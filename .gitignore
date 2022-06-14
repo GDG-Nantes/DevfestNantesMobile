@@ -9,7 +9,6 @@ out
 .directory
 node_modules
 local.properties
-iosApp.xcworkspace/
 
 .DS_Store
 .externalNativeBuild
