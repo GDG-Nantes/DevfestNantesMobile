@@ -3,6 +3,7 @@
     package="com.gdgnantes.devfest.android">
 
     <application
+        android:name=".DevFestNantesApplication"
         android:allowBackup="false"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
