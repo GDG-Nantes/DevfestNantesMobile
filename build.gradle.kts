@@ -1,5 +1,6 @@
 buildscript {
     val daggerVersion by extra { "2.40.5" }
+    val kotlinVersion by extra { "1.6.10" }
 
     repositories {
         gradlePluginPortal()
@@ -7,8 +8,8 @@ buildscript {
         mavenCentral()
     }
     dependencies {
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:1.7.0")
         classpath("com.android.tools.build:gradle:7.2.1")
+        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlinVersion")
         classpath("com.google.dagger:hilt-android-gradle-plugin:$daggerVersion")
     }
 }
