@@ -78,4 +78,7 @@ dependencies {
     // For local unit tests
     testImplementation("com.google.dagger:hilt-android-testing:$daggerVersion")
     kaptTest("com.google.dagger:hilt-compiler:$daggerVersion")
+
+    // Timber
+    implementation("com.jakewharton.timber:timber:5.0.1")
 }
