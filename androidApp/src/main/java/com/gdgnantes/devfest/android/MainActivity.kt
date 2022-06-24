@@ -12,9 +12,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import com.gdgnantes.devfest.Greeting
 import com.gdgnantes.devfest.android.ui.theme.DevFest_NantesTheme
-import com.gdgnantes.devfest.services.AgendaServiceBuilder
 import dagger.hilt.android.AndroidEntryPoint
-import timber.log.Timber
 
 fun greet(): String {
     return Greeting().greeting()
@@ -36,9 +34,9 @@ class MainActivity : ComponentActivity() {
             }
         }
 
-        AgendaServiceBuilder().build().getDays().onSuccess { days ->
+        /*AgendaServiceBuilder().build().getDays().onSuccess { days ->
             Timber.d(days.toString())
-        }
+        }*/
     }
 }
 
