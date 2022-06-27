@@ -1,9 +1,12 @@
-package com.gdgnantes.devfest.store.model.stubs
+package com.gdgnantes.devfest.kotlinmultiplatformsharedmodule.stubs
 
 
 import com.gdgnantes.devfest.store.model.*
 import kotlin.random.Random
 
+const val MAX_SESSIONS = 100
+const val MAX_SPEAKERS = 100
+const val MAX_ROOMS = 4
 const val MAX_SPEAKER_PER_SESSION = 5
 
 fun createSessionStub(): Session {

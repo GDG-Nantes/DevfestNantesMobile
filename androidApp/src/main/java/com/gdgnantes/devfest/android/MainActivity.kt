@@ -10,9 +10,14 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.lifecycle.lifecycleScope
 import com.gdgnantes.devfest.Greeting
 import com.gdgnantes.devfest.android.ui.theme.DevFest_NantesTheme
+import com.gdgnantes.devfest.store.DevFestNantesStore
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
+import timber.log.Timber
+import javax.inject.Inject
 
 fun greet(): String {
     return Greeting().greeting()
@@ -20,6 +25,10 @@ fun greet(): String {
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+
+    @Inject
+    lateinit var store: DevFestNantesStore
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -34,9 +43,14 @@ class MainActivity : ComponentActivity() {
             }
         }
 
-        /*AgendaServiceBuilder().build().getDays().onSuccess { days ->
-            Timber.d(days.toString())
-        }*/
+        lifecycleScope.launch {
+            store.getSessions().collect { sessionsResult ->
+                sessionsResult
+                    .onSuccess { sessions ->
+                        Timber.d(sessions.toString())
+                    }
+            }
+        }
     }
 }
 
