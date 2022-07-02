@@ -3,5 +3,5 @@ target 'iosApp' do
   platform :ios, '14.1'
   pod 'shared', :path => '../shared'
   pod 'store', :path => '../store'
-  pod 'store', :path => '../storeMocked'
+  pod 'storeMocked', :path => '../storeMocked'
 end

@@ -1,16 +1,26 @@
 PODS:
   - shared (1.0)
+  - store (1.0)
+  - storeMocked (1.0)
 
 DEPENDENCIES:
   - shared (from `../shared`)
+  - store (from `../store`)
+  - storeMocked (from `../storeMocked`)
 
 EXTERNAL SOURCES:
   shared:
     :path: "../shared"
+  store:
+    :path: "../store"
+  storeMocked:
+    :path: "../storeMocked"
 
 SPEC CHECKSUMS:
   shared: 7b4d6aa8aa7ada5f9dae3229e2524d316cb9f063
+  store: 4acfe2233a883238cb44c43cd1fb5a8e1242461e
+  storeMocked: a7d53b9262c6902639dfdbc7b82253d94efd4964
 
-PODFILE CHECKSUM: f282da88f39e69507b0a255187c8a6b644477756
+PODFILE CHECKSUM: 149a1dddcb8319966c524d3184fcfa86c8c7a9dd
 
 COCOAPODS: 1.11.3
