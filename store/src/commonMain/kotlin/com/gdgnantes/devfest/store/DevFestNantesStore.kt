@@ -2,7 +2,6 @@ package com.gdgnantes.devfest.store
 
 import com.gdgnantes.devfest.store.model.*
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.combine
 
 /**
  *
@@ -19,31 +18,6 @@ interface DevFestNantesStore {
     fun getBookmarks(userId: String): Flow<Result<Set<String>>>
     suspend fun setBookmark(userId: String, sessionId: String, value: Boolean)
 
-    fun getAgenda(): Flow<Result<Agenda>> {
-        val sessionsFlow = getSessions()
-        val roomsFlow = getRooms()
-        val speakersFlow = getSpeakers()
+    // Kotlin/Native client
 
-        return combine(
-            sessionsFlow,
-            roomsFlow,
-            speakersFlow
-        ) { sessions, rooms, speakers ->
-            val exception = sessions.exceptionOrNull()
-                ?: rooms.exceptionOrNull()
-                ?: speakers.exceptionOrNull()
-
-            if (exception != null) {
-                Result.failure(exception)
-            } else {
-                Result.success(
-                    Agenda(
-                        sessions.getOrThrow().associateBy { it.id },
-                        rooms.getOrThrow().associateBy { it.id },
-                        speakers.getOrThrow().associateBy { it.id }
-                    )
-                )
-            }
-        }
-    }
 }
