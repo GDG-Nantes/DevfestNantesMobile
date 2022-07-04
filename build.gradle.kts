@@ -1,6 +1,6 @@
 buildscript {
-    val daggerVersion by extra { "2.40.5" }
-    val kotlinVersion by extra { "1.6.10" }
+    val daggerVersion by extra { "2.42" }
+    val kotlinVersion by extra { "1.7.0" }
 
     repositories {
         gradlePluginPortal()
