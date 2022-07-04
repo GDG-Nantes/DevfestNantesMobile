@@ -44,11 +44,8 @@ class MainActivity : ComponentActivity() {
         }
 
         lifecycleScope.launch {
-            store.getSessions().collect { sessionsResult ->
-                sessionsResult
-                    .onSuccess { sessions ->
-                        Timber.d(sessions.toString())
-                    }
+            store.getSessions().collect { sessions ->
+                Timber.d(sessions.toString())
             }
         }
     }

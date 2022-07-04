@@ -7,17 +7,16 @@ import kotlinx.coroutines.flow.Flow
  *
  */
 interface DevFestNantesStore {
-    fun getVenue(id: String): Flow<Result<Venue>>
-    fun getSpeaker(id: String): Flow<Result<Speaker>>
-    fun getRoom(id: String): Flow<Result<Room>>
-    fun getSession(id: String): Flow<Result<Session>>
-    fun getPartners(): Flow<Result<List<Partner>>>
-    fun getSessions(): Flow<Result<List<Session>>>
-    fun getSpeakers(): Flow<Result<List<Speaker>>>
-    fun getRooms(): Flow<Result<List<Room>>>
-    fun getBookmarks(userId: String): Flow<Result<Set<String>>>
+    fun getBookmarks(userId: String): Flow<Set<String>>
     suspend fun setBookmark(userId: String, sessionId: String, value: Boolean)
+    val partners: Flow<List<Partner>>
+    fun getRoom(id: String): Flow<Room>
+    fun getRooms(): Flow<List<Room>>
+    fun getSession(id: String): Flow<Session>
+    fun getSessions(): Flow<List<Session>>
+    fun getSpeaker(id: String): Flow<Speaker>
+    fun getSpeakers(): Flow<List<Speaker>>
+    fun getVenue(id: String): Flow<Venue>
 
-    // Kotlin/Native client
 
 }
