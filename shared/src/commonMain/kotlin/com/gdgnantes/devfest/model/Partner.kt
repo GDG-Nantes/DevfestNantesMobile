@@ -1,4 +1,4 @@
-package com.gdgnantes.devfest.store.model
+package com.gdgnantes.devfest.model
 
 data class Partner(
     val name: String?,

@@ -9,5 +9,3 @@ pluginManagement {
 rootProject.name = "DevFest_Nantes"
 include(":androidApp")
 include(":shared")
-include(":store")
-include(":storeMocked")

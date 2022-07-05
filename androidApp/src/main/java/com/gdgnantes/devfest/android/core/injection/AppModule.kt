@@ -1,7 +1,7 @@
 package com.gdgnantes.devfest.android.core.injection
 
-import com.gdgnantes.devfest.kotlinmultiplatformsharedmodule.DevFestNantesStoreMocked
 import com.gdgnantes.devfest.store.DevFestNantesStore
+import com.gdgnantes.devfest.store.DevFestNantesStoreMocked
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

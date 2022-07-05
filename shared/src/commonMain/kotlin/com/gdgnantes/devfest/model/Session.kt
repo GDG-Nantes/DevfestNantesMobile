@@ -1,4 +1,4 @@
-package com.gdgnantes.devfest.store.model
+package com.gdgnantes.devfest.model
 
 data class Session(
         val id: String = "",

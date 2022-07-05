@@ -1,13 +1,11 @@
 import SwiftUI
 import shared
-import store
-import storeMocked
 import KMPNativeCoroutinesCombine
 
 @main
 struct iOSApp: App {
     
-    let store : DevFestNantesStore = DevFestNantesStoreMocked() as! DevFestNantesStore
+    let store : DevFestNantesStore = DevFestNantesStoreMocked()
     
 	var body: some Scene {       
         // Create an AnyPublisher for your flow

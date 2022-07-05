@@ -1,6 +1,6 @@
 package com.gdgnantes.devfest.store
 
-import com.gdgnantes.devfest.store.model.*
+import com.gdgnantes.devfest.model.*
 import kotlinx.coroutines.flow.Flow
 
 /**

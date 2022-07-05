@@ -42,8 +42,6 @@ android {
 
 dependencies {
     implementation(project(":shared"))
-    implementation(project(":store"))
-    implementation(project(":storeMocked"))
 
     // Coroutines
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.3-native-mt")

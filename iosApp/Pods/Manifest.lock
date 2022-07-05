@@ -3,14 +3,10 @@ PODS:
     - KMPNativeCoroutinesCore (= 0.12.5)
   - KMPNativeCoroutinesCore (0.12.5)
   - shared (1.0)
-  - store (1.0)
-  - storeMocked (1.0)
 
 DEPENDENCIES:
   - KMPNativeCoroutinesCombine (= 0.12.5)
   - shared (from `../shared`)
-  - store (from `../store`)
-  - storeMocked (from `../storeMocked`)
 
 SPEC REPOS:
   trunk:
@@ -20,18 +16,12 @@ SPEC REPOS:
 EXTERNAL SOURCES:
   shared:
     :path: "../shared"
-  store:
-    :path: "../store"
-  storeMocked:
-    :path: "../storeMocked"
 
 SPEC CHECKSUMS:
   KMPNativeCoroutinesCombine: 7efc1daae5d30e62fa8dfeb443f7e7ba779e9e7b
   KMPNativeCoroutinesCore: 36b0fda478802c81dee4673fcb489ccaa7e705f2
   shared: 07cac7993e4f05eda6b76f3a213b070947c3b79f
-  store: c83187b2f910eeea4134a0e7d5d2a21c743e4a04
-  storeMocked: 845368ba986e0f00fff22169c31ce4fbd77a5498
 
-PODFILE CHECKSUM: 4cea8ba3afcd64b2aa61fc9f7ae957ae8207a55c
+PODFILE CHECKSUM: f9b14647949db128f5fea3a776451d81cb5b4a84
 
 COCOAPODS: 1.11.3

@@ -1,8 +1,7 @@
-package com.gdgnantes.devfest.kotlinmultiplatformsharedmodule
+package com.gdgnantes.devfest.store
 
-import com.gdgnantes.devfest.kotlinmultiplatformsharedmodule.stubs.*
-import com.gdgnantes.devfest.store.DevFestNantesStore
-import com.gdgnantes.devfest.store.model.*
+import com.gdgnantes.devfest.model.*
+import com.gdgnantes.devfest.model.stubs.*
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow

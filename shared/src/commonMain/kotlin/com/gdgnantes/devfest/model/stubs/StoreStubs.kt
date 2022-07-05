@@ -1,7 +1,7 @@
-package com.gdgnantes.devfest.kotlinmultiplatformsharedmodule.stubs
+package com.gdgnantes.devfest.model.stubs
 
 
-import com.gdgnantes.devfest.store.model.*
+import com.gdgnantes.devfest.model.*
 import kotlin.random.Random
 
 const val MAX_PARTNERS = 50
