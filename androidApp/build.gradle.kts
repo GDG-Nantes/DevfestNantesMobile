@@ -6,16 +6,13 @@ plugins {
 }
 
 android {
-    compileSdk = 32
+    compileSdk = AndroidSdk.compile
     defaultConfig {
         applicationId = "com.gdgnantes.devfest.android"
-        minSdk = 23
-        targetSdk = 32
+        minSdk = AndroidSdk.min
+        targetSdk = AndroidSdk.target
         versionCode = 1
         versionName = "1.0"
-        vectorDrawables {
-            useSupportLibrary = true
-        }
     }
 
     compileOptions {
