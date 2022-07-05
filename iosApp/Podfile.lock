@@ -2,16 +2,21 @@ PODS:
   - KMPNativeCoroutinesCombine (0.12.5):
     - KMPNativeCoroutinesCore (= 0.12.5)
   - KMPNativeCoroutinesCore (0.12.5)
+  - NSLogger/ObjC (1.9.7)
+  - NSLogger/Swift (1.9.7):
+    - NSLogger/ObjC
   - shared (1.0)
 
 DEPENDENCIES:
   - KMPNativeCoroutinesCombine (= 0.12.5)
+  - NSLogger/Swift
   - shared (from `../shared`)
 
 SPEC REPOS:
   trunk:
     - KMPNativeCoroutinesCombine
     - KMPNativeCoroutinesCore
+    - NSLogger
 
 EXTERNAL SOURCES:
   shared:
@@ -20,8 +25,9 @@ EXTERNAL SOURCES:
 SPEC CHECKSUMS:
   KMPNativeCoroutinesCombine: 7efc1daae5d30e62fa8dfeb443f7e7ba779e9e7b
   KMPNativeCoroutinesCore: 36b0fda478802c81dee4673fcb489ccaa7e705f2
+  NSLogger: cf3013a4fba189f631f07e6c3d5b8ce2b209654b
   shared: 07cac7993e4f05eda6b76f3a213b070947c3b79f
 
-PODFILE CHECKSUM: f9b14647949db128f5fea3a776451d81cb5b4a84
+PODFILE CHECKSUM: 4296b67c62b094d752c891b617896492c4d554d1
 
 COCOAPODS: 1.11.3

@@ -69,7 +69,6 @@ class DevFestNantesStoreMocked : DevFestNantesStore {
     override val speakers: Flow<List<Speaker>>
         get() = flow {
             emit(
-
                 MutableList(Random.nextInt(1, MAX_SPEAKERS)) {
                     buildSpeakerStub()
                 }

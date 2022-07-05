@@ -3,6 +3,7 @@ import shared
 import Combine
 import KMPNativeCoroutinesCore
 import KMPNativeCoroutinesCombine
+import NSLogger
 
 @main
 struct iOSApp: App {
@@ -14,17 +15,21 @@ struct iOSApp: App {
     var cancellable: AnyCancellable
     
     init() {
+        //NSLogger
+        LoggerSetupBonjourForBuildUser()
+        
         self.store = DevFestNantesStoreMocked()
         // Create an AnyPublisher for your flow
         self.publisher = createPublisher(for: store.sessionsNative)
 
         // Now use this publisher as you would any other
         self.cancellable = publisher.sink { completion in
-            print("Received completion: \(completion)")
+            let log = "Received completion: \(completion)"
+            Logger.shared.log(.service, .debug, log)
         } receiveValue: { value in
-            print("Received value: \(value)")
+            let log = "Received value: \(value)"
+            Logger.shared.log(.service, .debug, log)
         }
-        print("coucou")
     }
     
 	var body: some Scene {
