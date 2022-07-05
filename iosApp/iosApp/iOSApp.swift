@@ -1,23 +1,33 @@
 import SwiftUI
 import shared
+import Combine
+import KMPNativeCoroutinesCore
 import KMPNativeCoroutinesCombine
 
 @main
 struct iOSApp: App {
     
-    let store : DevFestNantesStore = DevFestNantesStoreMocked()
+    let store : DevFestNantesStore
+
+    let publisher : AnyPublisher<[Session], Error>
     
-	var body: some Scene {       
+    var cancellable: AnyCancellable
+    
+    init() {
+        self.store = DevFestNantesStoreMocked()
         // Create an AnyPublisher for your flow
-        let publisher = createPublisher(for: store.partnersNative)
+        self.publisher = createPublisher(for: store.sessionsNative)
 
         // Now use this publisher as you would any other
-        let cancellable = publisher.sink { completion in
+        self.cancellable = publisher.sink { completion in
             print("Received completion: \(completion)")
         } receiveValue: { value in
             print("Received value: \(value)")
         }
-        
+        print("coucou")
+    }
+    
+	var body: some Scene {
 		WindowGroup {
 			ContentView()
 		}

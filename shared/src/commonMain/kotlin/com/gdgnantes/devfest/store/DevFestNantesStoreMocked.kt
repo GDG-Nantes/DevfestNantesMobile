@@ -4,14 +4,13 @@ import com.gdgnantes.devfest.model.*
 import com.gdgnantes.devfest.model.stubs.*
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.flow
 import kotlin.random.Random
 
 class DevFestNantesStoreMocked : DevFestNantesStore {
     private var bookmarks = MutableStateFlow<Set<String>>(setOf())
 
-    override fun getBookmarks(userId: String): Flow<Set<String>> = bookmarks.asStateFlow()
+    override suspend fun getBookmarks(userId: String): Set<String> = bookmarks.value
 
     override suspend fun setBookmark(userId: String, sessionId: String, value: Boolean) {
         val currentBookmarks = bookmarks.value.toMutableSet()
@@ -42,37 +41,41 @@ class DevFestNantesStoreMocked : DevFestNantesStore {
             )
         }
 
-    override fun getRoom(id: String): Flow<Room> = flow { emit(buildRoomStub()) }
+    override suspend fun getRoom(id: String): Room = buildRoomStub().copy(id = id)
 
-    override fun getRooms(): Flow<List<Room>> = flow {
-        emit(
-            MutableList(Random.nextInt(1, MAX_ROOMS)) {
-                buildRoomStub()
-            }
-        )
-    }
+    override val rooms: Flow<List<Room>>
+        get() = flow {
+            emit(
+                MutableList(Random.nextInt(1, MAX_ROOMS)) {
+                    buildRoomStub()
+                }
+            )
+        }
 
-    override fun getSession(id: String): Flow<Session> =
-        flow { emit(buildSessionStub()) }
+    override suspend fun getSession(id: String): Session =
+        buildSessionStub().copy(id = id)
 
-    override fun getSessions(): Flow<List<Session>> = flow {
-        emit(
-            MutableList(Random.nextInt(10, MAX_SESSIONS)) {
-                buildSessionStub()
-            }
-        )
-    }
+    override val sessions: Flow<List<Session>>
+        get() = flow {
+            emit(
+                MutableList(Random.nextInt(10, MAX_SESSIONS)) {
+                    buildSessionStub()
+                }
+            )
+        }
 
-    override fun getSpeaker(id: String): Flow<Speaker> = flow { emit(buildSpeakerStub()) }
+    override suspend fun getSpeaker(id: String): Speaker = buildSpeakerStub().copy(id = id)
 
-    override fun getSpeakers(): Flow<List<Speaker>> = flow {
-        emit(
+    override val speakers: Flow<List<Speaker>>
+        get() = flow {
+            emit(
 
-            MutableList(Random.nextInt(1, MAX_SPEAKERS)) {
-                buildSpeakerStub()
-            }
-        )
-    }
+                MutableList(Random.nextInt(1, MAX_SPEAKERS)) {
+                    buildSpeakerStub()
+                }
+            )
+        }
 
-    override fun getVenue(id: String): Flow<Venue> = flow { emit(buildVenueStub()) }
+    override val venue: Flow<Venue>
+        get() = flow { buildVenueStub() }
 }
