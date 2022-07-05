@@ -5,8 +5,6 @@ plugins {
     id("dagger.hilt.android.plugin")
 }
 
-val composeCompilerVersion = "1.1.1"
-
 android {
     compileSdk = 32
     defaultConfig {
@@ -19,15 +17,7 @@ android {
             useSupportLibrary = true
         }
     }
-    buildTypes {
-        getByName("release") {
-            isMinifyEnabled = false
-        }
-    }
 
-    composeOptions {
-        kotlinCompilerExtensionVersion = composeCompilerVersion
-    }
     compileOptions {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
@@ -35,9 +25,14 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+
     buildFeatures {
         compose = true
     }
+    composeOptions {
+        kotlinCompilerExtensionVersion = Versions.composeCompiler
+    }
+
     packagingOptions {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
@@ -45,39 +40,41 @@ android {
     }
 }
 
-val daggerVersion: String by rootProject.extra
-
 dependencies {
     implementation(project(":shared"))
+
+    // Coroutines
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.3-native-mt")
 
     // Compose
     // Integration with activities
     implementation("androidx.activity:activity-compose:1.4.0")
     // Compose Material Design
-    implementation("androidx.compose.material:material:$composeCompilerVersion")
+    implementation("androidx.compose.material:material:${Versions.compose}")
     // Animations
-    implementation("androidx.compose.animation:animation:$composeCompilerVersion")
+    implementation("androidx.compose.animation:animation:${Versions.compose}")
     // Tooling support (Previews, etc.)
-    implementation("androidx.compose.ui:ui-tooling:$composeCompilerVersion")
+    implementation("androidx.compose.ui:ui-tooling:${Versions.compose}")
     // Integration with ViewModels
-    implementation("androidx.compose.ui:ui:$composeCompilerVersion")
+    implementation("androidx.compose.ui:ui:${Versions.compose}")
     implementation("androidx.compose.material3:material3:1.0.0-alpha13")
-    implementation("androidx.compose.ui:ui-tooling-preview:$composeCompilerVersion")
+    implementation("androidx.compose.ui:ui-tooling-preview:${Versions.compose}")
 
     // UI Tests
-    androidTestImplementation("androidx.compose.ui:ui-test-junit4:$composeCompilerVersion")
+    androidTestImplementation("androidx.compose.ui:ui-test-junit4:${Versions.compose}")
     // Debug
-    debugImplementation("androidx.compose.ui:ui-test-manifest:$composeCompilerVersion")
+    debugImplementation("androidx.compose.ui:ui-test-manifest:${Versions.compose}")
 
-    // Dagger Hilt
-    implementation("com.google.dagger:hilt-android:$daggerVersion")
-    kapt("com.google.dagger:hilt-compiler:$daggerVersion")
-    // For instrumentation tests
-    androidTestImplementation("com.google.dagger:hilt-android-testing:$daggerVersion")
-    kaptAndroidTest("com.google.dagger:hilt-compiler:$daggerVersion")
-    // For local unit tests
-    testImplementation("com.google.dagger:hilt-android-testing:$daggerVersion")
-    kaptTest("com.google.dagger:hilt-compiler:$daggerVersion")
+    with(Dagger) {
+        implementation(hilt)
+        kapt(compiler)
+        // For instrumentation tests
+        androidTestImplementation(androidTesting)
+        kaptAndroidTest(compiler)
+        // For local unit tests
+        testImplementation(androidTesting)
+        kaptTest(compiler)
+    }
 
     // Timber
     implementation("com.jakewharton.timber:timber:5.0.1")
