@@ -46,19 +46,11 @@ dependencies {
     // Coroutines
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.3-native-mt")
 
-    // Compose
-    // Integration with activities
-    implementation("androidx.activity:activity-compose:1.4.0")
-    // Compose Material Design
-    implementation("androidx.compose.material:material:${Versions.compose}")
-    // Animations
-    implementation("androidx.compose.animation:animation:${Versions.compose}")
-    // Tooling support (Previews, etc.)
-    implementation("androidx.compose.ui:ui-tooling:${Versions.compose}")
-    // Integration with ViewModels
-    implementation("androidx.compose.ui:ui:${Versions.compose}")
-    implementation("androidx.compose.material3:material3:1.0.0-alpha13")
-    implementation("androidx.compose.ui:ui-tooling-preview:${Versions.compose}")
+    with(Compose) {
+        implementation(activity)
+        implementation(uiTooling)
+        implementation(material3)
+    }
 
     // UI Tests
     androidTestImplementation("androidx.compose.ui:ui-test-junit4:${Versions.compose}")
