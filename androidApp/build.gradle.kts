@@ -45,8 +45,11 @@ dependencies {
 
     with(Compose) {
         implementation(activity)
-        implementation(uiTooling)
         implementation(material3)
+        implementation(materialIconsCore)
+        implementation(materialIconsExtended)
+        implementation(navigation)
+        implementation(uiTooling)
     }
 
     // UI Tests
