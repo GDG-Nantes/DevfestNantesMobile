@@ -55,6 +55,14 @@ fun Home(
             composable(Screen.Agenda.route) {
                 Agenda()
             }
+
+            composable(Screen.Venue.route) {
+                Venue()
+            }
+
+            composable(Screen.About.route) {
+                About()
+            }
         }
     }
 }

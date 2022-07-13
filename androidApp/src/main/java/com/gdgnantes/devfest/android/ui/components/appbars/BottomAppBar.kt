@@ -37,6 +37,48 @@ fun BottomAppBar(
             },
             alwaysShowLabel = true
         )
+
+        NavigationBarItem(
+            selected = Screen.Venue == selected,
+            onClick = {
+                onClick(Screen.Venue)
+            },
+            icon = {
+                Icon(
+                    imageVector = Screen.Venue.imageVector(Screen.Venue == selected)!!,
+                    contentDescription = stringResource(id = Screen.Venue.title),
+                    tint = iconColor(selected = Screen.Venue == selected)
+                )
+            },
+            label = {
+                Text(
+                    text = stringResource(id = R.string.screen_venue),
+                    color = labelColor(selected = Screen.Venue == selected)
+                )
+            },
+            alwaysShowLabel = true
+        )
+
+        NavigationBarItem(
+            selected = Screen.About == selected,
+            onClick = {
+                onClick(Screen.About)
+            },
+            icon = {
+                Icon(
+                    imageVector = Screen.About.imageVector(Screen.About == selected)!!,
+                    contentDescription = stringResource(id = Screen.About.title),
+                    tint = iconColor(selected = Screen.About == selected)
+                )
+            },
+            label = {
+                Text(
+                    text = stringResource(id = R.string.screen_about),
+                    color = labelColor(selected = Screen.About == selected)
+                )
+            },
+            alwaysShowLabel = true
+        )
     }
 }
 

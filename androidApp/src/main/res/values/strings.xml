@@ -3,4 +3,6 @@
     <string name="screen_home">Home</string>
     <string name="screen_agenda">Agenda</string>
     <string name="action_back">Back</string>
+    <string name="screen_venue">Venue</string>
+    <string name="screen_about">About</string>
 </resources>
