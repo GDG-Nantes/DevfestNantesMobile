@@ -15,6 +15,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.gdgnantes.devfest.android.ui.components.appbars.BottomAppBar
 import com.gdgnantes.devfest.android.ui.components.appbars.TopAppBar
+import com.gdgnantes.devfest.android.ui.screens.agenda.Agenda
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

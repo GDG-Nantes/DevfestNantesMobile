@@ -50,6 +50,7 @@ dependencies {
         implementation(materialIconsExtended)
         implementation(navigation)
         implementation(uiTooling)
+        implementation(hiltNavigation)
     }
 
     // UI Tests

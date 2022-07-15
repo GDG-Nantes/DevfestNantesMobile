@@ -11,6 +11,7 @@ object Versions {
     const val accompanist = "0.24.13-rc"
 
     const val daggerVersion = "2.42"
+    const val hiltAndroidXVersion = "1.0.0"
 
     const val multiplatformSettings = "0.8.1"
     const val junit = "4.13"
@@ -53,6 +54,8 @@ object Compose {
     const val materialIconsExtended = "androidx.compose.material:material-icons-extended:${Versions.compose}"
     const val navigation = "androidx.navigation:navigation-compose:${Versions.navCompose}"
     const val coilCompose = "io.coil-kt:coil-compose:2.0.0"
+    const val hiltNavigation =
+        "androidx.hilt:hilt-navigation-compose:${Versions.hiltAndroidXVersion}"
 }
 
 object Dagger {
