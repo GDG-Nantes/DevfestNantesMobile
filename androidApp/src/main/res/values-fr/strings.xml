@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+  <string name="title_activity_main">Accueil</string>
+  <string name="screen_home">Accueil</string>
+  <string name="screen_agenda">Agenda</string>
+  <string name="action_back">Retour</string>
+  <string name="screen_venue">Lieu</string>
+  <string name="screen_about">À propos</string>
+</resources>
