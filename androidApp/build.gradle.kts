@@ -13,6 +13,7 @@ android {
         targetSdk = AndroidSdk.target
         versionCode = 1
         versionName = "1.0"
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
     compileOptions {
@@ -35,6 +36,13 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
+    
+    testOptions {
+        unitTests {
+            isReturnDefaultValues = true
+            isIncludeAndroidResources = true
+        }
+    }
 }
 
 dependencies {
@@ -45,8 +53,12 @@ dependencies {
 
     with(Compose) {
         implementation(activity)
-        implementation(uiTooling)
         implementation(material3)
+        implementation(materialIconsCore)
+        implementation(materialIconsExtended)
+        implementation(navigation)
+        implementation(uiTooling)
+        implementation(hiltNavigation)
     }
 
     // UI Tests
@@ -67,4 +79,22 @@ dependencies {
 
     // Timber
     implementation("com.jakewharton.timber:timber:5.0.1")
+
+    with(Tests) {
+        testImplementation(junit)
+        testImplementation(coroutinesTest)
+        testImplementation(kotlinJUnit)
+    }
+
+    with(AndroidTests) {
+        androidTestImplementation(androidXComposeUiTest)
+        androidTestImplementation(androidXTestCoreKtx)
+        androidTestImplementation(androidXTestRunner)
+        androidTestImplementation(androidXTestRules)
+        androidTestImplementation(androidXTestJUnitKtx)
+        androidTestImplementation(androidXTestTruth)
+        androidTestImplementation(androidXTestEspressoCore)
+        androidTestImplementation(androidXTestEspressoContrib)
+        androidTestImplementation(androidXTestEspressoIntents)
+    }
 }

@@ -1,30 +1,40 @@
 package com.gdgnantes.devfest.android
 
 import android.app.Application
-import com.gdgnantes.devfest.android.core.TimberTreeRelease
+import com.gdgnantes.devfest.android.core.ApplicationInitializer
+import com.gdgnantes.devfest.android.core.CoroutinesDispatcherProvider
 import dagger.hilt.android.HiltAndroidApp
-import timber.log.Timber
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.cancelChildren
+import kotlinx.coroutines.launch
+import javax.inject.Inject
+import javax.inject.Provider
 
 @HiltAndroidApp
 class DevFestNantesApplication: Application() {
 
+    @Inject
+    lateinit var appInitializers: Provider<Set<ApplicationInitializer>>
+
+    @Inject
+    lateinit var coroutineDispatcherProvider: CoroutinesDispatcherProvider
+
+    lateinit var coroutineScope: CoroutineScope
+
     override fun onCreate() {
         super.onCreate()
-        initLoggers()
+
+        coroutineScope = CoroutineScope(coroutineDispatcherProvider.main)
+
+        coroutineScope.launch {
+            appInitializers.get().iterator().forEach { initializer ->
+                initializer()
+            }
+        }
     }
 
-    /**
-     * Timber init
-     */
-    private fun initLoggers() {
-        if (BuildConfig.DEBUG) {
-            Timber.plant(object : Timber.DebugTree() {
-                override fun createStackElementTag(element: StackTraceElement): String? {
-                    return super.createStackElementTag(element) + ':'.toString() + element.lineNumber
-                }
-            })
-        } else {
-            Timber.plant(TimberTreeRelease())
-        }
+    override fun onTerminate() {
+        super.onTerminate()
+        coroutineScope.coroutineContext.cancelChildren()
     }
 }
