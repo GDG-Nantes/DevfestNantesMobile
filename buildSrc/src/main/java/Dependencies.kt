@@ -14,7 +14,11 @@ object Versions {
     const val hiltAndroidXVersion = "1.0.0"
 
     const val multiplatformSettings = "0.8.1"
+
     const val junit = "4.13"
+    const val androidXTestVersion = "1.4.0"
+    const val androidXJUnitVersion = "1.1.3"
+    const val espresso = "3.3.0"
 }
 
 
@@ -62,4 +66,25 @@ object Dagger {
     const val hilt = "com.google.dagger:hilt-android:${Versions.daggerVersion}"
     const val compiler = "com.google.dagger:hilt-compiler:${Versions.daggerVersion}"
     const val androidTesting = "com.google.dagger:hilt-android-testing:${Versions.daggerVersion}"
+}
+
+object Tests {
+    const val junit = "junit:junit:${Versions.junit}"
+    const val coroutinesTest =
+        "org.jetbrains.kotlinx:kotlinx-coroutines-test:${Versions.kotlinCoroutines}"
+    const val kotlinJUnit = "org.jetbrains.kotlin:kotlin-test-junit:${Versions.kotlinVersion}"
+}
+
+object AndroidTests {
+    const val androidXComposeUiTest = "androidx.compose.ui:ui-test-junit4:${Versions.compose}"
+    const val androidXTestCoreKtx = "androidx.test:core-ktx:${Versions.androidXTestVersion}"
+    const val androidXTestRunner = "androidx.test:runner:${Versions.androidXTestVersion}"
+    const val androidXTestRules = "androidx.test:rules:${Versions.androidXTestVersion}"
+    const val androidXTestJUnitKtx = "androidx.test.ext:junit-ktx:${Versions.androidXJUnitVersion}"
+    const val androidXTestTruth = "androidx.test.ext:truth:${Versions.androidXTestVersion}"
+    const val androidXTestEspressoCore = "androidx.test.espresso:espresso-core:${Versions.espresso}"
+    const val androidXTestEspressoContrib =
+        "androidx.test.espresso:espresso-contrib:${Versions.espresso}"
+    const val androidXTestEspressoIntents =
+        "androidx.test.espresso:espresso-intents:${Versions.espresso}"
 }
