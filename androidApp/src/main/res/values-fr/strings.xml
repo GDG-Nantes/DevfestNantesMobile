@@ -6,4 +6,5 @@
   <string name="action_back">Retour</string>
   <string name="screen_venue">Lieu</string>
   <string name="screen_about">À propos</string>
+    <string name="agenda_empty">vide</string>
 </resources>

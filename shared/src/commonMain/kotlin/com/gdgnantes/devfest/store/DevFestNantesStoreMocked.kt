@@ -5,9 +5,19 @@ import com.gdgnantes.devfest.model.stubs.*
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.map
 import kotlin.random.Random
 
 class DevFestNantesStoreMocked : DevFestNantesStore {
+
+    override val agenda: Flow<Agenda>
+        get() = sessions.map { sessions ->
+            Agenda.Builder().run {
+                this.sessions = sessions
+                build()
+            }
+        }
+
     private var bookmarks = MutableStateFlow<Set<String>>(setOf())
 
     override suspend fun getBookmarks(userId: String): Set<String> = bookmarks.value

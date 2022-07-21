@@ -8,7 +8,7 @@ data class Session(
         val level: SessionLevel? = null,
         val openFeedbackFormId: String = "",
         val room: Room,
-        val scheduleSlot: ScheduleSlot? = null,
+        val scheduleSlot: ScheduleSlot,
         val speakers: List<Speaker> = listOf(),
         val title: String = ""
 )

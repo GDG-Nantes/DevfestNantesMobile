@@ -5,4 +5,5 @@
     <string name="action_back">Back</string>
     <string name="screen_venue">Venue</string>
     <string name="screen_about">About</string>
+    <string name="agenda_empty">empty</string>
 </resources>
