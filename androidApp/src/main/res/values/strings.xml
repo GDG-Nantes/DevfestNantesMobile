@@ -6,4 +6,5 @@
     <string name="screen_venue">Venue</string>
     <string name="screen_about">About</string>
     <string name="agenda_empty">empty</string>
+    <string name="empty_day">Sorry, there is nothing conference available for currently selected filters.</string>
 </resources>
