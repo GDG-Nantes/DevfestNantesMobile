@@ -20,6 +20,7 @@ import com.gdgnantes.devfest.android.R
 import com.gdgnantes.devfest.android.ui.UiState
 import com.gdgnantes.devfest.android.ui.theme.DevFest_NantesTheme
 import com.gdgnantes.devfest.model.AgendaDay
+import com.gdgnantes.devfest.model.stubs.buildSessionStub
 
 @Composable
 fun Agenda(
@@ -98,7 +99,7 @@ fun AgendaLayoutPreview() {
         Scaffold {
             AgendaLayout(
                 uiState = UiState.SUCCESS,
-                days = mapOf(Pair(1, AgendaDay(1, emptyList()))),
+                days = mapOf(Pair(1, AgendaDay(1, listOf(buildSessionStub())))),
                 onRefresh = {}
             )
         }
