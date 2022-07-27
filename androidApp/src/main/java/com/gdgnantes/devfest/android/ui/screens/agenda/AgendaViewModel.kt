@@ -13,7 +13,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AgendaViewModel @Inject constructor(
-    val store: DevFestNantesStore
+    private val store: DevFestNantesStore
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow(UiState.LOADING)

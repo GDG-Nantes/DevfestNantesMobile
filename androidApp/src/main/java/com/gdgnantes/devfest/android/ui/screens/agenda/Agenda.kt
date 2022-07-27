@@ -9,6 +9,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -18,17 +19,46 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.gdgnantes.devfest.android.R
 import com.gdgnantes.devfest.android.ui.UiState
 import com.gdgnantes.devfest.android.ui.theme.DevFest_NantesTheme
+import com.gdgnantes.devfest.model.AgendaDay
 
 @Composable
 fun Agenda(
-    modifier: Modifier = Modifier
+    viewModel: AgendaViewModel = hiltViewModel()
 ) {
-    val viewModel = hiltViewModel<AgendaViewModel>()
-    val uiState = viewModel.uiState.collectAsState()
-    val daysState = viewModel.days.collectAsState()
-    when (uiState.value) {
+    AgendaLayout(
+        modifier = Modifier,
+        uiState = viewModel.uiState.collectAsState(),
+        days = viewModel.days.collectAsState(),
+        onRefresh = viewModel::onRefresh
+    )
+}
+
+@Composable
+fun AgendaLayout(
+    modifier: Modifier = Modifier,
+    uiState: State<UiState>,
+    days: State<Map<Int, AgendaDay>>,
+    onRefresh: () -> Unit
+) {
+    AgendaLayout(
+        modifier = modifier,
+        uiState = uiState.value,
+        days = days.value,
+        onRefresh = onRefresh
+    )
+}
+
+@Composable
+fun AgendaLayout(
+    modifier: Modifier = Modifier,
+    uiState: UiState,
+    days: Map<Int, AgendaDay>,
+    onRefresh: () -> Unit
+
+) {
+    when (uiState) {
         UiState.LOADING -> {
-            if (daysState.value.isEmpty()) {
+            if (days.isEmpty()) {
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
@@ -42,17 +72,17 @@ fun Agenda(
                 }
             } else {
                 AgendaPager(initialPageIndex = 0,
-                    days = daysState.value,
+                    days = days,
                     isRefreshing = true,
-                    onRefresh = viewModel::onRefresh,
+                    onRefresh = onRefresh,
                     onSessionClicked = { TODO() }
                 )
             }
         }
         UiState.SUCCESS -> AgendaPager(initialPageIndex = 0,
-            days = daysState.value,
+            days = days,
             isRefreshing = false,
-            onRefresh = viewModel::onRefresh,
+            onRefresh = onRefresh,
             onSessionClicked = { TODO() }
         )
         UiState.ERROR -> TODO()
@@ -63,10 +93,14 @@ fun Agenda(
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Preview
 @Composable
-fun AgendaPreview() {
+fun AgendaLayoutPreview() {
     DevFest_NantesTheme {
         Scaffold {
-            Agenda()
+            AgendaLayout(
+                uiState = UiState.SUCCESS,
+                days = mapOf(Pair(1, AgendaDay(1, emptyList()))),
+                onRefresh = {}
+            )
         }
     }
 }
