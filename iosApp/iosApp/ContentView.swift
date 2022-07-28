@@ -2,11 +2,28 @@ import SwiftUI
 import shared
 
 struct ContentView: View {
-	let greet = Greeting().greeting()
+    let greet = Greeting().greeting()
+    var body: some View {
+        TabView {
+           AgendaView()
+             .tabItem {
+                Image(systemName: "calendar")
+                Text("Agenda")
+              }
 
-	var body: some View {
-        Text(greet)
-	}
+           VenueView()
+             .tabItem {
+                Image(systemName: "location.circle.fill")
+                Text("Venue")
+              }
+            
+           AboutView()
+              .tabItem {
+                 Image(systemName: "info.circle")
+                 Text("About")
+               }
+        }
+    }
 }
 
 struct ContentView_Previews: PreviewProvider {
