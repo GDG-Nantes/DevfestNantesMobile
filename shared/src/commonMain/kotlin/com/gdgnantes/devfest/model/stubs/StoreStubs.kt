@@ -2,7 +2,10 @@ package com.gdgnantes.devfest.model.stubs
 
 
 import com.gdgnantes.devfest.model.*
+import com.gdgnantes.devfest.model.Agenda.Companion.DAY_ONE
 import kotlin.random.Random
+import kotlin.time.DurationUnit
+import kotlin.time.toDuration
 
 const val MAX_PARTNERS = 50
 const val MAX_ROOMS = 4
@@ -27,10 +30,16 @@ fun buildSessionStub(): Session {
     )
 }
 
-fun buildScheduleSlotStub() = ScheduleSlot(
-    endDate = "2022-10-20T11:15:02+00:00",
-    startDate = "2022-10-20T10:15:02+00:00"
-)
+fun buildScheduleSlotStub(): ScheduleSlot {
+    val day = DAY_ONE
+    val start = day.plus(Random.nextInt(9, 30).toDuration(DurationUnit.HOURS))
+    val end = start.plus(1.toDuration(DurationUnit.HOURS))
+
+    return ScheduleSlot(
+        endDate = end.toString(),
+        startDate = start.toString()
+    )
+}
 
 fun buildSpeakerStub(): Speaker {
     return Speaker(
