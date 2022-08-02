@@ -20,17 +20,20 @@ import com.gdgnantes.devfest.android.R
 import com.gdgnantes.devfest.android.ui.UiState
 import com.gdgnantes.devfest.android.ui.theme.DevFest_NantesTheme
 import com.gdgnantes.devfest.model.AgendaDay
+import com.gdgnantes.devfest.model.Session
 import com.gdgnantes.devfest.model.stubs.buildSessionStub
 
 @Composable
 fun Agenda(
-    viewModel: AgendaViewModel = hiltViewModel()
+    viewModel: AgendaViewModel = hiltViewModel(),
+    onSessionClick: ((Session) -> Unit)
 ) {
     AgendaLayout(
         modifier = Modifier,
         uiState = viewModel.uiState.collectAsState(),
         days = viewModel.days.collectAsState(),
-        onRefresh = viewModel::onRefresh
+        onRefresh = viewModel::onRefresh,
+        onSessionClick = onSessionClick
     )
 }
 
@@ -39,13 +42,15 @@ fun AgendaLayout(
     modifier: Modifier = Modifier,
     uiState: State<UiState>,
     days: State<Map<Int, AgendaDay>>,
-    onRefresh: () -> Unit
+    onRefresh: () -> Unit,
+    onSessionClick: ((Session) -> Unit)
 ) {
     AgendaLayout(
         modifier = modifier,
         uiState = uiState.value,
         days = days.value,
-        onRefresh = onRefresh
+        onRefresh = onRefresh,
+        onSessionClick = onSessionClick
     )
 }
 
@@ -54,8 +59,8 @@ fun AgendaLayout(
     modifier: Modifier = Modifier,
     uiState: UiState,
     days: Map<Int, AgendaDay>,
-    onRefresh: () -> Unit
-
+    onRefresh: () -> Unit,
+    onSessionClick: ((Session) -> Unit)
 ) {
     when (uiState) {
         UiState.LOADING -> {
@@ -76,7 +81,7 @@ fun AgendaLayout(
                     days = days,
                     isRefreshing = true,
                     onRefresh = onRefresh,
-                    onSessionClicked = { TODO() }
+                    onSessionClick = onSessionClick
                 )
             }
         }
@@ -84,7 +89,7 @@ fun AgendaLayout(
             days = days,
             isRefreshing = false,
             onRefresh = onRefresh,
-            onSessionClicked = { TODO() }
+            onSessionClick = onSessionClick
         )
         UiState.ERROR -> TODO()
     }
@@ -100,7 +105,8 @@ fun AgendaLayoutPreview() {
             AgendaLayout(
                 uiState = UiState.SUCCESS,
                 days = mapOf(Pair(1, AgendaDay(1, listOf(buildSessionStub())))),
-                onRefresh = {}
+                onRefresh = {},
+                onSessionClick = {}
             )
         }
     }

@@ -9,7 +9,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavGraph.Companion.findStartDestination
-import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
@@ -17,15 +16,17 @@ import androidx.navigation.compose.rememberNavController
 import com.gdgnantes.devfest.android.ui.components.appbars.BottomAppBar
 import com.gdgnantes.devfest.android.ui.components.appbars.TopAppBar
 import com.gdgnantes.devfest.android.ui.screens.agenda.Agenda
+import com.gdgnantes.devfest.model.Session
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Home(
     modifier: Modifier = Modifier,
-    navController: NavHostController = rememberNavController(),
     startDestination: Screen = Screen.Agenda,
+    onSessionClick: ((Session) -> Unit)
 ) {
-    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val homeNavController = rememberNavController()
+    val navBackStackEntry by homeNavController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
     val screen = currentDestination?.route?.run { Screen.screenFromRoute(this) } ?: startDestination
     Scaffold(
@@ -39,8 +40,8 @@ fun Home(
             BottomAppBar(
                 selected = screen,
                 onClick = {
-                    navController.navigate(it.route) {
-                        popUpTo(navController.graph.findStartDestination().id) {
+                    homeNavController.navigate(it.route) {
+                        popUpTo(homeNavController.graph.findStartDestination().id) {
                             saveState = true
                         }
                         launchSingleTop = true
@@ -51,12 +52,14 @@ fun Home(
         }
     ) {
         NavHost(
-            navController,
+            homeNavController,
             startDestination = Screen.Agenda.route,
             modifier = modifier.padding(it)
         ) {
             composable(Screen.Agenda.route) {
-                Agenda()
+                Agenda(
+                    onSessionClick = onSessionClick
+                )
             }
 
             composable(Screen.Venue.route) {

@@ -40,6 +40,13 @@ sealed class Screen(
         imageVectorOutlined = null
     )
 
+    object Session : Screen(
+        route = "session",
+        title = R.string.screen_session,
+        imageVectorFilled = null,
+        imageVectorOutlined = null
+    )
+
     object Venue : Screen(
         route = "venue",
         title = R.string.screen_venue,

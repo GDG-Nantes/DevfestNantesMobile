@@ -1,6 +1,7 @@
 package com.gdgnantes.devfest.android.ui.screens.agenda
 
 import android.annotation.SuppressLint
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material.MaterialTheme.colors
@@ -19,9 +20,10 @@ import com.gdgnantes.devfest.model.stubs.buildSessionStub
 @Composable
 fun AgendaRow(
     session: Session,
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onSessionClick: ((Session) -> Unit)
 ) {
-    Column(modifier = modifier) {
+    Column(modifier = modifier.clickable { onSessionClick(session) }) {
         Column(
             modifier = Modifier.padding(
                 start = 12.dp,
@@ -65,7 +67,8 @@ fun AgendaRowPreview() {
     DevFest_NantesTheme {
         Scaffold {
             AgendaRow(
-                session = buildSessionStub()
+                session = buildSessionStub(),
+                onSessionClick = {}
             )
         }
     }

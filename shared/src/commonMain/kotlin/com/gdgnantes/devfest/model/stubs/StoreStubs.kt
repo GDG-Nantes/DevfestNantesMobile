@@ -15,7 +15,7 @@ const val MAX_SPEAKER_PER_SESSION = 5
 
 fun buildSessionStub(): Session {
     return Session(
-        id = "", //TODO Replaces with UUID implementation
+        id = Random.nextLong().toString(),
         abstract = loremIpsum,
         category = SessionCategory.values()[SessionCategory.values().size - 1],
         language = SessionLanguage.values()[SessionLanguage.values().size - 1],

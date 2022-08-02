@@ -26,7 +26,7 @@ fun AgendaPager(
     days: Map<Int, AgendaDay>,
     isRefreshing: Boolean,
     onRefresh: () -> Unit,
-    onSessionClicked: (Session) -> Unit,
+    onSessionClick: (Session) -> Unit,
 ) {
     Column(modifier = Modifier.fillMaxWidth()) {
         val pagerState = rememberPagerState(initialPage = initialPageIndex)
@@ -70,7 +70,7 @@ fun AgendaPager(
                 } else {
                     AgendaColumn(
                         sessionsPerStartTime = sessions,
-                        onSessionClicked = {}
+                        onSessionClick = onSessionClick
                     )
                 }
             }
