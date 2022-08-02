@@ -11,12 +11,12 @@ data class Agenda(val days: Map<Int, AgendaDay>) {
         fun build(): Agenda {
             val dayOne = mutableListOf<Session>()
             val dayTwo = mutableListOf<Session>()
-            sessions.sortedBy { session -> session.scheduleSlot }
+            sessions.sortedBy { session -> session.scheduleSlot.startDate }
                 .forEach { session ->
                     val startInstant = session.scheduleSlot.startDate.toInstant()
                     if (startInstant.minus(DAY_ONE).inWholeDays == 0L) {
                         dayOne.add(session)
-                    } else if (startInstant.minus(DAY_ONE).inWholeDays == 0L) {
+                    } else if (startInstant.minus(DAY_TWO).inWholeDays == 0L) {
                         dayTwo.add(session)
                     }
                 }
