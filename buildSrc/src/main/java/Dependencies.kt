@@ -5,6 +5,8 @@ object Versions {
     const val kmpNativeCoroutines = "0.12.5-new-mm"
     const val kotlinxDateTime = "0.4.0"
 
+    const val accompanistPager = "0.24.13-rc"
+
     const val compose = "1.2.0-rc03"
     const val composeCompiler = "1.2.0"
     const val navCompose = "2.4.2"
@@ -34,13 +36,22 @@ object Deps {
 }
 
 object Kotlinx {
-    const val coroutinesCore = "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.kotlinCoroutines}"
+    const val coroutinesCore =
+        "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.kotlinCoroutines}"
     const val dateTime = "org.jetbrains.kotlinx:kotlinx-datetime:${Versions.kotlinxDateTime}"
     const val serialization = "org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.2"
 }
 
 object Kotlin {
     const val reflect = "org.jetbrains.kotlin:kotlin-reflect:${Versions.kotlinVersion}"
+}
+
+object Accompanist {
+    const val pager = "com.google.accompanist:accompanist-pager:${Versions.accompanistPager}"
+    const val pagerIndicator =
+        "com.google.accompanist:accompanist-pager-indicators:${Versions.accompanistPager}"
+    const val swipeRefresh =
+        "com.google.accompanist:accompanist-swiperefresh:${Versions.accompanistPager}"
 }
 
 object Compose {

@@ -6,4 +6,7 @@
   <string name="action_back">Retour</string>
   <string name="screen_venue">Lieu</string>
   <string name="screen_about">À propos</string>
+  <string name="agenda_empty">vide</string>
+  <string name="empty_day">Désolé, aucune conférence n\\\'est disponible pour les filtres actuellement sélectionnés.</string>
+  <string name="screen_session">Session details</string>
 </resources>

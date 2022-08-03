@@ -51,6 +51,12 @@ dependencies {
     // Coroutines
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.3-native-mt")
 
+    with(Accompanist) {
+        implementation(pager)
+        implementation(pagerIndicator)
+        implementation(swipeRefresh)
+    }
+
     with(Compose) {
         implementation(activity)
         implementation(material3)
