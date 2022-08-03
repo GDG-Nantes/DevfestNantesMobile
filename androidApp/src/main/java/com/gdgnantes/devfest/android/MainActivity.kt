@@ -54,7 +54,8 @@ class MainActivity : ComponentActivity() {
                                     sessionViewModelFactory(),
                                     sessionId
                                 )
-                            }
+                            },
+                            onBackClick = { mainNavController.popBackStack() }
                         )
                     }
                 }

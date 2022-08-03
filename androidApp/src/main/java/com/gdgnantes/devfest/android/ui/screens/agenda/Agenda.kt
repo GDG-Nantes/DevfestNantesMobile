@@ -77,7 +77,8 @@ fun AgendaLayout(
                     )
                 }
             } else {
-                AgendaPager(initialPageIndex = 0,
+                AgendaPager(
+                    initialPageIndex = 0,
                     days = days,
                     isRefreshing = true,
                     onRefresh = onRefresh,
@@ -85,12 +86,16 @@ fun AgendaLayout(
                 )
             }
         }
-        UiState.SUCCESS -> AgendaPager(initialPageIndex = 0,
-            days = days,
-            isRefreshing = false,
-            onRefresh = onRefresh,
-            onSessionClick = onSessionClick
-        )
+        UiState.SUCCESS ->
+            if (days.isNotEmpty()) {
+                AgendaPager(
+                    initialPageIndex = 0,
+                    days = days,
+                    isRefreshing = false,
+                    onRefresh = onRefresh,
+                    onSessionClick = onSessionClick
+                )
+            }
         UiState.ERROR -> TODO()
     }
 }
