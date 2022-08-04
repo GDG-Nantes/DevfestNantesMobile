@@ -86,5 +86,7 @@ class DevFestNantesStoreMocked : DevFestNantesStore {
         }
 
     override val venue: Flow<Venue>
-        get() = flow { buildVenueStub() }
+        get() = flow {
+            emit(buildVenueStub())
+        }
 }

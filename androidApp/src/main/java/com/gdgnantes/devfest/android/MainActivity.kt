@@ -1,5 +1,8 @@
 package com.gdgnantes.devfest.android
 
+import android.content.Intent
+import android.location.Location
+import android.net.Uri
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -40,7 +43,8 @@ class MainActivity : ComponentActivity() {
                         Home(
                             onSessionClick = { session ->
                                 mainNavController.navigate("${Screen.Session.route}/${session.id}")
-                            }
+                            },
+                            onNavigationClick = this@MainActivity::onNavigationClick
                         )
                     }
 
@@ -61,5 +65,10 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
+    }
+
+    private fun onNavigationClick(location: Location) {
+        val uri = "geo: latitude,longtitude ?q= ${location.latitude},${location.longitude}"
+        startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(uri)))
     }
 }

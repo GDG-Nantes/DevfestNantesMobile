@@ -34,5 +34,4 @@ class AgendaViewModel @Inject constructor(
             _uiState.emit(UiState.SUCCESS)
         }
     }
-
 }

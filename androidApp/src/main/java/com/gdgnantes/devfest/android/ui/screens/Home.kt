@@ -1,5 +1,6 @@
 package com.gdgnantes.devfest.android.ui.screens
 
+import android.location.Location
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
@@ -16,6 +17,7 @@ import androidx.navigation.compose.rememberNavController
 import com.gdgnantes.devfest.android.ui.components.appbars.BottomAppBar
 import com.gdgnantes.devfest.android.ui.components.appbars.TopAppBar
 import com.gdgnantes.devfest.android.ui.screens.agenda.Agenda
+import com.gdgnantes.devfest.android.ui.screens.venue.Venue
 import com.gdgnantes.devfest.model.Session
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -23,7 +25,8 @@ import com.gdgnantes.devfest.model.Session
 fun Home(
     modifier: Modifier = Modifier,
     startDestination: Screen = Screen.Agenda,
-    onSessionClick: ((Session) -> Unit)
+    onSessionClick: ((Session) -> Unit),
+    onNavigationClick: (Location) -> Unit
 ) {
     val homeNavController = rememberNavController()
     val navBackStackEntry by homeNavController.currentBackStackEntryAsState()
@@ -63,7 +66,9 @@ fun Home(
             }
 
             composable(Screen.Venue.route) {
-                Venue()
+                Venue(
+                    onNavigationClick = onNavigationClick
+                )
             }
 
             composable(Screen.About.route) {
