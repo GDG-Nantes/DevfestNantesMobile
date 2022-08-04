@@ -64,9 +64,13 @@ fun buildRoomStub(): Room {
 
 fun buildVenueStub(): Venue {
     return Venue(
-        address = "1 rue de la ville 01000 Ville",
+        name = "Cité des Congrès de Nantes",
+        address = "5 rue de Valmy, 44000 Nantes",
         descriptionEn = loremIpsum,
-        descriptionFr = loremIpsum
+        descriptionFr = loremIpsum,
+        latitude = 47.21308725112951,
+        longitude = -1.542622837466317,
+        imageUrl = "https://lh5.googleusercontent.com/p/AF1QipNszra8hDLL1D8Iumz_D5pYbLc058iy1wcLszmf=w408-h241-k-no"
     )
 }
 
