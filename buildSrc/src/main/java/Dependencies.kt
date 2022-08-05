@@ -50,6 +50,7 @@ object Accompanist {
     const val pager = "com.google.accompanist:accompanist-pager:${Versions.accompanistPager}"
     const val pagerIndicator =
         "com.google.accompanist:accompanist-pager-indicators:${Versions.accompanistPager}"
+    const val systemUiController = "com.google.accompanist:accompanist-systemuicontroller:0.25.0"
     const val swipeRefresh =
         "com.google.accompanist:accompanist-swiperefresh:${Versions.accompanistPager}"
 }
