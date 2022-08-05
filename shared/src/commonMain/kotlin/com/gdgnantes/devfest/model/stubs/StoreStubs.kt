@@ -70,7 +70,7 @@ fun buildVenueStub(): Venue {
         descriptionFr = loremIpsum,
         latitude = 47.21308725112951,
         longitude = -1.542622837466317,
-        imageUrl = "https://lh5.googleusercontent.com/p/AF1QipNszra8hDLL1D8Iumz_D5pYbLc058iy1wcLszmf=w408-h241-k-no"
+        imageUrl = "https://devfest.gdgnantes.com/static/6328df241501c6e31393e568e5c68d7e/efc43/amphi.webp"
     )
 }
 
