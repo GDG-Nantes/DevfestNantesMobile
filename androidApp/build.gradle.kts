@@ -59,6 +59,7 @@ dependencies {
 
     with(Compose) {
         implementation(activity)
+        implementation(coilCompose)
         implementation(material3)
         implementation(materialIconsCore)
         implementation(materialIconsExtended)

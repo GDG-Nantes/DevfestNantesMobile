@@ -1,6 +1,5 @@
 package com.gdgnantes.devfest.android.ui.screens
 
-import android.location.Location
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
@@ -25,8 +24,7 @@ import com.gdgnantes.devfest.model.Session
 fun Home(
     modifier: Modifier = Modifier,
     startDestination: Screen = Screen.Agenda,
-    onSessionClick: ((Session) -> Unit),
-    onNavigationClick: (Location) -> Unit
+    onSessionClick: ((Session) -> Unit)
 ) {
     val homeNavController = rememberNavController()
     val navBackStackEntry by homeNavController.currentBackStackEntryAsState()
@@ -66,9 +64,7 @@ fun Home(
             }
 
             composable(Screen.Venue.route) {
-                Venue(
-                    onNavigationClick = onNavigationClick
-                )
+                Venue()
             }
 
             composable(Screen.About.route) {
