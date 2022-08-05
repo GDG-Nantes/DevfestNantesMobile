@@ -25,11 +25,12 @@ import com.gdgnantes.devfest.model.stubs.buildSessionStub
 
 @Composable
 fun Agenda(
+    modifier: Modifier = Modifier,
     viewModel: AgendaViewModel = hiltViewModel(),
     onSessionClick: ((Session) -> Unit)
 ) {
     AgendaLayout(
-        modifier = Modifier,
+        modifier = modifier,
         uiState = viewModel.uiState.collectAsState(),
         days = viewModel.days.collectAsState(),
         onRefresh = viewModel::onRefresh,

@@ -68,7 +68,7 @@ object Compose {
         "androidx.compose.material:material-icons-core:${Versions.compose}"
     const val materialIconsExtended = "androidx.compose.material:material-icons-extended:${Versions.compose}"
     const val navigation = "androidx.navigation:navigation-compose:${Versions.navCompose}"
-    const val coilCompose = "io.coil-kt:coil-compose:2.0.0"
+    const val coilCompose = "io.coil-kt:coil-compose:2.1.0"
     const val hiltNavigation =
         "androidx.hilt:hilt-navigation-compose:${Versions.hiltAndroidXVersion}"
 }
