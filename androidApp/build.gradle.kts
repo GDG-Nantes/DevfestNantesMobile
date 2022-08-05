@@ -54,6 +54,7 @@ dependencies {
     with(Accompanist) {
         implementation(pager)
         implementation(pagerIndicator)
+        implementation(systemUiController)
         implementation(swipeRefresh)
     }
 
