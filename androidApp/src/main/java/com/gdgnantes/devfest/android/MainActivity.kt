@@ -16,6 +16,8 @@ import dagger.hilt.EntryPoint
 import dagger.hilt.InstallIn
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.components.ActivityComponent
+import io.openfeedback.android.OpenFeedback
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -25,6 +27,9 @@ class MainActivity : ComponentActivity() {
     interface ViewModelFactoryProvider {
         fun sessionViewModelFactory(): SessionViewModel.SessionViewModelFactory
     }
+
+    @Inject
+    lateinit var openFeedback: OpenFeedback
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -50,6 +55,7 @@ class MainActivity : ComponentActivity() {
                     ) { backStackEntry ->
                         val sessionId = backStackEntry.arguments!!.getString("sessionId")!!
                         SessionDetails(
+                            openFeedback = openFeedback,
                             viewModel = assistedViewModel {
                                 SessionViewModel.provideFactory(
                                     sessionViewModelFactory(),

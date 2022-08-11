@@ -31,8 +31,11 @@ object AndroidSdk {
 }
 
 object Deps {
-    const val multiplatformSettings = "com.russhwolf:multiplatform-settings:${Versions.multiplatformSettings}"
-    const val multiplatformSettingsCoroutines = "com.russhwolf:multiplatform-settings-coroutines:${Versions.multiplatformSettings}"
+    const val multiplatformSettings =
+        "com.russhwolf:multiplatform-settings:${Versions.multiplatformSettings}"
+    const val multiplatformSettingsCoroutines =
+        "com.russhwolf:multiplatform-settings-coroutines:${Versions.multiplatformSettings}"
+    const val openFeedback = "io.openfeedback:feedback-android-sdk-ui:0.0.7"
 }
 
 object Kotlinx {
