@@ -19,6 +19,7 @@ import com.gdgnantes.devfest.android.ui.components.appbars.TopAppBar
 import com.gdgnantes.devfest.model.Session
 import io.openfeedback.android.OpenFeedback
 import io.openfeedback.android.components.SessionFeedbackContainer
+import java.util.*
 
 @Composable
 fun SessionDetails(
@@ -82,8 +83,8 @@ fun SessionLayout(
 
             SessionFeedbackContainer(
                 openFeedback = openFeedback,
-                sessionId = "173222",
-                language = "en",
+                sessionId = "173222", //session.id <-- Uncomment once DevFest Nantes' instance is setup.
+                language = Locale.getDefault().language,
                 modifier = Modifier
                     .padding(it)
                     .padding(horizontal = 8.dp, vertical = 4.dp)

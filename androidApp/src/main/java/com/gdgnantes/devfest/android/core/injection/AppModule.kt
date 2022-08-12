@@ -36,7 +36,8 @@ abstract class AppModule {
 
         @AppScope
         @Provides
-        fun openfeedbac(application: Application) =
+        fun openFeedback(application: Application) =
+            // Updates with DevFest Nantes' credentials.
             OpenFeedback(
                 context = application,
                 openFeedbackProjectId = "mMHR63ARZQpPidFQISyc",
