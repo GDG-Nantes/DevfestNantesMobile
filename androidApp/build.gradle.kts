@@ -51,6 +51,10 @@ dependencies {
     // Coroutines
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.3-native-mt")
 
+    with(Deps) {
+        implementation(openFeedback)
+    }
+
     with(Accompanist) {
         implementation(pager)
         implementation(pagerIndicator)
