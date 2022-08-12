@@ -10,7 +10,7 @@ import SwiftUI
 
 struct VenueView: View {
     var body: some View {
-        Color.blue
+        Color.white
     }
 }
 

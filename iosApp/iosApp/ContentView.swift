@@ -2,26 +2,33 @@ import SwiftUI
 import shared
 
 struct ContentView: View {
-    let greet = Greeting().greeting()
-    var body: some View {
-        TabView {
-           AgendaView()
-             .tabItem {
-                Image(systemName: "calendar")
-                Text("Agenda")
-              }
+    @State private var selection = 0
 
-           VenueView()
-             .tabItem {
-                Image(systemName: "location.circle.fill")
-                Text("Venue")
-              }
-            
-           AboutView()
-              .tabItem {
-                 Image(systemName: "info.circle")
-                 Text("About")
-               }
+    var body: some View {
+        TabView(selection: $selection) {
+            AgendaView()
+                .tabItem {
+                    VStack {
+                        Image(systemName: "calendar")
+                        Text("Agenda")
+                    }
+            }.tag(0)
+
+             VenueView()
+                .tabItem {
+                    VStack {
+                        Image(systemName: "location.circle.fill")
+                        Text("Venue")
+                    }
+            }.tag(1)
+
+            AboutView()
+                .tabItem {
+                    VStack {
+                        Image(systemName: "info.circle")
+                        Text("About")
+                    }
+            }.tag(2)
         }
     }
 }

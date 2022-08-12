@@ -10,7 +10,7 @@ import SwiftUI
 
 struct AboutView: View {
     var body: some View {
-        Color.green
+        Color.white
     }
 }
 
