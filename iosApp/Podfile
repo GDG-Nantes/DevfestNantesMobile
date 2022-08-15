@@ -5,4 +5,5 @@ target 'iosApp' do
   pod 'KMPNativeCoroutinesCombine', '0.12.5'
   pod 'KMPNativeCoroutinesAsync'
   pod "NSLogger/Swift"
+  pod "URLImage"
 end

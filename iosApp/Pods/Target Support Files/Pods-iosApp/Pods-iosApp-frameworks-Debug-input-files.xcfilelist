@@ -3,3 +3,4 @@ ${BUILT_PRODUCTS_DIR}/KMPNativeCoroutinesAsync/KMPNativeCoroutinesAsync.framewor
 ${BUILT_PRODUCTS_DIR}/KMPNativeCoroutinesCombine/KMPNativeCoroutinesCombine.framework
 ${BUILT_PRODUCTS_DIR}/KMPNativeCoroutinesCore/KMPNativeCoroutinesCore.framework
 ${BUILT_PRODUCTS_DIR}/NSLogger/NSLogger.framework
+${BUILT_PRODUCTS_DIR}/URLImage/URLImage.framework

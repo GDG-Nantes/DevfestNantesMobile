@@ -8,12 +8,32 @@ PODS:
   - NSLogger/Swift (1.9.7):
     - NSLogger/ObjC
   - shared (1.0)
+  - URLImage (2.2.5):
+    - URLImage/Common (= 2.2.5)
+    - URLImage/DownloadManager (= 2.2.5)
+    - URLImage/FileIndex (= 2.2.5)
+    - URLImage/ImageDecoder (= 2.2.5)
+    - URLImage/Log (= 2.2.5)
+    - URLImage/PlainDatabase (= 2.2.5)
+    - URLImage/RemoteContentView (= 2.2.5)
+  - URLImage/Common (2.2.5)
+  - URLImage/DownloadManager (2.2.5):
+    - URLImage/Log
+  - URLImage/FileIndex (2.2.5):
+    - URLImage/Common
+    - URLImage/Log
+    - URLImage/PlainDatabase
+  - URLImage/ImageDecoder (2.2.5)
+  - URLImage/Log (2.2.5)
+  - URLImage/PlainDatabase (2.2.5)
+  - URLImage/RemoteContentView (2.2.5)
 
 DEPENDENCIES:
   - KMPNativeCoroutinesAsync
   - KMPNativeCoroutinesCombine (= 0.12.5)
   - NSLogger/Swift
   - shared (from `../shared`)
+  - URLImage
 
 SPEC REPOS:
   trunk:
@@ -21,6 +41,7 @@ SPEC REPOS:
     - KMPNativeCoroutinesCombine
     - KMPNativeCoroutinesCore
     - NSLogger
+    - URLImage
 
 EXTERNAL SOURCES:
   shared:
@@ -32,7 +53,8 @@ SPEC CHECKSUMS:
   KMPNativeCoroutinesCore: 36b0fda478802c81dee4673fcb489ccaa7e705f2
   NSLogger: cf3013a4fba189f631f07e6c3d5b8ce2b209654b
   shared: 07cac7993e4f05eda6b76f3a213b070947c3b79f
+  URLImage: 36a66c03ba2a9ccbbf06bc83431f2cef171008e8
 
-PODFILE CHECKSUM: b5a1124afee1549f2e45194c3d470e81da41c7e0
+PODFILE CHECKSUM: 5eedfcf784e4fcccd2fc703c9edf082ec0595221
 
 COCOAPODS: 1.11.3

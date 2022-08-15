@@ -12,27 +12,29 @@ import shared
 struct AgendaView: View {
     @ObservedObject private var viewModel = AgendaViewModel()
     
-    @State private var day = 1
+    @State private var day = "2022-10-20"
     
     var body: some View {
         NavigationView {
             VStack {
                 Picker("What is the day?", selection: $day) {
-                    Text("1").tag(1)
-                    Text("2").tag(2)
+                    Text("1").tag("2022-10-20")
+                    Text("2").tag("2022-10-21")
                 }
                 .pickerStyle(.segmented)
-                List(viewModel.sessions) { session in
-                    NavigationLink(destination: AgendaDetailView()) {
-                        VStack(alignment: .leading) {
-                            AgendaCellView(viewModel: viewModel, session: session)
+                List(viewModel.sessions.filter {
+                    $0.scheduleSlot.startDate.contains(day)}) { session in
+                        NavigationLink(destination: AgendaDetailView(session: session)) {
+                            VStack(alignment: .leading) {
+                                AgendaCellView(viewModel: viewModel, session: session)
+                                Spacer()
+                            }
                         }
                     }
-                }
-                .navigationTitle("Sessions")
-                .task {
-                    await viewModel.observeSessions()
-                }
+                    .navigationTitle("Agenda")
+                    .task {
+                        await viewModel.observeSessions()
+                    }
             }
         }
     }

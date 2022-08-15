@@ -31,7 +31,7 @@ struct AgendaCellView: View {
         HStack(alignment: .top) {
             VStack(alignment: .leading) {
                 Text(session.title)
-                    .foregroundColor(.blue)
+                    .foregroundColor(.red)
                     .font(.headline)
                     .padding(.bottom, 4)
                 Text("\(durationFormatter.string(from: getDate(date: session.scheduleSlot.startDate) , to: getDate(date: session.scheduleSlot.endDate) )!)")
