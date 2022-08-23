@@ -1,12 +1,12 @@
 ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES
 CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = NO
-FRAMEWORK_SEARCH_PATHS = $(inherited) "${PODS_CONFIGURATION_BUILD_DIR}/KMPNativeCoroutinesCombine" "${PODS_CONFIGURATION_BUILD_DIR}/KMPNativeCoroutinesCore" "${PODS_CONFIGURATION_BUILD_DIR}/NSLogger" "${PODS_ROOT}/../../shared/build/cocoapods/framework"
+FRAMEWORK_SEARCH_PATHS = $(inherited) "${PODS_CONFIGURATION_BUILD_DIR}/KMPNativeCoroutinesAsync" "${PODS_CONFIGURATION_BUILD_DIR}/KMPNativeCoroutinesCombine" "${PODS_CONFIGURATION_BUILD_DIR}/KMPNativeCoroutinesCore" "${PODS_CONFIGURATION_BUILD_DIR}/NSLogger" "${PODS_CONFIGURATION_BUILD_DIR}/URLImage" "${PODS_ROOT}/../../shared/build/cocoapods/framework"
 GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1 ${inherited} NSLOGGER_WAS_HERE=1 NSLOGGER_BUILD_USERNAME="${USER}"
-HEADER_SEARCH_PATHS = $(inherited) "${PODS_CONFIGURATION_BUILD_DIR}/KMPNativeCoroutinesCombine/KMPNativeCoroutinesCombine.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/KMPNativeCoroutinesCore/KMPNativeCoroutinesCore.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/NSLogger/NSLogger.framework/Headers"
+HEADER_SEARCH_PATHS = $(inherited) "${PODS_CONFIGURATION_BUILD_DIR}/KMPNativeCoroutinesAsync/KMPNativeCoroutinesAsync.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/KMPNativeCoroutinesCombine/KMPNativeCoroutinesCombine.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/KMPNativeCoroutinesCore/KMPNativeCoroutinesCore.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/NSLogger/NSLogger.framework/Headers" "${PODS_CONFIGURATION_BUILD_DIR}/URLImage/URLImage.framework/Headers"
 LD_RUNPATH_SEARCH_PATHS = $(inherited) /usr/lib/swift '@executable_path/Frameworks' '@loader_path/Frameworks'
 LIBRARY_SEARCH_PATHS = $(inherited) "${DT_TOOLCHAIN_DIR}/usr/lib/swift/${PLATFORM_NAME}" /usr/lib/swift
 OTHER_CFLAGS = $(inherited) -Wno-nullability-completeness
-OTHER_LDFLAGS = $(inherited) -ObjC -l"c++" -framework "CFNetwork" -framework "Combine" -framework "KMPNativeCoroutinesCombine" -framework "KMPNativeCoroutinesCore" -framework "NSLogger" -framework "SystemConfiguration" -framework "UIKit" -framework "shared"
+OTHER_LDFLAGS = $(inherited) -ObjC -l"c++" -framework "CFNetwork" -framework "Combine" -framework "KMPNativeCoroutinesAsync" -framework "KMPNativeCoroutinesCombine" -framework "KMPNativeCoroutinesCore" -framework "NSLogger" -framework "SystemConfiguration" -framework "UIKit" -framework "URLImage" -framework "shared"
 OTHER_SWIFT_FLAGS = $(inherited) -D COCOAPODS
 PODS_BUILD_DIR = ${BUILD_DIR}
 PODS_CONFIGURATION_BUILD_DIR = ${PODS_BUILD_DIR}/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)

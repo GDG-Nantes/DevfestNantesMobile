@@ -1,7 +1,11 @@
+ENV['SWIFT_VERSION'] = '5'
+
 target 'iosApp' do
   use_frameworks!
-  platform :ios, '14.1'
+  platform :ios, '15'
   pod 'shared', :path => '../shared'
   pod 'KMPNativeCoroutinesCombine', '0.12.5'
+  pod 'KMPNativeCoroutinesAsync'
   pod "NSLogger/Swift"
+  pod "URLImage"
 end
