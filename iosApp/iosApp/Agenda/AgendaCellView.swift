@@ -11,8 +11,8 @@ import shared
 
 struct AgendaCellView: View {
     @ObservedObject var viewModel: AgendaViewModel
-    var session: Session
-
+    var session: AgendaViewModel.Content.Session
+    
     var durationFormatter: DateComponentsFormatter = {
         let formatter = DateComponentsFormatter()
         formatter.unitsStyle = .full
@@ -26,7 +26,7 @@ struct AgendaCellView: View {
     }
     
     
-
+    
     var body: some View {
         HStack(alignment: .top) {
             VStack(alignment: .leading) {
@@ -34,9 +34,9 @@ struct AgendaCellView: View {
                     .foregroundColor(.red)
                     .font(.headline)
                     .padding(.bottom, 4)
-                Text("\(durationFormatter.string(from: getDate(date: session.scheduleSlot.startDate) , to: getDate(date: session.scheduleSlot.endDate) )!)")
+                Text("\(durationFormatter.string(from: getDate(date: session.startDate) , to: getDate(date: session.endDate) )!)")
                     .font(.footnote)
-                Text("\(session.room.name)")
+                Text("\(session.room)")
                     .font(.footnote)
                 Text("\(session.language!)")
                     .font(.footnote)
@@ -46,9 +46,9 @@ struct AgendaCellView: View {
             }
             Spacer()
             VStack {
-                    Image(systemName:  "star")
-                        .foregroundColor(.yellow)
-                        .padding(8)
+                Image(systemName:  "star")
+                    .foregroundColor(.yellow)
+                    .padding(8)
                 Spacer()
             }
         }

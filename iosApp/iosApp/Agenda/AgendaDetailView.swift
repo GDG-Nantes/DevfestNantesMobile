@@ -13,7 +13,7 @@ import URLImage
 
 struct AgendaDetailView: View {
     
-    var content : Session?
+    var content : AgendaViewModel.Content.Session?
     
     func getDate(date: String) -> Date {
         let newFormatter = ISO8601DateFormatter()
@@ -22,7 +22,7 @@ struct AgendaDetailView: View {
     
     var timeFormatter: DateFormatter = {
         let formatter = DateFormatter()
-        formatter.dateFormat = "hh:mm"
+        formatter.dateFormat = "HH:mm"
         return formatter
     }()
     
@@ -32,7 +32,8 @@ struct AgendaDetailView: View {
         return formatter
     }()
     
-    init(session: Session) {
+    
+    init(session: AgendaViewModel.Content.Session) {
         self.content = session
     }
     var body: some View {
@@ -43,7 +44,7 @@ struct AgendaDetailView: View {
                     .font(.title)
                     .padding(.bottom, 8)
                     .padding(.top, 16)
-                Text("\(fullDateFormatter.string(from: getDate(date: content!.scheduleSlot.startDate))), \(timeFormatter.string(from: getDate(date: content!.scheduleSlot.startDate))) - \(timeFormatter.string(from: getDate(date: content!.scheduleSlot.endDate))) ")
+                Text("\(fullDateFormatter.string(from: getDate(date: content!.startDate))), \(timeFormatter.string(from: getDate(date: content!.startDate))) - \(timeFormatter.string(from: getDate(date: content!.endDate))) ")
                     .bold()
                     .font(.headline)
                     .padding(.bottom, 8)

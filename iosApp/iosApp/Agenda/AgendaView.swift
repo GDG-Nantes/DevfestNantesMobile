@@ -14,27 +14,38 @@ struct AgendaView: View {
     
     @State private var day = "2022-10-20"
     
+    var sectionTimeFormatter: DateFormatter = {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "HH:mm"
+        return formatter
+    }()
+    
+    
     var body: some View {
+        
         NavigationView {
             VStack {
                 Picker("What is the day?", selection: $day) {
-                    Text("1").tag("2022-10-20")
-                    Text("2").tag("2022-10-21")
+                    Text("Day 1").tag("2022-10-20")
+                    Text("Day 2").tag("2022-10-21")
                 }
                 .pickerStyle(.segmented)
-                List(viewModel.sessions.filter {
-                    $0.scheduleSlot.startDate.contains(day)}) { session in
-                        NavigationLink(destination: AgendaDetailView(session: session)) {
-                            VStack(alignment: .leading) {
-                                AgendaCellView(viewModel: viewModel, session: session)
-                                Spacer()
+                List {
+                    ForEach(viewModel.content.sections.filter{($0.day.contains(day))}, id: \.date) { section in
+                        Section(header: Text("\(self.sectionTimeFormatter.string(from: section.date))")) {
+                            ForEach(section.sessions, id: \.id) { session in
+                                NavigationLink(destination: AgendaDetailView(session: session)) {
+                                    AgendaCellView(viewModel: viewModel, session: session)
+                                }
+                                .listRowBackground( Color(UIColor.systemBackground))
                             }
                         }
                     }
-                    .navigationTitle("Agenda")
-                    .task {
-                        await viewModel.observeSessions()
-                    }
+                }
+                .navigationBarTitle("Agenda")
+                .task {
+                    await viewModel.observeSessions()
+                }
             }
         }
     }
@@ -45,4 +56,3 @@ struct AgendaView_Previews: PreviewProvider {
         AgendaView()
     }
 }
-
