@@ -12,8 +12,12 @@ data class Speaker(
     val surname: String?
 ) {
 
+    fun getFullName(): String {
+        return this.firstname + this.surname
+    }
+
     fun getFullNameAndCompany(): String {
-        return this.firstname + this.surname + if (company.isNullOrBlank()) "" else ", " + this.company
+        return getFullName() + if (company.isNullOrBlank()) "" else ", " + this.company
     }
 
 }

@@ -16,6 +16,7 @@ import androidx.compose.ui.unit.dp
 import com.gdgnantes.devfest.android.ui.theme.DevFest_NantesTheme
 import com.gdgnantes.devfest.model.Session
 import com.gdgnantes.devfest.model.stubs.buildSessionStub
+import com.gdgnantes.devfest.utils.getDurationAndLanguageString
 
 @Composable
 fun AgendaRow(
@@ -36,10 +37,19 @@ fun AgendaRow(
                 text = session.title,
                 style = MaterialTheme.typography.h5
             )
+            Text(
+                text = session.getDurationAndLanguageString(),
+                style = MaterialTheme.typography.subtitle1
+            )
+            Text(
+                text = session.room.name,
+                style = MaterialTheme.typography.subtitle1
+            )
+
             Row {
                 Column(Modifier.weight(1F)) {
                     val speakers =
-                        session.speakers.joinToString(", ") { it.getFullNameAndCompany() }
+                        session.speakers.joinToString(", ") { it.getFullName() }
                     if (speakers.isNotBlank()) {
                         Text(
                             text = speakers,
