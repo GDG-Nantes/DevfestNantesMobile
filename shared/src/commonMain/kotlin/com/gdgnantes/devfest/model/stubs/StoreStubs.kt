@@ -17,7 +17,7 @@ fun buildSessionStub(): Session {
     return Session(
         id = Random.nextLong().toString(),
         abstract = loremIpsum,
-        category = SessionCategory.values()[SessionCategory.values().size - 1],
+        category = categoryStubs[Random.nextInt(categoryStubs.size)],
         language = SessionLanguage.values()[SessionLanguage.values().size - 1],
         level = SessionLevel.values()[SessionLevel.values().size - 1],
         openFeedbackFormId = "", //TODO Replaces with UUID implementation
