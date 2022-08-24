@@ -1,5 +1,6 @@
 plugins {
     kotlin("multiplatform")
+    kotlin("plugin.serialization") version "1.7.10"
     kotlin("native.cocoapods")
     id("com.android.library")
     id("com.rickclephas.kmp.nativecoroutines") version "0.12.5"
@@ -28,6 +29,7 @@ kotlin {
             dependencies {
                 with(Kotlinx) {
                     implementation(dateTime)
+                    implementation(serialization)
                 }
             }
         }

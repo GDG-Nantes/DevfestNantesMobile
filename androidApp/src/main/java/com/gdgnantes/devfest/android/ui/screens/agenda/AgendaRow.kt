@@ -10,9 +10,11 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.gdgnantes.devfest.android.ui.components.SessionCategory
 import com.gdgnantes.devfest.android.ui.theme.DevFest_NantesTheme
 import com.gdgnantes.devfest.model.Session
 import com.gdgnantes.devfest.model.stubs.buildSessionStub
@@ -37,10 +39,20 @@ fun AgendaRow(
                 text = session.title,
                 style = MaterialTheme.typography.h5
             )
-            Text(
-                text = session.getDurationAndLanguageString(),
-                style = MaterialTheme.typography.subtitle1
-            )
+
+            Row(
+                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                verticalAlignment = Alignment.CenterVertically,
+            ) {
+                session.category?.let { category ->
+                    SessionCategory(category = category)
+                }
+                Text(
+                    text = session.getDurationAndLanguageString(),
+                    style = MaterialTheme.typography.subtitle1
+                )
+            }
+
             Text(
                 text = session.room.name,
                 style = MaterialTheme.typography.subtitle1

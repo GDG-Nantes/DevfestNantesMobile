@@ -3,7 +3,7 @@ package com.gdgnantes.devfest.model
 data class Session(
         val id: String = "",
         val abstract: String = "",
-        val category: SessionCategory? = null,
+        val category: Category? = null,
         val language: SessionLanguage? = null,
         val level: SessionLevel? = null,
         val openFeedbackFormId: String = "",

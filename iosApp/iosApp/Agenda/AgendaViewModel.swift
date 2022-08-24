@@ -78,7 +78,7 @@ extension AgendaViewModel {
         struct Session: Hashable, Identifiable {
             let id: String
             let abstract: String
-            let category: SessionCategory?
+            let category: shared.Category?
             let language: SessionLanguage?
             let level: SessionLevel?
             let openFeedbackFormId: String
