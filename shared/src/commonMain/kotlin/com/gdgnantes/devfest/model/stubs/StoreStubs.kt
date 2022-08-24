@@ -21,7 +21,7 @@ fun buildSessionStub(): Session {
         language = SessionLanguage.values()[SessionLanguage.values().size - 1],
         level = SessionLevel.values()[SessionLevel.values().size - 1],
         openFeedbackFormId = "", //TODO Replaces with UUID implementation
-        room = buildRoomStub(),
+        room = roomStubs[Random.nextInt(roomStubs.size)],
         scheduleSlot = buildScheduleSlotStub(),
         speakers = MutableList(Random.nextInt(1, MAX_SPEAKER_PER_SESSION)) {
             buildSpeakerStub()
@@ -52,13 +52,6 @@ fun buildSpeakerStub(): Speaker {
         photoUrl = randomImageUrl,
         socials = emptyList(),
         surname = "Bar",
-    )
-}
-
-fun buildRoomStub(): Room {
-    return Room(
-        id = "", //TODO Replace with UUID implementation
-        name = "Foo"
     )
 }
 

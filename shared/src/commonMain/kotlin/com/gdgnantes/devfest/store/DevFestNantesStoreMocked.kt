@@ -51,15 +51,12 @@ class DevFestNantesStoreMocked : DevFestNantesStore {
             )
         }
 
-    override suspend fun getRoom(id: String): Room = buildRoomStub().copy(id = id)
+    override suspend fun getRoom(id: String): Room? =
+        roomStubs.firstOrNull { room -> room.id == id }
 
     override val rooms: Flow<List<Room>>
         get() = flow {
-            emit(
-                MutableList(Random.nextInt(1, MAX_ROOMS)) {
-                    buildRoomStub()
-                }
-            )
+            emit(roomStubs)
         }
 
     override suspend fun getSession(id: String): Session =
