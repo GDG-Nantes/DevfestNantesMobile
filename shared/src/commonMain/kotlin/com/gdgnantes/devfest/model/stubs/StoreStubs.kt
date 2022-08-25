@@ -59,8 +59,8 @@ fun buildVenueStub(): Venue {
     return Venue(
         name = "Cité des Congrès de Nantes",
         address = "5 rue de Valmy, 44000 Nantes",
-        descriptionEn = loremIpsum,
-        descriptionFr = loremIpsum,
+        descriptionEn = "Located in the center of Nantes, the event takes place in the “Cité des Congrès” with more than 3000m² of conference rooms, hand’s on and networking space…",
+        descriptionFr = "Située en plein cœur de ville, La Cité des Congrès de Nantes propose pour le DevFest Nantes plus de 3000m² de salles de conférences, codelabs et lieu de rencontre…",
         latitude = 47.21308725112951,
         longitude = -1.542622837466317,
         imageUrl = "https://devfest.gdgnantes.com/static/6328df241501c6e31393e568e5c68d7e/efc43/amphi.webp"
