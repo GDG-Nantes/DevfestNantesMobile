@@ -52,7 +52,7 @@ struct AgendaDetailView: View {
                     .font(.body)
                 Divider().padding(.top, 8)
                 HStack {
-                    LevelView(level: content!.level ?? .beginner)
+                    ComplexityView(complexity: content!.complexity ?? .beginner)
                 }
                 Divider().padding(.top, 8)
                 ForEach(content!.speakers, id: \.self) { speaker in
@@ -64,7 +64,7 @@ struct AgendaDetailView: View {
     }
 }
 
-extension SessionLevel {
+extension Complexity {
     var text: String {
         switch self {
         case .beginner: return "Beginner"
@@ -76,12 +76,12 @@ extension SessionLevel {
     }
 }
 
-struct LevelView: View {
-    var level: SessionLevel
+struct ComplexityView: View {
+    var complexity: Complexity
     
     
     var body: some View {
-        Text(level.text)
+        Text(complexity.text)
             .font(.body)
             .padding(.vertical, 8)
             .padding(.horizontal, 10)

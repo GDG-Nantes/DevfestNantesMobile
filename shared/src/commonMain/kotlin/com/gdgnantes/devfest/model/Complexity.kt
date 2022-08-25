@@ -1,6 +1,6 @@
 package com.gdgnantes.devfest.model
 
-enum class SessionLevel {
+enum class Complexity {
     BEGINNER,
     INTERMEDIATE,
     EXPERT

@@ -8,7 +8,7 @@ data class Speaker(
     val country: String? = null,
     val firstname: String = "",
     val photoUrl: String? = null,
-    val socials: List<SocialsItem?>? = null,
+    val socials: List<SocialsItem>? = null,
     val surname: String?
 ) {
 

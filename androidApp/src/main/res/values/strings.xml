@@ -9,4 +9,8 @@
     <string name="empty_day">Sorry, there is nothing conference available for currently selected filters.</string>
     <string name="screen_session">Session details</string>
     <string name="venue_go_to_button">Go to</string>
+    <string name="complexity_beginer">Beginer</string>
+    <string name="complexity_intermediate">Intermediate</string>
+    <string name="complexity_expert">Expert</string>
+    <string name="session_feedback_label">Provide feedback</string>
 </resources>

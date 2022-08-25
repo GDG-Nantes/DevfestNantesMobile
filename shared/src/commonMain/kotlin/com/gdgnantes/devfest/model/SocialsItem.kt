@@ -1,7 +1,14 @@
 package com.gdgnantes.devfest.model
 
 data class SocialsItem(
-    val name: String? = null,
-    val icon: String? = null,
+    val type: SocialsType? = null,
     val link: String? = null
 )
+
+enum class SocialsType {
+    GITHUB,
+    LINKEDIN,
+    TWITTER,
+    FACEBOOK,
+    WEBSITE
+}

@@ -19,7 +19,7 @@ fun buildSessionStub(): Session {
         abstract = loremIpsum,
         category = categoryStubs[Random.nextInt(categoryStubs.size)],
         language = SessionLanguage.values()[SessionLanguage.values().size - 1],
-        level = SessionLevel.values()[SessionLevel.values().size - 1],
+        complexity = Complexity.values()[Complexity.values().size - 1],
         openFeedbackFormId = "", //TODO Replaces with UUID implementation
         room = roomStubs[Random.nextInt(roomStubs.size)],
         scheduleSlot = buildScheduleSlotStub(),
@@ -50,7 +50,7 @@ fun buildSpeakerStub(): Speaker {
         country = "France",
         firstname = "Foo",
         photoUrl = randomImageUrl,
-        socials = emptyList(),
+        socials = socialItemStubs,
         surname = "Bar",
     )
 }

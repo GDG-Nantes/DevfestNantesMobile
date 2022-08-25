@@ -10,7 +10,7 @@ fun Session.getDurationInMinutes(): String {
     return minutesDuration.toString()
 }
 
-fun Session.getLanguageEmoji(): String? {
+fun Session.getLanguageEmojiString(): String? {
     return when (language) {
         SessionLanguage.ENGLISH -> "\uD83C\uDDEC\uD83C\uDDE7"
         SessionLanguage.FRENCH -> "\uD83C\uDDEB\uD83C\uDDF7"
@@ -19,6 +19,6 @@ fun Session.getLanguageEmoji(): String? {
 }
 
 fun Session.getDurationAndLanguageString(): String {
-    val languageEmoji = getLanguageEmoji()
+    val languageEmoji = getLanguageEmojiString()
     return getDurationInMinutes() + " minutes" + if (languageEmoji != null) " / $languageEmoji" else ""
 }

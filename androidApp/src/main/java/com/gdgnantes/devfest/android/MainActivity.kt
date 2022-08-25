@@ -6,9 +6,10 @@ import androidx.activity.compose.setContent
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.gdgnantes.devfest.android.services.ExternalContentService
 import com.gdgnantes.devfest.android.ui.screens.Home
 import com.gdgnantes.devfest.android.ui.screens.Screen
-import com.gdgnantes.devfest.android.ui.screens.session.SessionDetails
+import com.gdgnantes.devfest.android.ui.screens.session.SessionLayout
 import com.gdgnantes.devfest.android.ui.screens.session.SessionViewModel
 import com.gdgnantes.devfest.android.ui.theme.DevFest_NantesTheme
 import com.gdgnantes.devfest.android.utils.assistedViewModel
@@ -30,6 +31,9 @@ class MainActivity : ComponentActivity() {
 
     @Inject
     lateinit var openFeedback: OpenFeedback
+
+    @Inject
+    lateinit var externalContentService: ExternalContentService
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -54,7 +58,7 @@ class MainActivity : ComponentActivity() {
                         route = "${Screen.Session.route}/{sessionId}"
                     ) { backStackEntry ->
                         val sessionId = backStackEntry.arguments!!.getString("sessionId")!!
-                        SessionDetails(
+                        SessionLayout(
                             openFeedback = openFeedback,
                             viewModel = assistedViewModel {
                                 SessionViewModel.provideFactory(
@@ -62,7 +66,10 @@ class MainActivity : ComponentActivity() {
                                     sessionId
                                 )
                             },
-                            onBackClick = { mainNavController.popBackStack() }
+                            onBackClick = { mainNavController.popBackStack() },
+                            onSocialLinkClick = { url ->
+                                externalContentService.openUrl(url)
+                            }
                         )
                     }
                 }
