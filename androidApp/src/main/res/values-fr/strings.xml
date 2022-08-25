@@ -9,6 +9,7 @@
   <string name="agenda_empty">vide</string>
   <string name="empty_day">Désolé, aucune conférence n\\\'est disponible pour les filtres actuellement sélectionnés.</string>
   <string name="screen_session">Session details</string>
+  <string name="screen_about_header_body">Le DevFest, ou \'Developers Festival\', est une conférence technique destinée aux développeurs. Elle s\'adresse aussi bien aux étudiants, aux professionnels ou tout simplement aux curieux technophiles.  Cette année c\'est Jules Verne et son univers incroyable qui sera au coeur du Devfest !</string>
   <string name="venue_go_to_button">S\'y rendre</string>
   <string name="complexity_beginer">Débutant</string>
   <string name="complexity_intermediate">Intermediaire</string>

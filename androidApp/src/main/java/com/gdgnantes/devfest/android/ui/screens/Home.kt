@@ -15,6 +15,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.gdgnantes.devfest.android.ui.components.appbars.BottomAppBar
 import com.gdgnantes.devfest.android.ui.components.appbars.TopAppBar
+import com.gdgnantes.devfest.android.ui.screens.about.About
 import com.gdgnantes.devfest.android.ui.screens.agenda.Agenda
 import com.gdgnantes.devfest.android.ui.screens.venue.Venue
 import com.gdgnantes.devfest.model.Session
