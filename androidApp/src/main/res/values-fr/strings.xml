@@ -9,5 +9,9 @@
   <string name="agenda_empty">vide</string>
   <string name="empty_day">Désolé, aucune conférence n\\\'est disponible pour les filtres actuellement sélectionnés.</string>
   <string name="screen_session">Session details</string>
-    <string name="venue_go_to_button">S\'y rendre</string>
+  <string name="venue_go_to_button">S\'y rendre</string>
+  <string name="complexity_beginer">Débutant</string>
+  <string name="complexity_intermediate">Intermediaire</string>
+  <string name="complexity_expert">Expert</string>
+  <string name="session_feedback_label">Feedback</string>
 </resources>
