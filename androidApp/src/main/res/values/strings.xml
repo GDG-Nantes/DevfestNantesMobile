@@ -18,4 +18,6 @@
     <string name="about_code_of_conduct">Code of conduct</string>
     <string name="about_terms_of_service">Terms of service</string>
     <string name="about_website">Website</string>
+    <string name="app_version" translatable="false">Version %s (%d)</string>
+    <string name="about_social_title">Follow us</string>
 </resources>

@@ -34,7 +34,7 @@ fun AboutHeader(
         )
 
         Text(
-            modifier = Modifier.padding(8.dp),
+            modifier = Modifier.padding(vertical = 8.dp),
             text = stringResource(id = R.string.screen_about_header_body)
         )
     }

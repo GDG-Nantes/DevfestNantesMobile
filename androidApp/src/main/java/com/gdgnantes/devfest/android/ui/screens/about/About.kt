@@ -26,9 +26,19 @@ fun About(
                 .verticalScroll(state = rememberScrollState()),
             verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
-            AboutHeader()
+            AboutHeader(modifier.padding(horizontal = 8.dp))
 
-            AboutLinks(onWeblinkClick = onWeblinkClick)
+            AboutLinks(
+                modifier.padding(horizontal = 8.dp),
+                onWeblinkClick = onWeblinkClick
+            )
+
+            AboutSocial(
+                modifier.padding(horizontal = 8.dp),
+                onWeblinkClick = onWeblinkClick
+            )
+
+            AboutVersion(modifier.padding(horizontal = 8.dp))
         }
     }
 }
