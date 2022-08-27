@@ -15,6 +15,7 @@ import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.gdgnantes.devfest.android.ui.components.appbars.BottomAppBar
 import com.gdgnantes.devfest.android.ui.components.appbars.TopAppBar
+import com.gdgnantes.devfest.android.ui.screens.about.About
 import com.gdgnantes.devfest.android.ui.screens.agenda.Agenda
 import com.gdgnantes.devfest.android.ui.screens.venue.Venue
 import com.gdgnantes.devfest.model.Session
@@ -24,7 +25,8 @@ import com.gdgnantes.devfest.model.Session
 fun Home(
     modifier: Modifier = Modifier,
     startDestination: Screen = Screen.Agenda,
-    onSessionClick: ((Session) -> Unit)
+    onSessionClick: ((Session) -> Unit),
+    onWeblinkClick: (String) -> Unit
 ) {
     val homeNavController = rememberNavController()
     val navBackStackEntry by homeNavController.currentBackStackEntryAsState()
@@ -68,7 +70,7 @@ fun Home(
             }
 
             composable(Screen.About.route) {
-                About()
+                About(onWeblinkClick = onWeblinkClick)
             }
         }
     }

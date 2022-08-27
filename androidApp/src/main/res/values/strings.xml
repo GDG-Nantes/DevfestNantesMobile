@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <resources>
     <string name="title_activity_main">MainActivity</string>
     <string name="screen_home">Home</string>
@@ -9,8 +10,14 @@
     <string name="empty_day">Sorry, there is nothing conference available for currently selected filters.</string>
     <string name="screen_session">Session details</string>
     <string name="venue_go_to_button">Go to</string>
+    <string name="screen_about_header_body">The Devfest (i.e Developers Festival), is a technical conference destined to developers. It\'s meant for students, professionals, or any curious techie</string>
     <string name="complexity_beginer">Beginer</string>
     <string name="complexity_intermediate">Intermediate</string>
     <string name="complexity_expert">Expert</string>
     <string name="session_feedback_label">Provide feedback</string>
+    <string name="about_code_of_conduct">Code of conduct</string>
+    <string name="about_terms_of_service">Terms of service</string>
+    <string name="about_website">Website</string>
+    <string name="app_version" translatable="false">Version %s (%d)</string>
+    <string name="about_social_title">Follow us</string>
 </resources>

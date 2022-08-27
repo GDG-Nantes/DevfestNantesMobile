@@ -50,6 +50,9 @@ class MainActivity : ComponentActivity() {
                         Home(
                             onSessionClick = { session ->
                                 mainNavController.navigate("${Screen.Session.route}/${session.id}")
+                            },
+                            onWeblinkClick = { url ->
+                                externalContentService.openUrl(url)
                             }
                         )
                     }
