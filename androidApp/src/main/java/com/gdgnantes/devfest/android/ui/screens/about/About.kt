@@ -14,7 +14,8 @@ import com.gdgnantes.devfest.android.ui.theme.DevFest_NantesTheme
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun About(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    onWeblinkClick: (String) -> Unit
 ) {
     Scaffold {
         Column(
@@ -26,6 +27,8 @@ fun About(
             verticalArrangement = Arrangement.spacedBy(8.dp),
         ) {
             AboutHeader()
+
+            AboutLinks(onWeblinkClick = onWeblinkClick)
         }
     }
 }
@@ -34,6 +37,6 @@ fun About(
 @Composable
 fun AboutPreview() {
     DevFest_NantesTheme {
-        About()
+        About(onWeblinkClick = {})
     }
 }

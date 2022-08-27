@@ -25,7 +25,8 @@ import com.gdgnantes.devfest.model.Session
 fun Home(
     modifier: Modifier = Modifier,
     startDestination: Screen = Screen.Agenda,
-    onSessionClick: ((Session) -> Unit)
+    onSessionClick: ((Session) -> Unit),
+    onWeblinkClick: (String) -> Unit
 ) {
     val homeNavController = rememberNavController()
     val navBackStackEntry by homeNavController.currentBackStackEntryAsState()
@@ -69,7 +70,7 @@ fun Home(
             }
 
             composable(Screen.About.route) {
-                About()
+                About(onWeblinkClick = onWeblinkClick)
             }
         }
     }

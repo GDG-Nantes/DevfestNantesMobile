@@ -15,4 +15,7 @@
   <string name="complexity_intermediate">Intermediaire</string>
   <string name="complexity_expert">Expert</string>
   <string name="session_feedback_label">Feedback</string>
+  <string name="about_code_of_conduct">Code de conduite</string>
+  <string name="about_terms_of_service">Mentions Légales</string>
+  <string name="about_website">Site web</string>
 </resources>

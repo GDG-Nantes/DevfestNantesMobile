@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
 <resources>
     <string name="title_activity_main">MainActivity</string>
     <string name="screen_home">Home</string>
@@ -14,4 +15,7 @@
     <string name="complexity_intermediate">Intermediate</string>
     <string name="complexity_expert">Expert</string>
     <string name="session_feedback_label">Provide feedback</string>
+    <string name="about_code_of_conduct">Code of conduct</string>
+    <string name="about_terms_of_service">Terms of service</string>
+    <string name="about_website">Website</string>
 </resources>
