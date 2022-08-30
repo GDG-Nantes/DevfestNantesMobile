@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <resources>
+    <string name="app_name" translatable="false">DevFest Nantes</string>
     <string name="title_activity_main">MainActivity</string>
     <string name="screen_home">Home</string>
     <string name="screen_agenda">Agenda</string>
