@@ -36,7 +36,7 @@ android {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
     }
-    
+
     testOptions {
         unitTests {
             isReturnDefaultValues = true
@@ -48,11 +48,13 @@ android {
 dependencies {
     implementation(project(":shared"))
 
-    // Coroutines
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.3-native-mt")
+    with(Kotlinx) {
+        implementation(coroutinesCore)
+    }
 
     with(Deps) {
         implementation(openFeedback)
+        implementation(timber)
     }
 
     with(Accompanist) {
@@ -73,11 +75,6 @@ dependencies {
         implementation(hiltNavigation)
     }
 
-    // UI Tests
-    androidTestImplementation("androidx.compose.ui:ui-test-junit4:${Versions.compose}")
-    // Debug
-    debugImplementation("androidx.compose.ui:ui-test-manifest:${Versions.compose}")
-
     with(Dagger) {
         implementation(hilt)
         kapt(compiler)
@@ -89,13 +86,17 @@ dependencies {
         kaptTest(compiler)
     }
 
-    // Timber
-    implementation("com.jakewharton.timber:timber:5.0.1")
-
     with(Tests) {
         testImplementation(junit)
         testImplementation(coroutinesTest)
         testImplementation(kotlinJUnit)
+
+        with(Tests.Compose) {
+            // UI Tests
+            androidTestImplementation(uiTestComposeJUnit)
+            // Debug
+            debugImplementation(uiTestComposeManifest)
+        }
     }
 
     with(AndroidTests) {
