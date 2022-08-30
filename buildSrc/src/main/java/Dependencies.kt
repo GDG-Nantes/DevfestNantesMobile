@@ -1,13 +1,13 @@
 object Versions {
     const val kotlinVersion = "1.7.0"
 
-    const val kotlinCoroutines = "1.6.3"
+    const val kotlinCoroutines = "1.6.4"
     const val kmpNativeCoroutines = "0.12.5-new-mm"
     const val kotlinxDateTime = "0.4.0"
 
     const val accompanistPager = "0.24.13-rc"
 
-    const val compose = "1.2.0-rc03"
+    const val compose = "1.2.1"
     const val composeCompiler = "1.2.0"
     const val navCompose = "2.4.2"
     const val accompanist = "0.24.13-rc"
@@ -26,7 +26,7 @@ object Versions {
 
 object AndroidSdk {
     const val min = 23
-    const val compile = 32
+    const val compile = 33
     const val target = compile
 }
 
@@ -36,6 +36,7 @@ object Deps {
     const val multiplatformSettingsCoroutines =
         "com.russhwolf:multiplatform-settings-coroutines:${Versions.multiplatformSettings}"
     const val openFeedback = "io.openfeedback:feedback-android-sdk-ui:0.0.7"
+    const val timber = "com.jakewharton.timber:timber:5.0.1"
 }
 
 object Kotlinx {
@@ -75,6 +76,7 @@ object Compose {
     const val coilCompose = "io.coil-kt:coil-compose:2.1.0"
     const val hiltNavigation =
         "androidx.hilt:hilt-navigation-compose:${Versions.hiltAndroidXVersion}"
+
 }
 
 object Dagger {
@@ -88,6 +90,11 @@ object Tests {
     const val coroutinesTest =
         "org.jetbrains.kotlinx:kotlinx-coroutines-test:${Versions.kotlinCoroutines}"
     const val kotlinJUnit = "org.jetbrains.kotlin:kotlin-test-junit:${Versions.kotlinVersion}"
+
+    object Compose {
+        const val uiTestComposeJUnit = "androidx.compose.ui:ui-test-junit4:${Versions.compose}"
+        const val uiTestComposeManifest = "androidx.compose.ui:ui-test-junit4:${Versions.compose}"
+    }
 }
 
 object AndroidTests {
