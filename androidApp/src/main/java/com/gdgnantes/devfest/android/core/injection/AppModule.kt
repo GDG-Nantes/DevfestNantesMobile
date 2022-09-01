@@ -1,11 +1,16 @@
 package com.gdgnantes.devfest.android.core.injection
 
 import android.app.Application
+import android.content.SharedPreferences
+import androidx.preference.PreferenceManager
 import com.gdgnantes.devfest.android.core.ApplicationInitializer
 import com.gdgnantes.devfest.android.core.CoroutinesDispatcherProvider
 import com.gdgnantes.devfest.android.core.LoggerInitializer
+import com.gdgnantes.devfest.android.services.BookmarksStoreImpl
+import com.gdgnantes.devfest.store.BookmarksStore
 import com.gdgnantes.devfest.store.DevFestNantesStore
 import com.gdgnantes.devfest.store.DevFestNantesStoreMocked
+import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -17,6 +22,10 @@ import kotlinx.coroutines.Dispatchers
 @Module
 @InstallIn(SingletonComponent::class)
 abstract class AppModule {
+
+    @AppScope
+    @Binds
+    abstract fun bookmarksStore(bookmarksStoreImpl: BookmarksStoreImpl): BookmarksStore
 
     companion object {
         @AppScope
@@ -48,6 +57,12 @@ abstract class AppModule {
                     databaseUrl = "https://openfeedback-b7ab9.firebaseio.com"
                 )
             )
+
+        @AppScope
+        @Provides
+        fun sharedPreferences(application: Application): SharedPreferences {
+            return PreferenceManager.getDefaultSharedPreferences(application)
+        }
 
         @AppScope
         @Provides

@@ -57,6 +57,10 @@ dependencies {
         implementation(timber)
     }
 
+    with(AndroidX) {
+        implementation(preference)
+    }
+
     with(Accompanist) {
         implementation(pager)
         implementation(pagerIndicator)

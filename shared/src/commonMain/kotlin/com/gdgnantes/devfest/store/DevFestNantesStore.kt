@@ -8,8 +8,6 @@ import kotlinx.coroutines.flow.Flow
  */
 interface DevFestNantesStore {
     val agenda: Flow<Agenda>
-    suspend fun getBookmarks(userId: String): Set<String>
-    suspend fun setBookmark(userId: String, sessionId: String, value: Boolean)
     val partners: Flow<List<Partner>>
     suspend fun getRoom(id: String): Room?
     val rooms: Flow<List<Room>>
