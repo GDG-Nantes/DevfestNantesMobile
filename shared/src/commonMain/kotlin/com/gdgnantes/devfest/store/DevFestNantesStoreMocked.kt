@@ -4,26 +4,40 @@ import com.gdgnantes.devfest.model.*
 import com.gdgnantes.devfest.model.stubs.*
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.map
 import kotlin.random.Random
 
 class DevFestNantesStoreMocked : DevFestNantesStore {
 
+    private val sessionsCache = MutableList(Random.nextInt(10, MAX_SESSIONS)) {
+        buildSessionStub()
+    }
+
+    private val speakersCache by lazy {
+        val speakersList = mutableListOf<Speaker>()
+        sessionsCache.forEach { session ->
+            speakersList.addAll(session.speakers)
+        }
+        speakersList
+    }
+
+    private val partnersCache = MutableList(Random.nextInt(10, MAX_PARTNERS)) {
+        buildPartnerStub()
+    }
+
+    private val venueCache = buildVenueStub()
+
     override val agenda: Flow<Agenda>
-        get() = sessions.map { sessions ->
-            Agenda.Builder().run {
-                this.sessions = sessions
-                build()
-            }
+        get() = flow {
+            emit(
+                Agenda.Builder().run {
+                    this.sessions = sessionsCache
+                    build()
+                })
         }
 
     override val partners: Flow<List<Partner>>
         get() = flow {
-            emit(
-                MutableList(Random.nextInt(10, MAX_PARTNERS)) {
-                    buildPartner()
-                }
-            )
+            emit(partnersCache)
         }
 
     override suspend fun getRoom(id: String): Room? =
@@ -35,30 +49,23 @@ class DevFestNantesStoreMocked : DevFestNantesStore {
         }
 
     override suspend fun getSession(id: String): Session =
-        buildSessionStub().copy(id = id)
+        sessionsCache.first { session -> session.id == id }
 
     override val sessions: Flow<List<Session>>
         get() = flow {
-            emit(
-                MutableList(Random.nextInt(10, MAX_SESSIONS)) {
-                    buildSessionStub()
-                }
-            )
+            emit(sessionsCache)
         }
 
-    override suspend fun getSpeaker(id: String): Speaker = buildSpeakerStub().copy(id = id)
+    override suspend fun getSpeaker(id: String): Speaker =
+        speakersCache.first { speaker -> speaker.id == id }
 
     override val speakers: Flow<List<Speaker>>
         get() = flow {
-            emit(
-                MutableList(Random.nextInt(1, MAX_SPEAKERS)) {
-                    buildSpeakerStub()
-                }
-            )
+            emit(speakersCache)
         }
 
     override val venue: Flow<Venue>
         get() = flow {
-            emit(buildVenueStub())
+            emit(venueCache)
         }
 }
