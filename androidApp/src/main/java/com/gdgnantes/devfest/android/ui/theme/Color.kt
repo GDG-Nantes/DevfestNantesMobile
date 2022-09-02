@@ -63,3 +63,4 @@ val md_theme_dark_surfaceTint = Color(0xFFFFB4A3)
 
 
 val seed = Color(0xFFC14D32)
+val bookmarked = md_theme_light_tertiary

@@ -12,7 +12,7 @@ class BookmarksStoreImpl @Inject constructor(private val sharedPreferences: Shar
     BookmarksStore {
 
     private val bookmarkedSessions: MutableSet<String> = HashSet()
-    private val selectedSessionIds: MutableStateFlow<Set<String>>
+    private val _selectedSessionIds: MutableStateFlow<Set<String>>
 
     init {
         val prefSet = sharedPreferences.getStringSet(PREF_SELECTED_SESSIONS, null)
@@ -20,12 +20,17 @@ class BookmarksStoreImpl @Inject constructor(private val sharedPreferences: Shar
             bookmarkedSessions.addAll(prefSet)
         }
 
-        selectedSessionIds = MutableStateFlow(
+        _selectedSessionIds = MutableStateFlow(
             mutableSetOf<String>().apply {
                 addAll(bookmarkedSessions)
             }
         )
     }
+
+    override val bookmarkedSessionIds: Flow<Set<String>>
+        get() {
+            return _selectedSessionIds
+        }
 
     override fun isBookmarked(id: String): Boolean {
         return bookmarkedSessions.contains(id)
@@ -37,7 +42,7 @@ class BookmarksStoreImpl @Inject constructor(private val sharedPreferences: Shar
         } else {
             bookmarkedSessions.remove(sessionId)
         }
-        selectedSessionIds.value = mutableSetOf<String>().apply { addAll(bookmarkedSessions) }
+        _selectedSessionIds.value = mutableSetOf<String>().apply { addAll(bookmarkedSessions) }
         save()
     }
 
@@ -49,7 +54,7 @@ class BookmarksStoreImpl @Inject constructor(private val sharedPreferences: Shar
     }
 
     override fun subscribe(id: String): Flow<Boolean> {
-        return selectedSessionIds.asStateFlow().map { it.contains(id) }
+        return _selectedSessionIds.asStateFlow().map { it.contains(id) }
     }
 
     companion object {

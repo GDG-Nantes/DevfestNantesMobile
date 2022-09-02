@@ -1,5 +1,8 @@
 package com.gdgnantes.devfest.android.ui.screens.session
 
+import androidx.compose.animation.Crossfade
+import androidx.compose.animation.animateColorAsState
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
@@ -10,12 +13,18 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.gdgnantes.devfest.android.R
+import com.gdgnantes.devfest.android.ui.BookmarksViewModel
 import com.gdgnantes.devfest.android.ui.components.appbars.TopAppBar
+import com.gdgnantes.devfest.android.ui.theme.bookmarked
 import com.gdgnantes.devfest.model.Session
 import io.openfeedback.android.OpenFeedback
 import io.openfeedback.android.components.SessionFeedbackContainer
@@ -23,16 +32,17 @@ import java.util.*
 
 @Composable
 fun SessionLayout(
-    openFeedback: OpenFeedback,
-    viewModel: SessionViewModel,
     modifier: Modifier = Modifier,
+    viewModel: SessionViewModel,
+    openFeedback: OpenFeedback,
     onBackClick: () -> Unit,
     onSocialLinkClick: (String) -> Unit
 ) {
+    val sessionState = viewModel.session.collectAsState()
     SessionLayout(
-        openFeedback = openFeedback,
-        sessionState = viewModel.session.collectAsState(),
         modifier = modifier,
+        sessionState = sessionState,
+        openFeedback = openFeedback,
         onBackClick = onBackClick,
         onSocialLinkClick = onSocialLinkClick
     )
@@ -40,9 +50,9 @@ fun SessionLayout(
 
 @Composable
 fun SessionLayout(
-    openFeedback: OpenFeedback,
-    sessionState: State<Session?>,
     modifier: Modifier = Modifier,
+    sessionState: State<Session?>,
+    openFeedback: OpenFeedback,
     onBackClick: () -> Unit,
     onSocialLinkClick: (String) -> Unit
 ) {
@@ -57,14 +67,60 @@ fun SessionLayout(
     }
 }
 
+@Composable
+fun SessionLayout(
+    modifier: Modifier = Modifier,
+    session: Session,
+    bookmarksViewModel: BookmarksViewModel = hiltViewModel(),
+    openFeedback: OpenFeedback,
+    onBackClick: () -> Unit,
+    onSocialLinkClick: (String) -> Unit,
+) {
+    SessionLayout(
+        modifier = modifier,
+        session = session,
+        isBookmarked = bookmarksViewModel.subscribe(session.id).collectAsState(initial = false),
+        openFeedback = openFeedback,
+        onBackClick = onBackClick,
+        onSocialLinkClick = onSocialLinkClick,
+        onSessionBookmarkClick = { isBookmarked ->
+            bookmarksViewModel.setBookmarked(session.id, isBookmarked)
+        }
+    )
+}
+
+@Composable
+fun SessionLayout(
+    modifier: Modifier = Modifier,
+    session: Session,
+    isBookmarked: State<Boolean>,
+    openFeedback: OpenFeedback,
+    onBackClick: () -> Unit,
+    onSocialLinkClick: (String) -> Unit,
+    onSessionBookmarkClick: ((Boolean) -> Unit)
+) {
+    SessionLayout(
+        modifier = modifier,
+        session = session,
+        isBookmarked = isBookmarked.value,
+        openFeedback = openFeedback,
+        onBackClick = onBackClick,
+        onSocialLinkClick = onSocialLinkClick,
+        onSessionBookmarkClick = onSessionBookmarkClick
+    )
+}
+
+
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SessionLayout(
-    openFeedback: OpenFeedback,
-    session: Session,
     modifier: Modifier = Modifier,
+    session: Session,
+    isBookmarked: Boolean,
+    openFeedback: OpenFeedback,
     onBackClick: () -> Unit,
-    onSocialLinkClick: (String) -> Unit
+    onSocialLinkClick: (String) -> Unit,
+    onSessionBookmarkClick: ((Boolean) -> Unit)
 ) {
     Scaffold(
         topBar = {
@@ -81,7 +137,28 @@ fun SessionLayout(
                     }
                 }
             )
-        }) {
+        },
+        floatingActionButton = {
+            val containerColor by animateColorAsState(
+                if (isBookmarked) Color.White else bookmarked
+            )
+            FloatingActionButton(
+                containerColor = containerColor,
+                onClick = {
+                    onSessionBookmarkClick(!isBookmarked)
+                }
+            ) {
+                Crossfade(isBookmarked) { isBookmarked ->
+                    Image(
+                        painterResource(
+                            if (isBookmarked) R.drawable.ic_bookmarked_fab else R.drawable.ic_bookmark_fab
+                        ),
+                        contentDescription = stringResource(R.string.bookmarked)
+                    )
+                }
+            }
+        }
+    ) {
         Column(
             modifier
                 .verticalScroll(state = rememberScrollState())
