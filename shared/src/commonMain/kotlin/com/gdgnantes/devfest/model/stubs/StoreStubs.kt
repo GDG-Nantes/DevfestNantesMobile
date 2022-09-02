@@ -67,7 +67,7 @@ fun buildVenueStub(): Venue {
     )
 }
 
-fun buildPartner(): Partner {
+fun buildPartnerStub(): Partner {
     return Partner(
         name = "Partner ${Random.nextInt()}",
         imageUrl = randomImageUrl,

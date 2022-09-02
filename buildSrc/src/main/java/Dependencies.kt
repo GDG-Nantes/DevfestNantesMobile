@@ -50,6 +50,10 @@ object Kotlin {
     const val reflect = "org.jetbrains.kotlin:kotlin-reflect:${Versions.kotlinVersion}"
 }
 
+object AndroidX {
+    const val preference = "androidx.preference:preference:1.1.1"
+}
+
 object Accompanist {
     const val pager = "com.google.accompanist:accompanist-pager:${Versions.accompanistPager}"
     const val pagerIndicator =
