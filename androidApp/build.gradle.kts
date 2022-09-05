@@ -59,6 +59,7 @@ dependencies {
 
     with(AndroidX) {
         implementation(preference)
+        implementation(splashScreenCompat)
     }
 
     with(Accompanist) {
