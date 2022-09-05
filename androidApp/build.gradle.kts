@@ -53,11 +53,13 @@ dependencies {
     }
 
     with(Deps) {
+        implementation(material)
         implementation(openFeedback)
         implementation(timber)
     }
 
     with(AndroidX) {
+        implementation(browser)
         implementation(preference)
         implementation(splashScreenCompat)
     }

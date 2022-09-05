@@ -20,4 +20,8 @@
   <string name="about_website">Site web</string>
   <string name="about_social_title">Nous suivre</string>
   <string name="bookmarked">Favori</string>
+  <string name="btn_ok">Ok</string>
+  <string name="btn_cancel">Annuler</string>
+  <string name="web_external_disclaimer_text">Vous allez être redirigé vers une page web extérieure. Nous ne pouvons être tenus pour responsable du contenu disponible sur le site que vous allez visiter.</string>
+  <string name="web_external_disclaimer_title">Redirection</string>
 </resources>

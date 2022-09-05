@@ -22,4 +22,8 @@
     <string name="app_version" translatable="false">Version %s (%d)</string>
     <string name="about_social_title">Follow us</string>
     <string name="bookmarked">Favorite</string>
+    <string name="btn_ok">Ok</string>
+    <string name="btn_cancel">Cancel</string>
+    <string name="web_external_disclaimer_text">You will be redirected to an external web page. We can not be held responsible for the content available on the site you are going to visit.</string>
+    <string name="web_external_disclaimer_title">Redirection</string>
 </resources>

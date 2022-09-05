@@ -31,6 +31,7 @@ object AndroidSdk {
 }
 
 object Deps {
+    const val material = "com.google.android.material:material:1.6.1"
     const val multiplatformSettings =
         "com.russhwolf:multiplatform-settings:${Versions.multiplatformSettings}"
     const val multiplatformSettingsCoroutines =
@@ -51,6 +52,7 @@ object Kotlin {
 }
 
 object AndroidX {
+    const val browser = "androidx.browser:browser:1.4.0"
     const val preference = "androidx.preference:preference:1.1.1"
     const val splashScreenCompat = "androidx.core:core-splashscreen:1.0.0"
 }
