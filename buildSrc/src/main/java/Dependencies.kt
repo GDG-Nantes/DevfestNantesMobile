@@ -52,6 +52,7 @@ object Kotlin {
 
 object AndroidX {
     const val preference = "androidx.preference:preference:1.1.1"
+    const val splashScreenCompat = "androidx.core:core-splashscreen:1.0.0"
 }
 
 object Accompanist {
