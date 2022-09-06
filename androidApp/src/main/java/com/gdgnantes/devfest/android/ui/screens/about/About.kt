@@ -38,6 +38,11 @@ fun About(
                 onWeblinkClick = onWeblinkClick
             )
 
+            AboutLocalCommunities(
+                modifier.padding(horizontal = 8.dp),
+                onWeblinkClick = onWeblinkClick
+            )
+
             AboutVersion(modifier.padding(horizontal = 8.dp))
         }
     }

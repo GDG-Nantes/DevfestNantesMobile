@@ -26,4 +26,6 @@
     <string name="btn_cancel">Cancel</string>
     <string name="web_external_disclaimer_text">You will be redirected to an external web page. We can not be held responsible for the content available on the site you are going to visit.</string>
     <string name="web_external_disclaimer_title">Redirection</string>
+    <string name="local_communities_title">Local communities</string>
+    <string name="local_communities_button">🌍 Local communities website</string>
 </resources>

@@ -7,4 +7,5 @@ enum class WebLinks(val url: String) {
     SOCIAL_TWITTER("https://twitter.com/gdgnantes"),
     SOCIAL_LINKEDIN("https://www.linkedin.com/in/gdg-nantes"),
     SOCIAL_YOUTUBE("https://www.youtube.com/c/Gdg-franceBlogspotFr"),
+    NANTES_TECH_COMMUNITIES("https://nantes.community/"),
 }
