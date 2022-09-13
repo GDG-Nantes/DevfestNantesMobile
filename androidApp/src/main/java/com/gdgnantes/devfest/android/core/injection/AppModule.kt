@@ -68,7 +68,7 @@ abstract class AppModule {
         @Provides
         fun store(): DevFestNantesStore {
             return DevFestNantesStoreBuilder()
-                .setUseMockServer(true)
+                .setUseMockServer(false)
                 .build()
         }
     }

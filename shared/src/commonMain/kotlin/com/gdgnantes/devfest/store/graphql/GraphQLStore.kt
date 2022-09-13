@@ -7,10 +7,16 @@ import com.gdgnantes.devfest.model.*
 import com.gdgnantes.devfest.store.DevFestNantesStore
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.flow.map
 
 internal class GraphQLStore(private val apolloClient: ApolloClient) : DevFestNantesStore {
     override val agenda: Flow<Agenda>
-        get() = TODO("Not yet implemented")
+        get() = sessions.map { sessions ->
+            Agenda.Builder().run {
+                this.sessions = sessions
+                build()
+            }
+        }
 
     override val partners: Flow<Map<PartnerCategory, List<Partner>>>
         get() = flow {

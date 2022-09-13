@@ -16,7 +16,7 @@ query GetRooms {
 }
 
 query GetSessions {
-    sessions {
+    sessions(first: 100) {
         nodes {
             ...SessionDetails
         }
