@@ -111,7 +111,8 @@ internal class GraphQLStore(private val apolloClient: ApolloClient) : DevFestNan
 
     override suspend fun getVenue(language: ContentLanguage): Venue {
         return try {
-            val response = apolloClient.query(GetVenueQuery("1", language.apiParameter)).execute()
+            val response =
+                apolloClient.query(GetVenueQuery(VENUE_ID, language.apiParameter)).execute()
             response.dataAssertNoErrors.venue.toVenue()
         } catch (e: ApolloException) {
             println(e.message)
@@ -119,4 +120,7 @@ internal class GraphQLStore(private val apolloClient: ApolloClient) : DevFestNan
         }
     }
 
+    companion object {
+        const val VENUE_ID = "main"
+    }
 }
