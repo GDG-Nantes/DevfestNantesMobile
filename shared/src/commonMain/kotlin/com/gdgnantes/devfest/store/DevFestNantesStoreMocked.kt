@@ -20,9 +20,20 @@ internal class DevFestNantesStoreMocked : DevFestNantesStore {
         speakersList
     }
 
-    private val partnersCache = MutableList(Random.nextInt(10, MAX_PARTNERS)) {
-        buildPartnerStub()
-    }
+    private val partnersCache: Map<PartnerCategory, List<Partner>> = mapOf(
+        PartnerCategory.PLATINIUM to MutableList(Random.nextInt(2, MAX_PARTNERS))
+        {
+            buildPartnerStub()
+        },
+        PartnerCategory.GOLD to MutableList(Random.nextInt(2, MAX_PARTNERS))
+        {
+            buildPartnerStub()
+        },
+        PartnerCategory.VIRTUAL to MutableList(Random.nextInt(2, MAX_PARTNERS))
+        {
+            buildPartnerStub()
+        }
+    )
 
     private val venueCache = buildVenueStub()
 
@@ -35,7 +46,7 @@ internal class DevFestNantesStoreMocked : DevFestNantesStore {
                 })
         }
 
-    override val partners: Flow<List<Partner>>
+    override val partners: Flow<Map<PartnerCategory, List<Partner>>>
         get() = flow {
             emit(partnersCache)
         }

@@ -1,10 +1,30 @@
 package com.gdgnantes.devfest.store.graphql
 
+import com.gdgnantes.devfest.graphql.GetPartnerGroupsQuery
 import com.gdgnantes.devfest.graphql.GetSessionQuery
+import com.gdgnantes.devfest.graphql.fragment.RoomDetails
 import com.gdgnantes.devfest.graphql.fragment.SessionDetails
 import com.gdgnantes.devfest.graphql.fragment.SpeakerDetails
 import com.gdgnantes.devfest.graphql.fragment.VenueDetails
 import com.gdgnantes.devfest.model.*
+
+fun GetPartnerGroupsQuery.PartnerGroup.toPartnersGroup(): Pair<PartnerCategory, List<Partner>> {
+    val partnerCategory = when (title.lowercase()) {
+        "platinium" -> PartnerCategory.PLATINIUM
+        "gold" -> PartnerCategory.GOLD
+        "virtual" -> PartnerCategory.VIRTUAL
+        else -> PartnerCategory.VIRTUAL
+    }
+    return partnerCategory to partners.map { it.toPartner() }
+}
+
+fun GetPartnerGroupsQuery.Partner.toPartner(): Partner {
+    return Partner(
+        name = name,
+        logoUrl = logoUrl,
+        url = url
+    )
+}
 
 fun GetSessionQuery.Session.toSession(): Session = sessionDetails.toSession()
 
@@ -16,7 +36,7 @@ fun SessionDetails.toSession(): Session {
         language = null,
         complexity = null,
         openFeedbackFormId = "openFeedbackFormId",
-        room = rooms.firstOrNull()?.toRoom(),
+        room = rooms.firstOrNull()?.roomDetails?.toRoom(),
         scheduleSlot = ScheduleSlot(
             startDate = startInstant.toString(),
             endDate = endInstant.toString()
@@ -26,13 +46,11 @@ fun SessionDetails.toSession(): Session {
     )
 }
 
-fun SessionDetails.Room.toRoom(): Room {
-    return with(roomDetails) {
-        Room(
-            id = id,
-            name = name
-        )
-    }
+fun RoomDetails.toRoom(): Room {
+    return Room(
+        id = id,
+        name = name
+    )
 }
 
 fun SpeakerDetails.toSpeaker(): Speaker {
@@ -51,7 +69,7 @@ fun SpeakerDetails.toSpeaker(): Speaker {
 
 fun SpeakerDetails.Social.toSocial(): SocialsItem {
     return with(socialDetails) {
-        val type = when (name) {
+        val type = when (name.lowercase()) {
             "twitter" -> SocialsType.TWITTER
             "github" -> SocialsType.GITHUB
             "linkedin" -> SocialsType.LINKEDIN

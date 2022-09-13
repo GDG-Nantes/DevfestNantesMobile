@@ -7,7 +7,7 @@ import kotlin.random.Random
 import kotlin.time.DurationUnit
 import kotlin.time.toDuration
 
-const val MAX_PARTNERS = 50
+const val MAX_PARTNERS = 10
 const val MAX_ROOMS = 4
 const val MAX_SESSIONS = 100
 const val MAX_SPEAKERS = 100
@@ -69,10 +69,8 @@ fun buildVenueStub(): Venue {
 fun buildPartnerStub(): Partner {
     return Partner(
         name = "Partner ${Random.nextInt()}",
-        imageUrl = randomImageUrl,
-        link = "https://kotlinlang.org/docs/multiplatform.html",
-        description = loremIpsum,
-        order = Random.nextInt()
+        logoUrl = randomImageUrl,
+        url = "https://kotlinlang.org/docs/multiplatform.html"
     )
 }
 

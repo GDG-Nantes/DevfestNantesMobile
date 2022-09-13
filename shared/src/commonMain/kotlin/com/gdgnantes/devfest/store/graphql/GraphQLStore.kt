@@ -2,10 +2,7 @@ package com.gdgnantes.devfest.store.graphql
 
 import com.apollographql.apollo3.ApolloClient
 import com.apollographql.apollo3.exception.ApolloException
-import com.gdgnantes.devfest.graphql.GetSessionQuery
-import com.gdgnantes.devfest.graphql.GetSessionsQuery
-import com.gdgnantes.devfest.graphql.GetSpeakersQuery
-import com.gdgnantes.devfest.graphql.GetVenueQuery
+import com.gdgnantes.devfest.graphql.*
 import com.gdgnantes.devfest.model.*
 import com.gdgnantes.devfest.store.DevFestNantesStore
 import kotlinx.coroutines.flow.Flow
@@ -14,15 +11,50 @@ import kotlinx.coroutines.flow.flow
 internal class GraphQLStore(private val apolloClient: ApolloClient) : DevFestNantesStore {
     override val agenda: Flow<Agenda>
         get() = TODO("Not yet implemented")
-    override val partners: Flow<List<Partner>>
-        get() = TODO("Not yet implemented")
+
+    override val partners: Flow<Map<PartnerCategory, List<Partner>>>
+        get() = flow {
+            try {
+                val response = apolloClient.query(GetPartnerGroupsQuery()).execute()
+                response.dataAssertNoErrors.partnerGroups
+                    .map { it.toPartnersGroup() }
+                    .let { groups ->
+                        mutableMapOf<PartnerCategory, List<Partner>>().apply {
+                            groups.forEach { (category, partners) ->
+                                put(category, partners)
+                            }
+                        }
+                            .toMap()
+                            .run { emit(this) }
+                    }
+            } catch (e: ApolloException) {
+                println(e.message)
+            }
+        }
 
     override suspend fun getRoom(id: String): Room? {
-        TODO("Not yet implemented")
+        return try {
+            val response = apolloClient.query(GetRoomsQuery()).execute()
+            response.dataAssertNoErrors.rooms
+                .firstOrNull { it.roomDetails.id == id }
+                ?.roomDetails?.toRoom()
+        } catch (e: ApolloException) {
+            println(e.message)
+            null
+        }
     }
 
     override val rooms: Flow<List<Room>>
-        get() = TODO("Not yet implemented")
+        get() = flow {
+            try {
+                val response = apolloClient.query(GetRoomsQuery()).execute()
+                response.dataAssertNoErrors.rooms
+                    .map { it.roomDetails.toRoom() }
+                    .let { emit(it) }
+            } catch (e: ApolloException) {
+                println(e.message)
+            }
+        }
 
     override suspend fun getSession(id: String): Session? {
         return try {
