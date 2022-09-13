@@ -6,18 +6,13 @@ data class Speaker(
     val company: String? = null,
     val companyLogo: String? = null,
     val country: String? = null,
-    val firstname: String = "",
+    val name: String = "",
     val photoUrl: String? = null,
     val socials: List<SocialsItem>? = null,
-    val surname: String?
 ) {
 
-    fun getFullName(): String {
-        return this.firstname + this.surname
-    }
-
     fun getFullNameAndCompany(): String {
-        return getFullName() + if (company.isNullOrBlank()) "" else ", " + this.company
+        return name + if (company.isNullOrBlank()) "" else ", " + this.company
     }
 
 }

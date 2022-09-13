@@ -38,9 +38,9 @@ struct AgendaCellView: View {
                     .font(.footnote)
                 Text("\(session.room)")
                     .font(.footnote)
-                Text("\(session.language!)")
+                Text("\(session.language ?? SessionLanguage.english)")
                     .font(.footnote)
-                Text(session.speakers.map { $0.firstname }.joined(separator: ", "))
+                Text(session.speakers.map { $0.name }.joined(separator: ", "))
                     .font(.footnote)
                 Spacer()
             }

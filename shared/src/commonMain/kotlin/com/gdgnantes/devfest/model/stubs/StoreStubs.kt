@@ -7,7 +7,7 @@ import kotlin.random.Random
 import kotlin.time.DurationUnit
 import kotlin.time.toDuration
 
-const val MAX_PARTNERS = 50
+const val MAX_PARTNERS = 10
 const val MAX_ROOMS = 4
 const val MAX_SESSIONS = 100
 const val MAX_SPEAKERS = 100
@@ -48,19 +48,17 @@ fun buildSpeakerStub(): Speaker {
         company = "Company Inc",
         companyLogo = null,
         country = "France",
-        firstname = "Foo",
+        name = "Foo Bar",
         photoUrl = randomImageUrl,
         socials = socialItemStubs,
-        surname = "Bar",
     )
 }
 
-fun buildVenueStub(): Venue {
+fun buildVenueStub(language: ContentLanguage): Venue {
     return Venue(
         name = "Cité des Congrès de Nantes",
         address = "5 rue de Valmy, 44000 Nantes",
-        descriptionEn = "Located in the center of Nantes, the event takes place in the “Cité des Congrès” with more than 3000m² of conference rooms, hand’s on and networking space…",
-        descriptionFr = "Située en plein cœur de ville, La Cité des Congrès de Nantes propose pour le DevFest Nantes plus de 3000m² de salles de conférences, codelabs et lieu de rencontre…",
+        description = if (language == ContentLanguage.ENGLISH) "Located in the center of Nantes, the event takes place in the “Cité des Congrès” with more than 3000m² of conference rooms, hand’s on and networking space…" else "Située en plein cœur de ville, La Cité des Congrès de Nantes propose pour le DevFest Nantes plus de 3000m² de salles de conférences, codelabs et lieu de rencontre…",
         latitude = 47.21308725112951,
         longitude = -1.542622837466317,
         imageUrl = "https://devfest.gdgnantes.com/static/6328df241501c6e31393e568e5c68d7e/efc43/amphi.webp"
@@ -70,10 +68,8 @@ fun buildVenueStub(): Venue {
 fun buildPartnerStub(): Partner {
     return Partner(
         name = "Partner ${Random.nextInt()}",
-        imageUrl = randomImageUrl,
-        link = "https://kotlinlang.org/docs/multiplatform.html",
-        description = loremIpsum,
-        order = Random.nextInt()
+        logoUrl = randomImageUrl,
+        url = "https://kotlinlang.org/docs/multiplatform.html"
     )
 }
 

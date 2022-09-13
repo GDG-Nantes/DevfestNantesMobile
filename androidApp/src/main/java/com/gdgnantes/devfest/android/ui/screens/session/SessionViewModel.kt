@@ -3,7 +3,6 @@ package com.gdgnantes.devfest.android.ui.screens.session
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
-import com.gdgnantes.devfest.android.ui.UiState
 import com.gdgnantes.devfest.model.Session
 import com.gdgnantes.devfest.store.DevFestNantesStore
 import dagger.Module
@@ -20,9 +19,6 @@ class SessionViewModel @AssistedInject constructor(
     private val store: DevFestNantesStore,
     @Assisted sessionId: String
 ) : ViewModel() {
-    private val _uiState = MutableStateFlow(UiState.LOADING)
-    val uiState: StateFlow<UiState>
-        get() = _uiState
 
     private val _session = MutableStateFlow<Session?>(null)
     val session: StateFlow<Session?>

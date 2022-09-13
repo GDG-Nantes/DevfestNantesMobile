@@ -17,6 +17,7 @@ import androidx.core.os.ConfigurationCompat
 import com.gdgnantes.devfest.android.utils.getDateFromIso8601
 import com.gdgnantes.devfest.model.Session
 import java.text.DateFormat
+import java.util.*
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -75,6 +76,7 @@ private fun groupSessionsByStartTime(sessions: List<Session>): Map<String, List<
         val time = if (locale != null) {
             getDateFromIso8601(session.scheduleSlot.startDate)?.run {
                 val formatter: DateFormat = DateFormat.getTimeInstance(DateFormat.SHORT, locale)
+                formatter.timeZone = TimeZone.getDefault()
                 formatter.format(this)
             } ?: ""
         } else {

@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlin.random.Random
 
-class DevFestNantesStoreMocked : DevFestNantesStore {
+internal class DevFestNantesStoreMocked : DevFestNantesStore {
 
     private val sessionsCache = MutableList(Random.nextInt(10, MAX_SESSIONS)) {
         buildSessionStub()
@@ -20,11 +20,20 @@ class DevFestNantesStoreMocked : DevFestNantesStore {
         speakersList
     }
 
-    private val partnersCache = MutableList(Random.nextInt(10, MAX_PARTNERS)) {
-        buildPartnerStub()
-    }
-
-    private val venueCache = buildVenueStub()
+    private val partnersCache: Map<PartnerCategory, List<Partner>> = mapOf(
+        PartnerCategory.PLATINIUM to MutableList(Random.nextInt(2, MAX_PARTNERS))
+        {
+            buildPartnerStub()
+        },
+        PartnerCategory.GOLD to MutableList(Random.nextInt(2, MAX_PARTNERS))
+        {
+            buildPartnerStub()
+        },
+        PartnerCategory.VIRTUAL to MutableList(Random.nextInt(2, MAX_PARTNERS))
+        {
+            buildPartnerStub()
+        }
+    )
 
     override val agenda: Flow<Agenda>
         get() = flow {
@@ -35,7 +44,7 @@ class DevFestNantesStoreMocked : DevFestNantesStore {
                 })
         }
 
-    override val partners: Flow<List<Partner>>
+    override val partners: Flow<Map<PartnerCategory, List<Partner>>>
         get() = flow {
             emit(partnersCache)
         }
@@ -64,8 +73,7 @@ class DevFestNantesStoreMocked : DevFestNantesStore {
             emit(speakersCache)
         }
 
-    override val venue: Flow<Venue>
-        get() = flow {
-            emit(venueCache)
-        }
+    override suspend fun getVenue(language: ContentLanguage): Venue {
+        return buildVenueStub(language)
+    }
 }

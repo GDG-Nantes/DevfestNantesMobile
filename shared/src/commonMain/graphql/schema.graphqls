@@ -1,0 +1,126 @@
+type Configuration {
+  timezone: String!
+}
+
+"""
+A type representing a formatted kotlinx.datetime.Instant
+"""
+scalar Instant
+
+type PageInfo {
+  endCursor: String
+}
+
+type Partner {
+  logoUrl: String!
+
+  name: String!
+
+  url: String!
+}
+
+type PartnerGroup {
+  partners: [Partner!]!
+
+  title: String!
+}
+
+type Query {
+  config: Configuration!
+
+  partnerGroups: [PartnerGroup!]!
+
+  rooms: [Room!]!
+
+  session(id: String!): Session!
+
+  sessions(first: Int, after: String): SessionConnection!
+
+  speakers: [Speaker!]!
+
+  venue(id: String!): Venue!
+
+  venues: [Venue!]!
+}
+
+type Room {
+  capacity: Int
+
+  id: String!
+
+  name: String!
+}
+
+type Session {
+  description: String
+
+  endInstant: Instant!
+
+  id: String!
+
+  language: String
+
+  startInstant: Instant!
+
+  tags: [String!]!
+
+  title: String!
+
+  room: Room @deprecated(reason: "use rooms instead")
+
+  rooms: [Room!]!
+
+  speakers: [Speaker!]!
+}
+
+type SessionConnection {
+  nodes: [Session!]!
+
+  pageInfo: PageInfo!
+}
+
+type Social {
+  icon: String
+
+  link: String!
+
+  name: String!
+}
+
+type Speaker {
+  bio: String
+
+  company: String
+
+  id: String!
+
+  name: String!
+
+  photoUrl: String
+
+  socials: [Social!]!
+}
+
+type Venue {
+  address: String
+
+  coordinates: String @deprecated(reason: "use latitude and longitude instead")
+
+  descriptionFr: String! @deprecated(reason: "description(language: \"fr\") instead")
+
+  id: String!
+
+  imageUrl: String
+
+  latitude: Float
+
+  longitude: Float
+
+  name: String!
+
+  description(language: String): String!
+}
+
+schema {
+  query: Query
+}

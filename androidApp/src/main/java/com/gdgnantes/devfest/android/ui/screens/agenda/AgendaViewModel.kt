@@ -6,9 +6,7 @@ import com.gdgnantes.devfest.android.ui.UiState
 import com.gdgnantes.devfest.model.AgendaDay
 import com.gdgnantes.devfest.store.DevFestNantesStore
 import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.*
-import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
@@ -27,11 +25,6 @@ class AgendaViewModel @Inject constructor(
             .stateIn(viewModelScope, SharingStarted.Lazily, mapOf())
 
     fun onRefresh() {
-        //TODO add real logic
-        viewModelScope.launch {
-            _uiState.emit(UiState.LOADING)
-            delay(2000)
-            _uiState.emit(UiState.SUCCESS)
-        }
+        //TODO
     }
 }

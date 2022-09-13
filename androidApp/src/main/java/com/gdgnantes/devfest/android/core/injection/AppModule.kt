@@ -9,7 +9,7 @@ import com.gdgnantes.devfest.android.core.LoggerInitializer
 import com.gdgnantes.devfest.android.services.BookmarksStoreImpl
 import com.gdgnantes.devfest.store.BookmarksStore
 import com.gdgnantes.devfest.store.DevFestNantesStore
-import com.gdgnantes.devfest.store.DevFestNantesStoreMocked
+import com.gdgnantes.devfest.store.DevFestNantesStoreBuilder
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -66,6 +66,10 @@ abstract class AppModule {
 
         @AppScope
         @Provides
-        fun store(): DevFestNantesStore = DevFestNantesStoreMocked()
+        fun store(): DevFestNantesStore {
+            return DevFestNantesStoreBuilder()
+                .setUseMockServer(false)
+                .build()
+        }
     }
 }

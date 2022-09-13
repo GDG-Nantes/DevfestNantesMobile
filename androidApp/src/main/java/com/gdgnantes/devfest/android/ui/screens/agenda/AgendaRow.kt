@@ -106,13 +106,15 @@ fun AgendaRow(
 
             Row {
                 Column(Modifier.weight(1F)) {
-                    Text(
-                        text = session.room.name,
-                        style = MaterialTheme.typography.subtitle1
-                    )
+                    session.room?.let {
+                        Text(
+                            text = it.name,
+                            style = MaterialTheme.typography.subtitle1
+                        )
+                    }
 
                     val speakers =
-                        session.speakers.joinToString(", ") { it.getFullName() }
+                        session.speakers.joinToString(", ") { it.name }
                     if (speakers.isNotBlank()) {
                         Text(
                             text = speakers,

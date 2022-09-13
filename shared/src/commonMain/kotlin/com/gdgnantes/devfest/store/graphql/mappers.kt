@@ -1,0 +1,96 @@
+package com.gdgnantes.devfest.store.graphql
+
+import com.gdgnantes.devfest.graphql.GetPartnerGroupsQuery
+import com.gdgnantes.devfest.graphql.GetSessionQuery
+import com.gdgnantes.devfest.graphql.GetVenueQuery
+import com.gdgnantes.devfest.graphql.fragment.RoomDetails
+import com.gdgnantes.devfest.graphql.fragment.SessionDetails
+import com.gdgnantes.devfest.graphql.fragment.SpeakerDetails
+import com.gdgnantes.devfest.model.*
+
+fun GetPartnerGroupsQuery.PartnerGroup.toPartnersGroup(): Pair<PartnerCategory, List<Partner>> {
+    val partnerCategory = when (title.lowercase()) {
+        "platinium" -> PartnerCategory.PLATINIUM
+        "gold" -> PartnerCategory.GOLD
+        "virtual" -> PartnerCategory.VIRTUAL
+        else -> PartnerCategory.VIRTUAL
+    }
+    return partnerCategory to partners.map { it.toPartner() }
+}
+
+fun GetPartnerGroupsQuery.Partner.toPartner(): Partner {
+    return Partner(
+        name = name,
+        logoUrl = logoUrl,
+        url = url
+    )
+}
+
+fun GetSessionQuery.Session.toSession(): Session = sessionDetails.toSession()
+
+fun SessionDetails.toSession(): Session {
+    return Session(
+        id = id,
+        abstract = description ?: "",
+        category = null,
+        language = null,
+        complexity = null,
+        openFeedbackFormId = "openFeedbackFormId",
+        room = rooms.firstOrNull()?.roomDetails?.toRoom(),
+        scheduleSlot = ScheduleSlot(
+            startDate = startInstant.toString(),
+            endDate = endInstant.toString()
+        ),
+        speakers = speakers.map { it.speakerDetails.toSpeaker() },
+        title = title,
+    )
+}
+
+fun RoomDetails.toRoom(): Room {
+    return Room(
+        id = id,
+        name = name
+    )
+}
+
+fun SpeakerDetails.toSpeaker(): Speaker {
+    return Speaker(
+        id = id,
+        bio = bio,
+        company = company,
+        companyLogo = null,
+        country = null,
+        name = name,
+        photoUrl = photoUrl,
+        socials = socials.map { it.toSocial() }
+    )
+}
+
+fun SpeakerDetails.Social.toSocial(): SocialsItem {
+    return with(socialDetails) {
+        val type = when (name.lowercase()) {
+            "twitter" -> SocialsType.TWITTER
+            "github" -> SocialsType.GITHUB
+            "linkedin" -> SocialsType.LINKEDIN
+            "facebook" -> SocialsType.FACEBOOK
+            "website" -> SocialsType.WEBSITE
+            else -> SocialsType.WEBSITE
+        }
+
+        SocialsItem(
+            type = type,
+            link = link
+        )
+    }
+}
+
+fun GetVenueQuery.Venue.toVenue(): Venue {
+    return Venue(
+        address = address ?: "",
+        description = description,
+        latitude = latitude,
+        longitude = longitude,
+        imageUrl = imageUrl,
+        name = name
+    )
+}

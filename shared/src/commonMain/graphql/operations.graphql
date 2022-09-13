@@ -1,0 +1,84 @@
+query GetPartnerGroups {
+    partnerGroups {
+        title
+        partners {
+            logoUrl
+            name
+            url
+        }
+    }
+}
+
+query GetRooms {
+    rooms {
+        ...RoomDetails
+    }
+}
+
+query GetSessions {
+    sessions(first: 100) {
+        nodes {
+            ...SessionDetails
+        }
+    }
+}
+
+query GetSession($id: String!){
+    session(id: $id) {
+        ...SessionDetails
+    }
+}
+
+query GetSpeakers {
+    speakers {
+        ...SpeakerDetails
+    }
+}
+
+query GetVenue($id: String!, $language: String!) {
+    venue(id: $id) {
+        name
+        address
+        description(language: $language)
+        latitude
+        longitude
+        imageUrl
+    }
+}
+
+fragment SessionDetails on Session {
+    id
+    title
+    description
+    language
+    startInstant
+    endInstant
+    rooms {
+        ...RoomDetails
+    }
+    speakers {
+        ...SpeakerDetails
+    }
+    tags
+}
+
+fragment RoomDetails on Room {
+    id
+    name
+}
+
+fragment SpeakerDetails on Speaker {
+    id
+    bio
+    company
+    name
+    photoUrl
+    socials {
+        ...SocialDetails
+    }
+}
+
+fragment SocialDetails on Social {
+    name
+    link
+}
