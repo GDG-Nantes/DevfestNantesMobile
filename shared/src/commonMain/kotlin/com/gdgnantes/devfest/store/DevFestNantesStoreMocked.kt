@@ -35,8 +35,6 @@ internal class DevFestNantesStoreMocked : DevFestNantesStore {
         }
     )
 
-    private val venueCache = buildVenueStub()
-
     override val agenda: Flow<Agenda>
         get() = flow {
             emit(
@@ -75,8 +73,7 @@ internal class DevFestNantesStoreMocked : DevFestNantesStore {
             emit(speakersCache)
         }
 
-    override val venue: Flow<Venue>
-        get() = flow {
-            emit(venueCache)
-        }
+    override suspend fun getVenue(language: ContentLanguage): Venue {
+        return buildVenueStub(language)
+    }
 }

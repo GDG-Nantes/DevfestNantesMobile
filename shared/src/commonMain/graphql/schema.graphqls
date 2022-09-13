@@ -39,6 +39,8 @@ type Query {
   speakers: [Speaker!]!
 
   venue(id: String!): Venue!
+
+  venues: [Venue!]!
 }
 
 type Room {
@@ -102,15 +104,21 @@ type Speaker {
 type Venue {
   address: String
 
-  coordinates: String
+  coordinates: String @deprecated(reason: "use latitude and longitude instead")
 
-  description: String!
+  descriptionFr: String! @deprecated(reason: "description(language: \"fr\") instead")
 
-  descriptionFr: String!
+  id: String!
 
-  imageUrl: String!
+  imageUrl: String
+
+  latitude: Float
+
+  longitude: Float
 
   name: String!
+
+  description(language: String): String!
 }
 
 schema {

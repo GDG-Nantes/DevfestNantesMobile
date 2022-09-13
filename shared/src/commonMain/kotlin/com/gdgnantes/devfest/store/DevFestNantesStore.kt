@@ -15,5 +15,5 @@ interface DevFestNantesStore {
     val sessions: Flow<List<Session>>
     suspend fun getSpeaker(id: String): Speaker?
     val speakers: Flow<List<Speaker>>
-    val venue: Flow<Venue>
+    suspend fun getVenue(language: ContentLanguage): Venue
 }

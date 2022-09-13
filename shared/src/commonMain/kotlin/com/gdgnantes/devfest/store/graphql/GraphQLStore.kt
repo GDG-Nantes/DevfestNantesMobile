@@ -4,6 +4,7 @@ import com.apollographql.apollo3.ApolloClient
 import com.apollographql.apollo3.exception.ApolloException
 import com.gdgnantes.devfest.graphql.*
 import com.gdgnantes.devfest.model.*
+import com.gdgnantes.devfest.model.stubs.buildVenueStub
 import com.gdgnantes.devfest.store.DevFestNantesStore
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
@@ -108,15 +109,14 @@ internal class GraphQLStore(private val apolloClient: ApolloClient) : DevFestNan
             }
         }
 
-    override val venue: Flow<Venue>
-        get() = flow {
-            try {
-                val response = apolloClient.query(GetVenueQuery("1")).execute()
-                response.dataAssertNoErrors.venue.venueDetails.toVenue()
-                    .let { emit(it) }
-            } catch (e: ApolloException) {
-                println(e.message)
-            }
+    override suspend fun getVenue(language: ContentLanguage): Venue {
+        return try {
+            val response = apolloClient.query(GetVenueQuery("1", language.apiParameter)).execute()
+            response.dataAssertNoErrors.venue.toVenue()
+        } catch (e: ApolloException) {
+            println(e.message)
+            buildVenueStub(language) //Fallback
         }
+    }
 
 }

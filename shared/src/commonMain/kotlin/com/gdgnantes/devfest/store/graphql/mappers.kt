@@ -2,10 +2,10 @@ package com.gdgnantes.devfest.store.graphql
 
 import com.gdgnantes.devfest.graphql.GetPartnerGroupsQuery
 import com.gdgnantes.devfest.graphql.GetSessionQuery
+import com.gdgnantes.devfest.graphql.GetVenueQuery
 import com.gdgnantes.devfest.graphql.fragment.RoomDetails
 import com.gdgnantes.devfest.graphql.fragment.SessionDetails
 import com.gdgnantes.devfest.graphql.fragment.SpeakerDetails
-import com.gdgnantes.devfest.graphql.fragment.VenueDetails
 import com.gdgnantes.devfest.model.*
 
 fun GetPartnerGroupsQuery.PartnerGroup.toPartnersGroup(): Pair<PartnerCategory, List<Partner>> {
@@ -84,12 +84,12 @@ fun SpeakerDetails.Social.toSocial(): SocialsItem {
     }
 }
 
-fun VenueDetails.toVenue(): Venue {
+fun GetVenueQuery.Venue.toVenue(): Venue {
     return Venue(
         address = address ?: "",
-        descriptionEn = description,
-        descriptionFr = descriptionFr,
-        coordinates = coordinates,
+        description = description,
+        latitude = latitude,
+        longitude = longitude,
         imageUrl = imageUrl,
         name = name
     )

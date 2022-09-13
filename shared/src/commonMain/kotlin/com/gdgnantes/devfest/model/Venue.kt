@@ -2,9 +2,9 @@ package com.gdgnantes.devfest.model
 
 data class Venue(
     var address: String = "",
-    var descriptionEn: String = "",
-    var descriptionFr: String = "",
-    var coordinates: String? = null,
-    var imageUrl: String = "",
+    var description: String = "",
+    var latitude: Double? = 0.0,
+    var longitude: Double? = 0.0,
+    var imageUrl: String? = null,
     var name: String = "No Venue"
 )

@@ -35,9 +35,14 @@ query GetSpeakers {
     }
 }
 
-query GetVenue($id: String!){
+query GetVenue($id: String!, $language: String!) {
     venue(id: $id) {
-        ...VenueDetails
+        name
+        address
+        description(language: $language)
+        latitude
+        longitude
+        imageUrl
     }
 }
 
@@ -76,13 +81,4 @@ fragment SpeakerDetails on Speaker {
 fragment SocialDetails on Social {
     name
     link
-}
-
-fragment VenueDetails on Venue {
-    name
-    address
-    coordinates
-    description
-    descriptionFr
-    imageUrl
 }

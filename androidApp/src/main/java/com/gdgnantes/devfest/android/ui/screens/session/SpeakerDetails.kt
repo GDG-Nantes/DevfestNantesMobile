@@ -61,7 +61,6 @@ fun SpeakerDetails(
         }
 
         Row(Modifier.padding(start = 58.dp, top = 4.dp)) {
-            val context = LocalContext.current
             for (socialsItem in speaker.socials.orEmpty()
                 .filter { it.link != null && it.type != null }) {
                 IconButton(

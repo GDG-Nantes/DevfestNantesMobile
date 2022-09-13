@@ -2,6 +2,8 @@
 
 package com.gdgnantes.devfest.android.ui.screens.venue
 
+import android.content.Context
+import android.location.Location
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -16,7 +18,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.intl.Locale
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
@@ -24,6 +25,7 @@ import coil.request.ImageRequest
 import com.gdgnantes.devfest.android.R
 import com.gdgnantes.devfest.android.ui.theme.DevFest_NantesTheme
 import com.gdgnantes.devfest.android.utils.onNavigationClick
+import com.gdgnantes.devfest.model.ContentLanguage
 import com.gdgnantes.devfest.model.Venue
 import com.gdgnantes.devfest.model.stubs.buildVenueStub
 import timber.log.Timber
@@ -72,40 +74,43 @@ fun VenueDetails(
                     style = MaterialTheme.typography.h5,
                 )
 
+                val latitude = venue.latitude
+                val longitude = venue.longitude
                 Text(
                     modifier = Modifier.clickable {
-                        venue.coordinates?.let {
-                            context.onNavigationClick(
-                                it
-                            )
+                        if (latitude != null && longitude != null) {
+                            onNavigationClick(context, latitude, longitude)
                         }
                     },
                     text = venue.address,
                     style = MaterialTheme.typography.subtitle2,
                 )
 
-                venue.coordinates?.let { coordinates ->
+
+                if (latitude != null && longitude != null) {
                     Button(onClick = {
-                        context.onNavigationClick(coordinates)
+                        onNavigationClick(context, latitude, longitude)
                     }) {
                         Text(stringResource(id = R.string.venue_go_to_button))
                     }
                 }
 
-                if (Locale.current.language.lowercase().contains("fr")) {
-                    venue.descriptionFr
-                } else {
-                    venue.descriptionEn
-                }.let { description ->
-                    Text(
-                        modifier = Modifier.fillMaxWidth(),
-                        text = description,
-                        style = MaterialTheme.typography.subtitle2,
-                    )
-                }
+                Text(
+                    modifier = Modifier.fillMaxWidth(),
+                    text = venue.description,
+                    style = MaterialTheme.typography.subtitle2,
+                )
             }
         }
     }
+}
+
+private fun onNavigationClick(context: Context, latitude: Double, longitude: Double) {
+    val location = Location("unset").apply {
+        this.latitude = latitude
+        this.longitude = longitude
+    }
+    context.onNavigationClick(location)
 }
 
 @Preview
@@ -113,7 +118,7 @@ fun VenueDetails(
 fun VenueDetailsPreview() {
     DevFest_NantesTheme {
         VenueDetails(
-            venue = buildVenueStub()
+            venue = buildVenueStub(language = ContentLanguage.ENGLISH)
         )
     }
 }
