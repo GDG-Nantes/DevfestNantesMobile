@@ -4,6 +4,7 @@ import com.apollographql.apollo3.ApolloClient
 import com.apollographql.apollo3.exception.ApolloException
 import com.gdgnantes.devfest.graphql.GetSessionQuery
 import com.gdgnantes.devfest.graphql.GetSessionsQuery
+import com.gdgnantes.devfest.graphql.GetSpeakersQuery
 import com.gdgnantes.devfest.graphql.GetVenueQuery
 import com.gdgnantes.devfest.model.*
 import com.gdgnantes.devfest.store.DevFestNantesStore
@@ -45,12 +46,29 @@ internal class GraphQLStore(private val apolloClient: ApolloClient) : DevFestNan
             }
         }
 
-    override suspend fun getSpeaker(id: String): Speaker {
-        TODO("Not yet implemented")
+    override suspend fun getSpeaker(id: String): Speaker? {
+        return try {
+            val response = apolloClient.query(GetSpeakersQuery()).execute()
+            response.dataAssertNoErrors.speakers
+                .firstOrNull { it.speakerDetails.id == id }
+                ?.speakerDetails?.toSpeaker()
+        } catch (e: ApolloException) {
+            println(e.message)
+            null
+        }
     }
 
     override val speakers: Flow<List<Speaker>>
-        get() = TODO("Not yet implemented")
+        get() = flow {
+            try {
+                val response = apolloClient.query(GetSpeakersQuery()).execute()
+                response.dataAssertNoErrors.speakers
+                    .map { it.speakerDetails.toSpeaker() }
+                    .let { emit(it) }
+            } catch (e: ApolloException) {
+                println(e.message)
+            }
+        }
 
     override val venue: Flow<Venue>
         get() = flow {

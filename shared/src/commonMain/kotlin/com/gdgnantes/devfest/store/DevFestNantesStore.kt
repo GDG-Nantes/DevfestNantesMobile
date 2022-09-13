@@ -13,7 +13,7 @@ interface DevFestNantesStore {
     val rooms: Flow<List<Room>>
     suspend fun getSession(id: String): Session?
     val sessions: Flow<List<Session>>
-    suspend fun getSpeaker(id: String): Speaker
+    suspend fun getSpeaker(id: String): Speaker?
     val speakers: Flow<List<Speaker>>
     val venue: Flow<Venue>
 }

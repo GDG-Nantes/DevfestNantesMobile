@@ -12,6 +12,12 @@ query GetSession($id: String!){
     }
 }
 
+query GetSpeakers {
+    speakers {
+        ...SpeakerDetails
+    }
+}
+
 query GetVenue($id: String!){
     venue(id: $id) {
         ...VenueDetails

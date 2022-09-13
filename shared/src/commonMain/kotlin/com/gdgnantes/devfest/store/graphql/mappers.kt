@@ -21,7 +21,7 @@ fun SessionDetails.toSession(): Session {
             startDate = startInstant.toString(),
             endDate = endInstant.toString()
         ),
-        speakers = speakers.map { it.toSpeaker() },
+        speakers = speakers.map { it.speakerDetails.toSpeaker() },
         title = title,
     )
 }
@@ -35,20 +35,18 @@ fun SessionDetails.Room.toRoom(): Room {
     }
 }
 
-fun SessionDetails.Speaker.toSpeaker(): Speaker {
-    return with(speakerDetails) {
-        Speaker(
-            id = id,
-            bio = bio,
-            company = company,
-            companyLogo = null,
-            country = null,
-            firstname = name,
-            photoUrl = photoUrl,
-            socials = socials.map { it.toSocial() },
-            surname = null
-        )
-    }
+fun SpeakerDetails.toSpeaker(): Speaker {
+    return Speaker(
+        id = id,
+        bio = bio,
+        company = company,
+        companyLogo = null,
+        country = null,
+        firstname = name,
+        photoUrl = photoUrl,
+        socials = socials.map { it.toSocial() },
+        surname = null
+    )
 }
 
 fun SpeakerDetails.Social.toSocial(): SocialsItem {
