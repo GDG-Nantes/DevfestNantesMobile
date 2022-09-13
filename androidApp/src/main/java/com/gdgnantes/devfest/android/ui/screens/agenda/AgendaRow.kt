@@ -114,7 +114,7 @@ fun AgendaRow(
                     }
 
                     val speakers =
-                        session.speakers.joinToString(", ") { it.getFullName() }
+                        session.speakers.joinToString(", ") { it.name }
                     if (speakers.isNotBlank()) {
                         Text(
                             text = speakers,

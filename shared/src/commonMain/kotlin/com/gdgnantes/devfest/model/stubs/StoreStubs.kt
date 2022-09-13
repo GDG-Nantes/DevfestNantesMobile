@@ -48,10 +48,9 @@ fun buildSpeakerStub(): Speaker {
         company = "Company Inc",
         companyLogo = null,
         country = "France",
-        firstname = "Foo",
+        name = "Foo Bar",
         photoUrl = randomImageUrl,
         socials = socialItemStubs,
-        surname = "Bar",
     )
 }
 

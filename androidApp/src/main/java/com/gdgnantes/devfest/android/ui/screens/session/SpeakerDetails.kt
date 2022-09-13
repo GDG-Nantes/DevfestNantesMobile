@@ -41,7 +41,7 @@ fun SpeakerDetails(
                     .data(speaker.photoUrl)
                     .crossfade(true)
                     .build(),
-                contentDescription = speaker.getFullName()
+                contentDescription = speaker.name
             )
 
             Column(Modifier.padding(horizontal = 8.dp)) {
