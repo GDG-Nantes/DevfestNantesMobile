@@ -5,24 +5,24 @@ import com.gdgnantes.devfest.graphql.fragment.SessionDetails
 import com.gdgnantes.devfest.graphql.fragment.SpeakerDetails
 import com.gdgnantes.devfest.model.*
 
-fun GetSessionQuery.Session.toSession(): Session {
-    return with(sessionDetails) {
-        Session(
-            id = id,
-            abstract = description ?: "",
-            category = null,
-            language = null,
-            complexity = null,
-            openFeedbackFormId = "openFeedbackFormId",
-            room = rooms.firstOrNull()?.toRoom(),
-            scheduleSlot = ScheduleSlot(
-                startDate = startInstant.toString(),
-                endDate = endInstant.toString()
-            ),
-            speakers = speakers.map { it.toSpeaker() },
-            title = title,
-        )
-    }
+fun GetSessionQuery.Session.toSession(): Session = sessionDetails.toSession()
+
+fun SessionDetails.toSession(): Session {
+    return Session(
+        id = id,
+        abstract = description ?: "",
+        category = null,
+        language = null,
+        complexity = null,
+        openFeedbackFormId = "openFeedbackFormId",
+        room = rooms.firstOrNull()?.toRoom(),
+        scheduleSlot = ScheduleSlot(
+            startDate = startInstant.toString(),
+            endDate = endInstant.toString()
+        ),
+        speakers = speakers.map { it.toSpeaker() },
+        title = title,
+    )
 }
 
 fun SessionDetails.Room.toRoom(): Room {

@@ -1,3 +1,12 @@
+query GetSessions {
+    sessions {
+        nodes {
+            ...SessionDetails
+        }
+    }
+}
+
+
 query GetSession($id: String!){
     session(id: $id) {
         ...SessionDetails

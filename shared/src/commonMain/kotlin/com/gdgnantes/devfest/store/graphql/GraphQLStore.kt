@@ -3,9 +3,11 @@ package com.gdgnantes.devfest.store.graphql
 import com.apollographql.apollo3.ApolloClient
 import com.apollographql.apollo3.exception.ApolloException
 import com.gdgnantes.devfest.graphql.GetSessionQuery
+import com.gdgnantes.devfest.graphql.GetSessionsQuery
 import com.gdgnantes.devfest.model.*
 import com.gdgnantes.devfest.store.DevFestNantesStore
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.flow
 
 internal class GraphQLStore(private val apolloClient: ApolloClient) : DevFestNantesStore {
     override val agenda: Flow<Agenda>
@@ -31,7 +33,16 @@ internal class GraphQLStore(private val apolloClient: ApolloClient) : DevFestNan
     }
 
     override val sessions: Flow<List<Session>>
-        get() = TODO("Not yet implemented")
+        get() = flow {
+            try {
+                val response = apolloClient.query(GetSessionsQuery()).execute()
+                response.dataAssertNoErrors.sessions.nodes
+                    .map { it.sessionDetails.toSession() }
+                    .let { emit(it) }
+            } catch (e: ApolloException) {
+                println(e.message)
+            }
+        }
 
     override suspend fun getSpeaker(id: String): Speaker {
         TODO("Not yet implemented")
