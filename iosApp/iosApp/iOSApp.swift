@@ -18,7 +18,7 @@ struct iOSApp: App {
         //NSLogger
         LoggerSetupBonjourForBuildUser()
         
-        self.store = DevFestNantesStoreBuilder().build()
+        self.store = DevFestNantesStoreBuilder().setUseMockServer(useMockServer: false).build()
         // Create an AnyPublisher for your flow
         self.publisher = createPublisher(for: store.sessionsNative)
 

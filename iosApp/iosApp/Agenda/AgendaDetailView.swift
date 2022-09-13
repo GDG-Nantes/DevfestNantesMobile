@@ -98,7 +98,7 @@ struct SpeakerView: View {
         
         VStack(alignment: .leading) {
             HStack(alignment: .center) {
-                Text("\(speaker.firstname ) \(speaker.surname ?? "surname"), \(speaker.company ?? "Company")")
+                Text("\(speaker.name), \(speaker.company ?? "Company")")
                     .bold()
                     .padding(.vertical, 24)
                 let url = URL(string: speaker.photoUrl ?? "https://fakeface.rest/thumb/view")

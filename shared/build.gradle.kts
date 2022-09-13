@@ -66,6 +66,12 @@ kotlin {
     }
 }
 
+kotlin.targets.withType(org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget::class.java) {
+    binaries.all {
+        binaryOptions["memoryModel"] = "experimental"
+    }
+}
+
 apollo {
     packageName.set("com.gdgnantes.devfest.graphql")
 }
