@@ -39,7 +39,7 @@ fun SessionDetails(
         )
 
         val dateRangeAndRoom =
-            session.scheduleSlot.getFormattedRange(LocalContext.current) + ", " + session.room.name
+            session.scheduleSlot.getFormattedRange(LocalContext.current) + if (session.room != null) (", " + session.room?.name) else ""
         Text(
             text = dateRangeAndRoom,
             style = MaterialTheme.typography.labelMedium

@@ -6,7 +6,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import kotlin.random.Random
 
-class DevFestNantesStoreMocked : DevFestNantesStore {
+internal class DevFestNantesStoreMocked : DevFestNantesStore {
 
     private val sessionsCache = MutableList(Random.nextInt(10, MAX_SESSIONS)) {
         buildSessionStub()

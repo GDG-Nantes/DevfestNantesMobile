@@ -7,7 +7,7 @@ data class Session(
     val language: SessionLanguage? = null,
     val complexity: Complexity? = null,
     val openFeedbackFormId: String = "",
-    val room: Room,
+    val room: Room? = null,
     val scheduleSlot: ScheduleSlot,
     val speakers: List<Speaker> = listOf(),
     val title: String = ""

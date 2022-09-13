@@ -1,0 +1,42 @@
+query GetSession($id: String!){
+    session(id: $id) {
+        ...SessionDetails
+    }
+}
+
+fragment SessionDetails on Session {
+    id
+    title
+    description
+    language
+    startInstant
+    endInstant
+    rooms {
+        ...RoomDetails
+    }
+    speakers {
+        ...SpeakerDetails
+    }
+    tags
+}
+
+fragment RoomDetails on Room {
+    id
+    name
+}
+
+fragment SpeakerDetails on Speaker {
+    id
+    bio
+    company
+    name
+    photoUrl
+    socials {
+        ...SocialDetails
+    }
+}
+
+fragment SocialDetails on Social {
+    name
+    link
+}

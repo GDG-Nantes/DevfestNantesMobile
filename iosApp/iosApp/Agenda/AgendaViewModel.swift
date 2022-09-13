@@ -22,7 +22,7 @@ class AgendaViewModel: ObservableObject, Identifiable {
     
     
     init() {
-        self.store = DevFestNantesStoreMocked()
+        self.store = DevFestNantesStoreBuilder().build()
     }
     
     func getDate(date: String) -> Date {
