@@ -3,6 +3,8 @@ plugins {
     kotlin("android")
     kotlin("kapt")
     id("dagger.hilt.android.plugin")
+    id("com.google.gms.google-services")
+    id("com.google.firebase.crashlytics")
 }
 
 android {
@@ -50,6 +52,12 @@ dependencies {
 
     with(Kotlinx) {
         implementation(coroutinesCore)
+    }
+
+    with(Firebase) {
+        implementation(platform(firebaseBom))
+        implementation(firebaseAnalytics)
+        implementation(firebaseCrashlytics)
     }
 
     with(Deps) {
