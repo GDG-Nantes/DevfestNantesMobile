@@ -33,6 +33,11 @@ object AndroidSdk {
     const val target = compile
 }
 
+object Apollo {
+    const val apolloVersion = "3.6.0"
+    const val apolloRuntime = "com.apollographql.apollo3:apollo-runtime:$apolloVersion"
+}
+
 object Deps {
     const val material = "com.google.android.material:material:1.6.1"
     const val multiplatformSettings =

@@ -4,6 +4,7 @@ plugins {
     kotlin("native.cocoapods")
     id("com.android.library")
     id("com.rickclephas.kmp.nativecoroutines") version "0.12.5"
+    id("com.apollographql.apollo3") version Apollo.apolloVersion
 }
 
 version = "1.0"
@@ -30,6 +31,10 @@ kotlin {
                 with(Kotlinx) {
                     implementation(dateTime)
                     implementation(serialization)
+                }
+
+                with(Apollo) {
+                    implementation(apolloRuntime)
                 }
             }
         }
@@ -59,6 +64,10 @@ kotlin {
             iosSimulatorArm64Test.dependsOn(this)
         }
     }
+}
+
+apollo {
+    packageName.set("com.gdgnantes.devfest.graphql")
 }
 
 android {
