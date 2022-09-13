@@ -1,12 +1,15 @@
 package com.gdgnantes.devfest.store.graphql
 
 import com.apollographql.apollo3.ApolloClient
+import com.apollographql.apollo3.cache.normalized.FetchPolicy
+import com.apollographql.apollo3.cache.normalized.fetchPolicy
 import com.apollographql.apollo3.exception.ApolloException
 import com.gdgnantes.devfest.graphql.*
 import com.gdgnantes.devfest.model.*
 import com.gdgnantes.devfest.model.stubs.buildVenueStub
 import com.gdgnantes.devfest.store.DevFestNantesStore
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 
@@ -20,9 +23,10 @@ internal class GraphQLStore(private val apolloClient: ApolloClient) : DevFestNan
         }
 
     override val partners: Flow<Map<PartnerCategory, List<Partner>>>
-        get() = flow {
-            try {
-                val response = apolloClient.query(GetPartnerGroupsQuery()).execute()
+        get() = apolloClient.query(GetPartnerGroupsQuery())
+            .fetchPolicy(FetchPolicy.CacheAndNetwork)
+            .toFlow()
+            .map { response ->
                 response.dataAssertNoErrors.partnerGroups
                     .map { it.toPartnersGroup() }
                     .let { groups ->
@@ -30,14 +34,12 @@ internal class GraphQLStore(private val apolloClient: ApolloClient) : DevFestNan
                             groups.forEach { (category, partners) ->
                                 put(category, partners)
                             }
-                        }
-                            .toMap()
-                            .run { emit(this) }
+                        }.toMap()
                     }
-            } catch (e: ApolloException) {
+            }
+            .catch { e ->
                 println(e.message)
             }
-        }
 
     override suspend fun getRoom(id: String): Room? {
         return try {
@@ -74,16 +76,16 @@ internal class GraphQLStore(private val apolloClient: ApolloClient) : DevFestNan
     }
 
     override val sessions: Flow<List<Session>>
-        get() = flow {
-            try {
-                val response = apolloClient.query(GetSessionsQuery()).execute()
+        get() = apolloClient.query(GetSessionsQuery())
+            .fetchPolicy(FetchPolicy.CacheAndNetwork)
+            .toFlow()
+            .map { response ->
                 response.dataAssertNoErrors.sessions.nodes
                     .map { it.sessionDetails.toSession() }
-                    .let { emit(it) }
-            } catch (e: ApolloException) {
+            }
+            .catch { e ->
                 println(e.message)
             }
-        }
 
     override suspend fun getSpeaker(id: String): Speaker? {
         return try {

@@ -35,6 +35,8 @@ kotlin {
 
                 with(Apollo) {
                     implementation(apolloRuntime)
+                    implementation(apolloNormalizedCache)
+                    implementation(apolloNormalizedCacheSqlite)
                 }
             }
         }
