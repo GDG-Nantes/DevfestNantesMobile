@@ -5,6 +5,9 @@ object Versions {
     const val kmpNativeCoroutines = "0.12.5-new-mm"
     const val kotlinxDateTime = "0.4.0"
 
+    const val googleServicesVersion = "4.3.13"
+    const val crashlyticsGradleVersion = "2.9.1"
+
     const val accompanistPager = "0.24.13-rc"
 
     const val compose = "1.2.1"
@@ -90,6 +93,12 @@ object Dagger {
     const val hilt = "com.google.dagger:hilt-android:${Versions.daggerVersion}"
     const val compiler = "com.google.dagger:hilt-compiler:${Versions.daggerVersion}"
     const val androidTesting = "com.google.dagger:hilt-android-testing:${Versions.daggerVersion}"
+}
+
+object Firebase {
+    const val firebaseBom = "com.google.firebase:firebase-bom:30.4.1"
+    const val firebaseCrashlytics = "com.google.firebase:firebase-crashlytics-ktx"
+    const val firebaseAnalytics = "com.google.firebase:firebase-analytics-ktx"
 }
 
 object Tests {

@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "451587929709",
+    "project_id": "devfest-nantes-2022",
+    "storage_bucket": "devfest-nantes-2022.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:451587929709:android:27034905f7a57930fe7164",
+        "android_client_info": {
+          "package_name": "com.gdgnantes.devfest.android"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "451587929709-2v5mrav2dgbal09fen68enushajd9t60.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.gdgnantes.devfest.android",
+            "certificate_hash": "40e26e2cfa2e11205620c8ce9738fc24ce12b5c4"
+          }
+        },
+        {
+          "client_id": "451587929709-4fke1uqbtsl85129n7g4anlpv9poj531.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAXLIC8Wa0mUn_jZ4Jauv2qFEPtob5yrGE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "451587929709-4fke1uqbtsl85129n7g4anlpv9poj531.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
