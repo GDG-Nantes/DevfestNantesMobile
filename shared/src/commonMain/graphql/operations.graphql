@@ -6,10 +6,15 @@ query GetSessions {
     }
 }
 
-
 query GetSession($id: String!){
     session(id: $id) {
         ...SessionDetails
+    }
+}
+
+query GetVenue($id: String!){
+    venue(id: $id) {
+        ...VenueDetails
     }
 }
 
@@ -48,4 +53,13 @@ fragment SpeakerDetails on Speaker {
 fragment SocialDetails on Social {
     name
     link
+}
+
+fragment VenueDetails on Venue {
+    name
+    address
+    coordinates
+    description
+    descriptionFr
+    imageUrl
 }

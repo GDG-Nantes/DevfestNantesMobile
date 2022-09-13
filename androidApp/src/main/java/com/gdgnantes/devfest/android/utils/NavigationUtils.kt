@@ -2,10 +2,9 @@ package com.gdgnantes.devfest.android.utils
 
 import android.content.Context
 import android.content.Intent
-import android.location.Location
 import android.net.Uri
 
-fun Context.onNavigationClick(location: Location) {
-    val uri = "geo:latitude,longtitude?q= ${location.latitude},${location.longitude}"
+fun Context.onNavigationClick(coordinates: String) {
+    val uri = "geo:latitude,longtitude?q=$coordinates"
     startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(uri)))
 }

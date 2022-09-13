@@ -3,6 +3,7 @@ package com.gdgnantes.devfest.store.graphql
 import com.gdgnantes.devfest.graphql.GetSessionQuery
 import com.gdgnantes.devfest.graphql.fragment.SessionDetails
 import com.gdgnantes.devfest.graphql.fragment.SpeakerDetails
+import com.gdgnantes.devfest.graphql.fragment.VenueDetails
 import com.gdgnantes.devfest.model.*
 
 fun GetSessionQuery.Session.toSession(): Session = sessionDetails.toSession()
@@ -66,4 +67,15 @@ fun SpeakerDetails.Social.toSocial(): SocialsItem {
             link = link
         )
     }
+}
+
+fun VenueDetails.toVenue(): Venue {
+    return Venue(
+        address = address ?: "",
+        descriptionEn = description,
+        descriptionFr = descriptionFr,
+        coordinates = coordinates,
+        imageUrl = imageUrl,
+        name = name
+    )
 }

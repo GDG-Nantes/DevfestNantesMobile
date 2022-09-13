@@ -5,7 +5,12 @@ import com.gdgnantes.devfest.store.graphql.apolloClient
 
 class DevFestNantesStoreBuilder {
 
-    var useMockServer: Boolean = false
+    private var useMockServer: Boolean = false
+
+    fun setUseMockServer(useMockServer: Boolean): DevFestNantesStoreBuilder {
+        this.useMockServer = useMockServer
+        return this
+    }
 
     fun build(): DevFestNantesStore {
         return if (useMockServer) {

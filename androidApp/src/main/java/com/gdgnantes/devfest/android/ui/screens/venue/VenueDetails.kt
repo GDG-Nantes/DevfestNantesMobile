@@ -2,8 +2,6 @@
 
 package com.gdgnantes.devfest.android.ui.screens.venue
 
-import android.content.Context
-import android.location.Location
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
@@ -75,15 +73,23 @@ fun VenueDetails(
                 )
 
                 Text(
-                    modifier = Modifier.clickable { onNavigationClick(context, venue) },
+                    modifier = Modifier.clickable {
+                        venue.coordinates?.let {
+                            context.onNavigationClick(
+                                it
+                            )
+                        }
+                    },
                     text = venue.address,
                     style = MaterialTheme.typography.subtitle2,
                 )
 
-                Button(onClick = {
-                    onNavigationClick(context, venue)
-                }) {
-                    Text(stringResource(id = R.string.venue_go_to_button))
+                venue.coordinates?.let { coordinates ->
+                    Button(onClick = {
+                        context.onNavigationClick(coordinates)
+                    }) {
+                        Text(stringResource(id = R.string.venue_go_to_button))
+                    }
                 }
 
                 if (Locale.current.language.lowercase().contains("fr")) {
@@ -100,14 +106,6 @@ fun VenueDetails(
             }
         }
     }
-}
-
-private fun onNavigationClick(context: Context, venue: Venue) {
-    val location = Location("unset").apply {
-        latitude = venue.latitude
-        longitude = venue.longitude
-    }
-    context.onNavigationClick(location)
 }
 
 @Preview

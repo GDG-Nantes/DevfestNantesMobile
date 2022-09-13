@@ -4,6 +4,7 @@ import com.apollographql.apollo3.ApolloClient
 import com.apollographql.apollo3.exception.ApolloException
 import com.gdgnantes.devfest.graphql.GetSessionQuery
 import com.gdgnantes.devfest.graphql.GetSessionsQuery
+import com.gdgnantes.devfest.graphql.GetVenueQuery
 import com.gdgnantes.devfest.model.*
 import com.gdgnantes.devfest.store.DevFestNantesStore
 import kotlinx.coroutines.flow.Flow
@@ -50,7 +51,16 @@ internal class GraphQLStore(private val apolloClient: ApolloClient) : DevFestNan
 
     override val speakers: Flow<List<Speaker>>
         get() = TODO("Not yet implemented")
+
     override val venue: Flow<Venue>
-        get() = TODO("Not yet implemented")
+        get() = flow {
+            try {
+                val response = apolloClient.query(GetVenueQuery("1")).execute()
+                response.dataAssertNoErrors.venue.venueDetails.toVenue()
+                    .let { emit(it) }
+            } catch (e: ApolloException) {
+                println(e.message)
+            }
+        }
 
 }
