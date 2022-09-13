@@ -20,7 +20,7 @@ fun ScheduleSlot.getFormattedRange(context: Context): String {
             start.time,
             end.time,
             DateUtils.FORMAT_SHOW_WEEKDAY or DateUtils.FORMAT_SHOW_TIME or DateUtils.FORMAT_SHOW_DATE or DateUtils.FORMAT_SHOW_YEAR,
-            "Europe/Paris"
+            TimeZone.getDefault().id
         ).toString().titlecaseFirstCharIfItIsLowercase()
     }
 }
