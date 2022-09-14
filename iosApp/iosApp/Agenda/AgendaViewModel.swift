@@ -40,7 +40,9 @@ class AgendaViewModel: ObservableObject, Identifiable {
         do {
             let stream = asyncStream(for: store.sessionsNative)
             for try await data in stream {
-                self.sessionsChanged(sessions: data)
+                DispatchQueue.main.async {
+                    self.sessionsChanged(sessions: data)
+                }
             }
         } catch {
             print("Failed with error: \(error)")

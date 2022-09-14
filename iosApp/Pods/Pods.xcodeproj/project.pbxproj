@@ -16,6 +16,7 @@
 			dependencies = (
 			);
 			name = shared;
+			productName = shared;
 		};
 /* End PBXAggregateTarget section */
 
@@ -201,7 +202,7 @@
 		54978AE4DBCD7C3C21E5F48BB4D4BDED /* TransientImage.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TransientImage.swift; path = Sources/URLImage/Model/TransientImage.swift; sourceTree = "<group>"; };
 		54DA1B3B7C83F59C65A3B476300375AA /* DiskCache.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DiskCache.swift; path = Sources/URLImage/Cache/DiskCache.swift; sourceTree = "<group>"; };
 		54DC7F9924F99FEE67A9AD3BEE09A10C /* Pods-iosApp-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-iosApp-dummy.m"; sourceTree = "<group>"; };
-		55178EE20B0D1C73FECDF18A3B45C4A4 /* NSLogger */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = NSLogger; path = NSLogger.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		55178EE20B0D1C73FECDF18A3B45C4A4 /* NSLogger.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = NSLogger.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		59447E4D96EA44F26267ADA0CD9FA73B /* NSLogger-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "NSLogger-Info.plist"; sourceTree = "<group>"; };
 		59E33FBD263C97F8F5C7ED5CFCE0D514 /* Download.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Download.swift; path = Dependencies/Sources/DownloadManager/Download/Download.swift; sourceTree = "<group>"; };
 		5A9F87A2CA09669D28EB9218A0842E91 /* NativeFlow.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NativeFlow.swift; path = KMPNativeCoroutinesCore/NativeFlow.swift; sourceTree = "<group>"; };
@@ -235,7 +236,7 @@
 		9B3E80C9C153F838AA39598E87F45EFA /* CoreDataAttributeDescription.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CoreDataAttributeDescription.swift; path = Dependencies/Sources/PlainDatabase/CoreDataModel/CoreDataAttributeDescription.swift; sourceTree = "<group>"; };
 		9BB0B8B698D4C35D4F9A07EF70910170 /* Pods-iosApp-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-iosApp-acknowledgements.plist"; sourceTree = "<group>"; };
 		9D3A471356C8D8B38DFECCB080DC018A /* KMPNativeCoroutinesCombine.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = KMPNativeCoroutinesCombine.debug.xcconfig; sourceTree = "<group>"; };
-		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		9F1FFC8B10F4D7D4F37606E8959B3F29 /* Pods-iosApp-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-iosApp-acknowledgements.markdown"; sourceTree = "<group>"; };
 		9FECCB5AFF87D121F15BA01E683C7932 /* Pods-iosApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-iosApp.release.xcconfig"; sourceTree = "<group>"; };
 		9FFE145D16063A8859BC44338EB0EA1C /* URLImage-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "URLImage-prefix.pch"; sourceTree = "<group>"; };
@@ -266,7 +267,7 @@
 		D9DEF516942FE887B4F6B03EF629C9B6 /* NativeCancellable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NativeCancellable.swift; path = KMPNativeCoroutinesCore/NativeCancellable.swift; sourceTree = "<group>"; };
 		D9E3E0AA35C454F332BCA45F3C78EED7 /* RemoteImage.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = RemoteImage.swift; path = Sources/URLImage/Model/RemoteImage.swift; sourceTree = "<group>"; };
 		DB1747DCD1376709F896240C13FB9619 /* URLImageService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = URLImageService.swift; path = Sources/URLImage/URLImageService.swift; sourceTree = "<group>"; };
-		E32954243B605448566BC0C0B0BCF70D /* KMPNativeCoroutinesCore */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = KMPNativeCoroutinesCore; path = KMPNativeCoroutinesCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E32954243B605448566BC0C0B0BCF70D /* KMPNativeCoroutinesCore.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = KMPNativeCoroutinesCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E6A8420F25037169646C3F0536C3E17D /* KMPNativeCoroutinesAsync.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = KMPNativeCoroutinesAsync.modulemap; sourceTree = "<group>"; };
 		E888AEF782D5F1D1C9A331D7C2CC73C6 /* URLImage.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = URLImage.release.xcconfig; sourceTree = "<group>"; };
 		E8B85D0D801A0C90D67F4A3A109BFD51 /* FuturePublisher.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = FuturePublisher.swift; path = KMPNativeCoroutinesCombine/FuturePublisher.swift; sourceTree = "<group>"; };
@@ -277,7 +278,7 @@
 		F57834FB65DB625F42DD927DC5F454B9 /* ManagedObjectCodable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ManagedObjectCodable.swift; path = Dependencies/Sources/PlainDatabase/CoreDataModel/ManagedObjectCodable.swift; sourceTree = "<group>"; };
 		F6FDB852B550A3B46FC60FE6C8B95135 /* KMPNativeCoroutinesCore.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = KMPNativeCoroutinesCore.modulemap; sourceTree = "<group>"; };
 		F87A626222A8D9B26448A9FEB04FD0DF /* Pods-iosApp-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-iosApp-umbrella.h"; sourceTree = "<group>"; };
-		FB1BF8BE937671FB0F330C2D28634477 /* shared.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; path = shared.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
+		FB1BF8BE937671FB0F330C2D28634477 /* shared.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; path = shared.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		FC7F987A066CC4AA71F14E21A0715B56 /* URLImage.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = URLImage.debug.xcconfig; sourceTree = "<group>"; };
 		FC9BFF6A837E156AE3951F44B016EA2D /* Bundle+Extensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "Bundle+Extensions.swift"; path = "Dependencies/Sources/FileIndex/Common/Bundle+Extensions.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -393,7 +394,6 @@
 				2AB0C49D3EF843614DDF2A5913969CA9 /* AsyncStream.swift */,
 				AF5BAC4EEA1CD0DE557CE6F45C17482F /* Support Files */,
 			);
-			name = KMPNativeCoroutinesAsync;
 			path = KMPNativeCoroutinesAsync;
 			sourceTree = "<group>";
 		};
@@ -497,7 +497,6 @@
 				3C7C767E6AB2D92A82658B46DF36A1FE /* Publisher.swift */,
 				B827175373037ADB612907F5639CCC7A /* Support Files */,
 			);
-			name = KMPNativeCoroutinesCombine;
 			path = KMPNativeCoroutinesCombine;
 			sourceTree = "<group>";
 		};
@@ -518,7 +517,6 @@
 				A9235CD28BB9E9F7C670AC82F769AC19 /* NativeSuspend.swift */,
 				10113E41164D6212CB2C2A5BB415CA91 /* Support Files */,
 			);
-			name = KMPNativeCoroutinesCore;
 			path = KMPNativeCoroutinesCore;
 			sourceTree = "<group>";
 		};
@@ -610,7 +608,6 @@
 				56E937A2CAC4EF27B048D6ED451F5BD2 /* Support Files */,
 				8BED320F01546FD3182E6F5506B24E1D /* Swift */,
 			);
-			name = NSLogger;
 			path = NSLogger;
 			sourceTree = "<group>";
 		};
@@ -676,7 +673,6 @@
 				F9CFDEA1D6523AC337C48EF7C86B6348 /* RemoteContentView */,
 				BCE1E1F82FC35C5A09861F0759C31E2C /* Support Files */,
 			);
-			name = URLImage;
 			path = URLImage;
 			sourceTree = "<group>";
 		};
@@ -696,8 +692,8 @@
 			children = (
 				CBB360F2822905300C310CBA06D6A093 /* KMPNativeCoroutinesAsync */,
 				1BC4A026DBC6C2982B828355463B2569 /* KMPNativeCoroutinesCombine */,
-				E32954243B605448566BC0C0B0BCF70D /* KMPNativeCoroutinesCore */,
-				55178EE20B0D1C73FECDF18A3B45C4A4 /* NSLogger */,
+				E32954243B605448566BC0C0B0BCF70D /* KMPNativeCoroutinesCore.framework */,
+				55178EE20B0D1C73FECDF18A3B45C4A4 /* NSLogger.framework */,
 				B097DD7534E741D5C41838011D755842 /* Pods-iosApp */,
 				2887F2E4A4C98BEF767A166683622593 /* URLImage */,
 			);
@@ -788,7 +784,7 @@
 			);
 			name = NSLogger;
 			productName = NSLogger;
-			productReference = 55178EE20B0D1C73FECDF18A3B45C4A4 /* NSLogger */;
+			productReference = 55178EE20B0D1C73FECDF18A3B45C4A4 /* NSLogger.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 		3F9FD9D97D14F53EE028871E5A26555A /* KMPNativeCoroutinesCombine */ = {
@@ -886,7 +882,7 @@
 			);
 			name = KMPNativeCoroutinesCore;
 			productName = KMPNativeCoroutinesCore;
-			productReference = E32954243B605448566BC0C0B0BCF70D /* KMPNativeCoroutinesCore */;
+			productReference = E32954243B605448566BC0C0B0BCF70D /* KMPNativeCoroutinesCore.framework */;
 			productType = "com.apple.product-type.framework";
 		};
 /* End PBXNativeTarget section */
@@ -896,7 +892,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1240;
-				LastUpgradeCheck = 1240;
+				LastUpgradeCheck = 1400;
 			};
 			buildConfigurationList = 4821239608C13582E20E6DA73FD5F1F9 /* Build configuration list for PBXProject "Pods" */;
 			compatibilityVersion = "Xcode 10.0";
@@ -1152,7 +1148,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/KMPNativeCoroutinesCore/KMPNativeCoroutinesCore-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/KMPNativeCoroutinesCore/KMPNativeCoroutinesCore-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1186,7 +1182,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/NSLogger/NSLogger-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/NSLogger/NSLogger-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1238,7 +1234,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/KMPNativeCoroutinesCore/KMPNativeCoroutinesCore-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/KMPNativeCoroutinesCore/KMPNativeCoroutinesCore-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1403,6 +1399,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
@@ -1555,6 +1552,7 @@
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
 				COPY_PHASE_STRIP = NO;
+				DEAD_CODE_STRIPPING = YES;
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
@@ -1707,7 +1705,7 @@
 				GCC_PREFIX_HEADER = "Target Support Files/NSLogger/NSLogger-prefix.pch";
 				INFOPLIST_FILE = "Target Support Files/NSLogger/NSLogger-Info.plist";
 				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 12.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
