@@ -29,10 +29,16 @@ fun GetPartnerGroupsQuery.Partner.toPartner(): Partner {
 fun GetSessionQuery.Session.toSession(): Session = sessionDetails.toSession()
 
 fun SessionDetails.toSession(): Session {
+    val tag = if (tags.isNotEmpty()) tags.joinToString(", ") else null
     return Session(
         id = id,
         abstract = description ?: "",
-        category = null,
+        category = tag?.run {
+            Category(
+                id = lowercase(),
+                label = this
+            )
+        },
         language = null,
         complexity = null,
         openFeedbackFormId = "openFeedbackFormId",
