@@ -10,7 +10,7 @@ import SwiftUI
 import shared
 
 struct AgendaView: View {
-    @ObservedObject private var viewModel = AgendaViewModel()
+    @ObservedObject var viewModel: DevFestViewModel
     
     @State private var day = "2022-10-20"
     
@@ -31,10 +31,10 @@ struct AgendaView: View {
                 }
                 .pickerStyle(.segmented)
                 List {
-                    ForEach(viewModel.content.sections.filter{($0.day.contains(day))}, id: \.date) { section in
+                    ForEach(viewModel.agendaContent.sections.filter{($0.day.contains(day))}, id: \.date) { section in
                         Section(header: Text("\(self.sectionTimeFormatter.string(from: section.date))")) {
                             ForEach(section.sessions, id: \.id) { session in
-                                NavigationLink(destination: AgendaDetailView(session: session)) {
+                                NavigationLink(destination: AgendaDetailView(session: session, viewModel: viewModel)) {
                                     AgendaCellView(viewModel: viewModel, session: session)
                                 }
                                 .listRowBackground( Color(UIColor.systemBackground))
@@ -51,8 +51,8 @@ struct AgendaView: View {
     }
 }
 
-struct AgendaView_Previews: PreviewProvider {
-    static var previews: some View {
-        AgendaView()
-    }
-}
+//struct AgendaView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        AgendaView()
+//    }
+//}
