@@ -11,28 +11,28 @@ import URLImage
 
 
 struct VenueView: View {
-    @ObservedObject private var viewModel = VenueViewModel()
+    @ObservedObject var viewModel : DevFestViewModel
     
     var body: some View {
         ScrollView {
             VStack(alignment: .center, spacing: 8) {
-                URLImage(url: URL(string: viewModel.content.imageUrl)!) { image in
+                URLImage(url: URL(string: viewModel.venueContent.imageUrl)!) { image in
                     image
                         .resizable()
                         .aspectRatio(contentMode: .fit)
                 }.frame(maxHeight: 220)
                 
-                Text(viewModel.content.name)
+                Text(viewModel.venueContent.name)
                     .bold()
                     .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
                     .padding(.horizontal, 8)
                 
-                Text(viewModel.content.address)
+                Text(viewModel.venueContent.address)
                     .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
                     .padding(.horizontal, 8)
                 
                 Button("Y aller") {
-                    let url = "http://maps.apple.com/?daddr=\(viewModel.content.latitude),\(viewModel.content.longitude)"
+                    let url = "http://maps.apple.com/?daddr=\(viewModel.venueContent.latitude),\(viewModel.venueContent.longitude)"
                     UIApplication.shared.open(URL(string: url)!)
                 }.padding(.vertical, 8)
                     .padding(.horizontal, 16)
@@ -40,7 +40,7 @@ struct VenueView: View {
                     .background(Color.gray)
                     .cornerRadius(8)
                 
-                Text(viewModel.content.description)
+                Text(viewModel.venueContent.description)
                     .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
                     .padding(.horizontal, 8)
                 
@@ -54,9 +54,9 @@ struct VenueView: View {
     }
 }
 
-struct VenueView_Previews: PreviewProvider {
-    static var previews: some View {
-        VenueView()
-    }
-}
+//struct VenueView_Previews: PreviewProvider {
+//    static var previews: some View {
+//        VenueView()
+//    }
+//}
 

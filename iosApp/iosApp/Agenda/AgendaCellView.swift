@@ -10,8 +10,8 @@ import SwiftUI
 import shared
 
 struct AgendaCellView: View {
-    @ObservedObject var viewModel: AgendaViewModel
-    var session: AgendaViewModel.Content.Session
+    @ObservedObject var viewModel: DevFestViewModel
+    var session: AgendaContent.Session
     
     var durationFormatter: DateComponentsFormatter = {
         let formatter = DateComponentsFormatter()

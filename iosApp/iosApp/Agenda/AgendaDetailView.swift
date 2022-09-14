@@ -12,8 +12,8 @@ import URLImage
 
 
 struct AgendaDetailView: View {
-    
-    var content : AgendaViewModel.Content.Session?
+    var content : AgendaContent.Session?
+    @ObservedObject var viewModel: DevFestViewModel
     
     func getDate(date: String) -> Date {
         let newFormatter = ISO8601DateFormatter()
@@ -33,8 +33,9 @@ struct AgendaDetailView: View {
     }()
     
     
-    init(session: AgendaViewModel.Content.Session) {
+    init(session: AgendaContent.Session, viewModel: DevFestViewModel) {
         self.content = session
+        self.viewModel = viewModel
     }
     var body: some View {
         ScrollView {

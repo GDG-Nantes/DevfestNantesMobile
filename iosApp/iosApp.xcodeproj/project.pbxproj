@@ -13,9 +13,8 @@
 		2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2152FB032600AC8F00CF470E /* iOSApp.swift */; };
 		6798ED52212332E0C2D9C063 /* Pods_iosApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A11BE7E431CA95928352929 /* Pods_iosApp.framework */; };
 		7555FF83242A565900829871 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7555FF82242A565900829871 /* ContentView.swift */; };
-		CB179BD328D0D91B00BB9934 /* VenueViewmodel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB179BD228D0D91B00BB9934 /* VenueViewmodel.swift */; };
+		CB179BD728D22BA900BB9934 /* DevFestViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB179BD628D22BA900BB9934 /* DevFestViewModel.swift */; };
 		CB3F424428A6A02300D1C75B /* AgendaCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB3F424328A6A02300D1C75B /* AgendaCellView.swift */; };
-		CB73E80428A549620014B9AF /* AgendaViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB73E80328A549620014B9AF /* AgendaViewModel.swift */; };
 		CB73E81028A5587E0014B9AF /* AgendaDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB73E80F28A5587E0014B9AF /* AgendaDetailView.swift */; };
 		CB837AB6287B7D1200FEDAA1 /* AgendaView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB837AB5287B7D1200FEDAA1 /* AgendaView.swift */; };
 		CB837AB8287B7D6500FEDAA1 /* VenueView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB837AB7287B7D6500FEDAA1 /* VenueView.swift */; };
@@ -32,9 +31,8 @@
 		7555FF7B242A565900829871 /* iosApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = iosApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		7555FF82242A565900829871 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		7555FF8C242A565B00829871 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		CB179BD228D0D91B00BB9934 /* VenueViewmodel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VenueViewmodel.swift; sourceTree = "<group>"; };
+		CB179BD628D22BA900BB9934 /* DevFestViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevFestViewModel.swift; sourceTree = "<group>"; };
 		CB3F424328A6A02300D1C75B /* AgendaCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgendaCellView.swift; sourceTree = "<group>"; };
-		CB73E80328A549620014B9AF /* AgendaViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgendaViewModel.swift; sourceTree = "<group>"; };
 		CB73E80F28A5587E0014B9AF /* AgendaDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgendaDetailView.swift; sourceTree = "<group>"; };
 		CB837AB5287B7D1200FEDAA1 /* AgendaView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgendaView.swift; sourceTree = "<group>"; };
 		CB837AB7287B7D6500FEDAA1 /* VenueView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VenueView.swift; sourceTree = "<group>"; };
@@ -94,6 +92,7 @@
 			isa = PBXGroup;
 			children = (
 				058557BA273AAA24004C7B11 /* Assets.xcassets */,
+				CB179BD628D22BA900BB9934 /* DevFestViewModel.swift */,
 				7555FF82242A565900829871 /* ContentView.swift */,
 				7555FF8C242A565B00829871 /* Info.plist */,
 				2152FB032600AC8F00CF470E /* iOSApp.swift */,
@@ -109,7 +108,6 @@
 			isa = PBXGroup;
 			children = (
 				CB837AB7287B7D6500FEDAA1 /* VenueView.swift */,
-				CB179BD228D0D91B00BB9934 /* VenueViewmodel.swift */,
 			);
 			path = Venue;
 			sourceTree = "<group>";
@@ -118,7 +116,6 @@
 			isa = PBXGroup;
 			children = (
 				CB837AB5287B7D1200FEDAA1 /* AgendaView.swift */,
-				CB73E80328A549620014B9AF /* AgendaViewModel.swift */,
 				CB73E80F28A5587E0014B9AF /* AgendaDetailView.swift */,
 				CB3F424328A6A02300D1C75B /* AgendaCellView.swift */,
 			);
@@ -250,13 +247,12 @@
 			files = (
 				CB837AB8287B7D6500FEDAA1 /* VenueView.swift in Sources */,
 				2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */,
+				CB179BD728D22BA900BB9934 /* DevFestViewModel.swift in Sources */,
 				CB3F424428A6A02300D1C75B /* AgendaCellView.swift in Sources */,
-				CB73E80428A549620014B9AF /* AgendaViewModel.swift in Sources */,
 				7555FF83242A565900829871 /* ContentView.swift in Sources */,
 				CB837AB6287B7D1200FEDAA1 /* AgendaView.swift in Sources */,
 				CB837ABA287B7D9200FEDAA1 /* AboutView.swift in Sources */,
 				CB73E81028A5587E0014B9AF /* AgendaDetailView.swift in Sources */,
-				CB179BD328D0D91B00BB9934 /* VenueViewmodel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -1,12 +1,14 @@
 import SwiftUI
 import shared
+import Combine
 
 struct ContentView: View {
+    @StateObject var viewModel = DevFestViewModel()
+    
     @State private var selection = 0
-
     var body: some View {
         TabView(selection: $selection) {
-            AgendaView()
+            AgendaView(viewModel: viewModel)
                 .tabItem {
                     VStack {
                         Image(systemName: "calendar")
@@ -14,7 +16,7 @@ struct ContentView: View {
                     }
             }.tag(0)
 
-             VenueView()
+            VenueView(viewModel: viewModel)
                 .tabItem {
                     VStack {
                         Image(systemName: "location.circle.fill")
