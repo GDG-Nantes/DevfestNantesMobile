@@ -14,6 +14,7 @@
 		6798ED52212332E0C2D9C063 /* Pods_iosApp.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5A11BE7E431CA95928352929 /* Pods_iosApp.framework */; };
 		7555FF83242A565900829871 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7555FF82242A565900829871 /* ContentView.swift */; };
 		CB179BD728D22BA900BB9934 /* DevFestViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB179BD628D22BA900BB9934 /* DevFestViewModel.swift */; };
+		CB179BDB28D24C9C00BB9934 /* CategoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB179BDA28D24C9C00BB9934 /* CategoryView.swift */; };
 		CB3F424428A6A02300D1C75B /* AgendaCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB3F424328A6A02300D1C75B /* AgendaCellView.swift */; };
 		CB73E81028A5587E0014B9AF /* AgendaDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB73E80F28A5587E0014B9AF /* AgendaDetailView.swift */; };
 		CB837AB6287B7D1200FEDAA1 /* AgendaView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB837AB5287B7D1200FEDAA1 /* AgendaView.swift */; };
@@ -32,6 +33,7 @@
 		7555FF82242A565900829871 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		7555FF8C242A565B00829871 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		CB179BD628D22BA900BB9934 /* DevFestViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevFestViewModel.swift; sourceTree = "<group>"; };
+		CB179BDA28D24C9C00BB9934 /* CategoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryView.swift; sourceTree = "<group>"; };
 		CB3F424328A6A02300D1C75B /* AgendaCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgendaCellView.swift; sourceTree = "<group>"; };
 		CB73E80F28A5587E0014B9AF /* AgendaDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgendaDetailView.swift; sourceTree = "<group>"; };
 		CB837AB5287B7D1200FEDAA1 /* AgendaView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgendaView.swift; sourceTree = "<group>"; };
@@ -118,6 +120,7 @@
 				CB837AB5287B7D1200FEDAA1 /* AgendaView.swift */,
 				CB73E80F28A5587E0014B9AF /* AgendaDetailView.swift */,
 				CB3F424328A6A02300D1C75B /* AgendaCellView.swift */,
+				CB179BDA28D24C9C00BB9934 /* CategoryView.swift */,
 			);
 			path = Agenda;
 			sourceTree = "<group>";
@@ -253,6 +256,7 @@
 				CB837AB6287B7D1200FEDAA1 /* AgendaView.swift in Sources */,
 				CB837ABA287B7D9200FEDAA1 /* AboutView.swift in Sources */,
 				CB73E81028A5587E0014B9AF /* AgendaDetailView.swift in Sources */,
+				CB179BDB28D24C9C00BB9934 /* CategoryView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
