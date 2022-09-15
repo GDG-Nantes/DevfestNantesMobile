@@ -3,6 +3,7 @@ package com.gdgnantes.devfest.android.core.injection
 import android.app.Application
 import android.content.SharedPreferences
 import androidx.preference.PreferenceManager
+import com.gdgnantes.devfest.android.BuildConfig
 import com.gdgnantes.devfest.android.core.ApplicationInitializer
 import com.gdgnantes.devfest.android.core.CoroutinesDispatcherProvider
 import com.gdgnantes.devfest.android.core.LoggerInitializer
@@ -49,12 +50,12 @@ abstract class AppModule {
             // Updates with DevFest Nantes' credentials.
             OpenFeedback(
                 context = application,
-                openFeedbackProjectId = "SECRET",
+                openFeedbackProjectId = BuildConfig.OPEN_FEEDBACK_PROJECT_ID,
                 firebaseConfig = OpenFeedback.FirebaseConfig(
-                    projectId = "SECRET",
-                    applicationId = "SECRET",
-                    apiKey = "SECRET",
-                    databaseUrl = "SECRET"
+                    projectId = BuildConfig.OPEN_FEEDBACK_FIREBASE_PROJECT_ID,
+                    applicationId = BuildConfig.OPEN_FEEDBACK_FIREBASE_APPLICATION_ID,
+                    apiKey = BuildConfig.OPEN_FEEDBACK_FIREBASE_API_KEY,
+                    databaseUrl = BuildConfig.OPEN_FEEDBACK_FIREBASE_DATABASE_URL
                 )
             )
 
