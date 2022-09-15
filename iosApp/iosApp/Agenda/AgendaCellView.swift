@@ -37,9 +37,10 @@ struct AgendaCellView: View {
             }
             Spacer()
             VStack {
-                Image(systemName:  "star")
+                Image(systemName:  viewModel.favorites.contains(session.id) ? "star.fill" : "star")
                     .foregroundColor(.yellow)
                     .padding(8)
+                    .onTapGesture { self.viewModel.toggleFavorite(ofSession: session)}
                 Spacer()
             }
         }

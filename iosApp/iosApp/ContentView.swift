@@ -14,29 +14,29 @@ struct ContentView: View {
                         Image(systemName: "calendar")
                         Text("Agenda")
                     }
-            }.tag(0)
-
+                }.tag(0)
+            
             VenueView(viewModel: viewModel)
                 .tabItem {
                     VStack {
                         Image(systemName: "location.circle.fill")
                         Text("Venue")
                     }
-            }.tag(1)
-
+                }.tag(1)
+            
             AboutView()
                 .tabItem {
                     VStack {
                         Image(systemName: "info.circle")
                         Text("About")
                     }
-            }.tag(2)
+                }.tag(2)
         }
     }
 }
 
 struct ContentView_Previews: PreviewProvider {
-	static var previews: some View {
-		ContentView()
-	}
+    static var previews: some View {
+        ContentView()
+    }
 }
