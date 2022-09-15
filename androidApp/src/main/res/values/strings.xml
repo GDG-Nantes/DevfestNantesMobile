@@ -8,7 +8,7 @@
     <string name="screen_venue">Venue</string>
     <string name="screen_about">About</string>
     <string name="agenda_empty">empty</string>
-    <string name="empty_day">Sorry, there is nothing conference available for currently selected filters.</string>
+    <string name="empty_day">Sorry, there is no conference available for the selected filters.</string>
     <string name="screen_session">Session details</string>
     <string name="venue_go_to_button">Go to</string>
     <string name="screen_about_header_body">The Devfest (i.e Developers Festival), is a technical conference destined to developers. It\'s meant for students, professionals, or any curious techie</string>

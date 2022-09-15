@@ -6,6 +6,7 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import com.gdgnantes.devfest.android.ui.UiState
 import com.gdgnantes.devfest.android.utils.pagerTabIndicatorOffset
 import com.gdgnantes.devfest.model.AgendaDay
 import com.gdgnantes.devfest.model.Session
@@ -19,13 +20,14 @@ import kotlinx.coroutines.launch
 @OptIn(ExperimentalPagerApi::class)
 @Composable
 fun AgendaPager(
+    modifier: Modifier = Modifier,
     initialPageIndex: Int,
     days: Map<Int, AgendaDay>,
-    isRefreshing: Boolean,
+    uiState: UiState,
     onRefresh: () -> Unit,
     onSessionClick: (Session) -> Unit,
 ) {
-    Column(modifier = Modifier.fillMaxWidth()) {
+    Column(modifier = modifier.fillMaxWidth()) {
         val pagerState = rememberPagerState(initialPage = initialPageIndex)
 
         TabRow(
@@ -60,7 +62,7 @@ fun AgendaPager(
             state = pagerState,
         ) { page ->
             SwipeRefresh(
-                state = SwipeRefreshState(isRefreshing = isRefreshing),
+                state = SwipeRefreshState(isRefreshing = uiState == UiState.LOADING),
                 onRefresh = onRefresh,
             ) {
                 val sessions = days[page + 1]?.sessions ?: emptyList()

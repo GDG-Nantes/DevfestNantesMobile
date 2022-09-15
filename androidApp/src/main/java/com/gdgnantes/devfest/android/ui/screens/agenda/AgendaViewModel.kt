@@ -22,7 +22,14 @@ class AgendaViewModel @Inject constructor(
         get() = store.agenda
             .map { agenda -> agenda.days }
             .onEach { _uiState.emit(UiState.SUCCESS) }
-            .stateIn(viewModelScope, SharingStarted.Lazily, mapOf())
+            .stateIn(
+                viewModelScope,
+                SharingStarted.Lazily,
+                mapOf(
+                    1 to AgendaDay(1, emptyList()),
+                    2 to AgendaDay(2, emptyList())
+                )
+            )
 
     fun onRefresh() {
         //TODO
