@@ -59,6 +59,7 @@ fragment SessionDetails on Session {
     speakers {
         ...SpeakerDetails
     }
+    feedbackId
     tags
 }
 
