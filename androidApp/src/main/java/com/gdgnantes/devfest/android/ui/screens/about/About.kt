@@ -9,6 +9,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.gdgnantes.devfest.android.ui.screens.about.partners.Partners
 import com.gdgnantes.devfest.android.ui.theme.DevFest_NantesTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -34,6 +35,11 @@ fun About(
             )
 
             AboutSocial(
+                modifier.padding(horizontal = 8.dp),
+                onWeblinkClick = onWeblinkClick
+            )
+
+            Partners(
                 modifier.padding(horizontal = 8.dp),
                 onWeblinkClick = onWeblinkClick
             )

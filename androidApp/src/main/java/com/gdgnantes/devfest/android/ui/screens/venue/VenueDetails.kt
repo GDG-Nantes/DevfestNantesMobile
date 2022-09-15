@@ -54,9 +54,9 @@ fun VenueDetails(
                     .crossfade(true)
                     .build(),
                 onError = { state ->
-                    Timber.w(state.result.throwable, "Poi's image loading failed")
+                    Timber.w(state.result.throwable, "Venue's image loading failed")
                 },
-                contentDescription = "Place's logo",
+                contentDescription = stringResource(R.string.venue_image_content_description),
                 contentScale = ContentScale.Crop
             )
 
