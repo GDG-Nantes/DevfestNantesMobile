@@ -49,12 +49,12 @@ abstract class AppModule {
             // Updates with DevFest Nantes' credentials.
             OpenFeedback(
                 context = application,
-                openFeedbackProjectId = "mMHR63ARZQpPidFQISyc",
+                openFeedbackProjectId = "SECRET",
                 firebaseConfig = OpenFeedback.FirebaseConfig(
-                    projectId = "openfeedback-b7ab9",
-                    applicationId = "1:765209934800:android:a6bb09f3deabc2277297d5",
-                    apiKey = "AIzaSyC_cfbh8xKwF8UPxCeasGcsHyK4s5yZFeA",
-                    databaseUrl = "https://openfeedback-b7ab9.firebaseio.com"
+                    projectId = "SECRET",
+                    applicationId = "SECRET",
+                    apiKey = "SECRET",
+                    databaseUrl = "SECRET"
                 )
             )
 

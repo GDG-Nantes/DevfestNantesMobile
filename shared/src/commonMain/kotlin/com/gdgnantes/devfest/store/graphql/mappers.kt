@@ -41,7 +41,7 @@ fun SessionDetails.toSession(): Session {
         },
         language = null,
         complexity = null,
-        openFeedbackFormId = "openFeedbackFormId",
+        openFeedbackFormId = feedbackId,
         room = rooms.firstOrNull()?.roomDetails?.toRoom(),
         scheduleSlot = ScheduleSlot(
             startDate = startInstant.toString(),

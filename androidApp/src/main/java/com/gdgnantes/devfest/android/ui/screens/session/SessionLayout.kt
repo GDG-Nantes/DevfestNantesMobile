@@ -27,8 +27,6 @@ import com.gdgnantes.devfest.android.ui.components.appbars.TopAppBar
 import com.gdgnantes.devfest.android.ui.theme.bookmarked
 import com.gdgnantes.devfest.model.Session
 import io.openfeedback.android.OpenFeedback
-import io.openfeedback.android.components.SessionFeedbackContainer
-import java.util.*
 
 @Composable
 fun SessionLayout(
@@ -170,20 +168,12 @@ fun SessionLayout(
                 onSocialLinkClick = onSocialLinkClick
             )
 
-            Text(
-                text = stringResource(id = R.string.session_feedback_label),
-                modifier = Modifier.padding(8.dp),
-                style = MaterialTheme.typography.headlineSmall
-            )
-
-            SessionFeedbackContainer(
-                openFeedback = openFeedback,
-                sessionId = "173222", //session.id <-- Uncomment once DevFest Nantes' instance is setup.
-                language = Locale.getDefault().language,
-                modifier = Modifier
-                    .padding(horizontal = 8.dp)
-            )
+            session.openFeedbackFormId?.let { openFeedbackFormId ->
+                FeedbackForm(
+                    openFeedback = openFeedback,
+                    openFeedbackFormId = openFeedbackFormId,
+                )
+            }
         }
-
     }
 }

@@ -6,7 +6,7 @@ data class Session(
     val category: Category? = null,
     val language: SessionLanguage? = null,
     val complexity: Complexity? = null,
-    val openFeedbackFormId: String = "",
+    val openFeedbackFormId: String? = null,
     val room: Room? = null,
     val scheduleSlot: ScheduleSlot,
     val speakers: List<Speaker> = listOf(),
