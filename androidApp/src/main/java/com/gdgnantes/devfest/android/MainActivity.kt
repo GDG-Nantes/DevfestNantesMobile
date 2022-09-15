@@ -51,7 +51,7 @@ class MainActivity : ComponentActivity() {
                     composable(route = Screen.Home.route) {
                         Home(
                             onSessionClick = { session ->
-                                mainNavController.navigate("${Screen.Session.route}/${session.id}")
+                                session.openFeedbackFormId?.let { mainNavController.navigate("${Screen.Session.route}/${session.id}") }
                             },
                             onWeblinkClick = { url ->
                                 externalContentService.openUrl(url)

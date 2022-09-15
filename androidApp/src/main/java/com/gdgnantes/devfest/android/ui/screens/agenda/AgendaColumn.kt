@@ -6,10 +6,9 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
-import androidx.compose.material.MaterialTheme
-import androidx.compose.material.MaterialTheme.colors
-import androidx.compose.material.Surface
-import androidx.compose.material.Text
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Surface
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -35,7 +34,7 @@ fun AgendaColumn(
     ) {
         sessionsGroupedByStartTime.forEach {
             stickyHeader {
-                TimeSeparator(it.key)
+                TimeSeparator(prettyTime = it.key)
             }
 
             items(it.value) { session ->
@@ -49,8 +48,14 @@ fun AgendaColumn(
 }
 
 @Composable
-fun TimeSeparator(prettyTime: String) {
-    Surface(color = MaterialTheme.colors.background) {
+fun TimeSeparator(
+    modifier: Modifier = Modifier,
+    prettyTime: String
+) {
+    Surface(
+        modifier = modifier,
+        color = MaterialTheme.colorScheme.surfaceVariant
+    ) {
         Column(
             modifier = Modifier
                 .fillMaxWidth()
@@ -58,13 +63,13 @@ fun TimeSeparator(prettyTime: String) {
             Text(
                 modifier = Modifier.padding(horizontal = 12.dp, vertical = 4.dp),
                 text = prettyTime,
-                style = MaterialTheme.typography.caption
+                style = MaterialTheme.typography.labelMedium
             )
             Surface(
                 modifier = Modifier
                     .height(0.5.dp)
                     .fillMaxWidth(),
-                color = colors.onSurface
+                color = MaterialTheme.colorScheme.onSurfaceVariant
             ) {}
         }
     }
