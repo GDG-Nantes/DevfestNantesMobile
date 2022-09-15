@@ -67,7 +67,9 @@ class AgendaViewModel @Inject constructor(
         _days.value = mutableMapOf<Int, AgendaDay>().apply {
             unfilteredDays.value.forEach { (key, value) ->
                 this[key] =
-                    AgendaDay(value.dayIndex, value.sessions.filterSessions(_sessionFilters.value))
+                    AgendaDay(value.dayIndex, value.sessions
+                        .filterSessions(_sessionFilters.value)
+                        .sortedBy { session -> session.scheduleSlot.startDate })
             }
         }.toMap()
     }
