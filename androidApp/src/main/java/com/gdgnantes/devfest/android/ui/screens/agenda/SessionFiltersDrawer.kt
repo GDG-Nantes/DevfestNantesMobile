@@ -10,6 +10,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
@@ -105,7 +106,8 @@ private fun FilterItem(
         if (image != null) {
             Image(
                 modifier = Modifier.width(textLeftMargin),
-                painter = painterResource(image), contentDescription = text
+                painter = painterResource(image), contentDescription = text,
+                colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onSurface)
             )
         }
         /*if (language != null) {
