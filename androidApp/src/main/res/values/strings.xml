@@ -32,4 +32,9 @@
     <string name="session_filters_drawer_title">Filters</string>
     <string name="session_filters_drawer_languages_label">Languages</string>
     <string name="session_filters_drawer_rooms_label">Rooms</string>
+    <string name="partners_title">Partners</string>
+    <string name="venue_image_content_description">Picture of the venue.</string>
+    <string name="partners_platinium_title">PLATINIUM</string>
+    <string name="partners_gold_title">GOLD</string>
+    <string name="partners_virtual_title">VIRTUAL</string>
 </resources>

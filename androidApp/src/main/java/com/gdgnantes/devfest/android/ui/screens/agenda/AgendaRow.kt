@@ -5,7 +5,6 @@ import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Icon
 import androidx.compose.material.IconToggleButton
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
@@ -75,8 +74,8 @@ fun AgendaRow(
         modifier = modifier.padding(8.dp),
         onClick = { onSessionClick(session) },
         colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colors.background,
-            contentColor = MaterialTheme.colors.onBackground
+            containerColor = MaterialTheme.colorScheme.background,
+            contentColor = MaterialTheme.colorScheme.onBackground
         )
     ) {
         Column {
@@ -90,7 +89,8 @@ fun AgendaRow(
             ) {
                 Text(
                     text = session.title,
-                    style = MaterialTheme.typography.h5
+                    style = MaterialTheme.typography.titleMedium,
+                    color = MaterialTheme.colorScheme.primary
                 )
 
                 Row(
@@ -102,7 +102,7 @@ fun AgendaRow(
                     }
                     Text(
                         text = session.getDurationAndLanguageString(),
-                        style = MaterialTheme.typography.subtitle1
+                        style = MaterialTheme.typography.labelMedium
                     )
                 }
 
@@ -113,7 +113,7 @@ fun AgendaRow(
                         session.room?.let {
                             Text(
                                 text = it.name,
-                                style = MaterialTheme.typography.subtitle1
+                                style = MaterialTheme.typography.labelMedium
                             )
                         }
 
@@ -122,8 +122,7 @@ fun AgendaRow(
                         if (speakers.isNotBlank()) {
                             Text(
                                 text = speakers,
-                                style = MaterialTheme.typography.subtitle1,
-                                //modifier = Modifier.padding(top = 4.dp)
+                                style = MaterialTheme.typography.labelMedium
                             )
                         }
                     }

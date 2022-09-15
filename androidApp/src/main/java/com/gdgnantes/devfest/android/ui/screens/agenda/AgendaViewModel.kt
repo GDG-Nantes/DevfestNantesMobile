@@ -17,7 +17,7 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AgendaViewModel @Inject constructor(
-    private val store: DevFestNantesStore,
+    store: DevFestNantesStore,
     private val bookmarksStore: BookmarksStore
 ) : ViewModel() {
 
