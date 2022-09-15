@@ -36,11 +36,11 @@ fun AgendaPager(
             // Override the indicator, using the provided pagerTabIndicatorOffset modifier
             indicator = { tabPositions ->
                 TabRowDefaults.Indicator(
-                    Modifier.pagerTabIndicatorOffset(pagerState, tabPositions)
+                    Modifier.pagerTabIndicatorOffset(pagerState, tabPositions),
+                    color = MaterialTheme.colorScheme.primaryContainer
                 )
             },
-            containerColor = MaterialTheme.colorScheme.surfaceVariant,
-            contentColor = MaterialTheme.colorScheme.onSurfaceVariant
+            contentColor = MaterialTheme.colorScheme.onSurface
         ) {
             val daysNames = days.keys.toList().map { key -> key.toString() }
             repeat(daysNames.size) {

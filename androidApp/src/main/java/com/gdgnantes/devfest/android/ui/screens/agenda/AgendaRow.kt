@@ -2,16 +2,11 @@ package com.gdgnantes.devfest.android.ui.screens.agenda
 
 import android.annotation.SuppressLint
 import androidx.compose.animation.animateColorAsState
-import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Icon
 import androidx.compose.material.IconToggleButton
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material.MaterialTheme.colors
-import androidx.compose.material.Surface
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
+import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
@@ -67,6 +62,7 @@ fun AgendaRow(
     )
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AgendaRow(
     modifier: Modifier = Modifier,
@@ -75,85 +71,87 @@ fun AgendaRow(
     onSessionClick: ((Session) -> Unit),
     onSessionBookmarkClick: ((Boolean) -> Unit)
 ) {
-    Column(modifier = modifier.clickable { onSessionClick(session) }) {
-        Column(
-            modifier = Modifier.padding(
-                start = 12.dp,
-                end = 12.dp,
-                top = 12.dp,
-                bottom = 4.dp
-            )
-        ) {
-            Text(
-                text = session.title,
-                style = MaterialTheme.typography.h5
-            )
-
-            Row(
-                horizontalArrangement = Arrangement.spacedBy(8.dp),
-                verticalAlignment = Alignment.CenterVertically,
-            ) {
-                session.category?.let { category ->
-                    SessionCategory(category = category)
-                }
-                Text(
-                    text = session.getDurationAndLanguageString(),
-                    style = MaterialTheme.typography.subtitle1
+    OutlinedCard(
+        modifier = modifier.padding(8.dp),
+        onClick = { onSessionClick(session) },
+        colors = CardDefaults.cardColors(
+            containerColor = MaterialTheme.colors.background,
+            contentColor = MaterialTheme.colors.onBackground
+        )
+    ) {
+        Column {
+            Column(
+                modifier = Modifier.padding(
+                    start = 12.dp,
+                    end = 12.dp,
+                    top = 12.dp,
+                    bottom = 4.dp
                 )
-            }
+            ) {
+                Text(
+                    text = session.title,
+                    style = MaterialTheme.typography.h5
+                )
 
-
-
-            Row {
-                Column(Modifier.weight(1F)) {
-                    session.room?.let {
-                        Text(
-                            text = it.name,
-                            style = MaterialTheme.typography.subtitle1
-                        )
+                Row(
+                    horizontalArrangement = Arrangement.spacedBy(8.dp),
+                    verticalAlignment = Alignment.CenterVertically,
+                ) {
+                    session.category?.let { category ->
+                        SessionCategory(category = category)
                     }
-
-                    val speakers =
-                        session.speakers.joinToString(", ") { it.name }
-                    if (speakers.isNotBlank()) {
-                        Text(
-                            text = speakers,
-                            style = MaterialTheme.typography.subtitle1,
-                            //modifier = Modifier.padding(top = 4.dp)
-                        )
-                    }
-                }
-                Box {
-                    val icon =
-                        if (isBookmarked) R.drawable.ic_bookmarked else R.drawable.ic_bookmark
-
-                    val tint by animateColorAsState(
-                        if (isBookmarked) bookmarked
-                        else Color.LightGray
+                    Text(
+                        text = session.getDurationAndLanguageString(),
+                        style = MaterialTheme.typography.subtitle1
                     )
+                }
 
-                    IconToggleButton(
-                        checked = isBookmarked,
-                        onCheckedChange = {
-                            onSessionBookmarkClick(it)
-                        },
-                    ) {
-                        Icon(
-                            painter = painterResource(id = icon),
-                            contentDescription = "favorite",
-                            tint = tint
+
+
+                Row {
+                    Column(Modifier.weight(1F)) {
+                        session.room?.let {
+                            Text(
+                                text = it.name,
+                                style = MaterialTheme.typography.subtitle1
+                            )
+                        }
+
+                        val speakers =
+                            session.speakers.joinToString(", ") { it.name }
+                        if (speakers.isNotBlank()) {
+                            Text(
+                                text = speakers,
+                                style = MaterialTheme.typography.subtitle1,
+                                //modifier = Modifier.padding(top = 4.dp)
+                            )
+                        }
+                    }
+                    Box {
+                        val icon =
+                            if (isBookmarked) R.drawable.ic_bookmarked else R.drawable.ic_bookmark
+
+                        val tint by animateColorAsState(
+                            if (isBookmarked) bookmarked
+                            else Color.LightGray
                         )
+
+                        IconToggleButton(
+                            checked = isBookmarked,
+                            onCheckedChange = {
+                                onSessionBookmarkClick(it)
+                            },
+                        ) {
+                            Icon(
+                                painter = painterResource(id = icon),
+                                contentDescription = "favorite",
+                                tint = tint
+                            )
+                        }
                     }
                 }
             }
         }
-
-        Surface(
-            modifier = Modifier
-                .height(0.5.dp)
-                .fillMaxWidth(),
-            color = colors.onSurface
-        ) {}
     }
 }
 
