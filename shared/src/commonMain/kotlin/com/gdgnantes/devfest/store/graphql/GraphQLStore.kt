@@ -53,13 +53,13 @@ internal class GraphQLStore(private val apolloClient: ApolloClient) : DevFestNan
         }
     }
 
-    override val rooms: Flow<List<Room>>
+    override val rooms: Flow<Set<Room>>
         get() = flow {
             try {
                 val response = apolloClient.query(GetRoomsQuery()).execute()
                 response.dataAssertNoErrors.rooms
                     .map { it.roomDetails.toRoom() }
-                    .let { emit(it) }
+                    .let { emit(it.toSet()) }
             } catch (e: ApolloException) {
                 println(e.message)
             }

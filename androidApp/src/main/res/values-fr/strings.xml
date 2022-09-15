@@ -26,4 +26,8 @@
   <string name="web_external_disclaimer_title">Redirection</string>
   <string name="local_communities_title">Communautés locales</string>
   <string name="local_communities_button">🌍 Page des communautés tech Nantaises</string>
+  <string name="session_filters_action">Ouvrir les filtres de session</string>
+  <string name="session_filters_drawer_title">Filtres</string>
+  <string name="session_filters_drawer_languages_label">Langues</string>
+  <string name="session_filters_drawer_rooms_label">Salles</string>
 </resources>

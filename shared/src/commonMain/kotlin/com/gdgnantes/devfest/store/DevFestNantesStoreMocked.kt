@@ -52,9 +52,9 @@ internal class DevFestNantesStoreMocked : DevFestNantesStore {
     override suspend fun getRoom(id: String): Room? =
         roomStubs.firstOrNull { room -> room.id == id }
 
-    override val rooms: Flow<List<Room>>
+    override val rooms: Flow<Set<Room>>
         get() = flow {
-            emit(roomStubs)
+            emit(roomStubs.toSet())
         }
 
     override suspend fun getSession(id: String): Session =

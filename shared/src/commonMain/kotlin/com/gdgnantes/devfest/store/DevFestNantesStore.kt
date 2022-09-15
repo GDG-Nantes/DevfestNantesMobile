@@ -10,7 +10,7 @@ interface DevFestNantesStore {
     val agenda: Flow<Agenda>
     val partners: Flow<Map<PartnerCategory, List<Partner>>>
     suspend fun getRoom(id: String): Room?
-    val rooms: Flow<List<Room>>
+    val rooms: Flow<Set<Room>>
     suspend fun getSession(id: String): Session?
     val sessions: Flow<List<Session>>
     suspend fun getSpeaker(id: String): Speaker?

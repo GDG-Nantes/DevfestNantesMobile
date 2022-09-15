@@ -15,7 +15,7 @@ sealed class Screen(
     val route: String,
     @StringRes val title: Int,
     val imageVectorFilled: ImageVector?,
-    val imageVectorOutlined: ImageVector?,
+    val imageVectorOutlined: ImageVector?
 ) {
     fun imageVector(selected: Boolean) = if (selected) imageVectorFilled else imageVectorOutlined
 
