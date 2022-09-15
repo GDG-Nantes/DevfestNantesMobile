@@ -87,7 +87,7 @@ object Compose {
     const val uiTooling = "androidx.compose.ui:ui-tooling:${Versions.compose}"
     const val foundationLayout = "androidx.compose.foundation:foundation-layout:${Versions.compose}"
     const val material = "androidx.compose.material:material:${Versions.compose}"
-    const val material3 = "androidx.compose.material3:material3:1.0.0-alpha14"
+    const val material3 = "androidx.compose.material3:material3:1.0.0-beta02"
     const val materialIconsCore =
         "androidx.compose.material:material-icons-core:${Versions.compose}"
     const val materialIconsExtended = "androidx.compose.material:material-icons-extended:${Versions.compose}"
