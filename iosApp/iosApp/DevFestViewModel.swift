@@ -107,6 +107,7 @@ class DevFestViewModel: ObservableObject {
             let date: Date
             let startDate: String
             let endDate: String
+            let durationAndLanguage: String
             let title: String
         }
         
@@ -123,7 +124,7 @@ private extension AgendaContent.Session {
     
     init(from session: Session) {
         let newFormatter = ISO8601DateFormatter()
-        self.init(id: session.id, abstract: session.abstract, category: session.category, language: session.language, complexity: session.complexity, openFeedbackFormId: session.openFeedbackFormId, speakers: session.speakers, room: session.room?.name ?? "", date: newFormatter.date(from: session.scheduleSlot.startDate) ?? Date(), startDate: session.scheduleSlot.startDate, endDate: session.scheduleSlot.endDate, title: session.title)
+        self.init(id: session.id, abstract: session.abstract, category: session.category, language: session.language, complexity: session.complexity, openFeedbackFormId: session.openFeedbackFormId, speakers: session.speakers, room: session.room?.name ?? "", date: newFormatter.date(from: session.scheduleSlot.startDate) ?? Date(), startDate: session.scheduleSlot.startDate, endDate: session.scheduleSlot.endDate,durationAndLanguage: session.getDurationAndLanguageString(), title: session.title)
     }
 }
 

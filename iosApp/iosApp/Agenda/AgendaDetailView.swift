@@ -45,19 +45,25 @@ struct AgendaDetailView: View {
                     .font(.title)
                     .padding(.bottom, 8)
                     .padding(.top, 16)
-                Text("\(fullDateFormatter.string(from: getDate(date: content!.startDate))), \(timeFormatter.string(from: getDate(date: content!.startDate))) - \(timeFormatter.string(from: getDate(date: content!.endDate))) ")
+                Text("\(fullDateFormatter.string(from: getDate(date: content!.startDate))), \(timeFormatter.string(from: getDate(date: content!.startDate))) - \(timeFormatter.string(from: getDate(date: content!.endDate))), \(content!.room)")
                     .bold()
                     .font(.headline)
                     .padding(.bottom, 8)
-                Text(content!.abstract)
-                    .font(.body)
-                Divider().padding(.top, 8)
+                Divider().padding(.bottom, 8)
+                Text("\(content!.durationAndLanguage)")
+                .font(.footnote)
+
                 HStack {
-                    ComplexityView(complexity: content!.complexity ?? .beginner)
+                    CategoryView(categoryLabel: content?.category?.label ?? "cat")
+                    CategoryView(categoryLabel: content?.complexity?.text ?? "complexity")
+
                 }
                 Divider().padding(.top, 8)
+                Text(content!.abstract)
+                    .font(.body)
                 ForEach(content!.speakers, id: \.self) { speaker in
                     SpeakerView(speaker: speaker)
+                    Divider().padding(.top, 8)
                 }
             }.padding(.horizontal)
         }
@@ -77,45 +83,43 @@ extension Complexity {
     }
 }
 
-struct ComplexityView: View {
-    var complexity: Complexity
-    
-    
-    var body: some View {
-        Text(complexity.text)
-            .font(.body)
-            .padding(.vertical, 8)
-            .padding(.horizontal, 10)
-            .background(Color.secondary)
-            .foregroundColor(.black)
-            .clipShape(RoundedRectangle(cornerRadius: 35))
-    }
-}
-
 struct SpeakerView: View {
     var speaker: Speaker
     
     var body: some View {
         
         VStack(alignment: .leading) {
-            HStack(alignment: .center) {
-                Text("\(speaker.name), \(speaker.company ?? "Company")")
-                    .bold()
-                    .padding(.vertical, 24)
+            HStack(alignment: .top) {
                 let url = URL(string: speaker.photoUrl ?? "https://fakeface.rest/thumb/view")
                 URLImage(url: url!) { image in
                     image
                         .resizable()
                         .aspectRatio(contentMode: .fill)
                         .clipShape(Circle())
-                }.frame(width: 50, height: 50)
+                }.frame(width: 60, height: 60)
+                VStack(alignment: .leading) {
+                    Text("\(speaker.name ), \(speaker.company ?? "Company")")
+                    
+                        .bold()
+                        .padding(.vertical, 24)
+                    Text(speaker.bio ?? "bio speaker")
+                        .padding(.trailing, 8)
+                    HStack(alignment: .top, spacing: 20) {
+                        ForEach(speaker.socials!, id: \.self) { socialItem in
+                            Link(destination: URL(string: socialItem.link!)!) {
+                                if socialItem.type == .twitter {
+                                    Image("ic_network_twitter")
+                                } else {
+                                    Image("ic_network_web")
+                                }
+                            }
+                        }
+                    }
+                    
+                }
             }
-            Text(speaker.bio ?? "bio speaker")
-                .padding(.trailing, 8)
-            
+            .padding(.vertical, 8)
         }
-        .padding(.vertical, 8)
-        Divider().padding(.top, 8)
     }
 }
 
