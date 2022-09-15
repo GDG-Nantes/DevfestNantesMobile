@@ -51,12 +51,12 @@ struct AgendaDetailView: View {
                     .padding(.bottom, 8)
                 Divider().padding(.bottom, 8)
                 Text("\(content!.durationAndLanguage)")
-                .font(.footnote)
-
+                    .font(.footnote)
+                
                 HStack {
                     CategoryView(categoryLabel: content?.category?.label ?? "cat")
                     CategoryView(categoryLabel: content?.complexity?.text ?? "complexity")
-
+                    
                 }
                 Divider().padding(.top, 8)
                 Text(content!.abstract)
@@ -68,6 +68,11 @@ struct AgendaDetailView: View {
             }.padding(.horizontal)
         }
         .navigationBarTitle(Text(content!.title), displayMode: .inline)
+        .navigationBarItems(trailing:
+                                Image(systemName:  viewModel.favorites.contains(content!.id) ? "star.fill" : "star")
+            .foregroundColor(.yellow)
+            .padding(8)
+            .onTapGesture { self.viewModel.toggleFavorite(ofSession: content!)})
     }
 }
 

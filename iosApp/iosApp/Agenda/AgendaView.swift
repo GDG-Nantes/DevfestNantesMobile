@@ -13,6 +13,7 @@ struct AgendaView: View {
     @ObservedObject var viewModel: DevFestViewModel
     
     @State private var day = "2022-10-20"
+    @State private var showFavoritesOnly = false
     
     var sectionTimeFormatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -33,7 +34,7 @@ struct AgendaView: View {
                 List {
                     ForEach(viewModel.agendaContent.sections.filter{($0.day.contains(day))}, id: \.date) { section in
                         Section(header: Text("\(self.sectionTimeFormatter.string(from: section.date))")) {
-                            ForEach(section.sessions, id: \.id) { session in
+                            ForEach(self.showFavoritesOnly ? section.sessions.filter({viewModel.favorites.contains($0.id)}):  section.sessions, id: \.id) { session in
                                 NavigationLink(destination: AgendaDetailView(session: session, viewModel: viewModel)) {
                                     AgendaCellView(viewModel: viewModel, session: session)
                                 }
@@ -43,6 +44,11 @@ struct AgendaView: View {
                     }
                 }
                 .navigationBarTitle("Agenda")
+                .navigationBarItems(trailing:
+                                        Button(action: { self.showFavoritesOnly.toggle() }) {
+                    Image(systemName: showFavoritesOnly ? "star.fill" : "star").padding()
+                }
+                )
                 .task {
                     await viewModel.observeSessions()
                 }
