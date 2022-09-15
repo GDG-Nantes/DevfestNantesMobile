@@ -9,8 +9,10 @@ import com.gdgnantes.devfest.model.Session
 import com.gdgnantes.devfest.store.BookmarksStore
 import com.gdgnantes.devfest.store.DevFestNantesStore
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import javax.inject.Inject
 
 @HiltViewModel
@@ -23,13 +25,17 @@ class AgendaViewModel @Inject constructor(
     val uiState: StateFlow<UiState>
         get() = _uiState
 
-    val _days = MutableStateFlow(
-        mapOf(
-            1 to AgendaDay(1, emptyList()),
-            2 to AgendaDay(2, emptyList())
+    private val unfilteredDays = store.agenda
+        .map { agenda -> agenda.days }
+        .onEach { _uiState.emit(UiState.SUCCESS) }
+        .stateIn(
+            viewModelScope, SharingStarted.Lazily, mapOf(
+                1 to AgendaDay(1, emptyList()),
+                2 to AgendaDay(2, emptyList())
+            )
         )
-    )
 
+    private val _days = MutableStateFlow(unfilteredDays.value)
     val days: StateFlow<Map<Int, AgendaDay>>
         get() = _days.asStateFlow()
 
@@ -40,15 +46,10 @@ class AgendaViewModel @Inject constructor(
 
     init {
         viewModelScope.launch {
-            store.agenda
-                .map { agenda -> agenda.days }
-                .onEach { _uiState.emit(UiState.SUCCESS) }
-                .combine(_sessionFilters) { days, filters ->
-                    days to filters
-                }
-                .collect { (days, filters) ->
-                    _days.emit(days.filterSessions(filters))
-                }
+            unfilteredDays
+                .combine(_sessionFilters) { _, _ -> }
+                .combine(bookmarksStore.bookmarkedSessionIds) { _, _ -> }
+                .collect { updateFilteredDays() }
         }
     }
 
@@ -62,14 +63,13 @@ class AgendaViewModel @Inject constructor(
         }
     }
 
-    private fun Map<Int, AgendaDay>.filterSessions(
-        filterList: Set<SessionFilter>
-    ): Map<Int, AgendaDay> {
-        val output = mutableMapOf<Int, AgendaDay>()
-        forEach { (key, value) ->
-            output[key] = AgendaDay(value.dayIndex, value.sessions.filterSessions(filterList))
-        }
-        return output
+    private suspend fun updateFilteredDays() = withContext(Dispatchers.IO) {
+        _days.value = mutableMapOf<Int, AgendaDay>().apply {
+            unfilteredDays.value.forEach { (key, value) ->
+                this[key] =
+                    AgendaDay(value.dayIndex, value.sessions.filterSessions(_sessionFilters.value))
+            }
+        }.toMap()
     }
 
     private fun List<Session>.filterSessions(
