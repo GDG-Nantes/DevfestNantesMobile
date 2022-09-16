@@ -8,4 +8,5 @@ target 'iosApp' do
   pod 'KMPNativeCoroutinesAsync'
   pod "NSLogger/Swift"
   pod "URLImage"
+  pod 'SwiftGen', '~> 6.6'
 end
