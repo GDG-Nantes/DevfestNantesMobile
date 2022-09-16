@@ -22,21 +22,21 @@ struct AboutView: View {
                                 Image("ic_about_header")
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
-                                Text("screen_about_header_body")
+                                Text(L10n.screenAboutHeaderBody)
                                     .foregroundColor(Color.black)
                                 HStack(spacing: 24) {
                                     CustomButton(url: URL(string: "https://devfest.gdgnantes.com/code-of-conduct")!) {
-                                        Text("Code of conduct")
+                                        Text(L10n.aboutCodeOfConduct)
                                     }.foregroundColor(Color.red)
                                     CustomButton(url: URL(string: "https://devfest.gdgnantes.com/")!) {
-                                        Text("Website")
+                                        Text(L10n.aboutWebsite)
                                     }.foregroundColor(Color.red)
                                 }.padding(8)
                             }.padding(8)
                         }
                         Card {
                             VStack {
-                                Text("Follow us")
+                                Text(L10n.aboutSocialTitle)
                                     .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
                                     .foregroundColor(Color.red)
                                 HStack(alignment: .top, spacing: 40) {
@@ -53,19 +53,19 @@ struct AboutView: View {
                         }
                         Card {
                             VStack {
-                                Text("Local communities")
+                                Text(L10n.localCommunitiesTitle)
                                     .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
                                     .foregroundColor(Color.red)
                                 HStack(alignment: .top, spacing: 40) {
                                     CustomButton(url: URL(string: "https://nantes.community/")!) {
-                                        Text("🌍 Local communities website")
+                                        Text(L10n.localCommunitiesButton)
                                     }.foregroundColor(Color.red)
                                 }.padding(8)
                             }.padding(8)
                         }
                         Card {
                             VStack {
-                                Text("Sponsors")
+                                Text(L10n.partnersTitle)
                                     .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
                                     .foregroundColor(Color.red)
                             }.padding(8)

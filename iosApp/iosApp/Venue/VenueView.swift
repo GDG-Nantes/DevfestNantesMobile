@@ -31,7 +31,7 @@ struct VenueView: View {
                     .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
                     .padding(.horizontal, 8)
                 
-                Button("Y aller") {
+                Button(L10n.venueGoToButton) {
                     let url = "http://maps.apple.com/?daddr=\(viewModel.venueContent.latitude),\(viewModel.venueContent.longitude)"
                     UIApplication.shared.open(URL(string: url)!)
                 }.padding(.vertical, 8)

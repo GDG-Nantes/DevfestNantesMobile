@@ -43,7 +43,7 @@ struct AgendaView: View {
                         }
                     }
                 }
-                .navigationBarTitle("Agenda")
+                .navigationBarTitle(L10n.screenAgenda)
                 .navigationBarItems(trailing:
                                         Button(action: { self.showFavoritesOnly.toggle() }) {
                     Image(systemName: showFavoritesOnly ? "star.fill" : "star").padding()
