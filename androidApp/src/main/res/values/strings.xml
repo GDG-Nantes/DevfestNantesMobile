@@ -22,7 +22,7 @@
     <string name="app_version" translatable="false">Version %s (%d)</string>
     <string name="about_social_title">Follow us</string>
     <string name="bookmarked">Favorite</string>
-    <string name="btn_ok">Ok</string>
+    <string name="btn_ok">OK</string>
     <string name="btn_cancel">Cancel</string>
     <string name="web_external_disclaimer_text">You will be redirected to an external web page. We can not be held responsible for the content available on the site you are going to visit.</string>
     <string name="web_external_disclaimer_title">Redirection</string>
@@ -33,8 +33,12 @@
     <string name="session_filters_drawer_languages_label">Languages</string>
     <string name="session_filters_drawer_rooms_label">Rooms</string>
     <string name="partners_title">Partners</string>
-    <string name="venue_image_content_description">Picture of the venue.</string>
-    <string name="partners_platinium_title">PLATINIUM</string>
-    <string name="partners_gold_title">GOLD</string>
-    <string name="partners_virtual_title">VIRTUAL</string>
+    <string name="venue_image_content_description">Picture of the conference\'s venue.</string>
+    <string name="partners_platinium_title" translatable="false">PLATINIUM</string>
+    <string name="partners_gold_title" translatable="false">GOLD</string>
+    <string name="partners_virtual_title" translatable="false">VIRTUAL</string>
+    <string name="content_description_logo">%1$s logo. Link to the web page.</string>
+    <string name="content_description_speaker_website_icon">Website icon. Link to the speaker\'s website.</string>
+    <string name="content_description_speaker_picture">%1$s\'s profile picture.</string>
+    <string name="content_description_about_header">DevFest Nantes about logo header.</string>
 </resources>

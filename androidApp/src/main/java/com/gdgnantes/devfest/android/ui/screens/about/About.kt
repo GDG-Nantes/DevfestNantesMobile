@@ -25,7 +25,7 @@ fun About(
                 .fillMaxHeight()
                 .padding(it)
                 .verticalScroll(state = rememberScrollState()),
-            verticalArrangement = Arrangement.spacedBy(8.dp),
+            verticalArrangement = Arrangement.spacedBy(16.dp),
         ) {
             AboutHeader(modifier.padding(horizontal = 8.dp))
 
