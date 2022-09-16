@@ -24,7 +24,7 @@ struct ContentView: View {
                     }
                 }.tag(1)
             
-            AboutView()
+            AboutView(viewModel: viewModel)
                 .tabItem {
                     VStack {
                         Image(systemName: "info.circle")

@@ -17,6 +17,8 @@
 		CB179BDB28D24C9C00BB9934 /* CategoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB179BDA28D24C9C00BB9934 /* CategoryView.swift */; };
 		CB179BDE28D365E800BB9934 /* AgendaContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB179BDD28D365E800BB9934 /* AgendaContent.swift */; };
 		CB179BE028D365F600BB9934 /* VenueContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB179BDF28D365F600BB9934 /* VenueContent.swift */; };
+		CB179BE528D3894500BB9934 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB179BE428D3894500BB9934 /* CustomButton.swift */; };
+		CB179BEB28D4B48100BB9934 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = CB179BE928D4B48100BB9934 /* Localizable.strings */; };
 		CB3F424428A6A02300D1C75B /* AgendaCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB3F424328A6A02300D1C75B /* AgendaCellView.swift */; };
 		CB73E81028A5587E0014B9AF /* AgendaDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB73E80F28A5587E0014B9AF /* AgendaDetailView.swift */; };
 		CB837AB6287B7D1200FEDAA1 /* AgendaView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB837AB5287B7D1200FEDAA1 /* AgendaView.swift */; };
@@ -38,6 +40,9 @@
 		CB179BDA28D24C9C00BB9934 /* CategoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryView.swift; sourceTree = "<group>"; };
 		CB179BDD28D365E800BB9934 /* AgendaContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgendaContent.swift; sourceTree = "<group>"; };
 		CB179BDF28D365F600BB9934 /* VenueContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VenueContent.swift; sourceTree = "<group>"; };
+		CB179BE428D3894500BB9934 /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
+		CB179BEA28D4B48100BB9934 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		CB179BEC28D4B48E00BB9934 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		CB3F424328A6A02300D1C75B /* AgendaCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgendaCellView.swift; sourceTree = "<group>"; };
 		CB73E80F28A5587E0014B9AF /* AgendaDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgendaDetailView.swift; sourceTree = "<group>"; };
 		CB837AB5287B7D1200FEDAA1 /* AgendaView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgendaView.swift; sourceTree = "<group>"; };
@@ -97,7 +102,6 @@
 		7555FF7D242A565900829871 /* iosApp */ = {
 			isa = PBXGroup;
 			children = (
-				058557BA273AAA24004C7B11 /* Assets.xcassets */,
 				CB179BD628D22BA900BB9934 /* DevFestViewModel.swift */,
 				7555FF82242A565900829871 /* ContentView.swift */,
 				7555FF8C242A565B00829871 /* Info.plist */,
@@ -105,8 +109,10 @@
 				CB73E80E28A5501B0014B9AF /* Agenda */,
 				CB179BD128D0D8FF00BB9934 /* Venue */,
 				CB179BDC28D365B400BB9934 /* Data */,
+				CB179BE128D37E4C00BB9934 /* About */,
+				CB179BE628D4B2ED00BB9934 /* Resources */,
 				058557D7273AAEEB004C7B11 /* Preview Content */,
-				CB837AB9287B7D9200FEDAA1 /* AboutView.swift */,
+				CB179BE428D3894500BB9934 /* CustomButton.swift */,
 			);
 			path = iosApp;
 			sourceTree = "<group>";
@@ -126,6 +132,23 @@
 				CB179BDF28D365F600BB9934 /* VenueContent.swift */,
 			);
 			path = Data;
+			sourceTree = "<group>";
+		};
+		CB179BE128D37E4C00BB9934 /* About */ = {
+			isa = PBXGroup;
+			children = (
+				CB837AB9287B7D9200FEDAA1 /* AboutView.swift */,
+			);
+			path = About;
+			sourceTree = "<group>";
+		};
+		CB179BE628D4B2ED00BB9934 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				CB179BE928D4B48100BB9934 /* Localizable.strings */,
+				058557BA273AAA24004C7B11 /* Assets.xcassets */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 		CB73E80E28A5501B0014B9AF /* Agenda */ = {
@@ -191,7 +214,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
-				Base,
+				fr,
 			);
 			mainGroup = 7555FF72242A565900829871;
 			productRefGroup = 7555FF7C242A565900829871 /* Products */;
@@ -209,6 +232,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				058557D9273AAEEB004C7B11 /* Preview Assets.xcassets in Resources */,
+				CB179BEB28D4B48100BB9934 /* Localizable.strings in Resources */,
 				058557BB273AAA24004C7B11 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -262,6 +286,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CB179BE528D3894500BB9934 /* CustomButton.swift in Sources */,
 				CB179BE028D365F600BB9934 /* VenueContent.swift in Sources */,
 				CB837AB8287B7D6500FEDAA1 /* VenueView.swift in Sources */,
 				CB179BDE28D365E800BB9934 /* AgendaContent.swift in Sources */,
@@ -277,6 +302,18 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		CB179BE928D4B48100BB9934 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CB179BEA28D4B48100BB9934 /* en */,
+				CB179BEC28D4B48E00BB9934 /* fr */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		7555FFA3242A565B00829871 /* Debug */ = {
