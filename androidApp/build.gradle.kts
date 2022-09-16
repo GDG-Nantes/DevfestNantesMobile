@@ -46,6 +46,7 @@ android {
             isIncludeAndroidResources = true
         }
     }
+    namespace = "com.gdgnantes.devfest.android"
 }
 
 dependencies {
