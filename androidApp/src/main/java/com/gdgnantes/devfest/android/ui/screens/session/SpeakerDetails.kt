@@ -1,23 +1,24 @@
 package com.gdgnantes.devfest.android.ui.screens.session
 
 import android.annotation.SuppressLint
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Row
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
+import android.content.res.Configuration
+import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.material3.*
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.gdgnantes.devfest.android.R
+import com.gdgnantes.devfest.android.ui.components.SocialIcon
 import com.gdgnantes.devfest.android.ui.theme.DevFest_NantesTheme
 import com.gdgnantes.devfest.model.SocialsType
 import com.gdgnantes.devfest.model.Speaker
@@ -41,7 +42,10 @@ fun SpeakerDetails(
                     .data(speaker.photoUrl)
                     .crossfade(true)
                     .build(),
-                contentDescription = speaker.name
+                contentDescription = stringResource(
+                    id = R.string.content_description_speaker_picture,
+                    speaker.name
+                )
             )
 
             Column(Modifier.padding(horizontal = 8.dp)) {
@@ -57,40 +61,52 @@ fun SpeakerDetails(
                         style = MaterialTheme.typography.bodySmall,
                     )
                 }
-            }
-        }
 
-        Row(Modifier.padding(start = 58.dp, top = 4.dp)) {
-            for (socialsItem in speaker.socials.orEmpty()
-                .filter { it.link != null && it.type != null }) {
-                IconButton(
-                    onClick = {
-                        socialsItem.link?.let { onSocialLinkClick(it) }
-                    }
+                Row(
+                    Modifier.padding(top = 8.dp),
+                    horizontalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-                    Icon(
-                        painter = painterResource(
-                            if (socialsItem.type == SocialsType.TWITTER) {
-                                R.drawable.ic_network_twitter
-                            } else {
-                                R.drawable.ic_network_web
-                            }
-                        ), contentDescription = "${socialsItem.type.toString()} icon"
-                    )
+                    for (socialsItem in speaker.socials.orEmpty()
+                        .filter { it.link != null && it.type != null }) {
+                        if (socialsItem.type == SocialsType.TWITTER) {
+                            SocialIcon(
+                                resourceId = R.drawable.ic_network_twitter,
+                                contentDescription = stringResource(
+                                    id = R.string.content_description_logo,
+                                    "Twitter"
+                                ),
+                                onClick = { socialsItem.link?.let { onSocialLinkClick(it) } }
+                            )
+                        } else {
+                            SocialIcon(
+                                resourceId = R.drawable.ic_network_web,
+                                contentDescription = stringResource(
+                                    id = R.string.content_description_speaker_website_icon
+                                ),
+                                onClick = { socialsItem.link?.let { onSocialLinkClick(it) } }
+                            )
+                        }
+                    }
                 }
             }
         }
+
+
     }
 }
 
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
-@OptIn(ExperimentalMaterial3Api::class)
-@Preview
+@Preview(
+    "Night mode",
+    uiMode = Configuration.UI_MODE_NIGHT_YES
+)
+@Preview(
+    "Light mode",
+    uiMode = Configuration.UI_MODE_NIGHT_NO
+)
 @Composable
 fun SpeakerDetailsPreview() {
     DevFest_NantesTheme {
-        Scaffold {
-            SpeakerDetails(speaker = buildSpeakerStub(), onSocialLinkClick = {})
-        }
+        SpeakerDetails(speaker = buildSpeakerStub(), onSocialLinkClick = {})
     }
 }

@@ -1,6 +1,7 @@
 package com.gdgnantes.devfest.android.ui.screens.agenda
 
 import android.annotation.SuppressLint
+import android.content.res.Configuration
 import androidx.compose.animation.animateColorAsState
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.Icon
@@ -85,7 +86,8 @@ fun AgendaRow(
                     end = 12.dp,
                     top = 12.dp,
                     bottom = 4.dp
-                )
+                ),
+                verticalArrangement = Arrangement.spacedBy(8.dp)
             ) {
                 Text(
                     text = session.title,
@@ -105,8 +107,6 @@ fun AgendaRow(
                         style = MaterialTheme.typography.labelMedium
                     )
                 }
-
-
 
                 Row {
                     Column(Modifier.weight(1F)) {
@@ -156,17 +156,22 @@ fun AgendaRow(
 
 @ExperimentalMaterial3Api
 @SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
-@Preview
+@Preview(
+    "Night mode",
+    uiMode = Configuration.UI_MODE_NIGHT_YES
+)
+@Preview(
+    "Light mode",
+    uiMode = Configuration.UI_MODE_NIGHT_NO
+)
 @Composable
 fun AgendaRowPreview() {
     DevFest_NantesTheme {
-        Scaffold {
-            AgendaRow(
-                isBookmarked = true,
-                session = buildSessionStub(),
-                onSessionClick = {},
-                onSessionBookmarkClick = {}
-            )
-        }
+        AgendaRow(
+            isBookmarked = true,
+            session = buildSessionStub(),
+            onSessionClick = {},
+            onSessionBookmarkClick = {}
+        )
     }
 }
