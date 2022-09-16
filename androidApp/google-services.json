@@ -7,17 +7,17 @@
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:451587929709:android:27034905f7a57930fe7164",
+        "mobilesdk_app_id": "1:451587929709:android:f722cda15cab1a04fe7164",
         "android_client_info": {
-          "package_name": "com.gdgnantes.devfest.android"
+          "package_name": "com.gdgnantes.devfest.androidapp"
         }
       },
       "oauth_client": [
         {
-          "client_id": "451587929709-2v5mrav2dgbal09fen68enushajd9t60.apps.googleusercontent.com",
+          "client_id": "451587929709-h9ngkpofs1oh1u5dqrhubf29q0me22b1.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.gdgnantes.devfest.android",
+            "package_name": "com.gdgnantes.devfest.androidapp",
             "certificate_hash": "40e26e2cfa2e11205620c8ce9738fc24ce12b5c4"
           }
         },

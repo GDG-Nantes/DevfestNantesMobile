@@ -11,11 +11,11 @@ plugins {
 android {
     compileSdk = AndroidSdk.compile
     defaultConfig {
-        applicationId = "com.gdgnantes.devfest.android"
+        applicationId = "com.gdgnantes.devfest.androidapp"
         minSdk = AndroidSdk.min
         targetSdk = AndroidSdk.target
         versionCode = 1
-        versionName = "1.0"
+        versionName = "1.0.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
 
@@ -46,7 +46,7 @@ android {
             isIncludeAndroidResources = true
         }
     }
-    namespace = "com.gdgnantes.devfest.android"
+    namespace = "com.gdgnantes.devfest.androidapp"
 }
 
 dependencies {
