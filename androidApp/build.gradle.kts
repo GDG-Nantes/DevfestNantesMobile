@@ -88,7 +88,8 @@ dependencies {
         implementation(materialIconsCore)
         implementation(materialIconsExtended)
         implementation(navigation)
-        implementation(uiTooling)
+        debugImplementation(uiTooling)
+        implementation(uiToolingPreview)
         implementation(hiltNavigation)
     }
 
