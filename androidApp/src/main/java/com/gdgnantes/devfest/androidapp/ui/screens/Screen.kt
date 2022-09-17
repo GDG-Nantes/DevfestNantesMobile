@@ -47,6 +47,13 @@ sealed class Screen(
         imageVectorOutlined = null
     )
 
+    object Settings : Screen(
+        route = "settings",
+        title = R.string.screen_settings,
+        imageVectorFilled = null,
+        imageVectorOutlined = null
+    )
+
     object Venue : Screen(
         route = "venue",
         title = R.string.screen_venue,

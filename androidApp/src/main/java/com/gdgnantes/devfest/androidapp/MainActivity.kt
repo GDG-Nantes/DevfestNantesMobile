@@ -12,6 +12,7 @@ import com.gdgnantes.devfest.androidapp.ui.screens.Home
 import com.gdgnantes.devfest.androidapp.ui.screens.Screen
 import com.gdgnantes.devfest.androidapp.ui.screens.session.SessionLayout
 import com.gdgnantes.devfest.androidapp.ui.screens.session.SessionViewModel
+import com.gdgnantes.devfest.androidapp.ui.screens.settings.Settings
 import com.gdgnantes.devfest.androidapp.ui.theme.DevFest_NantesTheme
 import com.gdgnantes.devfest.androidapp.utils.assistedViewModel
 import dagger.hilt.EntryPoint
@@ -53,6 +54,7 @@ class MainActivity : ComponentActivity() {
                             onSessionClick = { session ->
                                 session.openFeedbackFormId?.let { mainNavController.navigate("${Screen.Session.route}/${session.id}") }
                             },
+                            onSettingsClick = { mainNavController.navigate(Screen.Settings.route) },
                             onWeblinkClick = { url ->
                                 externalContentService.openUrl(url)
                             }
@@ -75,6 +77,14 @@ class MainActivity : ComponentActivity() {
                             onSocialLinkClick = { url ->
                                 externalContentService.openUrl(url)
                             }
+                        )
+                    }
+
+                    composable(
+                        route = Screen.Settings.route
+                    ) {
+                        Settings(
+                            onBackClick = { mainNavController.popBackStack() }
                         )
                     }
                 }

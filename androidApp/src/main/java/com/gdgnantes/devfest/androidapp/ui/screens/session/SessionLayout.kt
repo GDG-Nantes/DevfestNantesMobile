@@ -130,7 +130,7 @@ fun SessionLayout(
                         Icon(
                             imageVector = Icons.Filled.ArrowBack,
                             tint = MaterialTheme.colorScheme.onSurface,
-                            contentDescription = "Back"
+                            contentDescription = stringResource(id = R.string.action_back)
                         )
                     }
                 }

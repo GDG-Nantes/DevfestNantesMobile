@@ -43,4 +43,6 @@
     <string name="content_description_about_header">DevFest Nantes about logo header.</string>
     <string name="fork_me_on_github" translatable="false">Fork me on Github</string>
     <string name="content_description_logo_github">Github logo</string>
+    <string name="settings_action">Open application settings.</string>
+    <string name="screen_settings">Settings</string>
 </resources>

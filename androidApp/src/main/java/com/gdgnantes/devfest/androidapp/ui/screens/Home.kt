@@ -3,6 +3,7 @@ package com.gdgnantes.devfest.androidapp.ui.screens
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.FilterList
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -30,6 +31,7 @@ fun Home(
     modifier: Modifier = Modifier,
     startDestination: Screen = Screen.Agenda,
     onSessionClick: ((Session) -> Unit),
+    onSettingsClick: () -> Unit,
     onWeblinkClick: (String) -> Unit
 ) {
     val homeNavController = rememberNavController()
@@ -61,6 +63,12 @@ fun Home(
                             }
                         }
                         else -> {}
+                    }
+                    IconButton(onClick = onSettingsClick) {
+                        Icon(
+                            imageVector = Icons.Filled.Settings,
+                            contentDescription = stringResource(id = R.string.settings_action)
+                        )
                     }
                 }
             )
