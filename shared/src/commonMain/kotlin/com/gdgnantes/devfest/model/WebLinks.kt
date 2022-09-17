@@ -1,4 +1,4 @@
-package com.gdgnantes.devfest
+package com.gdgnantes.devfest.model
 
 enum class WebLinks(val url: String) {
     WEBSITE("https://devfest.gdgnantes.com/"),
@@ -8,4 +8,5 @@ enum class WebLinks(val url: String) {
     SOCIAL_LINKEDIN("https://www.linkedin.com/in/gdg-nantes"),
     SOCIAL_YOUTUBE("https://www.youtube.com/c/Gdg-franceBlogspotFr"),
     NANTES_TECH_COMMUNITIES("https://nantes.community/"),
+    GITHUB("https://github.com/GDG-Nantes/DevfestNantesMobile")
 }
