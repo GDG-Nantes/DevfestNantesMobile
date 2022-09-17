@@ -6,9 +6,11 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.gdgnantes.devfest.androidapp.ui.components.GithubCard
 import com.gdgnantes.devfest.androidapp.ui.screens.about.partners.Partners
 import com.gdgnantes.devfest.androidapp.ui.theme.DevFest_NantesTheme
 
@@ -49,7 +51,14 @@ fun About(
                 onWeblinkClick = onWeblinkClick
             )
 
-            AboutVersion(modifier.padding(horizontal = 8.dp))
+            GithubCard(
+                modifier
+                    .padding(horizontal = 8.dp)
+                    .align(Alignment.CenterHorizontally),
+                onWeblinkClick = onWeblinkClick
+            )
+
+            AboutVersion(modifier.padding(8.dp))
         }
     }
 }
