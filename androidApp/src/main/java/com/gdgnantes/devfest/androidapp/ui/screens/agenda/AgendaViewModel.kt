@@ -4,6 +4,8 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.gdgnantes.devfest.androidapp.ui.UiState
 import com.gdgnantes.devfest.androidapp.utils.SessionFilter
+import com.gdgnantes.devfest.model.Agenda.Companion.DAY_ONE_ISO
+import com.gdgnantes.devfest.model.Agenda.Companion.DAY_TWO_ISO
 import com.gdgnantes.devfest.model.AgendaDay
 import com.gdgnantes.devfest.model.Session
 import com.gdgnantes.devfest.store.BookmarksStore
@@ -30,8 +32,8 @@ class AgendaViewModel @Inject constructor(
         .onEach { _uiState.emit(UiState.SUCCESS) }
         .stateIn(
             viewModelScope, SharingStarted.Lazily, mapOf(
-                1 to AgendaDay(1, emptyList()),
-                2 to AgendaDay(2, emptyList())
+                1 to AgendaDay(1, DAY_ONE_ISO, emptyList()),
+                2 to AgendaDay(2, DAY_TWO_ISO, emptyList())
             )
         )
 
@@ -66,8 +68,9 @@ class AgendaViewModel @Inject constructor(
     private suspend fun updateFilteredDays() = withContext(Dispatchers.IO) {
         _days.value = mutableMapOf<Int, AgendaDay>().apply {
             unfilteredDays.value.forEach { (key, value) ->
+                val date = if (key == 1) DAY_ONE_ISO else DAY_TWO_ISO
                 this[key] =
-                    AgendaDay(value.dayIndex, value.sessions
+                    AgendaDay(value.dayIndex, date, value.sessions
                         .filterSessions(_sessionFilters.value)
                         .sortedBy { session -> session.scheduleSlot.startDate })
             }

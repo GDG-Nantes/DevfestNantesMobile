@@ -9,28 +9,30 @@ data class Agenda(val days: Map<Int, AgendaDay>) {
         var sessions: List<Session> = emptyList()
 
         fun build(): Agenda {
-            val dayOne = mutableListOf<Session>()
-            val dayTwo = mutableListOf<Session>()
+            val dayOneSessions = mutableListOf<Session>()
+            val dayTwoSessions = mutableListOf<Session>()
             sessions.sortedBy { session -> session.scheduleSlot.startDate }
                 .forEach { session ->
                     val startInstant = session.scheduleSlot.startDate.toInstant()
                     if (startInstant.minus(DAY_ONE).inWholeDays == 0L) {
-                        dayOne.add(session)
+                        dayOneSessions.add(session)
                     } else if (startInstant.minus(DAY_TWO).inWholeDays == 0L) {
-                        dayTwo.add(session)
+                        dayTwoSessions.add(session)
                     }
                 }
 
             val days = mutableMapOf<Int, AgendaDay>()
-            days[1] = AgendaDay(1, dayOne)
-            days[2] = AgendaDay(2, dayTwo)
+            days[1] = AgendaDay(1, DAY_ONE_ISO, dayOneSessions)
+            days[2] = AgendaDay(2, DAY_TWO_ISO, dayTwoSessions)
 
             return Agenda(days)
         }
     }
 
     companion object {
-        val DAY_ONE = Instant.parse("2022-10-20T02:00:00.000Z")
-        val DAY_TWO = Instant.parse("2022-10-21T02:00:00.000Z")
+        const val DAY_ONE_ISO = "2022-10-20T00:00:00Z"
+        const val DAY_TWO_ISO = "2022-10-21T00:00:00Z"
+        val DAY_ONE = Instant.parse(DAY_ONE_ISO)
+        val DAY_TWO = Instant.parse(DAY_TWO_ISO)
     }
 }
