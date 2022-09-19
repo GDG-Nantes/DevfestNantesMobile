@@ -6,11 +6,15 @@ import androidx.preference.PreferenceManager
 import com.gdgnantes.devfest.androidapp.BuildConfig
 import com.gdgnantes.devfest.androidapp.core.ApplicationInitializer
 import com.gdgnantes.devfest.androidapp.core.CoroutinesDispatcherProvider
+import com.gdgnantes.devfest.androidapp.core.DataSharingInitializer
 import com.gdgnantes.devfest.androidapp.core.LoggerInitializer
 import com.gdgnantes.devfest.androidapp.services.BookmarksStoreImpl
+import com.gdgnantes.devfest.androidapp.services.DataSharingSettingsService
+import com.gdgnantes.devfest.androidapp.services.DataSharingSettingsServiceImpl
 import com.gdgnantes.devfest.store.BookmarksStore
 import com.gdgnantes.devfest.store.DevFestNantesStore
 import com.gdgnantes.devfest.store.DevFestNantesStoreBuilder
+import com.google.firebase.crashlytics.FirebaseCrashlytics
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -28,6 +32,10 @@ abstract class AppModule {
     @Binds
     abstract fun bookmarksStore(bookmarksStoreImpl: BookmarksStoreImpl): BookmarksStore
 
+    @AppScope
+    @Binds
+    abstract fun dataSharingSettingsService(dataSharingSettingsServiceImpl: DataSharingSettingsServiceImpl): DataSharingSettingsService
+
     companion object {
         @AppScope
         @Provides
@@ -41,8 +49,13 @@ abstract class AppModule {
         @Provides
         @ElementsIntoSet
         fun applicationInitializers(
-            loggerInitializer: LoggerInitializer
-        ): Set<ApplicationInitializer> = setOf(loggerInitializer)
+            loggerInitializer: LoggerInitializer,
+            dataSharingInitializer: DataSharingInitializer
+        ): Set<ApplicationInitializer> = setOf(loggerInitializer, dataSharingInitializer)
+
+        @AppScope
+        @Provides
+        fun crashlytics() = FirebaseCrashlytics.getInstance()
 
         @AppScope
         @Provides
