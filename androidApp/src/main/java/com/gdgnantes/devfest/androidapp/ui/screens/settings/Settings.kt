@@ -56,7 +56,10 @@ fun Settings(
                         contentDescription = stringResource(id = R.string.content_description_data_sharing_logo)
                     )
                 },
-                title = "Data sharing", subtitle = "Allow data sharing with GDG Nantes",
+                title = stringResource(id = R.string.screen_data_sharing),
+                subtitle = stringResource(
+                    id = R.string.settings_data_sharing_subtitle
+                ),
                 onClick = onOpenDataSharing
             )
 
