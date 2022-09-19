@@ -10,6 +10,8 @@ import androidx.navigation.compose.rememberNavController
 import com.gdgnantes.devfest.androidapp.services.ExternalContentService
 import com.gdgnantes.devfest.androidapp.ui.screens.Home
 import com.gdgnantes.devfest.androidapp.ui.screens.Screen
+import com.gdgnantes.devfest.androidapp.ui.screens.datasharing.DataSharingAgreementDialog
+import com.gdgnantes.devfest.androidapp.ui.screens.datasharing.DataSharingSettingsScreen
 import com.gdgnantes.devfest.androidapp.ui.screens.session.SessionLayout
 import com.gdgnantes.devfest.androidapp.ui.screens.session.SessionViewModel
 import com.gdgnantes.devfest.androidapp.ui.screens.settings.Settings
@@ -84,9 +86,22 @@ class MainActivity : ComponentActivity() {
                         route = Screen.Settings.route
                     ) {
                         Settings(
+                            onBackClick = { mainNavController.popBackStack() },
+                            onOpenDataSharing = { mainNavController.navigate(Screen.DataSharing.route) }
+                        )
+                    }
+
+                    composable(
+                        route = Screen.DataSharing.route
+                    ) {
+                        DataSharingSettingsScreen(
                             onBackClick = { mainNavController.popBackStack() }
                         )
                     }
+                }
+
+                DataSharingAgreementDialog {
+                    mainNavController.navigate(Screen.DataSharing.route)
                 }
             }
         }

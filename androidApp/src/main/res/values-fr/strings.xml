@@ -39,4 +39,13 @@
   <string name="content_description_logo_github">Logo de Github</string>
   <string name="settings_action">Ouvrir les paramètres de l\'application.</string>
   <string name="screen_settings">Paramètres</string>
+  <string name="content_description_data_sharing_logo">Icone de cadena.</string>
+  <string name="legal_data_sharing_consent_dialog_body">Nous utilisons des outils tiers pour mesurer et améliorer les performances. Aucune utilisation commerciale n\'est faite de ces données. En cliquant sur \"Consentement\" ou en activant ces outils dans les paramètres, vous consentez à l\'utilisation de ces services et technologies.</string>
+  <string name="legal_data_sharing_consent_dialog_button_consent">Consentir</string>
+  <string name="button_dialog_data_sharing_consent_customize">Personnaliser</string>
+  <string name="legal_data_sharing_body">Les donénes anonymes que vous partagez nous aide à améliorer l\'application.</string>
+  <string name="legal_data_sharing_google_analytics_description">Nous utilisons Google Analytics pour collecter des données anonymes afin de mesurer la façon dont les utilisateurs interagissent avec l\'application.</string>
+  <string name="legal_data_sharing_firebase_crashlytics_description">Nous utilisons Firebase Crashlytics pour collecter des données anonymes lorsqu\'un bug se produit. Cela nous aide à améliorer la stabilité de l\'application.</string>
+  <string name="legal_data_sharing_accept_all">Accepter tout</string>
+  <string name="screen_data_sharing">Partage de données</string>
 </resources>
