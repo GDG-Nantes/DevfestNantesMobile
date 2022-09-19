@@ -6,7 +6,9 @@ import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.platform.LocalContext
 import com.gdgnantes.devfest.androidapp.ui.UiState
+import com.gdgnantes.devfest.androidapp.utils.getDayFromIso8601
 import com.gdgnantes.devfest.androidapp.utils.pagerTabIndicatorOffset
 import com.gdgnantes.devfest.model.AgendaDay
 import com.gdgnantes.devfest.model.Session
@@ -42,7 +44,8 @@ fun AgendaPager(
             },
             contentColor = MaterialTheme.colorScheme.onSurface
         ) {
-            val daysNames = days.keys.toList().map { key -> key.toString() }
+            val daysNames = days.values.toList()
+                .map { getDayFromIso8601(it.date, context = LocalContext.current) ?: "" }
             repeat(daysNames.size) {
                 val coroutineScope = rememberCoroutineScope()
                 Tab(
