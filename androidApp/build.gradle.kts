@@ -14,7 +14,7 @@ android {
         applicationId = "com.gdgnantes.devfest.androidapp"
         minSdk = AndroidSdk.min
         targetSdk = AndroidSdk.target
-        versionCode = 3
+        versionCode = 4
         versionName = "1.0.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
