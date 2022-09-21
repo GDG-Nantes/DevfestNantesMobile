@@ -14,13 +14,13 @@ struct AgendaView: View {
     
     @State private var day = "2022-10-20"
     @State private var showFavoritesOnly = false
-    
+    @State private var selectedRoom: Room?
+        
     var sectionTimeFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateFormat = "HH:mm"
         return formatter
     }()
-    
     
     var body: some View {
         
@@ -34,7 +34,8 @@ struct AgendaView: View {
                 List {
                     ForEach(viewModel.agendaContent.sections.filter{($0.day.contains(day))}, id: \.date) { section in
                         Section(header: Text("\(self.sectionTimeFormatter.string(from: section.date))")) {
-                            ForEach(self.showFavoritesOnly ? section.sessions.filter({viewModel.favorites.contains($0.id)}):  section.sessions, id: \.id) { session in
+                            let filteredSessions = getFilteredSessions(sessions: section.sessions)
+                            ForEach(self.showFavoritesOnly ? filteredSessions.filter({viewModel.favorites.contains($0.id)}):  filteredSessions, id: \.id) { session in
                                 NavigationLink(destination: AgendaDetailView(session: session, viewModel: viewModel)) {
                                     AgendaCellView(viewModel: viewModel, session: session)
                                 }
@@ -45,16 +46,41 @@ struct AgendaView: View {
                 }
                 .navigationBarTitle(L10n.screenAgenda)
                 .navigationBarItems(trailing:
-                                        Button(action: { self.showFavoritesOnly.toggle() }) {
-                    Image(systemName: showFavoritesOnly ? "star.fill" : "star").padding()
-                }
-                )
+                Menu("\(Image(systemName: "line.3.horizontal.decrease.circle"))") {
+                    let selected = Binding(
+                        get: { self.showFavoritesOnly },
+                        set: { self.showFavoritesOnly = $0 == self.showFavoritesOnly ? false : $0 }
+                    )
+                        Picker("", selection: selected) {
+                            Text("Favorites").tag(true)
+                            Menu("Rooms") {
+                                let selected = Binding(
+                                    get: { self.selectedRoom },
+                                    set: { self.selectedRoom = $0 == self.selectedRoom ? nil : $0 })
+                                Picker("Rooms", selection: selected) {
+                                    ForEach(self.viewModel.roomsContent, id: \.id) { room in
+                                        Text(room.name).tag(Optional(room))
+                                    }
+                                }
+                            }
+                        }
+                    
+                })
                 .task {
+                    await viewModel.observeRooms()
                     await viewModel.observeSessions()
                 }
             }
         }
     }
+    
+    func getFilteredSessions(sessions: [AgendaContent.Session]) -> [AgendaContent.Session]{
+        if self.selectedRoom != nil {
+            return sessions.filter({selectedRoom!.name.contains($0.room)})
+        }
+        return sessions
+    }
+    
 }
 
 //struct AgendaView_Previews: PreviewProvider {
