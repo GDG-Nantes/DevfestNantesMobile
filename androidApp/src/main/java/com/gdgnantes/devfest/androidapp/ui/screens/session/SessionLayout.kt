@@ -10,10 +10,7 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material3.*
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.State
-import androidx.compose.runtime.collectAsState
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.testTag
@@ -23,6 +20,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.gdgnantes.devfest.androidapp.R
 import com.gdgnantes.devfest.androidapp.ui.BookmarksViewModel
+import com.gdgnantes.devfest.androidapp.ui.components.LoadingLayout
 import com.gdgnantes.devfest.androidapp.ui.components.appbars.TopAppBar
 import com.gdgnantes.devfest.androidapp.ui.theme.bookmarked
 import com.gdgnantes.devfest.model.Session
@@ -50,39 +48,26 @@ fun SessionLayout(
 fun SessionLayout(
     modifier: Modifier = Modifier,
     sessionState: State<Session?>,
+    bookmarksViewModel: BookmarksViewModel = hiltViewModel(),
     openFeedback: OpenFeedback,
     onBackClick: () -> Unit,
     onSocialLinkClick: (String) -> Unit
 ) {
-    sessionState.value?.let { session ->
-        SessionLayout(
-            openFeedback = openFeedback,
-            modifier = modifier,
-            session = session,
-            onBackClick = onBackClick,
-            onSocialLinkClick = onSocialLinkClick
-        )
-    }
-}
-
-@Composable
-fun SessionLayout(
-    modifier: Modifier = Modifier,
-    session: Session,
-    bookmarksViewModel: BookmarksViewModel = hiltViewModel(),
-    openFeedback: OpenFeedback,
-    onBackClick: () -> Unit,
-    onSocialLinkClick: (String) -> Unit,
-) {
+    val session = sessionState.value
+    val isBookmarkedState =
+        session?.run { bookmarksViewModel.subscribe(session.id).collectAsState(initial = false) }
+            ?: (remember {
+                mutableStateOf(false)
+            })
     SessionLayout(
         modifier = modifier,
         session = session,
-        isBookmarked = bookmarksViewModel.subscribe(session.id).collectAsState(initial = false),
+        isBookmarked = isBookmarkedState,
         openFeedback = openFeedback,
         onBackClick = onBackClick,
         onSocialLinkClick = onSocialLinkClick,
         onSessionBookmarkClick = { isBookmarked ->
-            bookmarksViewModel.setBookmarked(session.id, isBookmarked)
+            session?.id?.let { bookmarksViewModel.setBookmarked(it, isBookmarked) }
         }
     )
 }
@@ -90,7 +75,7 @@ fun SessionLayout(
 @Composable
 fun SessionLayout(
     modifier: Modifier = Modifier,
-    session: Session,
+    session: Session?,
     isBookmarked: State<Boolean>,
     openFeedback: OpenFeedback,
     onBackClick: () -> Unit,
@@ -113,7 +98,7 @@ fun SessionLayout(
 @Composable
 fun SessionLayout(
     modifier: Modifier = Modifier,
-    session: Session,
+    session: Session?,
     isBookmarked: Boolean,
     openFeedback: OpenFeedback,
     onBackClick: () -> Unit,
@@ -123,7 +108,7 @@ fun SessionLayout(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = session.title,
+                title = session?.title ?: stringResource(id = R.string.placeholder_session_details),
                 modifier = Modifier.testTag("topAppBar"),
                 navigationIcon = {
                     IconButton(onClick = onBackClick) {
@@ -162,17 +147,21 @@ fun SessionLayout(
                 .verticalScroll(state = rememberScrollState())
                 .padding(it)
         ) {
-            SessionDetails(
-                modifier = Modifier.padding(8.dp),
-                session = session,
-                onSocialLinkClick = onSocialLinkClick
-            )
-
-            session.openFeedbackFormId?.let { openFeedbackFormId ->
-                FeedbackForm(
-                    openFeedback = openFeedback,
-                    openFeedbackFormId = openFeedbackFormId,
+            if (session != null) {
+                SessionDetails(
+                    modifier = Modifier.padding(8.dp),
+                    session = session,
+                    onSocialLinkClick = onSocialLinkClick
                 )
+
+                session.openFeedbackFormId?.let { openFeedbackFormId ->
+                    FeedbackForm(
+                        openFeedback = openFeedback,
+                        openFeedbackFormId = openFeedbackFormId,
+                    )
+                }
+            } else {
+                LoadingLayout()
             }
         }
     }

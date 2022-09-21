@@ -57,4 +57,5 @@
     <string name="legal_data_sharing_accept_all">Accept all</string>
     <string name="screen_data_sharing">Data sharing</string>
     <string name="settings_data_sharing_subtitle">Customize data sharing</string>
+    <string name="placeholder_session_details">Session details</string>
 </resources>

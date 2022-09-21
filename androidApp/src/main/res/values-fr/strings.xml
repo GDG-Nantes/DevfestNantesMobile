@@ -49,4 +49,5 @@
   <string name="legal_data_sharing_accept_all">Accepter tout</string>
   <string name="screen_data_sharing">Partage de données</string>
   <string name="settings_data_sharing_subtitle">Personnaliser le partage de vos données.</string>
+  <string name="placeholder_session_details">Détails de la session</string>
 </resources>
