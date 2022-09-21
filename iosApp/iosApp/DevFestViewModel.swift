@@ -82,12 +82,11 @@ class DevFestViewModel: ObservableObject {
         do {
             let stream = asyncStream(for: store.partnersNative)
             for try await data in stream {
-                print("Data\(data)" )
+                self.partnersContent = []
                 DispatchQueue.main.async {
                     for key in data.keys.sorted() {
                         self.partnersContent.append(PartnerContent(categoryName: key, partners: data[key]!))
                     }
-//                    print(self.partnersContent)
                 }
             }
         } catch {

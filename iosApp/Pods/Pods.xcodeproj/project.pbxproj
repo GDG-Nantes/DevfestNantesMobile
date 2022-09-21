@@ -211,16 +211,10 @@
 		50C1D514C44BB7F8B6750BCF1D9468B0 /* NSLogger.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = NSLogger.release.xcconfig; sourceTree = "<group>"; };
 		54DC7F9924F99FEE67A9AD3BEE09A10C /* Pods-iosApp-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "Pods-iosApp-dummy.m"; sourceTree = "<group>"; };
 		55178EE20B0D1C73FECDF18A3B45C4A4 /* NSLogger */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = NSLogger; path = NSLogger.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-<<<<<<< HEAD
-		59447E4D96EA44F26267ADA0CD9FA73B /* NSLogger-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "NSLogger-Info.plist"; sourceTree = "<group>"; };
-		59E33FBD263C97F8F5C7ED5CFCE0D514 /* Download.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Download.swift; path = Dependencies/Sources/DownloadManager/Download/Download.swift; sourceTree = "<group>"; };
-		5A9F87A2CA09669D28EB9218A0842E91 /* NativeFlow.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NativeFlow.swift; path = KMPNativeCoroutinesCore/NativeFlow.swift; sourceTree = "<group>"; };
-=======
 		567CA6237D9ECDC8D1ECD38A8AB24F4F /* URLImage-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "URLImage-Info.plist"; sourceTree = "<group>"; };
 		58031B6DB391F826564D4350F8E6C898 /* File.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = File.swift; path = Dependencies/Sources/FileIndex/File.swift; sourceTree = "<group>"; };
 		5A71D31F3D3D0DE2B04CD003CF031680 /* CoreDataEntityDescription.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CoreDataEntityDescription.swift; path = Dependencies/Sources/PlainDatabase/CoreDataModel/CoreDataEntityDescription.swift; sourceTree = "<group>"; };
 		5A9819364C4E4B8CF1B7448F6E3EEBAB /* URLImageService+Decode.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "URLImageService+Decode.swift"; path = "Sources/URLImage/URLImageService+Decode.swift"; sourceTree = "<group>"; };
->>>>>>> b6f457c (👍Adds SwiftGen for localization strings)
 		5AC974169B09D4545F741E9A2147610E /* Pods-iosApp-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-iosApp-Info.plist"; sourceTree = "<group>"; };
 		5AD4A6A0B2B811D0B0909F8F8FF16E51 /* KMPNativeCoroutinesCore-prefix.pch */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "KMPNativeCoroutinesCore-prefix.pch"; sourceTree = "<group>"; };
 		5BCFB00693A134461C48B9979D1E2570 /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = Platforms/iPhoneOS.platform/Developer/SDKs/iPhoneOS14.0.sdk/System/Library/Frameworks/UIKit.framework; sourceTree = DEVELOPER_DIR; };
@@ -254,10 +248,6 @@
 		976E7D1C3543AF2936977DFFBF4A8708 /* RemoteContentViewLoadOptions+URLImageOptions_LoadOptions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "RemoteContentViewLoadOptions+URLImageOptions_LoadOptions.swift"; path = "Sources/URLImage/Common/RemoteContentViewLoadOptions+URLImageOptions_LoadOptions.swift"; sourceTree = "<group>"; };
 		992A2B32380B79D3387678B3843867F8 /* TransientImage.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = TransientImage.swift; path = Sources/URLImage/Model/TransientImage.swift; sourceTree = "<group>"; };
 		9BB0B8B698D4C35D4F9A07EF70910170 /* Pods-iosApp-acknowledgements.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "Pods-iosApp-acknowledgements.plist"; sourceTree = "<group>"; };
-<<<<<<< HEAD
-		9D3A471356C8D8B38DFECCB080DC018A /* KMPNativeCoroutinesCombine.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = KMPNativeCoroutinesCombine.debug.xcconfig; sourceTree = "<group>"; };
-=======
->>>>>>> b6f457c (👍Adds SwiftGen for localization strings)
 		9D940727FF8FB9C785EB98E56350EF41 /* Podfile */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; name = Podfile; path = ../Podfile; sourceTree = SOURCE_ROOT; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		9F1FFC8B10F4D7D4F37606E8959B3F29 /* Pods-iosApp-acknowledgements.markdown */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text; path = "Pods-iosApp-acknowledgements.markdown"; sourceTree = "<group>"; };
 		9FECCB5AFF87D121F15BA01E683C7932 /* Pods-iosApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = "Pods-iosApp.release.xcconfig"; sourceTree = "<group>"; };
@@ -284,34 +274,6 @@
 		C6D9925EBB3FD98ADEEA70B0D1756BF9 /* DownloadPublisher.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = DownloadPublisher.swift; path = Dependencies/Sources/DownloadManager/Download/DownloadPublisher.swift; sourceTree = "<group>"; };
 		C8907A1C94BE667A92D0A8C1920BA9EF /* CoreDataModelDescription.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CoreDataModelDescription.swift; path = Dependencies/Sources/PlainDatabase/CoreDataModel/CoreDataModelDescription.swift; sourceTree = "<group>"; };
 		CBB360F2822905300C310CBA06D6A093 /* KMPNativeCoroutinesAsync */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = KMPNativeCoroutinesAsync; path = KMPNativeCoroutinesAsync.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-<<<<<<< HEAD
-		CD0FEC744797FD9E4FFEB85410E774F3 /* CoreDataEntityDescription.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = CoreDataEntityDescription.swift; path = Dependencies/Sources/PlainDatabase/CoreDataModel/CoreDataEntityDescription.swift; sourceTree = "<group>"; };
-		CD99FBED0A471B04A738EED0C7CD4838 /* URLSessionDelegate.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = URLSessionDelegate.swift; path = Dependencies/Sources/DownloadManager/URLSession/URLSessionDelegate.swift; sourceTree = "<group>"; };
-		CEE723DB5BBEC64F778C1FA6C16B93B0 /* KMPNativeCoroutinesCore-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "KMPNativeCoroutinesCore-Info.plist"; sourceTree = "<group>"; };
-		CFCA368FD8D6F0ABA24516902A7D6702 /* KMPNativeCoroutinesCore-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "KMPNativeCoroutinesCore-dummy.m"; sourceTree = "<group>"; };
-		D0DE9FCC3AE117AE7CD0AC7D306ED61E /* AsyncFunction.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = AsyncFunction.swift; path = KMPNativeCoroutinesAsync/AsyncFunction.swift; sourceTree = "<group>"; };
-		D274FDAA1B74C61CE841E0BFC65E48EC /* KMPNativeCoroutinesCore.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = KMPNativeCoroutinesCore.debug.xcconfig; sourceTree = "<group>"; };
-		D455499C2FA557326FC085A2F0262110 /* ActivityIndicator.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ActivityIndicator.swift; path = Dependencies/Sources/RemoteContentView/Auxiliary/ActivityIndicator.swift; sourceTree = "<group>"; };
-		D51AF7A4C74BAB6EB59198C69870C524 /* KMPNativeCoroutinesCombine-Info.plist */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.plist.xml; path = "KMPNativeCoroutinesCombine-Info.plist"; sourceTree = "<group>"; };
-		D66C814D20A8A43F3E9ADEBE1759BCD3 /* LoggerCommon.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; name = LoggerCommon.h; path = Client/iOS/LoggerCommon.h; sourceTree = "<group>"; };
-		D9DEF516942FE887B4F6B03EF629C9B6 /* NativeCancellable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = NativeCancellable.swift; path = KMPNativeCoroutinesCore/NativeCancellable.swift; sourceTree = "<group>"; };
-		D9E3E0AA35C454F332BCA45F3C78EED7 /* RemoteImage.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = RemoteImage.swift; path = Sources/URLImage/Model/RemoteImage.swift; sourceTree = "<group>"; };
-		DB1747DCD1376709F896240C13FB9619 /* URLImageService.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = URLImageService.swift; path = Sources/URLImage/URLImageService.swift; sourceTree = "<group>"; };
-		E32954243B605448566BC0C0B0BCF70D /* KMPNativeCoroutinesCore */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; name = KMPNativeCoroutinesCore; path = KMPNativeCoroutinesCore.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		E6A8420F25037169646C3F0536C3E17D /* KMPNativeCoroutinesAsync.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = KMPNativeCoroutinesAsync.modulemap; sourceTree = "<group>"; };
-		E888AEF782D5F1D1C9A331D7C2CC73C6 /* URLImage.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = URLImage.release.xcconfig; sourceTree = "<group>"; };
-		E8B85D0D801A0C90D67F4A3A109BFD51 /* FuturePublisher.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = FuturePublisher.swift; path = KMPNativeCoroutinesCombine/FuturePublisher.swift; sourceTree = "<group>"; };
-		EA32C6DE158E04BF6211402F185B161A /* RemoteContentView.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = RemoteContentView.swift; path = Dependencies/Sources/RemoteContentView/RemoteContentView.swift; sourceTree = "<group>"; };
-		EBE28DB7A3D40DB3751DE4BBA42BEC75 /* KMPNativeCoroutinesCore.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = KMPNativeCoroutinesCore.release.xcconfig; sourceTree = "<group>"; };
-		EE562672BE764FEECEEB803BC8D6A16D /* NSLogger-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "NSLogger-umbrella.h"; sourceTree = "<group>"; };
-		F36CF70EDB5F6F41A1ED03056CC70ABB /* Database.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Database.swift; path = Dependencies/Sources/PlainDatabase/Database.swift; sourceTree = "<group>"; };
-		F57834FB65DB625F42DD927DC5F454B9 /* ManagedObjectCodable.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = ManagedObjectCodable.swift; path = Dependencies/Sources/PlainDatabase/CoreDataModel/ManagedObjectCodable.swift; sourceTree = "<group>"; };
-		F6FDB852B550A3B46FC60FE6C8B95135 /* KMPNativeCoroutinesCore.modulemap */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.module; path = KMPNativeCoroutinesCore.modulemap; sourceTree = "<group>"; };
-		F87A626222A8D9B26448A9FEB04FD0DF /* Pods-iosApp-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "Pods-iosApp-umbrella.h"; sourceTree = "<group>"; };
-		FB1BF8BE937671FB0F330C2D28634477 /* shared.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; path = shared.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
-		FC7F987A066CC4AA71F14E21A0715B56 /* URLImage.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; path = URLImage.debug.xcconfig; sourceTree = "<group>"; };
-		FC9BFF6A837E156AE3951F44B016EA2D /* Bundle+Extensions.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = "Bundle+Extensions.swift"; path = "Dependencies/Sources/FileIndex/Common/Bundle+Extensions.swift"; sourceTree = "<group>"; };
-=======
 		CCCC4C3180C51B8973E07AE31E1956F9 /* KMPNativeCoroutinesAsync-dummy.m */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.objc; path = "KMPNativeCoroutinesAsync-dummy.m"; sourceTree = "<group>"; };
 		CDACCDCFDB62AC333A60B3C5B92C6D05 /* Log.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = Log.swift; path = Dependencies/Sources/Log/Log.swift; sourceTree = "<group>"; };
 		CDBCA058F12020A0EF0F3DF099C24D57 /* RemoteContent.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = RemoteContent.swift; path = Dependencies/Sources/RemoteContentView/RemoteContent/RemoteContent.swift; sourceTree = "<group>"; };
@@ -336,7 +298,6 @@
 		F9500F08478AB8E2976252C533483565 /* URLImage-umbrella.h */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.c.h; path = "URLImage-umbrella.h"; sourceTree = "<group>"; };
 		FB1BF8BE937671FB0F330C2D28634477 /* shared.podspec */ = {isa = PBXFileReference; explicitFileType = text.script.ruby; includeInIndex = 1; indentWidth = 2; lastKnownFileType = text; path = shared.podspec; sourceTree = "<group>"; tabWidth = 2; xcLanguageSpecificationIdentifier = xcode.lang.ruby; };
 		FE57DB62CC22E77A9EA43FAB02ED3418 /* URLSessionCoordinator.swift */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = sourcecode.swift; name = URLSessionCoordinator.swift; path = Dependencies/Sources/DownloadManager/URLSession/URLSessionCoordinator.swift; sourceTree = "<group>"; };
->>>>>>> b6f457c (👍Adds SwiftGen for localization strings)
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -469,13 +430,8 @@
 				CFFCCA86A2DFBDDFA85889AD86144F37 /* SwiftGen.debug.xcconfig */,
 				931A47F3A5363B6C7BC18F0421E21159 /* SwiftGen.release.xcconfig */,
 			);
-<<<<<<< HEAD
-			name = KMPNativeCoroutinesAsync;
-			path = KMPNativeCoroutinesAsync;
-=======
 			name = "Support Files";
 			path = "../Target Support Files/SwiftGen";
->>>>>>> b6f457c (👍Adds SwiftGen for localization strings)
 			sourceTree = "<group>";
 		};
 		37CB923AD3CDB3EEBA272B8A5898F80A /* DownloadManager */ = {
@@ -629,23 +585,7 @@
 			children = (
 				F6FE1E47A5EF610C3296EE8302A6EEDB /* NSLogger.swift */,
 			);
-<<<<<<< HEAD
-			name = FileIndex;
-			sourceTree = "<group>";
-		};
-		79C5ABBD15A32E9DE57AF697414A5050 /* KMPNativeCoroutinesCombine */ = {
-			isa = PBXGroup;
-			children = (
-				21CEF919A85656FC8DEF5814B20EFC9F /* Future.swift */,
-				E8B85D0D801A0C90D67F4A3A109BFD51 /* FuturePublisher.swift */,
-				3C7C767E6AB2D92A82658B46DF36A1FE /* Publisher.swift */,
-				B827175373037ADB612907F5639CCC7A /* Support Files */,
-			);
-			name = KMPNativeCoroutinesCombine;
-			path = KMPNativeCoroutinesCombine;
-=======
 			name = Swift;
->>>>>>> b6f457c (👍Adds SwiftGen for localization strings)
 			sourceTree = "<group>";
 		};
 		7DBF81461E18ACE1B4BD971BAC841CF7 /* Frameworks */ = {
@@ -667,13 +607,8 @@
 				7ABD2C90BA7BAEF923225021591BA3AC /* KMPNativeCoroutinesCore.debug.xcconfig */,
 				E4E340E8C2464CB72B274C8E3550969A /* KMPNativeCoroutinesCore.release.xcconfig */,
 			);
-<<<<<<< HEAD
-			name = KMPNativeCoroutinesCore;
-			path = KMPNativeCoroutinesCore;
-=======
 			name = "Support Files";
 			path = "../Target Support Files/KMPNativeCoroutinesCore";
->>>>>>> b6f457c (👍Adds SwiftGen for localization strings)
 			sourceTree = "<group>";
 		};
 		8D75D6FB8628979C6E694B431B8D4791 /* Log */ = {
@@ -767,35 +702,6 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
-<<<<<<< HEAD
-		BCE1E1F82FC35C5A09861F0759C31E2C /* Support Files */ = {
-			isa = PBXGroup;
-			children = (
-				2548D2542A5260D77043DCA49E0C069A /* URLImage.modulemap */,
-				9557E72283ABE0D39FEA20920205768F /* URLImage-dummy.m */,
-				B0B1043A37B7DC4E7912DDA2FE3697F3 /* URLImage-Info.plist */,
-				9FFE145D16063A8859BC44338EB0EA1C /* URLImage-prefix.pch */,
-				445944F2F69E5638361B5C09F16D5C40 /* URLImage-umbrella.h */,
-				FC7F987A066CC4AA71F14E21A0715B56 /* URLImage.debug.xcconfig */,
-				E888AEF782D5F1D1C9A331D7C2CC73C6 /* URLImage.release.xcconfig */,
-			);
-			name = "Support Files";
-			path = "../Target Support Files/URLImage";
-			sourceTree = "<group>";
-		};
-		C3AEC955E3FB923E336BC453AB3847B3 /* NSLogger */ = {
-			isa = PBXGroup;
-			children = (
-				B83A02C777F23D3CD376D666A2FD6106 /* ObjC */,
-				56E937A2CAC4EF27B048D6ED451F5BD2 /* Support Files */,
-				8BED320F01546FD3182E6F5506B24E1D /* Swift */,
-			);
-			name = NSLogger;
-			path = NSLogger;
-			sourceTree = "<group>";
-		};
-=======
->>>>>>> b6f457c (👍Adds SwiftGen for localization strings)
 		CF1408CF629C7361332E53B88F7BD30C = {
 			isa = PBXGroup;
 			children = (
@@ -808,63 +714,6 @@
 			);
 			sourceTree = "<group>";
 		};
-<<<<<<< HEAD
-		D1E50F48A39D459F97AEBD95856BB683 /* Common */ = {
-			isa = PBXGroup;
-			children = (
-				38F6ABF1A41672876DA73E2D25AFEAF4 /* FileManager+Extensions.swift */,
-			);
-			name = Common;
-			sourceTree = "<group>";
-		};
-		E2A8C2D3BB84BE72486C69DA959AD76E /* PlainDatabase */ = {
-			isa = PBXGroup;
-			children = (
-				9B3E80C9C153F838AA39598E87F45EFA /* CoreDataAttributeDescription.swift */,
-				CD0FEC744797FD9E4FFEB85410E774F3 /* CoreDataEntityDescription.swift */,
-				AB2B9F3FC4895A693F99551D0E279731 /* CoreDataFetchIndexDescription.swift */,
-				6AED83946D0996FE39441167ED47514B /* CoreDataModelDescription.swift */,
-				F36CF70EDB5F6F41A1ED03056CC70ABB /* Database.swift */,
-				F57834FB65DB625F42DD927DC5F454B9 /* ManagedObjectCodable.swift */,
-				A84EF82EF04FB62ADD1D554319542B6A /* PlainDatabase.swift */,
-			);
-			name = PlainDatabase;
-			sourceTree = "<group>";
-		};
-		E7843085009542AC97E165DF8C7D54BC /* URLImage */ = {
-			isa = PBXGroup;
-			children = (
-				54DA1B3B7C83F59C65A3B476300375AA /* DiskCache.swift */,
-				94AB3E1D3C349D7A25E6F0B9ACC7C7DB /* Download+URLImageOptions.swift */,
-				7E7D402D68CBD835780BF3EEF740B02A /* Image_Orientation+CGImagePropertyOrientation.swift */,
-				49B0349236B39B287756548AB0C3D23F /* ImageInfo.swift */,
-				143527D78ACAC154E1389BB88623EF43 /* InMemoryCache.swift */,
-				A8BF92CE88A9AFF43FA27D9B52AE8D1A /* RemoteContentViewLoadOptions+URLImageOptions_LoadOptions.swift */,
-				D9E3E0AA35C454F332BCA45F3C78EED7 /* RemoteImage.swift */,
-				54978AE4DBCD7C3C21E5F48BB4D4BDED /* TransientImage.swift */,
-				354512F38AF17AF22C481FD4A7719CD7 /* URLImage.swift */,
-				5CA23E5A53C40DDDD2C1A77CE2508CAE /* URLImageError.swift */,
-				8503AA6CB635A239986D26E2438C1816 /* URLImageOptions.swift */,
-				DB1747DCD1376709F896240C13FB9619 /* URLImageService.swift */,
-				7D7D4EE8A347B092B62EE736B96F3008 /* URLImageService+Cache.swift */,
-				49FBF24AD8024A9B08380C54E09F7DE6 /* URLImageService+Decode.swift */,
-				9B1936D9035CB3F272C22BC85CF6C3B1 /* URLImageService+Extension.swift */,
-				0D59405D188F33606D4F1DD4C73D86CC /* URLImageService+RemoteImage.swift */,
-				D1E50F48A39D459F97AEBD95856BB683 /* Common */,
-				03D8FA05509DBC9F47EADEB561CF1A34 /* DownloadManager */,
-				6612857405602033FDEF312E53A72557 /* FileIndex */,
-				ADB258FBAA7BB7541BA9E81A3A9B4724 /* ImageDecoder */,
-				6280942CD4F4553A42CF8E8030684AC1 /* Log */,
-				E2A8C2D3BB84BE72486C69DA959AD76E /* PlainDatabase */,
-				F9CFDEA1D6523AC337C48EF7C86B6348 /* RemoteContentView */,
-				BCE1E1F82FC35C5A09861F0759C31E2C /* Support Files */,
-			);
-			name = URLImage;
-			path = URLImage;
-			sourceTree = "<group>";
-		};
-=======
->>>>>>> b6f457c (👍Adds SwiftGen for localization strings)
 		EEF3277DCE2E4B31CF76A57AB68C2BA1 /* shared */ = {
 			isa = PBXGroup;
 			children = (
@@ -1338,24 +1187,9 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = CFFCCA86A2DFBDDFA85889AD86144F37 /* SwiftGen.debug.xcconfig */;
 			buildSettings = {
-<<<<<<< HEAD
-				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "";
-				"CODE_SIGN_IDENTITY[sdk=watchos*]" = "";
-				CURRENT_PROJECT_VERSION = 1;
-				DEFINES_MODULE = YES;
-				DYLIB_COMPATIBILITY_VERSION = 1;
-				DYLIB_CURRENT_VERSION = 1;
-				DYLIB_INSTALL_NAME_BASE = "@rpath";
-				GCC_PREFIX_HEADER = "Target Support Files/KMPNativeCoroutinesCore/KMPNativeCoroutinesCore-prefix.pch";
-				INFOPLIST_FILE = "Target Support Files/KMPNativeCoroutinesCore/KMPNativeCoroutinesCore-Info.plist";
-				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
-				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
-=======
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
->>>>>>> b6f457c (👍Adds SwiftGen for localization strings)
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
