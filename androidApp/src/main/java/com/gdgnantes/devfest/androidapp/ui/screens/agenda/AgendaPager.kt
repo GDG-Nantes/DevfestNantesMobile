@@ -8,6 +8,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import com.gdgnantes.devfest.androidapp.ui.UiState
+import com.gdgnantes.devfest.androidapp.ui.components.LoadingLayout
 import com.gdgnantes.devfest.androidapp.utils.getDayFromIso8601
 import com.gdgnantes.devfest.androidapp.utils.pagerTabIndicatorOffset
 import com.gdgnantes.devfest.model.AgendaDay
@@ -68,14 +69,18 @@ fun AgendaPager(
                 state = SwipeRefreshState(isRefreshing = uiState == UiState.LOADING),
                 onRefresh = onRefresh,
             ) {
-                val sessions = days[page + 1]?.sessions ?: emptyList()
-                if (sessions.isEmpty()) {
-                    EmptyLayout()
+                if (uiState == UiState.STARTING) {
+                    LoadingLayout()
                 } else {
-                    AgendaColumn(
-                        sessionsPerStartTime = sessions,
-                        onSessionClick = onSessionClick
-                    )
+                    val sessions = days[page + 1]?.sessions ?: emptyList()
+                    if (sessions.isEmpty()) {
+                        EmptyLayout()
+                    } else {
+                        AgendaColumn(
+                            sessionsPerStartTime = sessions,
+                            onSessionClick = onSessionClick
+                        )
+                    }
                 }
             }
         }

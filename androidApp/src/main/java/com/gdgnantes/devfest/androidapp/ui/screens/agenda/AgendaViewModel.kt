@@ -23,7 +23,7 @@ class AgendaViewModel @Inject constructor(
     private val bookmarksStore: BookmarksStore
 ) : ViewModel() {
 
-    private val _uiState = MutableStateFlow(UiState.LOADING)
+    private val _uiState = MutableStateFlow(UiState.STARTING)
     val uiState: StateFlow<UiState>
         get() = _uiState
 
