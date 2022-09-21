@@ -84,7 +84,7 @@ class DevFestViewModel: ObservableObject {
     func observeVenue() async {
         Task {
             do {
-                let stream = asyncStream(for: self.store.getVenueNative(language: .french))
+                let stream = asyncStream(for: self.store.getVenueNative(language: .english))
                 for try await data in stream {
                     DispatchQueue.main.async {
                         self.venueContent = VenueContent(from: data)

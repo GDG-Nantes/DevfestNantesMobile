@@ -12,6 +12,7 @@ import URLImage
 
 struct VenueView: View {
     @ObservedObject var viewModel : DevFestViewModel
+    var content : AgendaContent.Session?
     
     var body: some View {
         ScrollView {

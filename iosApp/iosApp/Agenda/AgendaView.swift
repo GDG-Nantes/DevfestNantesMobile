@@ -75,8 +75,8 @@ struct AgendaView: View {
     }
     
     func getFilteredSessions(sessions: [AgendaContent.Session]) -> [AgendaContent.Session]{
-        if self.selectedRoom != nil {
-            return sessions.filter({selectedRoom!.name.contains($0.room)})
+        if let unwrappedRooms = selectedRoom {
+            return sessions.filter({unwrappedRooms.name.contains($0.room)})
         }
         return sessions
     }

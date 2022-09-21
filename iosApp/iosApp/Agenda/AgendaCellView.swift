@@ -21,16 +21,19 @@ struct AgendaCellView: View {
                     .font(.headline)
                     .padding(.bottom, 4)
                 HStack {
-                    CategoryView(categoryLabel: session.category?.label ?? "cat")
-                    
+                    if let categorylabel = session.category?.label {
+                        CategoryView(categoryLabel:  categorylabel)
+                    }
                     Text("\(session.durationAndLanguage)")
-                    
                         .font(.footnote)
                 }
                 Text("\(session.room)")
                     .font(.footnote)
-                Text("\(session.language ?? SessionLanguage.english)")
-                    .font(.footnote)
+                if let sessionLanguage = session.language {
+                    Text("\(sessionLanguage)")
+                        .font(.footnote)
+                }
+
                 Text(session.speakers.map { $0.name }.joined(separator: ", "))
                     .font(.footnote)
                 Spacer()
