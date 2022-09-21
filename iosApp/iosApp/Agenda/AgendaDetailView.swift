@@ -79,11 +79,11 @@ struct AgendaDetailView: View {
 extension Complexity {
     var text: String {
         switch self {
-        case .beginner: return "Beginner"
-        case .intermediate: return "Intermediate"
-        case .expert: return "Expert"
+        case .beginner: return L10n.complexityBeginer
+        case .intermediate: return L10n.complexityIntermediate
+        case .expert: return L10n.complexityExpert
         default:
-            return "default"
+            return ""
         }
     }
 }

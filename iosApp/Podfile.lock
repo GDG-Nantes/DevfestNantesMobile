@@ -8,6 +8,7 @@ PODS:
   - NSLogger/Swift (1.9.7):
     - NSLogger/ObjC
   - shared (1.0)
+  - SwiftGen (6.6.2)
   - URLImage (2.2.5):
     - URLImage/Common (= 2.2.5)
     - URLImage/DownloadManager (= 2.2.5)
@@ -33,6 +34,7 @@ DEPENDENCIES:
   - KMPNativeCoroutinesCombine (= 0.12.5)
   - NSLogger/Swift
   - shared (from `../shared`)
+  - SwiftGen (~> 6.6)
   - URLImage
 
 SPEC REPOS:
@@ -41,6 +43,7 @@ SPEC REPOS:
     - KMPNativeCoroutinesCombine
     - KMPNativeCoroutinesCore
     - NSLogger
+    - SwiftGen
     - URLImage
 
 EXTERNAL SOURCES:
@@ -53,8 +56,9 @@ SPEC CHECKSUMS:
   KMPNativeCoroutinesCore: 36b0fda478802c81dee4673fcb489ccaa7e705f2
   NSLogger: cf3013a4fba189f631f07e6c3d5b8ce2b209654b
   shared: 07cac7993e4f05eda6b76f3a213b070947c3b79f
+  SwiftGen: 1366a7f71aeef49954ca5a63ba4bef6b0f24138c
   URLImage: 36a66c03ba2a9ccbbf06bc83431f2cef171008e8
 
-PODFILE CHECKSUM: 00ca14337af80339976138075e6e0c7511096a24
+PODFILE CHECKSUM: 28109c274418beeb0fcd8ad9f66044251cc501c5
 
 COCOAPODS: 1.11.3

@@ -21,9 +21,11 @@ class DevFestViewModel: ObservableObject {
     let store : DevFestNantesStore
     let defaults = UserDefaults.standard
     var favorites: [String]
+//    var partners: Any
     
     @Published var venueContent: VenueContent = VenueContent(address: "5 rue de Valmy, 44000 Nantes", description: "Située en plein cœur de ville, La Cité des Congrès de Nantes propose pour le DevFest Nantes plus de 3000m² de salles de conférences, codelabs et lieu de rencontre…", latitude: 47.21308725112951, longitude: -1.542622837466317, imageUrl: "https://devfest.gdgnantes.com/static/6328df241501c6e31393e568e5c68d7e/efc43/amphi.webp", name: "Cité des Congrès de Nantes")
     @Published var agendaContent: AgendaContent = AgendaContent(sections: [])
+    @Published var partnersContent = [PartnerContent]()
     
     
     init() {
@@ -75,6 +77,22 @@ class DevFestViewModel: ObservableObject {
                 print("Failed with error: \(error)")
             }
         }}
+    
+    func observePartners() async {
+        do {
+            let stream = asyncStream(for: store.partnersNative)
+            for try await data in stream {
+                self.partnersContent = []
+                DispatchQueue.main.async {
+                    for key in data.keys.sorted() {
+                        self.partnersContent.append(PartnerContent(categoryName: key, partners: data[key]!))
+                    }
+                }
+            }
+        } catch {
+            print("Failed with error: \(error)")
+        }
+    }
     
     
     func getDate(date: String) -> Date {

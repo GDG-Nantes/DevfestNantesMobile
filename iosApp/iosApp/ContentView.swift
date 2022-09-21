@@ -12,7 +12,7 @@ struct ContentView: View {
                 .tabItem {
                     VStack {
                         Image(systemName: "calendar")
-                        Text("Agenda")
+                        Text(L10n.screenAgenda)
                     }
                 }.tag(0)
             
@@ -20,15 +20,15 @@ struct ContentView: View {
                 .tabItem {
                     VStack {
                         Image(systemName: "location.circle.fill")
-                        Text("Venue")
+                        Text(L10n.screenVenue)
                     }
                 }.tag(1)
             
-            AboutView()
+            AboutView(viewModel: viewModel)
                 .tabItem {
                     VStack {
                         Image(systemName: "info.circle")
-                        Text("About")
+                        Text(L10n.screenAbout)
                     }
                 }.tag(2)
         }

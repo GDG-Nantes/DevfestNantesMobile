@@ -17,11 +17,17 @@
 		CB179BDB28D24C9C00BB9934 /* CategoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB179BDA28D24C9C00BB9934 /* CategoryView.swift */; };
 		CB179BDE28D365E800BB9934 /* AgendaContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB179BDD28D365E800BB9934 /* AgendaContent.swift */; };
 		CB179BE028D365F600BB9934 /* VenueContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB179BDF28D365F600BB9934 /* VenueContent.swift */; };
+		CB179BE528D3894500BB9934 /* CustomButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB179BE428D3894500BB9934 /* CustomButton.swift */; };
+		CB179BEB28D4B48100BB9934 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = CB179BE928D4B48100BB9934 /* Localizable.strings */; };
+		CB179BF428D4C33A00BB9934 /* swiftgen.yml in Resources */ = {isa = PBXBuildFile; fileRef = CB179BF328D4C33A00BB9934 /* swiftgen.yml */; };
+		CB179BF628D4C36A00BB9934 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB179BF528D4C36A00BB9934 /* Strings.swift */; };
 		CB3F424428A6A02300D1C75B /* AgendaCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB3F424328A6A02300D1C75B /* AgendaCellView.swift */; };
 		CB73E81028A5587E0014B9AF /* AgendaDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB73E80F28A5587E0014B9AF /* AgendaDetailView.swift */; };
 		CB837AB6287B7D1200FEDAA1 /* AgendaView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB837AB5287B7D1200FEDAA1 /* AgendaView.swift */; };
 		CB837AB8287B7D6500FEDAA1 /* VenueView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB837AB7287B7D6500FEDAA1 /* VenueView.swift */; };
 		CB837ABA287B7D9200FEDAA1 /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB837AB9287B7D9200FEDAA1 /* AboutView.swift */; };
+		CBA5C22E28DB194E00D2779B /* PartnersContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBA5C22D28DB194E00D2779B /* PartnersContent.swift */; };
+		CBA5C23028DB4F5100D2779B /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBA5C22F28DB4F5100D2779B /* Card.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -38,11 +44,18 @@
 		CB179BDA28D24C9C00BB9934 /* CategoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryView.swift; sourceTree = "<group>"; };
 		CB179BDD28D365E800BB9934 /* AgendaContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgendaContent.swift; sourceTree = "<group>"; };
 		CB179BDF28D365F600BB9934 /* VenueContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VenueContent.swift; sourceTree = "<group>"; };
+		CB179BE428D3894500BB9934 /* CustomButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButton.swift; sourceTree = "<group>"; };
+		CB179BEA28D4B48100BB9934 /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/Localizable.strings; sourceTree = "<group>"; };
+		CB179BEC28D4B48E00BB9934 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
+		CB179BF328D4C33A00BB9934 /* swiftgen.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = swiftgen.yml; sourceTree = "<group>"; };
+		CB179BF528D4C36A00BB9934 /* Strings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
 		CB3F424328A6A02300D1C75B /* AgendaCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgendaCellView.swift; sourceTree = "<group>"; };
 		CB73E80F28A5587E0014B9AF /* AgendaDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgendaDetailView.swift; sourceTree = "<group>"; };
 		CB837AB5287B7D1200FEDAA1 /* AgendaView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgendaView.swift; sourceTree = "<group>"; };
 		CB837AB7287B7D6500FEDAA1 /* VenueView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VenueView.swift; sourceTree = "<group>"; };
 		CB837AB9287B7D9200FEDAA1 /* AboutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
+		CBA5C22D28DB194E00D2779B /* PartnersContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PartnersContent.swift; sourceTree = "<group>"; };
+		CBA5C22F28DB4F5100D2779B /* Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
 		F2F2D5718F0FE661E81ECDD3 /* Pods-iosApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iosApp.release.xcconfig"; path = "Target Support Files/Pods-iosApp/Pods-iosApp.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -97,7 +110,6 @@
 		7555FF7D242A565900829871 /* iosApp */ = {
 			isa = PBXGroup;
 			children = (
-				058557BA273AAA24004C7B11 /* Assets.xcassets */,
 				CB179BD628D22BA900BB9934 /* DevFestViewModel.swift */,
 				7555FF82242A565900829871 /* ContentView.swift */,
 				7555FF8C242A565B00829871 /* Info.plist */,
@@ -105,8 +117,12 @@
 				CB73E80E28A5501B0014B9AF /* Agenda */,
 				CB179BD128D0D8FF00BB9934 /* Venue */,
 				CB179BDC28D365B400BB9934 /* Data */,
+				CB179BE128D37E4C00BB9934 /* About */,
+				CB179BEE28D4C05100BB9934 /* SwiftGen */,
+				CB179BE628D4B2ED00BB9934 /* Resources */,
 				058557D7273AAEEB004C7B11 /* Preview Content */,
-				CB837AB9287B7D9200FEDAA1 /* AboutView.swift */,
+				CB179BE428D3894500BB9934 /* CustomButton.swift */,
+				CBA5C22F28DB4F5100D2779B /* Card.swift */,
 			);
 			path = iosApp;
 			sourceTree = "<group>";
@@ -124,8 +140,35 @@
 			children = (
 				CB179BDD28D365E800BB9934 /* AgendaContent.swift */,
 				CB179BDF28D365F600BB9934 /* VenueContent.swift */,
+				CBA5C22D28DB194E00D2779B /* PartnersContent.swift */,
 			);
 			path = Data;
+			sourceTree = "<group>";
+		};
+		CB179BE128D37E4C00BB9934 /* About */ = {
+			isa = PBXGroup;
+			children = (
+				CB837AB9287B7D9200FEDAA1 /* AboutView.swift */,
+			);
+			path = About;
+			sourceTree = "<group>";
+		};
+		CB179BE628D4B2ED00BB9934 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				CB179BE928D4B48100BB9934 /* Localizable.strings */,
+				058557BA273AAA24004C7B11 /* Assets.xcassets */,
+			);
+			path = Resources;
+			sourceTree = "<group>";
+		};
+		CB179BEE28D4C05100BB9934 /* SwiftGen */ = {
+			isa = PBXGroup;
+			children = (
+				CB179BF528D4C36A00BB9934 /* Strings.swift */,
+				CB179BF328D4C33A00BB9934 /* swiftgen.yml */,
+			);
+			path = SwiftGen;
 			sourceTree = "<group>";
 		};
 		CB73E80E28A5501B0014B9AF /* Agenda */ = {
@@ -160,6 +203,7 @@
 				7555FF79242A565900829871 /* Resources */,
 				5E1F1D6C76BD5C5DE5D6CF99 /* Frameworks */,
 				733C139CA3EAC19E8C06313A /* [CP] Embed Pods Frameworks */,
+				CB179BED28D4BD7600BB9934 /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -191,6 +235,7 @@
 			hasScannedForEncodings = 0;
 			knownRegions = (
 				en,
+				fr,
 				Base,
 			);
 			mainGroup = 7555FF72242A565900829871;
@@ -209,7 +254,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				058557D9273AAEEB004C7B11 /* Preview Assets.xcassets in Resources */,
+				CB179BEB28D4B48100BB9934 /* Localizable.strings in Resources */,
 				058557BB273AAA24004C7B11 /* Assets.xcassets in Resources */,
+				CB179BF428D4C33A00BB9934 /* swiftgen.yml in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -255,6 +302,23 @@
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
+		CB179BED28D4BD7600BB9934 /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 12;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "$PODS_ROOT/SwiftGen/bin/swiftgen config run --config \"$PROJECT_DIR\"/iosApp/SwiftGen/swiftgen.yml\n";
+		};
 /* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
@@ -262,12 +326,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CBA5C22E28DB194E00D2779B /* PartnersContent.swift in Sources */,
+				CB179BE528D3894500BB9934 /* CustomButton.swift in Sources */,
 				CB179BE028D365F600BB9934 /* VenueContent.swift in Sources */,
 				CB837AB8287B7D6500FEDAA1 /* VenueView.swift in Sources */,
 				CB179BDE28D365E800BB9934 /* AgendaContent.swift in Sources */,
 				2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */,
 				CB179BD728D22BA900BB9934 /* DevFestViewModel.swift in Sources */,
+				CBA5C23028DB4F5100D2779B /* Card.swift in Sources */,
 				CB3F424428A6A02300D1C75B /* AgendaCellView.swift in Sources */,
+				CB179BF628D4C36A00BB9934 /* Strings.swift in Sources */,
 				7555FF83242A565900829871 /* ContentView.swift in Sources */,
 				CB837AB6287B7D1200FEDAA1 /* AgendaView.swift in Sources */,
 				CB837ABA287B7D9200FEDAA1 /* AboutView.swift in Sources */,
@@ -277,6 +345,18 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 /* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		CB179BE928D4B48100BB9934 /* Localizable.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				CB179BEA28D4B48100BB9934 /* en */,
+				CB179BEC28D4B48E00BB9934 /* fr */,
+			);
+			name = Localizable.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
 
 /* Begin XCBuildConfiguration section */
 		7555FFA3242A565B00829871 /* Debug */ = {
