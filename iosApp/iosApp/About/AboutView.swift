@@ -77,14 +77,16 @@ struct AboutView: View {
                                             .bold()
                                             .padding(20)
                                         ForEach(category.partners, id: \.self) { partner in
-                                            if let url = URL(string: partner.logoUrl!) {
+                                            if let url = URL(string: partner.url!) {
                                                 Button(action: { UIApplication.shared.open(url) }) {
-                                                    URLImage(url: url ) { image in
-                                                        image
-                                                            .renderingMode(.original)
-                                                            .resizable()
-                                                            .aspectRatio(contentMode: .fit)
-                                                            .background(.white)
+                                                    if let logoUrl = URL(string: partner.logoUrl!) {
+                                                        URLImage(url: logoUrl ) { image in
+                                                            image
+                                                                .renderingMode(.original)
+                                                                .resizable()
+                                                                .aspectRatio(contentMode: .fit)
+                                                                .background(.white)
+                                                        }
                                                     }
                                                 }
                                                 .frame(maxHeight: 50)
