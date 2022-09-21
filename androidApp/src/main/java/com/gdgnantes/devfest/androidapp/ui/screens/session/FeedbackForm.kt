@@ -8,6 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import com.gdgnantes.devfest.androidapp.BuildConfig
 import com.gdgnantes.devfest.androidapp.R
 import io.openfeedback.android.OpenFeedback
 import io.openfeedback.android.components.SessionFeedbackContainer
@@ -19,21 +20,23 @@ fun FeedbackForm(
     openFeedback: OpenFeedback,
     openFeedbackFormId: String
 ) {
-    Column(
-        modifier = modifier
-    ) {
-        Text(
-            text = stringResource(id = R.string.session_feedback_label),
-            modifier = Modifier.padding(8.dp),
-            style = MaterialTheme.typography.headlineSmall
-        )
+    if (BuildConfig.OPEN_FEEDBACK_ENABLED.toBoolean()) {
+        Column(
+            modifier = modifier
+        ) {
+            Text(
+                text = stringResource(id = R.string.session_feedback_label),
+                modifier = Modifier.padding(8.dp),
+                style = MaterialTheme.typography.headlineSmall
+            )
 
-        SessionFeedbackContainer(
-            openFeedback = openFeedback,
-            sessionId = openFeedbackFormId,
-            language = Locale.getDefault().language,
-            modifier = Modifier
-                .padding(horizontal = 8.dp)
-        )
+            SessionFeedbackContainer(
+                openFeedback = openFeedback,
+                sessionId = openFeedbackFormId,
+                language = Locale.getDefault().language,
+                modifier = Modifier
+                    .padding(horizontal = 8.dp)
+            )
+        }
     }
 }

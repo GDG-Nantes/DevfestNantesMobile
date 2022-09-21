@@ -17,6 +17,13 @@ android {
         versionCode = 4
         versionName = "1.0.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+
+        buildConfigField("String", "OPEN_FEEDBACK_ENABLED", "\"false\"")
+        buildConfigField("String", "OPEN_FEEDBACK_PROJECT_ID", "\"SECRET\"")
+        buildConfigField("String", "OPEN_FEEDBACK_FIREBASE_PROJECT_ID", "\"SECRET\"")
+        buildConfigField("String", "OPEN_FEEDBACK_FIREBASE_APPLICATION_ID", "\"SECRET\"")
+        buildConfigField("String", "OPEN_FEEDBACK_FIREBASE_API_KEY", "\"SECRET\"")
+        buildConfigField("String", "OPEN_FEEDBACK_FIREBASE_DATABASE_URL", "\"SECRET\"")
     }
 
     compileOptions {
