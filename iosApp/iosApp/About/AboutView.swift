@@ -7,6 +7,7 @@
 //
 
 import SwiftUI
+import URLImage
 
 struct AboutView: View {
     @ObservedObject var viewModel: DevFestViewModel
@@ -64,10 +65,36 @@ struct AboutView: View {
                             }.padding(8)
                         }
                         Card {
-                            VStack {
+                            VStack(spacing: 16) {
                                 Text(L10n.partnersTitle)
                                     .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
                                     .foregroundColor(Color.red)
+                                
+                                ForEach(self.viewModel.partnersContent, id: \.self) { category in
+                                    VStack {
+                                        Text(category.categoryName.name)
+                                            .foregroundColor(Color.black)
+                                            .bold()
+                                            .padding(20)
+                                        ForEach(category.partners, id: \.self) { partner in
+                                            if let url = URL(string: partner.logoUrl!) {
+                                                Button(action: { UIApplication.shared.open(url) }) {
+                                                    URLImage(url: url ) { image in
+                                                        image
+                                                            .renderingMode(.original)
+                                                            .resizable()
+                                                            .aspectRatio(contentMode: .fit)
+                                                            .background(.white)
+                                                    }
+                                                }
+                                                .frame(maxHeight: 50)
+                                                .padding(8)
+                                            }
+                                            
+                                        }
+                                    }
+                                }
+                                Spacer(minLength: 8)
                             }.padding(8)
                         }
                     }
@@ -77,24 +104,14 @@ struct AboutView: View {
                 .padding(0)
                 .background(Color(UIColor.systemBackground))
             }
+            .task {
+                await viewModel.observePartners()
+            }
         }
         // must ensure that the stack navigation is used otherwise it is considered as a master view
         // and nothing is shown in the detail
         .navigationViewStyle(StackNavigationViewStyle())
         .padding(0)
-    }
-}
-
-struct Card<Content: View>: View {
-    let content: () -> Content
-
-    var body: some View {
-        VStack {
-            content()
-        }.frame(minWidth: 0, maxWidth: .infinity)
-            .background(Color.white)
-            .cornerRadius(8)
-            .padding(8)
     }
 }
 

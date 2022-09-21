@@ -26,6 +26,8 @@
 		CB837AB6287B7D1200FEDAA1 /* AgendaView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB837AB5287B7D1200FEDAA1 /* AgendaView.swift */; };
 		CB837AB8287B7D6500FEDAA1 /* VenueView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB837AB7287B7D6500FEDAA1 /* VenueView.swift */; };
 		CB837ABA287B7D9200FEDAA1 /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB837AB9287B7D9200FEDAA1 /* AboutView.swift */; };
+		CBA5C22E28DB194E00D2779B /* PartnersContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBA5C22D28DB194E00D2779B /* PartnersContent.swift */; };
+		CBA5C23028DB4F5100D2779B /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBA5C22F28DB4F5100D2779B /* Card.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -52,6 +54,8 @@
 		CB837AB5287B7D1200FEDAA1 /* AgendaView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgendaView.swift; sourceTree = "<group>"; };
 		CB837AB7287B7D6500FEDAA1 /* VenueView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VenueView.swift; sourceTree = "<group>"; };
 		CB837AB9287B7D9200FEDAA1 /* AboutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
+		CBA5C22D28DB194E00D2779B /* PartnersContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PartnersContent.swift; sourceTree = "<group>"; };
+		CBA5C22F28DB4F5100D2779B /* Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
 		F2F2D5718F0FE661E81ECDD3 /* Pods-iosApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iosApp.release.xcconfig"; path = "Target Support Files/Pods-iosApp/Pods-iosApp.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -118,6 +122,7 @@
 				CB179BE628D4B2ED00BB9934 /* Resources */,
 				058557D7273AAEEB004C7B11 /* Preview Content */,
 				CB179BE428D3894500BB9934 /* CustomButton.swift */,
+				CBA5C22F28DB4F5100D2779B /* Card.swift */,
 			);
 			path = iosApp;
 			sourceTree = "<group>";
@@ -135,6 +140,7 @@
 			children = (
 				CB179BDD28D365E800BB9934 /* AgendaContent.swift */,
 				CB179BDF28D365F600BB9934 /* VenueContent.swift */,
+				CBA5C22D28DB194E00D2779B /* PartnersContent.swift */,
 			);
 			path = Data;
 			sourceTree = "<group>";
@@ -320,12 +326,14 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CBA5C22E28DB194E00D2779B /* PartnersContent.swift in Sources */,
 				CB179BE528D3894500BB9934 /* CustomButton.swift in Sources */,
 				CB179BE028D365F600BB9934 /* VenueContent.swift in Sources */,
 				CB837AB8287B7D6500FEDAA1 /* VenueView.swift in Sources */,
 				CB179BDE28D365E800BB9934 /* AgendaContent.swift in Sources */,
 				2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */,
 				CB179BD728D22BA900BB9934 /* DevFestViewModel.swift in Sources */,
+				CBA5C23028DB4F5100D2779B /* Card.swift in Sources */,
 				CB3F424428A6A02300D1C75B /* AgendaCellView.swift in Sources */,
 				CB179BF628D4C36A00BB9934 /* Strings.swift in Sources */,
 				7555FF83242A565900829871 /* ContentView.swift in Sources */,
