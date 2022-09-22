@@ -27,10 +27,10 @@ struct AboutView: View {
                                 HStack(spacing: 24) {
                                     CustomButton(url: URL(string: "https://devfest.gdgnantes.com/code-of-conduct")!) {
                                         Text(L10n.aboutCodeOfConduct)
-                                    }.foregroundColor(Color(Asset.devfestRed.color))
+                                    }.foregroundColor(Color(Asset.devFestRed.color))
                                     CustomButton(url: URL(string: "https://devfest.gdgnantes.com/")!) {
                                         Text(L10n.aboutWebsite)
-                                    }.foregroundColor(Color(Asset.devfestRed.color))
+                                    }.foregroundColor(Color(Asset.devFestRed.color))
                                 }.padding(8)
                             }.padding(8)
                         }
@@ -38,7 +38,7 @@ struct AboutView: View {
                             VStack {
                                 Text(L10n.aboutSocialTitle)
                                     .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
-                                    .foregroundColor(Color(Asset.devfestRed.color))
+                                    .foregroundColor(Color(Asset.devFestRed.color))
                                 HStack(alignment: .top, spacing: 40) {
                                     Link(destination: URL(string: "https://facebook.com/gdgnantes")!) {
                                         Image("ic_network_facebook") }
@@ -55,11 +55,11 @@ struct AboutView: View {
                             VStack {
                                 Text(L10n.localCommunitiesTitle)
                                     .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
-                                    .foregroundColor(Color(Asset.devfestRed.color))
+                                    .foregroundColor(Color(Asset.devFestRed.color))
                                 HStack(alignment: .top, spacing: 40) {
                                     CustomButton(url: URL(string: "https://nantes.community/")!) {
                                         Text(L10n.localCommunitiesButton)
-                                    }.foregroundColor(Color(Asset.devfestRed.color))
+                                    }.foregroundColor(Color(Asset.devFestRed.color))
                                 }.padding(8)
                             }.padding(8)
                         }
@@ -67,7 +67,7 @@ struct AboutView: View {
                             VStack(spacing: 16) {
                                 Text(L10n.partnersTitle)
                                     .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
-                                    .foregroundColor(Color(Asset.devfestRed.color))
+                                    .foregroundColor(Color(Asset.devFestRed.color))
                                 
                                 ForEach(self.viewModel.partnersContent, id: \.self) { category in
                                     VStack {
