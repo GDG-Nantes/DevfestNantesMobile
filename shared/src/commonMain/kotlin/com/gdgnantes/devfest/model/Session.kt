@@ -10,5 +10,6 @@ data class Session(
     val room: Room? = null,
     val scheduleSlot: ScheduleSlot,
     val speakers: List<Speaker> = listOf(),
-    val title: String = ""
+    val title: String = "",
+    val type: SessionType? = null
 )

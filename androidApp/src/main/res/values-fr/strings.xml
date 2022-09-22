@@ -13,7 +13,7 @@
   <string name="venue_go_to_button">S\'y rendre</string>
   <string name="complexity_beginer">Débutant</string>
   <string name="complexity_intermediate">Intermediaire</string>
-  <string name="complexity_expert">Expert</string>
+  <string name="complexity_advanced">Avancé</string>
   <string name="session_feedback_label">Donnez-nous votre feedback</string>
   <string name="about_code_of_conduct">Code de conduite</string>
   <string name="about_terms_of_service">Mentions Légales</string>

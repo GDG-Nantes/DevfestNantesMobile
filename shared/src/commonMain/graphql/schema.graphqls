@@ -70,6 +70,8 @@ type Session {
 
   title: String!
 
+  type: String!
+
   room: Room @deprecated(reason: "use rooms instead")
 
   rooms: [Room!]!
