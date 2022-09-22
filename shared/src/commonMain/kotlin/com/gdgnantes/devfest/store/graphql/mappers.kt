@@ -72,21 +72,21 @@ fun SpeakerDetails.toSpeaker(): Speaker {
     )
 }
 
-fun SpeakerDetails.Social.toSocial(): SocialsItem {
+fun SpeakerDetails.Social.toSocial(): SocialItem {
     return with(socialDetails) {
         val type = when (name.lowercase()) {
-            "twitter" -> SocialsType.TWITTER
-            "github" -> SocialsType.GITHUB
-            "linkedin" -> SocialsType.LINKEDIN
-            "facebook" -> SocialsType.FACEBOOK
-            "website" -> SocialsType.WEBSITE
-            else -> SocialsType.WEBSITE
+            "twitter" -> SocialType.TWITTER
+            "github" -> SocialType.GITHUB
+            "linkedin" -> SocialType.LINKEDIN
+            "facebook" -> SocialType.FACEBOOK
+            "website" -> SocialType.WEBSITE
+            else -> SocialType.WEBSITE
         }
 
-        SocialsItem(
-            type = type,
-            link = link
-        )
+        SocialItem.Builder()
+            .setType(type)
+            .setLink(link)
+            .build()
     }
 }
 

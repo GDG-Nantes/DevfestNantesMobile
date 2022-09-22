@@ -20,7 +20,6 @@ import coil.request.ImageRequest
 import com.gdgnantes.devfest.androidapp.R
 import com.gdgnantes.devfest.androidapp.ui.components.SocialIcon
 import com.gdgnantes.devfest.androidapp.ui.theme.DevFest_NantesTheme
-import com.gdgnantes.devfest.model.SocialsType
 import com.gdgnantes.devfest.model.Speaker
 import com.gdgnantes.devfest.model.stubs.buildSpeakerStub
 
@@ -68,24 +67,12 @@ fun SpeakerDetails(
                 ) {
                     for (socialsItem in speaker.socials.orEmpty()
                         .filter { it.link != null && it.type != null }) {
-                        if (socialsItem.type == SocialsType.TWITTER) {
-                            SocialIcon(
-                                resourceId = R.drawable.ic_network_twitter,
-                                contentDescription = stringResource(
-                                    id = R.string.content_description_logo,
-                                    "Twitter"
-                                ),
-                                onClick = { socialsItem.link?.let { onSocialLinkClick(it) } }
-                            )
-                        } else {
-                            SocialIcon(
-                                resourceId = R.drawable.ic_network_web,
-                                contentDescription = stringResource(
-                                    id = R.string.content_description_speaker_website_icon
-                                ),
-                                onClick = { socialsItem.link?.let { onSocialLinkClick(it) } }
-                            )
-                        }
+                        val url = socialsItem.link ?: continue
+                        SocialIcon(
+                            modifier = Modifier.size(24.dp),
+                            socialItem = socialsItem,
+                            onClick = { onSocialLinkClick(url) }
+                        )
                     }
                 }
             }
