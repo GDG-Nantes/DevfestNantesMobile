@@ -38,41 +38,46 @@ struct AgendaDetailView: View {
         self.viewModel = viewModel
     }
     var body: some View {
-        ScrollView {
-            VStack(alignment: .leading, spacing: 8) {
-                Text(content!.title)
-                    .foregroundColor(.red)
-                    .font(.title)
-                    .padding(.bottom, 8)
-                    .padding(.top, 16)
-                Text("\(fullDateFormatter.string(from: getDate(date: content!.startDate))), \(timeFormatter.string(from: getDate(date: content!.startDate))) - \(timeFormatter.string(from: getDate(date: content!.endDate))), \(content!.room)")
-                    .bold()
-                    .font(.headline)
-                    .padding(.bottom, 8)
-                Divider().padding(.bottom, 8)
-                Text("\(content!.durationAndLanguage)")
-                    .font(.footnote)
-                
-                HStack {
-                    CategoryView(categoryLabel: content?.category?.label ?? "cat")
-                    CategoryView(categoryLabel: content?.complexity?.text ?? "complexity")
+        content.map { session in
+            ScrollView {
+                VStack(alignment: .leading, spacing: 8) {
+                    Text(session.title)
+                        .foregroundColor(Color(Asset.devfestRed.color))
+                        .font(.title)
+                        .padding(.bottom, 8)
+                        .padding(.top, 16)
+                    Text("\(fullDateFormatter.string(from: getDate(date: session.startDate))), \(timeFormatter.string(from: getDate(date: session.startDate))) - \(timeFormatter.string(from: getDate(date: session.endDate))), \(session.room)")
+                        .bold()
+                        .font(.headline)
+                        .padding(.bottom, 8)
+                    Divider().padding(.bottom, 8)
+                    Text("\(session.durationAndLanguage)")
+                        .font(.footnote)
                     
-                }
-                Divider().padding(.top, 8)
-                Text(content!.abstract)
-                    .font(.body)
-                ForEach(content!.speakers, id: \.self) { speaker in
-                    SpeakerView(speaker: speaker)
+                    HStack {
+                        if let categoryLabel = session.category?.label {
+                            CategoryView(categoryLabel: categoryLabel)
+                        }
+                        if let categoryText = session.complexity?.text {
+                            CategoryView(categoryLabel:  categoryText)
+                        }
+                    }
                     Divider().padding(.top, 8)
-                }
-            }.padding(.horizontal)
+                    Text(session.abstract)
+                        .font(.body)
+                    ForEach(session.speakers, id: \.self) { speaker in
+                        SpeakerView(speaker: speaker)
+                        Divider().padding(.top, 8)
+                    }
+                }.padding(.horizontal)
+            }
+            .navigationBarTitle(Text(session.title), displayMode: .inline)
+            .navigationBarItems(trailing:
+                                    Image(systemName:  viewModel.favorites.contains(session.id) ? "star.fill" : "star")
+                .foregroundColor(.yellow)
+                .padding(8)
+                .onTapGesture { self.viewModel.toggleFavorite(ofSession: session)})
         }
-        .navigationBarTitle(Text(content!.title), displayMode: .inline)
-        .navigationBarItems(trailing:
-                                Image(systemName:  viewModel.favorites.contains(content!.id) ? "star.fill" : "star")
-            .foregroundColor(.yellow)
-            .padding(8)
-            .onTapGesture { self.viewModel.toggleFavorite(ofSession: content!)})
     }
 }
 
@@ -95,30 +100,36 @@ struct SpeakerView: View {
         
         VStack(alignment: .leading) {
             HStack(alignment: .top) {
-                let url = URL(string: speaker.photoUrl ?? "https://fakeface.rest/thumb/view")
-                URLImage(url: url!) { image in
-                    image
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
-                        .clipShape(Circle())
-                }.frame(width: 60, height: 60)
+                if let photo = speaker.photoUrl {
+                    URLImage(url: URL(string: photo)!) { image in
+                        image
+                            .resizable()
+                            .aspectRatio(contentMode: .fill)
+                            .clipShape(Circle())
+                    }.frame(width: 60, height: 60)
+                }
                 VStack(alignment: .leading) {
-                    Text("\(speaker.name ), \(speaker.company ?? "Company")")
-                    
+                    Text("\(speaker.name ), \(speaker.company ?? "")")
                         .bold()
-                        .padding(.vertical, 24)
-                    Text(speaker.bio ?? "bio speaker")
+                        .padding(.vertical, 16)
+                    Text(speaker.bio ?? "")
                         .padding(.trailing, 8)
                     HStack(alignment: .top, spacing: 20) {
-                        ForEach(speaker.socials!, id: \.self) { socialItem in
-                            Link(destination: URL(string: socialItem.link!)!) {
-                                if socialItem.type == .twitter {
-                                    Image("ic_network_twitter")
-                                } else {
-                                    Image("ic_network_web")
+                        speaker.socials.map { socials in
+                            ForEach(socials, id: \.self) { socialItem in
+                                socialItem.link.map { link in
+                                    Link(destination: URL(string: link)!) {
+                                        if socialItem.type == .twitter {
+                                            Image("ic_network_twitter")
+                                        } else {
+                                            Image("ic_network_web")
+                                        }
+                                    }
                                 }
+
                             }
                         }
+
                     }
                     
                 }

@@ -15,7 +15,7 @@ struct Card<Content: View>: View {
         VStack {
             content()
         }.frame(minWidth: 0, maxWidth: .infinity)
-            .background(Color.white)
+            .background(Color(Asset.secondaryBackground.color))
             .cornerRadius(8)
             .padding(8)
     }

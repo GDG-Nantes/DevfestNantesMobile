@@ -28,7 +28,7 @@ struct CustomButton<Label: View>: View {
         .padding(.horizontal, 10)
         .overlay(
             RoundedRectangle(cornerRadius: 20)
-                .stroke(Color.black, lineWidth: 1)
+                .stroke(Color(Asset.devFestBlue.color), lineWidth: 1)
         )
         .sheet(isPresented: $showSafari) { SafariView(url: self.url) }
     }

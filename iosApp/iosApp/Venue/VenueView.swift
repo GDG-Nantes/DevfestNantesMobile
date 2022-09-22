@@ -11,6 +11,8 @@ import URLImage
 
 
 struct VenueView: View {
+    
+    
     @ObservedObject var viewModel : DevFestViewModel
     
     var body: some View {
@@ -33,14 +35,9 @@ struct VenueView: View {
                             .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
                             .padding(.horizontal, 8)
                         
-                        Button(L10n.venueGoToButton) {
-                            let url = "http://maps.apple.com/?daddr=\(viewModel.venueContent.latitude),\(viewModel.venueContent.longitude)"
-                            UIApplication.shared.open(URL(string: url)!)
-                        }.padding(.vertical, 8)
-                            .padding(.horizontal, 16)
-                            .foregroundColor(Color.primary)
-                            .background(Color.gray)
-                            .cornerRadius(8)
+                        CustomButton(url: URL(string: "http://maps.apple.com/?daddr=\(viewModel.venueContent.latitude),\(viewModel.venueContent.longitude)")!)  {
+                            Text(L10n.venueGoToButton)
+                        }.foregroundColor(Color(Asset.devfestRed.color))
                         
                         Text(viewModel.venueContent.description)
                             .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
@@ -51,7 +48,6 @@ struct VenueView: View {
                 }
             }
         }
-        
         .task {
             await viewModel.observeVenue()
         }

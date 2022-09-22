@@ -28,6 +28,7 @@
 		CB837ABA287B7D9200FEDAA1 /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB837AB9287B7D9200FEDAA1 /* AboutView.swift */; };
 		CBA5C22E28DB194E00D2779B /* PartnersContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBA5C22D28DB194E00D2779B /* PartnersContent.swift */; };
 		CBA5C23028DB4F5100D2779B /* Card.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBA5C22F28DB4F5100D2779B /* Card.swift */; };
+		CBA5C23228DBC5CA00D2779B /* Assets.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBA5C23128DBC5CA00D2779B /* Assets.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -56,6 +57,7 @@
 		CB837AB9287B7D9200FEDAA1 /* AboutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
 		CBA5C22D28DB194E00D2779B /* PartnersContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PartnersContent.swift; sourceTree = "<group>"; };
 		CBA5C22F28DB4F5100D2779B /* Card.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Card.swift; sourceTree = "<group>"; };
+		CBA5C23128DBC5CA00D2779B /* Assets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Assets.swift; sourceTree = "<group>"; };
 		F2F2D5718F0FE661E81ECDD3 /* Pods-iosApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iosApp.release.xcconfig"; path = "Target Support Files/Pods-iosApp/Pods-iosApp.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -165,6 +167,7 @@
 		CB179BEE28D4C05100BB9934 /* SwiftGen */ = {
 			isa = PBXGroup;
 			children = (
+				CBA5C23128DBC5CA00D2779B /* Assets.swift */,
 				CB179BF528D4C36A00BB9934 /* Strings.swift */,
 				CB179BF328D4C33A00BB9934 /* swiftgen.yml */,
 			);
@@ -336,6 +339,7 @@
 				CBA5C23028DB4F5100D2779B /* Card.swift in Sources */,
 				CB3F424428A6A02300D1C75B /* AgendaCellView.swift in Sources */,
 				CB179BF628D4C36A00BB9934 /* Strings.swift in Sources */,
+				CBA5C23228DBC5CA00D2779B /* Assets.swift in Sources */,
 				7555FF83242A565900829871 /* ContentView.swift in Sources */,
 				CB837AB6287B7D1200FEDAA1 /* AgendaView.swift in Sources */,
 				CB837ABA287B7D9200FEDAA1 /* AboutView.swift in Sources */,

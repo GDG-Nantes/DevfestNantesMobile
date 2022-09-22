@@ -3,3 +3,9 @@ strings:
     outputs:
         templateName: structured-swift4
         output: Strings.swift
+
+xcassets:
+    inputs: ${PROJECT_DIR}/iosApp/Resources/Assets.xcassets
+    outputs:
+        templateName: swift4
+        output: Assets.swift

@@ -39,3 +39,7 @@
 "content_description_speaker_website_icon" = "Website icon. Link to the speaker's website.";
 "content_description_speaker_picture" = "%1$s's profile picture.";
 "content_description_about_header" = "DevFest Nantes about logo header.";
+"day1" = "October 20, 2022";
+"day2" = "October 21, 2022";
+"filter_favorites" = "Favorites";
+"filter_rooms" = "Rooms";

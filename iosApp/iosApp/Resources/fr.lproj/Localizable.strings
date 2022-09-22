@@ -34,3 +34,7 @@
 "content_description_speaker_website_icon" = "Icon de site web. Lien vers le site web du speaker.";
 "content_description_speaker_picture" = "Photo de profil d'%1$s.";
 "content_description_about_header" = "Logo d'en tête du DevFest Nantes.";
+"day1" = "20 Octobre 2022";
+"day2" = "21 Octobre 2022";
+"filter_favorites" = "Favoris";
+"filter_rooms" = "Salles";

@@ -27,8 +27,8 @@ struct AgendaView: View {
         NavigationView {
             VStack {
                 Picker("What is the day?", selection: $day) {
-                    Text("Day 1").tag("2022-10-20")
-                    Text("Day 2").tag("2022-10-21")
+                    Text(L10n.day1).tag("2022-10-20")
+                    Text(L10n.day1).tag("2022-10-21")
                 }
                 .pickerStyle(.segmented)
                 List {
@@ -52,12 +52,12 @@ struct AgendaView: View {
                         set: { self.showFavoritesOnly = $0 == self.showFavoritesOnly ? false : $0 }
                     )
                         Picker("", selection: selected) {
-                            Text("Favorites").tag(true)
-                            Menu("Rooms") {
+                            Text(L10n.filterFavorites).tag(true)
+                            Menu(L10n.filterRooms) {
                                 let selected = Binding(
                                     get: { self.selectedRoom },
                                     set: { self.selectedRoom = $0 == self.selectedRoom ? nil : $0 })
-                                Picker("Rooms", selection: selected) {
+                                Picker(L10n.filterRooms, selection: selected) {
                                     ForEach(self.viewModel.roomsContent, id: \.id) { room in
                                         Text(room.name).tag(Optional(room))
                                     }
@@ -75,8 +75,8 @@ struct AgendaView: View {
     }
     
     func getFilteredSessions(sessions: [AgendaContent.Session]) -> [AgendaContent.Session]{
-        if self.selectedRoom != nil {
-            return sessions.filter({selectedRoom!.name.contains($0.room)})
+        if let unwrappedRooms = selectedRoom {
+            return sessions.filter({unwrappedRooms.name.contains($0.room)})
         }
         return sessions
     }

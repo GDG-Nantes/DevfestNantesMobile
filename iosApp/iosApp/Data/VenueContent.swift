@@ -20,6 +20,6 @@ struct VenueContent {
 
 extension VenueContent {
     init(from venue: Venue) {
-        self.init(address: venue.address, description: venue.description_, latitude: venue.latitude as! Double, longitude: venue.longitude as! Double, imageUrl: venue.imageUrl ?? "https://fakeface.rest/thumb/view", name: venue.name)
+        self.init(address: venue.address, description: venue.description_, latitude: venue.latitude as! Double, longitude: venue.longitude as! Double, imageUrl: venue.imageUrl ?? "https://fr.wikipedia.org/wiki/Cit%C3%A9_des_congr%C3%A8s_de_Nantes#/media/Fichier:La-cite-nantes.jpg", name: venue.name)
     }
 }
