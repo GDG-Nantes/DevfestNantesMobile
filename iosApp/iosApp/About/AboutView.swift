@@ -15,7 +15,7 @@ struct AboutView: View {
     var body: some View {
         NavigationView {
             ZStack {
-                Color(UIColor.systemBackground).edgesIgnoringSafeArea(.all)
+//                Color(UIColor.systemBackground).edgesIgnoringSafeArea(.all)
                 ScrollView {
                     VStack {
                         Card {
@@ -24,14 +24,13 @@ struct AboutView: View {
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
                                 Text(L10n.screenAboutHeaderBody)
-                                    .foregroundColor(Color.black)
                                 HStack(spacing: 24) {
                                     CustomButton(url: URL(string: "https://devfest.gdgnantes.com/code-of-conduct")!) {
                                         Text(L10n.aboutCodeOfConduct)
-                                    }.foregroundColor(Color.red)
+                                    }.foregroundColor(Color(Asset.devfestRed.color))
                                     CustomButton(url: URL(string: "https://devfest.gdgnantes.com/")!) {
                                         Text(L10n.aboutWebsite)
-                                    }.foregroundColor(Color.red)
+                                    }.foregroundColor(Color(Asset.devfestRed.color))
                                 }.padding(8)
                             }.padding(8)
                         }
@@ -39,7 +38,7 @@ struct AboutView: View {
                             VStack {
                                 Text(L10n.aboutSocialTitle)
                                     .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
-                                    .foregroundColor(Color.red)
+                                    .foregroundColor(Color(Asset.devfestRed.color))
                                 HStack(alignment: .top, spacing: 40) {
                                     Link(destination: URL(string: "https://facebook.com/gdgnantes")!) {
                                         Image("ic_network_facebook") }
@@ -56,11 +55,11 @@ struct AboutView: View {
                             VStack {
                                 Text(L10n.localCommunitiesTitle)
                                     .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
-                                    .foregroundColor(Color.red)
+                                    .foregroundColor(Color(Asset.devfestRed.color))
                                 HStack(alignment: .top, spacing: 40) {
                                     CustomButton(url: URL(string: "https://nantes.community/")!) {
                                         Text(L10n.localCommunitiesButton)
-                                    }.foregroundColor(Color.red)
+                                    }.foregroundColor(Color(Asset.devfestRed.color))
                                 }.padding(8)
                             }.padding(8)
                         }
@@ -68,7 +67,7 @@ struct AboutView: View {
                             VStack(spacing: 16) {
                                 Text(L10n.partnersTitle)
                                     .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
-                                    .foregroundColor(Color.red)
+                                    .foregroundColor(Color(Asset.devfestRed.color))
                                 
                                 ForEach(self.viewModel.partnersContent, id: \.self) { category in
                                     VStack {
@@ -100,7 +99,6 @@ struct AboutView: View {
                             }.padding(8)
                         }
                     }
-                    .background(Color.gray)
                     .frame(minWidth: 0, maxWidth: .infinity)
                 }
                 .padding(0)

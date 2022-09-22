@@ -17,7 +17,7 @@ struct AgendaCellView: View {
         HStack(alignment: .top) {
             VStack(alignment: .leading) {
                 Text(session.title)
-                    .foregroundColor(.red)
+                    .foregroundColor(Color(Asset.devfestRed.color))
                     .font(.headline)
                     .padding(.bottom, 4)
                 HStack {

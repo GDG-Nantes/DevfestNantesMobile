@@ -28,7 +28,17 @@ class DevFestViewModel: ObservableObject {
     @Published var partnersContent = [PartnerContent]()
     @Published var roomsContent = [Room]()
     
-    
+     var currentLanguage: ContentLanguage {
+        guard let languageCode = Locale.current.languageCode else {
+            return .english
+        }
+         if languageCode == "fr" {
+             return .french
+         }else {
+             return .french
+         }
+            
+    }
     
     init() {
         self.store = DevFestNantesStoreBuilder().setUseMockServer(useMockServer: false).build()
@@ -84,7 +94,7 @@ class DevFestViewModel: ObservableObject {
     func observeVenue() async {
         Task {
             do {
-                let stream = asyncStream(for: self.store.getVenueNative(language: .english))
+                let stream = asyncStream(for: self.store.getVenueNative(language: currentLanguage))
                 for try await data in stream {
                     DispatchQueue.main.async {
                         self.venueContent = VenueContent(from: data)

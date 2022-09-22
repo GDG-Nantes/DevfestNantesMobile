@@ -42,7 +42,7 @@ struct AgendaDetailView: View {
             ScrollView {
                 VStack(alignment: .leading, spacing: 8) {
                     Text(session.title)
-                        .foregroundColor(.red)
+                        .foregroundColor(Color(Asset.devfestRed.color))
                         .font(.title)
                         .padding(.bottom, 8)
                         .padding(.top, 16)
@@ -119,7 +119,6 @@ struct SpeakerView: View {
                             ForEach(socials, id: \.self) { socialItem in
                                 socialItem.link.map { link in
                                     Link(destination: URL(string: link)!) {
-                                        Text(link)
                                         if socialItem.type == .twitter {
                                             Image("ic_network_twitter")
                                         } else {
