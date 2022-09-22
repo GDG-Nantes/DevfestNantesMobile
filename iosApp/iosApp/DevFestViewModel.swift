@@ -80,7 +80,6 @@ class DevFestViewModel: ObservableObject {
                 let stream = asyncStream(for: store.roomsNative)
                 for try await data in stream {
                     DispatchQueue.main.async {
-                        print(data)
                         self.roomsContent = Array(data)
                     }
                     
