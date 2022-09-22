@@ -46,8 +46,8 @@ fun buildSpeakerStub(): Speaker {
         id = "", //TODO Replace with UUID implementation
         bio = loremIpsum,
         company = "Company Inc",
-        companyLogo = null,
-        country = "France",
+        companyLogoUrl = null,
+        city = "Nantes, France",
         name = "Foo Bar",
         photoUrl = randomImageUrl,
         socials = socialItemStubs,

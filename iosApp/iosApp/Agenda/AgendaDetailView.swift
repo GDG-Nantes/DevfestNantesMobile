@@ -86,7 +86,7 @@ extension Complexity {
         switch self {
         case .beginner: return L10n.complexityBeginer
         case .intermediate: return L10n.complexityIntermediate
-        case .expert: return L10n.complexityExpert
+        case .advanced: return L10n.complexityAdvanced
         default:
             return ""
         }

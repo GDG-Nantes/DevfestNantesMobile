@@ -11,7 +11,7 @@
 "screen_about_header_body" = "Le DevFest, ou 'Developers Festival', est une conférence technique destinée aux développeurs. Elle s'adresse aussi bien aux étudiants, aux professionnels ou tout simplement aux curieux technophiles.  Cette année c'est Jules Verne et son univers incroyable qui sera au coeur du Devfest !";
 "complexity_beginer" = "Débutant";
 "complexity_intermediate" = "Intermediaire";
-"complexity_expert" = "Expert";
+"complexity_advanced" = "Advanced";
 "session_feedback_label" = "Donnez-nous votre feedback";
 "about_code_of_conduct" = "Code de conduite";
 "about_terms_of_service" = "Mentions Légales";

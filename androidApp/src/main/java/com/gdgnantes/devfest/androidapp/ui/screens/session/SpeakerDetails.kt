@@ -53,6 +53,14 @@ fun SpeakerDetails(
                     style = MaterialTheme.typography.titleMedium,
                     fontWeight = FontWeight.Bold
                 )
+
+                speaker.city?.let { city ->
+                    Text(
+                        text = city,
+                        style = MaterialTheme.typography.titleSmall
+                    )
+                }
+
                 speaker.bio?.let { bio ->
                     Text(
                         modifier = Modifier.padding(top = 12.dp),

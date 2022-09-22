@@ -1,6 +1,5 @@
 package com.gdgnantes.devfest.androidapp.ui.components
 
-import android.annotation.SuppressLint
 import android.content.res.Configuration
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -46,7 +45,6 @@ fun SessionCategory(
     }
 }
 
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Preview(
     "Night mode",
     uiMode = Configuration.UI_MODE_NIGHT_YES

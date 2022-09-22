@@ -34,10 +34,10 @@ internal enum L10n {
   internal static let btnCancel = L10n.tr("Localizable", "btn_cancel", fallback: "Cancel")
   /// OK
   internal static let btnOk = L10n.tr("Localizable", "btn_ok", fallback: "OK")
+  /// Advanced
+  internal static let complexityAdvanced = L10n.tr("Localizable", "complexity_advanced", fallback: "Advanced")
   /// Beginer
   internal static let complexityBeginer = L10n.tr("Localizable", "complexity_beginer", fallback: "Beginer")
-  /// Expert
-  internal static let complexityExpert = L10n.tr("Localizable", "complexity_expert", fallback: "Expert")
   /// Intermediate
   internal static let complexityIntermediate = L10n.tr("Localizable", "complexity_intermediate", fallback: "Intermediate")
   /// DevFest Nantes about logo header.

@@ -49,6 +49,7 @@ query GetVenue($id: String!, $language: String!) {
 fragment SessionDetails on Session {
     id
     title
+    complexity
     description
     language
     startInstant
@@ -61,6 +62,7 @@ fragment SessionDetails on Session {
     }
     feedbackId
     tags
+    type
 }
 
 fragment RoomDetails on Room {
@@ -72,6 +74,8 @@ fragment SpeakerDetails on Speaker {
     id
     bio
     company
+    companyLogoUrl
+    city
     name
     photoUrl
     socials {
