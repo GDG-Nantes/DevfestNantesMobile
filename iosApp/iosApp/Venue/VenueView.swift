@@ -25,7 +25,8 @@ struct VenueView: View {
                                 .resizable()
                                 .aspectRatio(contentMode: .fill)
                         }.frame(maxHeight: 220)
-                        
+                        Spacer()
+                        Spacer()
                         Text(viewModel.venueContent.name)
                             .bold()
                             .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
