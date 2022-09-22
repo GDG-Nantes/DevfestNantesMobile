@@ -37,7 +37,7 @@ struct VenueView: View {
                         
                         CustomButton(url: URL(string: "http://maps.apple.com/?daddr=\(viewModel.venueContent.latitude),\(viewModel.venueContent.longitude)")!)  {
                             Text(L10n.venueGoToButton)
-                        }.foregroundColor(Color(Asset.devfestRed.color))
+                        }.foregroundColor(Color(Asset.devFestRed.color))
                         
                         Text(viewModel.venueContent.description)
                             .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)

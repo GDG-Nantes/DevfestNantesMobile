@@ -42,7 +42,7 @@ struct AgendaDetailView: View {
             ScrollView {
                 VStack(alignment: .leading, spacing: 8) {
                     Text(session.title)
-                        .foregroundColor(Color(Asset.devfestRed.color))
+                        .foregroundColor(Color(Asset.devFestRed.color))
                         .font(.title)
                         .padding(.bottom, 8)
                         .padding(.top, 16)

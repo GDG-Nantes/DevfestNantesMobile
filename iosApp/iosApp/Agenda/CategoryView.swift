@@ -19,7 +19,7 @@ struct CategoryView: View {
             .padding(.horizontal, 8)
             .overlay(
                 RoundedRectangle(cornerRadius: 20)
-                    .stroke(Color(Asset.devfestRed.color), lineWidth: 1)
+                    .stroke(Color(Asset.devFestRed.color), lineWidth: 1)
             )
     }
 }
