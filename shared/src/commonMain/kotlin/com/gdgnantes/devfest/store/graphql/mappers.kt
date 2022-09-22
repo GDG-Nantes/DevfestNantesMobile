@@ -65,8 +65,8 @@ fun SpeakerDetails.toSpeaker(): Speaker {
         id = id,
         bio = bio,
         company = company,
-        companyLogo = null,
-        country = null,
+        companyLogoUrl = companyLogoUrl,
+        city = city,
         name = name,
         photoUrl = photoUrl,
         socials = socials.map { it.toSocial() }

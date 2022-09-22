@@ -74,6 +74,8 @@ fragment SpeakerDetails on Speaker {
     id
     bio
     company
+    companyLogoUrl
+    city
     name
     photoUrl
     socials {
