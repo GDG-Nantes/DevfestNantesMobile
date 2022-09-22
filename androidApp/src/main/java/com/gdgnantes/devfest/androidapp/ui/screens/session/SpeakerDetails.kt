@@ -20,7 +20,7 @@ import coil.request.ImageRequest
 import com.gdgnantes.devfest.androidapp.R
 import com.gdgnantes.devfest.androidapp.ui.components.SocialIcon
 import com.gdgnantes.devfest.androidapp.ui.theme.DevFest_NantesTheme
-import com.gdgnantes.devfest.model.SocialsType
+import com.gdgnantes.devfest.model.SocialType
 import com.gdgnantes.devfest.model.Speaker
 import com.gdgnantes.devfest.model.stubs.buildSpeakerStub
 
@@ -68,7 +68,7 @@ fun SpeakerDetails(
                 ) {
                     for (socialsItem in speaker.socials.orEmpty()
                         .filter { it.link != null && it.type != null }) {
-                        if (socialsItem.type == SocialsType.TWITTER) {
+                        if (socialsItem.type == SocialType.TWITTER) {
                             SocialIcon(
                                 resourceId = R.drawable.ic_network_twitter,
                                 contentDescription = stringResource(
