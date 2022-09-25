@@ -15,7 +15,6 @@ struct AboutView: View {
     var body: some View {
         NavigationView {
             ZStack {
-//                Color(UIColor.systemBackground).edgesIgnoringSafeArea(.all)
                 ScrollView {
                     VStack {
                         Card {
@@ -72,7 +71,6 @@ struct AboutView: View {
                                 ForEach(self.viewModel.partnersContent, id: \.self) { category in
                                     VStack {
                                         Text(category.categoryName.name)
-                                            .foregroundColor(Color.black)
                                             .bold()
                                             .padding(20)
                                         ForEach(category.partners, id: \.self) { partner in
@@ -84,14 +82,13 @@ struct AboutView: View {
                                                                 .renderingMode(.original)
                                                                 .resizable()
                                                                 .aspectRatio(contentMode: .fit)
-                                                                .background(.white)
                                                         }
                                                     }
                                                 }
                                                 .frame(maxHeight: 50)
-                                                .padding(8)
+                                                .padding(3)
+                                                .background(.white)
                                             }
-                                            
                                         }
                                     }
                                 }

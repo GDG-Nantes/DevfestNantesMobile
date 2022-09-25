@@ -36,11 +36,15 @@ struct AgendaView: View {
                         Section(header: Text("\(self.sectionTimeFormatter.string(from: section.date))")) {
                             let filteredSessions = getFilteredSessions(sessions: section.sessions)
                             ForEach(self.showFavoritesOnly ? filteredSessions.filter({viewModel.favorites.contains($0.id)}):  filteredSessions, id: \.id) { session in
-                                if session
-                                NavigationLink(destination: AgendaDetailView(session: session, viewModel: viewModel)) {
-                                    AgendaCellView(viewModel: viewModel, session: session)
+                                if session.sessionType == .conference || session.sessionType == .codelab{
+                                    NavigationLink(destination: AgendaDetailView(session: session, viewModel: viewModel)) {
+                                        AgendaCellView(viewModel: viewModel, session: session)
+                                    }
+                                    .listRowBackground( Color(UIColor.systemBackground))
+                                } else {
+                                        AgendaCellView(viewModel: viewModel, session: session)
                                 }
-                                .listRowBackground( Color(UIColor.systemBackground))
+                                
                             }
                         }
                     }
