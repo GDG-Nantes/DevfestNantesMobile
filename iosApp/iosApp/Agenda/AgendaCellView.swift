@@ -29,10 +29,6 @@ struct AgendaCellView: View {
                 }
                 Text("\(session.room)")
                     .font(.footnote)
-                if let sessionLanguage = session.language {
-                    Text("\(sessionLanguage)")
-                        .font(.footnote)
-                }
 
                 Text(session.speakers.map { $0.name }.joined(separator: ", "))
                     .font(.footnote)
