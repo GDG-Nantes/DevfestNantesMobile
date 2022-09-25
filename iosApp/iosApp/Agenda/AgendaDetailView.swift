@@ -111,9 +111,12 @@ struct SpeakerView: View {
                 VStack(alignment: .leading) {
                     Text("\(speaker.name ), \(speaker.company ?? "")")
                         .bold()
-                        .padding(.vertical, 16)
+                        .font(.title3)
+                    Text(speaker.city ?? "")
+                        .bold()
+                    Spacer(minLength: 10)
                     Text(speaker.bio ?? "")
-                        .padding(.trailing, 8)
+                    Spacer(minLength: 10)
                     HStack(alignment: .top, spacing: 20) {
                         speaker.socials.map { socials in
                             ForEach(socials, id: \.self) { socialItem in
@@ -121,8 +124,14 @@ struct SpeakerView: View {
                                     Link(destination: URL(string: link)!) {
                                         if socialItem.type == .twitter {
                                             Image("ic_network_twitter")
-                                        } else {
-                                            Image("ic_network_web")
+                                        } else if socialItem.type == .github  {
+                                            Image("ic_network_github")
+                                        } else if socialItem.type == .linkedin  {
+                                            Image("ic_network_linkedin")
+                                        } else if socialItem.type == .facebook  {
+                                            Image("ic_network_facebook")
+                                        } else if socialItem.type == .facebook  {
+                                            Image("ic_network_facebook")
                                         }
                                     }
                                 }
@@ -134,7 +143,7 @@ struct SpeakerView: View {
                     
                 }
             }
-            .padding(.vertical, 8)
+           .padding(.vertical, 8)
         }
     }
 }

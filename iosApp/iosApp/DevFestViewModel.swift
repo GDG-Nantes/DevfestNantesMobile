@@ -35,7 +35,7 @@ class DevFestViewModel: ObservableObject {
          if languageCode == "fr" {
              return .french
          }else {
-             return .french
+             return .english
          }
             
     }
