@@ -3,7 +3,7 @@ plugins {
     kotlin("plugin.serialization") version "1.7.10"
     kotlin("native.cocoapods")
     id("com.android.library")
-    id("com.rickclephas.kmp.nativecoroutines") version "0.12.5"
+    id("com.rickclephas.kmp.nativecoroutines") version "0.13.0"
     id("com.apollographql.apollo3") version Apollo.apolloVersion
 }
 
