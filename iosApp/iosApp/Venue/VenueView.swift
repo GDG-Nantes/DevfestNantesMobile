@@ -17,16 +17,15 @@ struct VenueView: View {
     
     var body: some View {
         ScrollView {
-            VStack(alignment: .center, spacing: 8) {
+            VStack {
                 Card {
                     VStack(spacing: 16) {
                         URLImage(url: URL(string: viewModel.venueContent.imageUrl)!) { image in
                             image
                                 .resizable()
                                 .aspectRatio(contentMode: .fill)
-                        }.frame(maxHeight: 220)
-                        Spacer()
-                        Spacer()
+                        }
+
                         Text(viewModel.venueContent.name)
                             .bold()
                             .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
@@ -43,9 +42,8 @@ struct VenueView: View {
                         Text(viewModel.venueContent.description)
                             .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
                             .padding(.horizontal, 8)
-                        
-                        Spacer()
                     }
+                    .padding(8)
                 }
             }
         }
