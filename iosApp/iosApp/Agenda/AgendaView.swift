@@ -28,7 +28,7 @@ struct AgendaView: View {
             VStack {
                 Picker("What is the day?", selection: $day) {
                     Text(L10n.day1).tag("2022-10-20")
-                    Text(L10n.day1).tag("2022-10-21")
+                    Text(L10n.day2).tag("2022-10-21")
                 }
                 .pickerStyle(.segmented)
                 List {
@@ -40,7 +40,6 @@ struct AgendaView: View {
                                     NavigationLink(destination: AgendaDetailView(session: session, viewModel: viewModel)) {
                                         AgendaCellView(viewModel: viewModel, session: session)
                                     }
-                                    .listRowBackground( Color(UIColor.systemBackground))
                                 } else {
                                         AgendaCellView(viewModel: viewModel, session: session)
                                 }

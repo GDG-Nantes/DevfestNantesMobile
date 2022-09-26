@@ -22,6 +22,7 @@ struct AboutView: View {
                                 Image("ic_about_header")
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
+                                    .foregroundColor(Color(Asset.devFestBlue.color))
                                 Text(L10n.screenAboutHeaderBody)
                                 HStack(spacing: 24) {
                                     CustomButton(url: URL(string: "https://devfest.gdgnantes.com/code-of-conduct")!) {
@@ -40,13 +41,25 @@ struct AboutView: View {
                                     .foregroundColor(Color(Asset.devFestRed.color))
                                 HStack(alignment: .top, spacing: 40) {
                                     Link(destination: URL(string: "https://facebook.com/gdgnantes")!) {
-                                        Image("ic_network_facebook") }
+                                        Image("ic_network_facebook")
+                                            .renderingMode(.template)
+                                            .foregroundColor(Color(Asset.icColor.color))
+                                    }
                                     Link(destination: URL(string: "https://twitter.com/gdgnantes")!) {
-                                        Image("ic_network_twitter") }
+                                        Image("ic_network_twitter")
+                                            .renderingMode(.template)
+                                            .foregroundColor(Color(Asset.icColor.color))
+                                    }
                                     Link(destination: URL(string: "https://www.linkedin.com/in/gdg-nantes")!) {
-                                        Image("ic_network_linkedin") }
+                                        Image("ic_network_linkedin")
+                                            .renderingMode(.template)
+                                            .foregroundColor(Color(Asset.icColor.color))
+                                    }
                                     Link(destination: URL(string: "https://www.youtube.com/c/Gdg-franceBlogspotFr")!) {
-                                        Image("ic_network_web") }
+                                        Image("ic_network_web")
+                                            .renderingMode(.template)
+                                            .foregroundColor(Color(Asset.icColor.color))
+                                    }
                                 }.padding(8)
                             }.padding(8)
                         }
@@ -71,6 +84,7 @@ struct AboutView: View {
                                 ForEach(self.viewModel.partnersContent, id: \.self) { category in
                                     VStack {
                                         Text(category.categoryName.name)
+                                            .font(.title2)
                                             .bold()
                                             .padding(20)
                                         ForEach(category.partners, id: \.self) { partner in

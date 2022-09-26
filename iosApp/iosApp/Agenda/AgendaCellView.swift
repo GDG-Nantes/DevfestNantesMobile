@@ -43,6 +43,7 @@ struct AgendaCellView: View {
                 Spacer()
             }
         }
+        .padding(8)
     }
 }
 

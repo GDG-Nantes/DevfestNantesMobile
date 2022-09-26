@@ -124,14 +124,24 @@ struct SpeakerView: View {
                                     Link(destination: URL(string: link)!) {
                                         if socialItem.type == .twitter {
                                             Image("ic_network_twitter")
+                                                .renderingMode(.template)
+                                                .foregroundColor(Color(Asset.icColor.color))
                                         } else if socialItem.type == .github  {
                                             Image("ic_network_github")
+                                                .renderingMode(.template)
+                                                .foregroundColor(Color(Asset.icColor.color))
                                         } else if socialItem.type == .linkedin  {
                                             Image("ic_network_linkedin")
+                                                .renderingMode(.template)
+                                                .foregroundColor(Color(Asset.icColor.color))
                                         } else if socialItem.type == .facebook  {
                                             Image("ic_network_facebook")
-                                        } else if socialItem.type == .facebook  {
-                                            Image("ic_network_facebook")
+                                                .renderingMode(.template)
+                                                .foregroundColor(Color(Asset.icColor.color))
+                                        } else if socialItem.type == .website  {
+                                            Image("ic_network_web")
+                                                .renderingMode(.template)
+                                                .foregroundColor(Color(Asset.icColor.color))
                                         }
                                     }
                                 }
