@@ -25,7 +25,7 @@
   <string name="web_external_disclaimer_text">Vous allez être redirigé vers une page web extérieure. Nous ne pouvons être tenus pour responsable du contenu disponible sur le site que vous allez visiter.</string>
   <string name="web_external_disclaimer_title">Redirection</string>
   <string name="local_communities_title">Communautés locales</string>
-  <string name="local_communities_button">🌍 Page des communautés tech Nantaises</string>
+  <string name="content_description_local_communities_logo">Logo des communautés tech Nantaises. Clicquez pour ouvrir la page web.</string>
   <string name="session_filters_action">Ouvrir les filtres de session</string>
   <string name="session_filters_drawer_title">Filtres</string>
   <string name="session_filters_drawer_languages_label">Langues</string>

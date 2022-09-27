@@ -27,7 +27,7 @@
     <string name="web_external_disclaimer_text">You will be redirected to an external web page. We can not be held responsible for the content available on the site you are going to visit.</string>
     <string name="web_external_disclaimer_title">Redirection</string>
     <string name="local_communities_title">Local communities</string>
-    <string name="local_communities_button">🌍 Local communities website</string>
+    <string name="content_description_local_communities_logo">Logo of the Local communities. Click to open the website.</string>
     <string name="session_filters_action">Open session filters</string>
     <string name="session_filters_drawer_title">Filters</string>
     <string name="session_filters_drawer_languages_label">Languages</string>
