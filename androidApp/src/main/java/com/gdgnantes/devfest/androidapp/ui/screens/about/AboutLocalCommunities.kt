@@ -1,10 +1,13 @@
 package com.gdgnantes.devfest.androidapp.ui.screens.about
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -12,6 +15,7 @@ import com.gdgnantes.devfest.androidapp.R
 import com.gdgnantes.devfest.androidapp.ui.theme.DevFest_NantesTheme
 import com.gdgnantes.devfest.model.WebLinks
 
+@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AboutLocalCommunities(
     modifier: Modifier = Modifier,
@@ -33,8 +37,21 @@ fun AboutLocalCommunities(
                 .fillMaxWidth(),
             contentAlignment = Alignment.Center
         ) {
-            OutlinedButton(onClick = { onWeblinkClick(WebLinks.NANTES_TECH_COMMUNITIES.url) }) {
-                Text(text = stringResource(id = R.string.local_communities_button))
+            OutlinedCard(
+                colors = CardDefaults.cardColors(
+                    containerColor = Color.White,
+                    contentColor = Color.Black
+                ),
+                onClick = { onWeblinkClick(WebLinks.NANTES_TECH_COMMUNITIES.url) }
+            ) {
+                Image(
+                    modifier = Modifier
+                        .size(250.dp, 157.dp),
+                    painter = painterResource(id = R.drawable.local_communities_logo),
+                    contentDescription = stringResource(
+                        id = R.string.content_description_local_communities_logo
+                    )
+                )
             }
         }
     }
