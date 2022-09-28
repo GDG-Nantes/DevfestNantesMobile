@@ -28,9 +28,15 @@ struct AboutView: View {
                                     CustomButton(url: URL(string: "https://devfest.gdgnantes.com/code-of-conduct")!) {
                                         Text(L10n.aboutCodeOfConduct)
                                     }.foregroundColor(Color(Asset.devFestRed.color))
+                                        .simultaneousGesture(TapGesture().onEnded {
+                                            FirebaseAnalyticsService.shared.eventLinkCodeOfConductOpened()
+                                        })
                                     CustomButton(url: URL(string: "https://devfest.gdgnantes.com/")!) {
                                         Text(L10n.aboutWebsite)
                                     }.foregroundColor(Color(Asset.devFestRed.color))
+                                        .simultaneousGesture(TapGesture().onEnded {
+                                            FirebaseAnalyticsService.shared.eventLinkDevFestWebsiteOpened()
+                                        })
                                 }.padding(8)
                             }.padding(8)
                         }
@@ -45,21 +51,34 @@ struct AboutView: View {
                                             .renderingMode(.template)
                                             .foregroundColor(Color(Asset.icColor.color))
                                     }
+                                    .simultaneousGesture(TapGesture().onEnded {
+                                        FirebaseAnalyticsService.shared.eventLinkFacebookOpened()
+                                                })
+                        
                                     Link(destination: URL(string: "https://twitter.com/gdgnantes")!) {
                                         Image("ic_network_twitter")
                                             .renderingMode(.template)
                                             .foregroundColor(Color(Asset.icColor.color))
                                     }
+                                    .simultaneousGesture(TapGesture().onEnded {
+                                        FirebaseAnalyticsService.shared.eventLinkTwitterOpened()})
+
                                     Link(destination: URL(string: "https://www.linkedin.com/in/gdg-nantes")!) {
                                         Image("ic_network_linkedin")
                                             .renderingMode(.template)
                                             .foregroundColor(Color(Asset.icColor.color))
                                     }
+                                        .simultaneousGesture(TapGesture().onEnded {
+                                        FirebaseAnalyticsService.shared.eventLinkLinkedinOpened()})
+                                    
                                     Link(destination: URL(string: "https://www.youtube.com/c/Gdg-franceBlogspotFr")!) {
                                         Image("ic_network_web")
                                             .renderingMode(.template)
                                             .foregroundColor(Color(Asset.icColor.color))
                                     }
+                                            .simultaneousGesture(TapGesture().onEnded {
+                                        FirebaseAnalyticsService.shared.eventLinkYoutubeOpened()})
+
                                 }.padding(8)
                             }.padding(8)
                         }
@@ -71,7 +90,10 @@ struct AboutView: View {
                                 HStack(alignment: .top, spacing: 40) {
                                     CustomButton(url: URL(string: "https://nantes.community/")!) {
                                         Text(L10n.localCommunitiesButton)
-                                    }.foregroundColor(Color(Asset.devFestRed.color))
+                                    }.simultaneousGesture(TapGesture().onEnded {
+                                        FirebaseAnalyticsService.shared.eventLinkLocalCommunitiesOpened()
+                                    })
+                                    .foregroundColor(Color(Asset.devFestRed.color))
                                 }.padding(8)
                             }.padding(8)
                         }
@@ -89,7 +111,9 @@ struct AboutView: View {
                                             .padding(20)
                                         ForEach(category.partners, id: \.self) { partner in
                                             if let partnerUrl = partner.url {
-                                                Button(action: { UIApplication.shared.open(URL(string: partnerUrl)!) }) {
+                                                Button(action: { UIApplication.shared.open(URL(string: partnerUrl)!)
+                                                    FirebaseAnalyticsService.shared.eventLinkPartnerOpened(partnerURL: partnerUrl)
+                                                }) {
                                                     if let logo =  partner.logoUrl  {
                                                         URLImage(url: URL(string:logo)!) { image in
                                                             image
@@ -123,6 +147,9 @@ struct AboutView: View {
         // and nothing is shown in the detail
         .navigationViewStyle(StackNavigationViewStyle())
         .padding(0)
+        .onAppear{
+            FirebaseAnalyticsService.shared.pageAbout(view: self)
+        }
     }
 }
 

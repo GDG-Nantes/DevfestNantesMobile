@@ -78,6 +78,9 @@ struct AgendaView: View {
                 }
             }
         }
+            .onAppear{
+                FirebaseAnalyticsService.shared.pageAgenda(view: self)
+            }
     }
     
     func getFilteredSessions(sessions: [AgendaContent.Session]) -> [AgendaContent.Session]{

@@ -10,16 +10,27 @@ import Foundation
 import SwiftUI
 import Firebase
 
-class FirebaseAnalyticsService: AnalyticsService {
+class FirebaseAnalyticsService: AnalyticsService{
     
+    static let shared = FirebaseAnalyticsService()
+    
+    required internal init() {}
     // MARK: - Events
     
-    func eventAddFavorite(from page: AnalyticsPage, sessionId: String) {
-        Analytics.logEvent(AnalyticsEvent.speakerSocialLinkOpened.rawValue, parameters: [
-            AnalyticsParam.fromPage.rawValue: page.rawValue,
-            AnalyticsParam.sessionId.rawValue: sessionId
-            ]
-        )
+    func eventAddToFavorite(from page: AnalyticsPage, sessionId: String, fav: Bool) {
+        if fav {
+            Analytics.logEvent(AnalyticsEvent.addToFavorite.rawValue, parameters: [
+                AnalyticsParam.fromPage.rawValue: page.rawValue,
+                AnalyticsParam.sessionId.rawValue: sessionId
+                ]
+            )
+        } else {
+            Analytics.logEvent(AnalyticsEvent.deleteToFavorite.rawValue, parameters: [
+                AnalyticsParam.fromPage.rawValue: page.rawValue,
+                AnalyticsParam.sessionId.rawValue: sessionId
+                ]
+            )
+        }
     }
     
     func eventLinkCodeOfConductOpened() {
@@ -53,6 +64,11 @@ class FirebaseAnalyticsService: AnalyticsService {
             ]
         )
     }
+    
+    func eventLinkYoutubeOpened() {
+        Analytics.logEvent(AnalyticsEvent.linkYoutubeOpened.rawValue, parameters: [:] )
+    }
+
     
     func eventNavigationClicked() {
         Analytics.logEvent(AnalyticsEvent.navigationClicked.rawValue, parameters: [:])

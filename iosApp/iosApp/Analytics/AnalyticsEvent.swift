@@ -9,7 +9,8 @@
 import Foundation
 
 enum AnalyticsEvent: String {
-    case addFavorite = "addFavorite"
+    case addToFavorite = "addToFavorite"
+    case deleteToFavorite = "deleteToFavorite"
     case linkCodeOfConductOpened = "linkCodeOfConductOpened"
     case linkDevFestWebsiteOpened = "linkDevFestWebsiteOpened"
     case linkFacebookOpened = "linkFacebookOpened"
@@ -18,6 +19,7 @@ enum AnalyticsEvent: String {
     case linkLocalCommunitiesOpened = "localCommunitiesOpened"
     case linkPartnerOpened = "linkPartnerOpened"
     case linkSponsorOpened = "linkSponsorOpened"
+    case linkYoutubeOpened = "linkYoutubeOpened"
     case navigationClicked = "navigationClicked"
     case sessionOpened = "sessionOpened"
     case speakerSocialLinkOpened = "speakerSocialLinkOpened"

@@ -13,7 +13,7 @@ protocol AnalyticsService {
 
     // MARK: - Events
     
-    func eventAddFavorite(from page: AnalyticsPage ,sessionId: String)
+    func eventAddToFavorite(from page: AnalyticsPage, sessionId: String, fav: Bool)
     
     func eventLinkCodeOfConductOpened()
     
@@ -28,6 +28,8 @@ protocol AnalyticsService {
     func eventLinkPartnerOpened(partnerURL: String)
     
     func eventLinkTwitterOpened()
+    
+    func eventLinkYoutubeOpened()
     
     func eventNavigationClicked()
 
