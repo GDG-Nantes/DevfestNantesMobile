@@ -16,7 +16,6 @@ struct iOSApp: App {
         
         //Firebase
         FirebaseApp.configure()
-        Crashlytics.crashlytics().log("App loaded")
         
     }
     
