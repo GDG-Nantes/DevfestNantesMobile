@@ -27,6 +27,7 @@ class DevFestViewModel: ObservableObject {
     @Published var agendaContent: AgendaContent = AgendaContent(sections: [])
     @Published var partnersContent = [PartnerContent]()
     @Published var roomsContent = [Room]()
+    @Published var isLoading = true
     
      var currentLanguage: ContentLanguage {
         guard let languageCode = Locale.current.languageCode else {
@@ -71,6 +72,7 @@ class DevFestViewModel: ObservableObject {
                 day: self.sectionDateFormatter.string(from: date),
                 sessions: sessions))
         }
+        self.isLoading = false
         agendaContent.sections = sections
     }
     
