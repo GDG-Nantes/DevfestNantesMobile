@@ -217,6 +217,7 @@
 				7555FF79242A565900829871 /* Resources */,
 				5E1F1D6C76BD5C5DE5D6CF99 /* Frameworks */,
 				733C139CA3EAC19E8C06313A /* [CP] Embed Pods Frameworks */,
+				CBCB60F528E48BB8001E9B1A /* ShellScript */,
 			);
 			buildRules = (
 			);
@@ -340,6 +341,25 @@
 			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
 			shellScript = "$PODS_ROOT/SwiftGen/bin/swiftgen config run --config \"$PROJECT_DIR\"/iosApp/SwiftGen/swiftgen.yml\n";
+		};
+		CBCB60F528E48BB8001E9B1A /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${BUILD_DIR%/Build/*}/SourcePackages/checkouts/firebase-ios-sdk/Crashlytics/run",
+				"$(SRCROOT)/$(BUILT_PRODUCTS_DIR)/$(INFOPLIST_PATH)",
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n${BUILD_DIR%/Build/*}/SourcePackages/checkouts/firebase-ios-sdk/Crashlytics/run\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
