@@ -23,38 +23,39 @@ struct AgendaView: View {
     }()
     
     var body: some View {
-        
-        NavigationView {
-            VStack {
-                Picker("What is the day?", selection: $day) {
-                    Text(L10n.day1).tag("2022-10-20")
-                    Text(L10n.day2).tag("2022-10-21")
-                }
-                .pickerStyle(.segmented)
-                List {
-                    ForEach(viewModel.agendaContent.sections.filter{($0.day.contains(day))}, id: \.date) { section in
-                        Section(header: Text("\(self.sectionTimeFormatter.string(from: section.date))")) {
-                            let filteredSessions = getFilteredSessions(sessions: section.sessions)
-                            ForEach(self.showFavoritesOnly ? filteredSessions.filter({viewModel.favorites.contains($0.id)}):  filteredSessions, id: \.id) { session in
-                                if session.sessionType == .conference || session.sessionType == .codelab{
-                                    NavigationLink(destination: AgendaDetailView(session: session, viewModel: viewModel)) {
+
+            NavigationView {
+                LoadingView(isShowing: $viewModel.isLoading) {
+                VStack {
+                    Picker("What is the day?", selection: $day) {
+                        Text(L10n.day1).tag("2022-10-20")
+                        Text(L10n.day2).tag("2022-10-21")
+                    }
+                    .pickerStyle(.segmented)
+                    List {
+                        ForEach(viewModel.agendaContent.sections.filter{($0.day.contains(day))}, id: \.date) { section in
+                            Section(header: Text("\(self.sectionTimeFormatter.string(from: section.date))")) {
+                                let filteredSessions = getFilteredSessions(sessions: section.sessions)
+                                ForEach(self.showFavoritesOnly ? filteredSessions.filter({viewModel.favorites.contains($0.id)}):  filteredSessions, id: \.id) { session in
+                                    if session.sessionType == .conference || session.sessionType == .codelab{
+                                        NavigationLink(destination: AgendaDetailView(session: session, viewModel: viewModel)) {
+                                            AgendaCellView(viewModel: viewModel, session: session)
+                                        }
+                                    } else {
                                         AgendaCellView(viewModel: viewModel, session: session)
                                     }
-                                } else {
-                                        AgendaCellView(viewModel: viewModel, session: session)
+                                    
                                 }
-                                
                             }
                         }
                     }
-                }
-                .navigationBarTitle(L10n.screenAgenda)
-                .navigationBarItems(trailing:
-                Menu("\(Image(systemName: "line.3.horizontal.decrease.circle"))") {
-                    let selected = Binding(
-                        get: { self.showFavoritesOnly },
-                        set: { self.showFavoritesOnly = $0 == self.showFavoritesOnly ? false : $0 }
-                    )
+                    .navigationBarTitle(L10n.screenAgenda)
+                    .navigationBarItems(trailing:
+                                            Menu("\(Image(systemName: "line.3.horizontal.decrease.circle"))") {
+                        let selected = Binding(
+                            get: { self.showFavoritesOnly },
+                            set: { self.showFavoritesOnly = $0 == self.showFavoritesOnly ? false : $0 }
+                        )
                         Picker("", selection: selected) {
                             Text(L10n.filterFavorites).tag(true)
                             Menu(L10n.filterRooms) {
@@ -68,11 +69,12 @@ struct AgendaView: View {
                                 }
                             }
                         }
-                    
-                })
-                .task {
-                    await viewModel.observeRooms()
-                    await viewModel.observeSessions()
+                        
+                    })
+                    .task {
+                        await viewModel.observeRooms()
+                        await viewModel.observeSessions()
+                    }
                 }
             }
         }

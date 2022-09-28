@@ -62,6 +62,8 @@ internal enum L10n {
   internal static let filterFavorites = L10n.tr("Localizable", "filter_favorites", fallback: "Favorites")
   /// Rooms
   internal static let filterRooms = L10n.tr("Localizable", "filter_rooms", fallback: "Rooms")
+  /// Loading...
+  internal static let loading = L10n.tr("Localizable", "loading", fallback: "Loading...")
   /// 🌍 Local communities website
   internal static let localCommunitiesButton = L10n.tr("Localizable", "local_communities_button", fallback: "🌍 Local communities website")
   /// Local communities
