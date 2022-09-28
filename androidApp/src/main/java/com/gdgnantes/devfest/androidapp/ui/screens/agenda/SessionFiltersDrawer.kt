@@ -13,11 +13,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.gdgnantes.devfest.androidapp.R
 import com.gdgnantes.devfest.androidapp.utils.SessionFilter
 import com.gdgnantes.devfest.model.Room
+import com.gdgnantes.devfest.model.SessionLanguage
 
 @Composable
 fun AgendaFilterDrawer(
@@ -40,34 +42,34 @@ fun AgendaFilterDrawer(
             }
         )
 
-        /*HeaderItem(R.string.session_filters_drawer_languages_label)
-        val french = "French"
+        HeaderItem(R.string.session_filters_drawer_languages_label)
+        val french = SessionLanguage.FRENCH.name
         FilterItem(
-            text = stringResource(R.string.french),
-            language = french,
+            text = stringResource(R.string.language_french),
+            language = SessionLanguage.FRENCH,
             checked = sessionFilters.any { it.type == SessionFilter.FilterType.LANGUAGE && it.value == french },
             onCheck = { checked ->
-                val newSessionFilters = sessionFilters.toMutableList().apply {
+                val newSessionFilters = sessionFilters.toMutableSet().apply {
                     removeAll { it.type == SessionFilter.FilterType.LANGUAGE && it.value == french }
                     if (checked) add(SessionFilter(SessionFilter.FilterType.LANGUAGE, french))
                 }
-                onFiltersChanged(newSessionFilters)
+                onSessionFiltersChanged(newSessionFilters)
 
             }
         )
-        val english = "English"
+        val english = SessionLanguage.ENGLISH.name
         FilterItem(
-            text = stringResource(R.string.english),
-            language = english,
+            text = stringResource(R.string.language_english),
+            language = SessionLanguage.ENGLISH,
             checked = sessionFilters.any { it.type == SessionFilter.FilterType.LANGUAGE && it.value == english },
             onCheck = { checked ->
-                val newSessionFilters = sessionFilters.toMutableList().apply {
+                val newSessionFilters = sessionFilters.toMutableSet().apply {
                     removeAll { it.type == SessionFilter.FilterType.LANGUAGE && it.value == english }
                     if (checked) add(SessionFilter(SessionFilter.FilterType.LANGUAGE, english))
                 }
-                onFiltersChanged(newSessionFilters)
+                onSessionFiltersChanged(newSessionFilters)
             }
-        )*/
+        )
 
         HeaderItem(R.string.session_filters_drawer_rooms_label)
         for (room in rooms) {
@@ -90,7 +92,7 @@ fun AgendaFilterDrawer(
 private fun FilterItem(
     text: String,
     image: Int? = null,
-    language: String? = null,
+    language: SessionLanguage? = null,
     checked: Boolean,
     onCheck: (checked: Boolean) -> Unit,
 ) {
@@ -110,13 +112,19 @@ private fun FilterItem(
                 colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onSurface)
             )
         }
-        /*if (language != null) {
+        if (language != null) {
+            val emoji = when (language) {
+                SessionLanguage.FRENCH -> "🇫🇷"
+                SessionLanguage.ENGLISH -> "🇬🇧"
+            }
+
             Text(
                 modifier = Modifier.width(textLeftMargin),
                 textAlign = TextAlign.Center,
-                text = EmojiUtils.getLanguageInEmoji(language)!!
+                text = emoji
             )
-        }*/
+        }
+
         Text(
             modifier = Modifier
                 .weight(1f)

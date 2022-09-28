@@ -18,7 +18,11 @@ fun Session.getLanguageEmojiString(): String? {
     }
 }
 
+fun Session.getDurationString(): String {
+    return getDurationInMinutes() + " minutes"
+}
+
 fun Session.getDurationAndLanguageString(): String {
     val languageEmoji = getLanguageEmojiString()
-    return getDurationInMinutes() + " minutes" + if (languageEmoji != null) " / $languageEmoji" else ""
+    return getDurationString() + if (languageEmoji != null) " / $languageEmoji" else ""
 }
