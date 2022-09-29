@@ -17,6 +17,7 @@ import com.gdgnantes.devfest.androidapp.ui.screens.session.SessionViewModel
 import com.gdgnantes.devfest.androidapp.ui.screens.settings.Settings
 import com.gdgnantes.devfest.androidapp.ui.theme.DevFest_NantesTheme
 import com.gdgnantes.devfest.androidapp.utils.assistedViewModel
+import com.gdgnantes.devfest.model.SessionType
 import dagger.hilt.EntryPoint
 import dagger.hilt.InstallIn
 import dagger.hilt.android.AndroidEntryPoint
@@ -54,7 +55,14 @@ class MainActivity : ComponentActivity() {
                     composable(route = Screen.Home.route) {
                         Home(
                             onSessionClick = { session ->
-                                session.openFeedbackFormId?.let { mainNavController.navigate("${Screen.Session.route}/${session.id}") }
+                                when (session.type) {
+                                    SessionType.QUICKIE,
+                                    SessionType.CONFERENCE,
+                                    SessionType.CODELAB -> {
+                                        mainNavController.navigate("${Screen.Session.route}/${session.id}")
+                                    }
+                                    else -> {}
+                                }
                             },
                             onSettingsClick = { mainNavController.navigate(Screen.Settings.route) },
                             onWeblinkClick = { url ->

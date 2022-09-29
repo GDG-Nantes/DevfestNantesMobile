@@ -1,8 +1,6 @@
 package com.gdgnantes.devfest.androidapp.ui.screens.agenda
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.MaterialTheme
@@ -13,11 +11,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.gdgnantes.devfest.androidapp.R
 import com.gdgnantes.devfest.androidapp.utils.SessionFilter
+import com.gdgnantes.devfest.model.Complexity
 import com.gdgnantes.devfest.model.Room
+import com.gdgnantes.devfest.model.SessionLanguage
 
 @Composable
 fun AgendaFilterDrawer(
@@ -25,7 +26,9 @@ fun AgendaFilterDrawer(
     sessionFilters: Set<SessionFilter>,
     onSessionFiltersChanged: (Set<SessionFilter>) -> Unit,
 ) {
-    Column(modifier = Modifier.fillMaxWidth()) {
+    Column(modifier = Modifier
+        .fillMaxWidth()
+        .verticalScroll(rememberScrollState())) {
         HeaderItem(R.string.session_filters_drawer_title)
         FilterItem(
             text = stringResource(R.string.bookmarked),
@@ -40,34 +43,34 @@ fun AgendaFilterDrawer(
             }
         )
 
-        /*HeaderItem(R.string.session_filters_drawer_languages_label)
-        val french = "French"
+        HeaderItem(R.string.session_filters_drawer_languages_label)
+        val french = SessionLanguage.FRENCH.name
         FilterItem(
-            text = stringResource(R.string.french),
-            language = french,
+            text = stringResource(R.string.language_french),
+            language = SessionLanguage.FRENCH,
             checked = sessionFilters.any { it.type == SessionFilter.FilterType.LANGUAGE && it.value == french },
             onCheck = { checked ->
-                val newSessionFilters = sessionFilters.toMutableList().apply {
+                val newSessionFilters = sessionFilters.toMutableSet().apply {
                     removeAll { it.type == SessionFilter.FilterType.LANGUAGE && it.value == french }
                     if (checked) add(SessionFilter(SessionFilter.FilterType.LANGUAGE, french))
                 }
-                onFiltersChanged(newSessionFilters)
+                onSessionFiltersChanged(newSessionFilters)
 
             }
         )
-        val english = "English"
+        val english = SessionLanguage.ENGLISH.name
         FilterItem(
-            text = stringResource(R.string.english),
-            language = english,
+            text = stringResource(R.string.language_english),
+            language = SessionLanguage.ENGLISH,
             checked = sessionFilters.any { it.type == SessionFilter.FilterType.LANGUAGE && it.value == english },
             onCheck = { checked ->
-                val newSessionFilters = sessionFilters.toMutableList().apply {
+                val newSessionFilters = sessionFilters.toMutableSet().apply {
                     removeAll { it.type == SessionFilter.FilterType.LANGUAGE && it.value == english }
                     if (checked) add(SessionFilter(SessionFilter.FilterType.LANGUAGE, english))
                 }
-                onFiltersChanged(newSessionFilters)
+                onSessionFiltersChanged(newSessionFilters)
             }
-        )*/
+        )
 
         HeaderItem(R.string.session_filters_drawer_rooms_label)
         for (room in rooms) {
@@ -83,6 +86,56 @@ fun AgendaFilterDrawer(
                 }
             )
         }
+
+        HeaderItem(R.string.session_filters_drawer_complexity_label)
+        FilterItem(
+            text = stringResource(R.string.complexity_beginer),
+            checked = sessionFilters.any { it.type == SessionFilter.FilterType.COMPLEXITY && it.value == Complexity.BEGINNER.name },
+            onCheck = { checked ->
+                val newSessionFilters = sessionFilters.toMutableSet().apply {
+                    removeAll { it.type == SessionFilter.FilterType.COMPLEXITY && it.value == Complexity.BEGINNER.name }
+                    if (checked) add(
+                        SessionFilter(
+                            SessionFilter.FilterType.COMPLEXITY,
+                            Complexity.BEGINNER.name
+                        )
+                    )
+                }
+                onSessionFiltersChanged(newSessionFilters)
+            }
+        )
+        FilterItem(
+            text = stringResource(R.string.complexity_intermediate),
+            checked = sessionFilters.any { it.type == SessionFilter.FilterType.COMPLEXITY && it.value == Complexity.INTERMEDIATE.name },
+            onCheck = { checked ->
+                val newSessionFilters = sessionFilters.toMutableSet().apply {
+                    removeAll { it.type == SessionFilter.FilterType.COMPLEXITY && it.value == Complexity.INTERMEDIATE.name }
+                    if (checked) add(
+                        SessionFilter(
+                            SessionFilter.FilterType.COMPLEXITY,
+                            Complexity.INTERMEDIATE.name
+                        )
+                    )
+                }
+                onSessionFiltersChanged(newSessionFilters)
+            }
+        )
+        FilterItem(
+            text = stringResource(R.string.complexity_advanced),
+            checked = sessionFilters.any { it.type == SessionFilter.FilterType.COMPLEXITY && it.value == Complexity.ADVANCED.name },
+            onCheck = { checked ->
+                val newSessionFilters = sessionFilters.toMutableSet().apply {
+                    removeAll { it.type == SessionFilter.FilterType.COMPLEXITY && it.value == Complexity.ADVANCED.name }
+                    if (checked) add(
+                        SessionFilter(
+                            SessionFilter.FilterType.COMPLEXITY,
+                            Complexity.ADVANCED.name
+                        )
+                    )
+                }
+                onSessionFiltersChanged(newSessionFilters)
+            }
+        )
     }
 }
 
@@ -90,7 +143,7 @@ fun AgendaFilterDrawer(
 private fun FilterItem(
     text: String,
     image: Int? = null,
-    language: String? = null,
+    language: SessionLanguage? = null,
     checked: Boolean,
     onCheck: (checked: Boolean) -> Unit,
 ) {
@@ -110,13 +163,19 @@ private fun FilterItem(
                 colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onSurface)
             )
         }
-        /*if (language != null) {
+        if (language != null) {
+            val emoji = when (language) {
+                SessionLanguage.FRENCH -> "🇫🇷"
+                SessionLanguage.ENGLISH -> "🇬🇧"
+            }
+
             Text(
                 modifier = Modifier.width(textLeftMargin),
                 textAlign = TextAlign.Center,
-                text = EmojiUtils.getLanguageInEmoji(language)!!
+                text = emoji
             )
-        }*/
+        }
+
         Text(
             modifier = Modifier
                 .weight(1f)

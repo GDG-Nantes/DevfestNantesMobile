@@ -58,4 +58,7 @@
     <string name="screen_data_sharing">Data sharing</string>
     <string name="settings_data_sharing_subtitle">Customize data sharing</string>
     <string name="placeholder_session_details">Session details</string>
+    <string name="language_french">french</string>
+    <string name="language_english">english</string>
+    <string name="session_filters_drawer_complexity_label">Complexity</string>
 </resources>

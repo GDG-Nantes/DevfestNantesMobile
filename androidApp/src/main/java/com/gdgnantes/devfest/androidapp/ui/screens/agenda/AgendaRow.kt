@@ -24,8 +24,10 @@ import com.gdgnantes.devfest.androidapp.ui.components.SessionCategory
 import com.gdgnantes.devfest.androidapp.ui.theme.DevFest_NantesTheme
 import com.gdgnantes.devfest.androidapp.ui.theme.bookmarked
 import com.gdgnantes.devfest.model.Session
+import com.gdgnantes.devfest.model.SessionType
 import com.gdgnantes.devfest.model.stubs.buildSessionStub
 import com.gdgnantes.devfest.utils.getDurationAndLanguageString
+import com.gdgnantes.devfest.utils.getDurationString
 
 @Composable
 fun AgendaRow(
@@ -102,8 +104,19 @@ fun AgendaRow(
                     session.category?.let { category ->
                         SessionCategory(category = category)
                     }
+
+                    val duration = when (session.type) {
+                        SessionType.QUICKIE,
+                        SessionType.CONFERENCE,
+                        SessionType.CODELAB -> {
+                            session.getDurationAndLanguageString()
+                        }
+                        else -> {
+                            session.getDurationString()
+                        }
+                    }
                     Text(
-                        text = session.getDurationAndLanguageString(),
+                        text = duration,
                         style = MaterialTheme.typography.labelMedium
                     )
                 }

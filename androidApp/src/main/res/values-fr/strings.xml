@@ -50,4 +50,6 @@
   <string name="screen_data_sharing">Partage de données</string>
   <string name="settings_data_sharing_subtitle">Personnaliser le partage de vos données.</string>
   <string name="placeholder_session_details">Détails de la session</string>
+  <string name="language_french">français</string>
+  <string name="language_english">anglais</string>
 </resources>
