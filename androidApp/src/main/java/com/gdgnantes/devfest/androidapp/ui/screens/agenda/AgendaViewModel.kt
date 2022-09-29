@@ -100,6 +100,11 @@ class AgendaViewModel @Inject constructor(
                             sessionsByFilterType[filter.type]?.add(session)
                         }
                     }
+                    SessionFilter.FilterType.COMPLEXITY -> {
+                        if (filter.value == session.complexity?.name) {
+                            sessionsByFilterType[filter.type]?.add(session)
+                        }
+                    }
                     SessionFilter.FilterType.LANGUAGE -> {
                         if (filter.value == session.language?.name) {
                             sessionsByFilterType[filter.type]?.add(session)

@@ -1,8 +1,6 @@
 package com.gdgnantes.devfest.androidapp.ui.screens.agenda
 
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.clickable
+import androidx.compose.foundation.*
 import androidx.compose.foundation.layout.*
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.MaterialTheme
@@ -18,6 +16,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.gdgnantes.devfest.androidapp.R
 import com.gdgnantes.devfest.androidapp.utils.SessionFilter
+import com.gdgnantes.devfest.model.Complexity
 import com.gdgnantes.devfest.model.Room
 import com.gdgnantes.devfest.model.SessionLanguage
 
@@ -27,7 +26,9 @@ fun AgendaFilterDrawer(
     sessionFilters: Set<SessionFilter>,
     onSessionFiltersChanged: (Set<SessionFilter>) -> Unit,
 ) {
-    Column(modifier = Modifier.fillMaxWidth()) {
+    Column(modifier = Modifier
+        .fillMaxWidth()
+        .verticalScroll(rememberScrollState())) {
         HeaderItem(R.string.session_filters_drawer_title)
         FilterItem(
             text = stringResource(R.string.bookmarked),
@@ -85,6 +86,56 @@ fun AgendaFilterDrawer(
                 }
             )
         }
+
+        HeaderItem(R.string.session_filters_drawer_complexity_label)
+        FilterItem(
+            text = stringResource(R.string.complexity_beginer),
+            checked = sessionFilters.any { it.type == SessionFilter.FilterType.COMPLEXITY && it.value == Complexity.BEGINNER.name },
+            onCheck = { checked ->
+                val newSessionFilters = sessionFilters.toMutableSet().apply {
+                    removeAll { it.type == SessionFilter.FilterType.COMPLEXITY && it.value == Complexity.BEGINNER.name }
+                    if (checked) add(
+                        SessionFilter(
+                            SessionFilter.FilterType.COMPLEXITY,
+                            Complexity.BEGINNER.name
+                        )
+                    )
+                }
+                onSessionFiltersChanged(newSessionFilters)
+            }
+        )
+        FilterItem(
+            text = stringResource(R.string.complexity_intermediate),
+            checked = sessionFilters.any { it.type == SessionFilter.FilterType.COMPLEXITY && it.value == Complexity.INTERMEDIATE.name },
+            onCheck = { checked ->
+                val newSessionFilters = sessionFilters.toMutableSet().apply {
+                    removeAll { it.type == SessionFilter.FilterType.COMPLEXITY && it.value == Complexity.INTERMEDIATE.name }
+                    if (checked) add(
+                        SessionFilter(
+                            SessionFilter.FilterType.COMPLEXITY,
+                            Complexity.INTERMEDIATE.name
+                        )
+                    )
+                }
+                onSessionFiltersChanged(newSessionFilters)
+            }
+        )
+        FilterItem(
+            text = stringResource(R.string.complexity_advanced),
+            checked = sessionFilters.any { it.type == SessionFilter.FilterType.COMPLEXITY && it.value == Complexity.ADVANCED.name },
+            onCheck = { checked ->
+                val newSessionFilters = sessionFilters.toMutableSet().apply {
+                    removeAll { it.type == SessionFilter.FilterType.COMPLEXITY && it.value == Complexity.ADVANCED.name }
+                    if (checked) add(
+                        SessionFilter(
+                            SessionFilter.FilterType.COMPLEXITY,
+                            Complexity.ADVANCED.name
+                        )
+                    )
+                }
+                onSessionFiltersChanged(newSessionFilters)
+            }
+        )
     }
 }
 

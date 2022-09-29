@@ -60,4 +60,5 @@
     <string name="placeholder_session_details">Session details</string>
     <string name="language_french">french</string>
     <string name="language_english">english</string>
+    <string name="session_filters_drawer_complexity_label">Complexity</string>
 </resources>
