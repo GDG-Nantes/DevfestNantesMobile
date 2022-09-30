@@ -40,7 +40,7 @@ struct AgendaCellView: View {
                     .foregroundColor(.yellow)
                     .padding(8)
                     .onTapGesture { self.viewModel.toggleFavorite(ofSession: session)
-                        FirebaseAnalyticsService.shared.eventAddToFavorite(page: .agenda, sessionId: session.id, fav: viewModel.favorites.contains(session.id))
+                        FirebaseAnalyticsService.shared.eventBookmark(page: .agenda, sessionId: session.id, fav: viewModel.favorites.contains(session.id))
                     }
                 Spacer()
             }

@@ -18,7 +18,7 @@ class FirebaseAnalyticsService: AnalyticsService{
     required internal init() {}
     // MARK: - Events
     
-    func eventAddToFavorite(page: AnalyticsPage, sessionId: String, fav: Bool) {
+    func eventBookmark(page: AnalyticsPage, sessionId: String, fav: Bool) {
         if fav {
             Analytics.logEvent(AnalyticsEvent.addtofavorite.name, parameters: [
                 AnalyticsParam.frompage.name: page.name,
@@ -32,6 +32,10 @@ class FirebaseAnalyticsService: AnalyticsService{
                 ]
             )
         }
+    }
+    
+    func eventFilter() {
+        
     }
     
     func eventLinkCodeOfConductOpened() {

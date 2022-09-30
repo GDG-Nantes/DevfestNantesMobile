@@ -9,4 +9,7 @@ target 'DevFest Nantes' do
   pod "NSLogger/Swift"
   pod "URLImage"
   pod 'SwiftGen', '~> 6.6'
+  # Firebase
+  pod 'Firebase/AnalyticsWithoutAdIdSupport'
+  pod 'Firebase/Crashlytics'
 end

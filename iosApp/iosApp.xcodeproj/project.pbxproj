@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 51;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -31,8 +31,6 @@
 		CBA5C23228DBC5CA00D2779B /* Assets.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBA5C23128DBC5CA00D2779B /* Assets.swift */; };
 		CBCB60ED28E47FC5001E9B1A /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBCB60EC28E47FC5001E9B1A /* LoadingView.swift */; };
 		CBCB60EF28E485D5001E9B1A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CBCB60EE28E485D5001E9B1A /* GoogleService-Info.plist */; };
-		CBCB60F228E48832001E9B1A /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */ = {isa = PBXBuildFile; productRef = CBCB60F128E48832001E9B1A /* FirebaseAnalyticsWithoutAdIdSupport */; };
-		CBCB60F428E48832001E9B1A /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = CBCB60F328E48832001E9B1A /* FirebaseCrashlytics */; };
 		CBCB60FA28E48F27001E9B1A /* FirebaseAnalyticsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBCB60F928E48F27001E9B1A /* FirebaseAnalyticsService.swift */; };
 /* End PBXBuildFile section */
 
@@ -77,8 +75,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				00D69FD028D2032300498D05 /* libsqlite3.tbd in Frameworks */,
-				CBCB60F428E48832001E9B1A /* FirebaseCrashlytics in Frameworks */,
-				CBCB60F228E48832001E9B1A /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */,
 				4A68B3C2C094CCA8E63BD31C /* Pods_DevFest_Nantes.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -240,8 +236,6 @@
 			);
 			name = "DevFest Nantes";
 			packageProductDependencies = (
-				CBCB60F128E48832001E9B1A /* FirebaseAnalyticsWithoutAdIdSupport */,
-				CBCB60F328E48832001E9B1A /* FirebaseCrashlytics */,
 			);
 			productName = iosApp;
 			productReference = 7555FF7B242A565900829871 /* DevFest Nantes.app */;
@@ -273,7 +267,6 @@
 			);
 			mainGroup = 7555FF72242A565900829871;
 			packageReferences = (
-				CBCB60F028E48832001E9B1A /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
 			);
 			productRefGroup = 7555FF7C242A565900829871 /* Products */;
 			projectDirPath = "";
@@ -359,7 +352,7 @@
 		};
 		CBCB60F528E48BB8001E9B1A /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
+			buildActionMask = 8;
 			files = (
 			);
 			inputFileListPaths = (
@@ -372,7 +365,7 @@
 			);
 			outputPaths = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
+			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
 			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n${BUILD_DIR%/Build/*}/SourcePackages/checkouts/firebase-ios-sdk/Crashlytics/run\n";
 		};
@@ -613,30 +606,6 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
-
-/* Begin XCRemoteSwiftPackageReference section */
-		CBCB60F028E48832001E9B1A /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 9.0.0;
-			};
-		};
-/* End XCRemoteSwiftPackageReference section */
-
-/* Begin XCSwiftPackageProductDependency section */
-		CBCB60F128E48832001E9B1A /* FirebaseAnalyticsWithoutAdIdSupport */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = CBCB60F028E48832001E9B1A /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseAnalyticsWithoutAdIdSupport;
-		};
-		CBCB60F328E48832001E9B1A /* FirebaseCrashlytics */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = CBCB60F028E48832001E9B1A /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
-			productName = FirebaseCrashlytics;
-		};
-/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 7555FF73242A565900829871 /* Project object */;
 }

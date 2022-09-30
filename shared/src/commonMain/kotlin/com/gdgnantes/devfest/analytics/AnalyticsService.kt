@@ -2,7 +2,9 @@ package com.gdgnantes.devfest.analytics
 
 interface AnalyticsService {
 
-    fun eventAddToFavorite(page: AnalyticsPage, sessionId: String, fav: Boolean)
+    fun eventBookmark(page: AnalyticsPage, sessionId: String, fav: Boolean)
+
+    fun eventFilter()
 
     fun eventLinkCodeOfConductOpened()
 
