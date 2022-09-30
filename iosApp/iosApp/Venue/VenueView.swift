@@ -8,6 +8,7 @@
 
 import SwiftUI
 import URLImage
+import shared
 
 
 struct VenueView: View {
@@ -38,6 +39,9 @@ struct VenueView: View {
                         CustomButton(url: URL(string: "http://maps.apple.com/?daddr=\(viewModel.venueContent.latitude),\(viewModel.venueContent.longitude)")!)  {
                             Text(L10n.venueGoToButton)
                         }.foregroundColor(Color(Asset.devFestRed.color))
+                            .simultaneousGesture(TapGesture().onEnded {
+                                FirebaseAnalyticsService.shared.eventNavigationClicked()
+                            })
                         
                         Text(viewModel.venueContent.description)
                             .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
@@ -49,6 +53,9 @@ struct VenueView: View {
         }
         .task {
             await viewModel.observeVenue()
+        }
+        .onAppear{
+            FirebaseAnalyticsService.shared.pageEvent(page: AnalyticsPage.venue)
         }
     }
 }

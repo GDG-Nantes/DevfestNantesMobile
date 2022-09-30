@@ -1,6 +1,6 @@
 ENV['SWIFT_VERSION'] = '5'
 
-target 'iosApp' do
+target 'DevFest Nantes' do
   use_frameworks!
   platform :ios, '15'
   pod 'shared', :path => '../shared'
@@ -9,4 +9,7 @@ target 'iosApp' do
   pod "NSLogger/Swift"
   pod "URLImage"
   pod 'SwiftGen', '~> 6.6'
+  # Firebase
+  pod 'Firebase/AnalyticsWithoutAdIdSupport'
+  pod 'Firebase/Crashlytics'
 end

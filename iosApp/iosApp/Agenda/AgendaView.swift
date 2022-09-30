@@ -12,7 +12,7 @@ import shared
 struct AgendaView: View {
     @ObservedObject var viewModel: DevFestViewModel
     
-    @State private var day = "2022-10-20"
+    @State private var day = "1"
     @State private var showFavoritesOnly = false
     @State private var selectedRoom: Room?
         
@@ -28,8 +28,8 @@ struct AgendaView: View {
                 LoadingView(isShowing: $viewModel.isLoading) {
                 VStack {
                     Picker("What is the day?", selection: $day) {
-                        Text(L10n.day1).tag("2022-10-20")
-                        Text(L10n.day2).tag("2022-10-21")
+                        Text(L10n.day1).tag("1")
+                        Text(L10n.day2).tag("2")
                     }
                     .pickerStyle(.segmented)
                     List {
@@ -78,6 +78,9 @@ struct AgendaView: View {
                 }
             }
         }
+            .onAppear{
+                FirebaseAnalyticsService.shared.pageEvent(page: AnalyticsPage.agenda)
+            }
     }
     
     func getFilteredSessions(sessions: [AgendaContent.Session]) -> [AgendaContent.Session]{

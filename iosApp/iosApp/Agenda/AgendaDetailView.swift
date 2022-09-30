@@ -9,6 +9,7 @@
 import SwiftUI
 import shared
 import URLImage
+import shared
 
 
 struct AgendaDetailView: View {
@@ -76,7 +77,12 @@ struct AgendaDetailView: View {
                                     Image(systemName:  viewModel.favorites.contains(session.id) ? "star.fill" : "star")
                 .foregroundColor(.yellow)
                 .padding(8)
-                .onTapGesture { self.viewModel.toggleFavorite(ofSession: session)})
+                .onTapGesture { self.viewModel.toggleFavorite(ofSession: session)
+                    FirebaseAnalyticsService.shared.eventBookmark(page: .sessiondetails, sessionId: session.id, fav: viewModel.favorites.contains(session.id))
+                })
+        }
+        .onAppear{
+            FirebaseAnalyticsService.shared.pageEvent(page: AnalyticsPage.sessiondetails)
         }
     }
 }
@@ -143,17 +149,18 @@ struct SpeakerView: View {
                                                 .renderingMode(.template)
                                                 .foregroundColor(Color(Asset.icColor.color))
                                         }
+                                    }.onTapGesture {
+                                        FirebaseAnalyticsService.shared.eventSpeakerSocialLinkOpened(speaker: speaker.name, url: link)
                                     }
                                 }
-
                             }
                         }
-
+                        
                     }
                     
                 }
             }
-           .padding(.vertical, 8)
+            .padding(.vertical, 8)
         }
     }
 }
