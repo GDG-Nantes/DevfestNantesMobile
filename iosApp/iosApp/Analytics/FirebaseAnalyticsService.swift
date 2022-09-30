@@ -91,24 +91,9 @@ class FirebaseAnalyticsService: AnalyticsService{
     
     // MARK: - Page
     
-    func pageAgenda(view: any View) {
+    func pageEvent(page: AnalyticsPage) {
         Analytics.logEvent(AnalyticsEventScreenView,
-                           parameters: [AnalyticsParameterScreenName: AnalyticsPage.agenda.rawValue, AnalyticsParameterScreenClass: "\(type(of: view.self))"])
-    }
-    
-    func pageSessionDetails(view: any View) {
-        Analytics.logEvent(AnalyticsEventScreenView,
-                           parameters: [AnalyticsParameterScreenName: AnalyticsPage.sessionDetails.rawValue, AnalyticsParameterScreenClass: "\(type(of: view.self))"])
-    }
-    
-    func pageVenue(view: any View) {
-        Analytics.logEvent(AnalyticsEventScreenView,
-                           parameters: [AnalyticsParameterScreenName: AnalyticsPage.venue.rawValue, AnalyticsParameterScreenClass: "\(type(of: view.self))"])
-    }
-    
-    func pageAbout(view: any View) {
-        Analytics.logEvent(AnalyticsEventScreenView,
-                           parameters: [AnalyticsParameterScreenName: AnalyticsPage.about.rawValue, AnalyticsParameterScreenClass: "\(type(of: view.self))"])
+                           parameters: [AnalyticsParameterScreenName: page.rawValue])
     }
 }
 

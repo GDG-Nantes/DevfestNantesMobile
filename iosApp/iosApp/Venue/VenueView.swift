@@ -54,7 +54,7 @@ struct VenueView: View {
             await viewModel.observeVenue()
         }
         .onAppear{
-            FirebaseAnalyticsService.shared.pageVenue(view: self)
+            FirebaseAnalyticsService.shared.pageEvent(page: AnalyticsPage.venue)
         }
     }
 }

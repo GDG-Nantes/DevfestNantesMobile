@@ -148,7 +148,7 @@ struct AboutView: View {
         .navigationViewStyle(StackNavigationViewStyle())
         .padding(0)
         .onAppear{
-            FirebaseAnalyticsService.shared.pageAbout(view: self)
+            FirebaseAnalyticsService.shared.pageEvent(page: AnalyticsPage.about)
         }
     }
 }

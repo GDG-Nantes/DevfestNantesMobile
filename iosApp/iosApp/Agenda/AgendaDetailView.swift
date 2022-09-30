@@ -81,7 +81,7 @@ struct AgendaDetailView: View {
                 })
         }
         .onAppear{
-            FirebaseAnalyticsService.shared.pageSessionDetails(view: self)
+            FirebaseAnalyticsService.shared.pageEvent(page: AnalyticsPage.sessionDetails)
         }
     }
 }

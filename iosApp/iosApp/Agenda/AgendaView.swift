@@ -79,7 +79,7 @@ struct AgendaView: View {
             }
         }
             .onAppear{
-                FirebaseAnalyticsService.shared.pageAgenda(view: self)
+                FirebaseAnalyticsService.shared.pageEvent(page: AnalyticsPage.agenda)
             }
     }
     

@@ -40,12 +40,6 @@ protocol AnalyticsService {
 
     // MARK: - Pages
 
-    func pageAgenda(view: any View)
-    
-    func pageSessionDetails(view: any View)
-    
-    func pageVenue(view: any View)
-    
-    func pageAbout(view: any View)
+    func pageEvent(page: AnalyticsPage)
 
 }
