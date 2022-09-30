@@ -8,6 +8,7 @@
 
 import SwiftUI
 import URLImage
+import shared
 
 
 struct VenueView: View {

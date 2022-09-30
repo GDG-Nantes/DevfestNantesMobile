@@ -33,11 +33,7 @@
 		CBCB60EF28E485D5001E9B1A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CBCB60EE28E485D5001E9B1A /* GoogleService-Info.plist */; };
 		CBCB60F228E48832001E9B1A /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */ = {isa = PBXBuildFile; productRef = CBCB60F128E48832001E9B1A /* FirebaseAnalyticsWithoutAdIdSupport */; };
 		CBCB60F428E48832001E9B1A /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = CBCB60F328E48832001E9B1A /* FirebaseCrashlytics */; };
-		CBCB60F828E48EE7001E9B1A /* AnalyticsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBCB60F728E48EE7001E9B1A /* AnalyticsService.swift */; };
 		CBCB60FA28E48F27001E9B1A /* FirebaseAnalyticsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBCB60F928E48F27001E9B1A /* FirebaseAnalyticsService.swift */; };
-		CBCB60FC28E48F4B001E9B1A /* AnalyticsEvent.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBCB60FB28E48F4B001E9B1A /* AnalyticsEvent.swift */; };
-		CBCB60FE28E48F68001E9B1A /* AnalyticsPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBCB60FD28E48F68001E9B1A /* AnalyticsPage.swift */; };
-		CBCB610028E4A682001E9B1A /* AnalyticsParam.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBCB60FF28E4A682001E9B1A /* AnalyticsParam.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -71,11 +67,7 @@
 		CBA5C23128DBC5CA00D2779B /* Assets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Assets.swift; sourceTree = "<group>"; };
 		CBCB60EC28E47FC5001E9B1A /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
 		CBCB60EE28E485D5001E9B1A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
-		CBCB60F728E48EE7001E9B1A /* AnalyticsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsService.swift; sourceTree = "<group>"; };
 		CBCB60F928E48F27001E9B1A /* FirebaseAnalyticsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseAnalyticsService.swift; sourceTree = "<group>"; };
-		CBCB60FB28E48F4B001E9B1A /* AnalyticsEvent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsEvent.swift; sourceTree = "<group>"; };
-		CBCB60FD28E48F68001E9B1A /* AnalyticsPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsPage.swift; sourceTree = "<group>"; };
-		CBCB60FF28E4A682001E9B1A /* AnalyticsParam.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnalyticsParam.swift; sourceTree = "<group>"; };
 		F2F2D5718F0FE661E81ECDD3 /* Pods-iosApp.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-iosApp.release.xcconfig"; path = "Target Support Files/Pods-iosApp/Pods-iosApp.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -213,11 +205,7 @@
 		CBCB60F628E48EBC001E9B1A /* Analytics */ = {
 			isa = PBXGroup;
 			children = (
-				CBCB60F728E48EE7001E9B1A /* AnalyticsService.swift */,
 				CBCB60F928E48F27001E9B1A /* FirebaseAnalyticsService.swift */,
-				CBCB60FB28E48F4B001E9B1A /* AnalyticsEvent.swift */,
-				CBCB60FD28E48F68001E9B1A /* AnalyticsPage.swift */,
-				CBCB60FF28E4A682001E9B1A /* AnalyticsParam.swift */,
 			);
 			path = Analytics;
 			sourceTree = "<group>";
@@ -397,11 +385,9 @@
 			files = (
 				CBA5C22E28DB194E00D2779B /* PartnersContent.swift in Sources */,
 				CB179BE528D3894500BB9934 /* CustomButton.swift in Sources */,
-				CBCB60F828E48EE7001E9B1A /* AnalyticsService.swift in Sources */,
 				CB179BE028D365F600BB9934 /* VenueContent.swift in Sources */,
 				CB837AB8287B7D6500FEDAA1 /* VenueView.swift in Sources */,
 				CB179BDE28D365E800BB9934 /* AgendaContent.swift in Sources */,
-				CBCB610028E4A682001E9B1A /* AnalyticsParam.swift in Sources */,
 				2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */,
 				CB179BD728D22BA900BB9934 /* DevFestViewModel.swift in Sources */,
 				CBA5C23028DB4F5100D2779B /* Card.swift in Sources */,
@@ -412,9 +398,7 @@
 				7555FF83242A565900829871 /* ContentView.swift in Sources */,
 				CB837AB6287B7D1200FEDAA1 /* AgendaView.swift in Sources */,
 				CB837ABA287B7D9200FEDAA1 /* AboutView.swift in Sources */,
-				CBCB60FE28E48F68001E9B1A /* AnalyticsPage.swift in Sources */,
 				CB73E81028A5587E0014B9AF /* AgendaDetailView.swift in Sources */,
-				CBCB60FC28E48F4B001E9B1A /* AnalyticsEvent.swift in Sources */,
 				CB179BDB28D24C9C00BB9934 /* CategoryView.swift in Sources */,
 				CBCB60ED28E47FC5001E9B1A /* LoadingView.swift in Sources */,
 			);

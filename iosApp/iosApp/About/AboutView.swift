@@ -8,6 +8,7 @@
 
 import SwiftUI
 import URLImage
+import shared
 
 struct AboutView: View {
     @ObservedObject var viewModel: DevFestViewModel

@@ -9,6 +9,7 @@
 import SwiftUI
 import shared
 import URLImage
+import shared
 
 
 struct AgendaDetailView: View {
@@ -77,11 +78,11 @@ struct AgendaDetailView: View {
                 .foregroundColor(.yellow)
                 .padding(8)
                 .onTapGesture { self.viewModel.toggleFavorite(ofSession: session)
-                    FirebaseAnalyticsService.shared.eventAddToFavorite(from: .sessionDetails, sessionId: session.id, fav: viewModel.favorites.contains(session.id))
+                    FirebaseAnalyticsService.shared.eventAddToFavorite(page: .sessiondetails, sessionId: session.id, fav: viewModel.favorites.contains(session.id))
                 })
         }
         .onAppear{
-            FirebaseAnalyticsService.shared.pageEvent(page: AnalyticsPage.sessionDetails)
+            FirebaseAnalyticsService.shared.pageEvent(page: AnalyticsPage.sessiondetails)
         }
     }
 }
