@@ -52,4 +52,9 @@
   <string name="placeholder_session_details">Détails de la session</string>
   <string name="language_french">français</string>
   <string name="language_english">anglais</string>
+  <string name="session_filters_drawer_complexity_label">Complexité</string>
+  <string name="session_filters_drawer_type_label">Type de session</string>
+  <string name="session_type_conference">Conférence</string>
+  <string name="session_type_quickie">Quickie</string>
+  <string name="session_type_codelab">Codelab</string>
 </resources>
