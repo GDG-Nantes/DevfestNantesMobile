@@ -23,6 +23,7 @@ import com.gdgnantes.devfest.androidapp.ui.BookmarksViewModel
 import com.gdgnantes.devfest.androidapp.ui.components.SessionCategory
 import com.gdgnantes.devfest.androidapp.ui.theme.DevFest_NantesTheme
 import com.gdgnantes.devfest.androidapp.ui.theme.bookmarked
+import com.gdgnantes.devfest.androidapp.utils.isService
 import com.gdgnantes.devfest.model.Session
 import com.gdgnantes.devfest.model.SessionType
 import com.gdgnantes.devfest.model.stubs.buildSessionStub
@@ -139,26 +140,28 @@ fun AgendaRow(
                             )
                         }
                     }
-                    Box {
-                        val icon =
-                            if (isBookmarked) R.drawable.ic_bookmarked else R.drawable.ic_bookmark
+                    if (session.type?.isService() == false) {
+                        Box {
+                            val icon =
+                                if (isBookmarked) R.drawable.ic_bookmarked else R.drawable.ic_bookmark
 
-                        val tint by animateColorAsState(
-                            if (isBookmarked) bookmarked
-                            else Color.LightGray
-                        )
-
-                        IconToggleButton(
-                            checked = isBookmarked,
-                            onCheckedChange = {
-                                onSessionBookmarkClick(it)
-                            },
-                        ) {
-                            Icon(
-                                painter = painterResource(id = icon),
-                                contentDescription = "favorite",
-                                tint = tint
+                            val tint by animateColorAsState(
+                                if (isBookmarked) bookmarked
+                                else Color.LightGray
                             )
+
+                            IconToggleButton(
+                                checked = isBookmarked,
+                                onCheckedChange = {
+                                    onSessionBookmarkClick(it)
+                                },
+                            ) {
+                                Icon(
+                                    painter = painterResource(id = icon),
+                                    contentDescription = "favorite",
+                                    tint = tint
+                                )
+                            }
                         }
                     }
                 }
