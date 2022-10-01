@@ -4,5 +4,8 @@ enum class AnalyticsPage {
     agenda,
     sessionDetails,
     venue,
-    about
+    about;
+
+    val value: String
+        get() = name.lowercase()
 }

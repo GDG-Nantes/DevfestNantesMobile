@@ -2,6 +2,14 @@ package com.gdgnantes.devfest.analytics
 
 interface AnalyticsService {
 
+    /*
+    Notes:
+    * Enums should be capitalized
+    * eventBookmark param should be bookmarked instead of fav
+    * eventSpeakerSocialLinkOpened should specify the social network instead of the url and speakerId instead of speaker
+    * I added className to the pageEvent. Why not using it in iOS ?
+     */
+
     fun eventBookmark(page: AnalyticsPage, sessionId: String, fav: Boolean)
 
     fun eventFilter()
@@ -28,5 +36,5 @@ interface AnalyticsService {
 
     fun eventSpeakerSocialLinkOpened(speaker: String, url: String)
 
-    fun pageEvent(page: AnalyticsPage)
+    fun pageEvent(page: AnalyticsPage, className: String? = null)
 }

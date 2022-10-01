@@ -19,5 +19,8 @@ enum class AnalyticsParam {
     partnerURL,
     sessionId,
     speaker,
-    socialLink
+    socialLink;
+
+    val value: String
+        get() = name.lowercase()
 }

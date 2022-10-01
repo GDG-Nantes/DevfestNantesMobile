@@ -3,6 +3,7 @@ package com.gdgnantes.devfest.androidapp.core.injection
 import android.app.Application
 import android.content.SharedPreferences
 import androidx.preference.PreferenceManager
+import com.gdgnantes.devfest.analytics.AnalyticsService
 import com.gdgnantes.devfest.androidapp.BuildConfig
 import com.gdgnantes.devfest.androidapp.core.ApplicationInitializer
 import com.gdgnantes.devfest.androidapp.core.CoroutinesDispatcherProvider
@@ -11,10 +12,13 @@ import com.gdgnantes.devfest.androidapp.core.LoggerInitializer
 import com.gdgnantes.devfest.androidapp.services.BookmarksStoreImpl
 import com.gdgnantes.devfest.androidapp.services.DataSharingSettingsService
 import com.gdgnantes.devfest.androidapp.services.DataSharingSettingsServiceImpl
+import com.gdgnantes.devfest.androidapp.services.FirebaseAnalyticsService
 import com.gdgnantes.devfest.store.BookmarksStore
 import com.gdgnantes.devfest.store.DevFestNantesStore
 import com.gdgnantes.devfest.store.DevFestNantesStoreBuilder
+import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.crashlytics.FirebaseCrashlytics
+import com.google.firebase.ktx.Firebase
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -27,6 +31,10 @@ import kotlinx.coroutines.Dispatchers
 @Module
 @InstallIn(SingletonComponent::class)
 abstract class AppModule {
+
+    @AppScope
+    @Binds
+    abstract fun analyticsService(firebaseAnalyticsService: FirebaseAnalyticsService): AnalyticsService
 
     @AppScope
     @Binds
@@ -52,6 +60,10 @@ abstract class AppModule {
             loggerInitializer: LoggerInitializer,
             dataSharingInitializer: DataSharingInitializer
         ): Set<ApplicationInitializer> = setOf(loggerInitializer, dataSharingInitializer)
+
+        @AppScope
+        @Provides
+        fun analytics() = Firebase.analytics
 
         @AppScope
         @Provides

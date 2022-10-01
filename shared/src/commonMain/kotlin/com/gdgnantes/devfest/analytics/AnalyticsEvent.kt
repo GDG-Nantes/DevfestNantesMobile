@@ -14,5 +14,8 @@ enum class AnalyticsEvent {
     linkYoutubeOpened,
     navigationClicked,
     sessionOpened,
-    speakerSocialLinkOpened
+    speakerSocialLinkOpened;
+
+    val value: String
+        get() = name.lowercase()
 }
