@@ -100,18 +100,23 @@ class AgendaViewModel @Inject constructor(
                             sessionsByFilterType[filter.type]?.add(session)
                         }
                     }
-                    SessionFilter.FilterType.COMPLEXITY -> {
-                        if (filter.value == session.complexity?.name) {
-                            sessionsByFilterType[filter.type]?.add(session)
-                        }
-                    }
                     SessionFilter.FilterType.LANGUAGE -> {
                         if (filter.value == session.language?.name) {
                             sessionsByFilterType[filter.type]?.add(session)
                         }
                     }
+                    SessionFilter.FilterType.COMPLEXITY -> {
+                        if (filter.value == session.complexity?.name) {
+                            sessionsByFilterType[filter.type]?.add(session)
+                        }
+                    }
                     SessionFilter.FilterType.ROOM -> {
                         if (filter.value == session.room?.id) {
+                            sessionsByFilterType[filter.type]?.add(session)
+                        }
+                    }
+                    SessionFilter.FilterType.TYPE -> {
+                        if (filter.value == session.type?.name) {
                             sessionsByFilterType[filter.type]?.add(session)
                         }
                     }

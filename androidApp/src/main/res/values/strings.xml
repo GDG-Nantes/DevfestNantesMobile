@@ -61,4 +61,8 @@
     <string name="language_french">french</string>
     <string name="language_english">english</string>
     <string name="session_filters_drawer_complexity_label">Complexity</string>
+    <string name="session_filters_drawer_type_label">Session type</string>
+    <string name="session_type_conference">Conference</string>
+    <string name="session_type_quickie">Quickie</string>
+    <string name="session_type_codelab">Codelab</string>
 </resources>

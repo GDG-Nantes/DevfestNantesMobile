@@ -5,6 +5,7 @@ class SessionFilter(val type: FilterType, val value: Any) {
         BOOKMARK,
         COMPLEXITY,
         LANGUAGE,
-        ROOM
+        ROOM,
+        TYPE
     }
 }
