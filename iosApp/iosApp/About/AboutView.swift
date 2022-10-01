@@ -73,7 +73,7 @@ struct AboutView: View {
                                         FirebaseAnalyticsService.shared.eventLinkLinkedinOpened()})
                                     
                                     Link(destination: URL(string: "https://www.youtube.com/c/Gdg-franceBlogspotFr")!) {
-                                        Image("ic_network_web")
+                                        Image("ic_network_youtube")
                                             .renderingMode(.template)
                                             .foregroundColor(Color(Asset.icColor.color))
                                     }

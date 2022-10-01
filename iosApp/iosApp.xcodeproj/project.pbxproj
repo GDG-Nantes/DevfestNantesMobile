@@ -334,7 +334,7 @@
 		};
 		CB179BED28D4BD7600BB9934 /* SwiftGen */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 8;
+			buildActionMask = 12;
 			files = (
 			);
 			inputFileListPaths = (
@@ -346,7 +346,7 @@
 			);
 			outputPaths = (
 			);
-			runOnlyForDeploymentPostprocessing = 1;
+			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "$PODS_ROOT/SwiftGen/bin/swiftgen config run --config \"$PROJECT_DIR\"/iosApp/SwiftGen/swiftgen.yml\n";
 		};
