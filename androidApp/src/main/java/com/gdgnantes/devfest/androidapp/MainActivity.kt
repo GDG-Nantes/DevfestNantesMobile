@@ -7,6 +7,8 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.gdgnantes.devfest.analytics.AnalyticsPage
+import com.gdgnantes.devfest.analytics.AnalyticsService
 import com.gdgnantes.devfest.androidapp.services.ExternalContentService
 import com.gdgnantes.devfest.androidapp.ui.screens.Home
 import com.gdgnantes.devfest.androidapp.ui.screens.Screen
@@ -35,6 +37,9 @@ class MainActivity : ComponentActivity() {
     }
 
     @Inject
+    lateinit var analyticsService: AnalyticsService
+
+    @Inject
     lateinit var openFeedback: OpenFeedback
 
     @Inject
@@ -54,6 +59,7 @@ class MainActivity : ComponentActivity() {
                 ) {
                     composable(route = Screen.Home.route) {
                         Home(
+                            analyticsService = analyticsService,
                             onSessionClick = { session ->
                                 when (session.type) {
                                     SessionType.QUICKIE,
@@ -74,6 +80,7 @@ class MainActivity : ComponentActivity() {
                     composable(
                         route = "${Screen.Session.route}/{sessionId}"
                     ) { backStackEntry ->
+                        analyticsService.pageEvent(AnalyticsPage.sessionDetails)
                         val sessionId = backStackEntry.arguments!!.getString("sessionId")!!
                         SessionLayout(
                             openFeedback = openFeedback,
@@ -93,6 +100,7 @@ class MainActivity : ComponentActivity() {
                     composable(
                         route = Screen.Settings.route
                     ) {
+                        analyticsService.pageEvent(AnalyticsPage.SETTINGS)
                         Settings(
                             onBackClick = { mainNavController.popBackStack() },
                             onOpenDataSharing = { mainNavController.navigate(Screen.DataSharing.route) }
@@ -102,6 +110,7 @@ class MainActivity : ComponentActivity() {
                     composable(
                         route = Screen.DataSharing.route
                     ) {
+                        analyticsService.pageEvent(AnalyticsPage.DATASHARING)
                         DataSharingSettingsScreen(
                             onBackClick = { mainNavController.popBackStack() }
                         )

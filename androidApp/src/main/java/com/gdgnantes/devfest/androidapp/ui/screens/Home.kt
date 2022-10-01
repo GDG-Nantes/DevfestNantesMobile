@@ -16,6 +16,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.gdgnantes.devfest.analytics.AnalyticsPage
+import com.gdgnantes.devfest.analytics.AnalyticsService
 import com.gdgnantes.devfest.androidapp.R
 import com.gdgnantes.devfest.androidapp.ui.components.appbars.BottomAppBar
 import com.gdgnantes.devfest.androidapp.ui.components.appbars.TopAppBar
@@ -29,6 +31,7 @@ import kotlinx.coroutines.launch
 @Composable
 fun Home(
     modifier: Modifier = Modifier,
+    analyticsService: AnalyticsService,
     startDestination: Screen = Screen.Agenda,
     onSessionClick: ((Session) -> Unit),
     onSettingsClick: () -> Unit,
@@ -94,6 +97,7 @@ fun Home(
             modifier = modifier.padding(it)
         ) {
             composable(Screen.Agenda.route) {
+                analyticsService.pageEvent(AnalyticsPage.agenda)
                 Agenda(
                     agendaFilterDrawerState = agendaFilterDrawerState,
                     onSessionClick = onSessionClick
@@ -101,10 +105,12 @@ fun Home(
             }
 
             composable(Screen.Venue.route) {
+                analyticsService.pageEvent(AnalyticsPage.venue)
                 Venue()
             }
 
             composable(Screen.About.route) {
+                analyticsService.pageEvent(AnalyticsPage.about)
                 About(onWeblinkClick = onWeblinkClick)
             }
         }
