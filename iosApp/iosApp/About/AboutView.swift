@@ -26,13 +26,13 @@ struct AboutView: View {
                                     .foregroundColor(Color(Asset.devFestBlue.color))
                                 Text(L10n.screenAboutHeaderBody)
                                 HStack(spacing: 24) {
-                                    CustomButton(url: URL(string: "https://devfest.gdgnantes.com/code-of-conduct")!) {
+                                    CustomButton(url: URL(string: WebLinks.codeOfConduct.url)!) {
                                         Text(L10n.aboutCodeOfConduct)
                                     }.foregroundColor(Color(Asset.devFestRed.color))
                                         .simultaneousGesture(TapGesture().onEnded {
                                             FirebaseAnalyticsService.shared.eventLinkCodeOfConductOpened()
                                         })
-                                    CustomButton(url: URL(string: "https://devfest.gdgnantes.com/")!) {
+                                    CustomButton(url: URL(string: WebLinks.website.url)!) {
                                         Text(L10n.aboutWebsite)
                                     }.foregroundColor(Color(Asset.devFestRed.color))
                                         .simultaneousGesture(TapGesture().onEnded {
@@ -47,7 +47,7 @@ struct AboutView: View {
                                     .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
                                     .foregroundColor(Color(Asset.devFestRed.color))
                                 HStack(alignment: .top, spacing: 40) {
-                                    Link(destination: URL(string: "https://facebook.com/gdgnantes")!) {
+                                    Link(destination: URL(string: WebLinks.socialFacebook.url)!) {
                                         Image("ic_network_facebook")
                                             .renderingMode(.template)
                                             .foregroundColor(Color(Asset.icColor.color))
@@ -56,7 +56,7 @@ struct AboutView: View {
                                         FirebaseAnalyticsService.shared.eventLinkFacebookOpened()
                                                 })
                         
-                                    Link(destination: URL(string: "https://twitter.com/gdgnantes")!) {
+                                    Link(destination: URL(string: WebLinks.socialTwitter.url)!) {
                                         Image("ic_network_twitter")
                                             .renderingMode(.template)
                                             .foregroundColor(Color(Asset.icColor.color))
@@ -64,7 +64,7 @@ struct AboutView: View {
                                     .simultaneousGesture(TapGesture().onEnded {
                                         FirebaseAnalyticsService.shared.eventLinkTwitterOpened()})
 
-                                    Link(destination: URL(string: "https://www.linkedin.com/in/gdg-nantes")!) {
+                                    Link(destination: URL(string: WebLinks.socialLinkedin.url)!) {
                                         Image("ic_network_linkedin")
                                             .renderingMode(.template)
                                             .foregroundColor(Color(Asset.icColor.color))
@@ -72,7 +72,7 @@ struct AboutView: View {
                                         .simultaneousGesture(TapGesture().onEnded {
                                         FirebaseAnalyticsService.shared.eventLinkLinkedinOpened()})
                                     
-                                    Link(destination: URL(string: "https://www.youtube.com/c/Gdg-franceBlogspotFr")!) {
+                                    Link(destination: URL(string: WebLinks.socielYoutube.url)!) {
                                         Image("ic_network_youtube")
                                             .renderingMode(.template)
                                             .foregroundColor(Color(Asset.icColor.color))
@@ -83,21 +83,7 @@ struct AboutView: View {
                                 }.padding(8)
                             }.padding(8)
                         }
-                        Card {
-                            VStack {
-                                Text(L10n.localCommunitiesTitle)
-                                    .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
-                                    .foregroundColor(Color(Asset.devFestRed.color))
-                                HStack(alignment: .top, spacing: 40) {
-                                    CustomButton(url: URL(string: "https://nantes.community/")!) {
-                                        Text(L10n.localCommunitiesButton)
-                                    }.simultaneousGesture(TapGesture().onEnded {
-                                        FirebaseAnalyticsService.shared.eventLinkLocalCommunitiesOpened()
-                                    })
-                                    .foregroundColor(Color(Asset.devFestRed.color))
-                                }.padding(8)
-                            }.padding(8)
-                        }
+
                         Card {
                             VStack(spacing: 16) {
                                 Text(L10n.partnersTitle)
@@ -125,13 +111,49 @@ struct AboutView: View {
                                                     }
                                                 }
                                                 .frame(maxHeight: 50)
-                                                .padding(3)
-                                                .background(.white)
+                                                .padding(8)
+                                                .background(
+                                                    RoundedRectangle(cornerRadius: 20, style: .continuous).fill(Color.white)
+                                                )
                                             }
                                         }
                                     }
                                 }
                                 Spacer(minLength: 8)
+                            }.padding(8)
+                        }
+                        Card {
+                            VStack {
+                                Text(L10n.localCommunitiesTitle)
+                                    .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
+                                    .foregroundColor(Color(Asset.devFestRed.color))
+                                HStack(alignment: .top, spacing: 40) {
+                                    CustomButton(url: URL(string: WebLinks.nantestechCommunities.url)!) {
+                                        Image("local_communities_logo")
+                                    }
+                                    .background(
+                                        RoundedRectangle(cornerRadius: 20, style: .continuous).fill(Color.white)
+                                    )
+                                    .simultaneousGesture(TapGesture().onEnded {
+                                        FirebaseAnalyticsService.shared.eventLinkLocalCommunitiesOpened()
+                                    })
+                                    .foregroundColor(Color(Asset.devFestRed.color))
+                                }.padding(8)
+                            }.padding(8)
+                        }
+                        Card {
+                            VStack {
+                                CustomButton(url: URL(string: WebLinks.github.url)!) {
+                                    HStack(spacing: 0) {
+                                        Image("ic_network_github")
+                                                    .renderingMode(.template)
+                                                    .foregroundColor(Color(Asset.icColor.color))
+                                        Text(" \(L10n.forkMeOnGithub)")
+                                            .foregroundColor(Color(Asset.icColor.color))
+                                    }
+                                }
+                                Text("Version \("\(Bundle.main.releaseVersionNumber ?? "") (\(Bundle.main.buildVersionNumber ?? ""))")")
+                                    .font(.footnote)
                             }.padding(8)
                         }
                     }
@@ -159,3 +181,12 @@ struct AboutView: View {
 //        AboutView()
 //    }
 //}
+
+extension Bundle {
+    var releaseVersionNumber: String? {
+        return infoDictionary?["CFBundleShortVersionString"] as? String
+    }
+    var buildVersionNumber: String? {
+        return infoDictionary?["CFBundleVersion"] as? String
+    }
+}
