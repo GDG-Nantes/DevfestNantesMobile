@@ -12,9 +12,13 @@ import shared
 struct AgendaView: View {
     @ObservedObject var viewModel: DevFestViewModel
     
-    @State private var day = "1"
+    @State private var day = "2022-10-20"
     @State private var showFavoritesOnly = false
     @State private var selectedRoom: Room?
+    @State private var selectedComplexity: Complexity?
+    @State private var selectedLanguage: SessionLanguage?
+    @State private var selectedSessionType: SessionType?
+    @State private var clearFilter = false
         
     var sectionTimeFormatter: DateFormatter = {
         let formatter = DateFormatter()
@@ -28,8 +32,8 @@ struct AgendaView: View {
                 LoadingView(isShowing: $viewModel.isLoading) {
                 VStack {
                     Picker("What is the day?", selection: $day) {
-                        Text(L10n.day1).tag("1")
-                        Text(L10n.day2).tag("2")
+                        Text(L10n.day1).tag("2022-10-20")
+                        Text(L10n.day2).tag("2022-10-21")
                     }
                     .pickerStyle(.segmented)
                     List {
@@ -37,7 +41,7 @@ struct AgendaView: View {
                             Section(header: Text("\(self.sectionTimeFormatter.string(from: section.date))")) {
                                 let filteredSessions = getFilteredSessions(sessions: section.sessions)
                                 ForEach(self.showFavoritesOnly ? filteredSessions.filter({viewModel.favorites.contains($0.id)}):  filteredSessions, id: \.id) { session in
-                                    if session.sessionType == .conference || session.sessionType == .codelab{
+                                    if session.sessionType == .conference || session.sessionType == .codelab || session.sessionType == .quickie{
                                         NavigationLink(destination: AgendaDetailView(session: session, viewModel: viewModel)) {
                                             AgendaCellView(viewModel: viewModel, session: session)
                                         }
@@ -58,6 +62,25 @@ struct AgendaView: View {
                         )
                         Picker("", selection: selected) {
                             Text(L10n.filterFavorites).tag(true)
+                            Menu(L10n.filterLanguage) {
+                                let selected = Binding(
+                                    get: { self.selectedLanguage },
+                                    set: { self.selectedLanguage = $0 == self.selectedLanguage ? nil : $0 })
+                                Picker(L10n.filterLanguage, selection: selected) {
+                                    Text(L10n.languageFrench).tag(Optional(SessionLanguage.french))
+                                    Text(L10n.languageEnglish).tag(Optional(SessionLanguage.english))
+                                }
+                            }
+                            Menu(L10n.filterComplexity) {
+                                let selected = Binding(
+                                    get: { self.selectedComplexity },
+                                    set: { self.selectedComplexity = $0 == self.selectedComplexity ? nil : $0 })
+                                Picker(L10n.filterComplexity, selection: selected) {
+                                    Text(L10n.complexityBeginer).tag(Optional(Complexity.beginner))
+                                    Text(L10n.complexityIntermediate).tag(Optional(Complexity.intermediate))
+                                    Text(L10n.complexityAdvanced).tag(Optional(Complexity.advanced))
+                                }
+                            }
                             Menu(L10n.filterRooms) {
                                 let selected = Binding(
                                     get: { self.selectedRoom },
@@ -68,8 +91,29 @@ struct AgendaView: View {
                                     }
                                 }
                             }
+                            Menu(L10n.filterSessionType) {
+                                let selected = Binding(
+                                    get: { self.selectedSessionType },
+                                    set: { self.selectedSessionType = $0 == self.selectedSessionType ? nil : $0 })
+                                Picker(L10n.filterSessionType, selection: selected) {
+                                    Text(L10n.sessionTypeConference).tag(Optional(SessionType.conference))
+                                    Text(L10n.sessionTypeQuickie).tag(Optional(SessionType.quickie))
+                                    Text(L10n.sessionTypeCodelab).tag(Optional(SessionType.codelab))
+                                }
+                            }
                         }
-                        
+                        if showFavoritesOnly || selectedRoom != nil || selectedLanguage != nil || selectedComplexity != nil || selectedSessionType != nil {
+                            Button(action: {
+                                self.showFavoritesOnly = false
+                                self.selectedRoom = nil
+                                self.selectedLanguage = nil
+                                self.selectedSessionType = nil
+                                self.selectedComplexity = nil
+                            }) {
+                                Label(L10n.filterClear, systemImage: "trash")
+                            }
+                        }
+
                     })
                     .task {
                         await viewModel.observeRooms()
@@ -84,10 +128,29 @@ struct AgendaView: View {
     }
     
     func getFilteredSessions(sessions: [AgendaContent.Session]) -> [AgendaContent.Session]{
-        if let unwrappedRooms = selectedRoom {
-            return sessions.filter({unwrappedRooms.name.contains($0.room)})
+        var selectedSession: [AgendaContent.Session] = sessions
+        if let unwrappedLanguage = selectedLanguage {
+            selectedSession = selectedSession.filter {
+                $0.language == unwrappedLanguage
+                
+            }
         }
-        return sessions
+        if let unwrappedSessiontype = selectedSessionType {
+            selectedSession = selectedSession.filter {
+                $0.sessionType == unwrappedSessiontype
+                
+            }
+        }
+        if let unwrappedRooms = selectedRoom {
+            selectedSession = selectedSession.filter({unwrappedRooms.name.contains($0.room)})
+        }
+        if let unwrappedComplexity = selectedComplexity {
+            selectedSession = selectedSession.filter {
+                $0.complexity == unwrappedComplexity
+                
+            }
+        }
+        return selectedSession
     }
     
 }

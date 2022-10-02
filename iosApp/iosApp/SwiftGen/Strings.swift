@@ -58,12 +58,24 @@ internal enum L10n {
   internal static let day2 = L10n.tr("Localizable", "day2", fallback: "October 21, 2022")
   /// Sorry, there is no conference available for the selected filters.
   internal static let emptyDay = L10n.tr("Localizable", "empty_day", fallback: "Sorry, there is no conference available for the selected filters.")
+  /// Clear
+  internal static let filterClear = L10n.tr("Localizable", "filter_clear", fallback: "Clear")
+  /// Complexity
+  internal static let filterComplexity = L10n.tr("Localizable", "filter_complexity", fallback: "Complexity")
   /// Favorites
   internal static let filterFavorites = L10n.tr("Localizable", "filter_favorites", fallback: "Favorites")
+  /// Languages
+  internal static let filterLanguage = L10n.tr("Localizable", "filter_language", fallback: "Languages")
   /// Rooms
   internal static let filterRooms = L10n.tr("Localizable", "filter_rooms", fallback: "Rooms")
+  /// Session Type
+  internal static let filterSessionType = L10n.tr("Localizable", "filter_sessionType", fallback: "Session Type")
   /// Fork me on github
   internal static let forkMeOnGithub = L10n.tr("Localizable", "fork_me_on_github", fallback: "Fork me on github")
+  /// 🇬🇧 English
+  internal static let languageEnglish = L10n.tr("Localizable", "language_english", fallback: "🇬🇧 English")
+  /// 🇫🇷 French
+  internal static let languageFrench = L10n.tr("Localizable", "language_french", fallback: "🇫🇷 French")
   /// Loading...
   internal static let loading = L10n.tr("Localizable", "loading", fallback: "Loading...")
   /// 🌍 Local communities website
@@ -100,6 +112,12 @@ internal enum L10n {
   internal static let sessionFiltersDrawerRoomsLabel = L10n.tr("Localizable", "session_filters_drawer_rooms_label", fallback: "Rooms")
   /// Filters
   internal static let sessionFiltersDrawerTitle = L10n.tr("Localizable", "session_filters_drawer_title", fallback: "Filters")
+  /// Codelab
+  internal static let sessionTypeCodelab = L10n.tr("Localizable", "sessionType_Codelab", fallback: "Codelab")
+  /// Conference
+  internal static let sessionTypeConference = L10n.tr("Localizable", "sessionType_Conference", fallback: "Conference")
+  /// Quickie
+  internal static let sessionTypeQuickie = L10n.tr("Localizable", "sessionType_Quickie", fallback: "Quickie")
   /// Home
   internal static let titleActivityMain = L10n.tr("Localizable", "title_activity_main", fallback: "Home")
   /// Go to
