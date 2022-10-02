@@ -56,11 +56,14 @@ struct AgendaDetailView: View {
                         .font(.footnote)
                     
                     HStack {
+                        if let sessionTypeLabel = session.sessionType?.name.capitalized {
+                            CategoryView(categoryLabel: sessionTypeLabel)
+                        }
                         if let categoryLabel = session.category?.label {
                             CategoryView(categoryLabel: categoryLabel)
                         }
-                        if let categoryText = session.complexity?.text {
-                            CategoryView(categoryLabel:  categoryText)
+                        if let complexityLabel = session.complexity?.text {
+                            CategoryView(categoryLabel:  complexityLabel)
                         }
                     }
                     Divider().padding(.top, 8)
