@@ -45,3 +45,12 @@
 "filter_rooms" = "Rooms";
 "loading" = "Loading...";
 "fork_me_on_github" = "Fork me on github";
+"filter_complexity" = "Complexity";
+"filter_language" = "Languages";
+"filter_sessionType" = "Session Type";
+"filter_clear" = "Clear";
+"language_english" = "🇬🇧 English";
+"language_french" = "🇫🇷 French";
+"sessionType_Codelab" = "Codelab";
+"sessionType_Conference" = "Conference";
+"sessionType_Quickie" = "Quickie";

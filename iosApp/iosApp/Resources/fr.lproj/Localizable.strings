@@ -11,7 +11,7 @@
 "screen_about_header_body" = "Le DevFest, ou 'Developers Festival', est une conférence technique destinée aux développeurs. Elle s'adresse aussi bien aux étudiants, aux professionnels ou tout simplement aux curieux technophiles.  Cette année c'est Jules Verne et son univers incroyable qui sera au coeur du Devfest !";
 "complexity_beginer" = "Débutant";
 "complexity_intermediate" = "Intermediaire";
-"complexity_advanced" = "Advanced";
+"complexity_advanced" = "Avancé";
 "session_feedback_label" = "Donnez-nous votre feedback";
 "about_code_of_conduct" = "Code de conduite";
 "about_terms_of_service" = "Mentions Légales";
@@ -40,3 +40,12 @@
 "filter_rooms" = "Salles";
 "loading" = "Chargement...";
 "fork_me_on_github" = "Fork me on github";
+"filter_complexity" = "Complexités";
+"filter_language" = "Langues";
+"filter_sessionType" = "Type de session";
+"filter_clear" = "Supprimer les filtres";
+"language_english" = "🇬🇧 Anglais";
+"language_french" = "🇫🇷 Français";
+"sessionType_Codelab" = "Codelab";
+"sessionType_Conference" = "Conférence";
+"sessionType_Quickie" = "Quickie";
