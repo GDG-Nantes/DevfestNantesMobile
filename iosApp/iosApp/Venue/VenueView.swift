@@ -36,7 +36,7 @@ struct VenueView: View {
                             .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
                             .padding(.horizontal, 8)
                         
-                        CustomButton(url: URL(string: "http://maps.apple.com/?daddr=\(viewModel.venueContent.latitude),\(viewModel.venueContent.longitude)")!)  {
+                        CustomButton(url: URL(string: "\(WebLinks.maps)\(viewModel.venueContent.latitude),\(viewModel.venueContent.longitude)")!)  {
                             Text(L10n.venueGoToButton)
                         }.foregroundColor(Color(Asset.devFestRed.color))
                             .simultaneousGesture(TapGesture().onEnded {
