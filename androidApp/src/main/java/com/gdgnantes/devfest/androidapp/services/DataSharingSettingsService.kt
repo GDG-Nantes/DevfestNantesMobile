@@ -1,6 +1,7 @@
 package com.gdgnantes.devfest.androidapp.services
 
 import android.content.SharedPreferences
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -18,6 +19,7 @@ interface DataSharingSettingsService {
 }
 
 class DataSharingSettingsServiceImpl @Inject constructor(
+    private val analyticsService: FirebaseAnalytics,
     private val sharedPreferences: SharedPreferences,
     private val firebaseCrashlytics: FirebaseCrashlytics,
 ) : DataSharingSettingsService {
@@ -95,7 +97,11 @@ class DataSharingSettingsServiceImpl @Inject constructor(
     }
 
     private fun updatesGoogleAnalyticsActivationStatusCrashlytics() {
-        //TODO
+        analyticsService.setAnalyticsCollectionEnabled(
+            enabledDataServices.contains(
+                DataSharingService.GOOGLE_ANALYTICS.name
+            )
+        )
     }
 
     private fun buildDataSharingToolsList(): Map<DataSharingService, Boolean> {

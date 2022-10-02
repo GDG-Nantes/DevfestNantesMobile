@@ -38,6 +38,17 @@ fun Home(
     onWeblinkClick: (String) -> Unit
 ) {
     val homeNavController = rememberNavController()
+
+    homeNavController.addOnDestinationChangedListener { _, destination, _ ->
+        destination.route?.let { route ->
+            when (route) {
+                Screen.Agenda.route -> analyticsService.pageEvent(AnalyticsPage.agenda, route)
+                Screen.Venue.route -> analyticsService.pageEvent(AnalyticsPage.venue, route)
+                Screen.About.route -> analyticsService.pageEvent(AnalyticsPage.about, route)
+            }
+        }
+    }
+
     val navBackStackEntry by homeNavController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
     val screen = currentDestination?.route?.run { Screen.screenFromRoute(this) } ?: startDestination

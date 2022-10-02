@@ -4,6 +4,8 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.navigation.NavController
+import androidx.navigation.NavDestination
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -28,7 +30,7 @@ import io.openfeedback.android.OpenFeedback
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class MainActivity : ComponentActivity() {
+class MainActivity : ComponentActivity(), NavController.OnDestinationChangedListener {
 
     @EntryPoint
     @InstallIn(ActivityComponent::class)
@@ -52,6 +54,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             DevFest_NantesTheme {
                 val mainNavController = rememberNavController()
+                mainNavController.addOnDestinationChangedListener(this)
 
                 NavHost(
                     navController = mainNavController,
@@ -80,7 +83,6 @@ class MainActivity : ComponentActivity() {
                     composable(
                         route = "${Screen.Session.route}/{sessionId}"
                     ) { backStackEntry ->
-                        analyticsService.pageEvent(AnalyticsPage.sessionDetails)
                         val sessionId = backStackEntry.arguments!!.getString("sessionId")!!
                         SessionLayout(
                             openFeedback = openFeedback,
@@ -100,7 +102,6 @@ class MainActivity : ComponentActivity() {
                     composable(
                         route = Screen.Settings.route
                     ) {
-                        analyticsService.pageEvent(AnalyticsPage.SETTINGS)
                         Settings(
                             onBackClick = { mainNavController.popBackStack() },
                             onOpenDataSharing = { mainNavController.navigate(Screen.DataSharing.route) }
@@ -110,7 +111,6 @@ class MainActivity : ComponentActivity() {
                     composable(
                         route = Screen.DataSharing.route
                     ) {
-                        analyticsService.pageEvent(AnalyticsPage.DATASHARING)
                         DataSharingSettingsScreen(
                             onBackClick = { mainNavController.popBackStack() }
                         )
@@ -120,6 +120,26 @@ class MainActivity : ComponentActivity() {
                 DataSharingAgreementDialog {
                     mainNavController.navigate(Screen.DataSharing.route)
                 }
+            }
+        }
+    }
+
+    override fun onDestinationChanged(
+        controller: NavController,
+        destination: NavDestination,
+        arguments: Bundle?
+    ) {
+        destination.route?.let { route ->
+            when (route) {
+                Screen.Session.route -> analyticsService.pageEvent(
+                    AnalyticsPage.sessionDetails,
+                    route
+                )
+                Screen.Settings.route -> analyticsService.pageEvent(AnalyticsPage.SETTINGS, route)
+                Screen.DataSharing.route -> analyticsService.pageEvent(
+                    AnalyticsPage.DATASHARING,
+                    route
+                )
             }
         }
     }
