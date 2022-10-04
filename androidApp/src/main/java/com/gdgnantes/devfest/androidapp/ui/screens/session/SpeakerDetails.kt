@@ -20,6 +20,7 @@ import coil.request.ImageRequest
 import com.gdgnantes.devfest.androidapp.R
 import com.gdgnantes.devfest.androidapp.ui.components.SocialIcon
 import com.gdgnantes.devfest.androidapp.ui.theme.DevFest_NantesTheme
+import com.gdgnantes.devfest.model.SocialItem
 import com.gdgnantes.devfest.model.Speaker
 import com.gdgnantes.devfest.model.stubs.buildSpeakerStub
 
@@ -27,7 +28,7 @@ import com.gdgnantes.devfest.model.stubs.buildSpeakerStub
 fun SpeakerDetails(
     modifier: Modifier = Modifier,
     speaker: Speaker,
-    onSocialLinkClick: (String) -> Unit
+    onSocialLinkClick: (SocialItem, Speaker) -> Unit
 ) {
     Column(modifier.padding(top = 16.dp)) {
         Row() {
@@ -75,12 +76,13 @@ fun SpeakerDetails(
                 ) {
                     for (socialsItem in speaker.socials.orEmpty()
                         .filter { it.link != null && it.type != null }) {
-                        val url = socialsItem.link ?: continue
-                        SocialIcon(
-                            modifier = Modifier.size(24.dp),
-                            socialItem = socialsItem,
-                            onClick = { onSocialLinkClick(url) }
-                        )
+                        socialsItem.link?.let {
+                            SocialIcon(
+                                modifier = Modifier.size(24.dp),
+                                socialItem = socialsItem,
+                                onClick = { onSocialLinkClick(socialsItem, speaker) }
+                            )
+                        }
                     }
                 }
             }
@@ -102,6 +104,6 @@ fun SpeakerDetails(
 @Composable
 fun SpeakerDetailsPreview() {
     DevFest_NantesTheme {
-        SpeakerDetails(speaker = buildSpeakerStub(), onSocialLinkClick = {})
+        SpeakerDetails(speaker = buildSpeakerStub(), onSocialLinkClick = { _, _ -> })
     }
 }

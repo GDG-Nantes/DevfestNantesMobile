@@ -11,12 +11,14 @@ import com.gdgnantes.devfest.model.Venue
 @Composable
 fun Venue(
     modifier: Modifier = Modifier,
-    viewModel: VenueViewModel = hiltViewModel()
+    viewModel: VenueViewModel = hiltViewModel(),
+    onNavigationClick: () -> Unit,
 ) {
     VenueLayout(
         modifier = modifier,
         uiState = viewModel.uiState.collectAsState(),
-        venue = viewModel.venue.collectAsState()
+        venue = viewModel.venue.collectAsState(),
+        onNavigationClick = onNavigationClick
     )
 }
 
@@ -24,12 +26,14 @@ fun Venue(
 fun VenueLayout(
     modifier: Modifier = Modifier,
     uiState: State<UiState>,
-    venue: State<Venue>
+    venue: State<Venue>,
+    onNavigationClick: () -> Unit,
 ) {
     VenueLayout(
         modifier = modifier,
         uiState = uiState.value,
-        venue = venue.value
+        venue = venue.value,
+        onNavigationClick = onNavigationClick
     )
 }
 
@@ -37,13 +41,15 @@ fun VenueLayout(
 fun VenueLayout(
     modifier: Modifier = Modifier,
     uiState: UiState,
-    venue: Venue
+    venue: Venue,
+    onNavigationClick: () -> Unit,
 ) {
     when (uiState) {
         UiState.SUCCESS ->
             VenueDetails(
                 modifier = modifier,
-                venue = venue
+                venue = venue,
+                onNavigationClick = onNavigationClick
             )
         else -> {}
     }

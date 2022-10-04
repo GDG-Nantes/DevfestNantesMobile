@@ -27,7 +27,7 @@ import timber.log.Timber
 fun PartnerCard(
     modifier: Modifier = Modifier,
     partner: Partner,
-    onWeblinkClick: (String) -> Unit
+    onClick: (Partner) -> Unit
 ) {
     partner.logoUrl?.let {
         Card(
@@ -41,7 +41,7 @@ fun PartnerCard(
                 modifier = Modifier
                     .padding(8.dp)
                     .height(50.dp)
-                    .clickable { partner.url?.let { onWeblinkClick(it) } },
+                    .clickable { onClick(partner) },
                 model = ImageRequest.Builder(LocalContext.current)
                     .data(partner.logoUrl)
                     .crossfade(true)
@@ -72,7 +72,7 @@ fun PartnerCardPreview() {
             PartnerCard(
                 modifier = Modifier.padding(it),
                 partner = buildPartnerStub(),
-                onWeblinkClick = {})
+                onClick = {})
         }
     }
 }

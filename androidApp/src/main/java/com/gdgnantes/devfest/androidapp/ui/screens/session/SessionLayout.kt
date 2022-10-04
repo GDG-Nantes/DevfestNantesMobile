@@ -18,12 +18,15 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.gdgnantes.devfest.analytics.AnalyticsPage
 import com.gdgnantes.devfest.androidapp.R
 import com.gdgnantes.devfest.androidapp.ui.BookmarksViewModel
 import com.gdgnantes.devfest.androidapp.ui.components.LoadingLayout
 import com.gdgnantes.devfest.androidapp.ui.components.appbars.TopAppBar
 import com.gdgnantes.devfest.androidapp.ui.theme.bookmarked
 import com.gdgnantes.devfest.model.Session
+import com.gdgnantes.devfest.model.SocialItem
+import com.gdgnantes.devfest.model.Speaker
 import io.openfeedback.android.OpenFeedback
 
 @Composable
@@ -32,7 +35,7 @@ fun SessionLayout(
     viewModel: SessionViewModel,
     openFeedback: OpenFeedback,
     onBackClick: () -> Unit,
-    onSocialLinkClick: (String) -> Unit
+    onSocialLinkClick: (SocialItem, Speaker) -> Unit
 ) {
     val sessionState = viewModel.session.collectAsState()
     SessionLayout(
@@ -51,7 +54,7 @@ fun SessionLayout(
     bookmarksViewModel: BookmarksViewModel = hiltViewModel(),
     openFeedback: OpenFeedback,
     onBackClick: () -> Unit,
-    onSocialLinkClick: (String) -> Unit
+    onSocialLinkClick: (SocialItem, Speaker) -> Unit
 ) {
     val session = sessionState.value
     val isBookmarkedState =
@@ -67,7 +70,13 @@ fun SessionLayout(
         onBackClick = onBackClick,
         onSocialLinkClick = onSocialLinkClick,
         onSessionBookmarkClick = { isBookmarked ->
-            session?.id?.let { bookmarksViewModel.setBookmarked(it, isBookmarked) }
+            session?.id?.let {
+                bookmarksViewModel.setBookmarked(
+                    it,
+                    isBookmarked,
+                    AnalyticsPage.sessionDetails
+                )
+            }
         }
     )
 }
@@ -79,7 +88,7 @@ fun SessionLayout(
     isBookmarked: State<Boolean>,
     openFeedback: OpenFeedback,
     onBackClick: () -> Unit,
-    onSocialLinkClick: (String) -> Unit,
+    onSocialLinkClick: (SocialItem, Speaker) -> Unit,
     onSessionBookmarkClick: ((Boolean) -> Unit)
 ) {
     SessionLayout(
@@ -102,7 +111,7 @@ fun SessionLayout(
     isBookmarked: Boolean,
     openFeedback: OpenFeedback,
     onBackClick: () -> Unit,
-    onSocialLinkClick: (String) -> Unit,
+    onSocialLinkClick: (SocialItem, Speaker) -> Unit,
     onSessionBookmarkClick: ((Boolean) -> Unit)
 ) {
     Scaffold(

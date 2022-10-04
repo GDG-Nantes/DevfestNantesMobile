@@ -18,6 +18,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.gdgnantes.devfest.analytics.AnalyticsPage
 import com.gdgnantes.devfest.androidapp.R
 import com.gdgnantes.devfest.androidapp.ui.BookmarksViewModel
 import com.gdgnantes.devfest.androidapp.ui.components.SessionCategory
@@ -43,7 +44,7 @@ fun AgendaRow(
         session = session,
         onSessionClick = onSessionClick,
         onSessionBookmarkClick = { isBookmarked ->
-            bookmarksViewModel.setBookmarked(session.id, isBookmarked)
+            bookmarksViewModel.setBookmarked(session.id, isBookmarked, AnalyticsPage.agenda)
         }
     )
 }

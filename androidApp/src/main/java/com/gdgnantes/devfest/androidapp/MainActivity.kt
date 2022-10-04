@@ -63,6 +63,7 @@ class MainActivity : ComponentActivity(), NavController.OnDestinationChangedList
                     composable(route = Screen.Home.route) {
                         Home(
                             analyticsService = analyticsService,
+                            externalContentService = externalContentService,
                             onSessionClick = { session ->
                                 when (session.type) {
                                     SessionType.QUICKIE,
@@ -72,11 +73,9 @@ class MainActivity : ComponentActivity(), NavController.OnDestinationChangedList
                                     }
                                     else -> {}
                                 }
+                                analyticsService.eventSessionOpened(session.id)
                             },
-                            onSettingsClick = { mainNavController.navigate(Screen.Settings.route) },
-                            onWeblinkClick = { url ->
-                                externalContentService.openUrl(url)
-                            }
+                            onSettingsClick = { mainNavController.navigate(Screen.Settings.route) }
                         )
                     }
 
@@ -93,8 +92,11 @@ class MainActivity : ComponentActivity(), NavController.OnDestinationChangedList
                                 )
                             },
                             onBackClick = { mainNavController.popBackStack() },
-                            onSocialLinkClick = { url ->
-                                externalContentService.openUrl(url)
+                            onSocialLinkClick = { socialItem, speaker ->
+                                socialItem.link?.let { link ->
+                                    externalContentService.openUrl(link)
+                                    analyticsService.eventSpeakerSocialLinkOpened(speaker.id, link)
+                                }
                             }
                         )
                     }

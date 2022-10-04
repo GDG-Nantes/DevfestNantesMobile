@@ -7,6 +7,8 @@ interface AnalyticsService {
     * Enums should be capitalized
     * eventBookmark param should be bookmarked instead of fav
     * eventSpeakerSocialLinkOpened should specify the social network instead of the url and speakerId instead of speaker
+    * eventLinkPartnerOpened should specify the partnerId instead of the partnerURL
+    * linkSponsorOpened not used
     * I added className to the pageEvent. Why not using it in iOS ?
      */
 
@@ -19,6 +21,8 @@ interface AnalyticsService {
     fun eventLinkDevFestWebsiteOpened()
 
     fun eventLinkFacebookOpened()
+
+    fun eventLinkGithubOpened()
 
     fun eventLinkLinkedinOpened()
 

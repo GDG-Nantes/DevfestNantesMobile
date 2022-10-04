@@ -19,12 +19,14 @@ import androidx.navigation.compose.rememberNavController
 import com.gdgnantes.devfest.analytics.AnalyticsPage
 import com.gdgnantes.devfest.analytics.AnalyticsService
 import com.gdgnantes.devfest.androidapp.R
+import com.gdgnantes.devfest.androidapp.services.ExternalContentService
 import com.gdgnantes.devfest.androidapp.ui.components.appbars.BottomAppBar
 import com.gdgnantes.devfest.androidapp.ui.components.appbars.TopAppBar
 import com.gdgnantes.devfest.androidapp.ui.screens.about.About
 import com.gdgnantes.devfest.androidapp.ui.screens.agenda.Agenda
 import com.gdgnantes.devfest.androidapp.ui.screens.venue.Venue
 import com.gdgnantes.devfest.model.Session
+import com.gdgnantes.devfest.model.WebLinks.*
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -32,10 +34,10 @@ import kotlinx.coroutines.launch
 fun Home(
     modifier: Modifier = Modifier,
     analyticsService: AnalyticsService,
+    externalContentService: ExternalContentService,
     startDestination: Screen = Screen.Agenda,
     onSessionClick: ((Session) -> Unit),
-    onSettingsClick: () -> Unit,
-    onWeblinkClick: (String) -> Unit
+    onSettingsClick: () -> Unit
 ) {
     val homeNavController = rememberNavController()
 
@@ -108,7 +110,6 @@ fun Home(
             modifier = modifier.padding(it)
         ) {
             composable(Screen.Agenda.route) {
-                analyticsService.pageEvent(AnalyticsPage.agenda)
                 Agenda(
                     agendaFilterDrawerState = agendaFilterDrawerState,
                     onSessionClick = onSessionClick
@@ -116,13 +117,52 @@ fun Home(
             }
 
             composable(Screen.Venue.route) {
-                analyticsService.pageEvent(AnalyticsPage.venue)
-                Venue()
+                Venue(
+                    onNavigationClick = { analyticsService.eventNavigationClicked() },
+                )
             }
 
             composable(Screen.About.route) {
-                analyticsService.pageEvent(AnalyticsPage.about)
-                About(onWeblinkClick = onWeblinkClick)
+                About(
+                    onCodeOfConductClick = {
+                        externalContentService.openUrl(CODE_OF_CONDUCT.url)
+                        analyticsService.eventLinkCodeOfConductOpened()
+                    },
+                    onDevFestNantesWebsiteClick = {
+                        externalContentService.openUrl(WEBSITE.url)
+                        analyticsService.eventLinkDevFestWebsiteOpened()
+                    },
+                    onFacebookClick = {
+                        externalContentService.openUrl(SOCIAL_FACEBOOK.url)
+                        analyticsService.eventLinkFacebookOpened()
+                    },
+                    onTwitterClick = {
+                        externalContentService.openUrl(SOCIAL_TWITTER.url)
+                        analyticsService.eventLinkTwitterOpened()
+                    },
+                    onLinkedInClick = {
+                        externalContentService.openUrl(SOCIAL_LINKEDIN.url)
+                        analyticsService.eventLinkLinkedinOpened()
+                    },
+                    onYouTubeClick = {
+                        externalContentService.openUrl(SOCIAL_YOUTUBE.url)
+                        analyticsService.eventLinkYoutubeOpened()
+                    },
+                    onPartnerClick = { partner ->
+                        partner.url?.let { url ->
+                            externalContentService.openUrl(url)
+                            analyticsService.eventLinkPartnerOpened(url)
+                        }
+                    },
+                    onLocalCommunitiesClick = {
+                        externalContentService.openUrl(NANTES_TECH_COMMUNITIES.url)
+                        analyticsService.eventLinkLocalCommunitiesOpened()
+                    },
+                    onGithubClick = {
+                        externalContentService.openUrl(GITHUB.url)
+                        analyticsService.eventLinkGithubOpened()
+                    }
+                )
             }
         }
     }

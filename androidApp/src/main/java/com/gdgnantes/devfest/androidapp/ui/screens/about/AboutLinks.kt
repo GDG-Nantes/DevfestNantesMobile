@@ -15,12 +15,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.gdgnantes.devfest.androidapp.R
 import com.gdgnantes.devfest.androidapp.ui.theme.DevFest_NantesTheme
-import com.gdgnantes.devfest.model.WebLinks
 
 @Composable
 fun AboutLinks(
     modifier: Modifier = Modifier,
-    onWeblinkClick: (String) -> Unit
+    onCodeOfConductClick: () -> Unit,
+    onDevFestNantesWebsiteClick: () -> Unit,
 ) {
     Row(
         modifier = modifier
@@ -28,11 +28,11 @@ fun AboutLinks(
             .padding(8.dp),
         horizontalArrangement = Arrangement.SpaceAround
     ) {
-        OutlinedButton(onClick = { onWeblinkClick(WebLinks.CODE_OF_CONDUCT.url) }) {
+        OutlinedButton(onClick = onCodeOfConductClick) {
             Text(text = stringResource(id = R.string.about_code_of_conduct))
         }
 
-        OutlinedButton(onClick = { onWeblinkClick(WebLinks.WEBSITE.url) }) {
+        OutlinedButton(onClick = onDevFestNantesWebsiteClick) {
             Text(text = stringResource(id = R.string.about_website))
         }
     }
@@ -44,7 +44,10 @@ fun AboutLinks(
 fun AboutLinksPreview() {
     DevFest_NantesTheme {
         Scaffold {
-            AboutLinks(modifier = Modifier.padding(it), onWeblinkClick = {})
+            AboutLinks(
+                modifier = Modifier.padding(it),
+                onCodeOfConductClick = {},
+                onDevFestNantesWebsiteClick = {})
         }
     }
 }

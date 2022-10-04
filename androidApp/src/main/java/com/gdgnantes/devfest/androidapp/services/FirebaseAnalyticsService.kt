@@ -41,6 +41,10 @@ class FirebaseAnalyticsService @Inject constructor(private val firebaseAnalytics
         firebaseAnalytics.logEvent(AnalyticsEvent.linkFacebookOpened.value) {}
     }
 
+    override fun eventLinkGithubOpened() {
+        firebaseAnalytics.logEvent(AnalyticsEvent.linkGithubOpened.value) {}
+    }
+
     override fun eventLinkLinkedinOpened() {
         firebaseAnalytics.logEvent(AnalyticsEvent.linkLinkedinOpened.value) {}
     }
@@ -64,7 +68,7 @@ class FirebaseAnalyticsService @Inject constructor(private val firebaseAnalytics
     }
 
     override fun eventNavigationClicked() {
-        firebaseAnalytics.logEvent(AnalyticsEvent.linkYoutubeOpened.value) {}
+        firebaseAnalytics.logEvent(AnalyticsEvent.navigationClicked.value) {}
     }
 
     override fun eventSessionOpened(sessionId: String) {

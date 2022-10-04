@@ -6,6 +6,7 @@ enum class AnalyticsEvent {
     linkCodeOfConductOpened,
     linkDevFestWebsiteOpened,
     linkFacebookOpened,
+    linkGithubOpened,
     linkTwitterOpened,
     linkLinkedinOpened,
     linkLocalCommunitiesOpened,
