@@ -9,7 +9,6 @@
 import Foundation
 
 enum WebLinks {
-    case maps
     case website
     case codeOfConduct
     case socialFacebook
@@ -23,8 +22,6 @@ enum WebLinks {
                 extension WebLinks {
         var url: String {
             switch self {
-            case .maps:
-                return "http://maps.apple.com/?daddr="
             case .website:
                 return "https://devfest.gdgnantes.com/"
             case .codeOfConduct:
