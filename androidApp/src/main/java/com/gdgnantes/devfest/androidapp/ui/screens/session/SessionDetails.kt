@@ -21,6 +21,8 @@ import com.gdgnantes.devfest.androidapp.ui.components.SessionType
 import com.gdgnantes.devfest.androidapp.ui.theme.DevFest_NantesTheme
 import com.gdgnantes.devfest.androidapp.utils.getFormattedRange
 import com.gdgnantes.devfest.model.Session
+import com.gdgnantes.devfest.model.SocialItem
+import com.gdgnantes.devfest.model.Speaker
 import com.gdgnantes.devfest.model.stubs.buildSessionStub
 import com.gdgnantes.devfest.utils.getDurationAndLanguageString
 
@@ -28,7 +30,7 @@ import com.gdgnantes.devfest.utils.getDurationAndLanguageString
 fun SessionDetails(
     modifier: Modifier = Modifier,
     session: Session,
-    onSocialLinkClick: (String) -> Unit
+    onSocialLinkClick: (SocialItem, Speaker) -> Unit
 ) {
     Column(
         modifier,
@@ -88,7 +90,7 @@ fun SessionDetails(
 fun SessionDetailsPreview() {
     DevFest_NantesTheme {
         Scaffold {
-            SessionDetails(session = buildSessionStub(), onSocialLinkClick = {})
+            SessionDetails(session = buildSessionStub(), onSocialLinkClick = { _, _ -> })
         }
     }
 }

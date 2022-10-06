@@ -1,7 +1,7 @@
 package com.gdgnantes.devfest.model
 
 data class SocialItem private constructor(
-    val type: SocialType? = null,
+    val type: SocialType,
     val link: String? = null
 ) {
 
@@ -13,7 +13,7 @@ data class SocialItem private constructor(
         fun setType(type: SocialType): Builder = apply { _type = type }
         fun build(): SocialItem {
             return _link?.run { formatLink(this, _type) }
-                .run { SocialItem(_type, this) }
+                .run { SocialItem(_type ?: SocialType.WEBSITE, this) }
         }
 
         private fun formatLink(link: String, type: SocialType?): String {

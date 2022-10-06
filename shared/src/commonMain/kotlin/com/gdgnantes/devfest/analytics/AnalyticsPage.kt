@@ -1,8 +1,14 @@
 package com.gdgnantes.devfest.analytics
 
 enum class AnalyticsPage {
-    agenda,
-    sessionDetails,
-    venue,
-    about
+    ABOUT,
+    AGENDA,
+    DATASHARING,
+    SESSION_DETAILS,
+    SETTINGS,
+    VENUE;
+
+    override fun toString(): String {
+        return name.lowercase()
+    }
 }

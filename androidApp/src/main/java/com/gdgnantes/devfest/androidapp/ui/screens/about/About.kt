@@ -13,12 +13,21 @@ import androidx.compose.ui.unit.dp
 import com.gdgnantes.devfest.androidapp.ui.components.GithubCard
 import com.gdgnantes.devfest.androidapp.ui.screens.about.partners.Partners
 import com.gdgnantes.devfest.androidapp.ui.theme.DevFest_NantesTheme
+import com.gdgnantes.devfest.model.Partner
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun About(
     modifier: Modifier = Modifier,
-    onWeblinkClick: (String) -> Unit
+    onCodeOfConductClick: () -> Unit,
+    onDevFestNantesWebsiteClick: () -> Unit,
+    onFacebookClick: () -> Unit,
+    onTwitterClick: () -> Unit,
+    onLinkedInClick: () -> Unit,
+    onYouTubeClick: () -> Unit,
+    onPartnerClick: (Partner) -> Unit,
+    onLocalCommunitiesClick: () -> Unit,
+    onGithubClick: () -> Unit,
 ) {
     Scaffold {
         Column(
@@ -33,29 +42,33 @@ fun About(
 
             AboutLinks(
                 modifier.padding(horizontal = 8.dp),
-                onWeblinkClick = onWeblinkClick
+                onCodeOfConductClick = onCodeOfConductClick,
+                onDevFestNantesWebsiteClick = onDevFestNantesWebsiteClick
             )
 
             AboutSocial(
                 modifier.padding(horizontal = 8.dp),
-                onWeblinkClick = onWeblinkClick
+                onFacebookClick = onFacebookClick,
+                onTwitterClick = onTwitterClick,
+                onLinkedInClick = onLinkedInClick,
+                onYouTubeClick = onYouTubeClick
             )
 
             Partners(
                 modifier.padding(horizontal = 8.dp),
-                onWeblinkClick = onWeblinkClick
+                onPartnerClick = onPartnerClick
             )
 
             AboutLocalCommunities(
                 modifier.padding(horizontal = 8.dp),
-                onWeblinkClick = onWeblinkClick
+                onClick = onLocalCommunitiesClick
             )
 
             GithubCard(
                 modifier
                     .padding(horizontal = 8.dp)
                     .align(Alignment.CenterHorizontally),
-                onWeblinkClick = onWeblinkClick
+                onCLick = onGithubClick
             )
 
             AboutVersion(modifier.padding(8.dp))
@@ -67,6 +80,15 @@ fun About(
 @Composable
 fun AboutPreview() {
     DevFest_NantesTheme {
-        About(onWeblinkClick = {})
+        About(
+            onCodeOfConductClick = {},
+            onDevFestNantesWebsiteClick = {},
+            onFacebookClick = {},
+            onTwitterClick = {},
+            onLinkedInClick = {},
+            onYouTubeClick = {},
+            onPartnerClick = {},
+            onLocalCommunitiesClick = {},
+            onGithubClick = {})
     }
 }

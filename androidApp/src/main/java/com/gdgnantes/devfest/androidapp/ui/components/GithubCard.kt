@@ -20,12 +20,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.gdgnantes.devfest.androidapp.R
 import com.gdgnantes.devfest.androidapp.ui.theme.DevFest_NantesTheme
-import com.gdgnantes.devfest.model.WebLinks
 
 @Composable
 fun GithubCard(
     modifier: Modifier = Modifier,
-    onWeblinkClick: (String) -> Unit
+    onCLick: () -> Unit
 ) {
     OutlinedCard(
         modifier = modifier,
@@ -37,7 +36,7 @@ fun GithubCard(
         Row(
             modifier = Modifier
                 .padding(8.dp)
-                .clickable { onWeblinkClick(WebLinks.GITHUB.url) },
+                .clickable { onCLick() },
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             Icon(
@@ -63,6 +62,6 @@ fun GithubCard(
 @Composable
 fun GithubCardPreview() {
     DevFest_NantesTheme {
-        GithubCard(onWeblinkClick = {})
+        GithubCard(onCLick = {})
     }
 }

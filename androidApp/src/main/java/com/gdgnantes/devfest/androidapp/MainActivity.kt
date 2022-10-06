@@ -4,9 +4,13 @@ import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
+import androidx.navigation.NavController
+import androidx.navigation.NavDestination
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.gdgnantes.devfest.analytics.AnalyticsPage
+import com.gdgnantes.devfest.analytics.AnalyticsService
 import com.gdgnantes.devfest.androidapp.services.ExternalContentService
 import com.gdgnantes.devfest.androidapp.ui.screens.Home
 import com.gdgnantes.devfest.androidapp.ui.screens.Screen
@@ -26,13 +30,16 @@ import io.openfeedback.android.OpenFeedback
 import javax.inject.Inject
 
 @AndroidEntryPoint
-class MainActivity : ComponentActivity() {
+class MainActivity : ComponentActivity(), NavController.OnDestinationChangedListener {
 
     @EntryPoint
     @InstallIn(ActivityComponent::class)
     interface ViewModelFactoryProvider {
         fun sessionViewModelFactory(): SessionViewModel.SessionViewModelFactory
     }
+
+    @Inject
+    lateinit var analyticsService: AnalyticsService
 
     @Inject
     lateinit var openFeedback: OpenFeedback
@@ -47,6 +54,7 @@ class MainActivity : ComponentActivity() {
         setContent {
             DevFest_NantesTheme {
                 val mainNavController = rememberNavController()
+                mainNavController.addOnDestinationChangedListener(this)
 
                 NavHost(
                     navController = mainNavController,
@@ -54,6 +62,8 @@ class MainActivity : ComponentActivity() {
                 ) {
                     composable(route = Screen.Home.route) {
                         Home(
+                            analyticsService = analyticsService,
+                            externalContentService = externalContentService,
                             onSessionClick = { session ->
                                 when (session.type) {
                                     SessionType.QUICKIE,
@@ -63,11 +73,9 @@ class MainActivity : ComponentActivity() {
                                     }
                                     else -> {}
                                 }
+                                analyticsService.eventSessionOpened(session.id)
                             },
-                            onSettingsClick = { mainNavController.navigate(Screen.Settings.route) },
-                            onWeblinkClick = { url ->
-                                externalContentService.openUrl(url)
-                            }
+                            onSettingsClick = { mainNavController.navigate(Screen.Settings.route) }
                         )
                     }
 
@@ -84,8 +92,14 @@ class MainActivity : ComponentActivity() {
                                 )
                             },
                             onBackClick = { mainNavController.popBackStack() },
-                            onSocialLinkClick = { url ->
-                                externalContentService.openUrl(url)
+                            onSocialLinkClick = { socialItem, speaker ->
+                                socialItem.link?.let { link ->
+                                    externalContentService.openUrl(link)
+                                    analyticsService.eventSpeakerSocialLinkOpened(
+                                        speaker.id,
+                                        socialItem.type
+                                    )
+                                }
                             }
                         )
                     }
@@ -111,6 +125,26 @@ class MainActivity : ComponentActivity() {
                 DataSharingAgreementDialog {
                     mainNavController.navigate(Screen.DataSharing.route)
                 }
+            }
+        }
+    }
+
+    override fun onDestinationChanged(
+        controller: NavController,
+        destination: NavDestination,
+        arguments: Bundle?
+    ) {
+        destination.route?.let { route ->
+            when (route) {
+                Screen.Session.route -> analyticsService.pageEvent(
+                    AnalyticsPage.SESSION_DETAILS,
+                    route
+                )
+                Screen.Settings.route -> analyticsService.pageEvent(AnalyticsPage.SETTINGS, route)
+                Screen.DataSharing.route -> analyticsService.pageEvent(
+                    AnalyticsPage.DATASHARING,
+                    route
+                )
             }
         }
     }

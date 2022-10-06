@@ -18,17 +18,17 @@ class FirebaseAnalyticsService: AnalyticsService{
     required internal init() {}
     // MARK: - Events
     
-    func eventBookmark(page: AnalyticsPage, sessionId: String, fav: Bool) {
-        if fav {
-            Analytics.logEvent(AnalyticsEvent.addtofavorite.name, parameters: [
-                AnalyticsParam.frompage.name: page.name,
-                AnalyticsParam.sessionid.name: sessionId
+    func eventBookmark(page: AnalyticsPage, sessionId: String, bookmarked: Bool) {
+        if bookmarked {
+            Analytics.logEvent(AnalyticsEvent.addToBookmarks.description(), parameters: [
+                AnalyticsParam.fromPage.description(): page.description(),
+                AnalyticsParam.sessionId.description(): sessionId
                 ]
             )
         } else {
-            Analytics.logEvent(AnalyticsEvent.deletetofavorite.name, parameters: [
-                AnalyticsParam.frompage.name: page.name,
-                AnalyticsParam.sessionid.name: sessionId
+            Analytics.logEvent(AnalyticsEvent.removeFromBookmarks.description(), parameters: [
+                AnalyticsParam.fromPage.description(): page.description(),
+                AnalyticsParam.sessionId.description(): sessionId
                 ]
             )
         }
@@ -39,66 +39,69 @@ class FirebaseAnalyticsService: AnalyticsService{
     }
     
     func eventLinkCodeOfConductOpened() {
-        Analytics.logEvent(AnalyticsEvent.linkcodeofconductopened.name, parameters: [:] )
+        Analytics.logEvent(AnalyticsEvent.linkCodeOfConductOpened.description(), parameters: [:] )
     }
     
     func eventLinkDevFestWebsiteOpened() {
-        Analytics.logEvent(AnalyticsEvent.linkdevfestwebsiteopened.name, parameters: [:] )
+        Analytics.logEvent(AnalyticsEvent.linkDevfestWebsiteOpened.description(), parameters: [:] )
     }
     
     func eventLinkFacebookOpened() {
-        Analytics.logEvent(AnalyticsEvent.linkfacebookopened.name, parameters: [:] )
+        Analytics.logEvent(AnalyticsEvent.linkFacebookOpened.description(), parameters: [:] )
     }
     
     func eventLinkTwitterOpened() {
-        Analytics.logEvent(AnalyticsEvent.linktwitteropened.name, parameters: [:] )
+        Analytics.logEvent(AnalyticsEvent.linkTwitterOpened.description(), parameters: [:] )
     }
     
+    func eventLinkGithubOpened() {
+        Analytics.logEvent(AnalyticsEvent.linkGithubOpened.description(), parameters: [:] )
+    }
     
     func eventLinkLinkedinOpened() {
-        Analytics.logEvent(AnalyticsEvent.linklinkedinopened.name, parameters: [:] )
+        Analytics.logEvent(AnalyticsEvent.linkLinkedinOpened.description(), parameters: [:] )
     }
     
     func eventLinkLocalCommunitiesOpened() {
-        Analytics.logEvent(AnalyticsEvent.linklocalcommunitiesopened.name, parameters: [:] )
+        Analytics.logEvent(AnalyticsEvent.linkLocalCommunitiesOpened.description(), parameters: [:] )
     }
     
-    func eventLinkPartnerOpened(partnerURL: String) {
-        Analytics.logEvent(AnalyticsEvent.linkpartneropened.name, parameters: [
-            AnalyticsParam.partnerurl.name: String(partnerURL)
+    func eventLinkPartnerOpened(partnerName: String) {
+        Analytics.logEvent(AnalyticsEvent.linkPartnerOpened.description(), parameters: [
+            AnalyticsParam.partnerName.description(): partnerName
             ]
         )
     }
     
     func eventLinkYoutubeOpened() {
-        Analytics.logEvent(AnalyticsEvent.linkyoutubeopened.name, parameters: [:] )
+        Analytics.logEvent(AnalyticsEvent.linkYoutubeOpened.description(), parameters: [:] )
     }
 
     
     func eventNavigationClicked() {
-        Analytics.logEvent(AnalyticsEvent.navigationclicked.name, parameters: [:])
+        Analytics.logEvent(AnalyticsEvent.navigationClicked.description(), parameters: [:])
     }
     
     func eventSessionOpened(sessionId: String) {
-        Analytics.logEvent(AnalyticsEvent.linkpartneropened.name, parameters: [
-            AnalyticsParam.sessionid.name: String(sessionId)
+        Analytics.logEvent(AnalyticsEvent.linkPartnerOpened.description(), parameters: [
+            AnalyticsParam.sessionId.description(): String(sessionId)
             ]
         )
     }
     
-    func eventSpeakerSocialLinkOpened(speaker: String, url: String) {
-        Analytics.logEvent(AnalyticsEvent.speakersociallinkopened.name, parameters: [
-            AnalyticsParam.speaker.name: speaker,
-            AnalyticsParam.sociallink.name: url
+    func eventSpeakerSocialLinkOpened(speakerId: String, type: SocialType) {
+        Analytics.logEvent(AnalyticsEvent.speakerSocialLinkOpened.description(), parameters: [
+            AnalyticsParam.speakerId.description(): speakerId,
+            AnalyticsParam.socialType.description(): type.name
             ]
         )
     }
     
     // MARK: - Page
     
-    func pageEvent(page: AnalyticsPage) {
+    func pageEvent(page: AnalyticsPage, className: String?) {
         Analytics.logEvent(AnalyticsEventScreenView,
-                           parameters: [AnalyticsParameterScreenName: page.name])
+                           parameters: [AnalyticsParameterScreenName: page.description(), AnalyticsParameterScreenClass: className!])
     }
 }
 

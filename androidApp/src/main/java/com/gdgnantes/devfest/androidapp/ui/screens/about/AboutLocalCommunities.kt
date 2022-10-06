@@ -13,13 +13,12 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.gdgnantes.devfest.androidapp.R
 import com.gdgnantes.devfest.androidapp.ui.theme.DevFest_NantesTheme
-import com.gdgnantes.devfest.model.WebLinks
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AboutLocalCommunities(
     modifier: Modifier = Modifier,
-    onWeblinkClick: (String) -> Unit
+    onClick: () -> Unit
 ) {
     Column(
         modifier,
@@ -42,7 +41,7 @@ fun AboutLocalCommunities(
                     containerColor = Color.White,
                     contentColor = Color.Black
                 ),
-                onClick = { onWeblinkClick(WebLinks.NANTES_TECH_COMMUNITIES.url) }
+                onClick = onClick
             ) {
                 Image(
                     modifier = Modifier
@@ -63,7 +62,7 @@ fun AboutLocalCommunities(
 fun AboutLocalCommunitiesPreview() {
     DevFest_NantesTheme {
         Scaffold {
-            AboutLocalCommunities(modifier = Modifier.padding(it), onWeblinkClick = {})
+            AboutLocalCommunities(modifier = Modifier.padding(it), onClick = {})
         }
     }
 }

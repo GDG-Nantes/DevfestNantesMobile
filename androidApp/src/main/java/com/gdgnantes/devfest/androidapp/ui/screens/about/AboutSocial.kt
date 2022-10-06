@@ -13,12 +13,14 @@ import androidx.compose.ui.unit.dp
 import com.gdgnantes.devfest.androidapp.R
 import com.gdgnantes.devfest.androidapp.ui.components.SocialIcon
 import com.gdgnantes.devfest.androidapp.ui.theme.DevFest_NantesTheme
-import com.gdgnantes.devfest.model.WebLinks
 
 @Composable
 fun AboutSocial(
     modifier: Modifier = Modifier,
-    onWeblinkClick: (String) -> Unit
+    onFacebookClick: () -> Unit,
+    onTwitterClick: () -> Unit,
+    onLinkedInClick: () -> Unit,
+    onYouTubeClick: () -> Unit,
 ) {
     Column(
         modifier,
@@ -42,7 +44,7 @@ fun AboutSocial(
                     id = R.string.content_description_logo,
                     "Facebook"
                 ),
-                onClick = { onWeblinkClick(WebLinks.SOCIAL_FACEBOOK.url) }
+                onClick = onFacebookClick
             )
 
             SocialIcon(
@@ -51,7 +53,7 @@ fun AboutSocial(
                     id = R.string.content_description_logo,
                     "Twitter"
                 ),
-                onClick = { onWeblinkClick(WebLinks.SOCIAL_TWITTER.url) }
+                onClick = onTwitterClick
             )
 
             SocialIcon(
@@ -60,7 +62,7 @@ fun AboutSocial(
                     id = R.string.content_description_logo,
                     "LinkedIn"
                 ),
-                onClick = { onWeblinkClick(WebLinks.SOCIAL_LINKEDIN.url) }
+                onClick = onLinkedInClick
             )
 
             SocialIcon(
@@ -69,7 +71,7 @@ fun AboutSocial(
                     id = R.string.content_description_logo,
                     "Youtube"
                 ),
-                onClick = { onWeblinkClick(WebLinks.SOCIAL_YOUTUBE.url) }
+                onClick = onYouTubeClick
             )
         }
     }
@@ -81,7 +83,11 @@ fun AboutSocial(
 fun AboutSocialPreview() {
     DevFest_NantesTheme {
         Scaffold {
-            AboutSocial(modifier = Modifier.padding(it), onWeblinkClick = {})
+            AboutSocial(modifier = Modifier.padding(it),
+                onFacebookClick = {},
+                onTwitterClick = {},
+                onLinkedInClick = {},
+                onYouTubeClick = {})
         }
     }
 }

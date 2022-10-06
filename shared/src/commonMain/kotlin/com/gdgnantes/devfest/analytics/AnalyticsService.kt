@@ -1,8 +1,10 @@
 package com.gdgnantes.devfest.analytics
 
+import com.gdgnantes.devfest.model.SocialType
+
 interface AnalyticsService {
 
-    fun eventBookmark(page: AnalyticsPage, sessionId: String, fav: Boolean)
+    fun eventBookmark(page: AnalyticsPage, sessionId: String, bookmarked: Boolean)
 
     fun eventFilter()
 
@@ -12,11 +14,13 @@ interface AnalyticsService {
 
     fun eventLinkFacebookOpened()
 
+    fun eventLinkGithubOpened()
+
     fun eventLinkLinkedinOpened()
 
     fun eventLinkLocalCommunitiesOpened()
 
-    fun eventLinkPartnerOpened(partnerURL: String)
+    fun eventLinkPartnerOpened(partnerName: String)
 
     fun eventLinkTwitterOpened()
 
@@ -26,7 +30,7 @@ interface AnalyticsService {
 
     fun eventSessionOpened(sessionId: String)
 
-    fun eventSpeakerSocialLinkOpened(speaker: String, url: String)
+    fun eventSpeakerSocialLinkOpened(speakerId: String, type: SocialType)
 
-    fun pageEvent(page: AnalyticsPage)
+    fun pageEvent(page: AnalyticsPage, className: String? = null)
 }

@@ -23,14 +23,14 @@ import com.gdgnantes.devfest.model.Partner
 fun Partners(
     modifier: Modifier = Modifier,
     viewModel: PartnersViewModel = hiltViewModel(),
-    onWeblinkClick: (String) -> Unit
+    onPartnerClick: (Partner) -> Unit
 ) {
     Partners(
         modifier = modifier,
         platiniumPartners = viewModel.platiniumPartners.collectAsState(),
         goldPartners = viewModel.goldPartners.collectAsState(),
         virtualPartners = viewModel.virtualPartners.collectAsState(),
-        onWeblinkClick = onWeblinkClick
+        onPartnerClick = onPartnerClick
     )
 }
 
@@ -40,7 +40,7 @@ fun Partners(
     platiniumPartners: State<List<Partner>>,
     goldPartners: State<List<Partner>>,
     virtualPartners: State<List<Partner>>,
-    onWeblinkClick: (String) -> Unit
+    onPartnerClick: (Partner) -> Unit
 ) {
     Column(
         modifier,
@@ -56,19 +56,19 @@ fun Partners(
         PartnersGroup(
             title = stringResource(R.string.partners_platinium_title),
             partners = platiniumPartners.value,
-            onWeblinkClick = onWeblinkClick
+            onPartnerClick = onPartnerClick
         )
 
         PartnersGroup(
             title = stringResource(R.string.partners_gold_title),
             partners = goldPartners.value,
-            onWeblinkClick = onWeblinkClick
+            onPartnerClick = onPartnerClick
         )
 
         PartnersGroup(
             title = stringResource(R.string.partners_virtual_title),
             partners = virtualPartners.value,
-            onWeblinkClick = onWeblinkClick
+            onPartnerClick = onPartnerClick
         )
     }
 }
@@ -78,7 +78,7 @@ fun PartnersGroup(
     modifier: Modifier = Modifier,
     title: String,
     partners: List<Partner>,
-    onWeblinkClick: (String) -> Unit
+    onPartnerClick: (Partner) -> Unit
 ) {
     OutlinedCard(
         modifier = modifier,
@@ -105,7 +105,7 @@ fun PartnersGroup(
                 partners.forEach { partner ->
                     PartnerCard(
                         partner = partner,
-                        onWeblinkClick = onWeblinkClick
+                        onClick = onPartnerClick
                     )
                 }
             }
@@ -120,7 +120,7 @@ fun PartnersPreview() {
     DevFest_NantesTheme {
         Scaffold {
             Partners(modifier = Modifier.padding(it),
-                onWeblinkClick = {})
+                onPartnerClick = {})
         }
     }
 }

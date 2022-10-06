@@ -16,25 +16,41 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.gdgnantes.devfest.analytics.AnalyticsPage
+import com.gdgnantes.devfest.analytics.AnalyticsService
 import com.gdgnantes.devfest.androidapp.R
+import com.gdgnantes.devfest.androidapp.services.ExternalContentService
 import com.gdgnantes.devfest.androidapp.ui.components.appbars.BottomAppBar
 import com.gdgnantes.devfest.androidapp.ui.components.appbars.TopAppBar
 import com.gdgnantes.devfest.androidapp.ui.screens.about.About
 import com.gdgnantes.devfest.androidapp.ui.screens.agenda.Agenda
 import com.gdgnantes.devfest.androidapp.ui.screens.venue.Venue
 import com.gdgnantes.devfest.model.Session
+import com.gdgnantes.devfest.model.WebLinks.*
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Home(
     modifier: Modifier = Modifier,
+    analyticsService: AnalyticsService,
+    externalContentService: ExternalContentService,
     startDestination: Screen = Screen.Agenda,
     onSessionClick: ((Session) -> Unit),
-    onSettingsClick: () -> Unit,
-    onWeblinkClick: (String) -> Unit
+    onSettingsClick: () -> Unit
 ) {
     val homeNavController = rememberNavController()
+
+    homeNavController.addOnDestinationChangedListener { _, destination, _ ->
+        destination.route?.let { route ->
+            when (route) {
+                Screen.Agenda.route -> analyticsService.pageEvent(AnalyticsPage.AGENDA, route)
+                Screen.Venue.route -> analyticsService.pageEvent(AnalyticsPage.VENUE, route)
+                Screen.About.route -> analyticsService.pageEvent(AnalyticsPage.ABOUT, route)
+            }
+        }
+    }
+
     val navBackStackEntry by homeNavController.currentBackStackEntryAsState()
     val currentDestination = navBackStackEntry?.destination
     val screen = currentDestination?.route?.run { Screen.screenFromRoute(this) } ?: startDestination
@@ -101,11 +117,52 @@ fun Home(
             }
 
             composable(Screen.Venue.route) {
-                Venue()
+                Venue(
+                    onNavigationClick = { analyticsService.eventNavigationClicked() },
+                )
             }
 
             composable(Screen.About.route) {
-                About(onWeblinkClick = onWeblinkClick)
+                About(
+                    onCodeOfConductClick = {
+                        externalContentService.openUrl(CODE_OF_CONDUCT.url)
+                        analyticsService.eventLinkCodeOfConductOpened()
+                    },
+                    onDevFestNantesWebsiteClick = {
+                        externalContentService.openUrl(WEBSITE.url)
+                        analyticsService.eventLinkDevFestWebsiteOpened()
+                    },
+                    onFacebookClick = {
+                        externalContentService.openUrl(SOCIAL_FACEBOOK.url)
+                        analyticsService.eventLinkFacebookOpened()
+                    },
+                    onTwitterClick = {
+                        externalContentService.openUrl(SOCIAL_TWITTER.url)
+                        analyticsService.eventLinkTwitterOpened()
+                    },
+                    onLinkedInClick = {
+                        externalContentService.openUrl(SOCIAL_LINKEDIN.url)
+                        analyticsService.eventLinkLinkedinOpened()
+                    },
+                    onYouTubeClick = {
+                        externalContentService.openUrl(SOCIAL_YOUTUBE.url)
+                        analyticsService.eventLinkYoutubeOpened()
+                    },
+                    onPartnerClick = { partner ->
+                        partner.url?.let { url ->
+                            externalContentService.openUrl(url)
+                            analyticsService.eventLinkPartnerOpened(partner.name ?: "")
+                        }
+                    },
+                    onLocalCommunitiesClick = {
+                        externalContentService.openUrl(NANTES_TECH_COMMUNITIES.url)
+                        analyticsService.eventLinkLocalCommunitiesOpened()
+                    },
+                    onGithubClick = {
+                        externalContentService.openUrl(GITHUB.url)
+                        analyticsService.eventLinkGithubOpened()
+                    }
+                )
             }
         }
     }

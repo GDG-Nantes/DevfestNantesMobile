@@ -81,11 +81,11 @@ struct AgendaDetailView: View {
                 .foregroundColor(.yellow)
                 .padding(8)
                 .onTapGesture { self.viewModel.toggleFavorite(ofSession: session)
-                    FirebaseAnalyticsService.shared.eventBookmark(page: .sessiondetails, sessionId: session.id, fav: viewModel.favorites.contains(session.id))
+                    FirebaseAnalyticsService.shared.eventBookmark(page: .sessionDetails, sessionId: session.id, bookmarked: viewModel.favorites.contains(session.id))
                 })
         }
         .onAppear{
-            FirebaseAnalyticsService.shared.pageEvent(page: AnalyticsPage.sessiondetails)
+            FirebaseAnalyticsService.shared.pageEvent(page: AnalyticsPage.sessionDetails, className: "AgendaDetailView")
         }
     }
 }
@@ -153,7 +153,7 @@ struct SpeakerView: View {
                                                 .foregroundColor(Color(Asset.icColor.color))
                                         }
                                     }.onTapGesture {
-                                        FirebaseAnalyticsService.shared.eventSpeakerSocialLinkOpened(speaker: speaker.name, url: link)
+                                        FirebaseAnalyticsService.shared.eventSpeakerSocialLinkOpened(speakerId: speaker.id, type: socialItem.type)
                                     }
                                 }
                             }

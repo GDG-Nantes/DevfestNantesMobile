@@ -1,18 +1,22 @@
 package com.gdgnantes.devfest.analytics
 
 enum class AnalyticsEvent {
-    addToFavorite,
-    deleteToFavorite,
-    linkCodeOfConductOpened,
-    linkDevFestWebsiteOpened,
-    linkFacebookOpened,
-    linkTwitterOpened,
-    linkLinkedinOpened,
-    linkLocalCommunitiesOpened,
-    linkPartnerOpened,
-    linkSponsorOpened,
-    linkYoutubeOpened,
-    navigationClicked,
-    sessionOpened,
-    speakerSocialLinkOpened
+    ADD_TO_BOOKMARKS,
+    LINK_CODE_OF_CONDUCT_OPENED,
+    LINK_DEVFEST_WEBSITE_OPENED,
+    LINK_FACEBOOK_OPENED,
+    LINK_GITHUB_OPENED,
+    LINK_LINKEDIN_OPENED,
+    LINK_LOCAL_COMMUNITIES_OPENED,
+    LINK_PARTNER_OPENED,
+    LINK_TWITTER_OPENED,
+    LINK_YOUTUBE_OPENED,
+    NAVIGATION_CLICKED,
+    REMOVE_FROM_BOOKMARKS,
+    SESSION_OPENED,
+    SPEAKER_SOCIAL_LINK_OPENED;
+
+    override fun toString(): String {
+        return name.lowercase()
+    }
 }

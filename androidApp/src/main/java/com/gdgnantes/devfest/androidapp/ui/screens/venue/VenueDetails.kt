@@ -33,7 +33,8 @@ import timber.log.Timber
 @Composable
 fun VenueDetails(
     modifier: Modifier = Modifier,
-    venue: Venue
+    venue: Venue,
+    onNavigationClick: () -> Unit,
 ) {
     Scaffold {
         Column(
@@ -79,6 +80,7 @@ fun VenueDetails(
                 Text(
                     modifier = Modifier.clickable {
                         if (latitude != null && longitude != null) {
+                            onNavigationClick()
                             onNavigationClick(context, latitude, longitude)
                         }
                     },
@@ -89,6 +91,7 @@ fun VenueDetails(
 
                 if (latitude != null && longitude != null) {
                     Button(onClick = {
+                        onNavigationClick()
                         onNavigationClick(context, latitude, longitude)
                     }) {
                         Text(stringResource(id = R.string.venue_go_to_button))
@@ -118,7 +121,8 @@ private fun onNavigationClick(context: Context, latitude: Double, longitude: Dou
 fun VenueDetailsPreview() {
     DevFest_NantesTheme {
         VenueDetails(
-            venue = buildVenueStub(language = ContentLanguage.ENGLISH)
+            venue = buildVenueStub(language = ContentLanguage.ENGLISH),
+            onNavigationClick = {},
         )
     }
 }
