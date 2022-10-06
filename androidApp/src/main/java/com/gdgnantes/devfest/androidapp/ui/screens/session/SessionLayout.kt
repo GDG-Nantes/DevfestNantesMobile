@@ -74,7 +74,7 @@ fun SessionLayout(
                 bookmarksViewModel.setBookmarked(
                     it,
                     isBookmarked,
-                    AnalyticsPage.sessionDetails
+                    AnalyticsPage.SESSION_DETAILS
                 )
             }
         }

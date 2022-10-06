@@ -44,9 +44,9 @@ fun Home(
     homeNavController.addOnDestinationChangedListener { _, destination, _ ->
         destination.route?.let { route ->
             when (route) {
-                Screen.Agenda.route -> analyticsService.pageEvent(AnalyticsPage.agenda, route)
-                Screen.Venue.route -> analyticsService.pageEvent(AnalyticsPage.venue, route)
-                Screen.About.route -> analyticsService.pageEvent(AnalyticsPage.about, route)
+                Screen.Agenda.route -> analyticsService.pageEvent(AnalyticsPage.AGENDA, route)
+                Screen.Venue.route -> analyticsService.pageEvent(AnalyticsPage.VENUE, route)
+                Screen.About.route -> analyticsService.pageEvent(AnalyticsPage.ABOUT, route)
             }
         }
     }

@@ -13,14 +13,14 @@ class FirebaseAnalyticsService @Inject constructor(private val firebaseAnalytics
     AnalyticsService {
     override fun eventBookmark(page: AnalyticsPage, sessionId: String, fav: Boolean) {
         if (fav) {
-            firebaseAnalytics.logEvent(AnalyticsEvent.addToFavorite.value) {
-                param(AnalyticsParam.sessionId.value, sessionId)
-                param(AnalyticsParam.fromPage.value, page.value)
+            firebaseAnalytics.logEvent(AnalyticsEvent.ADD_TO_BOOKMARKS.toString()) {
+                param(AnalyticsParam.SESSION_ID.toString(), sessionId)
+                param(AnalyticsParam.FROM_PAGE.toString(), page.toString())
             }
         } else {
-            firebaseAnalytics.logEvent(AnalyticsEvent.deleteToFavorite.value) {
-                param(AnalyticsParam.sessionId.value, sessionId)
-                param(AnalyticsParam.fromPage.value, page.value)
+            firebaseAnalytics.logEvent(AnalyticsEvent.REMOVE_FROM_BOOKMARKS.toString()) {
+                param(AnalyticsParam.SESSION_ID.toString(), sessionId)
+                param(AnalyticsParam.FROM_PAGE.toString(), page.toString())
             }
         }
     }
@@ -30,63 +30,63 @@ class FirebaseAnalyticsService @Inject constructor(private val firebaseAnalytics
     }
 
     override fun eventLinkCodeOfConductOpened() {
-        firebaseAnalytics.logEvent(AnalyticsEvent.linkCodeOfConductOpened.value) {}
+        firebaseAnalytics.logEvent(AnalyticsEvent.LINK_CODE_OF_CONDUCT_OPENED.toString()) {}
     }
 
     override fun eventLinkDevFestWebsiteOpened() {
-        firebaseAnalytics.logEvent(AnalyticsEvent.linkDevFestWebsiteOpened.value) {}
+        firebaseAnalytics.logEvent(AnalyticsEvent.LINK_DEVFEST_WEBSITE_OPENED.toString()) {}
     }
 
     override fun eventLinkFacebookOpened() {
-        firebaseAnalytics.logEvent(AnalyticsEvent.linkFacebookOpened.value) {}
+        firebaseAnalytics.logEvent(AnalyticsEvent.LINK_FACEBOOK_OPENED.toString()) {}
     }
 
     override fun eventLinkGithubOpened() {
-        firebaseAnalytics.logEvent(AnalyticsEvent.linkGithubOpened.value) {}
+        firebaseAnalytics.logEvent(AnalyticsEvent.LINK_GITHUB_OPENED.toString()) {}
     }
 
     override fun eventLinkLinkedinOpened() {
-        firebaseAnalytics.logEvent(AnalyticsEvent.linkLinkedinOpened.value) {}
+        firebaseAnalytics.logEvent(AnalyticsEvent.LINK_LINKEDIN_OPENED.toString()) {}
     }
 
     override fun eventLinkLocalCommunitiesOpened() {
-        firebaseAnalytics.logEvent(AnalyticsEvent.linkLocalCommunitiesOpened.value) {}
+        firebaseAnalytics.logEvent(AnalyticsEvent.LINK_LOCAL_COMMUNITIES_OPENED.toString()) {}
     }
 
     override fun eventLinkPartnerOpened(partnerURL: String) {
-        firebaseAnalytics.logEvent(AnalyticsEvent.linkPartnerOpened.value) {
-            param(AnalyticsParam.partnerURL.value, partnerURL)
+        firebaseAnalytics.logEvent(AnalyticsEvent.LINK_PARTNER_OPENED.toString()) {
+            param(AnalyticsParam.PARTNER_URL.toString(), partnerURL)
         }
     }
 
     override fun eventLinkTwitterOpened() {
-        firebaseAnalytics.logEvent(AnalyticsEvent.linkTwitterOpened.value) {}
+        firebaseAnalytics.logEvent(AnalyticsEvent.LINK_TWITTER_OPENED.toString()) {}
     }
 
     override fun eventLinkYoutubeOpened() {
-        firebaseAnalytics.logEvent(AnalyticsEvent.linkYoutubeOpened.value) {}
+        firebaseAnalytics.logEvent(AnalyticsEvent.LINK_YOUTUBE_OPENED.toString()) {}
     }
 
     override fun eventNavigationClicked() {
-        firebaseAnalytics.logEvent(AnalyticsEvent.navigationClicked.value) {}
+        firebaseAnalytics.logEvent(AnalyticsEvent.NAVIGATION_CLICKED.toString()) {}
     }
 
     override fun eventSessionOpened(sessionId: String) {
-        firebaseAnalytics.logEvent(AnalyticsEvent.sessionOpened.value) {
-            param(AnalyticsParam.sessionId.value, sessionId)
+        firebaseAnalytics.logEvent(AnalyticsEvent.SESSION_OPENED.toString()) {
+            param(AnalyticsParam.SESSION_ID.toString(), sessionId)
         }
     }
 
     override fun eventSpeakerSocialLinkOpened(speaker: String, url: String) {
-        firebaseAnalytics.logEvent(AnalyticsEvent.sessionOpened.value) {
-            param(AnalyticsParam.speaker.value, speaker)
-            param(AnalyticsParam.socialLink.value, url)
+        firebaseAnalytics.logEvent(AnalyticsEvent.SPEAKER_SOCIAL_LINK_OPENED.toString()) {
+            param(AnalyticsParam.SPEAKER.toString(), speaker)
+            param(AnalyticsParam.SOCIAL_LINK.toString(), url)
         }
     }
 
     override fun pageEvent(page: AnalyticsPage, className: String?) {
         firebaseAnalytics.logEvent(FirebaseAnalytics.Event.SCREEN_VIEW) {
-            param(FirebaseAnalytics.Param.SCREEN_NAME, page.value)
+            param(FirebaseAnalytics.Param.SCREEN_NAME, page.toString())
             className?.run { param(FirebaseAnalytics.Param.SCREEN_CLASS, className) }
         }
     }

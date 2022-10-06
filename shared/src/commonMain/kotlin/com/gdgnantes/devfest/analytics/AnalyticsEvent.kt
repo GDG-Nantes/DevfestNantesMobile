@@ -1,22 +1,22 @@
 package com.gdgnantes.devfest.analytics
 
 enum class AnalyticsEvent {
-    addToFavorite,
-    deleteToFavorite,
-    linkCodeOfConductOpened,
-    linkDevFestWebsiteOpened,
-    linkFacebookOpened,
-    linkGithubOpened,
-    linkTwitterOpened,
-    linkLinkedinOpened,
-    linkLocalCommunitiesOpened,
-    linkPartnerOpened,
-    linkSponsorOpened,
-    linkYoutubeOpened,
-    navigationClicked,
-    sessionOpened,
-    speakerSocialLinkOpened;
+    ADD_TO_BOOKMARKS,
+    REMOVE_FROM_BOOKMARKS,
+    LINK_CODE_OF_CONDUCT_OPENED,
+    LINK_DEVFEST_WEBSITE_OPENED,
+    LINK_FACEBOOK_OPENED,
+    LINK_GITHUB_OPENED,
+    LINK_TWITTER_OPENED,
+    LINK_LINKEDIN_OPENED,
+    LINK_LOCAL_COMMUNITIES_OPENED,
+    LINK_PARTNER_OPENED,
+    LINK_YOUTUBE_OPENED,
+    NAVIGATION_CLICKED,
+    SESSION_OPENED,
+    SPEAKER_SOCIAL_LINK_OPENED;
 
-    val value: String
-        get() = name.lowercase()
+    override fun toString(): String {
+        return name.lowercase()
+    }
 }

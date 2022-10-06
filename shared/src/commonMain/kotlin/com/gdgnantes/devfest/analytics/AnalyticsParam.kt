@@ -1,26 +1,13 @@
 package com.gdgnantes.devfest.analytics
 
 enum class AnalyticsParam {
-    activated,
-    advertisementId,
-    adviceBlockId,
-    adviceId,
-    alertTriggerMode,
-    contactId,
-    errorType,
-    fromPage,
-    socialNetwork,
-    helpInformationId,
-    invitationBackSent,
-    masfipItemId,
-    numberOflaunch,
-    poiId,
-    qualificationId,
-    partnerURL,
-    sessionId,
-    speaker,
-    socialLink;
+    FROM_PAGE,
+    PARTNER_URL,
+    SESSION_ID,
+    SPEAKER,
+    SOCIAL_LINK;
 
-    val value: String
-        get() = name.lowercase()
+    override fun toString(): String {
+        return name.lowercase()
+    }
 }

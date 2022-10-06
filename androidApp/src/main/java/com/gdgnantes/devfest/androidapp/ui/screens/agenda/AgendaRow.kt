@@ -44,7 +44,7 @@ fun AgendaRow(
         session = session,
         onSessionClick = onSessionClick,
         onSessionBookmarkClick = { isBookmarked ->
-            bookmarksViewModel.setBookmarked(session.id, isBookmarked, AnalyticsPage.agenda)
+            bookmarksViewModel.setBookmarked(session.id, isBookmarked, AnalyticsPage.AGENDA)
         }
     )
 }

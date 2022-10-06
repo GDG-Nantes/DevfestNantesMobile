@@ -134,7 +134,7 @@ class MainActivity : ComponentActivity(), NavController.OnDestinationChangedList
         destination.route?.let { route ->
             when (route) {
                 Screen.Session.route -> analyticsService.pageEvent(
-                    AnalyticsPage.sessionDetails,
+                    AnalyticsPage.SESSION_DETAILS,
                     route
                 )
                 Screen.Settings.route -> analyticsService.pageEvent(AnalyticsPage.SETTINGS, route)

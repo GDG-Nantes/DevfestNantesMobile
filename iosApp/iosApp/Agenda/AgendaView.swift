@@ -123,7 +123,7 @@ struct AgendaView: View {
             }
         }
             .onAppear{
-                FirebaseAnalyticsService.shared.pageEvent(page: AnalyticsPage.agenda)
+                FirebaseAnalyticsService.shared.pageEvent(page: AnalyticsPage.agenda, className: "AgendaView")
             }
     }
     
