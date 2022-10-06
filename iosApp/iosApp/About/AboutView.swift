@@ -99,7 +99,7 @@ struct AboutView: View {
                                         ForEach(category.partners, id: \.self) { partner in
                                             if let partnerUrl = partner.url {
                                                 Button(action: { UIApplication.shared.open(URL(string: partnerUrl)!)
-                                                    FirebaseAnalyticsService.shared.eventLinkPartnerOpened(partnerURL: partnerUrl)
+                                                    FirebaseAnalyticsService.shared.eventLinkPartnerOpened(partnerName: partnerUrl)
                                                 }) {
                                                     if let logo =  partner.logoUrl  {
                                                         URLImage(url: URL(string:logo)!) { image in

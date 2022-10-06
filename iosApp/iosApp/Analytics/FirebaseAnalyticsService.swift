@@ -18,8 +18,8 @@ class FirebaseAnalyticsService: AnalyticsService{
     required internal init() {}
     // MARK: - Events
     
-    func eventBookmark(page: AnalyticsPage, sessionId: String, fav: Bool) {
-        if fav {
+    func eventBookmark(page: AnalyticsPage, sessionId: String, bookmarked: Bool) {
+        if bookmarked {
             Analytics.logEvent(AnalyticsEvent.addToBookmarks.description(), parameters: [
                 AnalyticsParam.fromPage.description(): page.description(),
                 AnalyticsParam.sessionId.description(): sessionId
@@ -66,9 +66,9 @@ class FirebaseAnalyticsService: AnalyticsService{
         Analytics.logEvent(AnalyticsEvent.linkLocalCommunitiesOpened.description(), parameters: [:] )
     }
     
-    func eventLinkPartnerOpened(partnerURL: String) {
+    func eventLinkPartnerOpened(partnerName: String) {
         Analytics.logEvent(AnalyticsEvent.linkPartnerOpened.description(), parameters: [
-            AnalyticsParam.partnerUrl.description(): String(partnerURL)
+            AnalyticsParam.partnerName.description(): partnerName
             ]
         )
     }
@@ -89,10 +89,10 @@ class FirebaseAnalyticsService: AnalyticsService{
         )
     }
     
-    func eventSpeakerSocialLinkOpened(speaker: String, url: String) {
+    func eventSpeakerSocialLinkOpened(speakerId: String, type: SocialType) {
         Analytics.logEvent(AnalyticsEvent.speakerSocialLinkOpened.description(), parameters: [
-            AnalyticsParam.speaker.description(): speaker,
-            AnalyticsParam.socialLink.description(): url
+            AnalyticsParam.speakerId.description(): speakerId,
+            AnalyticsParam.socialType.description(): type.name
             ]
         )
     }

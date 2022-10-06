@@ -95,7 +95,10 @@ class MainActivity : ComponentActivity(), NavController.OnDestinationChangedList
                             onSocialLinkClick = { socialItem, speaker ->
                                 socialItem.link?.let { link ->
                                     externalContentService.openUrl(link)
-                                    analyticsService.eventSpeakerSocialLinkOpened(speaker.id, link)
+                                    analyticsService.eventSpeakerSocialLinkOpened(
+                                        speaker.id,
+                                        socialItem.type
+                                    )
                                 }
                             }
                         )

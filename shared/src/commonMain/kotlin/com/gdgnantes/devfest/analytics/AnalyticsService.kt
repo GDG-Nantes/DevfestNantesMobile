@@ -1,18 +1,10 @@
 package com.gdgnantes.devfest.analytics
 
+import com.gdgnantes.devfest.model.SocialType
+
 interface AnalyticsService {
 
-    /*
-    Notes:
-    * Enums should be capitalized
-    * eventBookmark param should be bookmarked instead of fav
-    * eventSpeakerSocialLinkOpened should specify the social network instead of the url and speakerId instead of speaker
-    * eventLinkPartnerOpened should specify the partnerId instead of the partnerURL
-    * linkSponsorOpened not used
-    * I added className to the pageEvent. Why not using it in iOS ?
-     */
-
-    fun eventBookmark(page: AnalyticsPage, sessionId: String, fav: Boolean)
+    fun eventBookmark(page: AnalyticsPage, sessionId: String, bookmarked: Boolean)
 
     fun eventFilter()
 
@@ -28,7 +20,7 @@ interface AnalyticsService {
 
     fun eventLinkLocalCommunitiesOpened()
 
-    fun eventLinkPartnerOpened(partnerURL: String)
+    fun eventLinkPartnerOpened(partnerName: String)
 
     fun eventLinkTwitterOpened()
 
@@ -38,7 +30,7 @@ interface AnalyticsService {
 
     fun eventSessionOpened(sessionId: String)
 
-    fun eventSpeakerSocialLinkOpened(speaker: String, url: String)
+    fun eventSpeakerSocialLinkOpened(speakerId: String, type: SocialType)
 
     fun pageEvent(page: AnalyticsPage, className: String? = null)
 }

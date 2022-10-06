@@ -4,6 +4,7 @@ import com.gdgnantes.devfest.analytics.AnalyticsEvent
 import com.gdgnantes.devfest.analytics.AnalyticsPage
 import com.gdgnantes.devfest.analytics.AnalyticsParam
 import com.gdgnantes.devfest.analytics.AnalyticsService
+import com.gdgnantes.devfest.model.SocialType
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.ktx.logEvent
 import timber.log.Timber
@@ -11,8 +12,8 @@ import javax.inject.Inject
 
 class FirebaseAnalyticsService @Inject constructor(private val firebaseAnalytics: FirebaseAnalytics) :
     AnalyticsService {
-    override fun eventBookmark(page: AnalyticsPage, sessionId: String, fav: Boolean) {
-        if (fav) {
+    override fun eventBookmark(page: AnalyticsPage, sessionId: String, bookmarked: Boolean) {
+        if (bookmarked) {
             firebaseAnalytics.logEvent(AnalyticsEvent.ADD_TO_BOOKMARKS.toString()) {
                 param(AnalyticsParam.SESSION_ID.toString(), sessionId)
                 param(AnalyticsParam.FROM_PAGE.toString(), page.toString())
@@ -53,9 +54,9 @@ class FirebaseAnalyticsService @Inject constructor(private val firebaseAnalytics
         firebaseAnalytics.logEvent(AnalyticsEvent.LINK_LOCAL_COMMUNITIES_OPENED.toString()) {}
     }
 
-    override fun eventLinkPartnerOpened(partnerURL: String) {
+    override fun eventLinkPartnerOpened(partnerName: String) {
         firebaseAnalytics.logEvent(AnalyticsEvent.LINK_PARTNER_OPENED.toString()) {
-            param(AnalyticsParam.PARTNER_URL.toString(), partnerURL)
+            param(AnalyticsParam.PARTNER_NAME.toString(), partnerName)
         }
     }
 
@@ -77,10 +78,10 @@ class FirebaseAnalyticsService @Inject constructor(private val firebaseAnalytics
         }
     }
 
-    override fun eventSpeakerSocialLinkOpened(speaker: String, url: String) {
+    override fun eventSpeakerSocialLinkOpened(speakerId: String, type: SocialType) {
         firebaseAnalytics.logEvent(AnalyticsEvent.SPEAKER_SOCIAL_LINK_OPENED.toString()) {
-            param(AnalyticsParam.SPEAKER.toString(), speaker)
-            param(AnalyticsParam.SOCIAL_LINK.toString(), url)
+            param(AnalyticsParam.SPEAKER_ID.toString(), speakerId)
+            param(AnalyticsParam.SOCIAL_TYPE.toString(), type.name)
         }
     }
 

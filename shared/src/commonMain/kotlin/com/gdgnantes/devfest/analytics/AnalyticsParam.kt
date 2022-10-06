@@ -2,10 +2,10 @@ package com.gdgnantes.devfest.analytics
 
 enum class AnalyticsParam {
     FROM_PAGE,
-    PARTNER_URL,
+    PARTNER_NAME,
     SESSION_ID,
-    SPEAKER,
-    SOCIAL_LINK;
+    SOCIAL_TYPE,
+    SPEAKER_ID;
 
     override fun toString(): String {
         return name.lowercase()

@@ -151,7 +151,7 @@ fun Home(
                     onPartnerClick = { partner ->
                         partner.url?.let { url ->
                             externalContentService.openUrl(url)
-                            analyticsService.eventLinkPartnerOpened(url)
+                            analyticsService.eventLinkPartnerOpened(partner.name ?: "")
                         }
                     },
                     onLocalCommunitiesClick = {
