@@ -57,4 +57,7 @@
   <string name="session_type_conference">Conférence</string>
   <string name="session_type_quickie">Quickie</string>
   <string name="session_type_codelab">Codelab</string>
+  <string name="settings_version_label">Version</string>
+  <string name="settings_version_support">Support</string>
+  <string name="settings_version_support_subtitle">Signaler un problème.</string>
 </resources>

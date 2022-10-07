@@ -22,6 +22,8 @@ interface AnalyticsService {
 
     fun eventLinkPartnerOpened(partnerName: String)
 
+    fun eventLinkSupportOpened()
+
     fun eventLinkTwitterOpened()
 
     fun eventLinkYoutubeOpened()

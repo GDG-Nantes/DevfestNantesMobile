@@ -60,6 +60,10 @@ class FirebaseAnalyticsService @Inject constructor(private val firebaseAnalytics
         }
     }
 
+    override fun eventLinkSupportOpened() {
+        firebaseAnalytics.logEvent(AnalyticsEvent.LINK_SUPPORT_OPENED.toString()) {}
+    }
+
     override fun eventLinkTwitterOpened() {
         firebaseAnalytics.logEvent(AnalyticsEvent.LINK_TWITTER_OPENED.toString()) {}
     }
