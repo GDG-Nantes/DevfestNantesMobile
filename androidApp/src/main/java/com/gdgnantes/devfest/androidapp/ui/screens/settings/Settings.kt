@@ -24,6 +24,7 @@ import com.gdgnantes.devfest.androidapp.ui.screens.Screen
 fun Settings(
     modifier: Modifier = Modifier,
     onBackClick: () -> Unit,
+    onLegalClick: () -> Unit,
     onOpenDataSharing: () -> Unit,
     onSupportClick: () -> Unit,
 ) {
@@ -68,6 +69,11 @@ fun Settings(
                 title = stringResource(id = R.string.settings_version_support),
                 subtitle = stringResource(id = R.string.settings_version_support_subtitle),
                 onClick = onSupportClick
+            )
+
+            SettingsItem(
+                title = stringResource(id = R.string.settings_legal),
+                onClick = onLegalClick
             )
 
             SettingsItem(

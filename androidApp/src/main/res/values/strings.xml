@@ -68,4 +68,5 @@
     <string name="settings_version_label">Version</string>
     <string name="settings_version_support">Support</string>
     <string name="settings_version_support_subtitle">Report an issue.</string>
+    <string name="settings_legal">Legal notices</string>
 </resources>
