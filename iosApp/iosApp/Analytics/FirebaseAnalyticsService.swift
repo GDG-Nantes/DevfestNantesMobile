@@ -73,6 +73,10 @@ class FirebaseAnalyticsService: AnalyticsService{
         )
     }
     
+    func eventLinkSupportOpened() {
+        Analytics.logEvent(AnalyticsEvent.linkSupportOpened.description(), parameters: [:] )
+    }
+    
     func eventLinkYoutubeOpened() {
         Analytics.logEvent(AnalyticsEvent.linkYoutubeOpened.description(), parameters: [:] )
     }

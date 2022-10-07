@@ -22,6 +22,7 @@ import com.gdgnantes.devfest.androidapp.ui.screens.settings.Settings
 import com.gdgnantes.devfest.androidapp.ui.theme.DevFest_NantesTheme
 import com.gdgnantes.devfest.androidapp.utils.assistedViewModel
 import com.gdgnantes.devfest.model.SessionType
+import com.gdgnantes.devfest.model.WebLinks
 import dagger.hilt.EntryPoint
 import dagger.hilt.InstallIn
 import dagger.hilt.android.AndroidEntryPoint
@@ -109,7 +110,11 @@ class MainActivity : ComponentActivity(), NavController.OnDestinationChangedList
                     ) {
                         Settings(
                             onBackClick = { mainNavController.popBackStack() },
-                            onOpenDataSharing = { mainNavController.navigate(Screen.DataSharing.route) }
+                            onOpenDataSharing = { mainNavController.navigate(Screen.DataSharing.route) },
+                            onSupportClick = {
+                                externalContentService.openUrl(WebLinks.SUPPORT.url)
+                                analyticsService.eventLinkSupportOpened()
+                            }
                         )
                     }
 

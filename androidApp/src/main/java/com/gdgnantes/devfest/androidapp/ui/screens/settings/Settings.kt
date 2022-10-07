@@ -25,6 +25,7 @@ fun Settings(
     modifier: Modifier = Modifier,
     onBackClick: () -> Unit,
     onOpenDataSharing: () -> Unit,
+    onSupportClick: () -> Unit,
 ) {
     Scaffold(
         topBar = {
@@ -64,7 +65,13 @@ fun Settings(
             )
 
             SettingsItem(
-                title = "Version",
+                title = stringResource(id = R.string.settings_version_support),
+                subtitle = stringResource(id = R.string.settings_version_support_subtitle),
+                onClick = onSupportClick
+            )
+
+            SettingsItem(
+                title = stringResource(id = R.string.settings_version_label),
                 subtitle = stringResource(
                     R.string.app_version,
                     BuildConfig.VERSION_NAME,
