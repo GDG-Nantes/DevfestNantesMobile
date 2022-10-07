@@ -19,14 +19,19 @@ fun SettingsItem(
     modifier: Modifier = Modifier,
     icon: (@Composable () -> Unit)? = null,
     title: String,
-    subtitle: String,
+    subtitle: String? = null,
     onClick: (() -> Unit)? = null,
 ) {
+    val subtitleComposable: (@Composable () -> Unit)? = subtitle?.run {
+        @Composable {
+            Text(text = this@run)
+        }
+    }
     SettingsItem(
         modifier = modifier,
         icon = icon,
         title = { Text(text = title) },
-        subtitle = { Text(text = subtitle) },
+        subtitle = subtitleComposable,
         onClick = onClick,
     )
 }

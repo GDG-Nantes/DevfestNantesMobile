@@ -61,6 +61,13 @@ sealed class Screen(
         imageVectorOutlined = null
     )
 
+    object Legal : Screen(
+        route = "legal",
+        title = R.string.settings_legal,
+        imageVectorFilled = null,
+        imageVectorOutlined = null
+    )
+
     object Venue : Screen(
         route = "venue",
         title = R.string.screen_venue,

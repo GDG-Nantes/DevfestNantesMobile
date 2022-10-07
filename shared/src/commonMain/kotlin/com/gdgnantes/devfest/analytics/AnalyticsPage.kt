@@ -4,6 +4,7 @@ enum class AnalyticsPage {
     ABOUT,
     AGENDA,
     DATASHARING,
+    LEGAL,
     SESSION_DETAILS,
     SETTINGS,
     VENUE;
