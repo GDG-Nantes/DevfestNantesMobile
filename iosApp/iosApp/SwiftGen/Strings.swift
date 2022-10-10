@@ -90,6 +90,8 @@ internal enum L10n {
   internal static let partnersTitle = L10n.tr("Localizable", "partners_title", fallback: "Partners")
   /// VIRTUAL
   internal static let partnersVirtualTitle = L10n.tr("Localizable", "partners_virtual_title", fallback: "VIRTUAL")
+  /// Powered by OpenFeedback
+  internal static let poweredOpenfeedback = L10n.tr("Localizable", "powered_openfeedback", fallback: "Powered by OpenFeedback")
   /// About
   internal static let screenAbout = L10n.tr("Localizable", "screen_about", fallback: "About")
   /// The Devfest (i.e Developers Festival), is a technical conference destined to developers. It's meant for students, professionals, or any curious techie

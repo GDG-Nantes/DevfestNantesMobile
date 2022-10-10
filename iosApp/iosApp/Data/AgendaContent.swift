@@ -25,6 +25,8 @@ struct AgendaContent {
         let durationAndLanguage: String
         let title: String
         let sessionType: SessionType?
+        
+        var isATalk: Bool { return (openFeedbackFormId != nil) }
     }
     
     struct Section: Hashable {
