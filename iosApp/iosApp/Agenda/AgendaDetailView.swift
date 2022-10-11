@@ -71,11 +71,15 @@ struct AgendaDetailView: View {
                     Divider().padding(.top, 8)
                     Text(session.abstract)
                         .font(.body)
+                    Divider().padding(.top, 8)
 
-                    Spacer()
-                    
-                    if session.isATalk {
+
+                    ForEach(session.speakers, id: \.self) { speaker in
+                        SpeakerView(speaker: speaker)
                         Divider().padding(.top, 8)
+                    }
+                    
+                    if session.isATalk && RCValues.sharedInstance.bool(forKey: .openfeedback_enabled){
                             VStack(spacing: 16) {
                                 Spacer()
                                 CustomButton(url: URL(string: "\(WebLinks.openFeedback.url)/\(day)/\(session.openFeedbackFormId!)")!) {
@@ -91,11 +95,6 @@ struct AgendaDetailView: View {
                                     .foregroundColor(Color(UIColor.placeholderText))
                                 Divider().padding(.top, 8)
                             }
-                    }
-
-                    ForEach(session.speakers, id: \.self) { speaker in
-                        SpeakerView(speaker: speaker)
-                        Divider().padding(.top, 8)
                     }
                 }.padding(.horizontal)
             }

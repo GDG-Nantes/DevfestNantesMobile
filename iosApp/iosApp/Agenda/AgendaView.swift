@@ -116,6 +116,7 @@ struct AgendaView: View {
 
                     })
                     .task {
+                        RCValues.sharedInstance.fetchCloudValues()
                         await viewModel.observeRooms()
                         await viewModel.observeSessions()
                     }

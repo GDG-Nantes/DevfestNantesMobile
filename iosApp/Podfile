@@ -12,4 +12,5 @@ target 'DevFest Nantes' do
   # Firebase
   pod 'Firebase/AnalyticsWithoutAdIdSupport'
   pod 'Firebase/Crashlytics'
+  pod 'Firebase/RemoteConfig'
 end
