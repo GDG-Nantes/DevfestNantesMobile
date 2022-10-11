@@ -69,7 +69,7 @@ abstract class AppModule {
         @Provides
         fun config() = Firebase.remoteConfig.apply {
             val configSettings = remoteConfigSettings {
-                minimumFetchIntervalInSeconds = 3600
+                minimumFetchIntervalInSeconds = 300
             }
             setConfigSettingsAsync(configSettings)
         }
