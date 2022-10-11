@@ -11,7 +11,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.gdgnantes.devfest.androidapp.R
-import io.openfeedback.android.OpenFeedback
 import io.openfeedback.android.components.SessionFeedbackContainer
 import java.util.*
 
@@ -19,7 +18,6 @@ import java.util.*
 fun FeedbackForm(
     modifier: Modifier = Modifier,
     feedbackFormViewModel: FeedbackFormViewModel = hiltViewModel(),
-    openFeedback: OpenFeedback,
     openFeedbackFormId: String
 ) {
     if (feedbackFormViewModel.isOpenFeedbackEnabled.collectAsState().value) {
@@ -33,7 +31,7 @@ fun FeedbackForm(
             )
 
             SessionFeedbackContainer(
-                openFeedback = openFeedback,
+                openFeedback = feedbackFormViewModel.openFeedback,
                 sessionId = openFeedbackFormId,
                 language = Locale.getDefault().language,
                 modifier = Modifier

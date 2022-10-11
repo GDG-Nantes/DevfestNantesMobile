@@ -28,7 +28,6 @@ import dagger.hilt.EntryPoint
 import dagger.hilt.InstallIn
 import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.components.ActivityComponent
-import io.openfeedback.android.OpenFeedback
 import javax.inject.Inject
 
 @AndroidEntryPoint
@@ -42,9 +41,6 @@ class MainActivity : ComponentActivity(), NavController.OnDestinationChangedList
 
     @Inject
     lateinit var analyticsService: AnalyticsService
-
-    @Inject
-    lateinit var openFeedback: OpenFeedback
 
     @Inject
     lateinit var externalContentService: ExternalContentService
@@ -86,7 +82,6 @@ class MainActivity : ComponentActivity(), NavController.OnDestinationChangedList
                     ) { backStackEntry ->
                         val sessionId = backStackEntry.arguments!!.getString("sessionId")!!
                         SessionLayout(
-                            openFeedback = openFeedback,
                             viewModel = assistedViewModel {
                                 SessionViewModel.provideFactory(
                                     sessionViewModelFactory(),
