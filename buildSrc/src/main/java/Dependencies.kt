@@ -109,6 +109,8 @@ object Firebase {
     const val firebaseBom = "com.google.firebase:firebase-bom:30.4.1"
     const val firebaseCrashlytics = "com.google.firebase:firebase-crashlytics-ktx"
     const val firebaseAnalytics = "com.google.firebase:firebase-analytics-ktx"
+    const val firebaseConfig = "com.google.firebase:firebase-config-ktx"
+
 }
 
 object Tests {

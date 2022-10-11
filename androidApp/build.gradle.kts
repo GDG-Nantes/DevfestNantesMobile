@@ -73,6 +73,7 @@ dependencies {
         implementation(platform(firebaseBom))
         implementation(firebaseAnalytics)
         implementation(firebaseCrashlytics)
+        implementation(Firebase.firebaseConfig)
     }
 
     with(Deps) {

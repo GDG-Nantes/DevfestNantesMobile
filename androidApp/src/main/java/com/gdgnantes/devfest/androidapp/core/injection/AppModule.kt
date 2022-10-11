@@ -19,6 +19,8 @@ import com.gdgnantes.devfest.store.DevFestNantesStoreBuilder
 import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.remoteconfig.ktx.remoteConfig
+import com.google.firebase.remoteconfig.ktx.remoteConfigSettings
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -61,11 +63,17 @@ abstract class AppModule {
             dataSharingInitializer: DataSharingInitializer
         ): Set<ApplicationInitializer> = setOf(loggerInitializer, dataSharingInitializer)
 
-        @AppScope
         @Provides
         fun analytics() = Firebase.analytics
 
-        @AppScope
+        @Provides
+        fun config() = Firebase.remoteConfig.apply {
+            val configSettings = remoteConfigSettings {
+                minimumFetchIntervalInSeconds = 300
+            }
+            setConfigSettingsAsync(configSettings)
+        }
+
         @Provides
         fun crashlytics() = FirebaseCrashlytics.getInstance()
 

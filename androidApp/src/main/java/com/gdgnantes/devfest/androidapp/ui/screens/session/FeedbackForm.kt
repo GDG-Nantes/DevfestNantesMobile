@@ -5,22 +5,22 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.gdgnantes.devfest.androidapp.BuildConfig
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.gdgnantes.devfest.androidapp.R
-import io.openfeedback.android.OpenFeedback
 import io.openfeedback.android.components.SessionFeedbackContainer
 import java.util.*
 
 @Composable
 fun FeedbackForm(
     modifier: Modifier = Modifier,
-    openFeedback: OpenFeedback,
+    feedbackFormViewModel: FeedbackFormViewModel = hiltViewModel(),
     openFeedbackFormId: String
 ) {
-    if (BuildConfig.OPEN_FEEDBACK_ENABLED.toBoolean()) {
+    if (feedbackFormViewModel.isOpenFeedbackEnabled.collectAsState().value) {
         Column(
             modifier = modifier
         ) {
@@ -31,7 +31,7 @@ fun FeedbackForm(
             )
 
             SessionFeedbackContainer(
-                openFeedback = openFeedback,
+                openFeedback = feedbackFormViewModel.openFeedback,
                 sessionId = openFeedbackFormId,
                 language = Locale.getDefault().language,
                 modifier = Modifier

@@ -27,13 +27,11 @@ import com.gdgnantes.devfest.androidapp.ui.theme.bookmarked
 import com.gdgnantes.devfest.model.Session
 import com.gdgnantes.devfest.model.SocialItem
 import com.gdgnantes.devfest.model.Speaker
-import io.openfeedback.android.OpenFeedback
 
 @Composable
 fun SessionLayout(
     modifier: Modifier = Modifier,
     viewModel: SessionViewModel,
-    openFeedback: OpenFeedback,
     onBackClick: () -> Unit,
     onSocialLinkClick: (SocialItem, Speaker) -> Unit
 ) {
@@ -41,7 +39,6 @@ fun SessionLayout(
     SessionLayout(
         modifier = modifier,
         sessionState = sessionState,
-        openFeedback = openFeedback,
         onBackClick = onBackClick,
         onSocialLinkClick = onSocialLinkClick
     )
@@ -52,7 +49,6 @@ fun SessionLayout(
     modifier: Modifier = Modifier,
     sessionState: State<Session?>,
     bookmarksViewModel: BookmarksViewModel = hiltViewModel(),
-    openFeedback: OpenFeedback,
     onBackClick: () -> Unit,
     onSocialLinkClick: (SocialItem, Speaker) -> Unit
 ) {
@@ -66,7 +62,6 @@ fun SessionLayout(
         modifier = modifier,
         session = session,
         isBookmarked = isBookmarkedState,
-        openFeedback = openFeedback,
         onBackClick = onBackClick,
         onSocialLinkClick = onSocialLinkClick,
         onSessionBookmarkClick = { isBookmarked ->
@@ -86,7 +81,6 @@ fun SessionLayout(
     modifier: Modifier = Modifier,
     session: Session?,
     isBookmarked: State<Boolean>,
-    openFeedback: OpenFeedback,
     onBackClick: () -> Unit,
     onSocialLinkClick: (SocialItem, Speaker) -> Unit,
     onSessionBookmarkClick: ((Boolean) -> Unit)
@@ -95,7 +89,6 @@ fun SessionLayout(
         modifier = modifier,
         session = session,
         isBookmarked = isBookmarked.value,
-        openFeedback = openFeedback,
         onBackClick = onBackClick,
         onSocialLinkClick = onSocialLinkClick,
         onSessionBookmarkClick = onSessionBookmarkClick
@@ -109,7 +102,6 @@ fun SessionLayout(
     modifier: Modifier = Modifier,
     session: Session?,
     isBookmarked: Boolean,
-    openFeedback: OpenFeedback,
     onBackClick: () -> Unit,
     onSocialLinkClick: (SocialItem, Speaker) -> Unit,
     onSessionBookmarkClick: ((Boolean) -> Unit)
@@ -165,7 +157,6 @@ fun SessionLayout(
 
                 session.openFeedbackFormId?.let { openFeedbackFormId ->
                     FeedbackForm(
-                        openFeedback = openFeedback,
                         openFeedbackFormId = openFeedbackFormId,
                     )
                 }
