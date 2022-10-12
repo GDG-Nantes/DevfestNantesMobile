@@ -34,7 +34,7 @@ struct AgendaCellView: View {
                     .font(.footnote)
                 Spacer()
             }
-
+            Spacer()
             VStack {
                 if session.isATalk {
                     Image(systemName:  viewModel.favorites.contains(session.id) ? "star.fill" : "star")
