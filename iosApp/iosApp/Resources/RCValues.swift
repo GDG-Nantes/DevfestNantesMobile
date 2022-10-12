@@ -8,6 +8,7 @@
 
 import Foundation
 import FirebaseRemoteConfig
+import NSLogger
 
 enum ValueKey: String {
     case openfeedback_enabled
@@ -21,24 +22,23 @@ class RCValues {
     
     func loadDefaultValues() {
         let appDefaults: [String: Any?] = [
-            ValueKey.openfeedback_enabled.rawValue : true
+            ValueKey.openfeedback_enabled.rawValue : false
         ]
         RemoteConfig.remoteConfig().setDefaults(appDefaults as? [String: NSObject])
     }
     
     func fetchCloudValues() {
         let settings = RemoteConfigSettings()
-        // WARNING: Don't actually do this in production!
         settings.minimumFetchInterval = 300
         RemoteConfig.remoteConfig().configSettings = settings
         RemoteConfig.remoteConfig().fetch { _, error in
             if let error = error {
-                print("Got an error fetching remote values \(error)")
+                Logger.shared.log(.network, .error, "RemoteConfig error: \(error)")
                 return
             }
             
             RemoteConfig.remoteConfig().activate { _, _ in
-                print("Retrieved values from the cloud!")
+                Logger.shared.log(.network, .info, "Retrieved values from the cloud!")
             }
         }
     }
@@ -46,5 +46,4 @@ class RCValues {
     func bool(forKey key: ValueKey) -> Bool {
         RemoteConfig.remoteConfig()[key.rawValue].boolValue
     }
-    
 }

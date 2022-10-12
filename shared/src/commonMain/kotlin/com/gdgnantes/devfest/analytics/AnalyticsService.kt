@@ -28,6 +28,8 @@ interface AnalyticsService {
 
     fun eventLinkYoutubeOpened()
 
+    fun eventFeedbackClicked(openFeedbackId: String)
+
     fun eventNavigationClicked()
 
     fun eventSessionOpened(sessionId: String)

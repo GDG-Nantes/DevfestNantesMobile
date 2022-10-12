@@ -87,7 +87,7 @@ struct AgendaDetailView: View {
                                 }.foregroundColor(Color(Asset.devFestRed.color))
                                     .frame(minWidth: 0, maxWidth: .infinity, alignment: .center)
                                     .simultaneousGesture(TapGesture().onEnded {
-                                        FirebaseAnalyticsService.shared.eventLinkCodeOfConductOpened()
+                                        FirebaseAnalyticsService.shared.eventFeedbackClicked(openFeedbackId: session.openFeedbackFormId ?? "")
                                     })
                                 Text(L10n.poweredOpenfeedback)
                                     .frame(maxWidth: .infinity, alignment: .trailing)
