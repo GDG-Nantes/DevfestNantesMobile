@@ -15,6 +15,7 @@ import shared
 struct AgendaDetailView: View {
     var content : AgendaContent.Session?
     @ObservedObject var viewModel: DevFestViewModel
+    var day: String
     
     func getDate(date: String) -> Date {
         let newFormatter = ISO8601DateFormatter()
@@ -34,9 +35,10 @@ struct AgendaDetailView: View {
     }()
     
     
-    init(session: AgendaContent.Session, viewModel: DevFestViewModel) {
+    init(session: AgendaContent.Session, viewModel: DevFestViewModel, day: String) {
         self.content = session
         self.viewModel = viewModel
+        self.day = day
     }
     var body: some View {
         content.map { session in
@@ -69,9 +71,30 @@ struct AgendaDetailView: View {
                     Divider().padding(.top, 8)
                     Text(session.abstract)
                         .font(.body)
+                    Divider().padding(.top, 8)
+
+
                     ForEach(session.speakers, id: \.self) { speaker in
                         SpeakerView(speaker: speaker)
                         Divider().padding(.top, 8)
+                    }
+                    
+                    if session.isATalk && RCValues.sharedInstance.bool(forKey: .openfeedback_enabled){
+                            VStack(spacing: 16) {
+                                Spacer()
+                                CustomButton(url: URL(string: "\(WebLinks.openFeedback.url)/\(day)/\(session.openFeedbackFormId!)")!) {
+                                    Text(L10n.sessionFeedbackLabel)
+                                }.foregroundColor(Color(Asset.devFestRed.color))
+                                    .frame(minWidth: 0, maxWidth: .infinity, alignment: .center)
+                                    .simultaneousGesture(TapGesture().onEnded {
+                                        FirebaseAnalyticsService.shared.eventFeedbackClicked(openFeedbackId: session.openFeedbackFormId ?? "")
+                                    })
+                                Text(L10n.poweredOpenfeedback)
+                                    .frame(maxWidth: .infinity, alignment: .trailing)
+                                    .font(.callout)
+                                    .foregroundColor(Color(UIColor.placeholderText))
+                                Divider().padding(.top, 8)
+                            }
                     }
                 }.padding(.horizontal)
             }

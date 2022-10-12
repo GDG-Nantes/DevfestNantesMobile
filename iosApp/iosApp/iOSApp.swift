@@ -6,6 +6,9 @@ import KMPNativeCoroutinesCombine
 import NSLogger
 import FirebaseCore
 import FirebaseCrashlytics
+import FirebaseRemoteConfig
+
+var remoteConfig = RemoteConfig.remoteConfig()
 
 @main
 struct iOSApp: App {
@@ -16,6 +19,7 @@ struct iOSApp: App {
         
         //Firebase
         FirebaseApp.configure()
+        _ = RCValues.sharedInstance
         
     }
     

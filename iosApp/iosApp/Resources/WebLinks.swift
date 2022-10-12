@@ -17,6 +17,8 @@ enum WebLinks {
     case socielYoutube
     case nantestechCommunities
     case github
+    case openFeedback
+    case goTo
 }
 
                 extension WebLinks {
@@ -38,6 +40,10 @@ enum WebLinks {
                 return "https://nantes.community/"
             case .github:
                 return "https://github.com/GDG-Nantes/DevfestNantesMobile"
+            case .openFeedback:
+                return "https://openfeedback.io/devfestnantes22"
+            case .goTo:
+                return "http://maps.apple.com/?daddr="
             }
         }
     }

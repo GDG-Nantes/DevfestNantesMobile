@@ -34,15 +34,17 @@ struct AgendaCellView: View {
                     .font(.footnote)
                 Spacer()
             }
-            Spacer()
+
             VStack {
-                Image(systemName:  viewModel.favorites.contains(session.id) ? "star.fill" : "star")
-                    .foregroundColor(.yellow)
-                    .padding(8)
-                    .onTapGesture { self.viewModel.toggleFavorite(ofSession: session)
-                        FirebaseAnalyticsService.shared.eventBookmark(page: .agenda, sessionId: session.id, bookmarked: viewModel.favorites.contains(session.id))
-                    }
+                if session.isATalk {
+                    Image(systemName:  viewModel.favorites.contains(session.id) ? "star.fill" : "star")
+                        .foregroundColor(.yellow)
+                        .padding(8)
+                        .onTapGesture { self.viewModel.toggleFavorite(ofSession: session)
+                            FirebaseAnalyticsService.shared.eventBookmark(page: .agenda, sessionId: session.id, bookmarked: viewModel.favorites.contains(session.id))
+                        }
                 Spacer()
+                }
             }
         }
         .padding(8)

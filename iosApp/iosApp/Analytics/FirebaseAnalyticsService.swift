@@ -81,6 +81,12 @@ class FirebaseAnalyticsService: AnalyticsService{
         Analytics.logEvent(AnalyticsEvent.linkYoutubeOpened.description(), parameters: [:] )
     }
 
+    func eventFeedbackClicked(openFeedbackId: String) {
+        Analytics.logEvent(AnalyticsEvent.feedbackClicked.description(), parameters: [
+            AnalyticsParam.openfeedbackId.description(): String(openFeedbackId)
+            ]
+        )
+    }
     
     func eventNavigationClicked() {
         Analytics.logEvent(AnalyticsEvent.navigationClicked.description(), parameters: [:])
