@@ -25,7 +25,7 @@ Feedback forms are powered by [openfeedback.io](https://openfeedback.io/) thanks
 ## Requirements
 
 * [Android Studio](https://developer.android.com/studio/index.html)
-* [XCode](https://developer.apple.com/xcode/)
+* [Xcode](https://developer.apple.com/xcode/)
 
 ## Contributing
 
