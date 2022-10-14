@@ -5,7 +5,7 @@ KMM Mobile repo for the Android and iOS mobile app of the [DevFest Nantes 2022](
 Get it on :
 
   * [Play Store (Android)](https://play.google.com/store/apps/details?id=com.gdgnantes.devfest.androidapp)
-  * App Store (iOS)
+  * [App Store (iOS)](https://apps.apple.com/fr/app/devfest-nantes/id6443489706)
 
 Adapted from the Android Makers app :
 
