@@ -6,6 +6,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.gdgnantes.devfest.androidapp.ui.UiState
+import com.gdgnantes.devfest.androidapp.ui.components.LoadingLayout
 import com.gdgnantes.devfest.model.Venue
 
 @Composable
@@ -13,12 +14,14 @@ fun Venue(
     modifier: Modifier = Modifier,
     viewModel: VenueViewModel = hiltViewModel(),
     onNavigationClick: () -> Unit,
+    onVenuePlanClick: (String) -> Unit,
 ) {
     VenueLayout(
         modifier = modifier,
         uiState = viewModel.uiState.collectAsState(),
         venue = viewModel.venue.collectAsState(),
-        onNavigationClick = onNavigationClick
+        onNavigationClick = onNavigationClick,
+        onVenuePlanClick = onVenuePlanClick
     )
 }
 
@@ -26,14 +29,16 @@ fun Venue(
 fun VenueLayout(
     modifier: Modifier = Modifier,
     uiState: State<UiState>,
-    venue: State<Venue>,
+    venue: State<Venue?>,
     onNavigationClick: () -> Unit,
+    onVenuePlanClick: (String) -> Unit,
 ) {
     VenueLayout(
         modifier = modifier,
         uiState = uiState.value,
         venue = venue.value,
-        onNavigationClick = onNavigationClick
+        onNavigationClick = onNavigationClick,
+        onVenuePlanClick = onVenuePlanClick
     )
 }
 
@@ -41,16 +46,18 @@ fun VenueLayout(
 fun VenueLayout(
     modifier: Modifier = Modifier,
     uiState: UiState,
-    venue: Venue,
+    venue: Venue?,
     onNavigationClick: () -> Unit,
+    onVenuePlanClick: (String) -> Unit,
 ) {
-    when (uiState) {
-        UiState.SUCCESS ->
-            VenueDetails(
-                modifier = modifier,
-                venue = venue,
-                onNavigationClick = onNavigationClick
-            )
-        else -> {}
+    if (uiState != UiState.LOADING && venue != null) {
+        VenueDetails(
+            modifier = modifier,
+            venue = venue,
+            onNavigationClick = onNavigationClick,
+            onVenuePlanClick = { venue.floorPlanUrl?.let { onVenuePlanClick(it) } },
+        )
+    } else {
+        LoadingLayout(modifier = modifier)
     }
 }

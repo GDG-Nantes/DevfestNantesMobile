@@ -21,12 +21,12 @@ class VenueViewModel @Inject constructor(
     val uiState: StateFlow<UiState>
         get() = _uiState
 
-    val venue: StateFlow<Venue>
+    val venue: StateFlow<Venue?>
         get() = flow {
             ConfigurationCompat.getLocales(Resources.getSystem().configuration)[0]?.let { locale ->
                 emit(store.getVenue(locale.toContentLanguage()))
             }
         }
             .onEach { _uiState.emit(UiState.SUCCESS) }
-            .stateIn(viewModelScope, SharingStarted.Lazily, Venue())
+            .stateIn(viewModelScope, SharingStarted.Lazily, null)
 }

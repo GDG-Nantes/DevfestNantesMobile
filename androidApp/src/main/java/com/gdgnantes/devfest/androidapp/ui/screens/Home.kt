@@ -119,6 +119,7 @@ fun Home(
             composable(Screen.Venue.route) {
                 Venue(
                     onNavigationClick = { analyticsService.eventNavigationClicked() },
+                    onVenuePlanClick = { url -> externalContentService.openUrl(url) },
                 )
             }
 

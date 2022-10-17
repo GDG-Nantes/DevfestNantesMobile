@@ -69,4 +69,5 @@
     <string name="settings_version_support">Support</string>
     <string name="settings_version_support_subtitle">Report an issue.</string>
     <string name="settings_legal">Legal notices</string>
+    <string name="venue_plan_content_description">Plan of the conference\'s venue. Shows the different spaces and conferences rooms.</string>
 </resources>

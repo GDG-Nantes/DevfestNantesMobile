@@ -86,6 +86,7 @@ fun GetVenueQuery.Venue.toVenue(): Venue {
     return Venue(
         address = address ?: "",
         description = description,
+        floorPlanUrl = floorPlanUrl,
         latitude = latitude,
         longitude = longitude,
         imageUrl = imageUrl,
