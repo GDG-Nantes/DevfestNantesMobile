@@ -88,10 +88,6 @@ class FirebaseAnalyticsService: AnalyticsService{
         )
     }
     
-    func eventNavigationClicked() {
-        Analytics.logEvent(AnalyticsEvent.navigationClicked.description(), parameters: [:])
-    }
-    
     func eventSessionOpened(sessionId: String) {
         Analytics.logEvent(AnalyticsEvent.linkPartnerOpened.description(), parameters: [
             AnalyticsParam.sessionId.description(): String(sessionId)
@@ -105,6 +101,14 @@ class FirebaseAnalyticsService: AnalyticsService{
             AnalyticsParam.socialType.description(): type.name
             ]
         )
+    }
+    
+    func eventVenueFloorPlanClicked() {
+        Analytics.logEvent(AnalyticsEvent.venueFloorPlanClicked.description(), parameters: [:])
+    }
+    
+    func eventVenueNavigationClicked() {
+        Analytics.logEvent(AnalyticsEvent.venueNavigationClicked.description(), parameters: [:])
     }
     
     // MARK: - Page

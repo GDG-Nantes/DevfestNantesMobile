@@ -43,6 +43,7 @@ query GetVenue($id: String!, $language: String!) {
         latitude
         longitude
         imageUrl
+        floorPlanUrl
     }
 }
 

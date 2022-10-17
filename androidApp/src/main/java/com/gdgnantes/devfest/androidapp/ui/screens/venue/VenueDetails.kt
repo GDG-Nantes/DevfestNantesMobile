@@ -9,11 +9,8 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material3.Button
-import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
+import androidx.compose.material3.*
+import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -21,8 +18,10 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
+import coil.request.CachePolicy
 import coil.request.ImageRequest
 import com.gdgnantes.devfest.androidapp.R
+import com.gdgnantes.devfest.androidapp.ui.screens.venue.plan.VenueFloorPlanButton
 import com.gdgnantes.devfest.androidapp.ui.theme.DevFest_NantesTheme
 import com.gdgnantes.devfest.androidapp.utils.onNavigationClick
 import com.gdgnantes.devfest.model.ContentLanguage
@@ -35,6 +34,7 @@ fun VenueDetails(
     modifier: Modifier = Modifier,
     venue: Venue,
     onNavigationClick: () -> Unit,
+    onVenuePlanClick: () -> Unit,
 ) {
     Scaffold {
         Column(
@@ -42,6 +42,7 @@ fun VenueDetails(
                 .fillMaxWidth()
                 .fillMaxHeight()
                 .padding(it),
+            verticalArrangement = Arrangement.spacedBy(4.dp)
         ) {
 
             val context = LocalContext.current
@@ -52,6 +53,8 @@ fun VenueDetails(
                     .height(200.dp),
                 model = ImageRequest.Builder(LocalContext.current)
                     .data(venue.imageUrl)
+                    .networkCachePolicy(CachePolicy.ENABLED)
+                    .diskCachePolicy(CachePolicy.ENABLED)
                     .crossfade(true)
                     .build(),
                 onError = { state ->
@@ -103,6 +106,10 @@ fun VenueDetails(
                     text = venue.description,
                     style = MaterialTheme.typography.subtitle2,
                 )
+
+                venue.floorPlanUrl?.let { floorPlanUrl ->
+                    VenueFloorPlanButton(floorPlanUrl = floorPlanUrl, onClick = onVenuePlanClick)
+                }
             }
         }
     }
@@ -123,6 +130,7 @@ fun VenueDetailsPreview() {
         VenueDetails(
             venue = buildVenueStub(language = ContentLanguage.ENGLISH),
             onNavigationClick = {},
+            onVenuePlanClick = {}
         )
     }
 }

@@ -40,7 +40,7 @@ struct VenueView: View {
                             Text(L10n.venueGoToButton)
                         }.foregroundColor(Color(Asset.devFestRed.color))
                             .simultaneousGesture(TapGesture().onEnded {
-                                FirebaseAnalyticsService.shared.eventNavigationClicked()
+                                FirebaseAnalyticsService.shared.eventVenueNavigationClicked()
                             })
                         
                         Text(viewModel.venueContent.description)

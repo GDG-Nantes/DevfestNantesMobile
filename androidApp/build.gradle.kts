@@ -14,8 +14,8 @@ android {
         applicationId = "com.gdgnantes.devfest.androidapp"
         minSdk = AndroidSdk.min
         targetSdk = AndroidSdk.target
-        versionCode = 8
-        versionName = "1.0.0"
+        versionCode = 9
+        versionName = "1.0.1"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
         buildConfigField("String", "OPEN_FEEDBACK_ENABLED", "\"false\"")
@@ -24,6 +24,21 @@ android {
         buildConfigField("String", "OPEN_FEEDBACK_FIREBASE_APPLICATION_ID", "\"SECRET\"")
         buildConfigField("String", "OPEN_FEEDBACK_FIREBASE_API_KEY", "\"SECRET\"")
         buildConfigField("String", "OPEN_FEEDBACK_FIREBASE_DATABASE_URL", "\"SECRET\"")
+    }
+
+    buildTypes {
+        getByName("release") {
+            isMinifyEnabled = true
+            isShrinkResources = true
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "proguard-rules.pro"
+            )
+        }
+        getByName("debug") {
+            applicationIdSuffix = ".dev"
+            versionNameSuffix = "-DEBUG"
+        }
     }
 
     compileOptions {

@@ -1,4 +1,6 @@
 type Configuration {
+  name: String!
+
   timezone: String!
 }
 
@@ -88,9 +90,11 @@ type SessionConnection {
 type Social {
   icon: String
 
-  link: String!
+  link: String! @deprecated(reason: "use url instead, replace with url")
 
   name: String!
+
+  url: String!
 }
 
 type Speaker {
@@ -117,6 +121,8 @@ type Venue {
   coordinates: String @deprecated(reason: "use latitude and longitude instead")
 
   descriptionFr: String! @deprecated(reason: "description(language: \"fr\") instead")
+
+  floorPlanUrl: String
 
   id: String!
 
