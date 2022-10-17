@@ -24,6 +24,7 @@
 		CB3F424428A6A02300D1C75B /* AgendaCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB3F424328A6A02300D1C75B /* AgendaCellView.swift */; };
 		CB4980F228F609E3001D0484 /* RCValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB4980F128F609E3001D0484 /* RCValues.swift */; };
 		CB4980F428FD73C7001D0484 /* PhotoDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB4980F328FD73C7001D0484 /* PhotoDetailView.swift */; };
+		CB4980F728FDE6AC001D0484 /* UIImage-extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB4980F628FDE6AC001D0484 /* UIImage-extension.swift */; };
 		CB73E81028A5587E0014B9AF /* AgendaDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB73E80F28A5587E0014B9AF /* AgendaDetailView.swift */; };
 		CB837AB6287B7D1200FEDAA1 /* AgendaView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB837AB5287B7D1200FEDAA1 /* AgendaView.swift */; };
 		CB837AB8287B7D6500FEDAA1 /* VenueView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB837AB7287B7D6500FEDAA1 /* VenueView.swift */; };
@@ -61,6 +62,7 @@
 		CB3F424328A6A02300D1C75B /* AgendaCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgendaCellView.swift; sourceTree = "<group>"; };
 		CB4980F128F609E3001D0484 /* RCValues.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RCValues.swift; sourceTree = "<group>"; };
 		CB4980F328FD73C7001D0484 /* PhotoDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoDetailView.swift; sourceTree = "<group>"; };
+		CB4980F628FDE6AC001D0484 /* UIImage-extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage-extension.swift"; sourceTree = "<group>"; };
 		CB73E80F28A5587E0014B9AF /* AgendaDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgendaDetailView.swift; sourceTree = "<group>"; };
 		CB837AB5287B7D1200FEDAA1 /* AgendaView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgendaView.swift; sourceTree = "<group>"; };
 		CB837AB7287B7D6500FEDAA1 /* VenueView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VenueView.swift; sourceTree = "<group>"; };
@@ -139,6 +141,7 @@
 				CB179BE128D37E4C00BB9934 /* About */,
 				CB179BEE28D4C05100BB9934 /* SwiftGen */,
 				CB179BE628D4B2ED00BB9934 /* Resources */,
+				CB4980F528FDE673001D0484 /* Extension */,
 				058557D7273AAEEB004C7B11 /* Preview Content */,
 				CB179BE428D3894500BB9934 /* CustomButton.swift */,
 				CBA5C22F28DB4F5100D2779B /* Card.swift */,
@@ -193,6 +196,14 @@
 				CB179BF328D4C33A00BB9934 /* swiftgen.yml */,
 			);
 			path = SwiftGen;
+			sourceTree = "<group>";
+		};
+		CB4980F528FDE673001D0484 /* Extension */ = {
+			isa = PBXGroup;
+			children = (
+				CB4980F628FDE6AC001D0484 /* UIImage-extension.swift */,
+			);
+			path = Extension;
 			sourceTree = "<group>";
 		};
 		CB73E80E28A5501B0014B9AF /* Agenda */ = {
@@ -406,6 +417,7 @@
 				CB73E81028A5587E0014B9AF /* AgendaDetailView.swift in Sources */,
 				CB179BDB28D24C9C00BB9934 /* CategoryView.swift in Sources */,
 				CBCB60ED28E47FC5001E9B1A /* LoadingView.swift in Sources */,
+				CB4980F728FDE6AC001D0484 /* UIImage-extension.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -546,7 +558,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_ASSET_PATHS = "\"iosApp/Preview Content\"";
 				DEVELOPMENT_TEAM = ULPJX5LPF7;
 				ENABLE_PREVIEWS = YES;
@@ -557,7 +569,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = 1.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.gdgnantes.devfest.iosApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
@@ -574,7 +586,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 5;
+				CURRENT_PROJECT_VERSION = 6;
 				DEVELOPMENT_ASSET_PATHS = "\"iosApp/Preview Content\"";
 				DEVELOPMENT_TEAM = ULPJX5LPF7;
 				ENABLE_PREVIEWS = YES;
@@ -585,7 +597,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.0;
+				MARKETING_VERSION = 1.0.1;
 				PRODUCT_BUNDLE_IDENTIFIER = com.gdgnantes.devfest.iosApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";

@@ -41,7 +41,7 @@ struct VenueView: View {
                                 Text(L10n.venueGoToButton)
                             }.foregroundColor(Color(Asset.devFestRed.color))
                                 .simultaneousGesture(TapGesture().onEnded {
-                                    FirebaseAnalyticsService.shared.eventNavigationClicked()
+                                    FirebaseAnalyticsService.shared.eventVenueNavigationClicked()
                                 })
                             
                             Text(viewModel.venueContent.description)
@@ -60,10 +60,13 @@ struct VenueView: View {
                                 Button(action: {
                                     print("Plan")
                                 }, label: {
-                                    NavigationLink(destination: PhotoDetailView(image: UIImage(named: "plan_detail")!)) {
-                                        Image("plan_detail")
-                                            .resizable()
-                                            .aspectRatio(contentMode: .fit)
+                                    let image = UIImage(url: URL(string: viewModel.venueContent.planUrl)!)
+                                    NavigationLink(destination: PhotoDetailView(image: image!)) {
+                                        URLImage(url: URL(string: viewModel.venueContent.planUrl)!) { image in
+                                            image
+                                                .resizable()
+                                                .aspectRatio(contentMode: .fill)
+                                        }
                                     }})
                                 .padding(.vertical, 5)
                                 .padding(.horizontal, 10)

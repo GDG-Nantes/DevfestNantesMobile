@@ -90,8 +90,8 @@ internal enum L10n {
   internal static let partnersTitle = L10n.tr("Localizable", "partners_title", fallback: "Partners")
   /// VIRTUAL
   internal static let partnersVirtualTitle = L10n.tr("Localizable", "partners_virtual_title", fallback: "VIRTUAL")
-  /// Plan
-  internal static let plan = L10n.tr("Localizable", "plan", fallback: "Plan")
+  /// Map of the place
+  internal static let plan = L10n.tr("Localizable", "plan", fallback: "Map of the place")
   /// Powered by OpenFeedback
   internal static let poweredOpenfeedback = L10n.tr("Localizable", "powered_openfeedback", fallback: "Powered by OpenFeedback")
   /// About
