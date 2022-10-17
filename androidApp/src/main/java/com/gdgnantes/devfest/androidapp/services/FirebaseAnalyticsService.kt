@@ -72,8 +72,8 @@ class FirebaseAnalyticsService @Inject constructor(private val firebaseAnalytics
         firebaseAnalytics.logEvent(AnalyticsEvent.LINK_YOUTUBE_OPENED.toString()) {}
     }
 
-    override fun eventNavigationClicked() {
-        firebaseAnalytics.logEvent(AnalyticsEvent.NAVIGATION_CLICKED.toString()) {}
+    override fun eventFeedbackClicked(openFeedbackId: String) {
+        TODO("Not yet implemented")
     }
 
     override fun eventSessionOpened(sessionId: String) {
@@ -87,6 +87,14 @@ class FirebaseAnalyticsService @Inject constructor(private val firebaseAnalytics
             param(AnalyticsParam.SPEAKER_ID.toString(), speakerId)
             param(AnalyticsParam.SOCIAL_TYPE.toString(), type.name)
         }
+    }
+
+    override fun eventVenueNavigationClicked() {
+        firebaseAnalytics.logEvent(AnalyticsEvent.VENUE_NAVIGATION_CLICKED.toString()) {}
+    }
+
+    override fun eventVenueFloorPlanClicked() {
+        firebaseAnalytics.logEvent(AnalyticsEvent.VENUE_FLOOR_PLAN_CLICKED.toString()) {}
     }
 
     override fun pageEvent(page: AnalyticsPage, className: String?) {

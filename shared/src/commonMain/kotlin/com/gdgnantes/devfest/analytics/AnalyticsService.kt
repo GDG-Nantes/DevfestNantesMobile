@@ -30,11 +30,13 @@ interface AnalyticsService {
 
     fun eventFeedbackClicked(openFeedbackId: String)
 
-    fun eventNavigationClicked()
-
     fun eventSessionOpened(sessionId: String)
 
     fun eventSpeakerSocialLinkOpened(speakerId: String, type: SocialType)
+
+    fun eventVenueNavigationClicked()
+
+    fun eventVenueFloorPlanClicked()
 
     fun pageEvent(page: AnalyticsPage, className: String? = null)
 }
