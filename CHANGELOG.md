@@ -4,6 +4,8 @@ Change Log
 Version 2.0.5 *(2023-10-??)*
 ----------------------------
 
+* 📣 Adds a fallback button in case of an outage with the Openfeedback SDK.
+
 Version 2.0.4 *(2023-10-??)*
 ----------------------------
 

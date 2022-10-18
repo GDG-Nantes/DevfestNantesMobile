@@ -21,6 +21,11 @@ class FeedbackFormViewModel @Inject constructor(
     val isOpenFeedbackEnabled: StateFlow<Boolean>
         get() = _isOpenFeedbackEnabled.asStateFlow()
 
+    private val _isOpenfeedbackFallbackRequested: MutableStateFlow<Boolean> =
+        MutableStateFlow(false)
+    val isOpenfeedbackFallbackRequested: StateFlow<Boolean>
+        get() = _isOpenfeedbackFallbackRequested.asStateFlow()
+
     init {
         updateConfig()
         remoteConfig.fetchAndActivate()
@@ -38,5 +43,7 @@ class FeedbackFormViewModel @Inject constructor(
     private fun updateConfig() {
         _isOpenFeedbackEnabled.value =
             BuildConfig.OPEN_FEEDBACK_ENABLED.toBoolean() && remoteConfig.getBoolean("openfeedback_enabled")
+        _isOpenfeedbackFallbackRequested.value =
+            BuildConfig.OPEN_FEEDBACK_ENABLED.toBoolean() && remoteConfig.getBoolean("openfeedback_fallback_requested_android")
     }
 }

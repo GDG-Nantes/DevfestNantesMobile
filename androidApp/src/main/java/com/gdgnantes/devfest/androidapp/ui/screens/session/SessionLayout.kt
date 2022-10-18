@@ -33,14 +33,16 @@ fun SessionLayout(
     modifier: Modifier = Modifier,
     viewModel: SessionViewModel,
     onBackClick: () -> Unit,
-    onSocialLinkClick: (SocialItem, Speaker) -> Unit
+    onSocialLinkClick: (SocialItem, Speaker) -> Unit,
+    onFeedbackFormFallbackLinkClick: (String) -> Unit
 ) {
     val sessionState = viewModel.session.collectAsState()
     SessionLayout(
         modifier = modifier,
         sessionState = sessionState,
         onBackClick = onBackClick,
-        onSocialLinkClick = onSocialLinkClick
+        onSocialLinkClick = onSocialLinkClick,
+        onFeedbackFormFallbackLinkClick = onFeedbackFormFallbackLinkClick
     )
 }
 
@@ -50,7 +52,8 @@ fun SessionLayout(
     sessionState: State<Session?>,
     bookmarksViewModel: BookmarksViewModel = hiltViewModel(),
     onBackClick: () -> Unit,
-    onSocialLinkClick: (SocialItem, Speaker) -> Unit
+    onSocialLinkClick: (SocialItem, Speaker) -> Unit,
+    onFeedbackFormFallbackLinkClick: (String) -> Unit
 ) {
     val session = sessionState.value
     val isBookmarkedState =
@@ -72,7 +75,8 @@ fun SessionLayout(
                     AnalyticsPage.SESSION_DETAILS
                 )
             }
-        }
+        },
+        onFeedbackFormFallbackLinkClick = onFeedbackFormFallbackLinkClick
     )
 }
 
@@ -83,7 +87,8 @@ fun SessionLayout(
     isBookmarked: State<Boolean>,
     onBackClick: () -> Unit,
     onSocialLinkClick: (SocialItem, Speaker) -> Unit,
-    onSessionBookmarkClick: ((Boolean) -> Unit)
+    onSessionBookmarkClick: ((Boolean) -> Unit),
+    onFeedbackFormFallbackLinkClick: (String) -> Unit
 ) {
     SessionLayout(
         modifier = modifier,
@@ -91,7 +96,8 @@ fun SessionLayout(
         isBookmarked = isBookmarked.value,
         onBackClick = onBackClick,
         onSocialLinkClick = onSocialLinkClick,
-        onSessionBookmarkClick = onSessionBookmarkClick
+        onSessionBookmarkClick = onSessionBookmarkClick,
+        onFeedbackFormFallbackLinkClick = onFeedbackFormFallbackLinkClick
     )
 }
 
@@ -104,7 +110,8 @@ fun SessionLayout(
     isBookmarked: Boolean,
     onBackClick: () -> Unit,
     onSocialLinkClick: (SocialItem, Speaker) -> Unit,
-    onSessionBookmarkClick: ((Boolean) -> Unit)
+    onSessionBookmarkClick: ((Boolean) -> Unit),
+    onFeedbackFormFallbackLinkClick: (String) -> Unit
 ) {
     Scaffold(
         topBar = {
@@ -155,11 +162,10 @@ fun SessionLayout(
                     onSocialLinkClick = onSocialLinkClick
                 )
 
-                session.openFeedbackFormId?.let { openFeedbackFormId ->
-                    FeedbackForm(
-                        openFeedbackFormId = openFeedbackFormId,
-                    )
-                }
+                FeedbackForm(
+                    session = session,
+                    onFeedbackFormFallbackLinkClick = onFeedbackFormFallbackLinkClick
+                )
             } else {
                 LoadingLayout()
             }
