@@ -4,7 +4,7 @@ plugins {
     kotlin("native.cocoapods")
     id("com.android.library")
     id("com.rickclephas.kmp.nativecoroutines") version "0.12.5"
-    id("com.apollographql.apollo3") version 3.6.2
+    id("com.apollographql.apollo3") version Apollo.apolloVersion
 }
 
 version = "1.0"
