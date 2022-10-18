@@ -1,6 +1,6 @@
 plugins {
     kotlin("multiplatform")
-    kotlin("plugin.serialization") version "1.7.10"
+    kotlin("plugin.serialization") version "1.7.20"
     kotlin("native.cocoapods")
     id("com.android.library")
     id("com.rickclephas.kmp.nativecoroutines") version "0.12.5"
