@@ -51,7 +51,6 @@ android {
         freeCompilerArgs = freeCompilerArgs + listOf(
             "-Xopt-in=kotlin.RequiresOptIn",
             "-Xopt-in=kotlin.Experimental",
-            "-Xuse-experimental=kotlin.Experimental",
         )
     }
 

@@ -1,8 +1,8 @@
 object Versions {
-    const val kotlinVersion = "1.7.0"
+    const val kotlinVersion = "1.7.20"
 
     const val kotlinCoroutines = "1.6.4"
-    const val kmpNativeCoroutines = "0.12.5-new-mm"
+    const val kmpNativeCoroutines = "0.13.1"
     const val kotlinxDateTime = "0.4.0"
 
     const val googleServicesVersion = "4.3.13"
@@ -11,7 +11,7 @@ object Versions {
     const val accompanistPager = "0.24.13-rc"
 
     const val compose = "1.2.1"
-    const val composeCompiler = "1.2.0"
+    const val composeCompiler = "1.3.2"
     const val navCompose = "2.4.2"
     const val accompanist = "0.24.13-rc"
 
