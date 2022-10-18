@@ -173,7 +173,7 @@ SPEC CHECKSUMS:
   nanopb: b552cce312b6c8484180ef47159bc0f65a1f0431
   NSLogger: cf3013a4fba189f631f07e6c3d5b8ce2b209654b
   PromisesObjC: ab77feca74fa2823e7af4249b8326368e61014cb
-  shared: 07cac7993e4f05eda6b76f3a213b070947c3b79f
+  shared: 2d3b24a8fe27b7d9e65b8d075a9672fbc6a1aa10
   SwiftGen: 1366a7f71aeef49954ca5a63ba4bef6b0f24138c
   URLImage: 36a66c03ba2a9ccbbf06bc83431f2cef171008e8
 
