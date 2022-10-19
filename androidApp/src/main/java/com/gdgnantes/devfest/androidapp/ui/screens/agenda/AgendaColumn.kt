@@ -95,4 +95,7 @@ private fun groupSessionsByStartTime(sessions: List<Session>): Map<String, List<
         ) {
             it.second
         }
+        .mapValues { (_, value) ->
+            value.sortedBy { session -> session.room?.name }
+        }
 }
