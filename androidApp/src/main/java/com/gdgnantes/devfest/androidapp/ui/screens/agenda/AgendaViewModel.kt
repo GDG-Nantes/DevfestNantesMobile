@@ -91,10 +91,10 @@ class AgendaViewModel @Inject constructor(
             return filteredSessions.toList()
         }
         val sessionsByFilterType =
-            mutableMapOf<SessionFilter.FilterType, MutableList<Session>>()
+            mutableMapOf<SessionFilter.FilterType, MutableSet<Session>>()
         for (filter in filterList) {
             if (!sessionsByFilterType.containsKey(filter.type)) {
-                sessionsByFilterType[filter.type] = mutableListOf()
+                sessionsByFilterType[filter.type] = mutableSetOf()
             }
         }
         for (session in this) {
@@ -128,9 +128,9 @@ class AgendaViewModel @Inject constructor(
                 }
             }
         }
-        //get union join of all ScheduleSessions
-        val origin = sessionsByFilterType.values.flatten().toMutableList()
+        //get union join of all Sessions
+        val origin = sessionsByFilterType.values.flatten().toMutableSet()
         sessionsByFilterType.values.forEach { origin.retainAll(it) }
-        return origin
+        return origin.toList()
     }
 }
