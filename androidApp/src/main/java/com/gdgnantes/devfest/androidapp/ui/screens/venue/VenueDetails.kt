@@ -41,7 +41,8 @@ fun VenueDetails(
             modifier = modifier
                 .fillMaxWidth()
                 .fillMaxHeight()
-                .padding(it),
+                .padding(it)
+                .verticalScroll(rememberScrollState()),
             verticalArrangement = Arrangement.spacedBy(4.dp)
         ) {
 
@@ -68,7 +69,6 @@ fun VenueDetails(
                 modifier = modifier
                     .fillMaxWidth()
                     .fillMaxHeight()
-                    .verticalScroll(rememberScrollState())
                     .padding(8.dp),
                 verticalArrangement = Arrangement.spacedBy(16.dp),
             ) {
