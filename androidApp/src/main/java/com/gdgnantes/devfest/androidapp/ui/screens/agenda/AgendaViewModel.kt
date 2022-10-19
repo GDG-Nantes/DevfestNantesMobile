@@ -12,6 +12,7 @@ import com.gdgnantes.devfest.store.BookmarksStore
 import com.gdgnantes.devfest.store.DevFestNantesStore
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.*
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
@@ -19,23 +20,23 @@ import javax.inject.Inject
 
 @HiltViewModel
 class AgendaViewModel @Inject constructor(
-    store: DevFestNantesStore,
+    private val store: DevFestNantesStore,
     private val bookmarksStore: BookmarksStore
 ) : ViewModel() {
+
+    private var autoRefreshJob: Job? = null
 
     private val _uiState = MutableStateFlow(UiState.STARTING)
     val uiState: StateFlow<UiState>
         get() = _uiState
 
-    private val unfilteredDays = store.agenda
-        .map { agenda -> agenda.days }
-        .onEach { _uiState.emit(UiState.SUCCESS) }
-        .stateIn(
-            viewModelScope, SharingStarted.Lazily, mapOf(
-                1 to AgendaDay(1, DAY_ONE_ISO, emptyList()),
-                2 to AgendaDay(2, DAY_TWO_ISO, emptyList())
-            )
+    private val _unfilteredDays = MutableStateFlow(
+        mapOf(
+            1 to AgendaDay(1, DAY_ONE_ISO, emptyList()),
+            2 to AgendaDay(2, DAY_TWO_ISO, emptyList())
         )
+    )
+    private val unfilteredDays = _unfilteredDays.asStateFlow()
 
     private val _days = MutableStateFlow(unfilteredDays.value)
     val days: StateFlow<Map<Int, AgendaDay>>
@@ -47,16 +48,20 @@ class AgendaViewModel @Inject constructor(
     val sessionFilters = _sessionFilters.asStateFlow()
 
     init {
-        viewModelScope.launch {
-            unfilteredDays
+        onRefresh()
+    }
+
+    fun onRefresh() {
+        autoRefreshJob?.cancel()
+        autoRefreshJob = viewModelScope.launch {
+            store.agenda
+                .map { agenda -> agenda.days }
+                .onEach { _unfilteredDays.value = it }
+                .onEach { _uiState.emit(UiState.SUCCESS) }
                 .combine(_sessionFilters) { _, _ -> }
                 .combine(bookmarksStore.bookmarkedSessionIds) { _, _ -> }
                 .collect { updateFilteredDays() }
         }
-    }
-
-    fun onRefresh() {
-        //TODO
     }
 
     fun onSessionFiltersChanged(filters: Set<SessionFilter>) {
