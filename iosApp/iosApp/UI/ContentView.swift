@@ -34,6 +34,12 @@ struct ContentView: View {
                     }
                 }.tag(2)
         }
+        .onAppear{
+            // correct the transparency bug for Tab bars
+            let tabBarAppearance = UITabBarAppearance()
+            tabBarAppearance.configureWithOpaqueBackground()
+            UITabBar.appearance().scrollEdgeAppearance = tabBarAppearance
+        }
     }
 }
 

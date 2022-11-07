@@ -58,7 +58,7 @@ class DevFestViewModel: ObservableObject {
                 }
             }
         } catch {
-            print("Failed with error: \(error)")
+            Logger.shared.log(.network, .error, "Observe Sessions error: \(error)")
         }
     }
     
@@ -93,7 +93,7 @@ class DevFestViewModel: ObservableObject {
                 }
                 
             } catch {
-                print("Failed with error: \(error)")
+                Logger.shared.log(.network, .error, "Observe Rooms error: \(error)")
             }
         }}
     
@@ -110,7 +110,7 @@ class DevFestViewModel: ObservableObject {
                 }
                 
             } catch {
-                print("Failed with error: \(error)")
+                Logger.shared.log(.network, .error, "Observe Venue error: \(error)")
             }
         }}
     
@@ -127,7 +127,7 @@ class DevFestViewModel: ObservableObject {
                 }
             }
         } catch {
-            print("Failed with error: \(error)")
+            Logger.shared.log(.network, .error, "Observe Partners error: \(error)")
         }
     }
     
