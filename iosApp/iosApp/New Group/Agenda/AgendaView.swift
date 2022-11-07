@@ -10,8 +10,10 @@ import SwiftUI
 import shared
 
 struct AgendaView: View {
+    //Store an observable object instance
     @ObservedObject var viewModel: DevFestViewModel
     
+    //Property wrapper type that can read and write a value managed by SwiftUI
     @State private var day = "2022-10-20"
     @State private var showFavoritesOnly = false
     @State private var selectedRoom: Room?
@@ -19,17 +21,19 @@ struct AgendaView: View {
     @State private var selectedLanguage: SessionLanguage?
     @State private var selectedSessionType: SessionType?
     @State private var clearFilter = false
-        
+    
+    //Section Time formatter
     var sectionTimeFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateFormat = "HH:mm"
         return formatter
     }()
     
+    //Setup UI
     var body: some View {
-
-            NavigationView {
-                LoadingView(isShowing: $viewModel.isLoading) {
+        
+        NavigationView {
+            LoadingView(isShowing: $viewModel.isLoading) {
                 VStack {
                     Picker("What is the day?", selection: $day) {
                         Text(L10n.day1).tag("2022-10-20")
@@ -46,9 +50,8 @@ struct AgendaView: View {
                                             AgendaCellView(viewModel: viewModel, session: session)
                                         }
                                     } else {
-                                        AgendaCellView(viewModel: viewModel, session: session)
+                                            AgendaCellView(viewModel: viewModel, session: session)
                                     }
-                                    
                                 }
                             }
                         }
@@ -102,6 +105,7 @@ struct AgendaView: View {
                                 }
                             }
                         }
+                        ///Adds remove button filters
                         if showFavoritesOnly || selectedRoom != nil || selectedLanguage != nil || selectedComplexity != nil || selectedSessionType != nil {
                             Button(action: {
                                 self.showFavoritesOnly = false
@@ -113,7 +117,7 @@ struct AgendaView: View {
                                 Label(L10n.filterClear, systemImage: "trash")
                             }
                         }
-
+                        
                     })
                     .task {
                         RCValues.sharedInstance.fetchCloudValues()
@@ -123,41 +127,33 @@ struct AgendaView: View {
                 }
             }
         }
-            .onAppear{
-                FirebaseAnalyticsService.shared.pageEvent(page: AnalyticsPage.agenda, className: "AgendaView")
-            }
+        .onAppear{
+            FirebaseAnalyticsService.shared.pageEvent(page: AnalyticsPage.agenda, className: "AgendaView")
+        }
     }
     
-    func getFilteredSessions(sessions: [AgendaContent.Session]) -> [AgendaContent.Session]{
+    ///Method to filter sessions
+    private func getFilteredSessions(sessions: [AgendaContent.Session]) -> [AgendaContent.Session]{
         var selectedSession: [AgendaContent.Session] = sessions
         if let unwrappedLanguage = selectedLanguage {
             selectedSession = selectedSession.filter {
                 $0.language == unwrappedLanguage
-                
             }
         }
         if let unwrappedSessiontype = selectedSessionType {
             selectedSession = selectedSession.filter {
                 $0.sessionType == unwrappedSessiontype
-                
             }
         }
         if let unwrappedRooms = selectedRoom {
             selectedSession = selectedSession.filter({unwrappedRooms.name.contains($0.room)})
         }
+        
         if let unwrappedComplexity = selectedComplexity {
             selectedSession = selectedSession.filter {
                 $0.complexity == unwrappedComplexity
-                
             }
         }
         return selectedSession
     }
-    
 }
-
-//struct AgendaView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        AgendaView()
-//    }
-//}

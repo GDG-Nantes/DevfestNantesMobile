@@ -15,7 +15,10 @@ enum ValueKey: String {
 }
 
 class RCValues {
+    //Singleton
     static let sharedInstance = RCValues()
+    
+    //Initialization with value
     private init() {
         loadDefaultValues()
     }
@@ -27,6 +30,8 @@ class RCValues {
         RemoteConfig.remoteConfig().setDefaults(appDefaults as? [String: NSObject])
     }
     
+    
+    //Configure and fetch cloud value
     func fetchCloudValues() {
         let settings = RemoteConfigSettings()
         settings.minimumFetchInterval = 300
@@ -43,6 +48,7 @@ class RCValues {
         }
     }
     
+    //Global method for boolean values
     func bool(forKey key: ValueKey) -> Bool {
         RemoteConfig.remoteConfig()[key.rawValue].boolValue
     }

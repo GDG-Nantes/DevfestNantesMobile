@@ -8,10 +8,12 @@
 
 import SwiftUI
 
+///SwiftUI View
 struct CategoryView: View {
+    //Name of category
     var categoryLabel: String
     
-    
+    //setup UI
     var body: some View {
         Text(categoryLabel)
             .font(.system(size: 12))

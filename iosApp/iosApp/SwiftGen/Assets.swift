@@ -27,6 +27,7 @@ internal enum Asset {
   internal static let icColor = ColorAsset(name: "icColor")
   internal static let lauchScreenBackground = ColorAsset(name: "lauchScreenBackground")
   internal static let secondaryBackground = ColorAsset(name: "secondaryBackground")
+  internal static let floorplan = ImageAsset(name: "floorplan")
   internal static let icAboutHeader = ImageAsset(name: "ic_about_header")
   internal static let icNetworkFacebook = ImageAsset(name: "ic_network_facebook")
   internal static let icNetworkGithub = ImageAsset(name: "ic_network_github")

@@ -2,6 +2,7 @@ import SwiftUI
 import shared
 import Combine
 
+///SwiftUI TabView
 struct ContentView: View {
     @StateObject var viewModel = DevFestViewModel()
     
@@ -33,11 +34,12 @@ struct ContentView: View {
                     }
                 }.tag(2)
         }
+        .onAppear{
+            // correct the transparency bug for Tab bars
+            let tabBarAppearance = UITabBarAppearance()
+            tabBarAppearance.configureWithOpaqueBackground()
+            UITabBar.appearance().scrollEdgeAppearance = tabBarAppearance
+        }
     }
 }
 
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
-    }
-}

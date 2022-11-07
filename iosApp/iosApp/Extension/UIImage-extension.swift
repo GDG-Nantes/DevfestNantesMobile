@@ -10,8 +10,7 @@ import Foundation
 import UIKit
 import SwiftUI
 
-import UIKit
-    
+//Create UIImage with url for use in PDFView
 extension UIImage {
   convenience init?(url: URL?) {
     guard let url = url else { return nil }

@@ -8,19 +8,19 @@
 
 import SwiftUI
 
+///SwiftUI View
 struct LoadingView<Content>: View where Content: View {
-
+    
     @Binding var isShowing: Bool
     var content: () -> Content
-
+    
+    /// Setup View waiting for data to load
     var body: some View {
         GeometryReader { geometry in
             ZStack(alignment: .center) {
-
                 self.content()
                     .disabled(self.isShowing)
                     .blur(radius: self.isShowing ? 3 : 0)
-
                 VStack {
                     Text(L10n.loading)
                     ActivityIndicator(isAnimating: .constant(true), style: .large)
@@ -31,22 +31,23 @@ struct LoadingView<Content>: View where Content: View {
                 .foregroundColor(Color.primary)
                 .cornerRadius(20)
                 .opacity(self.isShowing ? 1 : 0)
-
+                
             }
         }
     }
-
+    
 }
 
+///Activity indicator for  swiftUI
 struct ActivityIndicator: UIViewRepresentable {
-
+    
     @Binding var isAnimating: Bool
     let style: UIActivityIndicatorView.Style
-
+    
     func makeUIView(context: UIViewRepresentableContext<ActivityIndicator>) -> UIActivityIndicatorView {
         return UIActivityIndicatorView(style: style)
     }
-
+    
     func updateUIView(_ uiView: UIActivityIndicatorView, context: UIViewRepresentableContext<ActivityIndicator>) {
         isAnimating ? uiView.startAnimating() : uiView.stopAnimating()
     }

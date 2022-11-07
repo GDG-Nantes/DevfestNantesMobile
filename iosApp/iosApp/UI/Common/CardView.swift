@@ -8,6 +8,7 @@
 
 import SwiftUI
 
+///SwiftUI View
 struct Card<Content: View>: View {
     let content: () -> Content
     

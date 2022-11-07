@@ -9,14 +9,16 @@
 import Foundation
 import shared
 
-extension PartnerCategory: Comparable {
-    public static func < (lhs: PartnerCategory, rhs: PartnerCategory) -> Bool {
-        return lhs.ordinal < rhs.ordinal
-    }
-}
-
+// MARK: - PartnerContent
 struct PartnerContent: Hashable {
     let categoryName: PartnerCategory
     let partners: [Partner]
 }
 
+
+extension PartnerCategory: Comparable {
+    //Conform to the Comparable protocol
+    public static func < (lhs: PartnerCategory, rhs: PartnerCategory) -> Bool {
+        return lhs.ordinal < rhs.ordinal
+    }
+}
