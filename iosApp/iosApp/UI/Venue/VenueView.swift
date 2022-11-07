@@ -61,8 +61,7 @@ struct VenueView: View {
                                                     print("Plan")
                                                 }, label: {
                                                     if let planUrl = viewModel.venueContent.planUrl {
-                                                        let image = UIImage(url: URL(string: planUrl)!)
-                                                        NavigationLink(destination: PhotoDetailView(image: image!)) {
+                                                        NavigationLink(destination: PhotoDetailView(image: Asset.floorplan.image)) {
                                                             URLImage(url: URL(string: planUrl)!) { image in
                                                                 image
                                                                     .resizable()
