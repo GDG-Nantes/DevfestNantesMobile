@@ -9,17 +9,21 @@
 import SwiftUI
 import SafariServices
 
+///SwiftUI View
 struct CustomButton<Label: View>: View {
     private var label: () -> Label
     private let url: URL
     
+    //Display or not the website in the app
     @State private var showSafari = false
     
+    //Initialization of CustomButton
     init(url: URL, @ViewBuilder label: @escaping () -> Label) {
         self.url = url
         self.label = label
     }
     
+    //setup UI
     var body: some View {
         Button(action: {
             self.showSafari = true
@@ -34,6 +38,7 @@ struct CustomButton<Label: View>: View {
     }
 }
 
+///Safari view in app
 struct SafariView: UIViewControllerRepresentable {
     let url: URL
     
@@ -43,12 +48,5 @@ struct SafariView: UIViewControllerRepresentable {
     
     func updateUIViewController(_ uiViewController: SFSafariViewController,
                                 context: UIViewControllerRepresentableContext<SafariView>) {
-    }
-}
-
-struct WebButton_Previews: PreviewProvider {
-    static var previews: some View {
-        CustomButton(url: URL(string: "https://www.google.com")!) { Text("Click me!") }
-            .previewLayout(.fixed(width: 300, height: 100))
     }
 }

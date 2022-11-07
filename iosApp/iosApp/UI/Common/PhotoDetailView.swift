@@ -9,6 +9,7 @@
 import SwiftUI
 import PDFKit
 
+///Use PDFView in SwiftUI for display and manipulate image
 struct PhotoDetailView: UIViewRepresentable {
     let image: UIImage
 

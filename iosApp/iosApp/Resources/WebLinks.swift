@@ -8,6 +8,7 @@
 
 import Foundation
 
+// MARK: - WebLinks
 enum WebLinks {
     case website
     case codeOfConduct
@@ -21,29 +22,30 @@ enum WebLinks {
     case goTo
 }
 
-                extension WebLinks {
-        var url: String {
-            switch self {
-            case .website:
-                return "https://devfest.gdgnantes.com/"
-            case .codeOfConduct:
-                return "https://devfest.gdgnantes.com/code-of-conduct"
-            case .socialFacebook:
-                return "https://facebook.com/gdgnantes"
-            case .socialTwitter:
-                return "https://twitter.com/gdgnantes"
-            case .socialLinkedin:
-                return "https://www.linkedin.com/in/gdg-nantes"
-            case .socielYoutube:
-                return "https://www.youtube.com/c/Gdg-franceBlogspotFr"
-            case .nantestechCommunities:
-                return "https://nantes.community/"
-            case .github:
-                return "https://github.com/GDG-Nantes/DevfestNantesMobile"
-            case .openFeedback:
-                return "https://openfeedback.io/devfestnantes22"
-            case .goTo:
-                return "http://maps.apple.com/?daddr="
-            }
+extension WebLinks {
+    //Weblink url
+    var url: String {
+        switch self {
+        case .website:
+            return "https://devfest.gdgnantes.com/"
+        case .codeOfConduct:
+            return "https://devfest.gdgnantes.com/code-of-conduct"
+        case .socialFacebook:
+            return "https://facebook.com/gdgnantes"
+        case .socialTwitter:
+            return "https://twitter.com/gdgnantes"
+        case .socialLinkedin:
+            return "https://www.linkedin.com/in/gdg-nantes"
+        case .socielYoutube:
+            return "https://www.youtube.com/c/Gdg-franceBlogspotFr"
+        case .nantestechCommunities:
+            return "https://nantes.community/"
+        case .github:
+            return "https://github.com/GDG-Nantes/DevfestNantesMobile"
+        case .openFeedback:
+            return "https://openfeedback.io/devfestnantes22"
+        case .goTo:
+            return "http://maps.apple.com/?daddr="
         }
     }
+}

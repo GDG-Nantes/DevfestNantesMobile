@@ -10,9 +10,13 @@ import SwiftUI
 import shared
 
 struct AgendaCellView: View {
+    //Store an observable object instance
     @ObservedObject var viewModel: DevFestViewModel
+    
+    //Session data
     var session: AgendaContent.Session
     
+    //Setup UI
     var body: some View {
         HStack(alignment: .top) {
             VStack(alignment: .leading) {
@@ -50,9 +54,3 @@ struct AgendaCellView: View {
         .padding(8)
     }
 }
-
-//struct AgendaCellView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        AgendaCellView()
-//    }
-//}

@@ -9,7 +9,6 @@
 import Foundation
 import shared
 import Combine
-import KMPNativeCoroutinesCore
 import KMPNativeCoroutinesAsync
 import NSLogger
 import SwiftUI
@@ -18,17 +17,19 @@ extension Session: Identifiable { }
 
 @MainActor
 class DevFestViewModel: ObservableObject {
+    ///Properties
     let store : DevFestNantesStore
     let defaults = UserDefaults.standard
     var favorites: [String]
-//    var partners: Any
     
-    @Published var venueContent: VenueContent = VenueContent(address: "5 rue de Valmy, 44000 Nantes", description: "Située en plein cœur de ville, La Cité des Congrès de Nantes propose pour le DevFest Nantes plus de 3000m² de salles de conférences, codelabs et lieu de rencontre…", latitude: 47.21308725112951, longitude: -1.542622837466317, imageUrl: "https://devfest.gdgnantes.com/static/6328df241501c6e31393e568e5c68d7e/efc43/amphi.webp", name: "Cité des Congrès de Nantes", planUrl: "https://raw.githubusercontent.com/GDG-Nantes/Devfest2022/master/src/images/plan-cite-blanc.png")
+    ///Observable objects
+    @Published var venueContent: VenueContent = VenueContent(address: "", description: "", latitude: 47.21308725112951, longitude: -1.542622837466317, imageUrl: "https://devfest.gdgnantes.com/static/6328df241501c6e31393e568e5c68d7e/efc43/amphi.webp", name: "", planUrl: "https://raw.githubusercontent.com/GDG-Nantes/Devfest2022/master/src/images/plan-cite-blanc.png")
     @Published var agendaContent: AgendaContent = AgendaContent(sections: [])
     @Published var partnersContent = [PartnerContent]()
     @Published var roomsContent = [Room]()
     @Published var isLoading = true
     
+    ///Detect phone language
      var currentLanguage: ContentLanguage {
         guard let languageCode = Locale.current.languageCode else {
             return .english
@@ -41,11 +42,13 @@ class DevFestViewModel: ObservableObject {
             
     }
     
+    ///Initialization of the model with store and the UserDefaults object
     init() {
         self.store = DevFestNantesStoreBuilder().setUseMockServer(useMockServer: false).build()
         self.favorites = defaults.object(forKey: "Favorites") as? [String] ?? []
     }
     
+    ///Asynchronous method to retrieve sessions
     func observeSessions() async {
         do {
             let stream = asyncStream(for: store.sessionsNative)
@@ -59,6 +62,7 @@ class DevFestViewModel: ObservableObject {
         }
     }
     
+    ///Allows you to classify sessions by time section
     private func sessionsChanged(sessions: [Session]) {
         let groupedSessions = Dictionary(grouping: sessions) { getDate(date: $0.scheduleSlot.startDate) }
         let sortedKeys = groupedSessions.keys.sorted()
@@ -76,6 +80,7 @@ class DevFestViewModel: ObservableObject {
         agendaContent.sections = sections
     }
     
+    ///Asynchronous method to retrieve rooms
     func observeRooms() async {
         Task {
             do {
@@ -92,6 +97,7 @@ class DevFestViewModel: ObservableObject {
             }
         }}
     
+    ///Asynchronous method to retrieve venue
     func observeVenue() async {
         Task {
             do {
@@ -108,6 +114,7 @@ class DevFestViewModel: ObservableObject {
             }
         }}
     
+    ///Asynchronous method to retrieve partners
     func observePartners() async {
         do {
             let stream = asyncStream(for: store.partnersNative)
@@ -124,12 +131,13 @@ class DevFestViewModel: ObservableObject {
         }
     }
     
-    
+    ///Method to convert a date in string format to ISO 8601 format
     func getDate(date: String) -> Date {
         let newFormatter = ISO8601DateFormatter()
         return newFormatter.date(from: date) ?? Date()// replace Date String
     }
     
+    ///Formatting the date
     var sectionDateFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-d"
@@ -138,9 +146,10 @@ class DevFestViewModel: ObservableObject {
     
 }
 
-///Favorites management
+// MARK: - Favorites management
 extension DevFestViewModel {
     
+    ///Method to add or remove a session from favorites
     func toggleFavorite(ofSession session: AgendaContent.Session) {
         if favorites.contains(session.id) {
             self.removeSessionToFavorite(sessionId: session.id)
@@ -149,7 +158,8 @@ extension DevFestViewModel {
         }
     }
     
-    func removeSessionToFavorite(sessionId: String) {
+    ///Method allowing the deletion of the session in favorites
+    private func removeSessionToFavorite(sessionId: String) {
         objectWillChange.send()
         while let idx = favorites.firstIndex(of:sessionId) {
             favorites.remove(at: idx)
@@ -157,13 +167,15 @@ extension DevFestViewModel {
         saveFavorites()
     }
     
-    func addSessionToFavorite(sessionId: String) {
+    ///Method allowing the addition of the session in favorites
+    private func addSessionToFavorite(sessionId: String) {
         objectWillChange.send()
         favorites.append(sessionId)
         saveFavorites()
     }
     
-    func saveFavorites() {
+    ///Method for saving favorites in userDefaults
+    private func saveFavorites() {
         defaults.set(favorites, forKey: "Favorites")
     }
 }

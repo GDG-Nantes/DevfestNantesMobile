@@ -11,13 +11,16 @@ import URLImage
 import shared
 
 struct AboutView: View {
+    //Store an observable object instance
     @ObservedObject var viewModel: DevFestViewModel
     
+    //Setup UI
     var body: some View {
         NavigationView {
             ZStack {
                 ScrollView {
                     VStack {
+                        //Header
                         Card {
                             VStack(spacing: 16) {
                                 Image("ic_about_header")
@@ -41,6 +44,7 @@ struct AboutView: View {
                                 }.padding(8)
                             }.padding(8)
                         }
+                        //Social link
                         Card {
                             VStack {
                                 Text(L10n.aboutSocialTitle)
@@ -83,7 +87,7 @@ struct AboutView: View {
                                 }.padding(8)
                             }.padding(8)
                         }
-
+                        //Partners
                         Card {
                             VStack(spacing: 16) {
                                 Text(L10n.partnersTitle)
@@ -122,6 +126,7 @@ struct AboutView: View {
                                 Spacer(minLength: 8)
                             }.padding(8)
                         }
+                        //Local communities
                         Card {
                             VStack {
                                 Text(L10n.localCommunitiesTitle)
@@ -141,6 +146,7 @@ struct AboutView: View {
                                 }.padding(8)
                             }.padding(8)
                         }
+                        //Github repo
                         Card {
                             VStack {
                                 CustomButton(url: URL(string: WebLinks.github.url)!) {
@@ -166,27 +172,10 @@ struct AboutView: View {
                 await viewModel.observePartners()
             }
         }
-        // must ensure that the stack navigation is used otherwise it is considered as a master view
-        // and nothing is shown in the detail
         .navigationViewStyle(StackNavigationViewStyle())
         .padding(0)
         .onAppear{
             FirebaseAnalyticsService.shared.pageEvent(page: AnalyticsPage.about, className: "AboutView")
         }
-    }
-}
-
-//struct AboutView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        AboutView()
-//    }
-//}
-
-extension Bundle {
-    var releaseVersionNumber: String? {
-        return infoDictionary?["CFBundleShortVersionString"] as? String
-    }
-    var buildVersionNumber: String? {
-        return infoDictionary?["CFBundleVersion"] as? String
     }
 }

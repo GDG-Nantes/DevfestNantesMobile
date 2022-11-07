@@ -13,33 +13,42 @@ import shared
 
 
 struct AgendaDetailView: View {
+    //Session data
     var content : AgendaContent.Session?
+    
+    
+    //Store an observable object instance
     @ObservedObject var viewModel: DevFestViewModel
     var day: String
     
+    //Method to convert a date in string format to ISO 8601 format
     func getDate(date: String) -> Date {
         let newFormatter = ISO8601DateFormatter()
         return newFormatter.date(from: date) ?? Date()// replace Date String
     }
     
+    //Formatting the time
     var timeFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateFormat = "HH:mm"
         return formatter
     }()
     
+    //Formatting the date
     var fullDateFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateStyle = .medium
         return formatter
     }()
     
-    
+    //Initialization of this view with Session, global viewmodel and the day
     init(session: AgendaContent.Session, viewModel: DevFestViewModel, day: String) {
         self.content = session
         self.viewModel = viewModel
         self.day = day
     }
+    
+    //Setup UI
     var body: some View {
         content.map { session in
             ScrollView {
@@ -73,12 +82,11 @@ struct AgendaDetailView: View {
                         .font(.body)
                     Divider().padding(.top, 8)
 
-
                     ForEach(session.speakers, id: \.self) { speaker in
                         SpeakerView(speaker: speaker)
                         Divider().padding(.top, 8)
                     }
-                    
+                    //Use Remote config for display openFeedback)
                     if session.isATalk && RCValues.sharedInstance.bool(forKey: .openfeedback_enabled){
                             VStack(spacing: 16) {
                                 Spacer()
@@ -113,87 +121,3 @@ struct AgendaDetailView: View {
     }
 }
 
-extension Complexity {
-    var text: String {
-        switch self {
-        case .beginner: return L10n.complexityBeginer
-        case .intermediate: return L10n.complexityIntermediate
-        case .advanced: return L10n.complexityAdvanced
-        default:
-            return ""
-        }
-    }
-}
-
-struct SpeakerView: View {
-    var speaker: Speaker
-    
-    var body: some View {
-        
-        VStack(alignment: .leading) {
-            HStack(alignment: .top) {
-                if let photo = speaker.photoUrl {
-                    URLImage(url: URL(string: photo)!) { image in
-                        image
-                            .resizable()
-                            .aspectRatio(contentMode: .fill)
-                            .clipShape(Circle())
-                    }.frame(width: 60, height: 60)
-                }
-                VStack(alignment: .leading) {
-                    Text("\(speaker.name ), \(speaker.company ?? "")")
-                        .bold()
-                        .font(.title3)
-                    Text(speaker.city ?? "")
-                        .bold()
-                    Spacer(minLength: 10)
-                    Text(speaker.bio ?? "")
-                    Spacer(minLength: 10)
-                    HStack(alignment: .top, spacing: 20) {
-                        speaker.socials.map { socials in
-                            ForEach(socials, id: \.self) { socialItem in
-                                socialItem.link.map { link in
-                                    Link(destination: URL(string: link)!) {
-                                        if socialItem.type == .twitter {
-                                            Image("ic_network_twitter")
-                                                .renderingMode(.template)
-                                                .foregroundColor(Color(Asset.icColor.color))
-                                        } else if socialItem.type == .github  {
-                                            Image("ic_network_github")
-                                                .renderingMode(.template)
-                                                .foregroundColor(Color(Asset.icColor.color))
-                                        } else if socialItem.type == .linkedin  {
-                                            Image("ic_network_linkedin")
-                                                .renderingMode(.template)
-                                                .foregroundColor(Color(Asset.icColor.color))
-                                        } else if socialItem.type == .facebook  {
-                                            Image("ic_network_facebook")
-                                                .renderingMode(.template)
-                                                .foregroundColor(Color(Asset.icColor.color))
-                                        } else if socialItem.type == .website  {
-                                            Image("ic_network_web")
-                                                .renderingMode(.template)
-                                                .foregroundColor(Color(Asset.icColor.color))
-                                        }
-                                    }.onTapGesture {
-                                        FirebaseAnalyticsService.shared.eventSpeakerSocialLinkOpened(speakerId: speaker.id, type: socialItem.type)
-                                    }
-                                }
-                            }
-                        }
-                        
-                    }
-                    
-                }
-            }
-            .padding(.vertical, 8)
-        }
-    }
-}
-
-
-//struct AgendaDetailView_Previews: PreviewProvider {
-//    static var previews: some View {
-//        AgendaDetailView()
-//    }
-//}

@@ -2,6 +2,7 @@ import SwiftUI
 import shared
 import Combine
 
+///SwiftUI TabView
 struct ContentView: View {
     @StateObject var viewModel = DevFestViewModel()
     
@@ -36,8 +37,3 @@ struct ContentView: View {
     }
 }
 
-struct ContentView_Previews: PreviewProvider {
-    static var previews: some View {
-        ContentView()
-    }
-}
