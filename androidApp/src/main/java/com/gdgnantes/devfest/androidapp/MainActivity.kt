@@ -107,7 +107,7 @@ class MainActivity : ComponentActivity(), NavController.OnDestinationChangedList
                         Settings(
                             onBackClick = { mainNavController.popBackStack() },
                             onLegalClick = { mainNavController.navigate(Screen.Legal.route) },
-                            onOpenDataSharing = { mainNavController.navigate(Screen.Legal.route) },
+                            onOpenDataSharing = { mainNavController.navigate(Screen.DataSharing.route) },
                             onSupportClick = {
                                 externalContentService.openUrl(WebLinks.SUPPORT.url)
                                 analyticsService.eventLinkSupportOpened()
