@@ -1,14 +1,14 @@
 package com.gdgnantes.devfest.androidapp.core
 
-import com.gdgnantes.devfest.androidapp.services.DataSharingSettingsService
+import com.gdgnantes.devfest.androidapp.services.DataCollectionSettingsService
 import javax.inject.Inject
 
 class DataSharingInitializer @Inject constructor(
-    private val dataSharingSettingsService: DataSharingSettingsService
+    private val dataCollectionSettingsService: DataCollectionSettingsService
 ) : ApplicationInitializer {
 
     override suspend operator fun invoke(params: Unit?): Result<Unit> {
-        dataSharingSettingsService.updatesDataServicesActivationStatus()
+        dataCollectionSettingsService.updatesDataServicesActivationStatus()
         return Result.success(Unit)
     }
 }

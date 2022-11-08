@@ -1,4 +1,4 @@
-package com.gdgnantes.devfest.androidapp.ui.screens.datasharing
+package com.gdgnantes.devfest.androidapp.ui.screens.datacollection
 
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.*
@@ -16,17 +16,17 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.gdgnantes.devfest.androidapp.R
-import com.gdgnantes.devfest.androidapp.services.DataSharingService
+import com.gdgnantes.devfest.androidapp.services.DataCollectionService
 import com.gdgnantes.devfest.androidapp.ui.screens.Screen
 import com.gdgnantes.devfest.androidapp.ui.theme.DevFestNantesTheme
 
 @Composable
-fun DataSharingSettingsScreen(
-    viewModel: DataSharingViewModel = hiltViewModel(),
+fun DataCollectionSettingsScreen(
+    viewModel: DataCollectionViewModel = hiltViewModel(),
     onBackClick: () -> Unit,
 ) {
-    DataSharingSettingsScreen(
-        dataSharingServicesActivationStatus = viewModel.dataSharingServicesActivationStatus.collectAsState(
+    DataCollectionSettingsScreen(
+        dataCollectionServicesActivationStatus = viewModel.dataCollectionServicesActivationStatus.collectAsState(
             initial = emptyMap()
         ),
         onServiceActivationStatusChange = viewModel::onServiceActivationStatusChange,
@@ -37,17 +37,17 @@ fun DataSharingSettingsScreen(
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun DataSharingSettingsScreen(
+fun DataCollectionSettingsScreen(
     modifier: Modifier = Modifier,
-    dataSharingServicesActivationStatus: State<Map<DataSharingService, Boolean>>,
-    onServiceActivationStatusChange: ((DataSharingService, Boolean) -> Unit),
+    dataCollectionServicesActivationStatus: State<Map<DataCollectionService, Boolean>>,
+    onServiceActivationStatusChange: ((DataCollectionService, Boolean) -> Unit),
     onAllServicesActivationStatusChange: ((Boolean) -> Unit),
     onBackClick: () -> Unit
 ) {
     Scaffold(
         topBar = {
             com.gdgnantes.devfest.androidapp.ui.components.appbars.TopAppBar(
-                title = stringResource(id = Screen.DataSharing.title),
+                title = stringResource(id = Screen.DataCollection.title),
                 modifier = Modifier.testTag("topAppBar"),
                 navigationIcon = {
                     IconButton(onClick = onBackClick) {
@@ -74,24 +74,24 @@ fun DataSharingSettingsScreen(
             ) {
                 Text(
                     text = stringResource(
-                        id = R.string.legal_data_sharing_body
+                        id = R.string.legal_data_collection_body
                     ),
                     modifier = Modifier
                         .fillMaxWidth(),
                     style = MaterialTheme.typography.bodyMedium
                 )
 
-                AllDataSharingToolSwitch(
+                AllDataCollectionToolSwitch(
                     modifier = Modifier
                         .padding(vertical = 8.dp)
                         .fillMaxWidth(),
-                    dataSharingServicesActivationStatus,
+                    dataCollectionServicesActivationStatus,
                 ) { checked ->
                     onAllServicesActivationStatusChange(checked)
                 }
 
-                DataSharingServices(
-                    dataSharingServicesActivationStatus = dataSharingServicesActivationStatus,
+                DataCollectionServices(
+                    dataCollectionServicesActivationStatus = dataCollectionServicesActivationStatus,
                     onServiceActivationStatusChange = onServiceActivationStatusChange
                 )
             }
@@ -100,16 +100,16 @@ fun DataSharingSettingsScreen(
 }
 
 @Composable
-fun DataSharingServices(
+fun DataCollectionServices(
     modifier: Modifier = Modifier,
-    dataSharingServicesActivationStatus: State<Map<DataSharingService, Boolean>>,
-    onServiceActivationStatusChange: ((DataSharingService, Boolean) -> Unit),
+    dataCollectionServicesActivationStatus: State<Map<DataCollectionService, Boolean>>,
+    onServiceActivationStatusChange: ((DataCollectionService, Boolean) -> Unit),
 ) {
-    dataSharingServicesActivationStatus.value.forEach { (service, enabled) ->
+    dataCollectionServicesActivationStatus.value.forEach { (service, enabled) ->
         key(service) {
-            DataSharingToolSwitch(
+            DataCollectionToolSwitch(
                 modifier = modifier,
-                dataSharingService = service,
+                dataCollectionService = service,
                 isEnabled = enabled,
                 onServiceActivationStatusChange = onServiceActivationStatusChange
             )
@@ -118,29 +118,30 @@ fun DataSharingServices(
 }
 
 @Composable
-fun DataSharingToolSwitch(
+fun DataCollectionToolSwitch(
     modifier: Modifier = Modifier,
-    dataSharingService: DataSharingService,
+    dataCollectionService: DataCollectionService,
     isEnabled: Boolean,
-    onServiceActivationStatusChange: ((DataSharingService, Boolean) -> Unit)
+    onServiceActivationStatusChange: ((DataCollectionService, Boolean) -> Unit)
 ) {
-    val title = when (dataSharingService) {
-        DataSharingService.GOOGLE_ANALYTICS -> stringResource(id = R.string.legal_data_sharing_google_analytics_title)
-        DataSharingService.FIREBASE_CRASHLYTICS -> stringResource(id = R.string.legal_data_sharing_firebase_crashlytics_title)
+    val title = when (dataCollectionService) {
+        DataCollectionService.GOOGLE_ANALYTICS -> stringResource(id = R.string.legal_data_collection_google_analytics_title)
+        DataCollectionService.FIREBASE_CRASHLYTICS -> stringResource(id = R.string.legal_data_collection_firebase_crashlytics_title)
     }
 
-    val description = when (dataSharingService) {
-        DataSharingService.GOOGLE_ANALYTICS -> stringResource(id = R.string.legal_data_sharing_google_analytics_description)
-        DataSharingService.FIREBASE_CRASHLYTICS -> stringResource(id = R.string.legal_data_sharing_firebase_crashlytics_description)
+    val description = when (dataCollectionService) {
+        DataCollectionService.GOOGLE_ANALYTICS -> stringResource(id = R.string.legal_data_collection_google_analytics_description)
+        DataCollectionService.FIREBASE_CRASHLYTICS -> stringResource(id = R.string.legal_data_collection_firebase_crashlytics_description)
     }
 
-    DataSharingSwitch(
+    DataCollectionSwitch(
+        modifier = modifier,
         title = title,
         description = description,
         checked = isEnabled,
         onCheckedChange = { checked ->
             onServiceActivationStatusChange.invoke(
-                dataSharingService,
+                dataCollectionService,
                 checked
             )
         }
@@ -148,15 +149,15 @@ fun DataSharingToolSwitch(
 }
 
 @Composable
-fun AllDataSharingToolSwitch(
+fun AllDataCollectionToolSwitch(
     modifier: Modifier = Modifier,
-    dataSharingServicesActivationStatus: State<Map<DataSharingService, Boolean>>,
+    dataCollectionServicesActivationStatus: State<Map<DataCollectionService, Boolean>>,
     onCheckedChange: (Boolean) -> Unit
 ) {
-    val allServicesEnabled = !dataSharingServicesActivationStatus.value.values.contains(false)
-    DataSharingSwitch(
+    val allServicesEnabled = !dataCollectionServicesActivationStatus.value.values.contains(false)
+    DataCollectionSwitch(
         modifier = modifier,
-        title = stringResource(id = R.string.legal_data_sharing_accept_all),
+        title = stringResource(id = R.string.legal_data_collection_accept_all),
         description = null,
         checked = allServicesEnabled,
         onCheckedChange = onCheckedChange
@@ -164,7 +165,7 @@ fun AllDataSharingToolSwitch(
 }
 
 @Composable
-fun DataSharingSwitch(
+fun DataCollectionSwitch(
     modifier: Modifier = Modifier,
     title: String,
     description: String?,
@@ -222,16 +223,16 @@ fun DataSharingSwitch(
 )
 
 @Composable
-fun PreviewDataSharingSettingsScreen() {
+fun PreviewDataCollectionSettingsScreen() {
     DevFestNantesTheme {
         Scaffold {
-            DataSharingSettingsScreen(
+            DataCollectionSettingsScreen(
                 modifier = Modifier.padding(it),
-                dataSharingServicesActivationStatus = remember {
+                dataCollectionServicesActivationStatus = remember {
                     mutableStateOf(
                         mapOf(
-                            DataSharingService.FIREBASE_CRASHLYTICS to true,
-                            DataSharingService.GOOGLE_ANALYTICS to false
+                            DataCollectionService.FIREBASE_CRASHLYTICS to true,
+                            DataCollectionService.GOOGLE_ANALYTICS to false
                         )
                     )
                 },

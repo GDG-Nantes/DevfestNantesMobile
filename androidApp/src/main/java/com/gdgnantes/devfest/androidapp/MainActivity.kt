@@ -14,8 +14,8 @@ import com.gdgnantes.devfest.analytics.AnalyticsService
 import com.gdgnantes.devfest.androidapp.services.ExternalContentService
 import com.gdgnantes.devfest.androidapp.ui.screens.Home
 import com.gdgnantes.devfest.androidapp.ui.screens.Screen
-import com.gdgnantes.devfest.androidapp.ui.screens.datasharing.DataSharingAgreementDialog
-import com.gdgnantes.devfest.androidapp.ui.screens.datasharing.DataSharingSettingsScreen
+import com.gdgnantes.devfest.androidapp.ui.screens.datacollection.DataCollectionAgreementDialog
+import com.gdgnantes.devfest.androidapp.ui.screens.datacollection.DataCollectionSettingsScreen
 import com.gdgnantes.devfest.androidapp.ui.screens.legal.LegalScreen
 import com.gdgnantes.devfest.androidapp.ui.screens.session.SessionLayout
 import com.gdgnantes.devfest.androidapp.ui.screens.session.SessionViewModel
@@ -107,7 +107,7 @@ class MainActivity : ComponentActivity(), NavController.OnDestinationChangedList
                         Settings(
                             onBackClick = { mainNavController.popBackStack() },
                             onLegalClick = { mainNavController.navigate(Screen.Legal.route) },
-                            onOpenDataSharing = { mainNavController.navigate(Screen.DataSharing.route) },
+                            onOpenDataSharing = { mainNavController.navigate(Screen.DataCollection.route) },
                             onSupportClick = {
                                 externalContentService.openUrl(WebLinks.SUPPORT.url)
                                 analyticsService.eventLinkSupportOpened()
@@ -116,9 +116,9 @@ class MainActivity : ComponentActivity(), NavController.OnDestinationChangedList
                     }
 
                     composable(
-                        route = Screen.DataSharing.route
+                        route = Screen.DataCollection.route
                     ) {
-                        DataSharingSettingsScreen(
+                        DataCollectionSettingsScreen(
                             onBackClick = { mainNavController.popBackStack() }
                         )
                     }
@@ -132,8 +132,8 @@ class MainActivity : ComponentActivity(), NavController.OnDestinationChangedList
                     }
                 }
 
-                DataSharingAgreementDialog {
-                    mainNavController.navigate(Screen.DataSharing.route)
+                DataCollectionAgreementDialog {
+                    mainNavController.navigate(Screen.DataCollection.route)
                 }
             }
         }
@@ -146,7 +146,7 @@ class MainActivity : ComponentActivity(), NavController.OnDestinationChangedList
     ) {
         destination.route?.let { route ->
             when (route) {
-                Screen.DataSharing.route -> analyticsService.pageEvent(
+                Screen.DataCollection.route -> analyticsService.pageEvent(
                     AnalyticsPage.DATASHARING,
                     route
                 )

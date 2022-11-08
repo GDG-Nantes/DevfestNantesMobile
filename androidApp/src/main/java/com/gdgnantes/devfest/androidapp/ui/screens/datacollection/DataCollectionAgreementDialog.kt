@@ -1,4 +1,4 @@
-package com.gdgnantes.devfest.androidapp.ui.screens.datasharing
+package com.gdgnantes.devfest.androidapp.ui.screens.datacollection
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.AlertDialog
@@ -14,21 +14,22 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.gdgnantes.devfest.androidapp.R
 
 @Composable
-fun DataSharingAgreementDialog(
+fun DataCollectionAgreementDialog(
     modifier: Modifier = Modifier,
-    viewModel: DataSharingViewModel = hiltViewModel(),
+    viewModel: DataCollectionViewModel = hiltViewModel(),
     onOpenDataSharing: () -> Unit,
 ) {
     val openDialog =
-        remember { mutableStateOf(!viewModel.isDataSharingAgreementSet) }
+        remember { mutableStateOf(!viewModel.isDataCollectionAgreementSet) }
     if (openDialog.value) {
         AlertDialog(
+            modifier = modifier,
             onDismissRequest = { openDialog.value = false },
             title = {
-                Text(text = stringResource(id = R.string.screen_data_sharing))
+                Text(text = stringResource(id = R.string.screen_data_collection))
             },
             text = {
-                Text(text = stringResource(id = R.string.legal_data_sharing_consent_dialog_body))
+                Text(text = stringResource(id = R.string.legal_data_collection_consent_dialog_body))
             },
             confirmButton = {
                 Button(
@@ -38,7 +39,7 @@ fun DataSharingAgreementDialog(
                         openDialog.value = false
                     }
                 ) {
-                    Text(stringResource(id = R.string.legal_data_sharing_consent_dialog_button_consent))
+                    Text(stringResource(id = R.string.legal_data_collection_consent_dialog_button_consent))
                 }
             },
             dismissButton = {
@@ -49,7 +50,7 @@ fun DataSharingAgreementDialog(
                         onOpenDataSharing()
                     }
                 ) {
-                    Text(stringResource(id = R.string.button_dialog_data_sharing_consent_customize))
+                    Text(stringResource(id = R.string.button_dialog_data_collection_consent_customize))
                 }
             },
             properties = DialogProperties(

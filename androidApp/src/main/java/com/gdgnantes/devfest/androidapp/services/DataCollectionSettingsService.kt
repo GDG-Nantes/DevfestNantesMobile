@@ -9,29 +9,33 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import javax.inject.Inject
 
-interface DataSharingSettingsService {
-    val isDataSharingAgreementSet: Boolean
-    val dataSharingServicesActivationStatus: Flow<Map<DataSharingService, Boolean>>
-    fun changeDataServiceActivationStatus(dataSharingService: DataSharingService, enabled: Boolean)
+interface DataCollectionSettingsService {
+    val isDataCollectionAgreementSet: Boolean
+    val dataCollectionServicesActivationStatus: Flow<Map<DataCollectionService, Boolean>>
+    fun changeDataServiceActivationStatus(
+        dataCollectionService: DataCollectionService,
+        enabled: Boolean
+    )
+
     fun consentToAllServices()
     fun disallowAllServices()
     fun updatesDataServicesActivationStatus()
 }
 
-class DataSharingSettingsServiceImpl @Inject constructor(
+class DataCollectionSettingsServiceImpl @Inject constructor(
     private val analyticsService: FirebaseAnalytics,
     private val sharedPreferences: SharedPreferences,
     private val firebaseCrashlytics: FirebaseCrashlytics,
-) : DataSharingSettingsService {
+) : DataCollectionSettingsService {
 
     private val enabledDataServices: MutableSet<String> = HashSet()
 
-    override val isDataSharingAgreementSet: Boolean
+    override val isDataCollectionAgreementSet: Boolean
         get() = sharedPreferences.contains(SHARED_PREFERENCES_KEY_ENABLED_DATA_SERVICES)
 
-    private val _dataSharingServicesActivationStatus: MutableStateFlow<Map<DataSharingService, Boolean>>
-    override val dataSharingServicesActivationStatus: StateFlow<Map<DataSharingService, Boolean>>
-        get() = _dataSharingServicesActivationStatus.asStateFlow()
+    private val _dataCollectionServicesActivationStatus: MutableStateFlow<Map<DataCollectionService, Boolean>>
+    override val dataCollectionServicesActivationStatus: StateFlow<Map<DataCollectionService, Boolean>>
+        get() = _dataCollectionServicesActivationStatus.asStateFlow()
 
     init {
         val prefSet =
@@ -40,26 +44,26 @@ class DataSharingSettingsServiceImpl @Inject constructor(
             enabledDataServices.addAll(prefSet)
         }
 
-        _dataSharingServicesActivationStatus = MutableStateFlow(
-            buildDataSharingToolsList()
+        _dataCollectionServicesActivationStatus = MutableStateFlow(
+            buildDataCollectionToolsList()
         )
     }
 
     override fun changeDataServiceActivationStatus(
-        dataSharingService: DataSharingService,
+        dataCollectionService: DataCollectionService,
         enabled: Boolean
     ) {
         if (enabled) {
-            enabledDataServices.add(dataSharingService.name)
+            enabledDataServices.add(dataCollectionService.name)
         } else {
-            enabledDataServices.remove(dataSharingService.name)
+            enabledDataServices.remove(dataCollectionService.name)
         }
 
         synchronise()
     }
 
     override fun consentToAllServices() {
-        DataSharingService.values().map { it.name }.toSet().let {
+        DataCollectionService.values().map { it.name }.toSet().let {
             enabledDataServices.addAll(it)
         }
         synchronise()
@@ -71,7 +75,7 @@ class DataSharingSettingsServiceImpl @Inject constructor(
     }
 
     private fun synchronise() {
-        _dataSharingServicesActivationStatus.value = buildDataSharingToolsList()
+        _dataCollectionServicesActivationStatus.value = buildDataCollectionToolsList()
         updatesDataServicesActivationStatus()
         save()
     }
@@ -91,7 +95,7 @@ class DataSharingSettingsServiceImpl @Inject constructor(
     private fun updatesFirebaseActivationStatusCrashlytics() {
         firebaseCrashlytics.setCrashlyticsCollectionEnabled(
             enabledDataServices.contains(
-                DataSharingService.FIREBASE_CRASHLYTICS.name
+                DataCollectionService.FIREBASE_CRASHLYTICS.name
             )
         )
     }
@@ -99,25 +103,25 @@ class DataSharingSettingsServiceImpl @Inject constructor(
     private fun updatesGoogleAnalyticsActivationStatusCrashlytics() {
         analyticsService.setAnalyticsCollectionEnabled(
             enabledDataServices.contains(
-                DataSharingService.GOOGLE_ANALYTICS.name
+                DataCollectionService.GOOGLE_ANALYTICS.name
             )
         )
     }
 
-    private fun buildDataSharingToolsList(): Map<DataSharingService, Boolean> {
-        return DataSharingService.values().associateWith { dataSharingService ->
+    private fun buildDataCollectionToolsList(): Map<DataCollectionService, Boolean> {
+        return DataCollectionService.values().associateWith { dataSharingService ->
             enabledDataServices.contains(dataSharingService.name)
         }
     }
 
     companion object {
         private const val SHARED_PREFERENCES_KEY_ENABLED_DATA_SERVICES =
-            "SHARED_PREFERENCES_KEY_ENABLED_DATASHARING_TOOLS"
+            "SHARED_PREFERENCES_KEY_ENABLED_DATA_COLLECTION_TOOLS"
     }
 
 }
 
-enum class DataSharingService {
+enum class DataCollectionService {
     GOOGLE_ANALYTICS,
     FIREBASE_CRASHLYTICS
 }
