@@ -10,8 +10,8 @@ import com.gdgnantes.devfest.androidapp.core.CoroutinesDispatcherProvider
 import com.gdgnantes.devfest.androidapp.core.DataSharingInitializer
 import com.gdgnantes.devfest.androidapp.core.LoggerInitializer
 import com.gdgnantes.devfest.androidapp.services.BookmarksStoreImpl
-import com.gdgnantes.devfest.androidapp.services.DataSharingSettingsService
-import com.gdgnantes.devfest.androidapp.services.DataSharingSettingsServiceImpl
+import com.gdgnantes.devfest.androidapp.services.DataCollectionSettingsService
+import com.gdgnantes.devfest.androidapp.services.DataCollectionSettingsServiceImpl
 import com.gdgnantes.devfest.androidapp.services.FirebaseAnalyticsService
 import com.gdgnantes.devfest.store.BookmarksStore
 import com.gdgnantes.devfest.store.DevFestNantesStore
@@ -44,7 +44,7 @@ abstract class AppModule {
 
     @AppScope
     @Binds
-    abstract fun dataSharingSettingsService(dataSharingSettingsServiceImpl: DataSharingSettingsServiceImpl): DataSharingSettingsService
+    abstract fun dataSharingSettingsService(dataCollectionSettingsServiceImpl: DataCollectionSettingsServiceImpl): DataCollectionSettingsService
 
     companion object {
         @AppScope

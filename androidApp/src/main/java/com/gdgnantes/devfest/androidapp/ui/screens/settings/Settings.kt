@@ -55,12 +55,12 @@ fun Settings(
                 icon = {
                     Icon(
                         imageVector = Icons.Default.Lock,
-                        contentDescription = stringResource(id = R.string.content_description_data_sharing_logo)
+                        contentDescription = stringResource(id = R.string.content_description_data_collection_logo)
                     )
                 },
-                title = stringResource(id = R.string.screen_data_sharing),
+                title = stringResource(id = R.string.screen_data_collection),
                 subtitle = stringResource(
-                    id = R.string.settings_data_sharing_subtitle
+                    id = R.string.settings_data_collection_subtitle
                 ),
                 onClick = onOpenDataSharing
             )

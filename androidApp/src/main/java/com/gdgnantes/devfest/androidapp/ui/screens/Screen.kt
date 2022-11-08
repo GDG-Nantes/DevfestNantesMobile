@@ -54,9 +54,9 @@ sealed class Screen(
         imageVectorOutlined = null
     )
 
-    object DataSharing : Screen(
-        route = "datasharing",
-        title = R.string.screen_data_sharing,
+    object DataCollection : Screen(
+        route = "datacollection",
+        title = R.string.screen_data_collection,
         imageVectorFilled = null,
         imageVectorOutlined = null
     )

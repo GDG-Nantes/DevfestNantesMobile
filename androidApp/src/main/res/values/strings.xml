@@ -45,18 +45,18 @@
     <string name="content_description_logo_github">Github logo</string>
     <string name="settings_action">Open application settings.</string>
     <string name="screen_settings">Settings</string>
-    <string name="content_description_data_sharing_logo">Lock icon.</string>
-    <string name="legal_data_sharing_consent_dialog_body">We use third party tools to measure and improve performances. No commercial use is made of this data. By clicking on \"Consent\" or by activating these tools in the settings, you consent to the use of these services and technologies.</string>
-    <string name="legal_data_sharing_consent_dialog_button_consent">Consent</string>
-    <string name="button_dialog_data_sharing_consent_customize">Customize</string>
-    <string name="legal_data_sharing_body">The anonymous data you may share with us allows us to improve the app.</string>
-    <string name="legal_data_sharing_google_analytics_title" translatable="false">Google Analytics</string>
-    <string name="legal_data_sharing_firebase_crashlytics_title" translatable="false">Firebase Crashlytics</string>
-    <string name="legal_data_sharing_google_analytics_description">We use Google Analytics to collect anonymous data to measure how users interact with the app.</string>
-    <string name="legal_data_sharing_firebase_crashlytics_description">We use Firebase Crashlytics to collect anonymous data when a bug occurs. It helps us to improve the stability of the app.</string>
-    <string name="legal_data_sharing_accept_all">Accept all</string>
-    <string name="screen_data_sharing">Data sharing</string>
-    <string name="settings_data_sharing_subtitle">Customize data sharing</string>
+    <string name="content_description_data_collection_logo">Lock icon.</string>
+    <string name="legal_data_collection_consent_dialog_body">We use third party tools to measure and improve performances. No commercial use is made of this data. By clicking on \"Consent\" or by activating these tools in the settings, you consent to the use of these services and technologies.</string>
+    <string name="legal_data_collection_consent_dialog_button_consent">Consent</string>
+    <string name="button_dialog_data_collection_consent_customize">Customize</string>
+    <string name="legal_data_collection_body">The anonymous data you may share with us allows us to improve the app.</string>
+    <string name="legal_data_collection_google_analytics_title" translatable="false">Google Analytics</string>
+    <string name="legal_data_collection_firebase_crashlytics_title" translatable="false">Firebase Crashlytics</string>
+    <string name="legal_data_collection_google_analytics_description">We use Google Analytics to collect anonymous data to measure how users interact with the app.</string>
+    <string name="legal_data_collection_firebase_crashlytics_description">We use Firebase Crashlytics to collect anonymous data when a bug occurs. It helps us to improve the stability of the app.</string>
+    <string name="legal_data_collection_accept_all">Accept all</string>
+    <string name="screen_data_collection">Data collection</string>
+    <string name="settings_data_collection_subtitle">Customize data collection</string>
     <string name="placeholder_session_details">Session details</string>
     <string name="language_french">french</string>
     <string name="language_english">english</string>
