@@ -71,7 +71,7 @@ private val DarkColors = darkColorScheme(
 )
 
 @Composable
-fun DevFest_NantesTheme(
+fun DevFestNantesTheme(
     useDarkTheme: Boolean = isSystemInDarkTheme(),
     content: @Composable() () -> Unit
 ) {

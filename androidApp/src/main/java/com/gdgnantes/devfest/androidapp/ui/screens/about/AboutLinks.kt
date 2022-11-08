@@ -14,7 +14,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.gdgnantes.devfest.androidapp.R
-import com.gdgnantes.devfest.androidapp.ui.theme.DevFest_NantesTheme
+import com.gdgnantes.devfest.androidapp.ui.theme.DevFestNantesTheme
 
 @Composable
 fun AboutLinks(
@@ -42,7 +42,7 @@ fun AboutLinks(
 @Preview
 @Composable
 fun AboutLinksPreview() {
-    DevFest_NantesTheme {
+    DevFestNantesTheme {
         Scaffold {
             AboutLinks(
                 modifier = Modifier.padding(it),

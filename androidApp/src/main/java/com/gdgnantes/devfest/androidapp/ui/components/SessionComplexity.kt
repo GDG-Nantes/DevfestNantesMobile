@@ -16,7 +16,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.gdgnantes.devfest.androidapp.R
-import com.gdgnantes.devfest.androidapp.ui.theme.DevFest_NantesTheme
+import com.gdgnantes.devfest.androidapp.ui.theme.DevFestNantesTheme
 import com.gdgnantes.devfest.model.Complexity
 
 @Composable
@@ -61,7 +61,7 @@ fun SessionComplexity(
 )
 @Composable
 fun SessionComplexityPreview() {
-    DevFest_NantesTheme {
+    DevFestNantesTheme {
         SessionComplexity(complexity = Complexity.BEGINNER)
     }
 }

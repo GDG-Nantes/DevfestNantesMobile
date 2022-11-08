@@ -19,7 +19,7 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.gdgnantes.devfest.androidapp.R
 import com.gdgnantes.devfest.androidapp.ui.components.SocialIcon
-import com.gdgnantes.devfest.androidapp.ui.theme.DevFest_NantesTheme
+import com.gdgnantes.devfest.androidapp.ui.theme.DevFestNantesTheme
 import com.gdgnantes.devfest.model.SocialItem
 import com.gdgnantes.devfest.model.Speaker
 import com.gdgnantes.devfest.model.stubs.buildSpeakerStub
@@ -103,7 +103,7 @@ fun SpeakerDetails(
 )
 @Composable
 fun SpeakerDetailsPreview() {
-    DevFest_NantesTheme {
+    DevFestNantesTheme {
         SpeakerDetails(speaker = buildSpeakerStub(), onSocialLinkClick = { _, _ -> })
     }
 }

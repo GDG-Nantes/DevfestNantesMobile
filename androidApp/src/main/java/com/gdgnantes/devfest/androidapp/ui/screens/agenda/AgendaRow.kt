@@ -22,7 +22,7 @@ import com.gdgnantes.devfest.analytics.AnalyticsPage
 import com.gdgnantes.devfest.androidapp.R
 import com.gdgnantes.devfest.androidapp.ui.BookmarksViewModel
 import com.gdgnantes.devfest.androidapp.ui.components.SessionCategory
-import com.gdgnantes.devfest.androidapp.ui.theme.DevFest_NantesTheme
+import com.gdgnantes.devfest.androidapp.ui.theme.DevFestNantesTheme
 import com.gdgnantes.devfest.androidapp.ui.theme.bookmarked
 import com.gdgnantes.devfest.androidapp.utils.isService
 import com.gdgnantes.devfest.model.Session
@@ -183,7 +183,7 @@ fun AgendaRow(
 )
 @Composable
 fun AgendaRowPreview() {
-    DevFest_NantesTheme {
+    DevFestNantesTheme {
         AgendaRow(
             isBookmarked = true,
             session = buildSessionStub(),

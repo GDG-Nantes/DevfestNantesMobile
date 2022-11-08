@@ -14,7 +14,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.gdgnantes.devfest.androidapp.ui.theme.DevFest_NantesTheme
+import com.gdgnantes.devfest.androidapp.ui.theme.DevFestNantesTheme
 import com.gdgnantes.devfest.model.Category
 
 @Composable
@@ -55,7 +55,7 @@ fun SessionCategory(
 )
 @Composable
 fun SessionCategoryPreview() {
-    DevFest_NantesTheme {
+    DevFestNantesTheme {
         SessionCategory(category = Category("mobile", "📱 Mobile & IoT"))
     }
 }

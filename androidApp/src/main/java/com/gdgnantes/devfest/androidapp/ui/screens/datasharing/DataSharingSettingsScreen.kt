@@ -18,7 +18,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.gdgnantes.devfest.androidapp.R
 import com.gdgnantes.devfest.androidapp.services.DataSharingService
 import com.gdgnantes.devfest.androidapp.ui.screens.Screen
-import com.gdgnantes.devfest.androidapp.ui.theme.DevFest_NantesTheme
+import com.gdgnantes.devfest.androidapp.ui.theme.DevFestNantesTheme
 
 @Composable
 fun DataSharingSettingsScreen(
@@ -223,7 +223,7 @@ fun DataSharingSwitch(
 
 @Composable
 fun PreviewDataSharingSettingsScreen() {
-    DevFest_NantesTheme {
+    DevFestNantesTheme {
         Scaffold {
             DataSharingSettingsScreen(
                 modifier = Modifier.padding(it),

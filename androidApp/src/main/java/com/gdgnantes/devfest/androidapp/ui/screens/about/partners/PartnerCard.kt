@@ -18,7 +18,7 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.gdgnantes.devfest.androidapp.R
-import com.gdgnantes.devfest.androidapp.ui.theme.DevFest_NantesTheme
+import com.gdgnantes.devfest.androidapp.ui.theme.DevFestNantesTheme
 import com.gdgnantes.devfest.model.Partner
 import com.gdgnantes.devfest.model.stubs.buildPartnerStub
 import timber.log.Timber
@@ -67,7 +67,7 @@ fun PartnerCard(
 @Preview
 @Composable
 fun PartnerCardPreview() {
-    DevFest_NantesTheme {
+    DevFestNantesTheme {
         Scaffold {
             PartnerCard(
                 modifier = Modifier.padding(it),

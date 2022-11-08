@@ -20,7 +20,7 @@ import com.gdgnantes.devfest.androidapp.ui.screens.legal.LegalScreen
 import com.gdgnantes.devfest.androidapp.ui.screens.session.SessionLayout
 import com.gdgnantes.devfest.androidapp.ui.screens.session.SessionViewModel
 import com.gdgnantes.devfest.androidapp.ui.screens.settings.Settings
-import com.gdgnantes.devfest.androidapp.ui.theme.DevFest_NantesTheme
+import com.gdgnantes.devfest.androidapp.ui.theme.DevFestNantesTheme
 import com.gdgnantes.devfest.androidapp.utils.assistedViewModel
 import com.gdgnantes.devfest.model.SessionType
 import com.gdgnantes.devfest.model.WebLinks
@@ -50,7 +50,7 @@ class MainActivity : ComponentActivity(), NavController.OnDestinationChangedList
         installSplashScreen()
 
         setContent {
-            DevFest_NantesTheme {
+            DevFestNantesTheme {
                 val mainNavController = rememberNavController()
                 mainNavController.addOnDestinationChangedListener(this)
 
