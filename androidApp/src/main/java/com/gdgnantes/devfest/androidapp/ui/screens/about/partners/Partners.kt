@@ -16,7 +16,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.gdgnantes.devfest.androidapp.R
-import com.gdgnantes.devfest.androidapp.ui.theme.DevFest_NantesTheme
+import com.gdgnantes.devfest.androidapp.ui.theme.DevFestNantesTheme
 import com.gdgnantes.devfest.model.Partner
 
 @Composable
@@ -117,7 +117,7 @@ fun PartnersGroup(
 @Preview
 @Composable
 fun PartnersPreview() {
-    DevFest_NantesTheme {
+    DevFestNantesTheme {
         Scaffold {
             Partners(modifier = Modifier.padding(it),
                 onPartnerClick = {})

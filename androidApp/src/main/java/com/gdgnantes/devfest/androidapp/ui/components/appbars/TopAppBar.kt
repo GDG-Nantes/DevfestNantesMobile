@@ -11,7 +11,7 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.gdgnantes.devfest.androidapp.ui.theme.DevFest_NantesTheme
+import com.gdgnantes.devfest.androidapp.ui.theme.DevFestNantesTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -39,7 +39,7 @@ internal fun (@Composable AppBarIcons.() -> Unit)?.takeOrEmpty(): (@Composable (
 @Preview
 @Composable
 fun TopAppBarPreview() {
-    DevFest_NantesTheme {
+    DevFestNantesTheme {
         Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
             TopAppBar(
                 title = "Speakers"

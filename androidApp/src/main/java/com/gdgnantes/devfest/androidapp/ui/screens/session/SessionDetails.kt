@@ -18,7 +18,7 @@ import androidx.compose.ui.unit.dp
 import com.gdgnantes.devfest.androidapp.ui.components.SessionCategory
 import com.gdgnantes.devfest.androidapp.ui.components.SessionComplexity
 import com.gdgnantes.devfest.androidapp.ui.components.SessionType
-import com.gdgnantes.devfest.androidapp.ui.theme.DevFest_NantesTheme
+import com.gdgnantes.devfest.androidapp.ui.theme.DevFestNantesTheme
 import com.gdgnantes.devfest.androidapp.utils.getFormattedRange
 import com.gdgnantes.devfest.model.Session
 import com.gdgnantes.devfest.model.SocialItem
@@ -88,7 +88,7 @@ fun SessionDetails(
 @Preview
 @Composable
 fun SessionDetailsPreview() {
-    DevFest_NantesTheme {
+    DevFestNantesTheme {
         Scaffold {
             SessionDetails(session = buildSessionStub(), onSocialLinkClick = { _, _ -> })
         }

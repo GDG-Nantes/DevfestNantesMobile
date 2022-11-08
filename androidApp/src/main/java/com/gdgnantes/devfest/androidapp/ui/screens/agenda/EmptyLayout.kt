@@ -14,7 +14,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.gdgnantes.devfest.androidapp.R
-import com.gdgnantes.devfest.androidapp.ui.theme.DevFest_NantesTheme
+import com.gdgnantes.devfest.androidapp.ui.theme.DevFestNantesTheme
 
 @Composable
 fun EmptyLayout(modifier: Modifier = Modifier) {
@@ -47,7 +47,7 @@ fun EmptyLayout(modifier: Modifier = Modifier) {
 )
 @Composable
 fun EmptyLayoutlPreview() {
-    DevFest_NantesTheme {
+    DevFestNantesTheme {
         Scaffold {
             EmptyLayout(modifier = Modifier.padding(it))
         }

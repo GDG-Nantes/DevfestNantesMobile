@@ -13,7 +13,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import com.gdgnantes.devfest.androidapp.BuildConfig
 import com.gdgnantes.devfest.androidapp.R
-import com.gdgnantes.devfest.androidapp.ui.theme.DevFest_NantesTheme
+import com.gdgnantes.devfest.androidapp.ui.theme.DevFestNantesTheme
 
 @Composable
 fun AboutVersion(
@@ -35,7 +35,7 @@ fun AboutVersion(
 @Preview
 @Composable
 fun AboutVersionPreview() {
-    DevFest_NantesTheme {
+    DevFestNantesTheme {
         Scaffold {
             AboutVersion(modifier = Modifier.padding(it))
         }

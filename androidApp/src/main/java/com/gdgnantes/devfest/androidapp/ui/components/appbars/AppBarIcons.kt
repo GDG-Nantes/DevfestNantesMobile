@@ -13,7 +13,7 @@ import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import com.gdgnantes.devfest.androidapp.R
-import com.gdgnantes.devfest.androidapp.ui.theme.DevFest_NantesTheme
+import com.gdgnantes.devfest.androidapp.ui.theme.DevFestNantesTheme
 
 object AppBarIcons {
     @Composable
@@ -55,7 +55,7 @@ internal fun AppBarIcon(
 @Preview
 @Composable
 fun AppBarIconPreview() {
-    DevFest_NantesTheme {
+    DevFestNantesTheme {
         AppBarIcons.Back {
         }
     }

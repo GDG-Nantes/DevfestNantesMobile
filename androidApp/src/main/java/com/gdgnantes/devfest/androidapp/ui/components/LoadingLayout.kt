@@ -11,7 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.gdgnantes.devfest.androidapp.ui.theme.DevFest_NantesTheme
+import com.gdgnantes.devfest.androidapp.ui.theme.DevFestNantesTheme
 
 @Composable
 fun LoadingLayout(modifier: Modifier = Modifier) {
@@ -34,7 +34,7 @@ fun LoadingLayout(modifier: Modifier = Modifier) {
 )
 @Composable
 fun EmptyLayoutlPreview() {
-    DevFest_NantesTheme {
+    DevFestNantesTheme {
         Scaffold {
             LoadingLayout(modifier = Modifier.padding(it))
         }
