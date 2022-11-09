@@ -17,35 +17,37 @@ struct VenueView: View {
     
     //Setup UI
     var body: some View {
+
         NavigationView {
                 ScrollView {
                         VStack {
+                            if let content = viewModel.venueContent {
                             Card {
                             VStack(spacing: 16) {
-                                    if let imageUrl =  viewModel.venueContent.imageUrl  {
+                                if let imageUrl =  content.imageUrl  {
                                         URLImage(url: URL(string: imageUrl)!) { image in
                                             image
                                                 .resizable()
                                                 .aspectRatio(contentMode: .fill)
                                         }}
                                     
-                                    Text(viewModel.venueContent.name)
+                                    Text(content.name)
                                         .bold()
                                         .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
                                         .padding(.horizontal, 8)
                                     
-                                    Text(viewModel.venueContent.address)
+                                    Text(content.address)
                                         .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
                                         .padding(.horizontal, 8)
                                     
-                                    CustomButton(url: URL(string: "\(WebLinks.goTo.url)\(viewModel.venueContent.latitude),\(viewModel.venueContent.longitude)")!)  {
+                                    CustomButton(url: URL(string: "\(WebLinks.goTo.url)\(content.latitude),\(content.longitude)")!)  {
                                         Text(L10n.venueGoToButton)
                                     }.foregroundColor(Color(Asset.devFestRed.color))
                                         .simultaneousGesture(TapGesture().onEnded {
                                             FirebaseAnalyticsService.shared.eventVenueNavigationClicked()
                                         })
                                     
-                                    Text(viewModel.venueContent.description)
+                                    Text(content.description)
                                         .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
                                         .padding(.horizontal, 8)
                                 }
@@ -60,7 +62,7 @@ struct VenueView: View {
                                                 Button(action: {
                                                     print("Plan")
                                                 }, label: {
-                                                    if let planUrl = viewModel.venueContent.planUrl {
+                                                    if let planUrl = content.planUrl {
                                                         NavigationLink(destination: PhotoDetailView(image: Asset.floorplan.image)) {
                                                             URLImage(url: URL(string: planUrl)!) { image in
                                                                 image
@@ -91,6 +93,7 @@ struct VenueView: View {
                 FirebaseAnalyticsService.shared.pageEvent(page: AnalyticsPage.venue, className: "VenueView")
             }
         }
+    }
     }
 }
 

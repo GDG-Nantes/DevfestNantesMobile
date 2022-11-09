@@ -14,3 +14,8 @@ target 'DevFest Nantes' do
   pod 'Firebase/Crashlytics'
   pod 'Firebase/RemoteConfig'
 end
+
+target 'DevFest NantesTests' do
+    inherit! :search_paths
+
+end
