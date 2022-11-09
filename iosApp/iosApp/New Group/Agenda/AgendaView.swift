@@ -41,20 +41,20 @@ struct AgendaView: View {
                     }
                     .pickerStyle(.segmented)
                     List {
-                        ForEach(viewModel.agendaContent.sections.filter{($0.day.contains(day))}, id: \.date) { section in
-                            Section(header: Text("\(self.sectionTimeFormatter.string(from: section.date))")) {
-                                let filteredSessions = getFilteredSessions(sessions: section.sessions)
-                                ForEach(self.showFavoritesOnly ? filteredSessions.filter({viewModel.favorites.contains($0.id)}):  filteredSessions, id: \.id) { session in
-                                    if session.sessionType == .conference || session.sessionType == .codelab || session.sessionType == .quickie{
-                                        NavigationLink(destination: AgendaDetailView(session: session, viewModel: viewModel, day: day)) {
+                            ForEach(viewModel.agendaContent.sections.filter{($0.day.contains(day))}, id: \.date) { section in
+                                Section(header: Text("\(self.sectionTimeFormatter.string(from: section.date))")) {
+                                    let filteredSessions = getFilteredSessions(sessions: section.sessions)
+                                    ForEach(self.showFavoritesOnly ? filteredSessions.filter({viewModel.favorites.contains($0.id)}):  filteredSessions, id: \.id) { session in
+                                        if session.sessionType == .conference || session.sessionType == .codelab || session.sessionType == .quickie{
+                                            NavigationLink(destination: AgendaDetailView(session: session, viewModel: viewModel, day: day)) {
+                                                AgendaCellView(viewModel: viewModel, session: session)
+                                            }
+                                        } else {
                                             AgendaCellView(viewModel: viewModel, session: session)
                                         }
-                                    } else {
-                                            AgendaCellView(viewModel: viewModel, session: session)
                                     }
                                 }
                             }
-                        }
                     }
                     .navigationBarTitle(L10n.screenAgenda)
                     .navigationBarItems(trailing:
@@ -84,16 +84,17 @@ struct AgendaView: View {
                                     Text(L10n.complexityAdvanced).tag(Optional(Complexity.advanced))
                                 }
                             }
-                            Menu(L10n.filterRooms) {
-                                let selected = Binding(
-                                    get: { self.selectedRoom },
-                                    set: { self.selectedRoom = $0 == self.selectedRoom ? nil : $0 })
-                                Picker(L10n.filterRooms, selection: selected) {
-                                    ForEach(self.viewModel.roomsContent, id: \.id) { room in
-                                        Text(room.name).tag(Optional(room))
+                            if let rooms = viewModel.roomsContent {
+                                Menu(L10n.filterRooms) {
+                                    let selected = Binding(
+                                        get: { self.selectedRoom },
+                                        set: { self.selectedRoom = $0 == self.selectedRoom ? nil : $0 })
+                                    Picker(L10n.filterRooms, selection: selected) {
+                                        ForEach(rooms, id: \.id) { room in
+                                            Text(room.name).tag(Optional(room))
+                                        }
                                     }
-                                }
-                            }
+                                }}
                             Menu(L10n.filterSessionType) {
                                 let selected = Binding(
                                     get: { self.selectedSessionType },

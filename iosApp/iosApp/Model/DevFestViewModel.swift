@@ -22,11 +22,12 @@ class DevFestViewModel: ObservableObject {
     let defaults = UserDefaults.standard
     var favorites: [String]
     
+
     ///Observable objects
-    @Published var venueContent: VenueContent = VenueContent(address: "", description: "", latitude: 47.21308725112951, longitude: -1.542622837466317, imageUrl: "https://devfest.gdgnantes.com/static/6328df241501c6e31393e568e5c68d7e/efc43/amphi.webp", name: "", planUrl: "https://raw.githubusercontent.com/GDG-Nantes/Devfest2022/master/src/images/plan-cite-blanc.png")
+    @Published var venueContent: VenueContent?
     @Published var agendaContent: AgendaContent = AgendaContent(sections: [])
-    @Published var partnersContent = [PartnerContent]()
-    @Published var roomsContent = [Room]()
+    @Published var partnersContent: [PartnerContent]?
+    @Published var roomsContent: [Room]?
     @Published var isLoading = true
     
     ///Detect phone language
@@ -122,7 +123,7 @@ class DevFestViewModel: ObservableObject {
                 self.partnersContent = []
                 DispatchQueue.main.async {
                     for key in data.keys.sorted() {
-                        self.partnersContent.append(PartnerContent(categoryName: key, partners: data[key]!))
+                        self.partnersContent?.append(PartnerContent(categoryName: key, partners: data[key]!))
                     }
                 }
             }

@@ -88,44 +88,45 @@ struct AboutView: View {
                             }.padding(8)
                         }
                         //Partners
-                        Card {
-                            VStack(spacing: 16) {
-                                Text(L10n.partnersTitle)
-                                    .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
-                                    .foregroundColor(Color(Asset.devFestRed.color))
-                                
-                                ForEach(self.viewModel.partnersContent, id: \.self) { category in
-                                    VStack {
-                                        Text(category.categoryName.name)
-                                            .font(.title2)
-                                            .bold()
-                                            .padding(20)
-                                        ForEach(category.partners, id: \.self) { partner in
-                                            if let partnerUrl = partner.url {
-                                                Button(action: { UIApplication.shared.open(URL(string: partnerUrl)!)
-                                                    FirebaseAnalyticsService.shared.eventLinkPartnerOpened(partnerName: partnerUrl)
-                                                }) {
-                                                    if let logo =  partner.logoUrl  {
-                                                        URLImage(url: URL(string:logo)!) { image in
-                                                            image
-                                                                .renderingMode(.original)
-                                                                .resizable()
-                                                                .aspectRatio(contentMode: .fit)
+                        if let content = viewModel.partnersContent {
+                            Card {
+                                VStack(spacing: 16) {
+                                    Text(L10n.partnersTitle)
+                                        .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
+                                        .foregroundColor(Color(Asset.devFestRed.color))
+                                    
+                                    ForEach(content, id: \.self) { category in
+                                        VStack {
+                                            Text(category.categoryName.name)
+                                                .font(.title2)
+                                                .bold()
+                                                .padding(20)
+                                            ForEach(category.partners, id: \.self) { partner in
+                                                if let partnerUrl = partner.url {
+                                                    Button(action: { UIApplication.shared.open(URL(string: partnerUrl)!)
+                                                        FirebaseAnalyticsService.shared.eventLinkPartnerOpened(partnerName: partnerUrl)
+                                                    }) {
+                                                        if let logo =  partner.logoUrl  {
+                                                            URLImage(url: URL(string:logo)!) { image in
+                                                                image
+                                                                    .renderingMode(.original)
+                                                                    .resizable()
+                                                                    .aspectRatio(contentMode: .fit)
+                                                            }
                                                         }
                                                     }
+                                                    .frame(maxHeight: 50)
+                                                    .padding(8)
+                                                    .background(
+                                                        RoundedRectangle(cornerRadius: 20, style: .continuous).fill(Color.white)
+                                                    )
                                                 }
-                                                .frame(maxHeight: 50)
-                                                .padding(8)
-                                                .background(
-                                                    RoundedRectangle(cornerRadius: 20, style: .continuous).fill(Color.white)
-                                                )
                                             }
                                         }
                                     }
-                                }
-                                Spacer(minLength: 8)
-                            }.padding(8)
-                        }
+                                    Spacer(minLength: 8)
+                                }.padding(8)
+                            }}
                         //Local communities
                         Card {
                             VStack {
