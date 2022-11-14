@@ -14,7 +14,7 @@ android {
         applicationId = "com.gdgnantes.devfest.androidapp"
         minSdk = AndroidSdk.min
         targetSdk = AndroidSdk.target
-        versionCode = 10
+        versionCode = 11
         versionName = "1.0.1"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
@@ -87,7 +87,7 @@ dependencies {
         implementation(platform(firebaseBom))
         implementation(firebaseAnalytics)
         implementation(firebaseCrashlytics)
-        implementation(Firebase.firebaseConfig)
+        implementation(firebaseConfig)
     }
 
     with(Deps) {
