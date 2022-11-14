@@ -9,7 +9,7 @@
 
 # Add any project specific keep options here:
 
-# WaryMe
+# Openfeedback
 -keep class io.openfeedback.** { *; }
 
 # CRASHLYTICS
