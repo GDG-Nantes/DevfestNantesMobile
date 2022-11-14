@@ -16,7 +16,8 @@
         android:theme="@style/AppTheme"
         android:label="@string/app_name"
         android:icon="@mipmap/ic_launcher"
-        android:logo="@mipmap/ic_launcher_round">
+        android:logo="@mipmap/ic_launcher_round"
+        android:localeConfig="@xml/locales_config">
 
         <meta-data
             android:name="google_analytics_default_allow_ad_personalization_signals"

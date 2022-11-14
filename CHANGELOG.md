@@ -1,12 +1,13 @@
 Change Log
 ==========
 
-Version 1.0.1 *(2022-10-??)*
+Version 1.0.1 *(2022-11-??)*
 ----------------------------
 
 * 📣 Adds venue's floor plan.
 * 📣 Adds additional session filters.
 * 📣 Implements refresh for Agenda.
+* 📣 Enable specific app language selection.
 * 👍 Sort sessions by room names.
 * 🐛 Fixes sessions filtering issue.
 * ⬆️ Bumps Apollo Graphql version to 3.6.2.
