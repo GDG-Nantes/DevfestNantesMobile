@@ -1,13 +1,61 @@
-type Configuration {
+type Bookmarks {
+  id: String!
+
+  sessionIds: [String!]!
+}
+
+type Conference {
+  days: [LocalDate!]!
+
+  id: String!
+
   name: String!
 
   timezone: String!
+}
+
+enum ConferenceField {
+  DAYS
+}
+
+input ConferenceOrderByInput {
+  direction: OrderByDirection!
+
+  field: ConferenceField!
 }
 
 """
 A type representing a formatted kotlinx.datetime.Instant
 """
 scalar Instant
+
+"""
+A type representing a formatted kotlinx.datetime.LocalDate
+"""
+scalar LocalDate
+
+"""
+A type representing a formatted kotlinx.datetime.LocalDateTime
+"""
+scalar LocalDateTime
+
+input LocalDateTimeFilterInput {
+  after: LocalDateTime
+
+  before: LocalDateTime
+}
+
+type Mutation {
+  addBookmark(sessionId: String!): Bookmarks!
+
+  removeBookmark(sessionId: String!): Bookmarks!
+}
+
+enum OrderByDirection {
+  ASCENDING
+
+  DESCENDING
+}
 
 type PageInfo {
   endCursor: String
@@ -28,7 +76,11 @@ type PartnerGroup {
 }
 
 type Query {
-  config: Configuration!
+  bookmarks: Bookmarks
+
+  conferences(orderBy: ConferenceOrderByInput): [Conference!]!
+
+  config: Conference!
 
   partnerGroups: [PartnerGroup!]!
 
@@ -36,7 +88,9 @@ type Query {
 
   session(id: String!): Session!
 
-  sessions(first: Int, after: String): SessionConnection!
+  sessions(first: Int, after: String, filter: SessionFilterInput, orderBy: SessionOrderByInput): SessionConnection!
+
+  speaker(id: String!): Speaker!
 
   speakers: [Speaker!]!
 
@@ -58,23 +112,39 @@ type Session {
 
   description: String
 
-  endInstant: Instant!
+  endInstant: Instant! @deprecated(reason: "use endsAt instead")
+
+  endsAt: LocalDateTime!
 
   feedbackId: String
 
   id: String!
 
+  """
+  An [IETF language code](https://en.wikipedia.org/wiki/IETF_language_tag) like en-US
+  """
   language: String
 
-  startInstant: Instant!
+  """
+  A shorter version of description for use when real estate is scarce like watches for an example.
+  This field might have the same value as description if a shortDescription is not available
+  """
+  shortDescription: String
+
+  startInstant: Instant! @deprecated(reason: "use startsAt instead")
+
+  startsAt: LocalDateTime!
 
   tags: [String!]!
 
   title: String!
 
+  """
+  One of "break", "lunch", "party", "keynote", "talk" or any other conference-specific format
+  """
   type: String!
 
-  room: Room @deprecated(reason: "use rooms instead")
+  room: Room
 
   rooms: [Room!]!
 
@@ -85,6 +155,22 @@ type SessionConnection {
   nodes: [Session!]!
 
   pageInfo: PageInfo!
+}
+
+enum SessionField {
+  STARTS_AT
+}
+
+input SessionFilterInput {
+  endsAt: LocalDateTimeFilterInput
+
+  startsAt: LocalDateTimeFilterInput
+}
+
+input SessionOrderByInput {
+  direction: OrderByDirection!
+
+  field: SessionField!
 }
 
 type Social {
@@ -113,6 +199,8 @@ type Speaker {
   photoUrl: String
 
   socials: [Social!]!
+
+  sessions: [Session!]!
 }
 
 type Venue {
@@ -120,7 +208,7 @@ type Venue {
 
   coordinates: String @deprecated(reason: "use latitude and longitude instead")
 
-  descriptionFr: String! @deprecated(reason: "description(language: \"fr\") instead")
+  descriptionFr: String! @deprecated(reason: "use description(language: \"fr\") instead")
 
   floorPlanUrl: String
 
@@ -139,4 +227,5 @@ type Venue {
 
 schema {
   query: Query
+  mutation: Mutation
 }
