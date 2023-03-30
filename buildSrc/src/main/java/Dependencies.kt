@@ -34,7 +34,7 @@ object AndroidSdk {
 }
 
 object Apollo {
-    const val apolloVersion = "3.6.2"
+    const val apolloVersion = "3.7.4"
     const val apolloRuntime = "com.apollographql.apollo3:apollo-runtime:$apolloVersion"
     const val apolloNormalizedCache =
         "com.apollographql.apollo3:apollo-normalized-cache:$apolloVersion"
