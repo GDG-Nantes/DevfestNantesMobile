@@ -79,11 +79,10 @@ apollo {
 }
 
 android {
-    compileSdk = 32
+    compileSdk = AndroidSdk.compile
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
     defaultConfig {
         minSdk = 23
-        targetSdk = 32
     }
     namespace = "com.gdgnantes.devfest"
 }

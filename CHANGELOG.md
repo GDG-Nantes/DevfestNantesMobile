@@ -1,7 +1,15 @@
 Change Log
 ==========
 
-Version 1.0.1 *(2022-11-??)*
+Version 1.0.2 *(2022-11-14)*
+----------------------------
+
+* 🐛 Fixes data not loading anymore due to a missing header.
+* ⬆️ Upgrades shared module target to API 33.
+* ⬆️ Bump com.android.tools.build:gradle from 7.3.1 to 7.4.2
+* ⬆️ Bumps Apollo Graphql version to 3.7.4.
+
+Version 1.0.1 *(2022-11-14)*
 ----------------------------
 
 * 📣 Adds venue's floor plan.
