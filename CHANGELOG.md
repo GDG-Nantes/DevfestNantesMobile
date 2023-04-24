@@ -1,6 +1,8 @@
 Change Log
 ==========
 
+* ⬆️ Bump com.android.tools.build:gradle from 7.4.2 to 8.0.0.
+
 Version 1.0.3 *(2023-??-??)*
 ----------------------------
 
