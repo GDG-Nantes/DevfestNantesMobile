@@ -1,7 +1,10 @@
 Change Log
 ==========
 
-Version 1.0.2 *(2022-11-14)*
+Version 1.0.3 *(2023-??-??)*
+----------------------------
+
+Version 1.0.2 *(2023-04-24)*
 ----------------------------
 
 * 🐛 Fixes data not loading anymore due to a missing header.
