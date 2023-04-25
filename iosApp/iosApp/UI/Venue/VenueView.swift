@@ -24,12 +24,11 @@ struct VenueView: View {
                             if let content = viewModel.venueContent {
                             Card {
                             VStack(spacing: 16) {
-                                if let imageUrl =  content.imageUrl  {
-                                        URLImage(url: URL(string: imageUrl)!) { image in
+                                        URLImage(url: URL(string: content.imageUrl)!) { image in
                                             image
                                                 .resizable()
                                                 .aspectRatio(contentMode: .fill)
-                                        }}
+                                        }
                                     
                                     Text(content.name)
                                         .bold()
@@ -62,15 +61,13 @@ struct VenueView: View {
                                                 Button(action: {
                                                     print("Plan")
                                                 }, label: {
-                                                    if let planUrl = content.planUrl {
                                                         NavigationLink(destination: PhotoDetailView(image: Asset.floorplan.image)) {
-                                                            URLImage(url: URL(string: planUrl)!) { image in
+                                                            URLImage(url: URL(string: content.planUrl)!) { image in
                                                                 image
                                                                     .resizable()
                                                                     .aspectRatio(contentMode: .fill)
                                                             }
                                                         }
-                                                    }
                                                 })
                                                 .padding(.vertical, 5)
                                                 .padding(.horizontal, 10)
