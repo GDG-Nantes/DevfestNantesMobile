@@ -145,17 +145,22 @@ class MainActivity : ComponentActivity(), NavController.OnDestinationChangedList
         arguments: Bundle?
     ) {
         destination.route?.let { route ->
-            when (route) {
-                Screen.DataCollection.route -> analyticsService.pageEvent(
+            if (route == Screen.Home.route) {
+                analyticsService.pageEvent(
                     AnalyticsPage.DATASHARING,
                     route
                 )
-                Screen.Legal.route -> analyticsService.pageEvent(AnalyticsPage.LEGAL, route)
-                Screen.Session.route -> analyticsService.pageEvent(
+            } else if (route == Screen.Legal.route) {
+                analyticsService.pageEvent(AnalyticsPage.LEGAL, route)
+            } else if (route.contains(Screen.Session.route)) {
+                analyticsService.pageEvent(
                     AnalyticsPage.SESSION_DETAILS,
                     route
                 )
-                Screen.Settings.route -> analyticsService.pageEvent(AnalyticsPage.SETTINGS, route)
+            } else if (route == Screen.Settings.route) {
+                analyticsService.pageEvent(AnalyticsPage.SETTINGS, route)
+            } else if (route == Screen.DataCollection.route) {
+                analyticsService.pageEvent(AnalyticsPage.DATASHARING, route)
             }
         }
     }
