@@ -42,11 +42,11 @@ android {
     }
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_17
+        targetCompatibility = JavaVersion.VERSION_17
     }
     kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_1_8.toString()
+        jvmTarget = JavaVersion.VERSION_17.toString()
 
         freeCompilerArgs = freeCompilerArgs + listOf(
             "-Xopt-in=kotlin.RequiresOptIn",
@@ -111,6 +111,7 @@ dependencies {
     }
 
     with(Compose) {
+        implementation(platform(composeBom))
         implementation(activity)
         implementation(coilCompose)
         implementation(material3)
@@ -147,14 +148,16 @@ dependencies {
     }
 
     with(AndroidTests) {
-        androidTestImplementation(androidXComposeUiTest)
-        androidTestImplementation(androidXTestCoreKtx)
-        androidTestImplementation(androidXTestRunner)
         androidTestImplementation(androidXTestRules)
         androidTestImplementation(androidXTestJUnitKtx)
         androidTestImplementation(androidXTestTruth)
         androidTestImplementation(androidXTestEspressoCore)
         androidTestImplementation(androidXTestEspressoContrib)
         androidTestImplementation(androidXTestEspressoIntents)
+
+        with(AndroidTests.Compose) {
+            // UI Tests
+            androidTestImplementation(uiTestComposeJUnit)
+        }
     }
 }
