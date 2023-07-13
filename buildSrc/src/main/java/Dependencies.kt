@@ -1,5 +1,5 @@
 object Versions {
-    const val kotlinVersion = "1.7.20"
+    const val kotlinVersion = "1.8.22"
 
     const val kotlinCoroutines = "1.6.4"
     const val kmpNativeCoroutines = "0.13.1"
@@ -10,20 +10,21 @@ object Versions {
 
     const val accompanistPager = "0.24.13-rc"
 
-    const val compose = "1.2.1"
-    const val composeCompiler = "1.3.2"
-    const val navCompose = "2.4.2"
+    const val composeBom = "2023.06.01"
+    const val composeCompiler = "1.4.8"
+    const val navCompose = "2.6.0"
     const val accompanist = "0.24.13-rc"
 
-    const val daggerVersion = "2.42"
+    const val daggerVersion = "2.46.1"
     const val hiltAndroidXVersion = "1.0.0"
 
     const val multiplatformSettings = "0.8.1"
 
-    const val junit = "4.13"
-    const val androidXTestVersion = "1.4.0"
-    const val androidXJUnitVersion = "1.1.3"
-    const val espresso = "3.3.0"
+    const val junit = "4.13.2"
+    const val androidXTestVersion = "1.5.0"
+    const val androidXTestRunnerVersion = "1.5.2"
+    const val androidXJUnitVersion = "1.1.5"
+    const val espresso = "3.5.0"
 }
 
 
@@ -34,7 +35,7 @@ object AndroidSdk {
 }
 
 object Apollo {
-    const val apolloVersion = "3.7.4"
+    const val apolloVersion = "3.8.2"
     const val apolloRuntime = "com.apollographql.apollo3:apollo-runtime:$apolloVersion"
     const val apolloNormalizedCache =
         "com.apollographql.apollo3:apollo-normalized-cache:$apolloVersion"
@@ -79,19 +80,20 @@ object Accompanist {
 }
 
 object Compose {
+    const val composeBom = "androidx.compose:compose-bom:${Versions.composeBom}"
     const val activity = "androidx.activity:activity-compose:1.5.0"
     const val compiler = "androidx.compose.compiler:compiler:${Versions.composeCompiler}"
-    const val ui = "androidx.compose.ui:ui:${Versions.compose}"
-    const val runtime = "androidx.compose.runtime:runtime:${Versions.compose}"
-    const val uiGraphics = "androidx.compose.ui:ui-graphics:${Versions.compose}"
-    const val uiTooling = "androidx.compose.ui:ui-tooling:${Versions.compose}"
-    const val uiToolingPreview = "androidx.compose.ui:ui-tooling-preview:${Versions.compose}"
-    const val foundationLayout = "androidx.compose.foundation:foundation-layout:${Versions.compose}"
-    const val material = "androidx.compose.material:material:${Versions.compose}"
+    const val ui = "androidx.compose.ui:ui"
+    const val runtime = "androidx.compose.runtime:runtime"
+    const val uiGraphics = "androidx.compose.ui:ui-graphics"
+    const val uiTooling = "androidx.compose.ui:ui-tooling"
+    const val uiToolingPreview = "androidx.compose.ui:ui-tooling-preview"
+    const val foundationLayout = "androidx.compose.foundation:foundation-layout"
+    const val material = "androidx.compose.material:material"
     const val material3 = "androidx.compose.material3:material3:1.0.0-beta02"
     const val materialIconsCore =
-        "androidx.compose.material:material-icons-core:${Versions.compose}"
-    const val materialIconsExtended = "androidx.compose.material:material-icons-extended:${Versions.compose}"
+        "androidx.compose.material:material-icons-core"
+    const val materialIconsExtended = "androidx.compose.material:material-icons-extended"
     const val navigation = "androidx.navigation:navigation-compose:${Versions.navCompose}"
     const val coilCompose = "io.coil-kt:coil-compose:2.1.0"
     const val hiltNavigation =
@@ -120,15 +122,14 @@ object Tests {
     const val kotlinJUnit = "org.jetbrains.kotlin:kotlin-test-junit:${Versions.kotlinVersion}"
 
     object Compose {
-        const val uiTestComposeJUnit = "androidx.compose.ui:ui-test-junit4:${Versions.compose}"
-        const val uiTestComposeManifest = "androidx.compose.ui:ui-test-junit4:${Versions.compose}"
+        const val uiTestComposeJUnit = "androidx.compose.ui:ui-test-junit4"
+        const val uiTestComposeManifest = "androidx.compose.ui:ui-test-junit4"
     }
 }
 
 object AndroidTests {
-    const val androidXComposeUiTest = "androidx.compose.ui:ui-test-junit4:${Versions.compose}"
     const val androidXTestCoreKtx = "androidx.test:core-ktx:${Versions.androidXTestVersion}"
-    const val androidXTestRunner = "androidx.test:runner:${Versions.androidXTestVersion}"
+    const val androidXTestRunner = "androidx.test:runner:${Versions.androidXTestRunnerVersion}"
     const val androidXTestRules = "androidx.test:rules:${Versions.androidXTestVersion}"
     const val androidXTestJUnitKtx = "androidx.test.ext:junit-ktx:${Versions.androidXJUnitVersion}"
     const val androidXTestTruth = "androidx.test.ext:truth:${Versions.androidXTestVersion}"
@@ -137,4 +138,8 @@ object AndroidTests {
         "androidx.test.espresso:espresso-contrib:${Versions.espresso}"
     const val androidXTestEspressoIntents =
         "androidx.test.espresso:espresso-intents:${Versions.espresso}"
+
+    object Compose {
+        const val uiTestComposeJUnit = "androidx.compose.ui:ui-test-junit4"
+    }
 }

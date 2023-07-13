@@ -1,6 +1,12 @@
 Change Log
 ==========
 
+* ⬆️ Bump com.android.tools.build:gradle from 7.4.2 to 8.0.2.
+* ⬆️ Uses ComposeBOM to manage compose dependencies.
+* ⬆️ Bumps Kotlin version to 1.8.22.
+* ⬆️ Bumps Appolo GraphQL to version to 3.8.2.
+* ⬆️ Bumps Navigation compose to version to 2.6.0.
+
 Version 1.0.3 *(2023-??-??)*
 ----------------------------
 
