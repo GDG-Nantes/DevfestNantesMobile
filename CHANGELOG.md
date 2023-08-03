@@ -1,6 +1,7 @@
 Change Log
 ==========
 
+* 📣 Enables dynamic colors.
 * ⬆️ Bump com.android.tools.build:gradle from 7.4.2 to 8.0.2.
 * ⬆️ Uses ComposeBOM to manage compose dependencies.
 * ⬆️ Bumps Kotlin version to 1.8.22.

@@ -1,11 +1,15 @@
 package com.gdgnantes.devfest.androidapp.ui.theme
 
+import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.darkColorScheme
+import androidx.compose.material3.dynamicDarkColorScheme
+import androidx.compose.material3.dynamicLightColorScheme
 import androidx.compose.material3.lightColorScheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.SideEffect
+import androidx.compose.ui.platform.LocalContext
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 
 
@@ -73,26 +77,32 @@ private val DarkColors = darkColorScheme(
 @Composable
 fun DevFestNantesTheme(
     useDarkTheme: Boolean = isSystemInDarkTheme(),
+    useDynamicColors: Boolean = true,
     content: @Composable() () -> Unit
 ) {
-    val colors = if (!useDarkTheme) {
-        LightColors
-    } else {
-        DarkColors
+    // Dynamic color is available on Android 12+
+    val dynamicColor = useDynamicColors && Build.VERSION.SDK_INT >= Build.VERSION_CODES.S
+    val colors = when {
+        dynamicColor && useDarkTheme -> dynamicDarkColorScheme(LocalContext.current)
+        dynamicColor && !useDarkTheme -> dynamicLightColorScheme(LocalContext.current)
+        useDarkTheme -> DarkColors
+        else -> LightColors
     }
 
-    // Remember a SystemUiController
-    val systemUiController = rememberSystemUiController()
+    if (!dynamicColor) {
+        // Remember a SystemUiController
+        val systemUiController = rememberSystemUiController()
 
-    SideEffect {
-        systemUiController.setStatusBarColor(
-            color = colors.surface,
-            darkIcons = false
-        )
-        systemUiController.setNavigationBarColor(
-            color = colors.surface,
-            darkIcons = false
-        )
+        SideEffect {
+            systemUiController.setStatusBarColor(
+                color = colors.surface,
+                darkIcons = false
+            )
+            systemUiController.setNavigationBarColor(
+                color = colors.surface,
+                darkIcons = false
+            )
+        }
     }
 
     MaterialTheme(
