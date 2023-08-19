@@ -6,10 +6,14 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
+import androidx.compose.material.Icon
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Schedule
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.core.os.ConfigurationCompat
@@ -30,7 +34,8 @@ fun AgendaColumn(
 
     LazyColumn(
         state = listState,
-        modifier = Modifier.fillMaxHeight()
+        modifier = Modifier
+            .fillMaxHeight()
     ) {
         sessionsGroupedByStartTime.forEach {
             stickyHeader {
@@ -53,24 +58,21 @@ fun TimeSeparator(
     prettyTime: String
 ) {
     Surface(
-        modifier = modifier,
-        color = MaterialTheme.colorScheme.surfaceVariant
+        modifier = modifier.fillMaxWidth(),
+        color = MaterialTheme.colorScheme.background,
+        contentColor = MaterialTheme.colorScheme.onBackground,
     ) {
-        Column(
-            modifier = Modifier
-                .fillMaxWidth()
+        Row(
+            modifier = modifier.padding(8.dp),
+            horizontalArrangement = Arrangement.spacedBy(8.dp),
+            verticalAlignment = Alignment.CenterVertically
         ) {
+            Icon(imageVector = Icons.Filled.Schedule, contentDescription = null)
+
             Text(
-                modifier = Modifier.padding(horizontal = 12.dp, vertical = 4.dp),
                 text = prettyTime,
-                style = MaterialTheme.typography.labelMedium
+                style = MaterialTheme.typography.headlineMedium,
             )
-            Surface(
-                modifier = Modifier
-                    .height(0.5.dp)
-                    .fillMaxWidth(),
-                color = MaterialTheme.colorScheme.onSurfaceVariant
-            ) {}
         }
     }
 }
