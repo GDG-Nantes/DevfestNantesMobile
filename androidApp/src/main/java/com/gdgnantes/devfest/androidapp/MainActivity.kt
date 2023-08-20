@@ -161,6 +161,8 @@ class MainActivity : ComponentActivity(), NavController.OnDestinationChangedList
                 analyticsService.pageEvent(AnalyticsPage.SETTINGS, route)
             } else if (route == Screen.DataCollection.route) {
                 analyticsService.pageEvent(AnalyticsPage.DATASHARING, route)
+            } else if (route == Screen.Speakers.route) {
+                analyticsService.pageEvent(AnalyticsPage.SPEAKERS, route)
             }
         }
     }

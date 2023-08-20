@@ -39,6 +39,27 @@ fun BottomAppBar(
         )
 
         NavigationBarItem(
+            selected = Screen.Speakers == selected,
+            onClick = {
+                onClick(Screen.Speakers)
+            },
+            icon = {
+                Icon(
+                    imageVector = Screen.Speakers.imageVector(Screen.Speakers == selected)!!,
+                    contentDescription = stringResource(id = Screen.Speakers.title),
+                    tint = iconColor(selected = Screen.Speakers == selected)
+                )
+            },
+            label = {
+                Text(
+                    text = stringResource(id = R.string.screen_speakers),
+                    color = labelColor(selected = Screen.Speakers == selected)
+                )
+            },
+            alwaysShowLabel = true
+        )
+
+        NavigationBarItem(
             selected = Screen.Venue == selected,
             onClick = {
                 onClick(Screen.Venue)

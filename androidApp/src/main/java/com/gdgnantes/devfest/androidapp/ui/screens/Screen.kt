@@ -4,9 +4,11 @@ import androidx.annotation.StringRes
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Domain
 import androidx.compose.material.icons.filled.Event
+import androidx.compose.material.icons.filled.Groups
 import androidx.compose.material.icons.filled.Info
 import androidx.compose.material.icons.outlined.Domain
 import androidx.compose.material.icons.outlined.Event
+import androidx.compose.material.icons.outlined.Groups
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.gdgnantes.devfest.androidapp.R
@@ -54,6 +56,13 @@ sealed class Screen(
         imageVectorOutlined = null
     )
 
+    object Speakers : Screen(
+        route = "speakers",
+        title = R.string.screen_speakers,
+        imageVectorFilled = Icons.Filled.Groups,
+        imageVectorOutlined = Icons.Outlined.Groups
+    )
+
     object DataCollection : Screen(
         route = "datacollection",
         title = R.string.screen_data_collection,
@@ -80,6 +89,7 @@ sealed class Screen(
             About.route -> About
             Agenda.route -> Agenda
             Home.route -> Home
+            Speakers.route -> Speakers
             Venue.route -> Venue
             else -> throw Exception("Unknown route specified")
         }
