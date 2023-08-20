@@ -75,13 +75,9 @@ fun AgendaRow(
     onSessionClick: ((Session) -> Unit),
     onSessionBookmarkClick: ((Boolean) -> Unit)
 ) {
-    Card(
+    ElevatedCard(
         modifier = modifier.padding(8.dp),
-        onClick = { onSessionClick(session) },
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.primaryContainer,
-            contentColor = MaterialTheme.colorScheme.onPrimaryContainer
-        )
+        onClick = { onSessionClick(session) }
     ) {
         Column {
             Column(

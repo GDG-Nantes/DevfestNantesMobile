@@ -84,11 +84,11 @@ fun BottomAppBar(
 
 @Composable
 fun iconColor(selected: Boolean): Color =
-    if (selected) MaterialTheme.colorScheme.onSecondaryContainer else MaterialTheme.colorScheme.onSurfaceVariant
+    if (selected) MaterialTheme.colorScheme.onSecondaryContainer else MaterialTheme.colorScheme.onSurface
 
 @Composable
 fun labelColor(selected: Boolean): Color =
-    if (selected) MaterialTheme.colorScheme.onSurface else MaterialTheme.colorScheme.onSurfaceVariant
+    if (selected) MaterialTheme.colorScheme.onSecondaryContainer else MaterialTheme.colorScheme.onSurface
 
 @Preview
 @Composable
