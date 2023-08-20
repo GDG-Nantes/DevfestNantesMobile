@@ -75,13 +75,9 @@ fun AgendaRow(
     onSessionClick: ((Session) -> Unit),
     onSessionBookmarkClick: ((Boolean) -> Unit)
 ) {
-    OutlinedCard(
+    ElevatedCard(
         modifier = modifier.padding(8.dp),
-        onClick = { onSessionClick(session) },
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.background,
-            contentColor = MaterialTheme.colorScheme.onBackground
-        )
+        onClick = { onSessionClick(session) }
     ) {
         Column {
             Column(
@@ -148,7 +144,7 @@ fun AgendaRow(
 
                             val tint by animateColorAsState(
                                 if (isBookmarked) bookmarked
-                                else Color.LightGray
+                                else Color.LightGray, label = "bookmarkAnimatedColorState"
                             )
 
                             IconToggleButton(

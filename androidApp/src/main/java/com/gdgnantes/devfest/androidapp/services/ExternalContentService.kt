@@ -32,7 +32,7 @@ class ExternalContentService @Inject constructor(
                 .setDefaultColorSchemeParams(
                     CustomTabColorSchemeParams.Builder()
                         .setToolbarColor(
-                            ContextCompat.getColor(activity, R.color.color_primary)
+                            ContextCompat.getColor(activity, R.color.md_theme_primary)
                         ).build()
                 )
                 .setShowTitle(true)
