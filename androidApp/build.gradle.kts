@@ -15,7 +15,7 @@ android {
         minSdk = AndroidSdk.min
         targetSdk = AndroidSdk.target
         versionCode = 13
-        versionName = "1.0.3"
+        versionName = "2.0.0"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
         buildConfigField("String", "OPEN_FEEDBACK_ENABLED", "\"false\"")
