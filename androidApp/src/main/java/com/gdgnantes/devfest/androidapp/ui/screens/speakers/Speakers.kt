@@ -257,18 +257,10 @@ fun SpeakerRow(
             }
         }
 
-        Surface(
-            shape = CircleShape,
+        SpeakerPicture(
             modifier = Modifier.size(32.dp),
-            color = MaterialTheme.colorScheme.secondary
-        ) {
-            Box(contentAlignment = Alignment.Center) {
-                Text(
-                    text = speaker.name.first().toString(),
-                    style = MaterialTheme.typography.bodyLarge
-                )
-            }
-        }
+            speaker = speaker
+        )
 
         Text(
             modifier = Modifier.padding(16.dp),
