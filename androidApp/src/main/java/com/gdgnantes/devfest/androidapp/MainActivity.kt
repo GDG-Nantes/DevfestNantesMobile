@@ -20,6 +20,8 @@ import com.gdgnantes.devfest.androidapp.ui.screens.legal.LegalScreen
 import com.gdgnantes.devfest.androidapp.ui.screens.session.SessionLayout
 import com.gdgnantes.devfest.androidapp.ui.screens.session.SessionViewModel
 import com.gdgnantes.devfest.androidapp.ui.screens.settings.Settings
+import com.gdgnantes.devfest.androidapp.ui.screens.speakers.SpeakerLayout
+import com.gdgnantes.devfest.androidapp.ui.screens.speakers.SpeakerViewModel
 import com.gdgnantes.devfest.androidapp.ui.theme.DevFestNantesTheme
 import com.gdgnantes.devfest.androidapp.utils.assistedViewModel
 import com.gdgnantes.devfest.model.SessionType
@@ -37,6 +39,7 @@ class MainActivity : ComponentActivity(), NavController.OnDestinationChangedList
     @InstallIn(ActivityComponent::class)
     interface ViewModelFactoryProvider {
         fun sessionViewModelFactory(): SessionViewModel.SessionViewModelFactory
+        fun speakerViewModelFactory(): SpeakerViewModel.SpeakerViewModelFactory
     }
 
     @Inject
@@ -69,9 +72,14 @@ class MainActivity : ComponentActivity(), NavController.OnDestinationChangedList
                                     SessionType.CODELAB -> {
                                         mainNavController.navigate("${Screen.Session.route}/${session.id}")
                                     }
+
                                     else -> {}
                                 }
                                 analyticsService.eventSessionOpened(session.id)
+                            },
+                            onSpeakerClick = { speaker ->
+                                mainNavController.navigate("${Screen.Speaker.route}/${speaker.id}")
+                                analyticsService.eventSpeakerOpened(speaker.id)
                             },
                             onSettingsClick = { mainNavController.navigate(Screen.Settings.route) }
                         )
@@ -86,6 +94,30 @@ class MainActivity : ComponentActivity(), NavController.OnDestinationChangedList
                                 SessionViewModel.provideFactory(
                                     sessionViewModelFactory(),
                                     sessionId
+                                )
+                            },
+                            onBackClick = { mainNavController.popBackStack() },
+                            onSocialLinkClick = { socialItem, speaker ->
+                                socialItem.link?.let { link ->
+                                    externalContentService.openUrl(link)
+                                    analyticsService.eventSpeakerSocialLinkOpened(
+                                        speaker.id,
+                                        socialItem.type
+                                    )
+                                }
+                            }
+                        )
+                    }
+
+                    composable(
+                        route = "${Screen.Speaker.route}/{speakerId}"
+                    ) { backStackEntry ->
+                        val speakerId = backStackEntry.arguments!!.getString("speakerId")!!
+                        SpeakerLayout(
+                            viewModel = assistedViewModel {
+                                SpeakerViewModel.provideFactory(
+                                    speakerViewModelFactory(),
+                                    speakerId
                                 )
                             },
                             onBackClick = { mainNavController.popBackStack() },
@@ -161,8 +193,8 @@ class MainActivity : ComponentActivity(), NavController.OnDestinationChangedList
                 analyticsService.pageEvent(AnalyticsPage.SETTINGS, route)
             } else if (route == Screen.DataCollection.route) {
                 analyticsService.pageEvent(AnalyticsPage.DATASHARING, route)
-            } else if (route == Screen.Speakers.route) {
-                analyticsService.pageEvent(AnalyticsPage.SPEAKERS, route)
+            } else if (route == Screen.Speaker.route) {
+                analyticsService.pageEvent(AnalyticsPage.SPEAKER, route)
             }
         }
     }

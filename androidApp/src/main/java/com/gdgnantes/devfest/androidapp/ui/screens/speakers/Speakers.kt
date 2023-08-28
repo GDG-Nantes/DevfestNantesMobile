@@ -1,5 +1,6 @@
 package com.gdgnantes.devfest.androidapp.ui.screens.speakers
 
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectVerticalDragGestures
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -49,12 +50,14 @@ List of speakers made with the code and article from Keith Abdulla's the Github 
 @Composable
 fun Speakers(
     modifier: Modifier = Modifier,
-    viewModel: SpeakersViewModel = hiltViewModel()
+    viewModel: SpeakersViewModel = hiltViewModel(),
+    onSpeakerClick: (Speaker) -> Unit
 ) {
     Speakers(
         modifier = modifier,
         speakers = viewModel.speakers.collectAsState(),
-        uiState = viewModel.uiState.collectAsState()
+        uiState = viewModel.uiState.collectAsState(),
+        onSpeakerClick = onSpeakerClick
     )
 }
 
@@ -62,12 +65,14 @@ fun Speakers(
 fun Speakers(
     modifier: Modifier = Modifier,
     speakers: State<List<Speaker>>,
-    uiState: State<UiState>
+    uiState: State<UiState>,
+    onSpeakerClick: (Speaker) -> Unit
 ) {
     Speakers(
         modifier = modifier,
         speakers = speakers.value,
-        uiState = uiState.value
+        uiState = uiState.value,
+        onSpeakerClick = onSpeakerClick
     )
 }
 
@@ -75,7 +80,8 @@ fun Speakers(
 fun Speakers(
     modifier: Modifier = Modifier,
     speakers: List<Speaker>,
-    uiState: UiState
+    uiState: UiState,
+    onSpeakerClick: (Speaker) -> Unit
 ) {
     val context = LocalDensity.current
     val alphabetHeightInPixels = remember { with(context) { alphabetItemHeight.toPx() } }
@@ -95,7 +101,8 @@ fun Speakers(
                     onAlphabetListDrag = { relativeDragYOffset, containerDistance ->
                         alphabetRelativeDragYOffset = relativeDragYOffset
                         alphabetDistanceFromTopOfScreen = containerDistance
-                    }
+                    },
+                    onSpeakerClick = onSpeakerClick
                 )
 
                 val yOffset = alphabetRelativeDragYOffset
@@ -177,6 +184,7 @@ fun SpeakersListWithScroller(
     modifier: Modifier = Modifier,
     speakers: List<Speaker>,
     onAlphabetListDrag: (Float?, Float) -> Unit,
+    onSpeakerClick: (Speaker) -> Unit
 ) {
     val mapOfFirstLetterIndex = remember(speakers) { speakers.getMapOfFirstUniqueCharIndex() }
     val alphabetHeightInPixels = with(LocalDensity.current) { alphabetItemHeight.toPx() }
@@ -193,7 +201,8 @@ fun SpeakersListWithScroller(
                 .weight(1F),
             speakers,
             lazyListState,
-            mapOfFirstLetterIndex
+            mapOfFirstLetterIndex,
+            onSpeakerClick
         )
 
         AlphabetScroller(
@@ -220,6 +229,7 @@ fun SpeakersList(
     speakers: List<Speaker>,
     lazyListState: LazyListState,
     firstLetterIndexes: Map<Char, Int>,
+    onSpeakerClick: (Speaker) -> Unit
 ) {
     LazyColumn(
         modifier = modifier,
@@ -227,6 +237,7 @@ fun SpeakersList(
     ) {
         itemsIndexed(speakers) { index, speaker ->
             SpeakerRow(
+                modifier = Modifier.clickable { onSpeakerClick(speaker) },
                 speaker = speaker,
                 isAlphabeticallyFirstInCharGroup =
                 firstLetterIndexes[speaker.name.lowercase().first()] == index,

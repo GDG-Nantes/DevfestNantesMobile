@@ -56,6 +56,13 @@ sealed class Screen(
         imageVectorOutlined = null
     )
 
+    object Speaker : Screen(
+        route = "speaker",
+        title = R.string.screen_speaker,
+        imageVectorFilled = Icons.Filled.Groups,
+        imageVectorOutlined = Icons.Outlined.Groups
+    )
+
     object Speakers : Screen(
         route = "speakers",
         title = R.string.screen_speakers,

@@ -7,6 +7,7 @@ enum class AnalyticsPage {
     LEGAL,
     SESSION_DETAILS,
     SETTINGS,
+    SPEAKER,
     SPEAKERS,
     VENUE;
 

@@ -82,6 +82,12 @@ class FirebaseAnalyticsService @Inject constructor(private val firebaseAnalytics
         }
     }
 
+    override fun eventSpeakerOpened(speakerId: String) {
+        firebaseAnalytics.logEvent(AnalyticsEvent.SPEAKER_OPENED.toString()) {
+            param(AnalyticsParam.SPEAKER_ID.toString(), speakerId)
+        }
+    }
+
     override fun eventSpeakerSocialLinkOpened(speakerId: String, type: SocialType) {
         firebaseAnalytics.logEvent(AnalyticsEvent.SPEAKER_SOCIAL_LINK_OPENED.toString()) {
             param(AnalyticsParam.SPEAKER_ID.toString(), speakerId)
