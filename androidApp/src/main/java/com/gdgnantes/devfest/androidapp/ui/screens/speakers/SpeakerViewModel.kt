@@ -3,6 +3,7 @@ package com.gdgnantes.devfest.androidapp.ui.screens.speakers
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
+import com.gdgnantes.devfest.model.Session
 import com.gdgnantes.devfest.model.Speaker
 import com.gdgnantes.devfest.store.DevFestNantesStore
 import dagger.assisted.Assisted
@@ -21,9 +22,16 @@ class SpeakerViewModel @AssistedInject constructor(
     val speaker: StateFlow<Speaker?>
         get() = _speaker
 
+    private val _sessions = MutableStateFlow<List<Session>>(emptyList())
+    val sessions: StateFlow<List<Session>>
+        get() = _sessions
+
     init {
         viewModelScope.launch {
             _speaker.emit(store.getSpeaker(speakerId))
+        }
+        viewModelScope.launch {
+            _sessions.emit(store.getSpeakerSessions(speakerId))
         }
     }
 
