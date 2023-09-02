@@ -18,7 +18,6 @@ import androidx.compose.ui.unit.dp
 import com.gdgnantes.devfest.androidapp.ui.components.SessionCategory
 import com.gdgnantes.devfest.androidapp.ui.components.SessionComplexity
 import com.gdgnantes.devfest.androidapp.ui.components.SessionType
-import com.gdgnantes.devfest.androidapp.ui.screens.speakers.SpeakerDetails
 import com.gdgnantes.devfest.androidapp.ui.theme.DevFestNantesTheme
 import com.gdgnantes.devfest.androidapp.utils.getFormattedRange
 import com.gdgnantes.devfest.model.Session
@@ -76,7 +75,7 @@ fun SessionDetails(
         )
 
         session.speakers.forEach { speaker ->
-            SpeakerDetails(
+            SessionSpeaker(
                 speaker = speaker,
                 onSocialLinkClick = onSocialLinkClick
             )
