@@ -93,20 +93,18 @@ fun DevFestNantesTheme(
         else -> lightColors
     }
 
-    if (!dynamicColor) {
-        // Remember a SystemUiController
-        val systemUiController = rememberSystemUiController()
+    // Remember a SystemUiController
+    val systemUiController = rememberSystemUiController()
 
-        SideEffect {
-            systemUiController.setStatusBarColor(
-                color = colors.surface,
-                darkIcons = !useDarkTheme
-            )
-            systemUiController.setNavigationBarColor(
-                color = colors.surface,
-                darkIcons = !useDarkTheme
-            )
-        }
+    SideEffect {
+        systemUiController.setStatusBarColor(
+            color = colors.surface,
+            darkIcons = !useDarkTheme
+        )
+        systemUiController.setNavigationBarColor(
+            color = colors.surface,
+            darkIcons = !useDarkTheme
+        )
     }
 
     MaterialTheme(

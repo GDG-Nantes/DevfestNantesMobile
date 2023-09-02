@@ -69,7 +69,7 @@ fun SpeakerDetails(
             Text(
                 modifier = Modifier.padding(top = 12.dp),
                 text = bio,
-                style = MaterialTheme.typography.bodySmall,
+                style = MaterialTheme.typography.bodyMedium,
             )
         }
     }

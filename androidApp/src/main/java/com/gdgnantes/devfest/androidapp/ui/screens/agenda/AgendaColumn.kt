@@ -67,7 +67,11 @@ fun TimeSeparator(
             horizontalArrangement = Arrangement.spacedBy(8.dp),
             verticalAlignment = Alignment.CenterVertically
         ) {
-            Icon(imageVector = Icons.Filled.Schedule, contentDescription = null)
+            Icon(
+                imageVector = Icons.Filled.Schedule,
+                contentDescription = null,
+                tint =  MaterialTheme.colorScheme.onBackground
+            )
 
             Text(
                 text = prettyTime,
