@@ -62,4 +62,6 @@
   <string name="settings_version_support_subtitle">Signaler un problème.</string>
   <string name="settings_legal">Mentions légales</string>
   <string name="venue_plan_content_description">Plan de la citée des congrès. Présente les différents espaces et les salles de la conférence.</string>
+  <string name="screen_speaker">Speaker</string>
+  <string name="screen_speakers">Speakers</string>
 </resources>

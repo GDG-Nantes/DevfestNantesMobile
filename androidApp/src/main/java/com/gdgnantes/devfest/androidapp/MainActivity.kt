@@ -20,8 +20,11 @@ import com.gdgnantes.devfest.androidapp.ui.screens.legal.LegalScreen
 import com.gdgnantes.devfest.androidapp.ui.screens.session.SessionLayout
 import com.gdgnantes.devfest.androidapp.ui.screens.session.SessionViewModel
 import com.gdgnantes.devfest.androidapp.ui.screens.settings.Settings
+import com.gdgnantes.devfest.androidapp.ui.screens.speakers.SpeakerLayout
+import com.gdgnantes.devfest.androidapp.ui.screens.speakers.SpeakerViewModel
 import com.gdgnantes.devfest.androidapp.ui.theme.DevFestNantesTheme
 import com.gdgnantes.devfest.androidapp.utils.assistedViewModel
+import com.gdgnantes.devfest.model.Session
 import com.gdgnantes.devfest.model.SessionType
 import com.gdgnantes.devfest.model.WebLinks
 import dagger.hilt.EntryPoint
@@ -37,6 +40,7 @@ class MainActivity : ComponentActivity(), NavController.OnDestinationChangedList
     @InstallIn(ActivityComponent::class)
     interface ViewModelFactoryProvider {
         fun sessionViewModelFactory(): SessionViewModel.SessionViewModelFactory
+        fun speakerViewModelFactory(): SpeakerViewModel.SpeakerViewModelFactory
     }
 
     @Inject
@@ -44,6 +48,8 @@ class MainActivity : ComponentActivity(), NavController.OnDestinationChangedList
 
     @Inject
     lateinit var externalContentService: ExternalContentService
+
+    lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,6 +59,7 @@ class MainActivity : ComponentActivity(), NavController.OnDestinationChangedList
             DevFestNantesTheme {
                 val mainNavController = rememberNavController()
                 mainNavController.addOnDestinationChangedListener(this)
+                navController = mainNavController
 
                 NavHost(
                     navController = mainNavController,
@@ -62,16 +69,10 @@ class MainActivity : ComponentActivity(), NavController.OnDestinationChangedList
                         Home(
                             analyticsService = analyticsService,
                             externalContentService = externalContentService,
-                            onSessionClick = { session ->
-                                when (session.type) {
-                                    SessionType.QUICKIE,
-                                    SessionType.CONFERENCE,
-                                    SessionType.CODELAB -> {
-                                        mainNavController.navigate("${Screen.Session.route}/${session.id}")
-                                    }
-                                    else -> {}
-                                }
-                                analyticsService.eventSessionOpened(session.id)
+                            onSessionClick = this@MainActivity::onSessionClick,
+                            onSpeakerClick = { speaker ->
+                                mainNavController.navigate("${Screen.Speaker.route}/${speaker.id}")
+                                analyticsService.eventSpeakerOpened(speaker.id)
                             },
                             onSettingsClick = { mainNavController.navigate(Screen.Settings.route) }
                         )
@@ -89,6 +90,31 @@ class MainActivity : ComponentActivity(), NavController.OnDestinationChangedList
                                 )
                             },
                             onBackClick = { mainNavController.popBackStack() },
+                            onSocialLinkClick = { socialItem, speaker ->
+                                socialItem.link?.let { link ->
+                                    externalContentService.openUrl(link)
+                                    analyticsService.eventSpeakerSocialLinkOpened(
+                                        speaker.id,
+                                        socialItem.type
+                                    )
+                                }
+                            }
+                        )
+                    }
+
+                    composable(
+                        route = "${Screen.Speaker.route}/{speakerId}"
+                    ) { backStackEntry ->
+                        val speakerId = backStackEntry.arguments!!.getString("speakerId")!!
+                        SpeakerLayout(
+                            viewModel = assistedViewModel {
+                                SpeakerViewModel.provideFactory(
+                                    speakerViewModelFactory(),
+                                    speakerId
+                                )
+                            },
+                            onBackClick = { mainNavController.popBackStack() },
+                            onSessionClick = this@MainActivity::onSessionClick,
                             onSocialLinkClick = { socialItem, speaker ->
                                 socialItem.link?.let { link ->
                                     externalContentService.openUrl(link)
@@ -139,6 +165,19 @@ class MainActivity : ComponentActivity(), NavController.OnDestinationChangedList
         }
     }
 
+    private fun onSessionClick(session: Session) {
+        when (session.type) {
+            SessionType.QUICKIE,
+            SessionType.CONFERENCE,
+            SessionType.CODELAB -> {
+                navController.navigate("${Screen.Session.route}/${session.id}")
+            }
+
+            else -> {}
+        }
+        analyticsService.eventSessionOpened(session.id)
+    }
+
     override fun onDestinationChanged(
         controller: NavController,
         destination: NavDestination,
@@ -161,6 +200,8 @@ class MainActivity : ComponentActivity(), NavController.OnDestinationChangedList
                 analyticsService.pageEvent(AnalyticsPage.SETTINGS, route)
             } else if (route == Screen.DataCollection.route) {
                 analyticsService.pageEvent(AnalyticsPage.DATASHARING, route)
+            } else if (route == Screen.Speaker.route) {
+                analyticsService.pageEvent(AnalyticsPage.SPEAKER, route)
             }
         }
     }

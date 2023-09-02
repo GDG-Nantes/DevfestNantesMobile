@@ -32,6 +32,8 @@ interface AnalyticsService {
 
     fun eventSessionOpened(sessionId: String)
 
+    fun eventSpeakerOpened(speakerId: String)
+
     fun eventSpeakerSocialLinkOpened(speakerId: String, type: SocialType)
 
     fun eventVenueNavigationClicked()

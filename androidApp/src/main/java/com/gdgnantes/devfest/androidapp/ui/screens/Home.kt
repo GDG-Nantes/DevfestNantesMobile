@@ -24,8 +24,10 @@ import com.gdgnantes.devfest.androidapp.ui.components.appbars.BottomAppBar
 import com.gdgnantes.devfest.androidapp.ui.components.appbars.TopAppBar
 import com.gdgnantes.devfest.androidapp.ui.screens.about.About
 import com.gdgnantes.devfest.androidapp.ui.screens.agenda.Agenda
+import com.gdgnantes.devfest.androidapp.ui.screens.speakers.Speakers
 import com.gdgnantes.devfest.androidapp.ui.screens.venue.Venue
 import com.gdgnantes.devfest.model.Session
+import com.gdgnantes.devfest.model.Speaker
 import com.gdgnantes.devfest.model.WebLinks.*
 import kotlinx.coroutines.launch
 
@@ -37,7 +39,8 @@ fun Home(
     externalContentService: ExternalContentService,
     startDestination: Screen = Screen.Agenda,
     onSessionClick: ((Session) -> Unit),
-    onSettingsClick: () -> Unit
+    onSpeakerClick: ((Speaker) -> Unit),
+    onSettingsClick: () -> Unit,
 ) {
     val homeNavController = rememberNavController()
 
@@ -45,6 +48,7 @@ fun Home(
         destination.route?.let { route ->
             when (route) {
                 Screen.Agenda.route -> analyticsService.pageEvent(AnalyticsPage.AGENDA, route)
+                Screen.Speakers.route -> analyticsService.pageEvent(AnalyticsPage.SPEAKERS, route)
                 Screen.Venue.route -> analyticsService.pageEvent(AnalyticsPage.VENUE, route)
                 Screen.About.route -> analyticsService.pageEvent(AnalyticsPage.ABOUT, route)
             }
@@ -113,6 +117,12 @@ fun Home(
                 Agenda(
                     agendaFilterDrawerState = agendaFilterDrawerState,
                     onSessionClick = onSessionClick
+                )
+            }
+
+            composable(Screen.Speakers.route) {
+                Speakers(
+                    onSpeakerClick = onSpeakerClick
                 )
             }
 

@@ -75,7 +75,7 @@ fun SessionDetails(
         )
 
         session.speakers.forEach { speaker ->
-            SpeakerDetails(
+            SessionSpeaker(
                 speaker = speaker,
                 onSocialLinkClick = onSocialLinkClick
             )

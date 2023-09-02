@@ -1,9 +1,12 @@
 package com.gdgnantes.devfest.androidapp.ui.screens.about
 
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -15,7 +18,6 @@ import com.gdgnantes.devfest.androidapp.ui.screens.about.partners.Partners
 import com.gdgnantes.devfest.androidapp.ui.theme.DevFestNantesTheme
 import com.gdgnantes.devfest.model.Partner
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun About(
     modifier: Modifier = Modifier,

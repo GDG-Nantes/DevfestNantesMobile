@@ -1,8 +1,14 @@
+@file:OptIn(ExperimentalFoundationApi::class)
+
 package com.gdgnantes.devfest.androidapp.ui.screens.agenda
 
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.pager.HorizontalPager
+import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.material3.*
+import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
@@ -10,17 +16,12 @@ import androidx.compose.ui.platform.LocalContext
 import com.gdgnantes.devfest.androidapp.ui.UiState
 import com.gdgnantes.devfest.androidapp.ui.components.LoadingLayout
 import com.gdgnantes.devfest.androidapp.utils.getDayFromIso8601
-import com.gdgnantes.devfest.androidapp.utils.pagerTabIndicatorOffset
 import com.gdgnantes.devfest.model.AgendaDay
 import com.gdgnantes.devfest.model.Session
-import com.google.accompanist.pager.ExperimentalPagerApi
-import com.google.accompanist.pager.HorizontalPager
-import com.google.accompanist.pager.rememberPagerState
 import com.google.accompanist.swiperefresh.SwipeRefresh
 import com.google.accompanist.swiperefresh.SwipeRefreshState
 import kotlinx.coroutines.launch
 
-@OptIn(ExperimentalPagerApi::class)
 @Composable
 fun AgendaPager(
     modifier: Modifier = Modifier,
@@ -39,7 +40,9 @@ fun AgendaPager(
             // Override the indicator, using the provided pagerTabIndicatorOffset modifier
             indicator = { tabPositions ->
                 TabRowDefaults.Indicator(
-                    Modifier.pagerTabIndicatorOffset(pagerState, tabPositions)
+                    Modifier.tabIndicatorOffset(
+                        tabPositions[pagerState.currentPage]
+                    )
                 )
             }
         ) {
@@ -60,7 +63,7 @@ fun AgendaPager(
         }
 
         HorizontalPager(
-            count = days.size,
+            pageCount = days.size,
             state = pagerState,
         ) { page ->
             SwipeRefresh(

@@ -4,8 +4,20 @@ import com.apollographql.apollo3.ApolloClient
 import com.apollographql.apollo3.cache.normalized.FetchPolicy
 import com.apollographql.apollo3.cache.normalized.fetchPolicy
 import com.apollographql.apollo3.exception.ApolloException
-import com.gdgnantes.devfest.graphql.*
-import com.gdgnantes.devfest.model.*
+import com.gdgnantes.devfest.graphql.GetPartnerGroupsQuery
+import com.gdgnantes.devfest.graphql.GetRoomsQuery
+import com.gdgnantes.devfest.graphql.GetSessionQuery
+import com.gdgnantes.devfest.graphql.GetSessionsQuery
+import com.gdgnantes.devfest.graphql.GetSpeakersQuery
+import com.gdgnantes.devfest.graphql.GetVenueQuery
+import com.gdgnantes.devfest.model.Agenda
+import com.gdgnantes.devfest.model.ContentLanguage
+import com.gdgnantes.devfest.model.Partner
+import com.gdgnantes.devfest.model.PartnerCategory
+import com.gdgnantes.devfest.model.Room
+import com.gdgnantes.devfest.model.Session
+import com.gdgnantes.devfest.model.Speaker
+import com.gdgnantes.devfest.model.Venue
 import com.gdgnantes.devfest.model.stubs.buildVenueStub
 import com.gdgnantes.devfest.store.DevFestNantesStore
 import kotlinx.coroutines.flow.Flow
@@ -96,6 +108,18 @@ internal class GraphQLStore(private val apolloClient: ApolloClient) : DevFestNan
         } catch (e: ApolloException) {
             println(e.message)
             null
+        }
+    }
+
+    override suspend fun getSpeakerSessions(speakerId: String): List<Session> {
+        return try {
+            val response = apolloClient.query(GetSessionsQuery()).execute()
+            response.dataAssertNoErrors.sessions.nodes
+                .map { it.sessionDetails.toSession() }
+                .filter { it.speakers.any { speaker -> speaker.id == speakerId } }
+        } catch (e: ApolloException) {
+            println(e.message)
+            emptyList()
         }
     }
 
