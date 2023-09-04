@@ -6,6 +6,6 @@ import com.apollographql.apollo3.cache.normalized.normalizedCache
 
 val apolloClient = ApolloClient.Builder()
     .serverUrl("https://graphql-dot-confetti-349319.uw.r.appspot.com/graphql")
-    .httpHeaders(listOf(HttpHeader("conference", "devfestnantes")))
+    .httpHeaders(listOf(HttpHeader("conference", "devfestnantes2023")))
     .normalizedCache(normalizedCache)
     .build()
