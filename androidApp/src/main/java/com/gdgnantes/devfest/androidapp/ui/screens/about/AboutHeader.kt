@@ -2,8 +2,8 @@ package com.gdgnantes.devfest.androidapp.ui.screens.about
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.Image
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
@@ -12,8 +12,6 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.graphics.ColorFilter
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
@@ -30,14 +28,15 @@ fun AboutHeader(
             .fillMaxWidth(),
         verticalArrangement = Arrangement.spacedBy(8.dp),
     ) {
-        Image(
+        Box(
             modifier = Modifier.fillMaxWidth(),
-            painter = painterResource(id = R.drawable.ic_about_header),
-            contentDescription = stringResource(id = R.string.content_description_about_header),
-            colorFilter = if (isSystemInDarkTheme()) ColorFilter.tint(
-                color = Color.White
-            ) else null
-        )
+        ) {
+            Image(
+                modifier = Modifier.fillMaxWidth(),
+                painter = painterResource(id = R.drawable.about_header),
+                contentDescription = stringResource(id = R.string.content_description_about_header)
+            )
+        }
 
         Text(
             modifier = Modifier.padding(vertical = 8.dp),
