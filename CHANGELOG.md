@@ -6,6 +6,8 @@ Version 2.0.0 *(2023-??-??)*
 
 * 📣 Enables dynamic colors.
 * 📣 Adds a speakers page.
+* ☁️ Fetches DevFest Nantes 2023's agenda.
+* 🖼️ Updates texts and UI assets for DevFest Nantes 2023.
 * ⬆️ Bump com.android.tools.build:gradle from 7.4.2 to 8.0.2.
 * ⬆️ Uses ComposeBOM to manage compose dependencies.
 * ⬆️ Bumps Kotlin version to 1.8.22.
