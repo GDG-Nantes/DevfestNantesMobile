@@ -110,6 +110,13 @@ class FirebaseAnalyticsService: AnalyticsService{
             ]
         )
     }
+
+    func eventSpeakerOpened(speakerId: String) {
+        Analytics.logEvent(AnalyticsEvent.speakerOpened.description(), parameters: [
+            AnalyticsParam.speakerId.description(): String(speakerId)
+            ]
+        )
+    }
     
     
     func eventSpeakerOpened(speakerId: String) {
