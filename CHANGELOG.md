@@ -1,10 +1,12 @@
 Change Log
 ==========
 
-Version 2.0.1 *(2023-??-??)*
+Version 2.0.1 *(2023-09-??)*
 ----------------------------
 
+* 📣 Adds new partners category.
 * 🖼️ Improves starting state handling.
+* 🖼️ Forces the partner logos to use a dark background. (same as the website's one).
 
 Version 2.0.0 *(2023-09-05)*
 ----------------------------
