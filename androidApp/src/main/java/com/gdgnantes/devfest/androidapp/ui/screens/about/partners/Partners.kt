@@ -81,11 +81,7 @@ fun PartnersGroup(
     onPartnerClick: (Partner) -> Unit
 ) {
     OutlinedCard(
-        modifier = modifier,
-        colors = CardDefaults.cardColors(
-            containerColor = MaterialTheme.colorScheme.background,
-            contentColor = MaterialTheme.colorScheme.onBackground
-        )
+        modifier = modifier
     ) {
         Column(Modifier.padding(vertical = 8.dp)) {
             Text(
