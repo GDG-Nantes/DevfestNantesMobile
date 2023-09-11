@@ -1,4 +1,4 @@
-package com.gdgnantes.devfest.androidapp.ui.screens.speakers
+package com.gdgnantes.devfest.androidapp.ui.screens.speakers.list
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

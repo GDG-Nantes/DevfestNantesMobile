@@ -1,4 +1,4 @@
-package com.gdgnantes.devfest.androidapp.ui.screens.speakers
+package com.gdgnantes.devfest.androidapp.ui.screens.speakers.details
 
 import android.annotation.SuppressLint
 import android.content.res.Configuration
@@ -12,6 +12,7 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.gdgnantes.devfest.androidapp.ui.components.SocialIcon
+import com.gdgnantes.devfest.androidapp.ui.screens.speakers.SpeakerPicture
 import com.gdgnantes.devfest.androidapp.ui.theme.DevFestNantesTheme
 import com.gdgnantes.devfest.model.SocialItem
 import com.gdgnantes.devfest.model.Speaker

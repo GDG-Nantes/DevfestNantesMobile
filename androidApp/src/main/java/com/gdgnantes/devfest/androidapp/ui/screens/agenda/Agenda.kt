@@ -37,7 +37,6 @@ fun Agenda(
     )
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AgendaLayout(
     modifier: Modifier = Modifier,
