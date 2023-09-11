@@ -30,6 +30,7 @@ fun Partners(
         platiniumPartners = viewModel.platiniumPartners.collectAsState(),
         goldPartners = viewModel.goldPartners.collectAsState(),
         virtualPartners = viewModel.virtualPartners.collectAsState(),
+        partnersPartners = viewModel.partnersPartners.collectAsState(),
         onPartnerClick = onPartnerClick
     )
 }
@@ -40,6 +41,7 @@ fun Partners(
     platiniumPartners: State<List<Partner>>,
     goldPartners: State<List<Partner>>,
     virtualPartners: State<List<Partner>>,
+    partnersPartners: State<List<Partner>>,
     onPartnerClick: (Partner) -> Unit
 ) {
     Column(
@@ -68,6 +70,11 @@ fun Partners(
         PartnersGroup(
             title = stringResource(R.string.partners_virtual_title),
             partners = virtualPartners.value,
+            onPartnerClick = onPartnerClick
+        )
+        PartnersGroup(
+            title = stringResource(R.string.partners_partners_title),
+            partners = partnersPartners.value,
             onPartnerClick = onPartnerClick
         )
     }

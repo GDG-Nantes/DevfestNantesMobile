@@ -13,7 +13,7 @@ fun GetPartnerGroupsQuery.PartnerGroup.toPartnersGroup(): Pair<PartnerCategory, 
         "platinium" -> PartnerCategory.PLATINIUM
         "gold" -> PartnerCategory.GOLD
         "virtual" -> PartnerCategory.VIRTUAL
-        else -> PartnerCategory.VIRTUAL
+        else -> PartnerCategory.PARTNERS
     }
     return partnerCategory to partners.map { it.toPartner() }
 }

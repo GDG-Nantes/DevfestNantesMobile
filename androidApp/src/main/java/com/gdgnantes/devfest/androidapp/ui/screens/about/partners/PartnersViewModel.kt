@@ -27,12 +27,16 @@ class PartnersViewModel @Inject constructor(
     private val _virtualPartners = MutableStateFlow<List<Partner>>(emptyList())
     val virtualPartners: StateFlow<List<Partner>> = _virtualPartners.asStateFlow()
 
+    private val _partnersPartners = MutableStateFlow<List<Partner>>(emptyList())
+    val partnersPartners: StateFlow<List<Partner>> = _partnersPartners.asStateFlow()
+
     init {
         viewModelScope.launch {
             store.partners.collectLatest {
                 _platiniumPartners.value = it[PartnerCategory.PLATINIUM] ?: emptyList()
                 _goldPartners.value = it[PartnerCategory.GOLD] ?: emptyList()
                 _virtualPartners.value = it[PartnerCategory.VIRTUAL] ?: emptyList()
+                _partnersPartners.value = it[PartnerCategory.PARTNERS] ?: emptyList()
             }
         }
     }

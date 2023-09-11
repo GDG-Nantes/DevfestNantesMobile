@@ -37,6 +37,7 @@
     <string name="partners_platinium_title" translatable="false">PLATINIUM</string>
     <string name="partners_gold_title" translatable="false">GOLD</string>
     <string name="partners_virtual_title" translatable="false">VIRTUAL</string>
+    <string name="partners_partners_title" translatable="false">PARTNERS</string>
     <string name="content_description_logo">%1$s logo. Link to the web page.</string>
     <string name="content_description_speaker_website_icon">Website icon. Link to the speaker\'s website.</string>
     <string name="content_description_speaker_picture">%1$s\'s profile picture.</string>
