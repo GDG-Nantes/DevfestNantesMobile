@@ -1,7 +1,12 @@
 Change Log
 ==========
 
-Version 2.0.0 *(2023-??-??)*
+Version 2.0.1 *(2023-??-??)*
+----------------------------
+
+* 🖼️ Improves starting state handling.
+
+Version 2.0.0 *(2023-09-05)*
 ----------------------------
 
 * 📣 Enables dynamic colors.
