@@ -1,4 +1,4 @@
-package com.gdgnantes.devfest.androidapp.ui.screens.speakers
+package com.gdgnantes.devfest.androidapp.ui.screens.speakers.details
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -22,7 +22,10 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.gdgnantes.devfest.androidapp.R
+import com.gdgnantes.devfest.androidapp.ui.UiState
+import com.gdgnantes.devfest.androidapp.ui.components.LoadingLayout
 import com.gdgnantes.devfest.androidapp.ui.components.appbars.TopAppBar
+import com.gdgnantes.devfest.androidapp.ui.screens.speakers.SpeakerViewModel
 import com.gdgnantes.devfest.model.Session
 import com.gdgnantes.devfest.model.SocialItem
 import com.gdgnantes.devfest.model.Speaker
@@ -37,6 +40,7 @@ fun SpeakerLayout(
 ) {
     SpeakerLayout(
         modifier = modifier,
+        uiState = viewModel.uiState.collectAsState(),
         sessions = viewModel.sessions.collectAsState(),
         speaker = viewModel.speaker.collectAsState(),
         onBackClick = onBackClick,
@@ -48,6 +52,7 @@ fun SpeakerLayout(
 @Composable
 fun SpeakerLayout(
     modifier: Modifier = Modifier,
+    uiState: State<UiState>,
     sessions: State<List<Session>>,
     speaker: State<Speaker?>,
     onBackClick: () -> Unit,
@@ -56,6 +61,7 @@ fun SpeakerLayout(
 ) {
     SpeakerLayout(
         modifier = modifier,
+        uiState = uiState.value,
         sessions = sessions.value,
         speaker = speaker.value,
         onBackClick = onBackClick,
@@ -67,6 +73,7 @@ fun SpeakerLayout(
 @Composable
 fun SpeakerLayout(
     modifier: Modifier = Modifier,
+    uiState: UiState,
     sessions: List<Session>,
     speaker: Speaker?,
     onBackClick: () -> Unit,
@@ -91,40 +98,48 @@ fun SpeakerLayout(
             )
         }
     ) {
-        Box(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(it)
-        ) {
-            speaker?.let {
-                LazyColumn(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(16.dp),
-                    verticalArrangement = Arrangement.spacedBy(8.dp)
-                ) {
+        if (uiState == UiState.STARTING) {
+            LoadingLayout(
+                modifier = modifier
+                    .padding(it)
+                    .fillMaxSize()
+            )
+        } else {
+            Box(
+                modifier = Modifier
+                    .fillMaxSize()
+                    .padding(it)
+            ) {
+                speaker?.let {
+                    LazyColumn(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .padding(16.dp),
+                        verticalArrangement = Arrangement.spacedBy(8.dp)
+                    ) {
 
-                    item {
-                        SpeakerDetails(
-                            modifier = Modifier.fillMaxWidth(),
-                            speaker = speaker,
-                            onSocialLinkClick = onSocialLinkClick
-                        )
-                    }
+                        item {
+                            SpeakerDetails(
+                                modifier = Modifier.fillMaxWidth(),
+                                speaker = speaker,
+                                onSocialLinkClick = onSocialLinkClick
+                            )
+                        }
 
-                    item {
-                        Text(
-                            "Talks",
-                            style = MaterialTheme.typography.titleMedium
-                        )
-                    }
+                        item {
+                            Text(
+                                "Talks",
+                                style = MaterialTheme.typography.titleMedium
+                            )
+                        }
 
-                    items(sessions) { session ->
-                        SpeakerSession(
-                            modifier = Modifier.fillMaxWidth(),
-                            session = session,
-                            onSessionClick = onSessionClick
-                        )
+                        items(sessions) { session ->
+                            SpeakerSession(
+                                modifier = Modifier.fillMaxWidth(),
+                                session = session,
+                                onSessionClick = onSessionClick
+                            )
+                        }
                     }
                 }
             }

@@ -1,4 +1,4 @@
-package com.gdgnantes.devfest.androidapp.ui.screens.speakers
+package com.gdgnantes.devfest.androidapp.ui.screens.speakers.list
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.gestures.detectVerticalDragGestures
@@ -41,6 +41,8 @@ import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.gdgnantes.devfest.androidapp.ui.UiState
+import com.gdgnantes.devfest.androidapp.ui.components.LoadingLayout
+import com.gdgnantes.devfest.androidapp.ui.screens.speakers.SpeakerPicture
 import com.gdgnantes.devfest.model.Speaker
 import kotlinx.coroutines.launch
 
@@ -89,31 +91,39 @@ fun Speakers(
     var alphabetDistanceFromTopOfScreen: Float by remember { mutableStateOf(0F) }
 
     Scaffold {
-        Surface(
-            modifier = modifier
-                .padding(it)
-                .fillMaxSize(),
-            color = MaterialTheme.colorScheme.background
-        ) {
-            BoxWithConstraints {
-                SpeakersListWithScroller(
-                    speakers = speakers,
-                    onAlphabetListDrag = { relativeDragYOffset, containerDistance ->
-                        alphabetRelativeDragYOffset = relativeDragYOffset
-                        alphabetDistanceFromTopOfScreen = containerDistance
-                    },
-                    onSpeakerClick = onSpeakerClick
-                )
-
-                val yOffset = alphabetRelativeDragYOffset
-                if (yOffset != null) {
-                    ScrollingBubble(
-                        boxConstraintMaxWidth = this.maxWidth,
-                        bubbleOffsetYFloat = yOffset + alphabetDistanceFromTopOfScreen,
-                        currAlphabetScrolledOn = yOffset.getIndexOfCharBasedOnYPosition(
-                            alphabetHeightInPixels = alphabetHeightInPixels,
-                        ),
+        if (uiState == UiState.STARTING) {
+            LoadingLayout(
+                modifier = modifier
+                    .padding(it)
+                    .fillMaxSize()
+            )
+        } else {
+            Surface(
+                modifier = modifier
+                    .padding(it)
+                    .fillMaxSize(),
+                color = MaterialTheme.colorScheme.background
+            ) {
+                BoxWithConstraints {
+                    SpeakersListWithScroller(
+                        speakers = speakers,
+                        onAlphabetListDrag = { relativeDragYOffset, containerDistance ->
+                            alphabetRelativeDragYOffset = relativeDragYOffset
+                            alphabetDistanceFromTopOfScreen = containerDistance
+                        },
+                        onSpeakerClick = onSpeakerClick
                     )
+
+                    val yOffset = alphabetRelativeDragYOffset
+                    if (yOffset != null) {
+                        ScrollingBubble(
+                            boxConstraintMaxWidth = this.maxWidth,
+                            bubbleOffsetYFloat = yOffset + alphabetDistanceFromTopOfScreen,
+                            currAlphabetScrolledOn = yOffset.getIndexOfCharBasedOnYPosition(
+                                alphabetHeightInPixels = alphabetHeightInPixels,
+                            ),
+                        )
+                    }
                 }
             }
         }

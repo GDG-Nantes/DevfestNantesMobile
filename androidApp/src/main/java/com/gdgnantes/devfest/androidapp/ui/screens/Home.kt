@@ -24,7 +24,7 @@ import com.gdgnantes.devfest.androidapp.ui.components.appbars.BottomAppBar
 import com.gdgnantes.devfest.androidapp.ui.components.appbars.TopAppBar
 import com.gdgnantes.devfest.androidapp.ui.screens.about.About
 import com.gdgnantes.devfest.androidapp.ui.screens.agenda.Agenda
-import com.gdgnantes.devfest.androidapp.ui.screens.speakers.Speakers
+import com.gdgnantes.devfest.androidapp.ui.screens.speakers.list.Speakers
 import com.gdgnantes.devfest.androidapp.ui.screens.venue.Venue
 import com.gdgnantes.devfest.model.Session
 import com.gdgnantes.devfest.model.Speaker
