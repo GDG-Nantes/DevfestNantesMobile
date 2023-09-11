@@ -19,6 +19,7 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import com.gdgnantes.devfest.androidapp.R
 import com.gdgnantes.devfest.androidapp.ui.theme.DevFestNantesTheme
+import com.gdgnantes.devfest.androidapp.ui.theme.partnersLogoBackground
 import com.gdgnantes.devfest.model.Partner
 import com.gdgnantes.devfest.model.stubs.buildPartnerStub
 import timber.log.Timber
@@ -33,8 +34,8 @@ fun PartnerCard(
         Card(
             modifier = modifier,
             colors = CardDefaults.cardColors(
-                containerColor = Color.White,
-                contentColor = Color.Black
+                containerColor = partnersLogoBackground,
+                contentColor = Color.LightGray
             )
         ) {
             AsyncImage(

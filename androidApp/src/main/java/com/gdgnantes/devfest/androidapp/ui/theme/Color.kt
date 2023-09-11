@@ -67,3 +67,4 @@ val md_theme_dark_scrim = Color(0xFF000000)
 
 val seed = Color(0xFFDA7C58)
 val bookmarked = md_theme_light_tertiary
+val partnersLogoBackground = Color(0xFF101421)
