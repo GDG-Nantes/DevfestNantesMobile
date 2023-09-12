@@ -26,7 +26,6 @@ struct AboutView: View {
                                 Image("ic_about_header")
                                     .resizable()
                                     .aspectRatio(contentMode: .fit)
-                                    .foregroundColor(Color(Asset.devFestBlue.color))
                                 Text(L10n.screenAboutHeaderBody)
                                 HStack(spacing: 24) {
                                     CustomButton(url: URL(string: WebLinks.codeOfConduct.url)!) {
@@ -118,7 +117,7 @@ struct AboutView: View {
                                                     .frame(maxHeight: 50)
                                                     .padding(8)
                                                     .background(
-                                                        RoundedRectangle(cornerRadius: 20, style: .continuous).fill(Color.white)
+                                                        RoundedRectangle(cornerRadius: 20, style: .continuous).fill(Color(Asset.devFestBlue.color))
                                                     )
                                                 }
                                             }

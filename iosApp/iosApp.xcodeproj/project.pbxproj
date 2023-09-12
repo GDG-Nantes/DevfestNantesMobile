@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 54;
+	objectVersion = 53;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -42,6 +42,7 @@
 		CBCB60EF28E485D5001E9B1A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CBCB60EE28E485D5001E9B1A /* GoogleService-Info.plist */; };
 		CBCB60FA28E48F27001E9B1A /* FirebaseAnalyticsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBCB60F928E48F27001E9B1A /* FirebaseAnalyticsService.swift */; };
 		CBCB610228E99990001E9B1A /* WebLinks.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBCB610128E99990001E9B1A /* WebLinks.swift */; };
+		CBDFA0232AAF566500302D34 /* SpeakersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDFA0222AAF566500302D34 /* SpeakersView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -99,6 +100,7 @@
 		CBCB60EE28E485D5001E9B1A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		CBCB60F928E48F27001E9B1A /* FirebaseAnalyticsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseAnalyticsService.swift; sourceTree = "<group>"; };
 		CBCB610128E99990001E9B1A /* WebLinks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebLinks.swift; sourceTree = "<group>"; };
+		CBDFA0222AAF566500302D34 /* SpeakersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeakersView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -232,6 +234,7 @@
 				CB46914029157375004C6120 /* Common */,
 				CB73E80E28A5501B0014B9AF /* Agenda */,
 				CB179BD128D0D8FF00BB9934 /* Venue */,
+				CBDFA0212AAF565000302D34 /* Speakers */,
 				CB179BE128D37E4C00BB9934 /* About */,
 			);
 			path = UI;
@@ -295,6 +298,14 @@
 				CBCB60F928E48F27001E9B1A /* FirebaseAnalyticsService.swift */,
 			);
 			path = Analytics;
+			sourceTree = "<group>";
+		};
+		CBDFA0212AAF565000302D34 /* Speakers */ = {
+			isa = PBXGroup;
+			children = (
+				CBDFA0222AAF566500302D34 /* SpeakersView.swift */,
+			);
+			path = Speakers;
 			sourceTree = "<group>";
 		};
 		D55A5A220E17EC8ED6D399D0 /* Frameworks */ = {
@@ -476,8 +487,7 @@
 		};
 		CB179BED28D4BD7600BB9934 /* SwiftGen */ = {
 			isa = PBXShellScriptBuildPhase;
-			alwaysOutOfDate = 1;
-			buildActionMask = 8;
+			buildActionMask = 12;
 			files = (
 			);
 			inputFileListPaths = (
@@ -489,7 +499,7 @@
 			);
 			outputPaths = (
 			);
-			runOnlyForDeploymentPostprocessing = 1;
+			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "$PODS_ROOT/SwiftGen/bin/swiftgen config run --config \"$PROJECT_DIR\"/iosApp/SwiftGen/swiftgen.yml\n";
 		};
@@ -538,6 +548,7 @@
 				CBA5C23228DBC5CA00D2779B /* Assets.swift in Sources */,
 				7555FF83242A565900829871 /* ContentView.swift in Sources */,
 				CBCB610228E99990001E9B1A /* WebLinks.swift in Sources */,
+				CBDFA0232AAF566500302D34 /* SpeakersView.swift in Sources */,
 				CB46914329196228004C6120 /* Complexity-extension.swift in Sources */,
 				CB837AB6287B7D1200FEDAA1 /* AgendaView.swift in Sources */,
 				CB837ABA287B7D9200FEDAA1 /* AboutView.swift in Sources */,

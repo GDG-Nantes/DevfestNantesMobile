@@ -18,13 +18,21 @@ struct ContentView: View {
                     }
                 }.tag(0)
             
+            SpeakersView(viewModel: viewModel)
+                .tabItem {
+                    VStack {
+                        Image(systemName: "person.3.fill")
+                        Text(L10n.screenSpeakers)
+                    }
+                }.tag(1)
+            
             VenueView(viewModel: viewModel)
                 .tabItem {
                     VStack {
                         Image(systemName: "location.circle.fill")
                         Text(L10n.screenVenue)
                     }
-                }.tag(1)
+                }.tag(2)
             
             AboutView(viewModel: viewModel)
                 .tabItem {
@@ -32,7 +40,7 @@ struct ContentView: View {
                         Image(systemName: "info.circle")
                         Text(L10n.screenAbout)
                     }
-                }.tag(2)
+                }.tag(3)
         }
         .onAppear{
             // correct the transparency bug for Tab bars

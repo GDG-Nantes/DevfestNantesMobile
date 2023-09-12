@@ -34,6 +34,8 @@ internal enum L10n {
   internal static let btnCancel = L10n.tr("Localizable", "btn_cancel", fallback: "Cancel")
   /// OK
   internal static let btnOk = L10n.tr("Localizable", "btn_ok", fallback: "OK")
+  /// Customize
+  internal static let buttonDialogDataCollectionConsentCustomize = L10n.tr("Localizable", "button_dialog_data_collection_consent_customize", fallback: "Customize")
   /// Advanced
   internal static let complexityAdvanced = L10n.tr("Localizable", "complexity_advanced", fallback: "Advanced")
   /// Beginer
@@ -42,10 +44,16 @@ internal enum L10n {
   internal static let complexityIntermediate = L10n.tr("Localizable", "complexity_intermediate", fallback: "Intermediate")
   /// DevFest Nantes about logo header.
   internal static let contentDescriptionAboutHeader = L10n.tr("Localizable", "content_description_about_header", fallback: "DevFest Nantes about logo header.")
+  /// Lock icon.
+  internal static let contentDescriptionDataCollectionLogo = L10n.tr("Localizable", "content_description_data_collection_logo", fallback: "Lock icon.")
+  /// Logo of the Local communities. Click to open the website.
+  internal static let contentDescriptionLocalCommunitiesLogo = L10n.tr("Localizable", "content_description_local_communities_logo", fallback: "Logo of the Local communities. Click to open the website.")
   /// %1$s logo. Link to the web page.
   internal static func contentDescriptionLogo(_ p1: UnsafePointer<CChar>) -> String {
     return L10n.tr("Localizable", "content_description_logo", p1, fallback: "%1$s logo. Link to the web page.")
   }
+  /// Github logo
+  internal static let contentDescriptionLogoGithub = L10n.tr("Localizable", "content_description_logo_github", fallback: "Github logo")
   /// %1$s's profile picture.
   internal static func contentDescriptionSpeakerPicture(_ p1: UnsafePointer<CChar>) -> String {
     return L10n.tr("Localizable", "content_description_speaker_picture", p1, fallback: "%1$s's profile picture.")
@@ -60,26 +68,32 @@ internal enum L10n {
   internal static let emptyDay = L10n.tr("Localizable", "empty_day", fallback: "Sorry, there is no conference available for the selected filters.")
   /// Clear
   internal static let filterClear = L10n.tr("Localizable", "filter_clear", fallback: "Clear")
-  /// Complexity
-  internal static let filterComplexity = L10n.tr("Localizable", "filter_complexity", fallback: "Complexity")
   /// Favorites
   internal static let filterFavorites = L10n.tr("Localizable", "filter_favorites", fallback: "Favorites")
-  /// Languages
-  internal static let filterLanguage = L10n.tr("Localizable", "filter_language", fallback: "Languages")
-  /// Rooms
-  internal static let filterRooms = L10n.tr("Localizable", "filter_rooms", fallback: "Rooms")
-  /// Session Type
-  internal static let filterSessionType = L10n.tr("Localizable", "filter_sessionType", fallback: "Session Type")
   /// Fork me on github
   internal static let forkMeOnGithub = L10n.tr("Localizable", "fork_me_on_github", fallback: "Fork me on github")
-  /// 🇬🇧 English
-  internal static let languageEnglish = L10n.tr("Localizable", "language_english", fallback: "🇬🇧 English")
-  /// 🇫🇷 French
-  internal static let languageFrench = L10n.tr("Localizable", "language_french", fallback: "🇫🇷 French")
+  /// english
+  internal static let languageEnglish = L10n.tr("Localizable", "language_english", fallback: "english")
+  /// french
+  internal static let languageFrench = L10n.tr("Localizable", "language_french", fallback: "french")
+  /// Accept all
+  internal static let legalDataCollectionAcceptAll = L10n.tr("Localizable", "legal_data_collection_accept_all", fallback: "Accept all")
+  /// The anonymous data you may share with us allows us to improve the app.
+  internal static let legalDataCollectionBody = L10n.tr("Localizable", "legal_data_collection_body", fallback: "The anonymous data you may share with us allows us to improve the app.")
+  /// We use third party tools to measure and improve performances. No commercial use is made of this data. By clicking on "Consent" or by activating these tools in the settings, you consent to the use of these services and technologies.
+  internal static let legalDataCollectionConsentDialogBody = L10n.tr("Localizable", "legal_data_collection_consent_dialog_body", fallback: "We use third party tools to measure and improve performances. No commercial use is made of this data. By clicking on \"Consent\" or by activating these tools in the settings, you consent to the use of these services and technologies.")
+  /// Consent
+  internal static let legalDataCollectionConsentDialogButtonConsent = L10n.tr("Localizable", "legal_data_collection_consent_dialog_button_consent", fallback: "Consent")
+  /// We use Firebase Crashlytics to collect anonymous data when a bug occurs. It helps us to improve the stability of the app.
+  internal static let legalDataCollectionFirebaseCrashlyticsDescription = L10n.tr("Localizable", "legal_data_collection_firebase_crashlytics_description", fallback: "We use Firebase Crashlytics to collect anonymous data when a bug occurs. It helps us to improve the stability of the app.")
+  /// Firebase Crashlytics
+  internal static let legalDataCollectionFirebaseCrashlyticsTitle = L10n.tr("Localizable", "legal_data_collection_firebase_crashlytics_title", fallback: "Firebase Crashlytics")
+  /// We use Google Analytics to collect anonymous data to measure how users interact with the app.
+  internal static let legalDataCollectionGoogleAnalyticsDescription = L10n.tr("Localizable", "legal_data_collection_google_analytics_description", fallback: "We use Google Analytics to collect anonymous data to measure how users interact with the app.")
+  /// Google Analytics
+  internal static let legalDataCollectionGoogleAnalyticsTitle = L10n.tr("Localizable", "legal_data_collection_google_analytics_title", fallback: "Google Analytics")
   /// Loading...
   internal static let loading = L10n.tr("Localizable", "loading", fallback: "Loading...")
-  /// 🌍 Local communities website
-  internal static let localCommunitiesButton = L10n.tr("Localizable", "local_communities_button", fallback: "🌍 Local communities website")
   /// Local communities
   internal static let localCommunitiesTitle = L10n.tr("Localizable", "local_communities_title", fallback: "Local communities")
   /// GOLD
@@ -90,6 +104,8 @@ internal enum L10n {
   internal static let partnersTitle = L10n.tr("Localizable", "partners_title", fallback: "Partners")
   /// VIRTUAL
   internal static let partnersVirtualTitle = L10n.tr("Localizable", "partners_virtual_title", fallback: "VIRTUAL")
+  /// Session details
+  internal static let placeholderSessionDetails = L10n.tr("Localizable", "placeholder_session_details", fallback: "Session details")
   /// Plan of the conference
   internal static let plan = L10n.tr("Localizable", "plan", fallback: "Plan of the conference")
   /// Powered by OpenFeedback
@@ -100,34 +116,60 @@ internal enum L10n {
   internal static let screenAboutHeaderBody = L10n.tr("Localizable", "screen_about_header_body", fallback: "The Devfest (i.e Developers Festival), is a technical conference destined to developers. It's meant for students, professionals, or any curious techie")
   /// Agenda
   internal static let screenAgenda = L10n.tr("Localizable", "screen_agenda", fallback: "Agenda")
+  /// Data collection
+  internal static let screenDataCollection = L10n.tr("Localizable", "screen_data_collection", fallback: "Data collection")
   /// Home
   internal static let screenHome = L10n.tr("Localizable", "screen_home", fallback: "Home")
   /// Session details
   internal static let screenSession = L10n.tr("Localizable", "screen_session", fallback: "Session details")
+  /// Settings
+  internal static let screenSettings = L10n.tr("Localizable", "screen_settings", fallback: "Settings")
+  /// Speaker
+  internal static let screenSpeaker = L10n.tr("Localizable", "screen_speaker", fallback: "Speaker")
+  /// Speakers
+  internal static let screenSpeakers = L10n.tr("Localizable", "screen_speakers", fallback: "Speakers")
   /// Venue
   internal static let screenVenue = L10n.tr("Localizable", "screen_venue", fallback: "Venue")
   /// Provide feedback
   internal static let sessionFeedbackLabel = L10n.tr("Localizable", "session_feedback_label", fallback: "Provide feedback")
   /// Open session filters
   internal static let sessionFiltersAction = L10n.tr("Localizable", "session_filters_action", fallback: "Open session filters")
+  /// Complexity
+  internal static let sessionFiltersDrawerComplexityLabel = L10n.tr("Localizable", "session_filters_drawer_complexity_label", fallback: "Complexity")
   /// Languages
   internal static let sessionFiltersDrawerLanguagesLabel = L10n.tr("Localizable", "session_filters_drawer_languages_label", fallback: "Languages")
   /// Rooms
   internal static let sessionFiltersDrawerRoomsLabel = L10n.tr("Localizable", "session_filters_drawer_rooms_label", fallback: "Rooms")
   /// Filters
   internal static let sessionFiltersDrawerTitle = L10n.tr("Localizable", "session_filters_drawer_title", fallback: "Filters")
+  /// Session type
+  internal static let sessionFiltersDrawerTypeLabel = L10n.tr("Localizable", "session_filters_drawer_type_label", fallback: "Session type")
   /// Codelab
-  internal static let sessionTypeCodelab = L10n.tr("Localizable", "sessionType_Codelab", fallback: "Codelab")
+  internal static let sessionTypeCodelab = L10n.tr("Localizable", "session_type_codelab", fallback: "Codelab")
   /// Conference
-  internal static let sessionTypeConference = L10n.tr("Localizable", "sessionType_Conference", fallback: "Conference")
+  internal static let sessionTypeConference = L10n.tr("Localizable", "session_type_conference", fallback: "Conference")
   /// Quickie
-  internal static let sessionTypeQuickie = L10n.tr("Localizable", "sessionType_Quickie", fallback: "Quickie")
-  /// Home
-  internal static let titleActivityMain = L10n.tr("Localizable", "title_activity_main", fallback: "Home")
+  internal static let sessionTypeQuickie = L10n.tr("Localizable", "session_type_quickie", fallback: "Quickie")
+  /// Open application settings.
+  internal static let settingsAction = L10n.tr("Localizable", "settings_action", fallback: "Open application settings.")
+  /// Customize data collection
+  internal static let settingsDataCollectionSubtitle = L10n.tr("Localizable", "settings_data_collection_subtitle", fallback: "Customize data collection")
+  /// Legal notices
+  internal static let settingsLegal = L10n.tr("Localizable", "settings_legal", fallback: "Legal notices")
+  /// Version
+  internal static let settingsVersionLabel = L10n.tr("Localizable", "settings_version_label", fallback: "Version")
+  /// Support
+  internal static let settingsVersionSupport = L10n.tr("Localizable", "settings_version_support", fallback: "Support")
+  /// Report an issue.
+  internal static let settingsVersionSupportSubtitle = L10n.tr("Localizable", "settings_version_support_subtitle", fallback: "Report an issue.")
+  /// MainActivity
+  internal static let titleActivityMain = L10n.tr("Localizable", "title_activity_main", fallback: "MainActivity")
   /// Go to
   internal static let venueGoToButton = L10n.tr("Localizable", "venue_go_to_button", fallback: "Go to")
   /// Picture of the conference's venue.
   internal static let venueImageContentDescription = L10n.tr("Localizable", "venue_image_content_description", fallback: "Picture of the conference's venue.")
+  /// Plan of the conference's venue. Shows the different spaces and conferences rooms.
+  internal static let venuePlanContentDescription = L10n.tr("Localizable", "venue_plan_content_description", fallback: "Plan of the conference's venue. Shows the different spaces and conferences rooms.")
   /// You will be redirected to an external web page. We can not be held responsible for the content available on the site you are going to visit.
   internal static let webExternalDisclaimerText = L10n.tr("Localizable", "web_external_disclaimer_text", fallback: "You will be redirected to an external web page. We can not be held responsible for the content available on the site you are going to visit.")
   /// Redirection

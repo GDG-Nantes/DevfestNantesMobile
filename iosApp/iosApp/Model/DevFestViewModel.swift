@@ -28,6 +28,7 @@ class DevFestViewModel: ObservableObject {
     @Published var agendaContent: AgendaContent = AgendaContent(sections: [])
     @Published var partnersContent: [PartnerContent]?
     @Published var roomsContent: [Room]?
+    @Published var speakersContent: [Speaker]?
     @Published var isLoading = true
     
     ///Detect phone language
@@ -131,6 +132,24 @@ class DevFestViewModel: ObservableObject {
             Logger.shared.log(.network, .error, "Observe Partners error: \(error)")
         }
     }
+    
+    ///Asynchronous method to retrieve speakers
+    func observeSpeakers() async {
+        Task {
+            do {
+                let stream = asyncStream(for: store.speakersNative)
+                for try await data in stream {
+                    DispatchQueue.main.async {
+                        self.speakersContent = Array(data)
+                    }
+                    
+                }
+                
+            } catch {
+                Logger.shared.log(.network, .error, "Observe Speakers error: \(error)")
+            }
+        }}
+
     
     ///Method to convert a date in string format to ISO 8601 format
     func getDate(date: String) -> Date {

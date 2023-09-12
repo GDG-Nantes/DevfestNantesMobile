@@ -65,41 +65,41 @@ struct AgendaView: View {
                         )
                         Picker("", selection: selected) {
                             Text(L10n.filterFavorites).tag(true)
-                            Menu(L10n.filterLanguage) {
+                            Menu(L10n.sessionFiltersDrawerLanguagesLabel) {
                                 let selected = Binding(
                                     get: { self.selectedLanguage },
                                     set: { self.selectedLanguage = $0 == self.selectedLanguage ? nil : $0 })
-                                Picker(L10n.filterLanguage, selection: selected) {
+                                Picker(L10n.sessionFiltersDrawerLanguagesLabel, selection: selected) {
                                     Text(L10n.languageFrench).tag(Optional(SessionLanguage.french))
                                     Text(L10n.languageEnglish).tag(Optional(SessionLanguage.english))
                                 }
                             }
-                            Menu(L10n.filterComplexity) {
+                            Menu(L10n.sessionFiltersDrawerComplexityLabel) {
                                 let selected = Binding(
                                     get: { self.selectedComplexity },
                                     set: { self.selectedComplexity = $0 == self.selectedComplexity ? nil : $0 })
-                                Picker(L10n.filterComplexity, selection: selected) {
+                                Picker(L10n.sessionFiltersDrawerComplexityLabel, selection: selected) {
                                     Text(L10n.complexityBeginer).tag(Optional(Complexity.beginner))
                                     Text(L10n.complexityIntermediate).tag(Optional(Complexity.intermediate))
                                     Text(L10n.complexityAdvanced).tag(Optional(Complexity.advanced))
                                 }
                             }
                             if let rooms = viewModel.roomsContent {
-                                Menu(L10n.filterRooms) {
+                                Menu(L10n.sessionFiltersDrawerRoomsLabel) {
                                     let selected = Binding(
                                         get: { self.selectedRoom },
                                         set: { self.selectedRoom = $0 == self.selectedRoom ? nil : $0 })
-                                    Picker(L10n.filterRooms, selection: selected) {
+                                    Picker(L10n.sessionFiltersDrawerRoomsLabel, selection: selected) {
                                         ForEach(rooms, id: \.id) { room in
                                             Text(room.name).tag(Optional(room))
                                         }
                                     }
                                 }}
-                            Menu(L10n.filterSessionType) {
+                            Menu(L10n.sessionFiltersDrawerTypeLabel) {
                                 let selected = Binding(
                                     get: { self.selectedSessionType },
                                     set: { self.selectedSessionType = $0 == self.selectedSessionType ? nil : $0 })
-                                Picker(L10n.filterSessionType, selection: selected) {
+                                Picker(L10n.sessionFiltersDrawerTypeLabel, selection: selected) {
                                     Text(L10n.sessionTypeConference).tag(Optional(SessionType.conference))
                                     Text(L10n.sessionTypeQuickie).tag(Optional(SessionType.quickie))
                                     Text(L10n.sessionTypeCodelab).tag(Optional(SessionType.codelab))
