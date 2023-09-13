@@ -27,7 +27,15 @@ struct AgendaContent {
         let title: String
         let sessionType: SessionType?
         
-        var isATalk: Bool { return (openFeedbackFormId != nil) }
+        var isATalk: Bool {
+            guard let sessionType = sessionType else { return false }
+            switch sessionType {
+            case .lunch, .opening, .break_:
+                return false
+            default:
+                return true
+            }
+        }
     }
     
 // MARK: - Section
@@ -47,3 +55,5 @@ extension AgendaContent.Session {
         self.init(id: session.id, abstract: session.abstract, category: session.category, language: session.language, complexity: session.complexity, openFeedbackFormId: session.openFeedbackFormId, speakers: session.speakers, room: session.room?.name ?? "", date: newFormatter.date(from: session.scheduleSlot.startDate) ?? Date(), startDate: session.scheduleSlot.startDate, endDate: session.scheduleSlot.endDate,durationAndLanguage: session.getDurationAndLanguageString(), title: session.title, sessionType: session.type)
     }
 }
+
+extension Session: Identifiable { }

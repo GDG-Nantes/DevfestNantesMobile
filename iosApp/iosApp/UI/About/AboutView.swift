@@ -12,7 +12,7 @@ import shared
 
 struct AboutView: View {
     //Store an observable object instance
-    @ObservedObject var viewModel: DevFestViewModel
+    @ObservedObject var viewModel = AboutViewModel()
     
     //Setup UI
     var body: some View {

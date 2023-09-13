@@ -11,7 +11,7 @@ import shared
 
 struct AgendaCellView: View {
     //Store an observable object instance
-    @ObservedObject var viewModel: DevFestViewModel
+    @ObservedObject var viewModel = AgendaViewModel()
     
     //Session data
     var session: AgendaContent.Session

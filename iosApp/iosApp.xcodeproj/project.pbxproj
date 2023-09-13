@@ -14,7 +14,6 @@
 		22080895895419DF5B470042 /* Pods_DevFest_NantesTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D913FA4EE49E781CDE94B26 /* Pods_DevFest_NantesTests.framework */; };
 		4A68B3C2C094CCA8E63BD31C /* Pods_DevFest_Nantes.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C00E8BA0569778DAA4195B86 /* Pods_DevFest_Nantes.framework */; };
 		7555FF83242A565900829871 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7555FF82242A565900829871 /* ContentView.swift */; };
-		CB179BD728D22BA900BB9934 /* DevFestViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB179BD628D22BA900BB9934 /* DevFestViewModel.swift */; };
 		CB179BDB28D24C9C00BB9934 /* CategoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB179BDA28D24C9C00BB9934 /* CategoryView.swift */; };
 		CB179BDE28D365E800BB9934 /* AgendaContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB179BDD28D365E800BB9934 /* AgendaContent.swift */; };
 		CB179BE028D365F600BB9934 /* VenueContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB179BDF28D365F600BB9934 /* VenueContent.swift */; };
@@ -43,6 +42,15 @@
 		CBCB60FA28E48F27001E9B1A /* FirebaseAnalyticsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBCB60F928E48F27001E9B1A /* FirebaseAnalyticsService.swift */; };
 		CBCB610228E99990001E9B1A /* WebLinks.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBCB610128E99990001E9B1A /* WebLinks.swift */; };
 		CBDFA0232AAF566500302D34 /* SpeakersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDFA0222AAF566500302D34 /* SpeakersView.swift */; };
+		CBDFA0302AB0F3E000302D34 /* SpeakerDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDFA02F2AB0F3E000302D34 /* SpeakerDetailsView.swift */; };
+		CBDFA0322AB0F4FC00302D34 /* SocialIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDFA0312AB0F4FC00302D34 /* SocialIcon.swift */; };
+		CBDFA0342AB0F5C500302D34 /* SpeakerPicture.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDFA0332AB0F5C500302D34 /* SpeakerPicture.swift */; };
+		CBDFA0362AB1B72200302D34 /* SpeakerDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDFA0352AB1B72200302D34 /* SpeakerDetailsViewModel.swift */; };
+		CBDFA0382AB1B74000302D34 /* BaseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDFA0372AB1B74000302D34 /* BaseViewModel.swift */; };
+		CBDFA03A2AB1BABC00302D34 /* AgendaViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDFA0392AB1BABC00302D34 /* AgendaViewModel.swift */; };
+		CBDFA03C2AB1BEFD00302D34 /* VenueViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDFA03B2AB1BEFD00302D34 /* VenueViewModel.swift */; };
+		CBDFA03E2AB1BFBC00302D34 /* AboutViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDFA03D2AB1BFBC00302D34 /* AboutViewModel.swift */; };
+		CBDFA0402AB1EDA200302D34 /* SpeakersViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDFA03F2AB1EDA200302D34 /* SpeakersViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -70,7 +78,6 @@
 		7555FF8C242A565B00829871 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C00E8BA0569778DAA4195B86 /* Pods_DevFest_Nantes.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DevFest_Nantes.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C1F34AAF82614BA9BC558506 /* Pods_DevFest_NantesTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DevFest_NantesTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		CB179BD628D22BA900BB9934 /* DevFestViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevFestViewModel.swift; sourceTree = "<group>"; };
 		CB179BDA28D24C9C00BB9934 /* CategoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryView.swift; sourceTree = "<group>"; };
 		CB179BDD28D365E800BB9934 /* AgendaContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgendaContent.swift; sourceTree = "<group>"; };
 		CB179BDF28D365F600BB9934 /* VenueContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VenueContent.swift; sourceTree = "<group>"; };
@@ -101,6 +108,15 @@
 		CBCB60F928E48F27001E9B1A /* FirebaseAnalyticsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseAnalyticsService.swift; sourceTree = "<group>"; };
 		CBCB610128E99990001E9B1A /* WebLinks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebLinks.swift; sourceTree = "<group>"; };
 		CBDFA0222AAF566500302D34 /* SpeakersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeakersView.swift; sourceTree = "<group>"; };
+		CBDFA02F2AB0F3E000302D34 /* SpeakerDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeakerDetailsView.swift; sourceTree = "<group>"; };
+		CBDFA0312AB0F4FC00302D34 /* SocialIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialIcon.swift; sourceTree = "<group>"; };
+		CBDFA0332AB0F5C500302D34 /* SpeakerPicture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeakerPicture.swift; sourceTree = "<group>"; };
+		CBDFA0352AB1B72200302D34 /* SpeakerDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeakerDetailsViewModel.swift; sourceTree = "<group>"; };
+		CBDFA0372AB1B74000302D34 /* BaseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewModel.swift; sourceTree = "<group>"; };
+		CBDFA0392AB1BABC00302D34 /* AgendaViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgendaViewModel.swift; sourceTree = "<group>"; };
+		CBDFA03B2AB1BEFD00302D34 /* VenueViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VenueViewModel.swift; sourceTree = "<group>"; };
+		CBDFA03D2AB1BFBC00302D34 /* AboutViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewModel.swift; sourceTree = "<group>"; };
+		CBDFA03F2AB1EDA200302D34 /* SpeakersViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeakersViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -184,6 +200,7 @@
 			isa = PBXGroup;
 			children = (
 				CB837AB7287B7D6500FEDAA1 /* VenueView.swift */,
+				CBDFA03B2AB1BEFD00302D34 /* VenueViewModel.swift */,
 			);
 			path = Venue;
 			sourceTree = "<group>";
@@ -202,6 +219,7 @@
 			isa = PBXGroup;
 			children = (
 				CB837AB9287B7D9200FEDAA1 /* AboutView.swift */,
+				CBDFA03D2AB1BFBC00302D34 /* AboutViewModel.swift */,
 			);
 			path = About;
 			sourceTree = "<group>";
@@ -243,7 +261,7 @@
 		CB3979C829199C0B00BDAE6F /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				CB179BD628D22BA900BB9934 /* DevFestViewModel.swift */,
+				CBDFA0372AB1B74000302D34 /* BaseViewModel.swift */,
 				CB179BDC28D365B400BB9934 /* Data */,
 			);
 			path = Model;
@@ -267,6 +285,8 @@
 				CB4980F328FD73C7001D0484 /* PhotoDetailView.swift */,
 				CB179BDA28D24C9C00BB9934 /* CategoryView.swift */,
 				CB46914429196271004C6120 /* SpeakerView.swift */,
+				CBDFA0312AB0F4FC00302D34 /* SocialIcon.swift */,
+				CBDFA0332AB0F5C500302D34 /* SpeakerPicture.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -287,6 +307,7 @@
 				CB837AB5287B7D1200FEDAA1 /* AgendaView.swift */,
 				CB73E80F28A5587E0014B9AF /* AgendaDetailView.swift */,
 				CB3F424328A6A02300D1C75B /* AgendaCellView.swift */,
+				CBDFA0392AB1BABC00302D34 /* AgendaViewModel.swift */,
 			);
 			name = Agenda;
 			path = "../New Group/Agenda";
@@ -304,6 +325,9 @@
 			isa = PBXGroup;
 			children = (
 				CBDFA0222AAF566500302D34 /* SpeakersView.swift */,
+				CBDFA02F2AB0F3E000302D34 /* SpeakerDetailsView.swift */,
+				CBDFA0352AB1B72200302D34 /* SpeakerDetailsViewModel.swift */,
+				CBDFA03F2AB1EDA200302D34 /* SpeakersViewModel.swift */,
 			);
 			path = Speakers;
 			sourceTree = "<group>";
@@ -531,6 +555,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				CBA5C22E28DB194E00D2779B /* PartnersContent.swift in Sources */,
+				CBDFA0362AB1B72200302D34 /* SpeakerDetailsViewModel.swift in Sources */,
+				CBDFA0402AB1EDA200302D34 /* SpeakersViewModel.swift in Sources */,
+				CBDFA03E2AB1BFBC00302D34 /* AboutViewModel.swift in Sources */,
 				CB179BE528D3894500BB9934 /* CustomButtonView.swift in Sources */,
 				CB46914529196271004C6120 /* SpeakerView.swift in Sources */,
 				CB179BE028D365F600BB9934 /* VenueContent.swift in Sources */,
@@ -538,11 +565,14 @@
 				CB179BDE28D365E800BB9934 /* AgendaContent.swift in Sources */,
 				CB4980F428FD73C7001D0484 /* PhotoDetailView.swift in Sources */,
 				2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */,
+				CBDFA0302AB0F3E000302D34 /* SpeakerDetailsView.swift in Sources */,
 				CB4980F228F609E3001D0484 /* RCValues.swift in Sources */,
 				CB4691472919661A004C6120 /* Bundle-extension.swift in Sources */,
-				CB179BD728D22BA900BB9934 /* DevFestViewModel.swift in Sources */,
+				CBDFA03C2AB1BEFD00302D34 /* VenueViewModel.swift in Sources */,
+				CBDFA0382AB1B74000302D34 /* BaseViewModel.swift in Sources */,
 				CBA5C23028DB4F5100D2779B /* CardView.swift in Sources */,
 				CB3F424428A6A02300D1C75B /* AgendaCellView.swift in Sources */,
+				CBDFA0342AB0F5C500302D34 /* SpeakerPicture.swift in Sources */,
 				CB179BF628D4C36A00BB9934 /* Strings.swift in Sources */,
 				CBCB60FA28E48F27001E9B1A /* FirebaseAnalyticsService.swift in Sources */,
 				CBA5C23228DBC5CA00D2779B /* Assets.swift in Sources */,
@@ -552,7 +582,9 @@
 				CB46914329196228004C6120 /* Complexity-extension.swift in Sources */,
 				CB837AB6287B7D1200FEDAA1 /* AgendaView.swift in Sources */,
 				CB837ABA287B7D9200FEDAA1 /* AboutView.swift in Sources */,
+				CBDFA0322AB0F4FC00302D34 /* SocialIcon.swift in Sources */,
 				CB73E81028A5587E0014B9AF /* AgendaDetailView.swift in Sources */,
+				CBDFA03A2AB1BABC00302D34 /* AgendaViewModel.swift in Sources */,
 				CB179BDB28D24C9C00BB9934 /* CategoryView.swift in Sources */,
 				CBCB60ED28E47FC5001E9B1A /* LoadingView.swift in Sources */,
 				CB4980F728FDE6AC001D0484 /* UIImage-extension.swift in Sources */,

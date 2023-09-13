@@ -11,8 +11,7 @@ import URLImage
 import shared
 
 struct SpeakersView: View {
-    @ObservedObject var viewModel: DevFestViewModel
-    @State private var searchText = ""
+    @ObservedObject var viewModel = SpeakersViewModel()
 
     var body: some View {
         NavigationView {
@@ -20,20 +19,22 @@ struct SpeakersView: View {
                 ScrollViewReader { scrollProxy in
                     ZStack {
                         List {
-                            ForEach(getAlphabets(), id: \.self) { letter in
+                            ForEach(viewModel.getAlphabets(), id: \.self) { letter in
                                 Section(header: Text(letter).id(letter)) {
-                                    ForEach(speakers(for: letter).map(SpeakerWrapper.init), id: \.id) { speakerWrapper in
-                                        HStack {
-                                            if let photo = speakerWrapper.speaker.photoUrl {
-                                                URLImage(url: URL(string: photo)!) { image in
-                                                    image
-                                                        .resizable()
-                                                        .aspectRatio(contentMode: .fill)
-                                                        .clipShape(Circle())
-                                                }.frame(width: 40, height: 40)
-                                            }
+                                    ForEach(viewModel.speakers(for: letter).map(SpeakerWrapper.init), id: \.id) { speakerWrapper in
+                                        NavigationLink(destination: SpeakerDetails(speakerId: speakerWrapper.id)) {
+                                            HStack {
+                                                if let photo = speakerWrapper.speaker.photoUrl {
+                                                    URLImage(url: URL(string: photo)!) { image in
+                                                        image
+                                                            .resizable()
+                                                            .aspectRatio(contentMode: .fill)
+                                                            .clipShape(Circle())
+                                                    }.frame(width: 40, height: 40)
+                                                }
 
-                                            Text(speakerWrapper.speaker.name)
+                                                Text(speakerWrapper.speaker.name)
+                                            }
                                         }
                                     }
                                 }
@@ -42,11 +43,11 @@ struct SpeakersView: View {
 
 
                         VStack {
-                            ForEach(getAlphabets(), id: \.self) { letter in
+                            ForEach(viewModel.getAlphabets(), id: \.self) { letter in
                                 HStack {
                                     Spacer()
                                     Button(action: {
-                                        if speakers(for: letter).count > 0 {
+                                        if viewModel.speakers(for: letter).count > 0 {
                                             withAnimation {
                                                 scrollProxy.scrollTo(letter)
                                             }
@@ -69,22 +70,22 @@ struct SpeakersView: View {
         }
     }
 
-    private func getAlphabets() -> [String] {
-        let letters = viewModel.speakersContent?.compactMap { $0.name.prefix(1).uppercased() }
-        let uniqueLetters = Array(Set(letters ?? []))
-        return uniqueLetters.sorted()
-    }
-
-    private func speakers(for letter: String) -> [Speaker] {
-        return viewModel.speakersContent?.filter {
-            $0.name.prefix(1).uppercased() == letter
-        } ?? []
-    }
+//    private func getAlphabets() -> [String] {
+//        let letters = viewModel.speakersContent?.compactMap { $0.name.prefix(1).uppercased() }
+//        let uniqueLetters = Array(Set(letters ?? []))
+//        return uniqueLetters.sorted()
+//    }
+//
+//    private func speakers(for letter: String) -> [Speaker] {
+//        return viewModel.speakersContent?.filter {
+//            $0.name.prefix(1).uppercased() == letter
+//        } ?? []
+//    }
 }
 
 struct SpeakersView_Previews: PreviewProvider {
     static var previews: some View {
-        SpeakersView(viewModel: DevFestViewModel())
+        SpeakersView(viewModel: SpeakersViewModel())
     }
 }
 

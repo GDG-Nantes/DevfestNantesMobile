@@ -18,7 +18,7 @@ struct AgendaDetailView: View {
     
     
     //Store an observable object instance
-    @ObservedObject var viewModel: DevFestViewModel
+    @ObservedObject var viewModel = AgendaViewModel()
     var day: String
     
     //Method to convert a date in string format to ISO 8601 format
@@ -42,9 +42,8 @@ struct AgendaDetailView: View {
     }()
     
     //Initialization of this view with Session, global viewmodel and the day
-    init(session: AgendaContent.Session, viewModel: DevFestViewModel, day: String) {
+    init(session: AgendaContent.Session, day: String) {
         self.content = session
-        self.viewModel = viewModel
         self.day = day
     }
     
@@ -90,7 +89,7 @@ struct AgendaDetailView: View {
                     if session.isATalk && RCValues.sharedInstance.bool(forKey: .openfeedback_enabled){
                             VStack(spacing: 16) {
                                 Spacer()
-                                CustomButton(url: URL(string: "\(WebLinks.openFeedback.url)/\(day)/\(session.openFeedbackFormId!)")!) {
+                                CustomButton(url: URL(string: "\(WebLinks.openFeedback.url)/\(day)/\(session.openFeedbackFormId ?? "")")!) {
                                     Text(L10n.sessionFeedbackLabel)
                                 }.foregroundColor(Color(Asset.devFestRed.color))
                                     .frame(minWidth: 0, maxWidth: .infinity, alignment: .center)

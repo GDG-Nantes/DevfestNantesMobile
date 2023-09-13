@@ -13,7 +13,7 @@ import shared
 
 struct VenueView: View {
     //Store an observable object instance
-    @ObservedObject var viewModel : DevFestViewModel
+    @ObservedObject var viewModel = VenueViewModel()
     
     //Setup UI
     var body: some View {

@@ -4,13 +4,13 @@ import Combine
 
 ///SwiftUI TabView
 struct ContentView: View {
-    @StateObject var viewModel = DevFestViewModel()
+    @StateObject var viewModel = BaseViewModel()
     
     @State private var selection = 0
     
     var body: some View {
         TabView(selection: $selection) {
-            AgendaView(viewModel: viewModel)
+            AgendaView()
                 .tabItem {
                     VStack {
                         Image(systemName: "calendar")
@@ -18,7 +18,7 @@ struct ContentView: View {
                     }
                 }.tag(0)
             
-            SpeakersView(viewModel: viewModel)
+            SpeakersView()
                 .tabItem {
                     VStack {
                         Image(systemName: "person.3.fill")
@@ -26,7 +26,7 @@ struct ContentView: View {
                     }
                 }.tag(1)
             
-            VenueView(viewModel: viewModel)
+            VenueView()
                 .tabItem {
                     VStack {
                         Image(systemName: "location.circle.fill")
@@ -34,7 +34,7 @@ struct ContentView: View {
                     }
                 }.tag(2)
             
-            AboutView(viewModel: viewModel)
+            AboutView()
                 .tabItem {
                     VStack {
                         Image(systemName: "info.circle")

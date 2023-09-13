@@ -11,7 +11,7 @@ import shared
 
 struct AgendaView: View {
     //Store an observable object instance
-    @ObservedObject var viewModel: DevFestViewModel
+    @ObservedObject var viewModel = AgendaViewModel()
     
     //Property wrapper type that can read and write a value managed by SwiftUI
     @State private var day = "2023-10-19"
@@ -46,11 +46,11 @@ struct AgendaView: View {
                                     let filteredSessions = getFilteredSessions(sessions: section.sessions)
                                     ForEach(self.showFavoritesOnly ? filteredSessions.filter({viewModel.favorites.contains($0.id)}):  filteredSessions, id: \.id) { session in
                                         if session.sessionType == .conference || session.sessionType == .codelab || session.sessionType == .quickie{
-                                            NavigationLink(destination: AgendaDetailView(session: session, viewModel: viewModel, day: day)) {
-                                                AgendaCellView(viewModel: viewModel, session: session)
+                                            NavigationLink(destination: AgendaDetailView(session: session, day: day)) {
+                                                AgendaCellView(session: session)
                                             }
                                         } else {
-                                            AgendaCellView(viewModel: viewModel, session: session)
+                                            AgendaCellView(session: session)
                                         }
                                     }
                                 }
