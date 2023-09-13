@@ -10,7 +10,7 @@ object Versions {
 
     const val accompanistPager = "0.24.13-rc"
 
-    const val composeBom = "2023.06.01"
+    const val composeBom = "2023.09.00"
     const val composeCompiler = "1.4.8"
     const val navCompose = "2.6.0"
     const val accompanist = "0.24.13-rc"

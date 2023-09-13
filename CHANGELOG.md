@@ -6,7 +6,7 @@ Version 2.0.2 *(2023-09-??)*
 
 * ⬆️ Bumps target SDK to Android 14.
 * ⬆️ Bumps firebase BOM to version 32.2.3.
-*
+* ⬆️ Bumps compose BOM to version 2023.09.00.
 
 Version 2.0.1 *(2023-09-12)*
 ----------------------------
