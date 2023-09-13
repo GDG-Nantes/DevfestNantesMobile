@@ -32,7 +32,9 @@ fun AgendaPager(
     onSessionClick: (Session) -> Unit,
 ) {
     Column(modifier = modifier.fillMaxWidth()) {
-        val pagerState = rememberPagerState(initialPage = initialPageIndex)
+        val pagerState = rememberPagerState(initialPage = initialPageIndex) {
+            days.size
+        }
 
         TabRow(
             // Our selected tab is our current page
@@ -63,7 +65,6 @@ fun AgendaPager(
         }
 
         HorizontalPager(
-            pageCount = days.size,
             state = pagerState,
         ) { page ->
             SwipeRefresh(
