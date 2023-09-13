@@ -4,6 +4,7 @@ Change Log
 Version 2.0.2 *(2023-09-??)*
 ----------------------------
 
+* 🖼 Updates app logo to the 2023 version.️
 * ⬆️ Bumps target SDK to Android 14.
 * ⬆️ Bumps firebase BOM to version 32.2.3.
 * ⬆️ Bumps compose BOM to version 2023.09.00.
