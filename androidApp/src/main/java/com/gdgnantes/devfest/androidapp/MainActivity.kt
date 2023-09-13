@@ -20,8 +20,8 @@ import com.gdgnantes.devfest.androidapp.ui.screens.legal.LegalScreen
 import com.gdgnantes.devfest.androidapp.ui.screens.session.SessionLayout
 import com.gdgnantes.devfest.androidapp.ui.screens.session.SessionViewModel
 import com.gdgnantes.devfest.androidapp.ui.screens.settings.Settings
-import com.gdgnantes.devfest.androidapp.ui.screens.speakers.details.SpeakerLayout
 import com.gdgnantes.devfest.androidapp.ui.screens.speakers.SpeakerViewModel
+import com.gdgnantes.devfest.androidapp.ui.screens.speakers.details.SpeakerLayout
 import com.gdgnantes.devfest.androidapp.ui.theme.DevFestNantesTheme
 import com.gdgnantes.devfest.androidapp.utils.assistedViewModel
 import com.gdgnantes.devfest.model.Session
@@ -49,7 +49,7 @@ class MainActivity : ComponentActivity(), NavController.OnDestinationChangedList
     @Inject
     lateinit var externalContentService: ExternalContentService
 
-    lateinit var navController: NavController
+    private lateinit var navController: NavController
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
