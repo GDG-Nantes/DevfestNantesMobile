@@ -40,8 +40,8 @@ struct SpeakerView: View {
                     HStack(alignment: .top, spacing: 20) {
                         speaker.socials.map { socials in
                             ForEach(socials, id: \.self) { socialItem in
-                                socialItem.link.map { link in
-                                    Link(destination: URL(string: link)!) {
+                                if let link = socialItem.link, let url = URL(string: link) {
+                                    Link(destination: url) {
                                         if socialItem.type == .twitter {
                                             Image("ic_network_twitter")
                                                 .renderingMode(.template)
