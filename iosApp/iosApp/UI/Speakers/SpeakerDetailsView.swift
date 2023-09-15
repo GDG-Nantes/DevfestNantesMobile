@@ -56,7 +56,11 @@ struct SpeakerDetails: View {
                     if let speakerSessions = viewModel.speakerSession {
                         ForEach(speakerSessions, id: \.id) { session in
                             NavigationLink(destination: AgendaDetailView(session: AgendaContent.Session(from: session), day: "day")) {
-                                AgendaCellView(session: AgendaContent.Session(from: session)).foregroundColor(.primary)
+                                AgendaCellView(session: AgendaContent.Session(from: session))
+                                    .foregroundColor(.primary)
+                                    .background(Color.secondary.opacity(0.3))
+                                    .cornerRadius(12)
+                                    .frame(maxWidth: .infinity)
                             }
                         }
                     }

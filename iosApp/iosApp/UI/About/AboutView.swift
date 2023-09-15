@@ -117,7 +117,7 @@ struct AboutView: View {
                                                     .frame(maxHeight: 50)
                                                     .padding(8)
                                                     .background(
-                                                        RoundedRectangle(cornerRadius: 20, style: .continuous).fill(Color(Asset.devFestBlue.color))
+                                                        RoundedRectangle(cornerRadius: 20, style: .continuous).fill(Color(Asset.lauchScreenBackground.color))
                                                     )
                                                 }
                                             }

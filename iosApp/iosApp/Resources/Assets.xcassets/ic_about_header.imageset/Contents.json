@@ -1,7 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "about header.svg",
+      "filename" : "about_header.png",
+      "idiom" : "universal"
+    },
+    {
+      "appearances" : [
+        {
+          "appearance" : "luminosity",
+          "value" : "dark"
+        }
+      ],
+      "filename" : "about_header (1).png",
       "idiom" : "universal"
     }
   ],
