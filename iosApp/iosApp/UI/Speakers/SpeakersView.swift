@@ -12,7 +12,7 @@ import shared
 
 struct SpeakersView: View {
     @ObservedObject var viewModel = SpeakersViewModel()
-
+    
     var body: some View {
         NavigationView {
             VStack {
@@ -32,7 +32,7 @@ struct SpeakersView: View {
                                                             .clipShape(Circle())
                                                     }.frame(width: 40, height: 40)
                                                 }
-
+                                                
                                                 Text(speakerWrapper.speaker.name)
                                             }
                                         }
@@ -40,8 +40,8 @@ struct SpeakersView: View {
                                 }
                             }
                         }
-
-
+                        .padding(.trailing, 20)
+                        
                         VStack {
                             ForEach(viewModel.getAlphabets(), id: \.self) { letter in
                                 HStack {
@@ -61,26 +61,14 @@ struct SpeakersView: View {
                             }
                         }
                     }
+                    .navigationTitle(L10n.screenSpeakers)
+                }
+                .task {
+                    await viewModel.observeSpeakers()
                 }
             }
-            .navigationTitle(L10n.screenSpeakers)
-        }
-        .task {
-            await viewModel.observeSpeakers()
         }
     }
-
-//    private func getAlphabets() -> [String] {
-//        let letters = viewModel.speakersContent?.compactMap { $0.name.prefix(1).uppercased() }
-//        let uniqueLetters = Array(Set(letters ?? []))
-//        return uniqueLetters.sorted()
-//    }
-//
-//    private func speakers(for letter: String) -> [Speaker] {
-//        return viewModel.speakersContent?.filter {
-//            $0.name.prefix(1).uppercased() == letter
-//        } ?? []
-//    }
 }
 
 struct SpeakersView_Previews: PreviewProvider {
