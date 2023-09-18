@@ -16,6 +16,7 @@ import SwiftUI
 @MainActor
 class SpeakersViewModel: BaseViewModel {
     @Published var speakersContent: [Speaker]?
+    @Published var isLoading = true
     
     ///Asynchronous method to retrieve speakers
     func observeSpeakers() async {
@@ -25,6 +26,7 @@ class SpeakersViewModel: BaseViewModel {
                 for try await data in stream {
                     DispatchQueue.main.async {
                         self.speakersContent = Array(data)
+                        self.isLoading = false
                     }
                 }
             } catch {

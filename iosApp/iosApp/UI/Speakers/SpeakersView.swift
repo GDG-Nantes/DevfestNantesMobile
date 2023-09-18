@@ -15,56 +15,57 @@ struct SpeakersView: View {
     
     var body: some View {
         NavigationView {
-            VStack {
-                ScrollViewReader { scrollProxy in
-                    ZStack {
-                        List {
-                            ForEach(viewModel.getAlphabets(), id: \.self) { letter in
-                                Section(header: Text(letter).id(letter)) {
-                                    ForEach(viewModel.speakers(for: letter).map(SpeakerWrapper.init), id: \.id) { speakerWrapper in
-                                        NavigationLink(destination: SpeakerDetails(speakerId: speakerWrapper.id)) {
-                                            HStack {
-                                                if let photo = speakerWrapper.speaker.photoUrl {
-                                                    URLImage(url: URL(string: photo)!) { image in
-                                                        image
-                                                            .resizable()
-                                                            .aspectRatio(contentMode: .fill)
-                                                            .clipShape(Circle())
-                                                    }.frame(width: 40, height: 40)
+            LoadingView(isShowing: $viewModel.isLoading) {
+                VStack {
+                    ScrollViewReader { scrollProxy in
+                        ZStack {
+                            List {
+                                ForEach(viewModel.getAlphabets(), id: \.self) { letter in
+                                    Section(header: Text(letter).id(letter)) {
+                                        ForEach(viewModel.speakers(for: letter).map(SpeakerWrapper.init), id: \.id) { speakerWrapper in
+                                            NavigationLink(destination: SpeakerDetails(speakerId: speakerWrapper.id)) {
+                                                HStack {
+                                                    if let photo = speakerWrapper.speaker.photoUrl {
+                                                        URLImage(url: URL(string: photo)!) { image in
+                                                            image
+                                                                .resizable()
+                                                                .aspectRatio(contentMode: .fill)
+                                                                .clipShape(Circle())
+                                                        }.frame(width: 40, height: 40)
+                                                    }
+                                                    
+                                                    Text(speakerWrapper.speaker.name)
                                                 }
-                                                
-                                                Text(speakerWrapper.speaker.name)
                                             }
                                         }
                                     }
                                 }
                             }
-                        }
-                        .padding(.trailing, 20)
-                        
-                        VStack {
-                            ForEach(viewModel.getAlphabets(), id: \.self) { letter in
-                                HStack {
-                                    Spacer()
-                                    Button(action: {
-                                        if viewModel.speakers(for: letter).count > 0 {
-                                            withAnimation {
-                                                scrollProxy.scrollTo(letter)
+                            
+                            VStack {
+                                ForEach(viewModel.getAlphabets(), id: \.self) { letter in
+                                    HStack {
+                                        Spacer()
+                                        Button(action: {
+                                            if viewModel.speakers(for: letter).count > 0 {
+                                                withAnimation {
+                                                    scrollProxy.scrollTo(letter)
+                                                }
                                             }
-                                        }
-                                    }, label: {
-                                        Text(letter)
-                                            .font(.system(size: 14))
-                                            .padding(.trailing, 7)
-                                    })
+                                        }, label: {
+                                            Text(letter)
+                                                .font(.system(size: 14))
+                                                .padding(.trailing, 7)
+                                        })
+                                    }
                                 }
                             }
                         }
+                        .navigationTitle(L10n.screenSpeakers)
                     }
-                    .navigationTitle(L10n.screenSpeakers)
-                }
-                .task {
-                    await viewModel.observeSpeakers()
+                    .task {
+                        await viewModel.observeSpeakers()
+                    }
                 }
             }
         }

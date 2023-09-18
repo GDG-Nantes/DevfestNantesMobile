@@ -7,7 +7,7 @@
 "agenda_empty" = "vide";
 "empty_day" = "Désolé, aucune conférence n'est disponible pour les filtres actuellement sélectionnés.";
 "screen_session" = "Session details";
-"screen_about_header_body" = "Le DevFest, ou 'Developers Festival', est une conférence technique destinée aux développeurs. Elle s'adresse aussi bien aux étudiants, aux professionnels ou tout simplement aux curieux technophiles.  Cette année c'est Jules Verne et son univers incroyable qui sera au coeur du Devfest !";
+"screen_about_header_body" = "Le DevFest, ou 'Developers Festival', est une conférence technique destinée aux développeurs. Elle s'adresse aussi bien aux étudiants, aux professionnels ou tout simplement aux curieux technophiles. Cette année le Devfest Nantes met la lumière sur les films !";
 "venue_go_to_button" = "S'y rendre";
 "complexity_beginer" = "Débutant";
 "complexity_intermediate" = "Intermediaire";
