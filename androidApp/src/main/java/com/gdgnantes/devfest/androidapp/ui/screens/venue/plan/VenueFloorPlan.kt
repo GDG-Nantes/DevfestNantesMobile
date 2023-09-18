@@ -3,12 +3,14 @@ package com.gdgnantes.devfest.androidapp.ui.screens.venue.plan
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ZoomIn
 import androidx.compose.material3.CardDefaults
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedCard
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -36,14 +38,17 @@ fun VenueFloorPlanButton(
         OutlinedCard(
             modifier = modifier
                 .fillMaxWidth()
-                .height(200.dp),
+                .height(250.dp),
             colors = CardDefaults.cardColors(
                 containerColor = Color.White,
-                contentColor = Color.Black
+                contentColor = MaterialTheme.colorScheme.primary
             ),
             onClick = onClick
         ) {
-            Box {
+            Box(
+                modifier = Modifier
+                    .fillMaxWidth()
+            ) {
                 AsyncImage(
                     modifier = Modifier
                         .align(Alignment.Center),
@@ -66,8 +71,9 @@ fun VenueFloorPlanButton(
 
                 Icon(
                     modifier = Modifier
-                        .size(48.dp)
-                        .align(Alignment.Center),
+                        .size(96.dp)
+                        .align(Alignment.BottomEnd)
+                        .padding(16.dp),
                     imageVector = Icons.Filled.ZoomIn,
                     contentDescription = null
                 )
