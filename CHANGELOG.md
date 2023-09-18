@@ -1,7 +1,12 @@
 Change Log
 ==========
 
-Version 2.0.2 *(2023-09-??)*
+Version 2.0.2 *(2023-09-13)*
+----------------------------
+
+* 💬 Updates translation keys.
+
+Version 2.0.2 *(2023-09-13)*
 ----------------------------
 
 * 🖼 Updates app logo to the 2023 version.️
