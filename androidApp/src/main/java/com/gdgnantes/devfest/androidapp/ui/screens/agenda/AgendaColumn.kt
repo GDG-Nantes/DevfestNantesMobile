@@ -13,12 +13,15 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.core.os.ConfigurationCompat
 import com.gdgnantes.devfest.androidapp.utils.getDateFromIso8601
 import com.gdgnantes.devfest.model.Session
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import java.text.DateFormat
 import java.util.*
 
@@ -31,6 +34,11 @@ fun AgendaColumn(
     val listState = rememberLazyListState()
 
     val sessionsGroupedByStartTime = groupSessionsByStartTime(sessionsPerStartTime)
+
+    LaunchedEffect(key1 = sessionsPerStartTime) {
+        val index = getCurrentStartTimeIndex(sessionsGroupedByStartTime)
+        listState.scrollToItem(index)
+    }
 
     LazyColumn(
         state = listState,
@@ -104,4 +112,23 @@ private fun groupSessionsByStartTime(sessions: List<Session>): Map<String, List<
         .mapValues { (_, value) ->
             value.sortedBy { session -> session.room?.name }
         }
+}
+
+private suspend fun getCurrentStartTimeIndex(sessionsGroupedByStartTime: Map<String, List<Session>>): Int {
+    var index = 0
+    return withContext(Dispatchers.IO) {
+        val now = Date()
+        sessionsGroupedByStartTime.forEach { entry ->
+            entry.value.firstOrNull()?.scheduleSlot?.endDate?.let {
+                getDateFromIso8601(it)?.let { sessionEndDate ->
+                    if (now > sessionEndDate) {
+                        index += entry.value.size + 1
+                    } else {
+                        return@withContext index
+                    }
+                }
+            }
+        }
+        index
+    }
 }
