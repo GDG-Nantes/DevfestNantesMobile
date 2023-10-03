@@ -1,6 +1,13 @@
 Change Log
 ==========
 
+Version 2.0.3 *(2023-10-03)*
+----------------------------
+
+* 📣 Sorts rooms and sessions like on the website.
+* 📣 Automatically scrolls to agenda to the current day and time.
+* ✂️ Sets the new Openfeedback URLs.
+
 Version 2.0.2 *(2023-09-13)*
 ----------------------------
 
