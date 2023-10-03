@@ -16,6 +16,12 @@ import com.gdgnantes.devfest.androidapp.utils.SessionFilter
 import com.gdgnantes.devfest.model.AgendaDay
 import com.gdgnantes.devfest.model.Room
 import com.gdgnantes.devfest.model.Session
+import kotlinx.datetime.Clock
+import kotlinx.datetime.Instant
+import kotlinx.datetime.LocalDate
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toLocalDateTime
+import kotlinx.datetime.todayIn
 
 @Composable
 fun Agenda(
@@ -49,6 +55,7 @@ fun AgendaLayout(
     onSessionClick: ((Session) -> Unit),
     onSessionFiltersChanged: (Set<SessionFilter>) -> Unit
 ) {
+    val agendaDays = days.value
     ModalNavigationDrawer(
         drawerState = agendaFilterDrawerState,
         drawerContent = {
@@ -63,12 +70,22 @@ fun AgendaLayout(
         content = {
             AgendaPager(
                 modifier = modifier,
-                initialPageIndex = 0,
-                days = days.value,
+                initialPageIndex = agendaDays.todayPageIndex(),
+                days = agendaDays,
                 uiState = uiState.value,
                 onRefresh = onRefresh,
                 onSessionClick = onSessionClick
             )
         }
     )
+}
+
+private fun Map<Int, AgendaDay>.todayPageIndex(): Int {
+    val today: LocalDate = Clock.System.todayIn(TimeZone.currentSystemDefault())
+    val todayPageIndex = values.indexOfLast { day ->
+        val startOfDay = Instant.parse(day.date)
+        val localDay: LocalDate = startOfDay.toLocalDateTime(TimeZone.currentSystemDefault()).date
+        localDay == today
+    }
+    return if (todayPageIndex < 0) 0 else todayPageIndex
 }

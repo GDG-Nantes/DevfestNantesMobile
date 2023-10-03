@@ -3,7 +3,7 @@ object Versions {
 
     const val kotlinCoroutines = "1.6.4"
     const val kmpNativeCoroutines = "0.13.1"
-    const val kotlinxDateTime = "0.4.0"
+    const val kotlinxDateTime = "0.4.1"
 
     const val googleServicesVersion = "4.3.13"
     const val crashlyticsGradleVersion = "2.9.1"
