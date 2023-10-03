@@ -50,7 +50,7 @@ fun AgendaColumn(
                 TimeSeparator(prettyTime = it.key)
             }
 
-            items(it.value) { session ->
+            items(it.value.sortedBy { session -> session.room?.sortIndex }) { session ->
                 AgendaRow(
                     session = session,
                     onSessionClick = onSessionClick

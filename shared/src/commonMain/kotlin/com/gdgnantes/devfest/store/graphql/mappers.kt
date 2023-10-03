@@ -1,12 +1,25 @@
 package com.gdgnantes.devfest.store.graphql
 
+import com.gdgnantes.devfest.domain.sortIndex
 import com.gdgnantes.devfest.graphql.GetPartnerGroupsQuery
 import com.gdgnantes.devfest.graphql.GetSessionQuery
 import com.gdgnantes.devfest.graphql.GetVenueQuery
 import com.gdgnantes.devfest.graphql.fragment.RoomDetails
 import com.gdgnantes.devfest.graphql.fragment.SessionDetails
 import com.gdgnantes.devfest.graphql.fragment.SpeakerDetails
-import com.gdgnantes.devfest.model.*
+import com.gdgnantes.devfest.model.Category
+import com.gdgnantes.devfest.model.Complexity
+import com.gdgnantes.devfest.model.Partner
+import com.gdgnantes.devfest.model.PartnerCategory
+import com.gdgnantes.devfest.model.Room
+import com.gdgnantes.devfest.model.ScheduleSlot
+import com.gdgnantes.devfest.model.Session
+import com.gdgnantes.devfest.model.SessionLanguage
+import com.gdgnantes.devfest.model.SessionType
+import com.gdgnantes.devfest.model.SocialItem
+import com.gdgnantes.devfest.model.SocialType
+import com.gdgnantes.devfest.model.Speaker
+import com.gdgnantes.devfest.model.Venue
 
 fun GetPartnerGroupsQuery.PartnerGroup.toPartnersGroup(): Pair<PartnerCategory, List<Partner>> {
     val partnerCategory = when (title.lowercase()) {
@@ -56,7 +69,8 @@ fun SessionDetails.toSession(): Session {
 fun RoomDetails.toRoom(): Room {
     return Room(
         id = id,
-        name = name
+        name = name,
+        sortIndex = sortIndex
     )
 }
 

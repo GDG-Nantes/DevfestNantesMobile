@@ -71,6 +71,7 @@ internal class GraphQLStore(private val apolloClient: ApolloClient) : DevFestNan
                 val response = apolloClient.query(GetRoomsQuery()).execute()
                 response.dataAssertNoErrors.rooms
                     .map { it.roomDetails.toRoom() }
+                    .sortedBy { it.sortIndex }
                     .let { emit(it.toSet()) }
             } catch (e: ApolloException) {
                 println(e.message)
