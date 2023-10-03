@@ -122,7 +122,7 @@ private suspend fun getCurrentStartTimeIndex(sessionsGroupedByStartTime: Map<Str
             entry.value.firstOrNull()?.scheduleSlot?.endDate?.let {
                 getDateFromIso8601(it)?.let { sessionEndDate ->
                     if (now > sessionEndDate) {
-                        index += entry.value.size + 1
+                        index += entry.value.size + 1 //Adds count of sessions per time + 1 for the header.
                     } else {
                         return@withContext index
                     }
