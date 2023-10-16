@@ -4,6 +4,9 @@ Change Log
 Version 2.0.4 *(2023-10-??)*
 ----------------------------
 
+* 🛠️ Configure cache ids for the Apollo client.
+* 🐛 Fixes cache issue.
+
 Version 2.0.3 *(2023-10-03)*
 ----------------------------
 
