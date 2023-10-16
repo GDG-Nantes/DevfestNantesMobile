@@ -1,3 +1,6 @@
+import org.jetbrains.kotlin.gradle.dsl.KotlinCompile
+import org.jetbrains.kotlin.gradle.dsl.KotlinJvmOptions
+
 plugins {
     id("com.android.application")
     kotlin("android")
@@ -6,6 +9,13 @@ plugins {
     id("com.google.gms.google-services")
     id("com.google.firebase.crashlytics")
     id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
+}
+
+tasks.withType(JavaCompile::class.java).configureEach {
+    options.release.set(17)
+}
+tasks.withType(KotlinCompile::class.java).configureEach {
+    (kotlinOptions as? KotlinJvmOptions)?.jvmTarget = "17"
 }
 
 android {

@@ -1,3 +1,7 @@
+import org.gradle.process.internal.JvmOptions
+import org.jetbrains.kotlin.gradle.dsl.KotlinCompile
+import org.jetbrains.kotlin.gradle.dsl.KotlinJvmOptions
+
 plugins {
     kotlin("multiplatform")
     kotlin("plugin.serialization") version Versions.kotlinVersion
@@ -75,7 +79,16 @@ kotlin.targets.withType(org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarge
 }
 
 apollo {
-    packageName.set("com.gdgnantes.devfest.graphql")
+    service("service") {
+        packageName.set("com.gdgnantes.devfest.graphql")
+    }
+}
+
+tasks.withType(JavaCompile::class.java).configureEach {
+    options.release.set(17)
+}
+tasks.withType(KotlinCompile::class.java).configureEach {
+    (kotlinOptions as? KotlinJvmOptions)?.jvmTarget = "17"
 }
 
 android {
