@@ -73,7 +73,6 @@ struct SpeakerDetails: View {
     }
     
     func onSocialLinkClick(socialitem: SocialItem) {
-        // Votre logique ici
     }
 }
 

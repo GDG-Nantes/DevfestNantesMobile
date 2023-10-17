@@ -13,16 +13,50 @@ import KMPNativeCoroutinesAsync
 import NSLogger
 import SwiftUI
 
-@MainActor
+
 class AgendaViewModel: BaseViewModel {
     @Published var agendaContent: AgendaContent = AgendaContent(sections: [])
     @Published var roomsContent: [Room]?
     @Published var isLoading = true
+    let defaults = UserDefaults.standard
+    var favorites: [String] {
+        get {
+            return defaults.object(forKey: "Favorites") as? [String] ?? []
+        }
+        set {
+            defaults.set(newValue, forKey: "Favorites")
+        }
+    }
     
     ///Initialization of the model with store and the UserDefaults object
     override init() {
         super.init()
+        self.favorites = defaults.object(forKey: "Favorites") as? [String] ?? []
     }
+    
+    // MARK: - Favorites management
+
+    ///Method to add or remove a session from favorites
+    func toggleFavorite(ofSession session: AgendaContent.Session) {
+        if favorites.contains(session.id) {
+            removeSessionFromFavorites(sessionId: session.id)
+        } else {
+            addSessionToFavorites(sessionId: session.id)
+        }
+    }
+    
+    ///Method allowing the deletion of the session in favorites
+    private func removeSessionFromFavorites(sessionId: String) {
+        objectWillChange.send()
+        favorites = favorites.filter { $0 != sessionId }
+    }
+
+    private func addSessionToFavorites(sessionId: String) {
+        objectWillChange.send()
+        favorites.append(sessionId)
+    }
+    
+
     
     ///Asynchronous method to retrieve sessions
     func observeSessions() async {
