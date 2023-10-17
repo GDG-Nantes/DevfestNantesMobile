@@ -1,8 +1,16 @@
 Change Log
 ==========
 
-Version 1.0.3 *(2023-??-??)*
+Version 2.0.1 *(2023-10-??)*
 ----------------------------
+* 👍 Improves management of favorites.
+* 🖼️ Improves calendar display.
+
+Version 2.0.0 *(2023-09-??)*
+----------------------------
+* 📣 Adds a speakers page.
+* ☁️ Fetches DevFest Nantes 2023's agenda.
+* 🖼️ Updates texts and UI assets for DevFest Nantes 2023.
 
 Version 1.0.2 *(2023-04-24)*
 ----------------------------
