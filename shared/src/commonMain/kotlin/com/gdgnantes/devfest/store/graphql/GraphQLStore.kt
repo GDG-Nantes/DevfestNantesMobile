@@ -22,7 +22,6 @@ import com.gdgnantes.devfest.model.stubs.buildVenueStub
 import com.gdgnantes.devfest.store.DevFestNantesStore
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
-import kotlinx.coroutines.flow.flow
 import kotlinx.coroutines.flow.map
 
 internal class GraphQLStore(private val apolloClient: ApolloClient) : DevFestNantesStore {
@@ -66,17 +65,18 @@ internal class GraphQLStore(private val apolloClient: ApolloClient) : DevFestNan
     }
 
     override val rooms: Flow<Set<Room>>
-        get() = flow {
-            try {
-                val response = apolloClient.query(GetRoomsQuery()).execute()
+        get() = apolloClient.query(GetRoomsQuery())
+            .fetchPolicy(FetchPolicy.CacheAndNetwork)
+            .toFlow()
+            .map { response ->
                 response.dataAssertNoErrors.rooms
                     .map { it.roomDetails.toRoom() }
                     .sortedBy { it.sortIndex }
-                    .let { emit(it.toSet()) }
-            } catch (e: ApolloException) {
+                    .toSet()
+            }
+            .catch { e ->
                 println(e.message)
             }
-        }
 
     override suspend fun getSession(id: String): Session? {
         return try {
@@ -125,16 +125,16 @@ internal class GraphQLStore(private val apolloClient: ApolloClient) : DevFestNan
     }
 
     override val speakers: Flow<List<Speaker>>
-        get() = flow {
-            try {
-                val response = apolloClient.query(GetSpeakersQuery()).execute()
+        get() = apolloClient.query(GetSpeakersQuery())
+            .fetchPolicy(FetchPolicy.CacheAndNetwork)
+            .toFlow()
+            .map { response ->
                 response.dataAssertNoErrors.speakers
                     .map { it.speakerDetails.toSpeaker() }
-                    .let { emit(it) }
-            } catch (e: ApolloException) {
+            }
+            .catch { e ->
                 println(e.message)
             }
-        }
 
     override suspend fun getVenue(language: ContentLanguage): Venue {
         return try {
