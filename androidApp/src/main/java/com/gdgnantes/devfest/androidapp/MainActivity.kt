@@ -98,6 +98,10 @@ class MainActivity : ComponentActivity(), NavController.OnDestinationChangedList
                                         socialItem.type
                                     )
                                 }
+                            },
+                            onFeedbackFormFallbackLinkClick = { url ->
+                                externalContentService.openUrl(url)
+                                analyticsService.eventFeedbackClicked(sessionId)
                             }
                         )
                     }
