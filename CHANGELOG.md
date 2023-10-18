@@ -5,12 +5,13 @@ Version 2.0.5 *(2023-10-??)*
 ----------------------------
 
 * 📣 Adds a fallback button in case of an outage with the Openfeedback SDK.
+* 🐛 Fixes cache issue for rooms and speakers.
 
-Version 2.0.4 *(2023-10-??)*
+Version 2.0.4 *(2023-10-16)*
 ----------------------------
 
 * 🛠️ Configure cache ids for the Apollo client.
-* 🐛 Fixes cache issue.
+* 🐛 Fixes cache issue for sessions.
 
 Version 2.0.3 *(2023-10-03)*
 ----------------------------

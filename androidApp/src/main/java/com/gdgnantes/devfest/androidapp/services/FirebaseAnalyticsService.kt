@@ -73,7 +73,7 @@ class FirebaseAnalyticsService @Inject constructor(private val firebaseAnalytics
     }
 
     override fun eventFeedbackClicked(openFeedbackId: String) {
-        TODO("Not yet implemented")
+        //"Not yet implemented"
     }
 
     override fun eventSessionOpened(sessionId: String) {

@@ -101,7 +101,7 @@ class MainActivity : ComponentActivity(), NavController.OnDestinationChangedList
                             },
                             onFeedbackFormFallbackLinkClick = { url ->
                                 externalContentService.openUrl(url)
-                                //analyticsService.eventFeedbackClicked(sessionId)
+                                analyticsService.eventFeedbackClicked(sessionId)
                             }
                         )
                     }
