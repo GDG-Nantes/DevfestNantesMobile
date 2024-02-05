@@ -4,6 +4,8 @@ Change Log
 Version 3.0.0 *(2024-??-??)*
 ----------------------------
 
+* ⬆️ Upgrades gradle plugin to version 8.2.
+
 Version 2.0.5 *(2023-10-18)*
 ----------------------------
 
