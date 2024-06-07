@@ -1,0 +1,28 @@
+[versions]
+agp = "8.4.1"
+kotlin = "2.0.0"
+dagger = "2.46.1"
+firebaseBom = "32.7.1"
+firebaseCrashlyticsPlugin = "2.9.1"
+googleServicesPlugin = "4.3.13"
+hilt = "1.0.0"
+secretsPlugin = "2.0.1"
+
+
+[libraries]
+androidx-hilt-compiler = { group = "androidx.hilt", name = "hilt-compiler", version.ref = "hilt" }
+
+dagger-hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "dagger" }
+dagger-hilt-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "dagger" }
+
+firebase-analytics-ktx = { group = "com.google.firebase", name = "firebase-analytics-ktx" }
+firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebaseBom" }
+firebase-crashlytics-ktx = { group = "com.google.firebase", name = "firebase-crashlytics-ktx" }
+
+[plugins]
+android-application = { id = "com.android.application", version.ref = "agp" }
+crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "firebaseCrashlyticsPlugin" }
+dagger-hilt = { id = "com.google.dagger.hilt.android", version.ref = "dagger" }
+google-services = { id = "com.google.gms.google-services", version.ref = "googleServicesPlugin" }
+jetbrains-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+secrets = { id = "com.google.android.libraries.mapsplatform.secrets-gradle-plugin", version.ref = "secretsPlugin" }

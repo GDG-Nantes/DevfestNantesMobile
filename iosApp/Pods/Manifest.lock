@@ -188,7 +188,7 @@ SPEC CHECKSUMS:
   NSLogger: cf3013a4fba189f631f07e6c3d5b8ce2b209654b
   PromisesObjC: c50d2056b5253dadbd6c2bea79b0674bd5a52fa4
   PromisesSwift: 28dca69a9c40779916ac2d6985a0192a5cb4a265
-  shared: 2d3b24a8fe27b7d9e65b8d075a9672fbc6a1aa10
+  shared: 90ed35de669e9fcb63a61e6b4bb0521eb732cc7a
   SwiftGen: 1366a7f71aeef49954ca5a63ba4bef6b0f24138c
   URLImage: 36a66c03ba2a9ccbbf06bc83431f2cef171008e8
 
