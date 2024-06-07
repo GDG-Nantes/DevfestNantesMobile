@@ -90,9 +90,9 @@ NSArray *ABTExperimentsToClearFromPayloads(
       [ABTConditionalUserPropertyController sharedInstanceWithAnalytics:analytics];
 
   // Check if the experiment is in experiments but not payloads.
-  for (id experiment in experiments) {
+  for (id experiment in [experiments copy]) {
     BOOL doesExperimentNoLongerExist = YES;
-    for (NSData *payload in payloads) {
+    for (NSData *payload in [payloads copy]) {
       ABTExperimentPayload *experimentPayload = ABTDeserializeExperimentPayload(payload);
       if (!experimentPayload) {
         FIRLogInfo(kFIRLoggerABTesting, @"I-ABT000002",

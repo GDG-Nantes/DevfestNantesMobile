@@ -8,20 +8,30 @@ import com.gdgnantes.devfest.model.Room
 import com.gdgnantes.devfest.model.Session
 import com.gdgnantes.devfest.model.Speaker
 import com.gdgnantes.devfest.model.Venue
+import com.rickclephas.kmp.nativecoroutines.NativeCoroutines
 import kotlinx.coroutines.flow.Flow
 
 /**
  *
  */
 interface DevFestNantesStore {
+    @NativeCoroutines
     val agenda: Flow<Agenda>
+
+    @NativeCoroutines
     val partners: Flow<Map<PartnerCategory, List<Partner>>>
     suspend fun getRoom(id: String): Room?
+
+    @NativeCoroutines
     val rooms: Flow<Set<Room>>
     suspend fun getSession(id: String): Session?
+
+    @NativeCoroutines
     val sessions: Flow<List<Session>>
     suspend fun getSpeaker(id: String): Speaker?
     suspend fun getSpeakerSessions(speakerId: String): List<Session>
+
+    @NativeCoroutines
     val speakers: Flow<List<Speaker>>
     suspend fun getVenue(language: ContentLanguage): Venue
 }

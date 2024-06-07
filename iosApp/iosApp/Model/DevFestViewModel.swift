@@ -51,48 +51,48 @@ class DevFestViewModel: ObservableObject {
     
     ///Asynchronous method to retrieve sessions
     func observeSessions() async {
-        do {
-            let stream = asyncStream(for: store.sessionsNative)
-            for try await data in stream {
-                DispatchQueue.main.async {
-                    self.sessionsChanged(sessions: data)
-                }
+            do {
+//                let stream = asyncSequence(for: store.sessions)
+//                for try await data in stream {
+//                    DispatchQueue.main.async {
+//                        self.sessionsChanged(sessions: data)
+//                    }
+//                }
+            } catch {
+                Logger.shared.log(.network, .error, "Observe Sessions error: \(error)")
             }
-        } catch {
-            Logger.shared.log(.network, .error, "Observe Sessions error: \(error)")
-        }
     }
     
     ///Allows you to classify sessions by time section
     private func sessionsChanged(sessions: [Session]) {
-        let groupedSessions = Dictionary(grouping: sessions) { getDate(date: $0.scheduleSlot.startDate) }
-        let sortedKeys = groupedSessions.keys.sorted()
-        var sections = [AgendaContent.Section]()
-        sortedKeys.forEach { date in
-            let sessions = groupedSessions[date]!
-                .map { AgendaContent.Session(from: $0) }
-                .sorted { $0.room < $1.room }
-            sections.append(AgendaContent.Section(
-                date: date,
-                day: self.sectionDateFormatter.string(from: date),
-                sessions: sessions))
-        }
-        self.isLoading = false
-        agendaContent.sections = sections
+//        let groupedSessions = Dictionary(grouping: sessions) { getDate(date: $0.scheduleSlot.startDate) }
+//        let sortedKeys = groupedSessions.keys.sorted()
+//        var sections = [AgendaContent.Section]()
+//        sortedKeys.forEach { date in
+//            let sessions = groupedSessions[date]!
+//                .map { AgendaContent.Session(from: $0) }
+//                .sorted { $0.room < $1.room }
+//            sections.append(AgendaContent.Section(
+//                date: date,
+//                day: self.sectionDateFormatter.string(from: date),
+//                sessions: sessions))
+//        }
+//        self.isLoading = false
+//        agendaContent.sections = sections
     }
     
     ///Asynchronous method to retrieve rooms
     func observeRooms() async {
         Task {
             do {
-                let stream = asyncStream(for: store.roomsNative)
-                for try await data in stream {
-                    DispatchQueue.main.async {
-                        self.roomsContent = Array(data)
-                    }
-                    
-                }
-                
+//                let stream = AsyncSequence(for: store.rooms)
+//                for try await data in stream {
+//                    DispatchQueue.main.async {
+//                        self.roomsContent = Array(data)
+//                    }
+//                    
+//                }
+//                
             } catch {
                 Logger.shared.log(.network, .error, "Observe Rooms error: \(error)")
             }
@@ -102,13 +102,13 @@ class DevFestViewModel: ObservableObject {
     func observeVenue() async {
         Task {
             do {
-                let stream = asyncStream(for: self.store.getVenueNative(language: currentLanguage))
-                for try await data in stream {
-                    DispatchQueue.main.async {
-                        self.venueContent = VenueContent(from: data)
-                    }
-                    
-                }
+//                let stream = asyncStream(for: self.store.getVenueNative(language: currentLanguage))
+//                for try await data in stream {
+//                    DispatchQueue.main.async {
+//                        self.venueContent = VenueContent(from: data)
+//                    }
+//                    
+//                }
                 
             } catch {
                 Logger.shared.log(.network, .error, "Observe Venue error: \(error)")
@@ -118,15 +118,15 @@ class DevFestViewModel: ObservableObject {
     ///Asynchronous method to retrieve partners
     func observePartners() async {
         do {
-            let stream = asyncStream(for: store.partnersNative)
-            for try await data in stream {
-                self.partnersContent = []
-                DispatchQueue.main.async {
-                    for key in data.keys.sorted() {
-                        self.partnersContent?.append(PartnerContent(categoryName: key, partners: data[key]!))
-                    }
-                }
-            }
+//            let stream = asyncStream(for: store.partnersNative)
+//            for try await data in stream {
+//                self.partnersContent = []
+//                DispatchQueue.main.async {
+//                    for key in data.keys.sorted() {
+//                        self.partnersContent?.append(PartnerContent(categoryName: key, partners: data[key]!))
+//                    }
+//                }
+//            }
         } catch {
             Logger.shared.log(.network, .error, "Observe Partners error: \(error)")
         }

@@ -1,8 +1,8 @@
 object Versions {
-    const val kotlinVersion = "1.8.22"
+    const val kotlinVersion = "1.9.22"
 
     const val kotlinCoroutines = "1.6.4"
-    const val kmpNativeCoroutines = "0.13.1"
+    const val kmpNativeCoroutines = "1.0.0-ALPHA-25"
     const val kotlinxDateTime = "0.4.1"
 
     const val googleServicesVersion = "4.3.13"
@@ -11,14 +11,12 @@ object Versions {
     const val accompanistPager = "0.24.13-rc"
 
     const val composeBom = "2023.09.00"
-    const val composeCompiler = "1.4.8"
+    const val composeCompiler = "1.5.10"
     const val navCompose = "2.6.0"
     const val accompanist = "0.24.13-rc"
 
     const val daggerVersion = "2.46.1"
     const val hiltAndroidXVersion = "1.0.0"
-
-    const val multiplatformSettings = "0.8.1"
 
     const val junit = "4.13.2"
     const val androidXTestVersion = "1.5.0"
@@ -45,10 +43,6 @@ object Apollo {
 
 object Deps {
     const val material = "com.google.android.material:material:1.6.1"
-    const val multiplatformSettings =
-        "com.russhwolf:multiplatform-settings:${Versions.multiplatformSettings}"
-    const val multiplatformSettingsCoroutines =
-        "com.russhwolf:multiplatform-settings-coroutines:${Versions.multiplatformSettings}"
     const val openFeedback = "io.openfeedback:feedback-android-sdk-ui:0.0.7"
     const val timber = "com.jakewharton.timber:timber:5.0.1"
 }
