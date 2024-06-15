@@ -1,21 +1,12 @@
-import org.jetbrains.kotlin.gradle.dsl.KotlinCompile
-import org.jetbrains.kotlin.gradle.dsl.KotlinJvmOptions
-
 plugins {
     alias(libs.plugins.android.application)
-    alias(libs.plugins.jetbrains.kotlin.android)
-    kotlin("kapt")
-    id("dagger.hilt.android.plugin")
-    id("com.google.gms.google-services")
-    id("com.google.firebase.crashlytics")
-    id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
-}
-
-tasks.withType(JavaCompile::class.java).configureEach {
-    options.release.set(17)
-}
-tasks.withType(KotlinCompile::class.java).configureEach {
-    (kotlinOptions as? KotlinJvmOptions)?.jvmTarget = "17"
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.compose.compiler)
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.google.services)
+    alias(libs.plugins.dagger.hilt)
+    alias(libs.plugins.crashlytics)
+    alias(libs.plugins.secrets)
 }
 
 android {
@@ -68,9 +59,6 @@ android {
         buildConfig = true
         compose = true
     }
-    composeOptions {
-        kotlinCompilerExtensionVersion = Versions.composeCompiler
-    }
 
     packagingOptions {
         resources {
@@ -89,6 +77,19 @@ android {
 
 dependencies {
     implementation(project(":shared"))
+
+    implementation(platform(libs.androidx.compose.bom))
+
+    implementation(libs.androidx.hilt.navigation.compose)
+
+    implementation(libs.dagger.hilt.android)
+    ksp(libs.dagger.hilt.compiler)
+    // For instrumentation tests
+    androidTestImplementation(libs.dagger.hilt.android.testing)
+    kspAndroidTest(libs.dagger.hilt.compiler)
+    // For local unit tests
+    testImplementation(libs.dagger.hilt.android.testing)
+    kspTest(libs.dagger.hilt.compiler)
 
     with(Kotlinx) {
         implementation(coroutinesCore)
@@ -122,7 +123,6 @@ dependencies {
     }
 
     with(Compose) {
-        implementation(platform(composeBom))
         implementation(activity)
         implementation(coilCompose)
         implementation(material3)
@@ -131,24 +131,12 @@ dependencies {
         implementation(navigation)
         debugImplementation(uiTooling)
         implementation(uiToolingPreview)
-        implementation(hiltNavigation)
-    }
-
-    with(Dagger) {
-        implementation(hilt)
-        kapt(compiler)
-        // For instrumentation tests
-        androidTestImplementation(androidTesting)
-        kaptAndroidTest(compiler)
-        // For local unit tests
-        testImplementation(androidTesting)
-        kaptTest(compiler)
     }
 
     with(Tests) {
         testImplementation(junit)
         testImplementation(coroutinesTest)
-        testImplementation(kotlinJUnit)
+        testImplementation(libs.kotlin.test.junit)
 
         with(Tests.Compose) {
             // UI Tests

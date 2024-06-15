@@ -1,19 +1,25 @@
-import org.jetbrains.kotlin.gradle.dsl.KotlinCompile
-import org.jetbrains.kotlin.gradle.dsl.KotlinJvmOptions
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jetbrains.kotlin.gradle.tasks.KotlinJvmCompile
 
 plugins {
-    kotlin("multiplatform")
-    kotlin("plugin.serialization") version Versions.kotlinVersion
-    kotlin("native.cocoapods")
-    id("com.android.library")
+    alias(libs.plugins.kotlin.multiplatform)
+    alias(libs.plugins.kotlin.cocoapods)
+    alias(libs.plugins.android.library)
+    alias(libs.plugins.kotlin.serialization)
     id("com.rickclephas.kmp.nativecoroutines") version Versions.kmpNativeCoroutines
     id("com.apollographql.apollo3") version Apollo.apolloVersion
 }
 
-version = "1.0"
-
 kotlin {
-    androidTarget()
+    androidTarget {
+        compilations.all {
+            tasks.withType<KotlinJvmCompile>().configureEach {
+                compilerOptions {
+                    jvmTarget.set(JvmTarget.JVM_1_8)
+                }
+            }
+        }
+    }
     iosX64()
     iosArm64()
     iosSimulatorArm64()
@@ -21,52 +27,30 @@ kotlin {
     cocoapods {
         summary = "Some description for the Shared Module"
         homepage = "Link to the Shared Module homepage"
+        version = "1.0"
         ios.deploymentTarget = "14.1"
         podfile = project.file("../iosApp/Podfile")
         framework {
             baseName = "shared"
+            isStatic = true
         }
     }
     
     sourceSets {
-        val commonMain by getting {
-            dependencies {
-                with(Kotlinx) {
-                    implementation(dateTime)
-                    implementation(serialization)
-                }
+        commonMain.dependencies {
+            with(Kotlinx) {
+                implementation(dateTime)
+                implementation(serialization)
+            }
 
-                with(Apollo) {
-                    implementation(apolloRuntime)
-                    implementation(apolloNormalizedCache)
-                    implementation(apolloNormalizedCacheSqlite)
-                }
+            with(Apollo) {
+                implementation(apolloRuntime)
+                implementation(apolloNormalizedCache)
+                implementation(apolloNormalizedCacheSqlite)
             }
         }
-        val commonTest by getting {
-            dependencies {
-                implementation(kotlin("test"))
-            }
-        }
-        val androidMain by getting
-        val androidUnitTest by getting
-        val iosX64Main by getting
-        val iosArm64Main by getting
-        val iosSimulatorArm64Main by getting
-        val iosMain by creating {
-            dependsOn(commonMain)
-            iosX64Main.dependsOn(this)
-            iosArm64Main.dependsOn(this)
-            iosSimulatorArm64Main.dependsOn(this)
-        }
-        val iosX64Test by getting
-        val iosArm64Test by getting
-        val iosSimulatorArm64Test by getting
-        val iosTest by creating {
-            dependsOn(commonTest)
-            iosX64Test.dependsOn(this)
-            iosArm64Test.dependsOn(this)
-            iosSimulatorArm64Test.dependsOn(this)
+        commonTest.dependencies {
+            implementation(libs.kotlin.test)
         }
     }
 }
@@ -87,13 +71,6 @@ apollo {
     }
 }
 
-tasks.withType(JavaCompile::class.java).configureEach {
-    options.release.set(17)
-}
-tasks.withType(KotlinCompile::class.java).configureEach {
-    (kotlinOptions as? KotlinJvmOptions)?.jvmTarget = "17"
-}
-
 android {
     compileSdk = AndroidSdk.compile
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
@@ -103,7 +80,7 @@ android {
     namespace = "com.gdgnantes.devfest"
 
     compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_17
-        targetCompatibility = JavaVersion.VERSION_17
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
     }
 }

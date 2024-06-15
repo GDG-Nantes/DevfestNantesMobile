@@ -1,22 +1,15 @@
 object Versions {
-    const val kotlinVersion = "1.9.22"
-
-    const val kotlinCoroutines = "1.6.4"
-    const val kmpNativeCoroutines = "1.0.0-ALPHA-25"
+    const val kotlinCoroutines = "1.8.1"
+    const val kmpNativeCoroutines = "1.0.0-ALPHA-31"
     const val kotlinxDateTime = "0.4.1"
 
     const val googleServicesVersion = "4.3.13"
     const val crashlyticsGradleVersion = "2.9.1"
 
     const val accompanistPager = "0.24.13-rc"
-
-    const val composeBom = "2023.09.00"
     const val composeCompiler = "1.5.10"
     const val navCompose = "2.6.0"
     const val accompanist = "0.24.13-rc"
-
-    const val daggerVersion = "2.46.1"
-    const val hiltAndroidXVersion = "1.0.0"
 
     const val junit = "4.13.2"
     const val androidXTestVersion = "1.5.0"
@@ -54,10 +47,6 @@ object Kotlinx {
     const val serialization = "org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.2"
 }
 
-object Kotlin {
-    const val reflect = "org.jetbrains.kotlin:kotlin-reflect:${Versions.kotlinVersion}"
-}
-
 object AndroidX {
     const val browser = "androidx.browser:browser:1.4.0"
     const val preference = "androidx.preference:preference:1.1.1"
@@ -74,7 +63,6 @@ object Accompanist {
 }
 
 object Compose {
-    const val composeBom = "androidx.compose:compose-bom:${Versions.composeBom}"
     const val activity = "androidx.activity:activity-compose:1.5.0"
     const val compiler = "androidx.compose.compiler:compiler:${Versions.composeCompiler}"
     const val ui = "androidx.compose.ui:ui"
@@ -90,15 +78,7 @@ object Compose {
     const val materialIconsExtended = "androidx.compose.material:material-icons-extended"
     const val navigation = "androidx.navigation:navigation-compose:${Versions.navCompose}"
     const val coilCompose = "io.coil-kt:coil-compose:2.1.0"
-    const val hiltNavigation =
-        "androidx.hilt:hilt-navigation-compose:${Versions.hiltAndroidXVersion}"
 
-}
-
-object Dagger {
-    const val hilt = "com.google.dagger:hilt-android:${Versions.daggerVersion}"
-    const val compiler = "com.google.dagger:hilt-compiler:${Versions.daggerVersion}"
-    const val androidTesting = "com.google.dagger:hilt-android-testing:${Versions.daggerVersion}"
 }
 
 object Firebase {
@@ -113,7 +93,6 @@ object Tests {
     const val junit = "junit:junit:${Versions.junit}"
     const val coroutinesTest =
         "org.jetbrains.kotlinx:kotlinx-coroutines-test:${Versions.kotlinCoroutines}"
-    const val kotlinJUnit = "org.jetbrains.kotlin:kotlin-test-junit:${Versions.kotlinVersion}"
 
     object Compose {
         const val uiTestComposeJUnit = "androidx.compose.ui:ui-test-junit4"
