@@ -3,12 +3,7 @@ object Versions {
     const val kmpNativeCoroutines = "1.0.0-ALPHA-31"
     const val kotlinxDateTime = "0.4.1"
 
-    const val googleServicesVersion = "4.3.13"
-    const val crashlyticsGradleVersion = "2.9.1"
-
     const val accompanistPager = "0.24.13-rc"
-    const val composeCompiler = "1.5.10"
-    const val navCompose = "2.6.0"
     const val accompanist = "0.24.13-rc"
 
     const val junit = "4.13.2"
@@ -60,14 +55,6 @@ object Accompanist {
     const val systemUiController = "com.google.accompanist:accompanist-systemuicontroller:0.25.0"
     const val swipeRefresh =
         "com.google.accompanist:accompanist-swiperefresh:${Versions.accompanistPager}"
-}
-
-object Firebase {
-    const val firebaseBom = "com.google.firebase:firebase-bom:32.2.3"
-    const val firebaseCrashlytics = "com.google.firebase:firebase-crashlytics-ktx"
-    const val firebaseAnalytics = "com.google.firebase:firebase-analytics-ktx"
-    const val firebaseConfig = "com.google.firebase:firebase-config-ktx"
-
 }
 
 object Tests {

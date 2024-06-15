@@ -39,6 +39,7 @@ dagger-hilt-compiler = { group = "com.google.dagger", name = "hilt-android-compi
 
 firebase-analytics-ktx = { group = "com.google.firebase", name = "firebase-analytics-ktx" }
 firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebaseBom" }
+firebase-config-ktx = { group = "com.google.firebase", name = "firebase-config-ktx" }
 firebase-crashlytics-ktx = { group = "com.google.firebase", name = "firebase-crashlytics-ktx" }
 
 kotlin-reflec = { group = "org.jetbrains.kotlin", name = "kotlin-reflect", version.ref = "kotlin" }

@@ -98,18 +98,16 @@ dependencies {
     testImplementation(libs.dagger.hilt.android.testing)
     kspTest(libs.dagger.hilt.compiler)
 
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.analytics.ktx)
+    implementation(libs.firebase.config.ktx)
+    implementation(libs.firebase.crashlytics.ktx)
+
     debugImplementation(libs.androidx.compose.ui.tooling)
 
     with(Kotlinx) {
         implementation(coroutinesCore)
         implementation(dateTime)
-    }
-
-    with(Firebase) {
-        implementation(platform(firebaseBom))
-        implementation(firebaseAnalytics)
-        implementation(firebaseCrashlytics)
-        implementation(firebaseConfig)
     }
 
     with(Deps) {
