@@ -11,7 +11,10 @@ firebaseCrashlyticsPlugin = "2.9.1"
 googleServicesPlugin = "4.3.13"
 hilt = "1.1.0"
 ksp = "2.0.0-1.0.22"
+material = "1.9.0"
+openfeedback = "0.0.7"
 secretsPlugin = "2.0.1"
+timber = "5.0.1"
 
 [libraries]
 
@@ -46,6 +49,11 @@ kotlin-reflec = { group = "org.jetbrains.kotlin", name = "kotlin-reflect", versi
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 kotlin-test-junit = { group = "org.jetbrains.kotlin", name = "kotlin-test-junit", version.ref = "kotlin" }
 
+material = { module = "com.google.android.material:material", version.ref = "material" }
+
+openfeedback = { module = "io.openfeedback:feedback-android-sdk-ui", version.ref = "openfeedback" }
+
+timber = { module = "com.jakewharton.timber:timber", version.ref = "timber" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

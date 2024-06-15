@@ -29,12 +29,6 @@ object Apollo {
         "com.apollographql.apollo3:apollo-normalized-cache-sqlite:$apolloVersion"
 }
 
-object Deps {
-    const val material = "com.google.android.material:material:1.6.1"
-    const val openFeedback = "io.openfeedback:feedback-android-sdk-ui:0.0.7"
-    const val timber = "com.jakewharton.timber:timber:5.0.1"
-}
-
 object Kotlinx {
     const val coroutinesCore =
         "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.kotlinCoroutines}"

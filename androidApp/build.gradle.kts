@@ -103,17 +103,15 @@ dependencies {
     implementation(libs.firebase.config.ktx)
     implementation(libs.firebase.crashlytics.ktx)
 
+    implementation(libs.material)
+    implementation(libs.openfeedback)
+    implementation(libs.timber)
+    
     debugImplementation(libs.androidx.compose.ui.tooling)
 
     with(Kotlinx) {
         implementation(coroutinesCore)
         implementation(dateTime)
-    }
-
-    with(Deps) {
-        implementation(material)
-        implementation(openFeedback)
-        implementation(timber)
     }
 
     with(AndroidX) {
