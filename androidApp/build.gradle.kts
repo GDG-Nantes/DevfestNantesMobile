@@ -79,8 +79,15 @@ dependencies {
     implementation(project(":shared"))
 
     implementation(platform(libs.androidx.compose.bom))
+    implementation(libs.androidx.compose.activity)
+    implementation(libs.androidx.compose.material.icons.extended)
+    implementation(libs.androidx.compose.material3)
+    implementation(libs.androidx.compose.navigation)
+    implementation(libs.androidx.compose.ui.tooling.preview)
 
     implementation(libs.androidx.hilt.navigation.compose)
+
+    implementation(libs.coil.compose)
 
     implementation(libs.dagger.hilt.android)
     ksp(libs.dagger.hilt.compiler)
@@ -90,6 +97,8 @@ dependencies {
     // For local unit tests
     testImplementation(libs.dagger.hilt.android.testing)
     kspTest(libs.dagger.hilt.compiler)
+
+    debugImplementation(libs.androidx.compose.ui.tooling)
 
     with(Kotlinx) {
         implementation(coroutinesCore)
@@ -120,17 +129,6 @@ dependencies {
         implementation(pagerIndicator)
         implementation(systemUiController)
         implementation(swipeRefresh)
-    }
-
-    with(Compose) {
-        implementation(activity)
-        implementation(coilCompose)
-        implementation(material3)
-        implementation(materialIconsCore)
-        implementation(materialIconsExtended)
-        implementation(navigation)
-        debugImplementation(uiTooling)
-        implementation(uiToolingPreview)
     }
 
     with(Tests) {

@@ -62,25 +62,6 @@ object Accompanist {
         "com.google.accompanist:accompanist-swiperefresh:${Versions.accompanistPager}"
 }
 
-object Compose {
-    const val activity = "androidx.activity:activity-compose:1.5.0"
-    const val compiler = "androidx.compose.compiler:compiler:${Versions.composeCompiler}"
-    const val ui = "androidx.compose.ui:ui"
-    const val runtime = "androidx.compose.runtime:runtime"
-    const val uiGraphics = "androidx.compose.ui:ui-graphics"
-    const val uiTooling = "androidx.compose.ui:ui-tooling"
-    const val uiToolingPreview = "androidx.compose.ui:ui-tooling-preview"
-    const val foundationLayout = "androidx.compose.foundation:foundation-layout"
-    const val material = "androidx.compose.material:material"
-    const val material3 = "androidx.compose.material3:material3:1.0.0-beta02"
-    const val materialIconsCore =
-        "androidx.compose.material:material-icons-core"
-    const val materialIconsExtended = "androidx.compose.material:material-icons-extended"
-    const val navigation = "androidx.navigation:navigation-compose:${Versions.navCompose}"
-    const val coilCompose = "io.coil-kt:coil-compose:2.1.0"
-
-}
-
 object Firebase {
     const val firebaseBom = "com.google.firebase:firebase-bom:32.2.3"
     const val firebaseCrashlytics = "com.google.firebase:firebase-crashlytics-ktx"
