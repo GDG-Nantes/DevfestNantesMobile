@@ -1,7 +1,5 @@
 object Versions {
-    const val kotlinCoroutines = "1.8.1"
     const val kmpNativeCoroutines = "1.0.0-ALPHA-31"
-    const val kotlinxDateTime = "0.4.1"
 
     const val accompanistPager = "0.24.13-rc"
     const val accompanist = "0.24.13-rc"
@@ -29,13 +27,6 @@ object Apollo {
         "com.apollographql.apollo3:apollo-normalized-cache-sqlite:$apolloVersion"
 }
 
-object Kotlinx {
-    const val coroutinesCore =
-        "org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.kotlinCoroutines}"
-    const val dateTime = "org.jetbrains.kotlinx:kotlinx-datetime:${Versions.kotlinxDateTime}"
-    const val serialization = "org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.2"
-}
-
 object AndroidX {
     const val browser = "androidx.browser:browser:1.4.0"
     const val preference = "androidx.preference:preference:1.1.1"
@@ -53,9 +44,7 @@ object Accompanist {
 
 object Tests {
     const val junit = "junit:junit:${Versions.junit}"
-    const val coroutinesTest =
-        "org.jetbrains.kotlinx:kotlinx-coroutines-test:${Versions.kotlinCoroutines}"
-
+    
     object Compose {
         const val uiTestComposeJUnit = "androidx.compose.ui:ui-test-junit4"
         const val uiTestComposeManifest = "androidx.compose.ui:ui-test-junit4"

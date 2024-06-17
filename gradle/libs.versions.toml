@@ -10,6 +10,9 @@ firebaseBom = "32.7.1"
 firebaseCrashlyticsPlugin = "2.9.1"
 googleServicesPlugin = "4.3.13"
 hilt = "1.1.0"
+kotlinxCoroutines = "1.8.1"
+kotlinxDatetime = "0.4.1"
+kotlinxSerialization = "1.3.2"
 ksp = "2.0.0-1.0.22"
 material = "1.9.0"
 openfeedback = "0.0.7"
@@ -48,6 +51,12 @@ firebase-crashlytics-ktx = { group = "com.google.firebase", name = "firebase-cra
 kotlin-reflec = { group = "org.jetbrains.kotlin", name = "kotlin-reflect", version.ref = "kotlin" }
 kotlin-test = { module = "org.jetbrains.kotlin:kotlin-test", version.ref = "kotlin" }
 kotlin-test-junit = { group = "org.jetbrains.kotlin", name = "kotlin-test-junit", version.ref = "kotlin" }
+
+kotlinx-coroutines-android = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-android", version.ref = "kotlinxCoroutines" }
+kotlinx-coroutines = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-core", version.ref = "kotlinxCoroutines" }
+kotlinx-coroutines-test = { group = "org.jetbrains.kotlinx", name = "kotlinx-coroutines-test", version.ref = "kotlinxCoroutines" }
+kotlinx-datetime = { group = "org.jetbrains.kotlinx", name = "kotlinx-datetime", version.ref = "kotlinxDatetime" }
+kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinxSerialization" }
 
 material = { module = "com.google.android.material:material", version.ref = "material" }
 

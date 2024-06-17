@@ -103,16 +103,14 @@ dependencies {
     implementation(libs.firebase.config.ktx)
     implementation(libs.firebase.crashlytics.ktx)
 
+    implementation(libs.kotlinx.coroutines.android)
+    implementation(libs.kotlinx.datetime)
+
     implementation(libs.material)
     implementation(libs.openfeedback)
     implementation(libs.timber)
-    
-    debugImplementation(libs.androidx.compose.ui.tooling)
 
-    with(Kotlinx) {
-        implementation(coroutinesCore)
-        implementation(dateTime)
-    }
+    debugImplementation(libs.androidx.compose.ui.tooling)
 
     with(AndroidX) {
         implementation(browser)
@@ -126,10 +124,11 @@ dependencies {
         implementation(systemUiController)
         implementation(swipeRefresh)
     }
+    
+    testImplementation(libs.kotlinx.coroutines.test)
 
     with(Tests) {
         testImplementation(junit)
-        testImplementation(coroutinesTest)
         testImplementation(libs.kotlin.test.junit)
 
         with(Tests.Compose) {

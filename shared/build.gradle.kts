@@ -38,10 +38,8 @@ kotlin {
     
     sourceSets {
         commonMain.dependencies {
-            with(Kotlinx) {
-                implementation(dateTime)
-                implementation(serialization)
-            }
+            implementation(libs.kotlinx.datetime)
+            implementation(libs.kotlinx.serialization.json)
 
             with(Apollo) {
                 implementation(apolloRuntime)
