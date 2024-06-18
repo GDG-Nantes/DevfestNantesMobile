@@ -7,7 +7,7 @@ plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.serialization)
     id("com.rickclephas.kmp.nativecoroutines") version Versions.kmpNativeCoroutines
-    id("com.apollographql.apollo3") version Apollo.apolloVersion
+    alias(libs.plugins.appollo)
 }
 
 kotlin {
@@ -38,14 +38,10 @@ kotlin {
     
     sourceSets {
         commonMain.dependencies {
+            implementation(libs.bundles.appollo)
+
             implementation(libs.kotlinx.datetime)
             implementation(libs.kotlinx.serialization.json)
-
-            with(Apollo) {
-                implementation(apolloRuntime)
-                implementation(apolloNormalizedCache)
-                implementation(apolloNormalizedCacheSqlite)
-            }
         }
         commonTest.dependencies {
             implementation(libs.kotlin.test)

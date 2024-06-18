@@ -18,15 +18,6 @@ object AndroidSdk {
     const val target = compile
 }
 
-object Apollo {
-    const val apolloVersion = "3.8.2"
-    const val apolloRuntime = "com.apollographql.apollo3:apollo-runtime:$apolloVersion"
-    const val apolloNormalizedCache =
-        "com.apollographql.apollo3:apollo-normalized-cache:$apolloVersion"
-    const val apolloNormalizedCacheSqlite =
-        "com.apollographql.apollo3:apollo-normalized-cache-sqlite:$apolloVersion"
-}
-
 object AndroidX {
     const val browser = "androidx.browser:browser:1.4.0"
     const val preference = "androidx.preference:preference:1.1.1"

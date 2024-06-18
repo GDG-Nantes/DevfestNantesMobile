@@ -1,7 +1,7 @@
 [versions]
 activity = "1.5.0"
 agp = "8.5.0"
-kotlin = "2.0.0"
+appollo = "3.8.2"
 coil = "2.2.2"
 composeBom = "2024.03.00"
 composeNavigation = "2.5.3"
@@ -10,6 +10,7 @@ firebaseBom = "32.7.1"
 firebaseCrashlyticsPlugin = "2.9.1"
 googleServicesPlugin = "4.3.13"
 hilt = "1.1.0"
+kotlin = "2.0.0"
 kotlinxCoroutines = "1.8.1"
 kotlinxDatetime = "0.4.1"
 kotlinxSerialization = "1.3.2"
@@ -36,6 +37,10 @@ androidx-compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-toolin
 androidx-compose-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
 androidx-hilt-compiler = { group = "androidx.hilt", name = "hilt-compiler", version.ref = "hilt" }
 androidx-hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "hilt" }
+
+appollo-runtime = { group = "com.apollographql.apollo3", name = "apollo-runtime", version.ref = "appollo" }
+appollo-normalized-cache = { group = "com.apollographql.apollo3", name = "apollo-normalized-cache", version.ref = "appollo" }
+appollo-normalized-cache-sqlite = { group = "com.apollographql.apollo3", name = "apollo-normalized-cache-sqlite", version.ref = "appollo" }
 
 coil-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil" }
 
@@ -64,9 +69,13 @@ openfeedback = { module = "io.openfeedback:feedback-android-sdk-ui", version.ref
 
 timber = { module = "com.jakewharton.timber:timber", version.ref = "timber" }
 
+[bundles]
+appollo = ["appollo-runtime", "appollo-normalized-cache", "appollo-normalized-cache-sqlite"]
+
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 android-library = { id = "com.android.library", version.ref = "agp" }
+appollo = { id = "com.apollographql.apollo3", version.ref = "appollo" }
 crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "firebaseCrashlyticsPlugin" }
 dagger-hilt = { id = "com.google.dagger.hilt.android", version.ref = "dagger" }
 google-services = { id = "com.google.gms.google-services", version.ref = "googleServicesPlugin" }
