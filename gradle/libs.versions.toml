@@ -12,6 +12,7 @@ firebaseBom = "32.7.1"
 firebaseCrashlyticsPlugin = "2.9.1"
 googleServicesPlugin = "4.3.13"
 hilt = "1.1.0"
+kmpNativeCoroutines = "1.0.0-ALPHA-31"
 kotlin = "2.0.0"
 kotlinxCoroutines = "1.8.1"
 kotlinxDatetime = "0.4.1"
@@ -91,6 +92,7 @@ appollo = { id = "com.apollographql.apollo3", version.ref = "appollo" }
 crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "firebaseCrashlyticsPlugin" }
 dagger-hilt = { id = "com.google.dagger.hilt.android", version.ref = "dagger" }
 google-services = { id = "com.google.gms.google-services", version.ref = "googleServicesPlugin" }
+kmp-native-coroutines = { id = "com.rickclephas.kmp.nativecoroutines", version.ref = "kmpNativeCoroutines" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-cocoapods = { id = "org.jetbrains.kotlin.native.cocoapods", version.ref = "kotlin" }
 kotlin-compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }

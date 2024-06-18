@@ -1,8 +1,4 @@
 object Versions {
-    const val kmpNativeCoroutines = "1.0.0-ALPHA-31"
-
-    const val accompanistPager = "0.24.13-rc"
-    const val accompanist = "0.24.13-rc"
 
     const val junit = "4.13.2"
     const val androidXTestVersion = "1.5.0"

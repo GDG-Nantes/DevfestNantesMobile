@@ -6,7 +6,7 @@ plugins {
     alias(libs.plugins.kotlin.cocoapods)
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.serialization)
-    id("com.rickclephas.kmp.nativecoroutines") version Versions.kmpNativeCoroutines
+    alias(libs.plugins.kmp.native.coroutines)
     alias(libs.plugins.appollo)
 }
 
