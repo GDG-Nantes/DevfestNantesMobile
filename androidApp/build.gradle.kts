@@ -78,6 +78,7 @@ android {
 dependencies {
     implementation(project(":shared"))
 
+    implementation(libs.bundles.accompanist)
     implementation(libs.androidx.browser)
 
     implementation(platform(libs.androidx.compose.bom))
@@ -116,13 +117,6 @@ dependencies {
     implementation(libs.timber)
 
     debugImplementation(libs.androidx.compose.ui.tooling)
-
-    with(Accompanist) {
-        implementation(pager)
-        implementation(pagerIndicator)
-        implementation(systemUiController)
-        implementation(swipeRefresh)
-    }
 
     testImplementation(libs.kotlinx.coroutines.test)
 
