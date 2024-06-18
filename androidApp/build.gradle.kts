@@ -117,20 +117,9 @@ dependencies {
     implementation(libs.timber)
 
     debugImplementation(libs.androidx.compose.ui.tooling)
+    debugImplementation(libs.androidx.compose.ui.test.manifest)
 
-    testImplementation(libs.kotlinx.coroutines.test)
-
-    with(Tests) {
-        testImplementation(junit)
-        testImplementation(libs.kotlin.test.junit)
-
-        with(Tests.Compose) {
-            // UI Tests
-            androidTestImplementation(uiTestComposeJUnit)
-            // Debug
-            debugImplementation(uiTestComposeManifest)
-        }
-    }
+    testImplementation(libs.bundles.test)
 
     with(AndroidTests) {
         androidTestImplementation(androidXTestRules)

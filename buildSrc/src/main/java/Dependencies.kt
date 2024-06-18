@@ -14,15 +14,6 @@ object AndroidSdk {
     const val target = compile
 }
 
-object Tests {
-    const val junit = "junit:junit:${Versions.junit}"
-    
-    object Compose {
-        const val uiTestComposeJUnit = "androidx.compose.ui:ui-test-junit4"
-        const val uiTestComposeManifest = "androidx.compose.ui:ui-test-junit4"
-    }
-}
-
 object AndroidTests {
     const val androidXTestCoreKtx = "androidx.test:core-ktx:${Versions.androidXTestVersion}"
     const val androidXTestRunner = "androidx.test:runner:${Versions.androidXTestRunnerVersion}"
