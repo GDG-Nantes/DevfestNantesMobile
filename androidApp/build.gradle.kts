@@ -1,21 +1,12 @@
-import org.jetbrains.kotlin.gradle.dsl.KotlinCompile
-import org.jetbrains.kotlin.gradle.dsl.KotlinJvmOptions
-
 plugins {
-    id("com.android.application")
-    kotlin("android")
-    kotlin("kapt")
-    id("dagger.hilt.android.plugin")
-    id("com.google.gms.google-services")
-    id("com.google.firebase.crashlytics")
-    id("com.google.android.libraries.mapsplatform.secrets-gradle-plugin")
-}
-
-tasks.withType(JavaCompile::class.java).configureEach {
-    options.release.set(17)
-}
-tasks.withType(KotlinCompile::class.java).configureEach {
-    (kotlinOptions as? KotlinJvmOptions)?.jvmTarget = "17"
+    alias(libs.plugins.android.application)
+    alias(libs.plugins.kotlin.android)
+    alias(libs.plugins.kotlin.compose.compiler)
+    alias(libs.plugins.ksp)
+    alias(libs.plugins.google.services)
+    alias(libs.plugins.dagger.hilt)
+    alias(libs.plugins.crashlytics)
+    alias(libs.plugins.secrets)
 }
 
 android {
@@ -68,9 +59,6 @@ android {
         buildConfig = true
         compose = true
     }
-    composeOptions {
-        kotlinCompilerExtensionVersion = Versions.composeCompiler
-    }
 
     packagingOptions {
         resources {
@@ -90,85 +78,47 @@ android {
 dependencies {
     implementation(project(":shared"))
 
-    with(Kotlinx) {
-        implementation(coroutinesCore)
-        implementation(dateTime)
-    }
+    implementation(libs.bundles.accompanist)
+    implementation(libs.androidx.browser)
 
-    with(Firebase) {
-        implementation(platform(firebaseBom))
-        implementation(firebaseAnalytics)
-        implementation(firebaseCrashlytics)
-        implementation(firebaseConfig)
-    }
+    implementation(platform(libs.androidx.compose.bom))
+    implementation(libs.androidx.compose.activity)
+    implementation(libs.androidx.compose.material.icons.extended)
+    implementation(libs.androidx.compose.material3)
+    implementation(libs.androidx.compose.navigation)
+    implementation(libs.androidx.compose.ui.tooling.preview)
 
-    with(Deps) {
-        implementation(material)
-        implementation(openFeedback)
-        implementation(timber)
-    }
+    implementation(libs.androidx.hilt.navigation.compose)
 
-    with(AndroidX) {
-        implementation(browser)
-        implementation(preference)
-        implementation(splashScreenCompat)
-    }
+    implementation(libs.androidx.preference)
+    implementation(libs.androidx.splashscreen)
 
-    with(Accompanist) {
-        implementation(pager)
-        implementation(pagerIndicator)
-        implementation(systemUiController)
-        implementation(swipeRefresh)
-    }
+    implementation(libs.coil.compose)
 
-    with(Compose) {
-        implementation(platform(composeBom))
-        implementation(activity)
-        implementation(coilCompose)
-        implementation(material3)
-        implementation(materialIconsCore)
-        implementation(materialIconsExtended)
-        implementation(navigation)
-        debugImplementation(uiTooling)
-        implementation(uiToolingPreview)
-        implementation(hiltNavigation)
-    }
+    implementation(libs.dagger.hilt.android)
+    ksp(libs.dagger.hilt.compiler)
+    androidTestImplementation(libs.dagger.hilt.android.testing)
+    kspAndroidTest(libs.dagger.hilt.compiler)
+    testImplementation(libs.dagger.hilt.android.testing)
+    kspTest(libs.dagger.hilt.compiler)
 
-    with(Dagger) {
-        implementation(hilt)
-        kapt(compiler)
-        // For instrumentation tests
-        androidTestImplementation(androidTesting)
-        kaptAndroidTest(compiler)
-        // For local unit tests
-        testImplementation(androidTesting)
-        kaptTest(compiler)
-    }
+    implementation(platform(libs.firebase.bom))
+    implementation(libs.firebase.analytics.ktx)
+    implementation(libs.firebase.config.ktx)
+    implementation(libs.firebase.crashlytics.ktx)
 
-    with(Tests) {
-        testImplementation(junit)
-        testImplementation(coroutinesTest)
-        testImplementation(kotlinJUnit)
+    implementation(libs.kotlinx.coroutines.android)
+    implementation(libs.kotlinx.datetime)
 
-        with(Tests.Compose) {
-            // UI Tests
-            androidTestImplementation(uiTestComposeJUnit)
-            // Debug
-            debugImplementation(uiTestComposeManifest)
-        }
-    }
+    implementation(libs.material)
+    implementation(libs.openfeedback)
+    implementation(libs.timber)
 
-    with(AndroidTests) {
-        androidTestImplementation(androidXTestRules)
-        androidTestImplementation(androidXTestJUnitKtx)
-        androidTestImplementation(androidXTestTruth)
-        androidTestImplementation(androidXTestEspressoCore)
-        androidTestImplementation(androidXTestEspressoContrib)
-        androidTestImplementation(androidXTestEspressoIntents)
+    debugImplementation(libs.bundles.debug)
 
-        with(AndroidTests.Compose) {
-            // UI Tests
-            androidTestImplementation(uiTestComposeJUnit)
-        }
-    }
+    testImplementation(platform(libs.androidx.compose.bom))
+    testImplementation(libs.bundles.test)
+
+    androidTestImplementation(platform(libs.androidx.compose.bom))
+    androidTestImplementation(libs.bundles.android.test)
 }

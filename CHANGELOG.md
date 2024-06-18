@@ -4,8 +4,9 @@ Change Log
 Version 3.0.0 *(2024-??-??)*
 ----------------------------
 
-* ⬆️ Upgrades gradle plugin to version 8.2.
-* ⬆️ Upgrades Android gradle plugin to version 8.2.2.
+* ✂️ Moves Accompanist dependencies definition to version catalog.
+* ⬆️ Upgrades gradle plugin to version 8.7.
+* ⬆️ Upgrades Kotlin to version 2.0.0.
 
 Version 2.0.5 *(2023-10-18)*
 ----------------------------

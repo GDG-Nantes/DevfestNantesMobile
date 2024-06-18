@@ -90,6 +90,10 @@ __attribute__((no_sanitize("thread"))) void FIRSetAnalyticsDebugMode(BOOL analyt
   sFIRAnalyticsDebugMode = analyticsDebugMode;
 }
 
+FIRLoggerLevel FIRGetLoggerLevel(void) {
+  return (FIRLoggerLevel)GULGetLoggerLevel();
+}
+
 void FIRSetLoggerLevel(FIRLoggerLevel loggerLevel) {
   FIRLoggerInitializeASL();
   GULSetLoggerLevel((GULLoggerLevel)loggerLevel);
@@ -169,6 +173,13 @@ FIR_LOGGING_FUNCTION(Debug)
          withMessage:(NSString *)message
             withArgs:(va_list)args {
   FIRLogBasic(level, service, messageCode, message, args);
+}
+
++ (void)logWithLevel:(FIRLoggerLevel)level
+             service:(FIRLoggerService)service
+                code:(NSString *)code
+             message:(NSString *)message {
+  FIRLogBasic(level, service, code, message, NULL);
 }
 
 @end

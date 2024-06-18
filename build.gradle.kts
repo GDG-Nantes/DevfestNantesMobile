@@ -1,26 +1,15 @@
-buildscript {
-    repositories {
-        gradlePluginPortal()
-        google()
-        mavenCentral()
-    }
-    dependencies {
-        classpath("com.android.tools.build:gradle:8.2.2")
-        classpath("org.jetbrains.kotlin:kotlin-gradle-plugin:${Versions.kotlinVersion}")
-        classpath("com.google.dagger:hilt-android-gradle-plugin:${Versions.daggerVersion}")
-        classpath("com.google.gms:google-services:${Versions.googleServicesVersion}")
-        classpath("com.google.firebase:firebase-crashlytics-gradle:${Versions.crashlyticsGradleVersion}")
-        classpath("com.google.android.libraries.mapsplatform.secrets-gradle-plugin:secrets-gradle-plugin:2.0.1")
-    }
-}
-
-allprojects {
-    repositories {
-        google()
-        mavenCentral()
-    }
-}
-
-tasks.register("clean", Delete::class) {
-    delete(rootProject.buildDir)
+plugins {
+    alias(libs.plugins.appollo) apply false
+    alias(libs.plugins.android.application) apply false
+    alias(libs.plugins.android.library) apply false
+    alias(libs.plugins.crashlytics) apply false
+    alias(libs.plugins.dagger.hilt) apply false
+    alias(libs.plugins.google.services) apply false
+    alias(libs.plugins.kmp.native.coroutines) apply false
+    alias(libs.plugins.kotlin.android) apply false
+    alias(libs.plugins.kotlin.cocoapods) apply false
+    alias(libs.plugins.kotlin.multiplatform) apply false
+    alias(libs.plugins.kotlin.serialization) apply false
+    alias(libs.plugins.ksp) apply false
+    alias(libs.plugins.secrets) apply false
 }
