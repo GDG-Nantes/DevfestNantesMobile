@@ -18,12 +18,6 @@ object AndroidSdk {
     const val target = compile
 }
 
-object AndroidX {
-    const val browser = "androidx.browser:browser:1.4.0"
-    const val preference = "androidx.preference:preference:1.1.1"
-    const val splashScreenCompat = "androidx.core:core-splashscreen:1.0.0"
-}
-
 object Accompanist {
     const val pager = "com.google.accompanist:accompanist-pager:${Versions.accompanistPager}"
     const val pagerIndicator =

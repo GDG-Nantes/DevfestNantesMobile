@@ -78,6 +78,8 @@ android {
 dependencies {
     implementation(project(":shared"))
 
+    implementation(libs.androidx.browser)
+
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.compose.activity)
     implementation(libs.androidx.compose.material.icons.extended)
@@ -86,6 +88,9 @@ dependencies {
     implementation(libs.androidx.compose.ui.tooling.preview)
 
     implementation(libs.androidx.hilt.navigation.compose)
+
+    implementation(libs.androidx.preference)
+    implementation(libs.androidx.splashscreen)
 
     implementation(libs.coil.compose)
 
@@ -112,19 +117,13 @@ dependencies {
 
     debugImplementation(libs.androidx.compose.ui.tooling)
 
-    with(AndroidX) {
-        implementation(browser)
-        implementation(preference)
-        implementation(splashScreenCompat)
-    }
-
     with(Accompanist) {
         implementation(pager)
         implementation(pagerIndicator)
         implementation(systemUiController)
         implementation(swipeRefresh)
     }
-    
+
     testImplementation(libs.kotlinx.coroutines.test)
 
     with(Tests) {
