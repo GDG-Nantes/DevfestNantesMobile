@@ -116,22 +116,11 @@ dependencies {
     implementation(libs.openfeedback)
     implementation(libs.timber)
 
-    debugImplementation(libs.androidx.compose.ui.tooling)
-    debugImplementation(libs.androidx.compose.ui.test.manifest)
+    debugImplementation(libs.bundles.debug)
 
+    testImplementation(platform(libs.androidx.compose.bom))
     testImplementation(libs.bundles.test)
 
-    with(AndroidTests) {
-        androidTestImplementation(androidXTestRules)
-        androidTestImplementation(androidXTestJUnitKtx)
-        androidTestImplementation(androidXTestTruth)
-        androidTestImplementation(androidXTestEspressoCore)
-        androidTestImplementation(androidXTestEspressoContrib)
-        androidTestImplementation(androidXTestEspressoIntents)
-
-        with(AndroidTests.Compose) {
-            // UI Tests
-            androidTestImplementation(uiTestComposeJUnit)
-        }
-    }
+    androidTestImplementation(platform(libs.androidx.compose.bom))
+    androidTestImplementation(libs.bundles.android.test)
 }

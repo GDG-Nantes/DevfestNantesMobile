@@ -2,12 +2,16 @@
 accompanist = "0.25.0"
 activity = "1.5.0"
 agp = "8.5.0"
+androidXTestVersion = "1.5.0"
+androidXTestRunnerVersion = "1.5.2"
+androidXJUnitVersion = "1.1.5"
 appollo = "3.8.2"
 browser = "1.4.0"
 coil = "2.2.2"
 composeBom = "2024.03.00"
 composeNavigation = "2.5.3"
 dagger = "2.50"
+espresso = "3.5.0"
 firebaseBom = "32.7.1"
 firebaseCrashlyticsPlugin = "2.9.1"
 googleServicesPlugin = "4.3.13"
@@ -50,6 +54,14 @@ androidx-hilt-compiler = { group = "androidx.hilt", name = "hilt-compiler", vers
 androidx-hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "hilt" }
 androidx-preference = { group = "androidx.preference", name = "preference", version.ref = "preference" }
 androidx-splashscreen = { group = "androidx.core", name = "core-splashscreen", version.ref = "spalshscreen" }
+androidx-test-core = { group = "androidx.test", name = "core-ktx", version.ref = "androidXTestVersion" }
+androidx-test-espresso = { group = "androidx.test.espresso", name = "espresso-core", version.ref = "espresso" }
+androidx-test-espresso-contrib = { group = "androidx.test.espresso", name = "espresso-contrib", version.ref = "espresso" }
+androidx-test-espresso-intents = { group = "androidx.test.espresso", name = "espresso-intents", version.ref = "espresso" }
+androidx-test-ext-junit = { group = "androidx.test.ext", name = "junit-ktx", version.ref = "androidXJUnitVersion" }
+androidx-test-rules = { group = "androidx.test", name = "rules", version.ref = "androidXTestVersion" }
+androidx-test-runner = { group = "androidx.test", name = "runner", version.ref = "androidXTestRunnerVersion" }
+androidx-test-truth = { group = "androidx.test.ext", name = "truth", version.ref = "androidXTestVersion" }
 
 appollo-runtime = { group = "com.apollographql.apollo3", name = "apollo-runtime", version.ref = "appollo" }
 appollo-normalized-cache = { group = "com.apollographql.apollo3", name = "apollo-normalized-cache", version.ref = "appollo" }
@@ -58,7 +70,7 @@ appollo-normalized-cache-sqlite = { group = "com.apollographql.apollo3", name = 
 coil-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil" }
 
 dagger-hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "dagger" }
-dagger-hilt-android-testing = { group = "com.google.dagger", name = "hilt-android-testing", version.ref = "hilt" }
+dagger-hilt-android-testing = { group = "com.google.dagger", name = "hilt-android-testing", version.ref = "dagger" }
 dagger-hilt-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "dagger" }
 
 firebase-analytics-ktx = { group = "com.google.firebase", name = "firebase-analytics-ktx" }
@@ -86,7 +98,9 @@ timber = { module = "com.jakewharton.timber:timber", version.ref = "timber" }
 
 [bundles]
 accompanist = ["accompanist-pager", "accompanist-pager-indicators", "accompanist-systemuicontroller", "accompanist-swiperefresh"]
+android-test = ["androidx-compose-ui-test-junit4", "androidx-test-espresso", "androidx-test-espresso-contrib", "androidx-test-espresso-intents", "androidx-test-ext-junit", "androidx-test-rules", "androidx-test-truth"]
 appollo = ["appollo-runtime", "appollo-normalized-cache", "appollo-normalized-cache-sqlite"]
+debug = ["androidx-compose-ui-tooling", "androidx-compose-ui-test-manifest"]
 test = ["junit", "androidx-compose-ui-test-junit4", "kotlinx-coroutines-test"]
 
 [plugins]

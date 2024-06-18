@@ -69,7 +69,7 @@ android {
     compileSdk = AndroidSdk.compile
     sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
     defaultConfig {
-        minSdk = 23
+        minSdk = AndroidSdk.min
     }
     namespace = "com.gdgnantes.devfest"
 
