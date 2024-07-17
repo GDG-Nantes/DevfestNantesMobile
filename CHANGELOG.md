@@ -4,6 +4,7 @@ Change Log
 Version 3.0.0 *(2024-??-??)*
 ----------------------------
 
+* 📣 Adds the linter Detekt.
 * ✂️ Moves Accompanist dependencies definition to version catalog.
 * ⬆️ Upgrades gradle plugin to version 8.7.
 * ⬆️ Upgrades Kotlin to version 2.0.0.

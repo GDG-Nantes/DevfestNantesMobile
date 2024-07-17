@@ -1,5 +1,9 @@
+import io.gitlab.arturbosch.detekt.Detekt
+import io.gitlab.arturbosch.detekt.DetektCreateBaselineTask
+
 plugins {
     alias(libs.plugins.android.application)
+    alias(libs.plugins.detekt)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose.compiler)
     alias(libs.plugins.ksp)
@@ -7,6 +11,19 @@ plugins {
     alias(libs.plugins.dagger.hilt)
     alias(libs.plugins.crashlytics)
     alias(libs.plugins.secrets)
+}
+
+detekt {
+    buildUponDefaultConfig = true
+    allRules = false
+    autoCorrect = true
+    config.setFrom("$rootDir/linters/detekt-config.yml")
+}
+tasks.withType<Detekt>().configureEach {
+    jvmTarget = "1.8"
+}
+tasks.withType<DetektCreateBaselineTask>().configureEach {
+    jvmTarget = "1.8"
 }
 
 android {
@@ -76,6 +93,8 @@ android {
 }
 
 dependencies {
+    detektPlugins(libs.detekt.fomatting)
+
     implementation(project(":shared"))
 
     implementation(libs.bundles.accompanist)
