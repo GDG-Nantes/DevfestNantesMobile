@@ -4,7 +4,12 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.FilterList
 import androidx.compose.material.icons.filled.Settings
-import androidx.compose.material3.*
+import androidx.compose.material3.DrawerValue
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
@@ -28,7 +33,14 @@ import com.gdgnantes.devfest.androidapp.ui.screens.speakers.list.Speakers
 import com.gdgnantes.devfest.androidapp.ui.screens.venue.Venue
 import com.gdgnantes.devfest.model.Session
 import com.gdgnantes.devfest.model.Speaker
-import com.gdgnantes.devfest.model.WebLinks.*
+import com.gdgnantes.devfest.model.WebLinks.CODE_OF_CONDUCT
+import com.gdgnantes.devfest.model.WebLinks.GITHUB
+import com.gdgnantes.devfest.model.WebLinks.NANTES_TECH_COMMUNITIES
+import com.gdgnantes.devfest.model.WebLinks.SOCIAL_FACEBOOK
+import com.gdgnantes.devfest.model.WebLinks.SOCIAL_LINKEDIN
+import com.gdgnantes.devfest.model.WebLinks.SOCIAL_TWITTER
+import com.gdgnantes.devfest.model.WebLinks.SOCIAL_YOUTUBE
+import com.gdgnantes.devfest.model.WebLinks.WEBSITE
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -72,14 +84,17 @@ fun Home(
                             val scope = rememberCoroutineScope()
                             IconButton(onClick = {
                                 scope.launch {
-                                    if (agendaFilterDrawerState.isClosed) agendaFilterDrawerState.open() else agendaFilterDrawerState.close()
+                                    if (agendaFilterDrawerState.isClosed) {
+                                        agendaFilterDrawerState.open()
+                                    } else {
+                                        agendaFilterDrawerState.close()
+                                    }
                                 }
                             }) {
                                 Icon(
                                     imageVector = Icons.Filled.FilterList,
                                     contentDescription = stringResource(id = R.string.session_filters_action)
                                 )
-
                             }
                         }
                         else -> {}

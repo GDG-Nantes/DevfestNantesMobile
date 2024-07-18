@@ -82,10 +82,12 @@ fun AgendaLayout(
 
 private fun Map<Int, AgendaDay>.todayPageIndex(): Int {
     val today: LocalDate = Clock.System.todayIn(TimeZone.currentSystemDefault())
-    val todayPageIndex = values.indexOfLast { day ->
-        val startOfDay = Instant.parse(day.date)
-        val localDay: LocalDate = startOfDay.toLocalDateTime(TimeZone.currentSystemDefault()).date
-        localDay == today
-    }
+    val todayPageIndex =
+        values.indexOfLast { day ->
+            val startOfDay = Instant.parse(day.date)
+            val localDay: LocalDate =
+                startOfDay.toLocalDateTime(TimeZone.currentSystemDefault()).date
+            localDay == today
+        }
     return if (todayPageIndex < 0) 0 else todayPageIndex
 }

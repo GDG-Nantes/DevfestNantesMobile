@@ -11,8 +11,7 @@ import javax.inject.Inject
 import javax.inject.Provider
 
 @HiltAndroidApp
-class DevFestNantesApplication: Application() {
-
+class DevFestNantesApplication : Application() {
     @Inject
     lateinit var appInitializers: Provider<Set<ApplicationInitializer>>
 

@@ -16,7 +16,7 @@ plugins {
 detekt {
     buildUponDefaultConfig = true
     allRules = false
-    autoCorrect = true
+    autoCorrect = false
     config.setFrom("$rootDir/linters/detekt-config.yml")
 }
 tasks.withType<Detekt>().configureEach {

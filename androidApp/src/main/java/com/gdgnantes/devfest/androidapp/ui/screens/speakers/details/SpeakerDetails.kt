@@ -2,7 +2,11 @@ package com.gdgnantes.devfest.androidapp.ui.screens.speakers.details
 
 import android.annotation.SuppressLint
 import android.content.res.Configuration
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -26,13 +30,15 @@ fun SpeakerDetails(
 ) {
     Column(modifier) {
         SpeakerPicture(
-            modifier = Modifier
+            modifier =
+            Modifier
                 .size(128.dp)
                 .align(Alignment.CenterHorizontally),
             speaker = speaker
         )
         Text(
-            modifier = Modifier
+            modifier =
+            Modifier
                 .align(Alignment.CenterHorizontally)
                 .padding(top = 8.dp),
             text = speaker.getFullNameAndCompany(),

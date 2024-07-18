@@ -33,7 +33,6 @@ import kotlinx.coroutines.Dispatchers
 @Module
 @InstallIn(SingletonComponent::class)
 abstract class AppModule {
-
     @AppScope
     @Binds
     abstract fun analyticsService(firebaseAnalyticsService: FirebaseAnalyticsService): AnalyticsService
@@ -44,17 +43,22 @@ abstract class AppModule {
 
     @AppScope
     @Binds
-    abstract fun dataSharingSettingsService(dataCollectionSettingsServiceImpl: DataCollectionSettingsServiceImpl): DataCollectionSettingsService
+    abstract fun dataSharingSettingsService(
+        dataCollectionSettingsServiceImpl: DataCollectionSettingsServiceImpl
+    ): DataCollectionSettingsService
 
     companion object {
+        const val REMOTE_CONFIG_MINIMUM_FETCH_INTERVAL = 300L
+
         @AppScope
         @Provides
-        fun coroutinesDispatcherProvider() = CoroutinesDispatcherProvider(
-            default = Dispatchers.Default,
-            computation = Dispatchers.Default,
-            io = Dispatchers.IO,
-            main = Dispatchers.Main.immediate
-        )
+        fun coroutinesDispatcherProvider() =
+            CoroutinesDispatcherProvider(
+                default = Dispatchers.Default,
+                computation = Dispatchers.Default,
+                io = Dispatchers.IO,
+                main = Dispatchers.Main.immediate
+            )
 
         @Provides
         @ElementsIntoSet
@@ -67,12 +71,15 @@ abstract class AppModule {
         fun analytics() = Firebase.analytics
 
         @Provides
-        fun config() = Firebase.remoteConfig.apply {
-            val configSettings = remoteConfigSettings {
-                minimumFetchIntervalInSeconds = 300
-            }
-            setConfigSettingsAsync(configSettings)
-        }
+        fun config() =
+            Firebase.remoteConfig
+                .apply {
+                    val configSettings =
+                        remoteConfigSettings {
+                            minimumFetchIntervalInSeconds = REMOTE_CONFIG_MINIMUM_FETCH_INTERVAL
+                        }
+                    setConfigSettingsAsync(configSettings)
+                }
 
         @Provides
         fun crashlytics() = FirebaseCrashlytics.getInstance()
@@ -84,7 +91,8 @@ abstract class AppModule {
             OpenFeedback(
                 context = application,
                 openFeedbackProjectId = BuildConfig.OPEN_FEEDBACK_PROJECT_ID,
-                firebaseConfig = OpenFeedback.FirebaseConfig(
+                firebaseConfig =
+                OpenFeedback.FirebaseConfig(
                     projectId = BuildConfig.OPEN_FEEDBACK_FIREBASE_PROJECT_ID,
                     applicationId = BuildConfig.OPEN_FEEDBACK_FIREBASE_APPLICATION_ID,
                     apiKey = BuildConfig.OPEN_FEEDBACK_FIREBASE_API_KEY,

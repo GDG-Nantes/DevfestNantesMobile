@@ -18,7 +18,6 @@ class SpeakerViewModel @AssistedInject constructor(
     private val store: DevFestNantesStore,
     @Assisted speakerId: String
 ) : ViewModel() {
-
     private val _uiState = MutableStateFlow(UiState.STARTING)
     val uiState: StateFlow<UiState>
         get() = _uiState
@@ -51,10 +50,11 @@ class SpeakerViewModel @AssistedInject constructor(
         fun provideFactory(
             assistedFactory: SpeakerViewModelFactory,
             speakerId: String
-        ): ViewModelProvider.Factory = object : ViewModelProvider.Factory {
-            override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                return assistedFactory.create(speakerId) as T
+        ): ViewModelProvider.Factory =
+            object : ViewModelProvider.Factory {
+                override fun <T : ViewModel> create(modelClass: Class<T>): T {
+                    return assistedFactory.create(speakerId) as T
+                }
             }
-        }
     }
 }

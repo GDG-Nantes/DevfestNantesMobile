@@ -4,7 +4,6 @@ import android.util.Log
 import timber.log.Timber
 
 class TimberTreeRelease : Timber.Tree() {
-
     override fun isLoggable(tag: String?, priority: Int) =
         !(priority == Log.VERBOSE || priority == Log.DEBUG)
 

@@ -23,7 +23,8 @@ fun AboutLinks(
     onDevFestNantesWebsiteClick: () -> Unit,
 ) {
     Row(
-        modifier = modifier
+        modifier =
+        modifier
             .fillMaxWidth()
             .padding(8.dp),
         horizontalArrangement = Arrangement.SpaceAround
@@ -47,7 +48,8 @@ fun AboutLinksPreview() {
             AboutLinks(
                 modifier = Modifier.padding(it),
                 onCodeOfConductClick = {},
-                onDevFestNantesWebsiteClick = {})
+                onDevFestNantesWebsiteClick = {}
+            )
         }
     }
 }

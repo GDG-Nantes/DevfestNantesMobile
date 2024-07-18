@@ -24,7 +24,8 @@ fun SocialIcon(
 ) {
     val iconTint = (if (isSystemInDarkTheme()) Color.White else Color.Black).copy(alpha = 0.5f)
     Icon(
-        modifier = modifier
+        modifier =
+        modifier
             .size(24.dp)
             .clickable(onClick = onClick),
         painter = painterResource(resourceId),
@@ -41,48 +42,59 @@ fun SocialIcon(
 ) {
     val type = socialItem.type ?: return
     when (type) {
-        SocialType.GITHUB -> SocialIcon(
+        SocialType.GITHUB ->
+            SocialIcon(
             modifier = modifier,
             resourceId = R.drawable.github,
-            contentDescription = stringResource(
+                contentDescription =
+                stringResource(
                 id = R.string.content_description_logo,
                 "Github"
             ),
             onClick = onClick
         )
-        SocialType.LINKEDIN -> SocialIcon(
+
+        SocialType.LINKEDIN ->
+            SocialIcon(
             modifier = modifier,
             resourceId = R.drawable.ic_network_linkedin,
-            contentDescription = stringResource(
+                contentDescription =
+                stringResource(
                 id = R.string.content_description_logo,
                 "LinkedIn"
             ),
             onClick = onClick
         )
-        SocialType.TWITTER -> SocialIcon(
+
+        SocialType.TWITTER ->
+            SocialIcon(
             modifier = modifier,
             resourceId = R.drawable.ic_network_twitter,
-            contentDescription = stringResource(
+                contentDescription =
+                stringResource(
                 id = R.string.content_description_logo,
                 "Twitter"
             ),
             onClick = onClick
         )
-        SocialType.FACEBOOK -> SocialIcon(
+
+        SocialType.FACEBOOK ->
+            SocialIcon(
             modifier = modifier,
             resourceId = R.drawable.ic_network_facebook,
-            contentDescription = stringResource(
+                contentDescription =
+                stringResource(
                 id = R.string.content_description_logo,
                 "Facebook"
             ),
             onClick = onClick
         )
-        else -> SocialIcon(
+
+        else ->
+            SocialIcon(
             modifier = modifier,
             resourceId = R.drawable.ic_network_web,
-            contentDescription = stringResource(
-                id = R.string.content_description_speaker_website_icon
-            ),
+                contentDescription = stringResource(R.string.content_description_speaker_website_icon),
             onClick = onClick
         )
     }

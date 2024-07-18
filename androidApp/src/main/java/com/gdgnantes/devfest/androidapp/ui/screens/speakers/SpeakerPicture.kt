@@ -18,15 +18,18 @@ fun SpeakerPicture(
     speaker: Speaker
 ) {
     AsyncImage(
-        modifier = modifier
+        modifier =
+        modifier
             .clip(CircleShape),
         placeholder = painterResource(R.drawable.ic_person_black_24dp),
         error = painterResource(R.drawable.ic_person_black_24dp),
-        model = ImageRequest.Builder(LocalContext.current)
+        model =
+        ImageRequest.Builder(LocalContext.current)
             .data(speaker.photoUrl)
             .crossfade(true)
             .build(),
-        contentDescription = stringResource(
+        contentDescription =
+        stringResource(
             id = R.string.content_description_speaker_picture,
             speaker.name
         )

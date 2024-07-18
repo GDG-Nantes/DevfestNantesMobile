@@ -100,24 +100,26 @@ fun SpeakerLayout(
     ) {
         if (uiState == UiState.STARTING) {
             LoadingLayout(
-                modifier = modifier
+                modifier =
+                modifier
                     .padding(it)
                     .fillMaxSize()
             )
         } else {
             Box(
-                modifier = Modifier
+                modifier =
+                Modifier
                     .fillMaxSize()
                     .padding(it)
             ) {
                 speaker?.let {
                     LazyColumn(
-                        modifier = Modifier
+                        modifier =
+                        Modifier
                             .fillMaxSize()
                             .padding(16.dp),
                         verticalArrangement = Arrangement.spacedBy(8.dp)
                     ) {
-
                         item {
                             SpeakerDetails(
                                 modifier = Modifier.fillMaxWidth(),

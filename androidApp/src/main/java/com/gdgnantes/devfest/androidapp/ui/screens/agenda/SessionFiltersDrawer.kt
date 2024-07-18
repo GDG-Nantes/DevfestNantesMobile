@@ -1,8 +1,17 @@
 package com.gdgnantes.devfest.androidapp.ui.screens.agenda
 
 import androidx.annotation.StringRes
-import androidx.compose.foundation.*
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Checkbox
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -30,7 +39,8 @@ fun AgendaFilterDrawer(
     onSessionFiltersChanged: (Set<SessionFilter>) -> Unit,
 ) {
     Column(
-        modifier = modifier
+        modifier =
+        modifier
             .fillMaxWidth()
             .verticalScroll(rememberScrollState())
     ) {
@@ -43,10 +53,11 @@ fun AgendaFilterDrawer(
             image = R.drawable.ic_bookmarked,
             checked = sessionFilters.any { it.type == SessionFilter.FilterType.BOOKMARK },
             onCheck = { checked ->
-                val newSessionFilters = sessionFilters.toMutableSet().apply {
-                    removeAll { it.type == SessionFilter.FilterType.BOOKMARK }
-                    if (checked) add(SessionFilter(SessionFilter.FilterType.BOOKMARK, ""))
-                }
+                val newSessionFilters =
+                    sessionFilters.toMutableSet().apply {
+                        removeAll { it.type == SessionFilter.FilterType.BOOKMARK }
+                        if (checked) add(SessionFilter(SessionFilter.FilterType.BOOKMARK, ""))
+                    }
                 onSessionFiltersChanged(newSessionFilters)
             }
         )
@@ -70,10 +81,11 @@ fun AgendaFilterDrawer(
                 text = room.name,
                 checked = sessionFilters.any { it.type == SessionFilter.FilterType.ROOM && it.value == room.id },
                 onCheck = { checked ->
-                    val newSessionFilters = sessionFilters.toMutableSet().apply {
-                        removeAll { it.type == SessionFilter.FilterType.ROOM && it.value == room.id }
-                        if (checked) add(SessionFilter(SessionFilter.FilterType.ROOM, room.id))
-                    }
+                    val newSessionFilters =
+                        sessionFilters.toMutableSet().apply {
+                            removeAll { it.type == SessionFilter.FilterType.ROOM && it.value == room.id }
+                            if (checked) add(SessionFilter(SessionFilter.FilterType.ROOM, room.id))
+                        }
                     onSessionFiltersChanged(newSessionFilters)
                 }
             )
@@ -104,10 +116,11 @@ private fun FiltersLanguage(
         language = SessionLanguage.FRENCH,
         checked = sessionFilters.any { it.type == SessionFilter.FilterType.LANGUAGE && it.value == french },
         onCheck = { checked ->
-            val newSessionFilters = sessionFilters.toMutableSet().apply {
-                removeAll { it.type == SessionFilter.FilterType.LANGUAGE && it.value == french }
-                if (checked) add(SessionFilter(SessionFilter.FilterType.LANGUAGE, french))
-            }
+            val newSessionFilters =
+                sessionFilters.toMutableSet().apply {
+                    removeAll { it.type == SessionFilter.FilterType.LANGUAGE && it.value == french }
+                    if (checked) add(SessionFilter(SessionFilter.FilterType.LANGUAGE, french))
+                }
             onSessionFiltersChanged(newSessionFilters)
         }
     )
@@ -118,10 +131,11 @@ private fun FiltersLanguage(
         language = SessionLanguage.ENGLISH,
         checked = sessionFilters.any { it.type == SessionFilter.FilterType.LANGUAGE && it.value == english },
         onCheck = { checked ->
-            val newSessionFilters = sessionFilters.toMutableSet().apply {
-                removeAll { it.type == SessionFilter.FilterType.LANGUAGE && it.value == english }
-                if (checked) add(SessionFilter(SessionFilter.FilterType.LANGUAGE, english))
-            }
+            val newSessionFilters =
+                sessionFilters.toMutableSet().apply {
+                    removeAll { it.type == SessionFilter.FilterType.LANGUAGE && it.value == english }
+                    if (checked) add(SessionFilter(SessionFilter.FilterType.LANGUAGE, english))
+                }
             onSessionFiltersChanged(newSessionFilters)
         }
     )
@@ -140,49 +154,72 @@ private fun FiltersComplexity(
 
     FilterItem(
         text = stringResource(R.string.complexity_beginer),
-        checked = sessionFilters.any { it.type == SessionFilter.FilterType.COMPLEXITY && it.value == Complexity.BEGINNER.name },
+        checked =
+        sessionFilters.any {
+            it.type == SessionFilter.FilterType.COMPLEXITY &&
+                    it.value == Complexity.BEGINNER.name
+        },
         onCheck = { checked ->
-            val newSessionFilters = sessionFilters.toMutableSet().apply {
-                removeAll { it.type == SessionFilter.FilterType.COMPLEXITY && it.value == Complexity.BEGINNER.name }
-                if (checked) add(
-                    SessionFilter(
-                        SessionFilter.FilterType.COMPLEXITY,
-                        Complexity.BEGINNER.name
-                    )
-                )
-            }
+            val newSessionFilters =
+                sessionFilters.toMutableSet().apply {
+                    removeAll { it.type == SessionFilter.FilterType.COMPLEXITY && it.value == Complexity.BEGINNER.name }
+                    if (checked) {
+                        add(
+                            SessionFilter(
+                                SessionFilter.FilterType.COMPLEXITY,
+                                Complexity.BEGINNER.name
+                            )
+                        )
+                    }
+                }
             onSessionFiltersChanged(newSessionFilters)
         }
     )
     FilterItem(
         text = stringResource(R.string.complexity_intermediate),
-        checked = sessionFilters.any { it.type == SessionFilter.FilterType.COMPLEXITY && it.value == Complexity.INTERMEDIATE.name },
+        checked =
+        sessionFilters.any {
+            it.type == SessionFilter.FilterType.COMPLEXITY && it.value == Complexity.INTERMEDIATE.name
+        },
         onCheck = { checked ->
-            val newSessionFilters = sessionFilters.toMutableSet().apply {
-                removeAll { it.type == SessionFilter.FilterType.COMPLEXITY && it.value == Complexity.INTERMEDIATE.name }
-                if (checked) add(
-                    SessionFilter(
-                        SessionFilter.FilterType.COMPLEXITY,
-                        Complexity.INTERMEDIATE.name
-                    )
-                )
-            }
+            val newSessionFilters =
+                sessionFilters.toMutableSet().apply {
+                    removeAll {
+                        it.type == SessionFilter.FilterType.COMPLEXITY &&
+                                it.value == Complexity.INTERMEDIATE.name
+                    }
+                    if (checked) {
+                        add(
+                            SessionFilter(
+                                SessionFilter.FilterType.COMPLEXITY,
+                                Complexity.INTERMEDIATE.name
+                            )
+                        )
+                    }
+                }
             onSessionFiltersChanged(newSessionFilters)
         }
     )
     FilterItem(
         text = stringResource(R.string.complexity_advanced),
-        checked = sessionFilters.any { it.type == SessionFilter.FilterType.COMPLEXITY && it.value == Complexity.ADVANCED.name },
+        checked =
+        sessionFilters.any {
+            it.type == SessionFilter.FilterType.COMPLEXITY &&
+                    it.value == Complexity.ADVANCED.name
+        },
         onCheck = { checked ->
-            val newSessionFilters = sessionFilters.toMutableSet().apply {
-                removeAll { it.type == SessionFilter.FilterType.COMPLEXITY && it.value == Complexity.ADVANCED.name }
-                if (checked) add(
-                    SessionFilter(
-                        SessionFilter.FilterType.COMPLEXITY,
-                        Complexity.ADVANCED.name
-                    )
-                )
-            }
+            val newSessionFilters =
+                sessionFilters.toMutableSet().apply {
+                    removeAll { it.type == SessionFilter.FilterType.COMPLEXITY && it.value == Complexity.ADVANCED.name }
+                    if (checked) {
+                        add(
+                            SessionFilter(
+                                SessionFilter.FilterType.COMPLEXITY,
+                                Complexity.ADVANCED.name
+                            )
+                        )
+                    }
+                }
             onSessionFiltersChanged(newSessionFilters)
         }
     )
@@ -201,49 +238,79 @@ private fun FiltersType(
 
     FilterItem(
         text = stringResource(R.string.session_type_conference),
-        checked = sessionFilters.any { it.type == SessionFilter.FilterType.TYPE && it.value == SessionType.CONFERENCE.name },
+        checked =
+        sessionFilters
+            .any {
+                it.type == SessionFilter.FilterType.TYPE &&
+                        it.value == SessionType.CONFERENCE.name
+            },
         onCheck = { checked ->
-            val newSessionFilters = sessionFilters.toMutableSet().apply {
-                removeAll { it.type == SessionFilter.FilterType.TYPE && it.value == SessionType.CONFERENCE.name }
-                if (checked) add(
-                    SessionFilter(
-                        SessionFilter.FilterType.TYPE,
-                        SessionType.CONFERENCE.name
-                    )
-                )
-            }
+            val newSessionFilters =
+                sessionFilters.toMutableSet()
+                    .apply {
+                        removeAll {
+                            it.type == SessionFilter.FilterType.TYPE &&
+                                    it.value == SessionType.CONFERENCE.name
+                        }
+                        if (checked) {
+                            add(
+                                SessionFilter(
+                                    SessionFilter.FilterType.TYPE,
+                                    SessionType.CONFERENCE.name
+                                )
+                            )
+                        }
+                    }
             onSessionFiltersChanged(newSessionFilters)
         }
     )
     FilterItem(
         text = stringResource(R.string.session_type_quickie),
-        checked = sessionFilters.any { it.type == SessionFilter.FilterType.TYPE && it.value == SessionType.QUICKIE.name },
+        checked =
+        sessionFilters.any {
+            it.type == SessionFilter.FilterType.TYPE &&
+                    it.value == SessionType.QUICKIE.name
+        },
         onCheck = { checked ->
-            val newSessionFilters = sessionFilters.toMutableSet().apply {
-                removeAll { it.type == SessionFilter.FilterType.TYPE && it.value == SessionType.QUICKIE.name }
-                if (checked) add(
-                    SessionFilter(
-                        SessionFilter.FilterType.TYPE,
-                        SessionType.QUICKIE.name
-                    )
-                )
-            }
+            val newSessionFilters =
+                sessionFilters.toMutableSet().apply {
+                    removeAll { it.type == SessionFilter.FilterType.TYPE && it.value == SessionType.QUICKIE.name }
+                    if (checked) {
+                        add(
+                            SessionFilter(
+                                SessionFilter.FilterType.TYPE,
+                                SessionType.QUICKIE.name
+                            )
+                        )
+                    }
+                }
             onSessionFiltersChanged(newSessionFilters)
         }
     )
     FilterItem(
         text = stringResource(R.string.session_type_codelab),
-        checked = sessionFilters.any { it.type == SessionFilter.FilterType.TYPE && it.value == SessionType.CODELAB.name },
+        checked =
+        sessionFilters.any {
+            it.type == SessionFilter.FilterType.TYPE &&
+                    it.value == SessionType.CODELAB.name
+        },
         onCheck = { checked ->
-            val newSessionFilters = sessionFilters.toMutableSet().apply {
-                removeAll { it.type == SessionFilter.FilterType.TYPE && it.value == SessionType.CODELAB.name }
-                if (checked) add(
-                    SessionFilter(
-                        SessionFilter.FilterType.TYPE,
-                        SessionType.CODELAB.name
-                    )
-                )
-            }
+            val newSessionFilters =
+                sessionFilters.toMutableSet()
+                    .apply {
+                        removeAll {
+                            it.type == SessionFilter.FilterType.TYPE &&
+                                    it.value == SessionType.CODELAB.name
+                        }
+                        if (checked) {
+                            add(
+                                SessionFilter(
+                                    SessionFilter.FilterType.TYPE,
+                                    SessionType.CODELAB.name
+                                )
+                            )
+                        }
+                    }
             onSessionFiltersChanged(newSessionFilters)
         }
     )
@@ -259,7 +326,8 @@ private fun FilterItem(
     onCheck: (checked: Boolean) -> Unit,
 ) {
     Row(
-        modifier = modifier
+        modifier =
+        modifier
             .fillMaxWidth()
             .clickable {
                 onCheck(!checked)
@@ -270,15 +338,17 @@ private fun FilterItem(
         if (image != null) {
             Image(
                 modifier = Modifier.width(textLeftMargin),
-                painter = painterResource(image), contentDescription = text,
+                painter = painterResource(image),
+                contentDescription = text,
                 colorFilter = ColorFilter.tint(MaterialTheme.colorScheme.onSurface)
             )
         }
         if (language != null) {
-            val emoji = when (language) {
-                SessionLanguage.FRENCH -> "🇫🇷"
-                SessionLanguage.ENGLISH -> "🇬🇧"
-            }
+            val emoji =
+                when (language) {
+                    SessionLanguage.FRENCH -> "🇫🇷"
+                    SessionLanguage.ENGLISH -> "🇬🇧"
+                }
 
             Text(
                 modifier = Modifier.width(textLeftMargin),
@@ -288,16 +358,20 @@ private fun FilterItem(
         }
 
         Text(
-            modifier = Modifier
+            modifier =
+            Modifier
                 .weight(1f)
                 .padding(start = if (image == null && language == null) textLeftMargin else 0.dp),
             text = text,
             fontSize = 14.sp
         )
         Checkbox(
-            modifier = Modifier
+            modifier =
+            Modifier
                 .width(48.dp)
-                .height(48.dp), checked = checked, onCheckedChange = null
+                .height(48.dp),
+            checked = checked,
+            onCheckedChange = null
         )
     }
 }
@@ -308,7 +382,8 @@ private fun HeaderItem(
     @StringRes text: Int
 ) {
     Text(
-        modifier = modifier
+        modifier =
+        modifier
             .fillMaxWidth()
             .background(color = MaterialTheme.colorScheme.surfaceVariant)
             .padding(12.dp),

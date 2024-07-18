@@ -35,7 +35,6 @@ import javax.inject.Inject
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity(), NavController.OnDestinationChangedListener {
-
     @EntryPoint
     @InstallIn(ActivityComponent::class)
     interface ViewModelFactoryProvider {
@@ -83,7 +82,8 @@ class MainActivity : ComponentActivity(), NavController.OnDestinationChangedList
                     ) { backStackEntry ->
                         val sessionId = backStackEntry.arguments!!.getString("sessionId")!!
                         SessionLayout(
-                            viewModel = assistedViewModel {
+                            viewModel =
+                            assistedViewModel {
                                 SessionViewModel.provideFactory(
                                     sessionViewModelFactory(),
                                     sessionId
@@ -111,7 +111,8 @@ class MainActivity : ComponentActivity(), NavController.OnDestinationChangedList
                     ) { backStackEntry ->
                         val speakerId = backStackEntry.arguments!!.getString("speakerId")!!
                         SpeakerLayout(
-                            viewModel = assistedViewModel {
+                            viewModel =
+                            assistedViewModel {
                                 SpeakerViewModel.provideFactory(
                                     speakerViewModelFactory(),
                                     speakerId

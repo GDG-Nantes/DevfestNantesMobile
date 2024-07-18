@@ -17,7 +17,6 @@ import javax.inject.Inject
 class PartnersViewModel @Inject constructor(
     store: DevFestNantesStore,
 ) : ViewModel() {
-
     private val _platiniumPartners = MutableStateFlow<List<Partner>>(emptyList())
     val platiniumPartners: StateFlow<List<Partner>> = _platiniumPartners.asStateFlow()
 

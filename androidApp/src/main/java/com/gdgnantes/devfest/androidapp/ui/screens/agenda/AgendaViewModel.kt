@@ -13,7 +13,14 @@ import com.gdgnantes.devfest.store.DevFestNantesStore
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
-import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import javax.inject.Inject
@@ -23,19 +30,19 @@ class AgendaViewModel @Inject constructor(
     private val store: DevFestNantesStore,
     private val bookmarksStore: BookmarksStore
 ) : ViewModel() {
-
     private var autoRefreshJob: Job? = null
 
     private val _uiState = MutableStateFlow(UiState.STARTING)
     val uiState: StateFlow<UiState>
         get() = _uiState
 
-    private val _unfilteredDays = MutableStateFlow(
-        mapOf(
-            1 to AgendaDay(1, DAY_ONE_ISO, emptyList()),
-            2 to AgendaDay(2, DAY_TWO_ISO, emptyList())
+    private val _unfilteredDays =
+        MutableStateFlow(
+            mapOf(
+                1 to AgendaDay(1, DAY_ONE_ISO, emptyList()),
+                2 to AgendaDay(2, DAY_TWO_ISO, emptyList())
+            )
         )
-    )
     private val unfilteredDays = _unfilteredDays.asStateFlow()
 
     private val _days = MutableStateFlow(unfilteredDays.value)
@@ -53,15 +60,16 @@ class AgendaViewModel @Inject constructor(
 
     fun onRefresh() {
         autoRefreshJob?.cancel()
-        autoRefreshJob = viewModelScope.launch {
-            store.agenda
-                .map { agenda -> agenda.days }
-                .onEach { _unfilteredDays.value = it }
-                .onEach { _uiState.emit(UiState.SUCCESS) }
-                .combine(_sessionFilters) { _, _ -> }
-                .combine(bookmarksStore.bookmarkedSessionIds) { _, _ -> }
-                .collect { updateFilteredDays() }
-        }
+        autoRefreshJob =
+            viewModelScope.launch {
+                store.agenda
+                    .map { agenda -> agenda.days }
+                    .onEach { _unfilteredDays.value = it }
+                    .onEach { _uiState.emit(UiState.SUCCESS) }
+                    .combine(_sessionFilters) { _, _ -> }
+                    .combine(bookmarksStore.bookmarkedSessionIds) { _, _ -> }
+                    .collect { updateFilteredDays() }
+            }
     }
 
     fun onSessionFiltersChanged(filters: Set<SessionFilter>) {
@@ -70,18 +78,25 @@ class AgendaViewModel @Inject constructor(
         }
     }
 
-    private suspend fun updateFilteredDays() = withContext(Dispatchers.IO) {
-        _days.value = mutableMapOf<Int, AgendaDay>().apply {
-            unfilteredDays.value.forEach { (key, value) ->
-                val date = if (key == 1) DAY_ONE_ISO else DAY_TWO_ISO
-                this[key] =
-                    AgendaDay(value.dayIndex, date, value.sessions
-                        .filterSessions(_sessionFilters.value)
-                        .sortedBy { session -> session.scheduleSlot.startDate })
-            }
-        }.toMap()
-    }
+    private suspend fun updateFilteredDays() =
+        withContext(Dispatchers.IO) {
+            _days.value =
+                mutableMapOf<Int, AgendaDay>()
+                    .apply {
+                        unfilteredDays.value.forEach { (key, value) ->
+                            val date = if (key == 1) DAY_ONE_ISO else DAY_TWO_ISO
+                            this[key] =
+                                AgendaDay(
+                                    value.dayIndex, date,
+                                    value.sessions
+                                        .filterSessions(_sessionFilters.value)
+                                        .sortedBy { session -> session.scheduleSlot.startDate }
+                                )
+                        }
+                    }.toMap()
+        }
 
+    @Suppress("NestedBlockDepth", "CyclomaticComplexMethod")
     private fun List<Session>.filterSessions(
         filterList: Set<SessionFilter>
     ): List<Session> {
@@ -105,21 +120,25 @@ class AgendaViewModel @Inject constructor(
                             sessionsByFilterType[filter.type]?.add(session)
                         }
                     }
+
                     SessionFilter.FilterType.LANGUAGE -> {
                         if (filter.value == session.language?.name) {
                             sessionsByFilterType[filter.type]?.add(session)
                         }
                     }
+
                     SessionFilter.FilterType.COMPLEXITY -> {
                         if (filter.value == session.complexity?.name) {
                             sessionsByFilterType[filter.type]?.add(session)
                         }
                     }
+
                     SessionFilter.FilterType.ROOM -> {
                         if (filter.value == session.room?.id) {
                             sessionsByFilterType[filter.type]?.add(session)
                         }
                     }
+
                     SessionFilter.FilterType.TYPE -> {
                         if (filter.value == session.type?.name) {
                             sessionsByFilterType[filter.type]?.add(session)
@@ -128,7 +147,7 @@ class AgendaViewModel @Inject constructor(
                 }
             }
         }
-        //get union join of all Sessions
+        // get union join of all Sessions
         val origin = sessionsByFilterType.values.flatten().toMutableSet()
         sessionsByFilterType.values.forEach { origin.retainAll(it) }
         return origin.toList()

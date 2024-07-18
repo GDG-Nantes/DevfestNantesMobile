@@ -10,6 +10,7 @@ import com.google.firebase.analytics.ktx.logEvent
 import timber.log.Timber
 import javax.inject.Inject
 
+@Suppress("TooManyFunctions")
 class FirebaseAnalyticsService @Inject constructor(private val firebaseAnalytics: FirebaseAnalytics) :
     AnalyticsService {
     override fun eventBookmark(page: AnalyticsPage, sessionId: String, bookmarked: Boolean) {
@@ -73,7 +74,7 @@ class FirebaseAnalyticsService @Inject constructor(private val firebaseAnalytics
     }
 
     override fun eventFeedbackClicked(openFeedbackId: String) {
-        //"Not yet implemented"
+        // "Not yet implemented"
     }
 
     override fun eventSessionOpened(sessionId: String) {
@@ -109,5 +110,4 @@ class FirebaseAnalyticsService @Inject constructor(private val firebaseAnalytics
             className?.run { param(FirebaseAnalytics.Param.SCREEN_CLASS, className) }
         }
     }
-
 }

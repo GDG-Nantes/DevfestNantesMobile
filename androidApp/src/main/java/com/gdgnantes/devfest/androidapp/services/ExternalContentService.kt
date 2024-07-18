@@ -25,10 +25,12 @@ class ExternalContentService @Inject constructor(
         }
     }
 
+    @Suppress("TooGenericExceptionCaught") // Find out which exception should be handled.
     private fun launchTab(url: String) {
         try {
             val parse = Uri.parse(url)
-            val customTabsIntent: CustomTabsIntent = CustomTabsIntent.Builder()
+            val customTabsIntent: CustomTabsIntent =
+                CustomTabsIntent.Builder()
                 .setDefaultColorSchemeParams(
                     CustomTabColorSchemeParams.Builder()
                         .setToolbarColor(

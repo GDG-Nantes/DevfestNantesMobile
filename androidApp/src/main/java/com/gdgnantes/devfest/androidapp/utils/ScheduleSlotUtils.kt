@@ -5,7 +5,8 @@ import android.content.res.Resources
 import android.text.format.DateUtils
 import androidx.core.os.ConfigurationCompat
 import com.gdgnantes.devfest.model.ScheduleSlot
-import java.util.*
+import java.util.Formatter
+import java.util.TimeZone
 
 fun ScheduleSlot.getFormattedRange(context: Context): String {
     val locale = ConfigurationCompat.getLocales(Resources.getSystem().configuration)[0]
@@ -19,7 +20,10 @@ fun ScheduleSlot.getFormattedRange(context: Context): String {
             Formatter(locale),
             start.time,
             end.time,
-            DateUtils.FORMAT_SHOW_WEEKDAY or DateUtils.FORMAT_SHOW_TIME or DateUtils.FORMAT_SHOW_DATE or DateUtils.FORMAT_SHOW_YEAR,
+            DateUtils.FORMAT_SHOW_WEEKDAY or
+                    DateUtils.FORMAT_SHOW_TIME or
+                    DateUtils.FORMAT_SHOW_DATE or
+                    DateUtils.FORMAT_SHOW_YEAR,
             TimeZone.getDefault().id
         ).toString().titlecaseFirstCharIfItIsLowercase()
     }

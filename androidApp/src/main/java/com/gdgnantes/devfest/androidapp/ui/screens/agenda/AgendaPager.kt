@@ -7,8 +7,11 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
-import androidx.compose.material3.*
+import androidx.compose.material3.Tab
+import androidx.compose.material3.TabRow
+import androidx.compose.material3.TabRowDefaults
 import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
@@ -32,9 +35,10 @@ fun AgendaPager(
     onSessionClick: (Session) -> Unit,
 ) {
     Column(modifier = modifier.fillMaxWidth()) {
-        val pagerState = rememberPagerState(initialPage = initialPageIndex) {
-            days.size
-        }
+        val pagerState =
+            rememberPagerState(initialPage = initialPageIndex) {
+                days.size
+            }
 
         TabRow(
             // Our selected tab is our current page
@@ -48,8 +52,9 @@ fun AgendaPager(
                 )
             }
         ) {
-            val daysNames = days.values.toList()
-                .map { getDayFromIso8601(it.date, context = LocalContext.current) ?: "" }
+            val daysNames =
+                days.values.toList()
+                    .map { getDayFromIso8601(it.date, context = LocalContext.current) ?: "" }
             repeat(daysNames.size) {
                 val coroutineScope = rememberCoroutineScope()
                 Tab(

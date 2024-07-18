@@ -53,7 +53,8 @@ fun DataCollectionAgreementDialog(
                     Text(stringResource(id = R.string.button_dialog_data_collection_consent_customize))
                 }
             },
-            properties = DialogProperties(
+            properties =
+            DialogProperties(
                 dismissOnBackPress = false,
                 dismissOnClickOutside = false
             )

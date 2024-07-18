@@ -8,7 +8,11 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
 import androidx.compose.material.icons.filled.Lock
-import androidx.compose.material3.*
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
@@ -46,7 +50,8 @@ fun Settings(
         }
     ) {
         Column(
-            modifier = modifier
+            modifier =
+            modifier
                 .padding(it)
                 .verticalScroll(state = rememberScrollState()),
             verticalArrangement = Arrangement.spacedBy(8.dp)
@@ -59,7 +64,8 @@ fun Settings(
                     )
                 },
                 title = stringResource(id = R.string.screen_data_collection),
-                subtitle = stringResource(
+                subtitle =
+                stringResource(
                     id = R.string.settings_data_collection_subtitle
                 ),
                 onClick = onOpenDataSharing
@@ -78,7 +84,8 @@ fun Settings(
 
             SettingsItem(
                 title = stringResource(id = R.string.settings_version_label),
-                subtitle = stringResource(
+                subtitle =
+                stringResource(
                     R.string.app_version,
                     BuildConfig.VERSION_NAME,
                     BuildConfig.VERSION_CODE

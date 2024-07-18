@@ -16,7 +16,6 @@ class BookmarksViewModel @Inject constructor(
     private val analyticsService: AnalyticsService,
     private val bookmarksStore: BookmarksStore,
 ) : ViewModel() {
-
     fun subscribe(id: String): Flow<Boolean> {
         return bookmarksStore.subscribe(id)
             .stateIn(viewModelScope, SharingStarted.Eagerly, false)

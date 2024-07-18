@@ -26,7 +26,9 @@ internal fun SettingsTileIcon(
         contentAlignment = Alignment.Center,
     ) {
         icon?.let {
-            CompositionLocalProvider(LocalContentColor provides if (isSystemInDarkTheme()) Color.White else Color.Black) {
+            CompositionLocalProvider(
+                LocalContentColor provides if (isSystemInDarkTheme()) Color.White else Color.Black
+            ) {
                 it()
             }
         }

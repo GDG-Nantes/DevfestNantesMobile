@@ -33,7 +33,8 @@ fun About(
 ) {
     Scaffold {
         Column(
-            modifier = modifier
+            modifier =
+            modifier
                 .fillMaxWidth()
                 .fillMaxHeight()
                 .padding(it)
@@ -91,6 +92,7 @@ fun AboutPreview() {
             onYouTubeClick = {},
             onPartnerClick = {},
             onLocalCommunitiesClick = {},
-            onGithubClick = {})
+            onGithubClick = {}
+        )
     }
 }

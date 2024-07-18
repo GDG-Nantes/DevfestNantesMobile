@@ -2,7 +2,11 @@ package com.gdgnantes.devfest.androidapp.ui.screens.agenda
 
 import android.content.res.Resources
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.lazy.rememberLazyListState
@@ -23,7 +27,8 @@ import com.gdgnantes.devfest.model.Session
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.text.DateFormat
-import java.util.*
+import java.util.Date
+import java.util.TimeZone
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -42,7 +47,8 @@ fun AgendaColumn(
 
     LazyColumn(
         state = listState,
-        modifier = Modifier
+        modifier =
+        Modifier
             .fillMaxHeight()
     ) {
         sessionsGroupedByStartTime.forEach {
@@ -78,7 +84,7 @@ fun TimeSeparator(
             Icon(
                 imageVector = Icons.Filled.Schedule,
                 contentDescription = null,
-                tint =  MaterialTheme.colorScheme.onBackground
+                tint = MaterialTheme.colorScheme.onBackground
             )
 
             Text(
@@ -92,15 +98,16 @@ fun TimeSeparator(
 private fun groupSessionsByStartTime(sessions: List<Session>): Map<String, List<Session>> {
     return sessions.map { session ->
         val locale = ConfigurationCompat.getLocales(Resources.getSystem().configuration)[0]
-        val time = if (locale != null) {
-            getDateFromIso8601(session.scheduleSlot.startDate)?.run {
-                val formatter: DateFormat = DateFormat.getTimeInstance(DateFormat.SHORT, locale)
-                formatter.timeZone = TimeZone.getDefault()
-                formatter.format(this)
-            } ?: ""
-        } else {
-            ""
-        }
+        val time =
+            if (locale != null) {
+                getDateFromIso8601(session.scheduleSlot.startDate)?.run {
+                    val formatter: DateFormat = DateFormat.getTimeInstance(DateFormat.SHORT, locale)
+                    formatter.timeZone = TimeZone.getDefault()
+                    formatter.format(this)
+                } ?: ""
+            } else {
+                ""
+            }
         time to session
     }
         .filter { pair -> pair.first.isNotEmpty() }
@@ -122,7 +129,7 @@ private suspend fun getCurrentStartTimeIndex(sessionsGroupedByStartTime: Map<Str
             entry.value.firstOrNull()?.scheduleSlot?.endDate?.let {
                 getDateFromIso8601(it)?.let { sessionEndDate ->
                     if (now > sessionEndDate) {
-                        index += entry.value.size + 1 //Adds count of sessions per time + 1 for the header.
+                        index += entry.value.size + 1 // Adds count of sessions per time + 1 for the header.
                     } else {
                         return@withContext index
                     }

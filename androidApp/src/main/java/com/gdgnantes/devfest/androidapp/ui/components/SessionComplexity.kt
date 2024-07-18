@@ -27,11 +27,13 @@ fun SessionComplexity(
     OutlinedCard(
         modifier = modifier,
         shape = RoundedCornerShape(20.dp),
-        border = BorderStroke(
+        border =
+        BorderStroke(
             1.dp,
             if (isSystemInDarkTheme()) MaterialTheme.colorScheme.onSurface else MaterialTheme.colorScheme.surface
         ),
-        colors = if (isSystemInDarkTheme()) {
+        colors =
+        if (isSystemInDarkTheme()) {
             cardColors(
                 containerColor = MaterialTheme.colorScheme.surface,
                 contentColor = MaterialTheme.colorScheme.onSurface
@@ -66,8 +68,9 @@ fun SessionComplexityPreview() {
     }
 }
 
-fun Complexity.labelResId() = when (this) {
-    Complexity.BEGINNER -> R.string.complexity_beginer
-    Complexity.INTERMEDIATE -> R.string.complexity_intermediate
-    Complexity.ADVANCED -> R.string.complexity_advanced
-}
+fun Complexity.labelResId() =
+    when (this) {
+        Complexity.BEGINNER -> R.string.complexity_beginer
+        Complexity.INTERMEDIATE -> R.string.complexity_intermediate
+        Complexity.ADVANCED -> R.string.complexity_advanced
+    }

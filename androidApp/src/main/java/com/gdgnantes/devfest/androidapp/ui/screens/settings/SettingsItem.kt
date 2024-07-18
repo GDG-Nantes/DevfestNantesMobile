@@ -22,11 +22,12 @@ fun SettingsItem(
     subtitle: String? = null,
     onClick: (() -> Unit)? = null,
 ) {
-    val subtitleComposable: (@Composable () -> Unit)? = subtitle?.run {
-        @Composable {
-            Text(text = this@run)
+    val subtitleComposable: (@Composable () -> Unit)? =
+        subtitle?.run {
+            @Composable {
+                Text(text = this@run)
+            }
         }
-    }
     SettingsItem(
         modifier = modifier,
         icon = icon,
@@ -48,7 +49,8 @@ fun SettingsItem(
         modifier = modifier.fillMaxWidth(),
     ) {
         Row(
-            modifier = Modifier
+            modifier =
+            Modifier
                 .weight(1f)
                 .clickable(onClick = { onClick?.invoke() }),
             verticalAlignment = Alignment.CenterVertically,
