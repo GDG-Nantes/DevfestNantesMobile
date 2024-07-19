@@ -4,8 +4,7 @@ import kotlinx.datetime.Instant
 import kotlinx.datetime.toInstant
 
 data class Agenda(val days: Map<Int, AgendaDay>) {
-
-    class Builder() {
+    class Builder {
         var sessions: List<Session> = emptyList()
 
         fun build(): Agenda {

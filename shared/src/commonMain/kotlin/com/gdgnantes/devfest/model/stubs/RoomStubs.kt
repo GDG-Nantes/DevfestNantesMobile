@@ -4,7 +4,8 @@ import com.gdgnantes.devfest.model.Room
 import kotlin.native.concurrent.SharedImmutable
 
 @SharedImmutable
-val roomStubs: List<Room> = listOf(
+val roomStubs: List<Room> =
+    listOf(
     Room(
         "jules_verne",
         "Jules Verne",

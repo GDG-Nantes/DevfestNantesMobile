@@ -2,12 +2,27 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.tasks.KotlinJvmCompile
 
 plugins {
+    alias(libs.plugins.detekt)
     alias(libs.plugins.kotlin.multiplatform)
     alias(libs.plugins.kotlin.cocoapods)
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.kmp.native.coroutines)
     alias(libs.plugins.appollo)
+}
+
+detekt {
+    buildUponDefaultConfig = true
+    allRules = false
+    autoCorrect = false
+    config.setFrom("$rootDir/linters/detekt-config.yml")
+
+    source.setFrom(
+        "src/commonMain/kotlin",
+        "src/androidMain/kotlin",
+        "src/iosMain/kotlin",
+        // Add other source sets as needed
+    )
 }
 
 kotlin {
@@ -77,4 +92,8 @@ android {
         sourceCompatibility = JavaVersion.VERSION_1_8
         targetCompatibility = JavaVersion.VERSION_1_8
     }
+}
+
+dependencies {
+    detektPlugins(libs.detekt.fomatting)
 }
