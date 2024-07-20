@@ -28,22 +28,22 @@ fun GithubCard(
 ) {
     OutlinedCard(
         modifier = modifier,
-        colors = CardDefaults.cardColors(
+        colors =
+        CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.background,
             contentColor = MaterialTheme.colorScheme.onBackground
         )
     ) {
         Row(
-            modifier = Modifier
+            modifier =
+            Modifier
                 .padding(8.dp)
                 .clickable { onCLick() },
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             Icon(
                 painter = painterResource(id = R.drawable.github),
-                contentDescription = stringResource(
-                    id = R.string.content_description_logo_github
-                ),
+                contentDescription = stringResource(R.string.content_description_logo_github),
                 tint = if (isSystemInDarkTheme()) Color.White else Color.Black
             )
             Text(text = stringResource(id = R.string.fork_me_on_github))

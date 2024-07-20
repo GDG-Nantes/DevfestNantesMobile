@@ -1,6 +1,10 @@
 package com.gdgnantes.devfest.androidapp.ui.screens.about
 
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
@@ -27,20 +31,20 @@ fun AboutSocial(
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         Text(
-            text = stringResource(
-                R.string.about_social_title
-            ),
+            text = stringResource(R.string.about_social_title),
             style = MaterialTheme.typography.titleMedium
         )
 
         Row(
-            modifier = Modifier
+            modifier =
+            Modifier
                 .fillMaxWidth(),
             horizontalArrangement = Arrangement.SpaceAround
         ) {
             SocialIcon(
                 resourceId = R.drawable.ic_network_facebook,
-                contentDescription = stringResource(
+                contentDescription =
+                stringResource(
                     id = R.string.content_description_logo,
                     "Facebook"
                 ),
@@ -49,7 +53,8 @@ fun AboutSocial(
 
             SocialIcon(
                 resourceId = R.drawable.ic_network_twitter,
-                contentDescription = stringResource(
+                contentDescription =
+                stringResource(
                     id = R.string.content_description_logo,
                     "Twitter"
                 ),
@@ -58,7 +63,8 @@ fun AboutSocial(
 
             SocialIcon(
                 resourceId = R.drawable.ic_network_linkedin,
-                contentDescription = stringResource(
+                contentDescription =
+                stringResource(
                     id = R.string.content_description_logo,
                     "LinkedIn"
                 ),
@@ -67,7 +73,8 @@ fun AboutSocial(
 
             SocialIcon(
                 resourceId = R.drawable.ic_network_youtube,
-                contentDescription = stringResource(
+                contentDescription =
+                stringResource(
                     id = R.string.content_description_logo,
                     "Youtube"
                 ),
@@ -83,11 +90,13 @@ fun AboutSocial(
 fun AboutSocialPreview() {
     DevFestNantesTheme {
         Scaffold {
-            AboutSocial(modifier = Modifier.padding(it),
+            AboutSocial(
+                modifier = Modifier.padding(it),
                 onFacebookClick = {},
                 onTwitterClick = {},
                 onLinkedInClick = {},
-                onYouTubeClick = {})
+                onYouTubeClick = {}
+            )
         }
     }
 }

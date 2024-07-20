@@ -16,7 +16,6 @@ class FeedbackFormViewModel @Inject constructor(
     val openFeedback: OpenFeedback,
     private val remoteConfig: FirebaseRemoteConfig
 ) : ViewModel() {
-
     private val _isOpenFeedbackEnabled: MutableStateFlow<Boolean> = MutableStateFlow(false)
     val isOpenFeedbackEnabled: StateFlow<Boolean>
         get() = _isOpenFeedbackEnabled.asStateFlow()
@@ -42,8 +41,10 @@ class FeedbackFormViewModel @Inject constructor(
 
     private fun updateConfig() {
         _isOpenFeedbackEnabled.value =
-            BuildConfig.OPEN_FEEDBACK_ENABLED.toBoolean() && remoteConfig.getBoolean("openfeedback_enabled")
+            BuildConfig.OPEN_FEEDBACK_ENABLED.toBoolean() &&
+                    remoteConfig.getBoolean("openfeedback_enabled")
         _isOpenfeedbackFallbackRequested.value =
-            BuildConfig.OPEN_FEEDBACK_ENABLED.toBoolean() && remoteConfig.getBoolean("openfeedback_fallback_requested_android")
+            BuildConfig.OPEN_FEEDBACK_ENABLED.toBoolean() &&
+                    remoteConfig.getBoolean("openfeedback_fallback_requested_android")
     }
 }

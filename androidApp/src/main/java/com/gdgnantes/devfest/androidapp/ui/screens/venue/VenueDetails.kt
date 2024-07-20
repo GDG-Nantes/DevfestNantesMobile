@@ -5,12 +5,20 @@ package com.gdgnantes.devfest.androidapp.ui.screens.venue
 import android.content.Context
 import android.location.Location
 import androidx.compose.foundation.clickable
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material3.Button
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
@@ -38,21 +46,23 @@ fun VenueDetails(
 ) {
     Scaffold {
         Column(
-            modifier = modifier
+            modifier =
+            modifier
                 .fillMaxWidth()
                 .fillMaxHeight()
                 .padding(it)
                 .verticalScroll(rememberScrollState()),
             verticalArrangement = Arrangement.spacedBy(4.dp)
         ) {
-
             val context = LocalContext.current
 
             AsyncImage(
-                modifier = Modifier
+                modifier =
+                Modifier
                     .fillMaxWidth()
                     .height(200.dp),
-                model = ImageRequest.Builder(LocalContext.current)
+                model =
+                ImageRequest.Builder(LocalContext.current)
                     .data(venue.imageUrl)
                     .networkCachePolicy(CachePolicy.ENABLED)
                     .diskCachePolicy(CachePolicy.ENABLED)
@@ -66,13 +76,13 @@ fun VenueDetails(
             )
 
             Column(
-                modifier = modifier
+                modifier =
+                modifier
                     .fillMaxWidth()
                     .fillMaxHeight()
                     .padding(8.dp),
                 verticalArrangement = Arrangement.spacedBy(16.dp),
             ) {
-
                 Text(
                     text = venue.name,
                     style = MaterialTheme.typography.h5,
@@ -81,7 +91,8 @@ fun VenueDetails(
                 val latitude = venue.latitude
                 val longitude = venue.longitude
                 Text(
-                    modifier = Modifier.clickable {
+                    modifier =
+                    Modifier.clickable {
                         if (latitude != null && longitude != null) {
                             onNavigationClick()
                             onNavigationClick(context, latitude, longitude)
@@ -90,7 +101,6 @@ fun VenueDetails(
                     text = venue.address,
                     style = MaterialTheme.typography.subtitle2,
                 )
-
 
                 if (latitude != null && longitude != null) {
                     Button(onClick = {
@@ -116,10 +126,11 @@ fun VenueDetails(
 }
 
 private fun onNavigationClick(context: Context, latitude: Double, longitude: Double) {
-    val location = Location("unset").apply {
-        this.latitude = latitude
-        this.longitude = longitude
-    }
+    val location =
+        Location("unset").apply {
+            this.latitude = latitude
+            this.longitude = longitude
+        }
     context.onNavigationClick(location)
 }
 

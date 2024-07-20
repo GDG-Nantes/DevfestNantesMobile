@@ -10,7 +10,6 @@ import javax.inject.Inject
 
 class BookmarksStoreImpl @Inject constructor(private val sharedPreferences: SharedPreferences) :
     BookmarksStore {
-
     private val bookmarkedSessions: MutableSet<String> = HashSet()
     private val _selectedSessionIds: MutableStateFlow<Set<String>>
 
@@ -20,7 +19,8 @@ class BookmarksStoreImpl @Inject constructor(private val sharedPreferences: Shar
             bookmarkedSessions.addAll(prefSet)
         }
 
-        _selectedSessionIds = MutableStateFlow(
+        _selectedSessionIds =
+            MutableStateFlow(
             mutableSetOf<String>().apply {
                 addAll(bookmarkedSessions)
             }

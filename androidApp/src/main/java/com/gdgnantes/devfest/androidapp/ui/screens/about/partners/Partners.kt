@@ -4,7 +4,10 @@ import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.*
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedCard
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
@@ -49,9 +52,7 @@ fun Partners(
         verticalArrangement = Arrangement.spacedBy(8.dp)
     ) {
         Text(
-            text = stringResource(
-                R.string.partners_title,
-            ),
+            text = stringResource(R.string.partners_title),
             style = MaterialTheme.typography.titleMedium,
         )
 
@@ -92,7 +93,8 @@ fun PartnersGroup(
     ) {
         Column(Modifier.padding(vertical = 8.dp)) {
             Text(
-                modifier = Modifier
+                modifier =
+                Modifier
                     .fillMaxWidth()
                     .padding(8.dp),
                 text = title,
@@ -116,14 +118,15 @@ fun PartnersGroup(
     }
 }
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Preview
 @Composable
 fun PartnersPreview() {
     DevFestNantesTheme {
         Scaffold {
-            Partners(modifier = Modifier.padding(it),
-                onPartnerClick = {})
+            Partners(
+                modifier = Modifier.padding(it),
+                onPartnerClick = {}
+            )
         }
     }
 }

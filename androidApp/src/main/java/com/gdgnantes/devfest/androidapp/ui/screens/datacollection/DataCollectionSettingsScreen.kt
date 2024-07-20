@@ -1,13 +1,31 @@
 package com.gdgnantes.devfest.androidapp.ui.screens.datacollection
 
 import android.content.res.Configuration
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.fillMaxHeight
+import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material3.*
-import androidx.compose.runtime.*
+import androidx.compose.material3.Card
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Switch
+import androidx.compose.material3.Text
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.State
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.key
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
@@ -26,7 +44,8 @@ fun DataCollectionSettingsScreen(
     onBackClick: () -> Unit,
 ) {
     DataCollectionSettingsScreen(
-        dataCollectionServicesActivationStatus = viewModel.dataCollectionServicesActivationStatus.collectAsState(
+        dataCollectionServicesActivationStatus =
+        viewModel.dataCollectionServicesActivationStatus.collectAsState(
             initial = emptyMap()
         ),
         onServiceActivationStatusChange = viewModel::onServiceActivationStatusChange,
@@ -62,7 +81,8 @@ fun DataCollectionSettingsScreen(
         }
     ) {
         Box(
-            modifier = modifier
+            modifier =
+            modifier
                 .padding(it)
                 .fillMaxHeight(),
         ) {
@@ -73,16 +93,19 @@ fun DataCollectionSettingsScreen(
                 verticalArrangement = Arrangement.spacedBy(8.dp),
             ) {
                 Text(
-                    text = stringResource(
+                    text =
+                    stringResource(
                         id = R.string.legal_data_collection_body
                     ),
-                    modifier = Modifier
+                    modifier =
+                    Modifier
                         .fillMaxWidth(),
                     style = MaterialTheme.typography.bodyMedium
                 )
 
                 AllDataCollectionToolSwitch(
-                    modifier = Modifier
+                    modifier =
+                    Modifier
                         .padding(vertical = 8.dp)
                         .fillMaxWidth(),
                     dataCollectionServicesActivationStatus,
@@ -124,15 +147,31 @@ fun DataCollectionToolSwitch(
     isEnabled: Boolean,
     onServiceActivationStatusChange: ((DataCollectionService, Boolean) -> Unit)
 ) {
-    val title = when (dataCollectionService) {
-        DataCollectionService.GOOGLE_ANALYTICS -> stringResource(id = R.string.legal_data_collection_google_analytics_title)
-        DataCollectionService.FIREBASE_CRASHLYTICS -> stringResource(id = R.string.legal_data_collection_firebase_crashlytics_title)
-    }
+    val title =
+        when (dataCollectionService) {
+            DataCollectionService.GOOGLE_ANALYTICS ->
+                stringResource(
+                    id = R.string.legal_data_collection_google_analytics_title
+                )
 
-    val description = when (dataCollectionService) {
-        DataCollectionService.GOOGLE_ANALYTICS -> stringResource(id = R.string.legal_data_collection_google_analytics_description)
-        DataCollectionService.FIREBASE_CRASHLYTICS -> stringResource(id = R.string.legal_data_collection_firebase_crashlytics_description)
-    }
+            DataCollectionService.FIREBASE_CRASHLYTICS ->
+                stringResource(
+                    id = R.string.legal_data_collection_firebase_crashlytics_title
+                )
+        }
+
+    val description =
+        when (dataCollectionService) {
+            DataCollectionService.GOOGLE_ANALYTICS ->
+                stringResource(
+                    id = R.string.legal_data_collection_google_analytics_description
+                )
+
+            DataCollectionService.FIREBASE_CRASHLYTICS ->
+                stringResource(
+                    id = R.string.legal_data_collection_firebase_crashlytics_description
+                )
+        }
 
     DataCollectionSwitch(
         modifier = modifier,
@@ -174,12 +213,13 @@ fun DataCollectionSwitch(
 ) {
     Card(
         shape = MaterialTheme.shapes.medium,
-        modifier = modifier
+        modifier =
+        modifier
             .fillMaxWidth()
-
     ) {
         Column(
-            modifier = Modifier
+            modifier =
+            Modifier
                 .padding(horizontal = 8.dp)
                 .fillMaxWidth()
         ) {
@@ -221,14 +261,14 @@ fun DataCollectionSwitch(
     showBackground = true,
     name = "Dark Mode"
 )
-
 @Composable
 fun PreviewDataCollectionSettingsScreen() {
     DevFestNantesTheme {
         Scaffold {
             DataCollectionSettingsScreen(
                 modifier = Modifier.padding(it),
-                dataCollectionServicesActivationStatus = remember {
+                dataCollectionServicesActivationStatus =
+                remember {
                     mutableStateOf(
                         mapOf(
                             DataCollectionService.FIREBASE_CRASHLYTICS to true,

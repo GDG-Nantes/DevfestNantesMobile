@@ -11,6 +11,7 @@ coil = "2.2.2"
 composeBom = "2024.06.00"
 composeNavigation = "2.5.3"
 dagger = "2.50"
+detekt = "1.23.6"
 espresso = "3.5.0"
 firebaseBom = "32.7.1"
 firebaseCrashlyticsPlugin = "2.9.1"
@@ -73,6 +74,8 @@ dagger-hilt-android = { group = "com.google.dagger", name = "hilt-android", vers
 dagger-hilt-android-testing = { group = "com.google.dagger", name = "hilt-android-testing", version.ref = "dagger" }
 dagger-hilt-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "dagger" }
 
+detekt-fomatting = { module = "io.gitlab.arturbosch.detekt:detekt-formatting", version.ref = "detekt" }
+
 firebase-analytics-ktx = { group = "com.google.firebase", name = "firebase-analytics-ktx" }
 firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebaseBom" }
 firebase-config-ktx = { group = "com.google.firebase", name = "firebase-config-ktx" }
@@ -109,6 +112,7 @@ android-library = { id = "com.android.library", version.ref = "agp" }
 appollo = { id = "com.apollographql.apollo3", version.ref = "appollo" }
 crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "firebaseCrashlyticsPlugin" }
 dagger-hilt = { id = "com.google.dagger.hilt.android", version.ref = "dagger" }
+detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
 google-services = { id = "com.google.gms.google-services", version.ref = "googleServicesPlugin" }
 kmp-native-coroutines = { id = "com.rickclephas.kmp.nativecoroutines", version.ref = "kmpNativeCoroutines" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }

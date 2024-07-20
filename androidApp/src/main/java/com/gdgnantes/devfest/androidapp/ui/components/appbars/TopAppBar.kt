@@ -29,6 +29,7 @@ fun TopAppBar(
     )
 }
 
+@Suppress("FunctionTypeReferenceSpacing")
 internal fun (@Composable AppBarIcons.() -> Unit)?.takeOrEmpty(): (@Composable () -> Unit) {
     if (this == null) return {}
     return {

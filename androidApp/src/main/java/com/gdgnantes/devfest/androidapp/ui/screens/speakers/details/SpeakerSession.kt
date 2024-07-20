@@ -2,8 +2,15 @@ package com.gdgnantes.devfest.androidapp.ui.screens.speakers.details
 
 import android.annotation.SuppressLint
 import android.content.res.Configuration
-import androidx.compose.foundation.layout.*
-import androidx.compose.material3.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.Card
+import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -17,7 +24,6 @@ import com.gdgnantes.devfest.model.stubs.buildSessionStub
 import com.gdgnantes.devfest.utils.getDurationAndLanguageString
 import com.gdgnantes.devfest.utils.getDurationString
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SpeakerSession(
     modifier: Modifier = Modifier,
@@ -26,7 +32,8 @@ fun SpeakerSession(
 ) {
     Card(
         modifier = modifier.padding(8.dp),
-        colors = CardDefaults.cardColors(
+        colors =
+        CardDefaults.cardColors(
             containerColor = MaterialTheme.colorScheme.secondaryContainer,
             contentColor = MaterialTheme.colorScheme.onSecondaryContainer
         ),
@@ -34,7 +41,8 @@ fun SpeakerSession(
     ) {
         Column {
             Column(
-                modifier = Modifier.padding(
+                modifier =
+                Modifier.padding(
                     start = 12.dp,
                     end = 12.dp,
                     top = 12.dp,
@@ -56,17 +64,18 @@ fun SpeakerSession(
                         SessionCategory(category = category)
                     }
 
-                    val duration = when (session.type) {
-                        SessionType.QUICKIE,
-                        SessionType.CONFERENCE,
-                        SessionType.CODELAB -> {
-                            session.getDurationAndLanguageString()
-                        }
+                    val duration =
+                        when (session.type) {
+                            SessionType.QUICKIE,
+                            SessionType.CONFERENCE,
+                            SessionType.CODELAB -> {
+                                session.getDurationAndLanguageString()
+                            }
 
-                        else -> {
-                            session.getDurationString()
+                            else -> {
+                                session.getDurationString()
+                            }
                         }
-                    }
                     Text(
                         text = duration,
                         style = MaterialTheme.typography.labelMedium

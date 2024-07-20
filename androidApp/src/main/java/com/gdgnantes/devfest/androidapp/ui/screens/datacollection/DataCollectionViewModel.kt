@@ -11,7 +11,6 @@ import javax.inject.Inject
 class DataCollectionViewModel @Inject constructor(
     private val dataCollectionSettingsService: DataCollectionSettingsService
 ) : ViewModel() {
-
     val dataCollectionServicesActivationStatus: Flow<Map<DataCollectionService, Boolean>>
         get() = dataCollectionSettingsService.dataCollectionServicesActivationStatus
 

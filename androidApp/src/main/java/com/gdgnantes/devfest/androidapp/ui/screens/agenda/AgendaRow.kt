@@ -3,10 +3,17 @@ package com.gdgnantes.devfest.androidapp.ui.screens.agenda
 import android.annotation.SuppressLint
 import android.content.res.Configuration
 import androidx.compose.animation.animateColorAsState
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material.Icon
 import androidx.compose.material.IconToggleButton
-import androidx.compose.material3.*
+import androidx.compose.material3.ElevatedCard
+import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
@@ -81,7 +88,8 @@ fun AgendaRow(
     ) {
         Column {
             Column(
-                modifier = Modifier.padding(
+                modifier =
+                Modifier.padding(
                     start = 12.dp,
                     end = 12.dp,
                     top = 12.dp,
@@ -103,16 +111,18 @@ fun AgendaRow(
                         SessionCategory(category = category)
                     }
 
-                    val duration = when (session.type) {
-                        SessionType.QUICKIE,
-                        SessionType.CONFERENCE,
-                        SessionType.CODELAB -> {
-                            session.getDurationAndLanguageString()
+                    val duration =
+                        when (session.type) {
+                            SessionType.QUICKIE,
+                            SessionType.CONFERENCE,
+                            SessionType.CODELAB -> {
+                                session.getDurationAndLanguageString()
+                            }
+
+                            else -> {
+                                session.getDurationString()
+                            }
                         }
-                        else -> {
-                            session.getDurationString()
-                        }
-                    }
                     Text(
                         text = duration,
                         style = MaterialTheme.typography.labelMedium
@@ -143,8 +153,12 @@ fun AgendaRow(
                                 if (isBookmarked) R.drawable.ic_bookmarked else R.drawable.ic_bookmark
 
                             val tint by animateColorAsState(
-                                if (isBookmarked) bookmarked
-                                else Color.LightGray, label = "bookmarkAnimatedColorState"
+                                if (isBookmarked) {
+                                    bookmarked
+                                } else {
+                                    Color.LightGray
+                                },
+                                label = "bookmarkAnimatedColorState"
                             )
 
                             IconToggleButton(

@@ -29,9 +29,10 @@ import dagger.hilt.android.EntryPointAccessors
 
 @Composable
 inline fun <reified VM : ViewModel> assistedViewModel(
-    viewModelStoreOwner: ViewModelStoreOwner = checkNotNull(LocalViewModelStoreOwner.current) {
-        "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
-    },
+    viewModelStoreOwner: ViewModelStoreOwner =
+        checkNotNull(LocalViewModelStoreOwner.current) {
+            "No ViewModelStoreOwner was provided via LocalViewModelStoreOwner"
+        },
     provideFactory: MainActivity.ViewModelFactoryProvider.() -> ViewModelProvider.Factory,
 ): VM {
     val factory = provideFactory(assistedViewModelFactory())
@@ -39,7 +40,8 @@ inline fun <reified VM : ViewModel> assistedViewModel(
 }
 
 @Composable
-fun assistedViewModelFactory() = EntryPointAccessors.fromActivity(
-    LocalContext.current as Activity,
-    MainActivity.ViewModelFactoryProvider::class.java
-)
+fun assistedViewModelFactory() =
+    EntryPointAccessors.fromActivity(
+        LocalContext.current as Activity,
+        MainActivity.ViewModelFactoryProvider::class.java
+    )

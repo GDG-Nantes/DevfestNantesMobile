@@ -93,13 +93,15 @@ fun Speakers(
     Scaffold {
         if (uiState == UiState.STARTING) {
             LoadingLayout(
-                modifier = modifier
+                modifier =
+                modifier
                     .padding(it)
                     .fillMaxSize()
             )
         } else {
             Surface(
-                modifier = modifier
+                modifier =
+                modifier
                     .padding(it)
                     .fillMaxSize(),
                 color = MaterialTheme.colorScheme.background
@@ -119,7 +121,8 @@ fun Speakers(
                         ScrollingBubble(
                             boxConstraintMaxWidth = this.maxWidth,
                             bubbleOffsetYFloat = yOffset + alphabetDistanceFromTopOfScreen,
-                            currAlphabetScrolledOn = yOffset.getIndexOfCharBasedOnYPosition(
+                            currAlphabetScrolledOn =
+                            yOffset.getIndexOfCharBasedOnYPosition(
                                 alphabetHeightInPixels = alphabetHeightInPixels,
                             ),
                         )
@@ -139,11 +142,13 @@ fun ScrollingBubble(
 ) {
     val bubbleSize = 96.dp
     Surface(
-        modifier = modifier
+        modifier =
+        modifier
             .size(bubbleSize)
             .offset(
                 x = (boxConstraintMaxWidth - (bubbleSize + alphabetItemHeight)),
-                y = with(LocalDensity.current) {
+                y =
+                with(LocalDensity.current) {
                     bubbleOffsetYFloat.toDp() - (bubbleSize / 2)
                 },
             ),
@@ -180,12 +185,16 @@ internal fun Float.getIndexOfCharBasedOnYPosition(
 ): Char {
     val alphabetCharList = "abcdefghijklmnopqrstuvwxyz".map { it }
 
+    @Suppress("MagicNumber")
+    val maximumAlphabetIndex = 25
+
     var index = ((this) / alphabetHeightInPixels).toInt()
-    index = when {
-        index > 25 -> 25
-        index < 0 -> 0
-        else -> index
-    }
+    index =
+        when {
+            index > maximumAlphabetIndex -> maximumAlphabetIndex
+            index < 0 -> 0
+            else -> index
+        }
     return alphabetCharList[index]
 }
 
@@ -221,9 +230,10 @@ fun SpeakersListWithScroller(
                 coroutineScope.launch {
                     // null case can happen if we go through list
                     // and we don't have a name that starts with I
-                    val indexOfChar = relativeDragYOffset?.getIndexOfCharBasedOnYPosition(
-                        alphabetHeightInPixels = alphabetHeightInPixels,
-                    )
+                    val indexOfChar =
+                        relativeDragYOffset?.getIndexOfCharBasedOnYPosition(
+                            alphabetHeightInPixels = alphabetHeightInPixels,
+                        )
                     mapOfFirstLetterIndex[indexOfChar]?.let {
                         lazyListState.scrollToItem(it)
                     }
@@ -302,7 +312,8 @@ private fun AlphabetScroller(
     var containerPositionOffset by remember { mutableStateOf(0F) }
 
     Column(
-        modifier = modifier
+        modifier =
+        modifier
             .width(16.dp)
             .onGloballyPositioned { layoutCoordinates ->
                 containerPositionOffset = layoutCoordinates.positionInRoot().y

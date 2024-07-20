@@ -2,7 +2,11 @@ package com.gdgnantes.devfest.androidapp.ui.screens.session
 
 import android.annotation.SuppressLint
 import android.content.res.Configuration
-import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -26,7 +30,8 @@ fun SessionSpeaker(
     Column(modifier.padding(top = 16.dp)) {
         Row {
             SpeakerPicture(
-                modifier = Modifier
+                modifier =
+                Modifier
                     .size(64.dp),
                 speaker = speaker
             )
@@ -70,8 +75,6 @@ fun SessionSpeaker(
                 }
             }
         }
-
-
     }
 }
 

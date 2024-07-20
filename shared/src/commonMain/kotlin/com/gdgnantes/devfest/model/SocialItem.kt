@@ -4,7 +4,6 @@ data class SocialItem private constructor(
     val type: SocialType,
     val link: String? = null
 ) {
-
     class Builder {
         private var _link: String? = null
         private var _type: SocialType? = null
@@ -52,7 +51,8 @@ enum class SocialType {
     WEBSITE;
 
     val baseUrl: String
-        get() = when (this) {
+        get() =
+            when (this) {
             GITHUB -> "https://github.com/"
             LINKEDIN -> "https://www.linkedin.com/"
             TWITTER -> "https://twitter.com/"

@@ -26,31 +26,33 @@ import kotlinx.coroutines.flow.map
 
 internal class GraphQLStore(private val apolloClient: ApolloClient) : DevFestNantesStore {
     override val agenda: Flow<Agenda>
-        get() = sessions.map { sessions ->
-            Agenda.Builder().run {
-                this.sessions = sessions
-                build()
+        get() =
+            sessions.map { sessions ->
+                Agenda.Builder().run {
+                    this.sessions = sessions
+                    build()
+                }
             }
-        }
 
     override val partners: Flow<Map<PartnerCategory, List<Partner>>>
-        get() = apolloClient.query(GetPartnerGroupsQuery())
-            .fetchPolicy(FetchPolicy.CacheAndNetwork)
-            .toFlow()
-            .map { response ->
-                response.dataAssertNoErrors.partnerGroups
-                    .map { it.toPartnersGroup() }
-                    .let { groups ->
-                        mutableMapOf<PartnerCategory, List<Partner>>().apply {
-                            groups.forEach { (category, partners) ->
-                                put(category, partners)
-                            }
-                        }.toMap()
-                    }
-            }
-            .catch { e ->
-                println(e.message)
-            }
+        get() =
+            apolloClient.query(GetPartnerGroupsQuery())
+                .fetchPolicy(FetchPolicy.CacheAndNetwork)
+                .toFlow()
+                .map { response ->
+                    response.dataAssertNoErrors.partnerGroups
+                        .map { it.toPartnersGroup() }
+                        .let { groups ->
+                            mutableMapOf<PartnerCategory, List<Partner>>().apply {
+                                groups.forEach { (category, partners) ->
+                                    put(category, partners)
+                                }
+                            }.toMap()
+                        }
+                }
+                .catch { e ->
+                    println(e.message)
+                }
 
     override suspend fun getRoom(id: String): Room? {
         return try {
@@ -65,18 +67,19 @@ internal class GraphQLStore(private val apolloClient: ApolloClient) : DevFestNan
     }
 
     override val rooms: Flow<Set<Room>>
-        get() = apolloClient.query(GetRoomsQuery())
-            .fetchPolicy(FetchPolicy.CacheAndNetwork)
-            .toFlow()
-            .map { response ->
-                response.dataAssertNoErrors.rooms
-                    .map { it.roomDetails.toRoom() }
-                    .sortedBy { it.sortIndex }
-                    .toSet()
-            }
-            .catch { e ->
-                println(e.message)
-            }
+        get() =
+            apolloClient.query(GetRoomsQuery())
+                .fetchPolicy(FetchPolicy.CacheAndNetwork)
+                .toFlow()
+                .map { response ->
+                    response.dataAssertNoErrors.rooms
+                        .map { it.roomDetails.toRoom() }
+                        .sortedBy { it.sortIndex }
+                        .toSet()
+                }
+                .catch { e ->
+                    println(e.message)
+                }
 
     override suspend fun getSession(id: String): Session? {
         return try {
@@ -89,16 +92,17 @@ internal class GraphQLStore(private val apolloClient: ApolloClient) : DevFestNan
     }
 
     override val sessions: Flow<List<Session>>
-        get() = apolloClient.query(GetSessionsQuery())
-            .fetchPolicy(FetchPolicy.CacheAndNetwork)
-            .toFlow()
-            .map { response ->
-                response.dataAssertNoErrors.sessions.nodes
-                    .map { it.sessionDetails.toSession() }
-            }
-            .catch { e ->
-                println(e.message)
-            }
+        get() =
+            apolloClient.query(GetSessionsQuery())
+                .fetchPolicy(FetchPolicy.CacheAndNetwork)
+                .toFlow()
+                .map { response ->
+                    response.dataAssertNoErrors.sessions.nodes
+                        .map { it.sessionDetails.toSession() }
+                }
+                .catch { e ->
+                    println(e.message)
+                }
 
     override suspend fun getSpeaker(id: String): Speaker? {
         return try {
@@ -125,16 +129,17 @@ internal class GraphQLStore(private val apolloClient: ApolloClient) : DevFestNan
     }
 
     override val speakers: Flow<List<Speaker>>
-        get() = apolloClient.query(GetSpeakersQuery())
-            .fetchPolicy(FetchPolicy.CacheAndNetwork)
-            .toFlow()
-            .map { response ->
-                response.dataAssertNoErrors.speakers
-                    .map { it.speakerDetails.toSpeaker() }
-            }
-            .catch { e ->
-                println(e.message)
-            }
+        get() =
+            apolloClient.query(GetSpeakersQuery())
+                .fetchPolicy(FetchPolicy.CacheAndNetwork)
+                .toFlow()
+                .map { response ->
+                    response.dataAssertNoErrors.speakers
+                        .map { it.speakerDetails.toSpeaker() }
+                }
+                .catch { e ->
+                    println(e.message)
+                }
 
     override suspend fun getVenue(language: ContentLanguage): Venue {
         return try {
@@ -143,7 +148,7 @@ internal class GraphQLStore(private val apolloClient: ApolloClient) : DevFestNan
             response.dataAssertNoErrors.venue.toVenue()
         } catch (e: ApolloException) {
             println(e.message)
-            buildVenueStub(language) //Fallback
+            buildVenueStub(language) // Fallback
         }
     }
 

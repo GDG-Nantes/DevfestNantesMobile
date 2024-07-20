@@ -27,7 +27,6 @@ class DataCollectionSettingsServiceImpl @Inject constructor(
     private val sharedPreferences: SharedPreferences,
     private val firebaseCrashlytics: FirebaseCrashlytics,
 ) : DataCollectionSettingsService {
-
     private val enabledDataServices: MutableSet<String> = HashSet()
 
     override val isDataCollectionAgreementSet: Boolean
@@ -44,7 +43,8 @@ class DataCollectionSettingsServiceImpl @Inject constructor(
             enabledDataServices.addAll(prefSet)
         }
 
-        _dataCollectionServicesActivationStatus = MutableStateFlow(
+        _dataCollectionServicesActivationStatus =
+            MutableStateFlow(
             buildDataCollectionToolsList()
         )
     }
@@ -118,7 +118,6 @@ class DataCollectionSettingsServiceImpl @Inject constructor(
         private const val SHARED_PREFERENCES_KEY_ENABLED_DATA_SERVICES =
             "SHARED_PREFERENCES_KEY_ENABLED_DATA_COLLECTION_TOOLS"
     }
-
 }
 
 enum class DataCollectionService {

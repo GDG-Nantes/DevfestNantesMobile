@@ -1,3 +1,5 @@
+@file:Suppress("TooManyFunctions")
+
 package com.gdgnantes.devfest.store.graphql
 
 import com.gdgnantes.devfest.domain.sortIndex
@@ -22,12 +24,13 @@ import com.gdgnantes.devfest.model.Speaker
 import com.gdgnantes.devfest.model.Venue
 
 fun GetPartnerGroupsQuery.PartnerGroup.toPartnersGroup(): Pair<PartnerCategory, List<Partner>> {
-    val partnerCategory = when (title.lowercase()) {
-        "platinium" -> PartnerCategory.PLATINIUM
-        "gold" -> PartnerCategory.GOLD
-        "virtual" -> PartnerCategory.VIRTUAL
-        else -> PartnerCategory.PARTNERS
-    }
+    val partnerCategory =
+        when (title.lowercase()) {
+            "platinium" -> PartnerCategory.PLATINIUM
+            "gold" -> PartnerCategory.GOLD
+            "virtual" -> PartnerCategory.VIRTUAL
+            else -> PartnerCategory.PARTNERS
+        }
     return partnerCategory to partners.map { it.toPartner() }
 }
 
@@ -46,7 +49,8 @@ fun SessionDetails.toSession(): Session {
     return Session(
         id = id,
         abstract = description ?: "",
-        category = tag?.run {
+        category =
+        tag?.run {
             Category(
                 id = lowercase(),
                 label = this
@@ -56,7 +60,8 @@ fun SessionDetails.toSession(): Session {
         complexity = complexity?.toComplexity(),
         openFeedbackFormId = feedbackId,
         room = rooms.firstOrNull()?.roomDetails?.toRoom(),
-        scheduleSlot = ScheduleSlot(
+        scheduleSlot =
+        ScheduleSlot(
             startDate = startInstant.toString(),
             endDate = endInstant.toString()
         ),

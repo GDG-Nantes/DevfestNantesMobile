@@ -10,9 +10,7 @@ data class Speaker(
     val photoUrl: String? = null,
     val socials: List<SocialItem>? = null,
 ) {
-
     fun getFullNameAndCompany(): String {
         return name + if (company.isNullOrBlank()) "" else ", " + this.company
     }
-
 }

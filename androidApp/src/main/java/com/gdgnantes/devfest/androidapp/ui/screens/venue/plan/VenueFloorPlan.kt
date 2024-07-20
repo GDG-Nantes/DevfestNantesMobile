@@ -8,11 +8,14 @@ import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ZoomIn
 import androidx.compose.material3.CardDefaults
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedCard
-import androidx.compose.runtime.*
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -26,7 +29,6 @@ import coil.request.ImageRequest
 import com.gdgnantes.devfest.androidapp.R
 import timber.log.Timber
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun VenueFloorPlanButton(
     modifier: Modifier = Modifier,
@@ -36,23 +38,28 @@ fun VenueFloorPlanButton(
     var displayVenue by remember { mutableStateOf(true) }
     if (displayVenue) {
         OutlinedCard(
-            modifier = modifier
+            modifier =
+            modifier
                 .fillMaxWidth()
                 .height(250.dp),
-            colors = CardDefaults.cardColors(
+            colors =
+            CardDefaults.cardColors(
                 containerColor = Color.White,
                 contentColor = MaterialTheme.colorScheme.primary
             ),
             onClick = onClick
         ) {
             Box(
-                modifier = Modifier
+                modifier =
+                Modifier
                     .fillMaxWidth()
             ) {
                 AsyncImage(
-                    modifier = Modifier
+                    modifier =
+                    Modifier
                         .align(Alignment.Center),
-                    model = ImageRequest.Builder(LocalContext.current)
+                    model =
+                    ImageRequest.Builder(LocalContext.current)
                         .data(floorPlanUrl)
                         .networkCachePolicy(CachePolicy.ENABLED)
                         .diskCachePolicy(CachePolicy.ENABLED)
@@ -70,7 +77,8 @@ fun VenueFloorPlanButton(
                 )
 
                 Icon(
-                    modifier = Modifier
+                    modifier =
+                    Modifier
                         .size(96.dp)
                         .align(Alignment.BottomEnd)
                         .padding(16.dp),

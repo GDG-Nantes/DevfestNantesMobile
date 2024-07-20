@@ -8,7 +8,10 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material3.*
+import androidx.compose.material3.Icon
+import androidx.compose.material3.IconButton
+import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
@@ -19,7 +22,6 @@ import com.gdgnantes.devfest.androidapp.R
 import com.gdgnantes.devfest.androidapp.ui.screens.Screen
 import com.gdgnantes.devfest.androidapp.ui.theme.DevFestNantesTheme
 
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun LegalScreen(
     modifier: Modifier = Modifier,
@@ -48,21 +50,25 @@ fun LegalScreen(
         // Adding a WebView inside AndroidView
         // with layout as full screen
         AndroidView(
-            modifier = modifier
+            modifier =
+            modifier
                 .padding(it)
                 .fillMaxSize(),
             factory = { context ->
                 WebView(context).apply {
-                    layoutParams = ViewGroup.LayoutParams(
-                        ViewGroup.LayoutParams.MATCH_PARENT,
-                        ViewGroup.LayoutParams.MATCH_PARENT
-                    )
+                    layoutParams =
+                        ViewGroup.LayoutParams(
+                            ViewGroup.LayoutParams.MATCH_PARENT,
+                            ViewGroup.LayoutParams.MATCH_PARENT
+                        )
                     webViewClient = WebViewClient()
                     loadUrl(mUrl)
                 }
-            }, update = { webView ->
+            },
+            update = { webView ->
                 webView.loadUrl(mUrl)
-            })
+            }
+        )
     }
 }
 
@@ -76,7 +82,6 @@ fun LegalScreen(
     showBackground = true,
     name = "Dark Mode"
 )
-
 @Composable
 fun PreviewLegalScreen() {
     DevFestNantesTheme {

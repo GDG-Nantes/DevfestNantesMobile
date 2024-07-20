@@ -3,10 +3,12 @@ package com.gdgnantes.devfest.utils
 import com.gdgnantes.devfest.model.Session
 import com.gdgnantes.devfest.model.SessionLanguage
 
+const val MILLISECONDS_IN_MINUTE = 60000
+
 fun Session.getDurationInMinutes(): String {
     val millisecondsDuration =
         scheduleSlot.endDateAsEpochMilliseconds - scheduleSlot.startDateAsEpochMilliseconds
-    val minutesDuration = millisecondsDuration / 60000
+    val minutesDuration = millisecondsDuration / MILLISECONDS_IN_MINUTE
     return minutesDuration.toString()
 }
 

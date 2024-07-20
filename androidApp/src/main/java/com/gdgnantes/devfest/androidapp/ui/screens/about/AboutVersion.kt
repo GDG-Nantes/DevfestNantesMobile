@@ -22,7 +22,8 @@ fun AboutVersion(
     Text(
         modifier = modifier.fillMaxWidth(),
         textAlign = TextAlign.Center,
-        text = stringResource(
+        text =
+        stringResource(
             R.string.app_version,
             BuildConfig.VERSION_NAME,
             BuildConfig.VERSION_CODE

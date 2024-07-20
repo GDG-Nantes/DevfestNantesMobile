@@ -16,7 +16,6 @@ class SessionViewModel @AssistedInject constructor(
     private val store: DevFestNantesStore,
     @Assisted sessionId: String
 ) : ViewModel() {
-
     private val _session = MutableStateFlow<Session?>(null)
     val session: StateFlow<Session?>
         get() = _session
@@ -37,7 +36,8 @@ class SessionViewModel @AssistedInject constructor(
         fun provideFactory(
             assistedFactory: SessionViewModelFactory,
             sessionId: String
-        ): ViewModelProvider.Factory = object : ViewModelProvider.Factory {
+        ): ViewModelProvider.Factory =
+            object : ViewModelProvider.Factory {
             override fun <T : ViewModel> create(modelClass: Class<T>): T {
                 return assistedFactory.create(sessionId) as T
             }

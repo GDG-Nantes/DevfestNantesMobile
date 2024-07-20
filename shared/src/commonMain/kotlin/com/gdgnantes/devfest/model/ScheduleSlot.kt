@@ -6,7 +6,6 @@ data class ScheduleSlot(
     val endDate: String = "",
     val startDate: String = ""
 ) : Comparable<ScheduleSlot> {
-
     val startDateAsEpochMilliseconds = Instant.parse(startDate).toEpochMilliseconds()
     val endDateAsEpochMilliseconds = Instant.parse(endDate).toEpochMilliseconds()
 

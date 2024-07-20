@@ -33,17 +33,20 @@ fun PartnerCard(
     partner.logoUrl?.let {
         Card(
             modifier = modifier,
-            colors = CardDefaults.cardColors(
+            colors =
+            CardDefaults.cardColors(
                 containerColor = partnersLogoBackground,
                 contentColor = Color.LightGray
             )
         ) {
             AsyncImage(
-                modifier = Modifier
+                modifier =
+                Modifier
                     .padding(8.dp)
                     .height(50.dp)
                     .clickable { onClick(partner) },
-                model = ImageRequest.Builder(LocalContext.current)
+                model =
+                ImageRequest.Builder(LocalContext.current)
                     .data(partner.logoUrl)
                     .crossfade(true)
                     .build(),
@@ -53,7 +56,8 @@ fun PartnerCard(
                         "${partner.name}'s logo loading failed (url = ${partner.logoUrl})"
                     )
                 },
-                contentDescription = stringResource(
+                contentDescription =
+                stringResource(
                     id = R.string.content_description_logo,
                     "${partner.name}"
                 ),
@@ -61,7 +65,6 @@ fun PartnerCard(
             )
         }
     }
-
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -73,7 +76,8 @@ fun PartnerCardPreview() {
             PartnerCard(
                 modifier = Modifier.padding(it),
                 partner = buildPartnerStub(),
-                onClick = {})
+                onClick = {}
+            )
         }
     }
 }

@@ -2,8 +2,8 @@ package com.gdgnantes.devfest.analytics
 
 import com.gdgnantes.devfest.model.SocialType
 
+@Suppress("TooManyFunctions")
 interface AnalyticsService {
-
     fun eventBookmark(page: AnalyticsPage, sessionId: String, bookmarked: Boolean)
 
     fun eventFilter()

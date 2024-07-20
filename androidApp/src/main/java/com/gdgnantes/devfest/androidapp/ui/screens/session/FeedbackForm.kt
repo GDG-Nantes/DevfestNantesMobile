@@ -21,7 +21,7 @@ import com.gdgnantes.devfest.model.WebLinks
 import io.openfeedback.android.OpenFeedback
 import io.openfeedback.android.components.SessionFeedbackContainer
 import java.text.SimpleDateFormat
-import java.util.*
+import java.util.Locale
 
 @Composable
 fun FeedbackForm(
@@ -58,7 +58,8 @@ fun FallbackFeedbackForm(
     onFeedbackFormFallbackLinkClick: (String) -> Unit,
 ) {
     Box(
-        modifier = modifier
+        modifier =
+        modifier
             .fillMaxWidth()
             .padding(16.dp)
     ) {
@@ -105,7 +106,8 @@ fun OpenfeedbackForm(
             openFeedback = openFeedback,
             sessionId = openFeedbackFormId,
             language = Locale.getDefault().language,
-            modifier = Modifier
+            modifier =
+            Modifier
                 .padding(horizontal = 8.dp)
         )
     }

@@ -25,11 +25,13 @@ fun SessionCategory(
     OutlinedCard(
         modifier = modifier,
         shape = RoundedCornerShape(20.dp),
-        border = BorderStroke(
+        border =
+        BorderStroke(
             1.dp,
             if (isSystemInDarkTheme()) MaterialTheme.colorScheme.onSurface else MaterialTheme.colorScheme.surface
         ),
-        colors = if (isSystemInDarkTheme()) {
+        colors =
+        if (isSystemInDarkTheme()) {
             cardColors(
                 containerColor = MaterialTheme.colorScheme.surface,
                 contentColor = MaterialTheme.colorScheme.onSurface

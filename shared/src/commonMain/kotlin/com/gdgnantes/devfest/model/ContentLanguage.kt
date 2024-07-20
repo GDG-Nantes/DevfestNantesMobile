@@ -5,7 +5,8 @@ enum class ContentLanguage {
     FRENCH;
 
     val apiParameter: String
-        get() = when (this) {
+        get() =
+            when (this) {
             ENGLISH -> "en"
             FRENCH -> "fr"
         }

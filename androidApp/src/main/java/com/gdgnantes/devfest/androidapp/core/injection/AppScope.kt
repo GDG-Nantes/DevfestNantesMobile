@@ -6,5 +6,4 @@ import javax.inject.Singleton
 
 @Scope
 @AliasOf(Singleton::class)
-annotation class AppScope {
-}
+annotation class AppScope
