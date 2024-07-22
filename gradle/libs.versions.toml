@@ -2,7 +2,7 @@
 accompanist = "0.25.0"
 activity = "1.5.0"
 agp = "8.3.0"
-androidXTestVersion = "1.5.0"
+androidXTestVersion = "1.6.0"
 androidXTestRunnerVersion = "1.5.2"
 androidXJUnitVersion = "1.1.5"
 appollo = "3.8.2"
