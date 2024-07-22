@@ -28,7 +28,7 @@ material = "1.9.0"
 preference = "1.1.1"
 openfeedback = "0.0.7"
 secretsPlugin = "2.0.1"
-spalshscreen = "1.0.0"
+spalshscreen = "1.0.1"
 timber = "5.0.1"
 
 [libraries]
