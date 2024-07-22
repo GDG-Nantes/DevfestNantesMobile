@@ -1,5 +1,5 @@
 [versions]
-accompanist = "0.25.0"
+accompanist = "0.34.0"
 activity = "1.5.0"
 agp = "8.3.0"
 androidXTestVersion = "1.5.0"
