@@ -1,6 +1,6 @@
 [versions]
 accompanist = "0.25.0"
-activity = "1.5.0"
+activity = "1.9.1"
 agp = "8.5.2"
 androidXTestVersion = "1.5.0"
 androidXTestRunnerVersion = "1.5.2"
