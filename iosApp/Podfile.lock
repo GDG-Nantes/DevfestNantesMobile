@@ -87,11 +87,11 @@ PODS:
     - GoogleUtilities/Logger
   - GoogleUtilities/UserDefaults (7.12.0):
     - GoogleUtilities/Logger
-  - KMPNativeCoroutinesAsync (1.0.0-ALPHA-25):
-    - KMPNativeCoroutinesCore (= 1.0.0-ALPHA-25)
-  - KMPNativeCoroutinesCombine (1.0.0-ALPHA-25):
-    - KMPNativeCoroutinesCore (= 1.0.0-ALPHA-25)
-  - KMPNativeCoroutinesCore (1.0.0-ALPHA-25)
+  - KMPNativeCoroutinesAsync (1.0.0-ALPHA-34):
+    - KMPNativeCoroutinesCore (= 1.0.0-ALPHA-34)
+  - KMPNativeCoroutinesCombine (1.0.0-ALPHA-34):
+    - KMPNativeCoroutinesCore (= 1.0.0-ALPHA-34)
+  - KMPNativeCoroutinesCore (1.0.0-ALPHA-34)
   - nanopb (2.30909.1):
     - nanopb/decode (= 2.30909.1)
     - nanopb/encode (= 2.30909.1)
@@ -129,8 +129,8 @@ DEPENDENCIES:
   - Firebase/AnalyticsWithoutAdIdSupport
   - Firebase/Crashlytics
   - Firebase/RemoteConfig
-  - KMPNativeCoroutinesAsync (= 1.0.0-ALPHA-25)
-  - KMPNativeCoroutinesCombine (= 1.0.0-ALPHA-25)
+  - KMPNativeCoroutinesAsync (= 1.0.0-ALPHA-34)
+  - KMPNativeCoroutinesCombine (= 1.0.0-ALPHA-34)
   - NSLogger/Swift
   - shared (from `../shared`)
   - SwiftGen (~> 6.6)
@@ -181,17 +181,17 @@ SPEC CHECKSUMS:
   GoogleAppMeasurement: a65314d316443969ed3d3709b3a187448ed6418f
   GoogleDataTransport: 57c22343ab29bc686febbf7cbb13bad167c2d8fe
   GoogleUtilities: 0759d1a57ebb953965c2dfe0ba4c82e95ccc2e34
-  KMPNativeCoroutinesAsync: 6d0db40ef39b9a27526b551eb7a492898aab0af0
-  KMPNativeCoroutinesCombine: eef09e387d54b5dc903bdfd50af477dc9a6aa195
-  KMPNativeCoroutinesCore: f93a7371febd007689950e048e933c98dc3d6235
+  KMPNativeCoroutinesAsync: 709d922d3c8db3b83c5f0ce4035123dd7e6187b1
+  KMPNativeCoroutinesCombine: d9de1379a4f61fbe5089e1fa0533329e7536bebc
+  KMPNativeCoroutinesCore: 7e18aa574381ab40ea6a5b90ec2dffd362c0082b
   nanopb: d4d75c12cd1316f4a64e3c6963f879ecd4b5e0d5
   NSLogger: cf3013a4fba189f631f07e6c3d5b8ce2b209654b
   PromisesObjC: c50d2056b5253dadbd6c2bea79b0674bd5a52fa4
   PromisesSwift: 28dca69a9c40779916ac2d6985a0192a5cb4a265
-  shared: 90ed35de669e9fcb63a61e6b4bb0521eb732cc7a
+  shared: 5f44f3f8910a5c02edcba565fb3f2f29d9b7d70d
   SwiftGen: 1366a7f71aeef49954ca5a63ba4bef6b0f24138c
   URLImage: 36a66c03ba2a9ccbbf06bc83431f2cef171008e8
 
-PODFILE CHECKSUM: deeafe5971d156fd976ecf585e0e3187f762859d
+PODFILE CHECKSUM: 8f576c5ff7ae3698d78e846107aa2b253e469090
 
 COCOAPODS: 1.15.2
