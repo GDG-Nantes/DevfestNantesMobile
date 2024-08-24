@@ -22,7 +22,7 @@ struct VenueContent {
 
 extension VenueContent {
     //Initialization venue
-    init(from venue: Venue) {
+    init(from venue: Venue_) {
         self.init(address: venue.address, description: venue.description_, latitude: venue.latitude as! Double, longitude: venue.longitude as! Double, imageUrl: venue.imageUrl ?? "https://fr.wikipedia.org/wiki/Cit%C3%A9_des_congr%C3%A8s_de_Nantes#/media/Fichier:La-cite-nantes.jpg", name: venue.name, planUrl: venue.floorPlanUrl ?? "https://raw.githubusercontent.com/GDG-Nantes/Devfest2022/master/src/images/plan-cite-blanc.png")
     }
 }

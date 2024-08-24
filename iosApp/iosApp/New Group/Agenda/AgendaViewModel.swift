@@ -16,7 +16,7 @@ import SwiftUI
 
 class AgendaViewModel: BaseViewModel {
     @Published var agendaContent: AgendaContent = AgendaContent(sections: [])
-    @Published var roomsContent: [Room]?
+    @Published var roomsContent: [Room_]?
     @Published var isLoading = true
     let defaults = UserDefaults.standard
     var favorites: [String] {
@@ -61,10 +61,10 @@ class AgendaViewModel: BaseViewModel {
     ///Asynchronous method to retrieve sessions
     func observeSessions() async {
         do {
-            let stream = asyncStream(for: store.sessionsNative)
-            for try await data in stream {
+            let sessionsSequence = asyncSequence(for: store.getSessions())
+            for try await sessions in sessionsSequence {
                 DispatchQueue.main.async {
-                    self.sessionsChanged(sessions: data)
+                    self.sessionsChanged(sessions: sessions)
                 }
             }
         } catch {
@@ -73,7 +73,7 @@ class AgendaViewModel: BaseViewModel {
     }
     
     ///Allows you to classify sessions by time section
-    private func sessionsChanged(sessions: [Session]) {
+    private func sessionsChanged(sessions: [Session_]) {
         let groupedSessions = Dictionary(grouping: sessions) { getDate(date: $0.scheduleSlot.startDate) }
         let sortedKeys = groupedSessions.keys.sorted()
         var sections = [AgendaContent.Section]()
@@ -94,10 +94,10 @@ class AgendaViewModel: BaseViewModel {
     func observeRooms() async {
         Task {
             do {
-                let stream = asyncStream(for: store.roomsNative)
-                for try await data in stream {
+                let roomsSequence = asyncSequence(for: store.getRooms())
+                for try await rooms in roomsSequence {
                     DispatchQueue.main.async {
-                        self.roomsContent = Array(data)
+                        self.roomsContent = Array(rooms)
                     }
                 }
             } catch {

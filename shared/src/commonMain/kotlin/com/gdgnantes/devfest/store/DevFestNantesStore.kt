@@ -20,18 +20,25 @@ interface DevFestNantesStore {
 
     @NativeCoroutines
     val partners: Flow<Map<PartnerCategory, List<Partner>>>
-    suspend fun getRoom(id: String): Room?
 
+    @NativeCoroutines
+    suspend fun getRoom(id: String): Room?
     @NativeCoroutines
     val rooms: Flow<Set<Room>>
-    suspend fun getSession(id: String): Session?
 
+    @NativeCoroutines
+    suspend fun getSession(id: String): Session?
     @NativeCoroutines
     val sessions: Flow<List<Session>>
-    suspend fun getSpeaker(id: String): Speaker?
-    suspend fun getSpeakerSessions(speakerId: String): List<Session>
 
     @NativeCoroutines
+    suspend fun getSpeaker(id: String): Speaker?
+
+    @NativeCoroutines
+    suspend fun getSpeakerSessions(speakerId: String): List<Session>
+    @NativeCoroutines
     val speakers: Flow<List<Speaker>>
+
+    @NativeCoroutines
     suspend fun getVenue(language: ContentLanguage): Venue
 }

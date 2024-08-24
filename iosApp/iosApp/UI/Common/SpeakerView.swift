@@ -13,7 +13,7 @@ import URLImage
 ///SwiftUI speaker View
 struct SpeakerView: View {
     //Speaker data
-    var speaker: Speaker
+    var speaker: Speaker_
     
     //setup UI
     var body: some View {

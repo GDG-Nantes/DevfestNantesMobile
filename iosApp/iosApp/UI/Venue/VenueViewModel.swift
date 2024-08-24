@@ -33,11 +33,9 @@ class VenueViewModel: BaseViewModel {
     func observeVenue() async {
         Task {
             do {
-                let stream = asyncStream(for: self.store.getVenueNative(language: currentLanguage))
-                for try await data in stream {
-                    DispatchQueue.main.async {
-                        self.venueContent = VenueContent(from: data)
-                    }
+                let venueData = try await asyncFunction(for: store.getVenue(language: currentLanguage))
+                DispatchQueue.main.async {
+                    self.venueContent = VenueContent(from: venueData)
                 }
             } catch {
                 Logger.shared.log(.network, .error, "Observe Venue error: \(error)")

@@ -14,7 +14,7 @@ struct AgendaView: View {
     
     @State private var day = "2023-10-19"
     @State private var showFavoritesOnly = false
-    @State private var selectedRoom: Room?
+    @State private var selectedRoom: Room_?
     @State private var selectedComplexity: Complexity?
     @State private var selectedLanguage: SessionLanguage?
     @State private var selectedSessionType: SessionType?

@@ -20,12 +20,11 @@ class AboutViewModel: BaseViewModel {
     ///Asynchronous method to retrieve partners
     func observePartners() async {
         do {
-            let stream = asyncStream(for: store.partnersNative)
-            for try await data in stream {
-                self.partnersContent = []
+            let partnersSequence = asyncSequence(for: store.getPartners())
+            for try await partners in partnersSequence {
                 DispatchQueue.main.async {
-                    for key in data.keys.sorted() {
-                        self.partnersContent?.append(PartnerContent(categoryName: key, partners: data[key]!))
+                    for key in partners.keys.sorted() {
+                        self.partnersContent?.append(PartnerContent(categoryName: key, partners: partners[key]!))
                     }
                 }
             }

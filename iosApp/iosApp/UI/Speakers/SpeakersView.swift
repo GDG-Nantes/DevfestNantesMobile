@@ -79,7 +79,7 @@ struct SpeakersView_Previews: PreviewProvider {
 }
 
 struct SpeakerWrapper: Identifiable {
-    var speaker: Speaker
+    var speaker: Speaker_
     var id: String {
         speaker.id
     }

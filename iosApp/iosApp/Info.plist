@@ -29,10 +29,10 @@
 	</dict>
 	<key>UILaunchScreen</key>
 	<dict>
-		<key>UIImageName</key>
-		<string>appIcon</string>
 		<key>UIColorName</key>
 		<string>lauchScreenBackground</string>
+		<key>UIImageName</key>
+		<string>appIcon</string>
 	</dict>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>

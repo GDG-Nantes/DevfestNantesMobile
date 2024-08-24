@@ -14,8 +14,8 @@ import SwiftUI
 
 
 class SpeakerDetailsViewModel: BaseViewModel {
-    @Published var speaker: Speaker?
-    @Published var speakerSession: [Session]?
+    @Published var speaker: Speaker_?
+    @Published var speakerSession: [Session_]?
     var speakerId: String
     
     init(speakerId: String) {
@@ -25,40 +25,33 @@ class SpeakerDetailsViewModel: BaseViewModel {
         Task {
             await getSpeaker(speakerId: speakerId)
             await getSpeakerSession(speakerId: speakerId)
-        }
-        
+        }        
     }
     
 
     func getSpeaker(speakerId: String) async {
         Task {
             do {
-                let stream = asyncStream(for: self.store.getSpeakerNative(id: speakerId))
-                for try await data in stream {
-                    DispatchQueue.main.async {
-                        self.speaker = data
-                    }
-                    
+                let speakerReslut = try await asyncFunction(for: store.getSpeaker(id: speakerId))
+                DispatchQueue.main.async {
+                    self.speaker = speakerReslut
                 }
-                
             } catch {
                 Logger.shared.log(.network, .error, "Observe Venue error: \(error)")
             }
-        }}
+        }
+    }
     
     func getSpeakerSession(speakerId: String) async {
         Task {
             do {
-                let stream = asyncStream(for: self.store.getSpeakerSessionsNative(speakerId: speakerId))
-                for try await data in stream {
-                    DispatchQueue.main.async {
-                        self.speakerSession = data
-                    }
-                    
+                let speakerSessionResult = try await asyncFunction(for: store.getSpeakerSessions(speakerId: speakerId))
+                DispatchQueue.main.async {
+                    self.speakerSession = speakerSessionResult
                 }
-                
             } catch {
                 Logger.shared.log(.network, .error, "Observe Venue error: \(error)")
             }
-        }}
+        }
+    }
 }

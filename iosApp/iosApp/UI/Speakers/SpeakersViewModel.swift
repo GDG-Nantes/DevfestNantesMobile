@@ -15,17 +15,17 @@ import SwiftUI
 
 @MainActor
 class SpeakersViewModel: BaseViewModel {
-    @Published var speakersContent: [Speaker]?
+    @Published var speakersContent: [Speaker_]?
     @Published var isLoading = true
     
     ///Asynchronous method to retrieve speakers
     func observeSpeakers() async {
         Task {
             do {
-                let stream = asyncStream(for: store.speakersNative)
-                for try await data in stream {
+                let speakersSequence = asyncSequence(for: store.getSpeakers())
+                for try await speakers in speakersSequence {
                     DispatchQueue.main.async {
-                        self.speakersContent = Array(data)
+                        self.speakersContent = speakers
                         self.isLoading = false
                     }
                 }
@@ -43,7 +43,7 @@ class SpeakersViewModel: BaseViewModel {
     }
 
     ///Function to get speakers by the first letter of their name
-    func speakers(for letter: String) -> [Speaker] {
+    func speakers(for letter: String) -> [Speaker_] {
         return speakersContent?.filter {
             $0.name.prefix(1).uppercased() == letter
         } ?? []

@@ -12,7 +12,7 @@ import shared
 // MARK: - PartnerContent
 struct PartnerContent: Hashable {
     let categoryName: PartnerCategory
-    let partners: [Partner]
+    let partners: [Partner_]
 }
 
 

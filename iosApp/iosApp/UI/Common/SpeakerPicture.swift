@@ -11,7 +11,7 @@ import URLImage
 import shared
 
 struct SpeakerPicture: View {
-    var speaker: Speaker
+    var speaker: Speaker_
     
     var body: some View {
         Group {
