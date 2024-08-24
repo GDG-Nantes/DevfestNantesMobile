@@ -5,13 +5,10 @@ captures
 bin
 gen
 out
-*.iml
 .directory
 node_modules
-local.properties
 
 .DS_Store
-.externalNativeBuild
 
 ## Android
 # Built application files
@@ -109,3 +106,4 @@ lint/tmp/
 
 # Build files
 androidApp/mapping.txt
+/iosApp/iosApp/GoogleService-Info.plist
