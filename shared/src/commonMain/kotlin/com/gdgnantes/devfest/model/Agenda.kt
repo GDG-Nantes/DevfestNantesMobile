@@ -29,8 +29,8 @@ data class Agenda(val days: Map<Int, AgendaDay>) {
     }
 
     companion object {
-        const val DAY_ONE_ISO = "2023-10-19T00:00:00Z"
-        const val DAY_TWO_ISO = "2023-10-20T00:00:00Z"
+        const val DAY_ONE_ISO = "2024-10-17T00:00:00Z"
+        const val DAY_TWO_ISO = "2024-10-18T00:00:00Z"
         val DAY_ONE = Instant.parse(DAY_ONE_ISO)
         val DAY_TWO = Instant.parse(DAY_TWO_ISO)
     }
