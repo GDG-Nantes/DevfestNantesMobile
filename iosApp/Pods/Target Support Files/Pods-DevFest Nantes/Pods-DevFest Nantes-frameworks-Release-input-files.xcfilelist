@@ -18,4 +18,3 @@ ${BUILT_PRODUCTS_DIR}/PromisesObjC/FBLPromises.framework
 ${BUILT_PRODUCTS_DIR}/PromisesSwift/Promises.framework
 ${BUILT_PRODUCTS_DIR}/URLImage/URLImage.framework
 ${BUILT_PRODUCTS_DIR}/nanopb/nanopb.framework
-${PODS_ROOT}/../../shared/build/cocoapods/framework/shared.framework
