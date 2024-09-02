@@ -60,10 +60,10 @@ internal enum L10n {
   }
   /// Website icon. Link to the speaker's website.
   internal static let contentDescriptionSpeakerWebsiteIcon = L10n.tr("Localizable", "content_description_speaker_website_icon", fallback: "Website icon. Link to the speaker's website.")
-  /// October 19, 2023
-  internal static let day1 = L10n.tr("Localizable", "day1", fallback: "October 19, 2023")
-  /// October 20, 2023
-  internal static let day2 = L10n.tr("Localizable", "day2", fallback: "October 20, 2023")
+  /// October 17, 2024
+  internal static let day1 = L10n.tr("Localizable", "day1", fallback: "October 17, 2024")
+  /// October 18, 2024
+  internal static let day2 = L10n.tr("Localizable", "day2", fallback: "October 18, 2024")
   /// Sorry, there is no conference available for the selected filters.
   internal static let emptyDay = L10n.tr("Localizable", "empty_day", fallback: "Sorry, there is no conference available for the selected filters.")
   /// Clear

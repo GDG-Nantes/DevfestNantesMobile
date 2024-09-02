@@ -12,7 +12,7 @@ import shared
 struct AgendaView: View {
     @ObservedObject var viewModel = AgendaViewModel()
     
-    @State private var day = "2023-10-19"
+    @State private var day = "2024-10-17"
     @State private var showFavoritesOnly = false
     @State private var selectedRoom: Room_?
     @State private var selectedComplexity: Complexity?
@@ -33,8 +33,8 @@ struct AgendaView: View {
                 ScrollViewReader { proxy in
                     VStack {
                         Picker("What is the day?", selection: $day) {
-                            Text(L10n.day1).tag("2023-10-19")
-                            Text(L10n.day2).tag("2023-10-20")
+                            Text(L10n.day1).tag("2024-10-17")
+                            Text(L10n.day2).tag("2024-10-18")
                         }
                         .pickerStyle(SegmentedPickerStyle())
 
@@ -200,12 +200,12 @@ struct AgendaView: View {
             let currentDay = formatter.string(from: Date())
 
             
-            if currentDay == "2023-10-19" {
-                day = "2023-10-19"
-            } else if currentDay == "2023-10-20" {
-                day = "2023-10-20"
+            if currentDay == "2024-10-17" {
+                day = "2024-10-17"
+            } else if currentDay == "2024-10-18" {
+                day = "2024-10-18"
             } else {
-                day = "2023-10-19"
+                day = "2024-10-17"
             }
             
             
