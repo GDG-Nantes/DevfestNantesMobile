@@ -106,7 +106,7 @@ struct AgendaDetailView: View {
             .navigationBarTitle(Text(session.title), displayMode: .inline)
             .navigationBarItems(trailing:
                                     Image(systemName:  viewModel.favorites.contains(session.id) ? "star.fill" : "star")
-                .foregroundColor(.yellow)
+                .foregroundColor(Color(Asset.devFestYellow.color))
                 .padding(8)
                 .onTapGesture { self.viewModel.toggleFavorite(ofSession: session)
                     FirebaseAnalyticsService.shared.eventBookmark(page: .sessionDetails, sessionId: session.id, bookmarked: viewModel.favorites.contains(session.id))
