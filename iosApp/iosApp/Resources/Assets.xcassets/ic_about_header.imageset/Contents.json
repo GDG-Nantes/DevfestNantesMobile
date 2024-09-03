@@ -1,7 +1,7 @@
 {
   "images" : [
     {
-      "filename" : "about_header.png",
+      "filename" : "logo-long.svg",
       "idiom" : "universal"
     },
     {
@@ -11,7 +11,7 @@
           "value" : "dark"
         }
       ],
-      "filename" : "about_header (1).png",
+      "filename" : "logo-long 1.svg",
       "idiom" : "universal"
     }
   ],

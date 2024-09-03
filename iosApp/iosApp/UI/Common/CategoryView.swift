@@ -17,11 +17,14 @@ struct CategoryView: View {
     var body: some View {
         Text(categoryLabel)
             .font(.system(size: 12))
+            .colorInvert()
             .padding(.vertical, 5)
             .padding(.horizontal, 8)
+            .background(Color(Asset.devFestYellow.color))
+                        .cornerRadius(20)
             .overlay(
                 RoundedRectangle(cornerRadius: 20)
-                    .stroke(Color(Asset.devFestRed.color), lineWidth: 1)
+                    .stroke(Color(Asset.devFestYellow.color), lineWidth: 1)
             )
     }
 }
