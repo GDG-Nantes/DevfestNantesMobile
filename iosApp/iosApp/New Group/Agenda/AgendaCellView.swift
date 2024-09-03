@@ -11,10 +11,11 @@ import shared
 
 struct AgendaCellView: View {
     //Store an observable object instance
-    @ObservedObject var viewModel: DevFestViewModel
+    @ObservedObject var viewModel = AgendaViewModel()
     
     //Session data
     var session: AgendaContent.Session
+    var isBookmarked = true
     
     //Setup UI
     var body: some View {
@@ -22,6 +23,7 @@ struct AgendaCellView: View {
             VStack(alignment: .leading) {
                 Text(session.title)
                     .foregroundColor(Color(Asset.devFestRed.color))
+                    .multilineTextAlignment(.leading)
                     .font(.headline)
                     .padding(.bottom, 4)
                 HStack {
@@ -33,14 +35,14 @@ struct AgendaCellView: View {
                 }
                 Text("\(session.room)")
                     .font(.footnote)
-
+                Spacer()
                 Text(session.speakers.map { $0.name }.joined(separator: ", "))
                     .font(.footnote)
                 Spacer()
             }
             Spacer()
             VStack {
-                if session.isATalk {
+                if session.isATalk && isBookmarked {
                     Image(systemName:  viewModel.favorites.contains(session.id) ? "star.fill" : "star")
                         .foregroundColor(.yellow)
                         .padding(8)

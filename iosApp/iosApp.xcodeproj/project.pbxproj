@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		006B310F2C7A8FBB0024C17B /* DevFestNantesStore-extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 006B310E2C7A8FBB0024C17B /* DevFestNantesStore-extension.swift */; };
 		00D69FD028D2032300498D05 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 00D69FCF28D2032300498D05 /* libsqlite3.tbd */; };
 		058557BB273AAA24004C7B11 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 058557BA273AAA24004C7B11 /* Assets.xcassets */; };
 		058557D9273AAEEB004C7B11 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 058557D8273AAEEB004C7B11 /* Preview Assets.xcassets */; };
@@ -14,7 +15,6 @@
 		22080895895419DF5B470042 /* Pods_DevFest_NantesTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D913FA4EE49E781CDE94B26 /* Pods_DevFest_NantesTests.framework */; };
 		4A68B3C2C094CCA8E63BD31C /* Pods_DevFest_Nantes.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C00E8BA0569778DAA4195B86 /* Pods_DevFest_Nantes.framework */; };
 		7555FF83242A565900829871 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7555FF82242A565900829871 /* ContentView.swift */; };
-		CB179BD728D22BA900BB9934 /* DevFestViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB179BD628D22BA900BB9934 /* DevFestViewModel.swift */; };
 		CB179BDB28D24C9C00BB9934 /* CategoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB179BDA28D24C9C00BB9934 /* CategoryView.swift */; };
 		CB179BDE28D365E800BB9934 /* AgendaContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB179BDD28D365E800BB9934 /* AgendaContent.swift */; };
 		CB179BE028D365F600BB9934 /* VenueContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB179BDF28D365F600BB9934 /* VenueContent.swift */; };
@@ -39,9 +39,19 @@
 		CBA5C23028DB4F5100D2779B /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBA5C22F28DB4F5100D2779B /* CardView.swift */; };
 		CBA5C23228DBC5CA00D2779B /* Assets.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBA5C23128DBC5CA00D2779B /* Assets.swift */; };
 		CBCB60ED28E47FC5001E9B1A /* LoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBCB60EC28E47FC5001E9B1A /* LoadingView.swift */; };
-		CBCB60EF28E485D5001E9B1A /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = CBCB60EE28E485D5001E9B1A /* GoogleService-Info.plist */; };
 		CBCB60FA28E48F27001E9B1A /* FirebaseAnalyticsService.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBCB60F928E48F27001E9B1A /* FirebaseAnalyticsService.swift */; };
 		CBCB610228E99990001E9B1A /* WebLinks.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBCB610128E99990001E9B1A /* WebLinks.swift */; };
+		CBDFA0232AAF566500302D34 /* SpeakersView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDFA0222AAF566500302D34 /* SpeakersView.swift */; };
+		CBDFA0302AB0F3E000302D34 /* SpeakerDetailsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDFA02F2AB0F3E000302D34 /* SpeakerDetailsView.swift */; };
+		CBDFA0322AB0F4FC00302D34 /* SocialIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDFA0312AB0F4FC00302D34 /* SocialIcon.swift */; };
+		CBDFA0342AB0F5C500302D34 /* SpeakerPicture.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDFA0332AB0F5C500302D34 /* SpeakerPicture.swift */; };
+		CBDFA0362AB1B72200302D34 /* SpeakerDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDFA0352AB1B72200302D34 /* SpeakerDetailsViewModel.swift */; };
+		CBDFA0382AB1B74000302D34 /* BaseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDFA0372AB1B74000302D34 /* BaseViewModel.swift */; };
+		CBDFA03A2AB1BABC00302D34 /* AgendaViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDFA0392AB1BABC00302D34 /* AgendaViewModel.swift */; };
+		CBDFA03C2AB1BEFD00302D34 /* VenueViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDFA03B2AB1BEFD00302D34 /* VenueViewModel.swift */; };
+		CBDFA03E2AB1BFBC00302D34 /* AboutViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDFA03D2AB1BFBC00302D34 /* AboutViewModel.swift */; };
+		CBDFA0402AB1EDA200302D34 /* SpeakersViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDFA03F2AB1EDA200302D34 /* SpeakersViewModel.swift */; };
+		F55262872C820F720013352B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F55262862C820F720013352B /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,6 +65,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		006B310E2C7A8FBB0024C17B /* DevFestNantesStore-extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DevFestNantesStore-extension.swift"; sourceTree = "<group>"; };
 		00D69FCF28D2032300498D05 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		058557BA273AAA24004C7B11 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		058557D8273AAEEB004C7B11 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -68,7 +79,6 @@
 		7555FF82242A565900829871 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		7555FF8C242A565B00829871 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		C00E8BA0569778DAA4195B86 /* Pods_DevFest_Nantes.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DevFest_Nantes.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		CB179BD628D22BA900BB9934 /* DevFestViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevFestViewModel.swift; sourceTree = "<group>"; };
 		CB179BDA28D24C9C00BB9934 /* CategoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryView.swift; sourceTree = "<group>"; };
 		CB179BDD28D365E800BB9934 /* AgendaContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgendaContent.swift; sourceTree = "<group>"; };
 		CB179BDF28D365F600BB9934 /* VenueContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VenueContent.swift; sourceTree = "<group>"; };
@@ -95,9 +105,19 @@
 		CBA5C22F28DB4F5100D2779B /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		CBA5C23128DBC5CA00D2779B /* Assets.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Assets.swift; sourceTree = "<group>"; };
 		CBCB60EC28E47FC5001E9B1A /* LoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadingView.swift; sourceTree = "<group>"; };
-		CBCB60EE28E485D5001E9B1A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		CBCB60F928E48F27001E9B1A /* FirebaseAnalyticsService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FirebaseAnalyticsService.swift; sourceTree = "<group>"; };
 		CBCB610128E99990001E9B1A /* WebLinks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebLinks.swift; sourceTree = "<group>"; };
+		CBDFA0222AAF566500302D34 /* SpeakersView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeakersView.swift; sourceTree = "<group>"; };
+		CBDFA02F2AB0F3E000302D34 /* SpeakerDetailsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeakerDetailsView.swift; sourceTree = "<group>"; };
+		CBDFA0312AB0F4FC00302D34 /* SocialIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialIcon.swift; sourceTree = "<group>"; };
+		CBDFA0332AB0F5C500302D34 /* SpeakerPicture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeakerPicture.swift; sourceTree = "<group>"; };
+		CBDFA0352AB1B72200302D34 /* SpeakerDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeakerDetailsViewModel.swift; sourceTree = "<group>"; };
+		CBDFA0372AB1B74000302D34 /* BaseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewModel.swift; sourceTree = "<group>"; };
+		CBDFA0392AB1BABC00302D34 /* AgendaViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgendaViewModel.swift; sourceTree = "<group>"; };
+		CBDFA03B2AB1BEFD00302D34 /* VenueViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VenueViewModel.swift; sourceTree = "<group>"; };
+		CBDFA03D2AB1BFBC00302D34 /* AboutViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewModel.swift; sourceTree = "<group>"; };
+		CBDFA03F2AB1EDA200302D34 /* SpeakersViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeakersViewModel.swift; sourceTree = "<group>"; };
+		F55262862C820F720013352B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -172,7 +192,7 @@
 				CB179BE628D4B2ED00BB9934 /* Resources */,
 				CB4980F528FDE673001D0484 /* Extension */,
 				058557D7273AAEEB004C7B11 /* Preview Content */,
-				CBCB60EE28E485D5001E9B1A /* GoogleService-Info.plist */,
+				F55262862C820F720013352B /* GoogleService-Info.plist */,
 			);
 			path = iosApp;
 			sourceTree = "<group>";
@@ -181,6 +201,7 @@
 			isa = PBXGroup;
 			children = (
 				CB837AB7287B7D6500FEDAA1 /* VenueView.swift */,
+				CBDFA03B2AB1BEFD00302D34 /* VenueViewModel.swift */,
 			);
 			path = Venue;
 			sourceTree = "<group>";
@@ -199,6 +220,7 @@
 			isa = PBXGroup;
 			children = (
 				CB837AB9287B7D9200FEDAA1 /* AboutView.swift */,
+				CBDFA03D2AB1BFBC00302D34 /* AboutViewModel.swift */,
 			);
 			path = About;
 			sourceTree = "<group>";
@@ -231,6 +253,7 @@
 				CB46914029157375004C6120 /* Common */,
 				CB73E80E28A5501B0014B9AF /* Agenda */,
 				CB179BD128D0D8FF00BB9934 /* Venue */,
+				CBDFA0212AAF565000302D34 /* Speakers */,
 				CB179BE128D37E4C00BB9934 /* About */,
 			);
 			path = UI;
@@ -239,7 +262,7 @@
 		CB3979C829199C0B00BDAE6F /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				CB179BD628D22BA900BB9934 /* DevFestViewModel.swift */,
+				CBDFA0372AB1B74000302D34 /* BaseViewModel.swift */,
 				CB179BDC28D365B400BB9934 /* Data */,
 			);
 			path = Model;
@@ -263,6 +286,8 @@
 				CB4980F328FD73C7001D0484 /* PhotoDetailView.swift */,
 				CB179BDA28D24C9C00BB9934 /* CategoryView.swift */,
 				CB46914429196271004C6120 /* SpeakerView.swift */,
+				CBDFA0312AB0F4FC00302D34 /* SocialIcon.swift */,
+				CBDFA0332AB0F5C500302D34 /* SpeakerPicture.swift */,
 			);
 			path = Common;
 			sourceTree = "<group>";
@@ -273,6 +298,7 @@
 				CB4980F628FDE6AC001D0484 /* UIImage-extension.swift */,
 				CB46914229196228004C6120 /* Complexity-extension.swift */,
 				CB4691462919661A004C6120 /* Bundle-extension.swift */,
+				006B310E2C7A8FBB0024C17B /* DevFestNantesStore-extension.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -283,6 +309,7 @@
 				CB837AB5287B7D1200FEDAA1 /* AgendaView.swift */,
 				CB73E80F28A5587E0014B9AF /* AgendaDetailView.swift */,
 				CB3F424328A6A02300D1C75B /* AgendaCellView.swift */,
+				CBDFA0392AB1BABC00302D34 /* AgendaViewModel.swift */,
 			);
 			name = Agenda;
 			path = "../New Group/Agenda";
@@ -294,6 +321,17 @@
 				CBCB60F928E48F27001E9B1A /* FirebaseAnalyticsService.swift */,
 			);
 			path = Analytics;
+			sourceTree = "<group>";
+		};
+		CBDFA0212AAF565000302D34 /* Speakers */ = {
+			isa = PBXGroup;
+			children = (
+				CBDFA0222AAF566500302D34 /* SpeakersView.swift */,
+				CBDFA02F2AB0F3E000302D34 /* SpeakerDetailsView.swift */,
+				CBDFA0352AB1B72200302D34 /* SpeakerDetailsViewModel.swift */,
+				CBDFA03F2AB1EDA200302D34 /* SpeakersViewModel.swift */,
+			);
+			path = Speakers;
 			sourceTree = "<group>";
 		};
 		D55A5A220E17EC8ED6D399D0 /* Frameworks */ = {
@@ -396,9 +434,9 @@
 			files = (
 				058557D9273AAEEB004C7B11 /* Preview Assets.xcassets in Resources */,
 				CB179BEB28D4B48100BB9934 /* Localizable.strings in Resources */,
-				CBCB60EF28E485D5001E9B1A /* GoogleService-Info.plist in Resources */,
 				058557BB273AAA24004C7B11 /* Assets.xcassets in Resources */,
 				CB179BF428D4C33A00BB9934 /* swiftgen.yml in Resources */,
+				F55262872C820F720013352B /* GoogleService-Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -475,8 +513,7 @@
 		};
 		CB179BED28D4BD7600BB9934 /* SwiftGen */ = {
 			isa = PBXShellScriptBuildPhase;
-			alwaysOutOfDate = 1;
-			buildActionMask = 8;
+			buildActionMask = 12;
 			files = (
 			);
 			inputFileListPaths = (
@@ -488,7 +525,7 @@
 			);
 			outputPaths = (
 			);
-			runOnlyForDeploymentPostprocessing = 1;
+			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "$PODS_ROOT/SwiftGen/bin/swiftgen config run --config \"$PROJECT_DIR\"/iosApp/SwiftGen/swiftgen.yml\n";
 		};
@@ -520,6 +557,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				CBA5C22E28DB194E00D2779B /* PartnersContent.swift in Sources */,
+				CBDFA0362AB1B72200302D34 /* SpeakerDetailsViewModel.swift in Sources */,
+				006B310F2C7A8FBB0024C17B /* DevFestNantesStore-extension.swift in Sources */,
+				CBDFA0402AB1EDA200302D34 /* SpeakersViewModel.swift in Sources */,
+				CBDFA03E2AB1BFBC00302D34 /* AboutViewModel.swift in Sources */,
 				CB179BE528D3894500BB9934 /* CustomButtonView.swift in Sources */,
 				CB46914529196271004C6120 /* SpeakerView.swift in Sources */,
 				CB179BE028D365F600BB9934 /* VenueContent.swift in Sources */,
@@ -527,20 +568,26 @@
 				CB179BDE28D365E800BB9934 /* AgendaContent.swift in Sources */,
 				CB4980F428FD73C7001D0484 /* PhotoDetailView.swift in Sources */,
 				2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */,
+				CBDFA0302AB0F3E000302D34 /* SpeakerDetailsView.swift in Sources */,
 				CB4980F228F609E3001D0484 /* RCValues.swift in Sources */,
 				CB4691472919661A004C6120 /* Bundle-extension.swift in Sources */,
-				CB179BD728D22BA900BB9934 /* DevFestViewModel.swift in Sources */,
+				CBDFA03C2AB1BEFD00302D34 /* VenueViewModel.swift in Sources */,
+				CBDFA0382AB1B74000302D34 /* BaseViewModel.swift in Sources */,
 				CBA5C23028DB4F5100D2779B /* CardView.swift in Sources */,
 				CB3F424428A6A02300D1C75B /* AgendaCellView.swift in Sources */,
+				CBDFA0342AB0F5C500302D34 /* SpeakerPicture.swift in Sources */,
 				CB179BF628D4C36A00BB9934 /* Strings.swift in Sources */,
 				CBCB60FA28E48F27001E9B1A /* FirebaseAnalyticsService.swift in Sources */,
 				CBA5C23228DBC5CA00D2779B /* Assets.swift in Sources */,
 				7555FF83242A565900829871 /* ContentView.swift in Sources */,
 				CBCB610228E99990001E9B1A /* WebLinks.swift in Sources */,
+				CBDFA0232AAF566500302D34 /* SpeakersView.swift in Sources */,
 				CB46914329196228004C6120 /* Complexity-extension.swift in Sources */,
 				CB837AB6287B7D1200FEDAA1 /* AgendaView.swift in Sources */,
 				CB837ABA287B7D9200FEDAA1 /* AboutView.swift in Sources */,
+				CBDFA0322AB0F4FC00302D34 /* SocialIcon.swift in Sources */,
 				CB73E81028A5587E0014B9AF /* AgendaDetailView.swift in Sources */,
+				CBDFA03A2AB1BABC00302D34 /* AgendaViewModel.swift in Sources */,
 				CB179BDB28D24C9C00BB9934 /* CategoryView.swift in Sources */,
 				CBCB60ED28E47FC5001E9B1A /* LoadingView.swift in Sources */,
 				CB4980F728FDE6AC001D0484 /* UIImage-extension.swift in Sources */,
@@ -703,10 +750,11 @@
 			baseConfigurationReference = 335DDDADCA8EF96DDC2FF0DA /* Pods-DevFest Nantes.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 8;
+				CURRENT_PROJECT_VERSION = 11;
 				DEVELOPMENT_ASSET_PATHS = "\"iosApp/Preview Content\"";
-				DEVELOPMENT_TEAM = W3455W99SW;
+				DEVELOPMENT_TEAM = ULPJX5LPF7;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = iosApp/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "DevFest Nantes";
@@ -715,9 +763,10 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.3;
-				PRODUCT_BUNDLE_IDENTIFIER = com.robincaroff.devfest.iosApp;
+				MARKETING_VERSION = 2.0.1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.gdgnantes.devfest.iosApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
@@ -731,10 +780,11 @@
 			baseConfigurationReference = 642F83E11D7437F95EA9CC78 /* Pods-DevFest Nantes.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 8;
+				CURRENT_PROJECT_VERSION = 11;
 				DEVELOPMENT_ASSET_PATHS = "\"iosApp/Preview Content\"";
-				DEVELOPMENT_TEAM = W3455W99SW;
+				DEVELOPMENT_TEAM = ULPJX5LPF7;
 				ENABLE_PREVIEWS = YES;
 				INFOPLIST_FILE = iosApp/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "DevFest Nantes";
@@ -743,9 +793,10 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.0.3;
-				PRODUCT_BUNDLE_IDENTIFIER = com.robincaroff.devfest.iosApp;
+				MARKETING_VERSION = 2.0.1;
+				PRODUCT_BUNDLE_IDENTIFIER = com.gdgnantes.devfest.iosApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
 				SUPPORTS_MACCATALYST = NO;
 				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;

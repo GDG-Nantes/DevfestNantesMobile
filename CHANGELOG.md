@@ -13,6 +13,12 @@ Version 3.0.0 *(2024-08-30)*
 * ⬆️ Upgrades gradle plugin to version 8.7.
 * ⬆️ Upgrades Kotlin to version 2.0.0.
 
+Version iOS 2.0.1 *(2023-10-??)*
+----------------------------
+
+* 👍 Improves management of favorites.
+* 🖼️ Improves calendar display.
+
 Version 2.0.5 *(2023-10-18)*
 ----------------------------
 
@@ -31,6 +37,13 @@ Version 2.0.3 *(2023-10-03)*
 * 📣 Sorts rooms and sessions like on the website.
 * 📣 Automatically scrolls to agenda to the current day and time.
 * ✂️ Sets the new Openfeedback URLs.
+
+Version iOS 2.0.0 *(2023-09-??)*
+----------------------------
+
+* 📣 Adds a speakers page.
+* ☁️ Fetches DevFest Nantes 2023's agenda.
+* 🖼️ Updates texts and UI assets for DevFest Nantes 2023.
 
 Version 2.0.2 *(2023-09-13)*
 ----------------------------

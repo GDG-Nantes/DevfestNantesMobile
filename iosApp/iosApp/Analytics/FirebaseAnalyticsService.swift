@@ -11,8 +11,7 @@ import SwiftUI
 import Firebase
 import shared
 
-class FirebaseAnalyticsService: AnalyticsService{
-    
+class FirebaseAnalyticsService: AnalyticsService {
     ///Singleton FirebaseAnalytics
     static let shared = FirebaseAnalyticsService()
     
@@ -110,10 +109,12 @@ class FirebaseAnalyticsService: AnalyticsService{
             ]
         )
     }
-    
-    
+
     func eventSpeakerOpened(speakerId: String) {
-        <#code#>
+        Analytics.logEvent(AnalyticsEvent.speakerOpened.description(), parameters: [
+            AnalyticsParam.speakerId.description(): String(speakerId)
+            ]
+        )
     }
     
     
@@ -121,7 +122,7 @@ class FirebaseAnalyticsService: AnalyticsService{
     func eventSpeakerSocialLinkOpened(speakerId: String, type: SocialType) {
         Analytics.logEvent(AnalyticsEvent.speakerSocialLinkOpened.description(), parameters: [
             AnalyticsParam.speakerId.description(): speakerId,
-            AnalyticsParam.socialType.description(): type.name
+            AnalyticsParam.socialType.description(): type
             ]
         )
     }

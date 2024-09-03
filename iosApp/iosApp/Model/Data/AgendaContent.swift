@@ -18,7 +18,7 @@ struct AgendaContent {
         let language: SessionLanguage?
         let complexity: Complexity?
         let openFeedbackFormId: String?
-        let speakers: [Speaker]
+        let speakers: [Speaker_]
         let room: String
         let date: Date
         let startDate: String
@@ -27,7 +27,15 @@ struct AgendaContent {
         let title: String
         let sessionType: SessionType?
         
-        var isATalk: Bool { return (openFeedbackFormId != nil) }
+        var isATalk: Bool {
+            guard let sessionType = sessionType else { return false }
+            switch sessionType {
+            case .lunch, .opening, .break_:
+                return false
+            default:
+                return true
+            }
+        }
     }
     
 // MARK: - Section
@@ -42,8 +50,10 @@ struct AgendaContent {
 
 extension AgendaContent.Session {
     //Initialization session
-    init(from session: Session) {
+    init(from session: Session_) {
         let newFormatter = ISO8601DateFormatter()
         self.init(id: session.id, abstract: session.abstract, category: session.category, language: session.language, complexity: session.complexity, openFeedbackFormId: session.openFeedbackFormId, speakers: session.speakers, room: session.room?.name ?? "", date: newFormatter.date(from: session.scheduleSlot.startDate) ?? Date(), startDate: session.scheduleSlot.startDate, endDate: session.scheduleSlot.endDate,durationAndLanguage: session.getDurationAndLanguageString(), title: session.title, sessionType: session.type)
     }
 }
+
+extension Session: Identifiable { }
