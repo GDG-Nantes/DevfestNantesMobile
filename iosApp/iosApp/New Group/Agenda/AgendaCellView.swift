@@ -44,7 +44,7 @@ struct AgendaCellView: View {
             VStack {
                 if session.isATalk && isBookmarked {
                     Image(systemName:  viewModel.favorites.contains(session.id) ? "star.fill" : "star")
-                        .foregroundColor(.yellow)
+                        .foregroundColor(Color(Asset.devFestYellow.color))
                         .padding(8)
                         .onTapGesture { self.viewModel.toggleFavorite(ofSession: session)
                             FirebaseAnalyticsService.shared.eventBookmark(page: .agenda, sessionId: session.id, bookmarked: viewModel.favorites.contains(session.id))
@@ -54,5 +54,6 @@ struct AgendaCellView: View {
             }
         }
         .padding(8)
+
     }
 }

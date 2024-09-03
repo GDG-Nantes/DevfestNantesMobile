@@ -33,7 +33,11 @@
 		<string>lauchScreenBackground</string>
 		<key>UIImageName</key>
 		<string>appIcon</string>
+		<key>UILaunchScreen</key>
+		<dict/>
 	</dict>
+	<key>UILaunchStoryboardName</key>
+	<string>Launch Screen.storyboard</string>
 	<key>UIRequiredDeviceCapabilities</key>
 	<array>
 		<string>armv7</string>
