@@ -13,7 +13,7 @@ struct ContentView: View {
             AgendaView()
                 .tabItem {
                     VStack {
-                        Image(systemName: "calendar")
+                        Image(systemName: "calendar").renderingMode(.template)
                         Text(L10n.screenAgenda)
                     }
                 }.tag(0)
@@ -21,7 +21,7 @@ struct ContentView: View {
             SpeakersView()
                 .tabItem {
                     VStack {
-                        Image(systemName: "person.3.fill")
+                        Image(systemName: "person.3.fill").renderingMode(.template)
                         Text(L10n.screenSpeakers)
                     }
                 }.tag(1)
@@ -29,7 +29,7 @@ struct ContentView: View {
             VenueView()
                 .tabItem {
                     VStack {
-                        Image(systemName: "location.circle.fill")
+                        Image(systemName: "location.circle.fill").renderingMode(.template)
                         Text(L10n.screenVenue)
                     }
                 }.tag(2)
@@ -37,11 +37,12 @@ struct ContentView: View {
             AboutView()
                 .tabItem {
                     VStack {
-                        Image(systemName: "info.circle")
+                        Image(systemName: "info.circle").renderingMode(.template)
                         Text(L10n.screenAbout)
                     }
                 }.tag(3)
         }
+        .accentColor(Color(Asset.devFestRed.color))
         .onAppear{
             // correct the transparency bug for Tab bars
             let tabBarAppearance = UITabBarAppearance()
