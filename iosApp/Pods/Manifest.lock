@@ -87,11 +87,11 @@ PODS:
     - GoogleUtilities/Logger
   - GoogleUtilities/UserDefaults (7.12.0):
     - GoogleUtilities/Logger
-  - KMPNativeCoroutinesAsync (1.0.0-ALPHA-34):
-    - KMPNativeCoroutinesCore (= 1.0.0-ALPHA-34)
-  - KMPNativeCoroutinesCombine (1.0.0-ALPHA-34):
-    - KMPNativeCoroutinesCore (= 1.0.0-ALPHA-34)
-  - KMPNativeCoroutinesCore (1.0.0-ALPHA-34)
+  - KMPNativeCoroutinesAsync (1.0.0-ALPHA-35):
+    - KMPNativeCoroutinesCore (= 1.0.0-ALPHA-35)
+  - KMPNativeCoroutinesCombine (1.0.0-ALPHA-35):
+    - KMPNativeCoroutinesCore (= 1.0.0-ALPHA-35)
+  - KMPNativeCoroutinesCore (1.0.0-ALPHA-35)
   - nanopb (2.30909.1):
     - nanopb/decode (= 2.30909.1)
     - nanopb/encode (= 2.30909.1)
@@ -129,8 +129,8 @@ DEPENDENCIES:
   - Firebase/AnalyticsWithoutAdIdSupport
   - Firebase/Crashlytics
   - Firebase/RemoteConfig
-  - KMPNativeCoroutinesAsync (= 1.0.0-ALPHA-34)
-  - KMPNativeCoroutinesCombine (= 1.0.0-ALPHA-34)
+  - KMPNativeCoroutinesAsync (= 1.0.0-ALPHA-35)
+  - KMPNativeCoroutinesCombine (= 1.0.0-ALPHA-35)
   - NSLogger/Swift
   - shared (from `../shared`)
   - SwiftGen (~> 6.6)
@@ -181,9 +181,9 @@ SPEC CHECKSUMS:
   GoogleAppMeasurement: a65314d316443969ed3d3709b3a187448ed6418f
   GoogleDataTransport: 57c22343ab29bc686febbf7cbb13bad167c2d8fe
   GoogleUtilities: 0759d1a57ebb953965c2dfe0ba4c82e95ccc2e34
-  KMPNativeCoroutinesAsync: 709d922d3c8db3b83c5f0ce4035123dd7e6187b1
-  KMPNativeCoroutinesCombine: d9de1379a4f61fbe5089e1fa0533329e7536bebc
-  KMPNativeCoroutinesCore: 7e18aa574381ab40ea6a5b90ec2dffd362c0082b
+  KMPNativeCoroutinesAsync: 2ff4bf2e3124e031038908428e4327c31ce932fd
+  KMPNativeCoroutinesCombine: c31494db5964d882fc313317a170a31e2e74752c
+  KMPNativeCoroutinesCore: 9f9854943cd352d3bd46d5f3dc1fd46e2cc16434
   nanopb: d4d75c12cd1316f4a64e3c6963f879ecd4b5e0d5
   NSLogger: cf3013a4fba189f631f07e6c3d5b8ce2b209654b
   PromisesObjC: c50d2056b5253dadbd6c2bea79b0674bd5a52fa4
@@ -192,6 +192,6 @@ SPEC CHECKSUMS:
   SwiftGen: 1366a7f71aeef49954ca5a63ba4bef6b0f24138c
   URLImage: 36a66c03ba2a9ccbbf06bc83431f2cef171008e8
 
-PODFILE CHECKSUM: 8f576c5ff7ae3698d78e846107aa2b253e469090
+PODFILE CHECKSUM: 3429eb0c3f8349b1930bb6abb411f4c76a1505f8
 
 COCOAPODS: 1.15.2
