@@ -1,6 +1,0 @@
-framework module Pods_DevFest_NantesTests {
-  umbrella header "Pods-DevFest NantesTests-umbrella.h"
-
-  export *
-  module * { export * }
-}
