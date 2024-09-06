@@ -9,7 +9,7 @@
 "empty_day" = "Sorry, there is no conference available for the selected filters.";
 "screen_session" = "Session details";
 "venue_go_to_button" = "Go to";
-"screen_about_header_body" = "The Devfest (i.e Developers Festival), is a technical conference destined to developers. It's meant for students, professionals, or any curious techie. This year's edition will shine light on the movie industry !";
+"screen_about_header_body" = "The Devfest (i.e Developers Festival), is a technical conference destined to developers. It's meant for students, professionals, or any curious techie.\nThis year's edition will be scary!";
 "complexity_beginer" = "Beginer";
 "complexity_intermediate" = "Intermediate";
 "complexity_advanced" = "Advanced";
