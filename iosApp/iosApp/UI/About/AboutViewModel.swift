@@ -17,20 +17,22 @@ import os
 class AboutViewModel: BaseViewModel {
     @Published var partnersContent: [PartnerContent]?
     
-    ///Asynchronous method to retrieve partners
+    /// Asynchronous method to retrieve partners
     func observePartners() async {
+        self.partnersContent = []
+
         do {
-            let partnersSequence = asyncSequence(for: store.partners)
+            let partnersSequence = asyncSequence(for: store.getPartners())
+            var newContentSet = Set<PartnerContent>()
             for try await partners in partnersSequence {
-                DispatchQueue.main.async {
-                    for key in partners.keys.sorted() {
-                        self.partnersContent?.append(PartnerContent(categoryName: key, partners: partners[key]!))
-                    }
+                for key in partners.keys.sorted() {
+                    let newPartnerContent = PartnerContent(categoryName: key, partners: partners[key]!)
+                    newContentSet.insert(newPartnerContent)
                 }
             }
+            self.partnersContent = Array(newContentSet)
         } catch {
-            Logger(subsystem: Bundle.main.bundleIdentifier ?? "DevFestNantes", category: "About").error("Observe Partners error: \(error.localizedDescription)")
-            // Handle error appropriately, e.g., show an alert to the user
+            Logger.shared.log(.network, .error, "Observe Partners error: \(error)")
         }
     }
 }
