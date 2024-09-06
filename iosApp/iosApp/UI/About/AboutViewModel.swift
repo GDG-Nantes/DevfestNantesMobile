@@ -17,19 +17,22 @@ import SwiftUI
 class AboutViewModel: BaseViewModel {
     @Published var partnersContent: [PartnerContent]?
     
-    ///Asynchronous method to retrieve partners
-    func observePartners() async {
-        do {
-            let partnersSequence = asyncSequence(for: store.getPartners())
-            for try await partners in partnersSequence {
-                DispatchQueue.main.async {
+    /// Asynchronous method to retrieve partners
+        func observePartners() async {
+            self.partnersContent = []
+
+            do {
+                let partnersSequence = asyncSequence(for: store.getPartners())
+                var newContentSet = Set<PartnerContent>()
+                for try await partners in partnersSequence {
                     for key in partners.keys.sorted() {
-                        self.partnersContent?.append(PartnerContent(categoryName: key, partners: partners[key]!))
+                        let newPartnerContent = PartnerContent(categoryName: key, partners: partners[key]!)
+                        newContentSet.insert(newPartnerContent)
                     }
                 }
+                self.partnersContent = Array(newContentSet)
+            } catch {
+                Logger.shared.log(.network, .error, "Observe Partners error: \(error)")
             }
-        } catch {
-            Logger.shared.log(.network, .error, "Observe Partners error: \(error)")
         }
-    }
 }
