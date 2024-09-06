@@ -107,3 +107,6 @@ lint/tmp/
 # Build files
 androidApp/mapping.txt
 /iosApp/iosApp/GoogleService-Info.plist
+
+# Design
+*.afdesign
