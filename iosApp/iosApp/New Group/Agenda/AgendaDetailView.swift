@@ -87,7 +87,7 @@ struct AgendaDetailView: View {
                     if session.isATalk && RCValues.sharedInstance.bool(forKey: .openfeedback_enabled){
                             VStack(spacing: 16) {
                                 Spacer()
-                                CustomButton(url: URL(string: "\(WebLinks.openFeedback.url)/\(day)/\(session.openFeedbackFormId ?? "")")!) {
+                                CustomButton(url: URL(string: "\(WebLinks.openFeedback.url)/\(day)/\(session.id)")!) {
                                     Text(L10n.sessionFeedbackLabel)
                                 }.foregroundColor(Color(Asset.devFestRed.color))
                                     .frame(minWidth: 0, maxWidth: .infinity, alignment: .center)
