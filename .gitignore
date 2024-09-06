@@ -108,3 +108,6 @@ lint/tmp/
 androidApp/mapping.txt
 /iosApp/iosApp/GoogleService-Info.plist
 iosApp/Pods
+
+# Design
+*.afdesign
