@@ -23,16 +23,21 @@ class AboutViewModel: BaseViewModel {
 
         do {
             let partnersSequence = asyncSequence(for: store.getPartners())
-            var newContentSet = Set<PartnerContent>()
+            var newContentArray = [PartnerContent]()
             for try await partners in partnersSequence {
-                for key in partners.keys.sorted() {
+                let sortedKeys = partners.keys.sorted()
+                for key in sortedKeys {
                     let newPartnerContent = PartnerContent(categoryName: key, partners: partners[key]!)
-                    newContentSet.insert(newPartnerContent)
+
+                    if !newContentArray.contains(newPartnerContent) {
+                        newContentArray.append(newPartnerContent)
+                    }
                 }
             }
-            self.partnersContent = Array(newContentSet)
+            self.partnersContent = newContentArray
         } catch {
             Logger.shared.log(.network, .error, "Observe Partners error: \(error)")
         }
     }
 }
+
