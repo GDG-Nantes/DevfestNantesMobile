@@ -93,7 +93,7 @@ struct AboutView: View {
                                         .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
                                         .foregroundColor(Color(Asset.devFestRed.color))
                                     
-                                    ForEach(content.sorted(by: { $0.categoryName.name < $1.categoryName.name }), id: \.self) { category in
+                                    ForEach(content, id: \.self) { category in
                                         VStack {
                                             Text(category.categoryName.name)
                                                 .font(.title2)
