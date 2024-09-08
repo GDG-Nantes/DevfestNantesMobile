@@ -18,21 +18,26 @@ class AboutViewModel: BaseViewModel {
     @Published var partnersContent: [PartnerContent]?
     
     /// Asynchronous method to retrieve partners
-        func observePartners() async {
-            self.partnersContent = []
+    func observePartners() async {
+        self.partnersContent = []
 
-            do {
-                let partnersSequence = asyncSequence(for: store.getPartners())
-                var newContentSet = Set<PartnerContent>()
-                for try await partners in partnersSequence {
-                    for key in partners.keys.sorted() {
-                        let newPartnerContent = PartnerContent(categoryName: key, partners: partners[key]!)
-                        newContentSet.insert(newPartnerContent)
+        do {
+            let partnersSequence = asyncSequence(for: store.getPartners())
+            var newContentArray = [PartnerContent]()
+            for try await partners in partnersSequence {
+                let sortedKeys = partners.keys.sorted()
+                for key in sortedKeys {
+                    let newPartnerContent = PartnerContent(categoryName: key, partners: partners[key]!)
+
+                    if !newContentArray.contains(newPartnerContent) {
+                        newContentArray.append(newPartnerContent)
                     }
                 }
-                self.partnersContent = Array(newContentSet)
-            } catch {
-                Logger.shared.log(.network, .error, "Observe Partners error: \(error)")
             }
+            self.partnersContent = newContentArray
+        } catch {
+            Logger.shared.log(.network, .error, "Observe Partners error: \(error)")
         }
+    }
 }
+
