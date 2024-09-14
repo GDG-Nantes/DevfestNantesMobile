@@ -2,9 +2,7 @@ package com.gdgnantes.devfest.model.stubs
 
 import com.gdgnantes.devfest.model.SocialItem
 import com.gdgnantes.devfest.model.SocialType
-import kotlin.native.concurrent.SharedImmutable
 
-@SharedImmutable
 val SOCIAL_ITEMS_STUBS: List<SocialItem> =
     listOf(
         SocialItem.Builder().setType(SocialType.TWITTER)

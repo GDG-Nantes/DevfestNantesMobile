@@ -1,9 +1,7 @@
 package com.gdgnantes.devfest.model.stubs
 
 import com.gdgnantes.devfest.model.Room
-import kotlin.native.concurrent.SharedImmutable
 
-@SharedImmutable
 val roomStubs: List<Room> =
     listOf(
     Room(

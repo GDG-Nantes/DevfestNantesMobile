@@ -1,9 +1,7 @@
 package com.gdgnantes.devfest.model.stubs
 
 import com.gdgnantes.devfest.model.Category
-import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
-import kotlin.native.concurrent.SharedImmutable
 
 const val CATEGORY_STUBS_JSON =
     "[{\"id\":\"mobile_iot\",\"label\":\"\uD83D\uDCF1 Mobile & IoT\"}," +
@@ -15,5 +13,4 @@ const val CATEGORY_STUBS_JSON =
             "{\"id\":\"security\",\"label\":\"\uD83D\uDC31\u200D\uD83D\uDCBB SECURITY\"}," +
             "{\"id\":\"ux_ui\",\"label\":\"\uD83D\uDC9A UX / UI\"}]"
 
-@SharedImmutable
 val categoryStubs: List<Category> = Json.decodeFromString(CATEGORY_STUBS_JSON)
