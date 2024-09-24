@@ -23,11 +23,13 @@ interface DevFestNantesStore {
 
     @NativeCoroutines
     suspend fun getRoom(id: String): Room?
+
     @NativeCoroutines
     val rooms: Flow<Set<Room>>
 
     @NativeCoroutines
     suspend fun getSession(id: String): Session?
+
     @NativeCoroutines
     val sessions: Flow<List<Session>>
 
@@ -36,6 +38,7 @@ interface DevFestNantesStore {
 
     @NativeCoroutines
     suspend fun getSpeakerSessions(speakerId: String): List<Session>
+
     @NativeCoroutines
     val speakers: Flow<List<Speaker>>
 
