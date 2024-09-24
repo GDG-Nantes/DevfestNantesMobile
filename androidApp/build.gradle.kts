@@ -130,7 +130,8 @@ dependencies {
     implementation(libs.kotlinx.datetime)
 
     implementation(libs.material)
-    implementation(libs.openfeedback)
+    implementation(libs.openfeedback.m3)
+    implementation(libs.openfeedback.viewmodel)
     implementation(libs.timber)
 
     debugImplementation(libs.bundles.debug)
