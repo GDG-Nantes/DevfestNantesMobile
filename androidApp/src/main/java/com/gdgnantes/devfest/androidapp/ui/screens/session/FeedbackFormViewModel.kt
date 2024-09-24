@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import com.gdgnantes.devfest.androidapp.BuildConfig
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import dagger.hilt.android.lifecycle.HiltViewModel
-import io.openfeedback.android.OpenFeedback
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -13,7 +12,6 @@ import javax.inject.Inject
 
 @HiltViewModel
 class FeedbackFormViewModel @Inject constructor(
-    val openFeedback: OpenFeedback,
     private val remoteConfig: FirebaseRemoteConfig
 ) : ViewModel() {
     private val _isOpenFeedbackEnabled: MutableStateFlow<Boolean> = MutableStateFlow(false)

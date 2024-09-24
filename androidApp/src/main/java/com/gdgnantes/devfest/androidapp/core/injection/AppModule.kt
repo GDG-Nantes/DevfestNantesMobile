@@ -4,11 +4,11 @@ import android.app.Application
 import android.content.SharedPreferences
 import androidx.preference.PreferenceManager
 import com.gdgnantes.devfest.analytics.AnalyticsService
-import com.gdgnantes.devfest.androidapp.BuildConfig
 import com.gdgnantes.devfest.androidapp.core.ApplicationInitializer
 import com.gdgnantes.devfest.androidapp.core.CoroutinesDispatcherProvider
 import com.gdgnantes.devfest.androidapp.core.DataSharingInitializer
 import com.gdgnantes.devfest.androidapp.core.LoggerInitializer
+import com.gdgnantes.devfest.androidapp.core.OpenFeedbackInitializer
 import com.gdgnantes.devfest.androidapp.services.BookmarksStoreImpl
 import com.gdgnantes.devfest.androidapp.services.DataCollectionSettingsService
 import com.gdgnantes.devfest.androidapp.services.DataCollectionSettingsServiceImpl
@@ -27,7 +27,6 @@ import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import dagger.multibindings.ElementsIntoSet
-import io.openfeedback.android.OpenFeedback
 import kotlinx.coroutines.Dispatchers
 
 @Module
@@ -63,9 +62,11 @@ abstract class AppModule {
         @Provides
         @ElementsIntoSet
         fun applicationInitializers(
+            dataSharingInitializer: DataSharingInitializer,
             loggerInitializer: LoggerInitializer,
-            dataSharingInitializer: DataSharingInitializer
-        ): Set<ApplicationInitializer> = setOf(loggerInitializer, dataSharingInitializer)
+            openFeedbackInitializer: OpenFeedbackInitializer
+        ): Set<ApplicationInitializer> =
+            setOf(dataSharingInitializer, loggerInitializer, openFeedbackInitializer)
 
         @Provides
         fun analytics() = Firebase.analytics
@@ -83,22 +84,6 @@ abstract class AppModule {
 
         @Provides
         fun crashlytics() = FirebaseCrashlytics.getInstance()
-
-        @AppScope
-        @Provides
-        fun openFeedback(application: Application) =
-            // Updates with DevFest Nantes' credentials.
-            OpenFeedback(
-                context = application,
-                openFeedbackProjectId = BuildConfig.OPEN_FEEDBACK_PROJECT_ID,
-                firebaseConfig =
-                OpenFeedback.FirebaseConfig(
-                    projectId = BuildConfig.OPEN_FEEDBACK_FIREBASE_PROJECT_ID,
-                    applicationId = BuildConfig.OPEN_FEEDBACK_FIREBASE_APPLICATION_ID,
-                    apiKey = BuildConfig.OPEN_FEEDBACK_FIREBASE_API_KEY,
-                    databaseUrl = BuildConfig.OPEN_FEEDBACK_FIREBASE_DATABASE_URL
-                )
-            )
 
         @AppScope
         @Provides
