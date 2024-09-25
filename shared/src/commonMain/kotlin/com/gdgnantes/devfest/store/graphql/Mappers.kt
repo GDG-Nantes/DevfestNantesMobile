@@ -58,7 +58,7 @@ fun SessionDetails.toSession(): Session {
         },
         language = language?.toSessionLanguage(),
         complexity = complexity?.toComplexity(),
-        openFeedbackFormId = feedbackId ?: title.lowercase().replace(" ", ""),
+        openFeedbackFormId = feedbackId ?: id,
         room = rooms.firstOrNull()?.roomDetails?.toRoom(),
         scheduleSlot =
         ScheduleSlot(
