@@ -9,7 +9,8 @@
 import Foundation
 import shared
 import Combine
-import KMPNativeCoroutinesAsync
+import KMPNativeCoroutinesCombine
+
 import NSLogger
 import SwiftUI
 
@@ -18,6 +19,8 @@ class AgendaViewModel: BaseViewModel {
     @Published var agendaContent: AgendaContent = AgendaContent(sections: [])
     @Published var roomsContent: [Room_]?
     @Published var isLoading = true
+    private var cancellables = Set<AnyCancellable>()
+
     let defaults = UserDefaults.standard
     var favorites: [String] {
         get {
@@ -57,20 +60,25 @@ class AgendaViewModel: BaseViewModel {
     }
     
 
-    
-    ///Asynchronous method to retrieve sessions
-    func observeSessions() async {
-        do {
-            let sessionsSequence = asyncSequence(for: store.getSessions())
-            for try await sessions in sessionsSequence {
-                DispatchQueue.main.async {
-                    self.sessionsChanged(sessions: sessions)
+
+    func observeSessions() {
+        createPublisher(for: store.getSessions())
+            .receive(on: DispatchQueue.main)
+            .sink(receiveCompletion: { completion in
+                switch completion {
+                case .finished:
+                    Logger.shared.log(.network, .info, "Sessions observation completed.")
+                case .failure(let error):
+                    Logger.shared.log(.network, .error, "Observe Sessions error: \(error)")
                 }
-            }
-        } catch {
-            Logger.shared.log(.network, .error, "Observe Sessions error: \(error)")
-        }
+            }, receiveValue: { sessions in
+                Logger.shared.log(.network, .info, "Received sessions: \(sessions)")
+                self.sessionsChanged(sessions: sessions)
+            })
+            .store(in: &cancellables) 
     }
+
+
     
     ///Allows you to classify sessions by time section
     private func sessionsChanged(sessions: [Session_]) {
@@ -90,21 +98,22 @@ class AgendaViewModel: BaseViewModel {
         agendaContent.sections = sections
     }
     
-    ///Asynchronous method to retrieve rooms
-    func observeRooms() async {
-        Task {
-            do {
-                let roomsSequence = asyncSequence(for: store.getRooms())
-                for try await rooms in roomsSequence {
-                    DispatchQueue.main.async {
-                        self.roomsContent = Array(rooms)
-                    }
+    func observeRooms() {
+        createPublisher(for: store.getRooms())
+            .receive(on: DispatchQueue.main)
+            .sink(receiveCompletion: { completion in
+                switch completion {
+                case .finished:
+                    Logger.shared.log(.network, .info, "Rooms observation completed.")
+                case .failure(let error):
+                    Logger.shared.log(.network, .error, "Observe Rooms error: \(error)")
                 }
-            } catch {
-                Logger.shared.log(.network, .error, "Observe Rooms error: \(error)")
-            }
-        }
+            }, receiveValue: { rooms in
+                self.roomsContent = Array(rooms)
+            })
+            .store(in: &cancellables)
     }
+
     
     ///Method to convert a date in string format to ISO 8601 format
     func getDate(date: String) -> Date {

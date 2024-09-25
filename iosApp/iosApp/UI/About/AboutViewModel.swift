@@ -9,35 +9,35 @@
 import Foundation
 import shared
 import Combine
-import KMPNativeCoroutinesAsync
+import KMPNativeCoroutinesCombine
 import NSLogger
 import SwiftUI
 
 @MainActor
 class AboutViewModel: BaseViewModel {
     @Published var partnersContent: [PartnerContent]?
-    
-    /// Asynchronous method to retrieve partners
-    func observePartners() async {
+
+    private var cancellables = Set<AnyCancellable>()
+
+    func observePartners() {
         self.partnersContent = []
 
-        do {
-            let partnersSequence = asyncSequence(for: store.getPartners())
-            var newContentArray = [PartnerContent]()
-            for try await partners in partnersSequence {
+        let partnersPublisher = createPublisher(for: store.getPartners())
+        
+        partnersPublisher
+            .sink(receiveCompletion: { completion in
+                if case let .failure(error) = completion {
+                    Logger.shared.log(.network, .error, "Observe Partners error: \(error)")
+                }
+            }, receiveValue: { partners in
+                var newContentSet = Set<PartnerContent>()
                 let sortedKeys = partners.keys.sorted()
                 for key in sortedKeys {
                     let newPartnerContent = PartnerContent(categoryName: key, partners: partners[key]!)
-
-                    if !newContentArray.contains(newPartnerContent) {
-                        newContentArray.append(newPartnerContent)
-                    }
+                    newContentSet.insert(newPartnerContent)
                 }
-            }
-            self.partnersContent = newContentArray
-        } catch {
-            Logger.shared.log(.network, .error, "Observe Partners error: \(error)")
-        }
+                self.partnersContent = Array(newContentSet)
+            })
+            .store(in: &self.cancellables)
     }
 }
-

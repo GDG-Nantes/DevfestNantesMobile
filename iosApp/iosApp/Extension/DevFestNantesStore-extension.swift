@@ -37,4 +37,5 @@ extension DevFestNantesStore {
     func getVenue(language: ContentLanguage) -> NativeSuspend<Venue_, Error, KotlinUnit> {
         DevFestNantesStoreNativeKt.getVenue(self, language: language)
     }
+    
 }

@@ -9,13 +9,14 @@
 import Foundation
 import shared
 import Combine
-import KMPNativeCoroutinesAsync
+import KMPNativeCoroutinesCombine
 import NSLogger
 import SwiftUI
 
 @MainActor
 class VenueViewModel: BaseViewModel {
     @Published var venueContent: VenueContent?
+    private var cancellables = Set<AnyCancellable>()
     
     ///Detect phone language
     var currentLanguage: ContentLanguage {
@@ -29,17 +30,21 @@ class VenueViewModel: BaseViewModel {
         }
     }
     
-    ///Asynchronous method to retrieve venue
-    func observeVenue() async {
-        Task {
-            do {
-                let venueData = try await asyncFunction(for: store.getVenue(language: currentLanguage))
-                DispatchQueue.main.async {
-                    self.venueContent = VenueContent(from: venueData)
+    ///Method to retrieve venue using Combine
+    func observeVenue() {
+        nativeSuspendToPublisher(store.getVenue(language: currentLanguage))
+            .receive(on: DispatchQueue.main)
+            .sink(
+                receiveCompletion: { completion in
+                    if case let .failure(error) = completion {
+                        Logger.shared.log(.network, .error, "Observe Venue error: \(error)")
+                    }
+                },
+                receiveValue: { [weak self] venueData in
+                    self?.venueContent = VenueContent(from: venueData)
                 }
-            } catch {
-                Logger.shared.log(.network, .error, "Observe Venue error: \(error)")
-            }
-        }
+            )
+            .store(in: &cancellables)
     }
 }
+

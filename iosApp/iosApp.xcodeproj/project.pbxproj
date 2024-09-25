@@ -53,6 +53,7 @@
 		CBDFA0402AB1EDA200302D34 /* SpeakersViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDFA03F2AB1EDA200302D34 /* SpeakersViewModel.swift */; };
 		F51BF5B12C860F92003C64A5 /* Launch Screen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F51BF5B02C860F92003C64A5 /* Launch Screen.storyboard */; };
 		F55262872C820F720013352B /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F55262862C820F720013352B /* GoogleService-Info.plist */; };
+		F585791E2CA411BD00FBDDF7 /* NativeSuspendExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = F585791D2CA411BD00FBDDF7 /* NativeSuspendExtensions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -120,6 +121,7 @@
 		CBDFA03F2AB1EDA200302D34 /* SpeakersViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeakersViewModel.swift; sourceTree = "<group>"; };
 		F51BF5B02C860F92003C64A5 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		F55262862C820F720013352B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		F585791D2CA411BD00FBDDF7 /* NativeSuspendExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NativeSuspendExtensions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -302,6 +304,7 @@
 				CB46914229196228004C6120 /* Complexity-extension.swift */,
 				CB4691462919661A004C6120 /* Bundle-extension.swift */,
 				006B310E2C7A8FBB0024C17B /* DevFestNantesStore-extension.swift */,
+				F585791D2CA411BD00FBDDF7 /* NativeSuspendExtensions.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -593,6 +596,7 @@
 				CB73E81028A5587E0014B9AF /* AgendaDetailView.swift in Sources */,
 				CBDFA03A2AB1BABC00302D34 /* AgendaViewModel.swift in Sources */,
 				CB179BDB28D24C9C00BB9934 /* CategoryView.swift in Sources */,
+				F585791E2CA411BD00FBDDF7 /* NativeSuspendExtensions.swift in Sources */,
 				CBCB60ED28E47FC5001E9B1A /* LoadingView.swift in Sources */,
 				CB4980F728FDE6AC001D0484 /* UIImage-extension.swift in Sources */,
 			);

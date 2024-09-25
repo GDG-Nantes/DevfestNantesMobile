@@ -9,7 +9,7 @@
 import Foundation
 import shared
 import Combine
-import KMPNativeCoroutinesAsync
+import KMPNativeCoroutinesCombine
 import NSLogger
 import SwiftUI
 
@@ -17,32 +17,33 @@ import SwiftUI
 class SpeakersViewModel: BaseViewModel {
     @Published var speakersContent: [Speaker_]?
     @Published var isLoading = true
-    
-    ///Asynchronous method to retrieve speakers
-    func observeSpeakers() async {
-        Task {
-            do {
-                let speakersSequence = asyncSequence(for: store.getSpeakers())
-                for try await speakers in speakersSequence {
-                    DispatchQueue.main.async {
-                        self.speakersContent = speakers
-                        self.isLoading = false
-                    }
+    private var cancellables = Set<AnyCancellable>()
+
+    func observeSpeakers() {
+        let speakersPublisher: AnyPublisher<[Speaker_], Error> = KMPNativeCoroutinesCombine.createPublisher(for: store.getSpeakers())
+        
+        speakersPublisher
+            .receive(on: DispatchQueue.main)
+            .sink(receiveCompletion: { completion in
+                switch completion {
+                case .finished:
+                    self.isLoading = false
+                case .failure(let error):
+                    Logger.shared.log(.network, .error, "Observe Speakers error: \(error)")
+                    self.isLoading = false
                 }
-            } catch {
-                Logger.shared.log(.network, .error, "Observe Speakers error: \(error)")
-            }
-        }
+            }, receiveValue: { speakers in
+                self.speakersContent = speakers
+            })
+            .store(in: &cancellables)
     }
 
-    ///Function to get the first letters of speaker names
     func getAlphabets() -> [String] {
         let letters = speakersContent?.compactMap { $0.name.prefix(1).uppercased() }
         let uniqueLetters = Array(Set(letters ?? []))
         return uniqueLetters.sorted()
     }
 
-    ///Function to get speakers by the first letter of their name
     func speakers(for letter: String) -> [Speaker_] {
         return speakersContent?.filter {
             $0.name.prefix(1).uppercased() == letter
