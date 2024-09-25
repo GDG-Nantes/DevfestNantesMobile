@@ -1,7 +1,6 @@
 package com.gdgnantes.devfest.model
 
 import kotlinx.datetime.Instant
-import kotlinx.datetime.toInstant
 
 data class Agenda(val days: Map<Int, AgendaDay>) {
     class Builder {
@@ -12,7 +11,7 @@ data class Agenda(val days: Map<Int, AgendaDay>) {
             val dayTwoSessions = mutableListOf<Session>()
             sessions.sortedBy { session -> session.scheduleSlot.startDate }
                 .forEach { session ->
-                    val startInstant = session.scheduleSlot.startDate.toInstant()
+                    val startInstant = session.scheduleSlot.startDate.let(Instant::parse)
                     if (startInstant.minus(DAY_ONE).inWholeDays == 0L) {
                         dayOneSessions.add(session)
                     } else if (startInstant.minus(DAY_TWO).inWholeDays == 0L) {
