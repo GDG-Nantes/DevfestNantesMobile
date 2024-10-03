@@ -4,6 +4,8 @@ Change Log
 Version 3.0.2 *(2024-10-??)*
 ----------------------------
 
+* 🐛 Fixes openFeedback integration.
+
 Version 3.0.1 *(2024-09-25)*
 ----------------------------
 
