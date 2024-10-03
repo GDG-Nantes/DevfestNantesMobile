@@ -57,7 +57,7 @@ fun OpenfeedbackForm(
         )
 
         OpenFeedback(
-            projectId = BuildConfig.OPEN_FEEDBACK_FIREBASE_PROJECT_ID,
+            projectId = BuildConfig.OPEN_FEEDBACK_PROJECT_ID,
             sessionId = sessionId
         )
     }
