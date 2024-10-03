@@ -23,20 +23,20 @@ class AboutViewModel: BaseViewModel {
         self.partnersContent = []
 
         let partnersPublisher = createPublisher(for: store.getPartners())
-        
+
         partnersPublisher
             .sink(receiveCompletion: { completion in
                 if case let .failure(error) = completion {
                     Logger.shared.log(.network, .error, "Observe Partners error: \(error)")
                 }
             }, receiveValue: { partners in
-                var newContentSet = Set<PartnerContent>()
+                var newContentArray = [PartnerContent]()
                 let sortedKeys = partners.keys.sorted()
                 for key in sortedKeys {
                     let newPartnerContent = PartnerContent(categoryName: key, partners: partners[key]!)
-                    newContentSet.insert(newPartnerContent)
+                    newContentArray.append(newPartnerContent)
                 }
-                self.partnersContent = Array(newContentSet)
+                self.partnersContent = newContentArray
             })
             .store(in: &self.cancellables)
     }
