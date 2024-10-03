@@ -11,10 +11,10 @@
 		00D69FD028D2032300498D05 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 00D69FCF28D2032300498D05 /* libsqlite3.tbd */; };
 		058557BB273AAA24004C7B11 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 058557BA273AAA24004C7B11 /* Assets.xcassets */; };
 		058557D9273AAEEB004C7B11 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 058557D8273AAEEB004C7B11 /* Preview Assets.xcassets */; };
+		0C73202B4517BF60CC81748F /* Pods_DevFest_NantesTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 32A1D316CCB1E8CF3DFBA898 /* Pods_DevFest_NantesTests.framework */; };
 		2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2152FB032600AC8F00CF470E /* iOSApp.swift */; };
-		22080895895419DF5B470042 /* Pods_DevFest_NantesTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5D913FA4EE49E781CDE94B26 /* Pods_DevFest_NantesTests.framework */; };
-		4A68B3C2C094CCA8E63BD31C /* Pods_DevFest_Nantes.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C00E8BA0569778DAA4195B86 /* Pods_DevFest_Nantes.framework */; };
 		7555FF83242A565900829871 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7555FF82242A565900829871 /* ContentView.swift */; };
+		BCE33A593D022804FB3CAC6C /* Pods_DevFest_Nantes.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BFB72FACA0427D77A70F073A /* Pods_DevFest_Nantes.framework */; };
 		CB179BDB28D24C9C00BB9934 /* CategoryView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB179BDA28D24C9C00BB9934 /* CategoryView.swift */; };
 		CB179BDE28D365E800BB9934 /* AgendaContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB179BDD28D365E800BB9934 /* AgendaContent.swift */; };
 		CB179BE028D365F600BB9934 /* VenueContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB179BDF28D365F600BB9934 /* VenueContent.swift */; };
@@ -71,16 +71,14 @@
 		00D69FCF28D2032300498D05 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		058557BA273AAA24004C7B11 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		058557D8273AAEEB004C7B11 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
-		209C5897DA14B899729D8AC7 /* Pods-DevFest NantesTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DevFest NantesTests.release.xcconfig"; path = "Target Support Files/Pods-DevFest NantesTests/Pods-DevFest NantesTests.release.xcconfig"; sourceTree = "<group>"; };
 		2152FB032600AC8F00CF470E /* iOSApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = iOSApp.swift; sourceTree = "<group>"; };
-		255F875C06EF30F068FC16DC /* Pods-DevFest NantesTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DevFest NantesTests.debug.xcconfig"; path = "Target Support Files/Pods-DevFest NantesTests/Pods-DevFest NantesTests.debug.xcconfig"; sourceTree = "<group>"; };
-		335DDDADCA8EF96DDC2FF0DA /* Pods-DevFest Nantes.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DevFest Nantes.debug.xcconfig"; path = "Target Support Files/Pods-DevFest Nantes/Pods-DevFest Nantes.debug.xcconfig"; sourceTree = "<group>"; };
-		5D913FA4EE49E781CDE94B26 /* Pods_DevFest_NantesTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DevFest_NantesTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		642F83E11D7437F95EA9CC78 /* Pods-DevFest Nantes.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DevFest Nantes.release.xcconfig"; path = "Target Support Files/Pods-DevFest Nantes/Pods-DevFest Nantes.release.xcconfig"; sourceTree = "<group>"; };
+		32A1D316CCB1E8CF3DFBA898 /* Pods_DevFest_NantesTests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DevFest_NantesTests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		7555FF7B242A565900829871 /* DevFest Nantes.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "DevFest Nantes.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		7555FF82242A565900829871 /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
 		7555FF8C242A565B00829871 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		C00E8BA0569778DAA4195B86 /* Pods_DevFest_Nantes.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DevFest_Nantes.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		7CE5E9DBCF97049EA4BE040B /* Pods-DevFest Nantes.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DevFest Nantes.release.xcconfig"; path = "Target Support Files/Pods-DevFest Nantes/Pods-DevFest Nantes.release.xcconfig"; sourceTree = "<group>"; };
+		BFB72FACA0427D77A70F073A /* Pods_DevFest_Nantes.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_DevFest_Nantes.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C2DD5C06850D7A242C93E51B /* Pods-DevFest NantesTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DevFest NantesTests.debug.xcconfig"; path = "Target Support Files/Pods-DevFest NantesTests/Pods-DevFest NantesTests.debug.xcconfig"; sourceTree = "<group>"; };
 		CB179BDA28D24C9C00BB9934 /* CategoryView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryView.swift; sourceTree = "<group>"; };
 		CB179BDD28D365E800BB9934 /* AgendaContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgendaContent.swift; sourceTree = "<group>"; };
 		CB179BDF28D365F600BB9934 /* VenueContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VenueContent.swift; sourceTree = "<group>"; };
@@ -119,9 +117,11 @@
 		CBDFA03B2AB1BEFD00302D34 /* VenueViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VenueViewModel.swift; sourceTree = "<group>"; };
 		CBDFA03D2AB1BFBC00302D34 /* AboutViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewModel.swift; sourceTree = "<group>"; };
 		CBDFA03F2AB1EDA200302D34 /* SpeakersViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeakersViewModel.swift; sourceTree = "<group>"; };
+		E7FA56E1E579AD433ED1E71B /* Pods-DevFest Nantes.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DevFest Nantes.debug.xcconfig"; path = "Target Support Files/Pods-DevFest Nantes/Pods-DevFest Nantes.debug.xcconfig"; sourceTree = "<group>"; };
 		F51BF5B02C860F92003C64A5 /* Launch Screen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = "Launch Screen.storyboard"; sourceTree = "<group>"; };
 		F55262862C820F720013352B /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		F585791D2CA411BD00FBDDF7 /* NativeSuspendExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NativeSuspendExtensions.swift; sourceTree = "<group>"; };
+		FDC47FE0FFEF883C3EF45B93 /* Pods-DevFest NantesTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-DevFest NantesTests.release.xcconfig"; path = "Target Support Files/Pods-DevFest NantesTests/Pods-DevFest NantesTests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -130,7 +130,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				00D69FD028D2032300498D05 /* libsqlite3.tbd in Frameworks */,
-				4A68B3C2C094CCA8E63BD31C /* Pods_DevFest_Nantes.framework in Frameworks */,
+				BCE33A593D022804FB3CAC6C /* Pods_DevFest_Nantes.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -138,7 +138,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				22080895895419DF5B470042 /* Pods_DevFest_NantesTests.framework in Frameworks */,
+				0C73202B4517BF60CC81748F /* Pods_DevFest_NantesTests.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -156,10 +156,10 @@
 		4A88C115827EC45D296926A8 /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				335DDDADCA8EF96DDC2FF0DA /* Pods-DevFest Nantes.debug.xcconfig */,
-				642F83E11D7437F95EA9CC78 /* Pods-DevFest Nantes.release.xcconfig */,
-				255F875C06EF30F068FC16DC /* Pods-DevFest NantesTests.debug.xcconfig */,
-				209C5897DA14B899729D8AC7 /* Pods-DevFest NantesTests.release.xcconfig */,
+				E7FA56E1E579AD433ED1E71B /* Pods-DevFest Nantes.debug.xcconfig */,
+				7CE5E9DBCF97049EA4BE040B /* Pods-DevFest Nantes.release.xcconfig */,
+				C2DD5C06850D7A242C93E51B /* Pods-DevFest NantesTests.debug.xcconfig */,
+				FDC47FE0FFEF883C3EF45B93 /* Pods-DevFest NantesTests.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -344,8 +344,8 @@
 			isa = PBXGroup;
 			children = (
 				00D69FCF28D2032300498D05 /* libsqlite3.tbd */,
-				C00E8BA0569778DAA4195B86 /* Pods_DevFest_Nantes.framework */,
-				5D913FA4EE49E781CDE94B26 /* Pods_DevFest_NantesTests.framework */,
+				BFB72FACA0427D77A70F073A /* Pods_DevFest_Nantes.framework */,
+				32A1D316CCB1E8CF3DFBA898 /* Pods_DevFest_NantesTests.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -357,13 +357,13 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 7555FFA5242A565B00829871 /* Build configuration list for PBXNativeTarget "DevFest Nantes" */;
 			buildPhases = (
-				9BCCD527FE38A015A1F13232 /* [CP] Check Pods Manifest.lock */,
+				5D891F2233D57AD85752853B /* [CP] Check Pods Manifest.lock */,
 				CB179BED28D4BD7600BB9934 /* SwiftGen */,
 				7555FF77242A565900829871 /* Sources */,
 				7555FF79242A565900829871 /* Resources */,
 				5E1F1D6C76BD5C5DE5D6CF99 /* Frameworks */,
-				733C139CA3EAC19E8C06313A /* [CP] Embed Pods Frameworks */,
 				CBCB60F528E48BB8001E9B1A /* Firebase */,
+				9912B05FDC69CEEA88567D57 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -378,7 +378,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = CB3979D52919B78F00BDAE6F /* Build configuration list for PBXNativeTarget "DevFest NantesTests" */;
 			buildPhases = (
-				454FFC6B2083FF400649C68F /* [CP] Check Pods Manifest.lock */,
+				FD7D81FE463FF747D3DBE1AB /* [CP] Check Pods Manifest.lock */,
 				CB3979C92919B78E00BDAE6F /* Sources */,
 				CB3979CA2919B78E00BDAE6F /* Frameworks */,
 				CB3979CB2919B78E00BDAE6F /* Resources */,
@@ -457,46 +457,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		454FFC6B2083FF400649C68F /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-DevFest NantesTests-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
-		};
-		733C139CA3EAC19E8C06313A /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 12;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-DevFest Nantes/Pods-DevFest Nantes-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-DevFest Nantes/Pods-DevFest Nantes-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-DevFest Nantes/Pods-DevFest Nantes-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		9BCCD527FE38A015A1F13232 /* [CP] Check Pods Manifest.lock */ = {
+		5D891F2233D57AD85752853B /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -516,6 +477,23 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
+		};
+		9912B05FDC69CEEA88567D57 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-DevFest Nantes/Pods-DevFest Nantes-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-DevFest Nantes/Pods-DevFest Nantes-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-DevFest Nantes/Pods-DevFest Nantes-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		CB179BED28D4BD7600BB9934 /* SwiftGen */ = {
@@ -555,6 +533,28 @@
 			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
 			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\n\"${PODS_ROOT}/FirebaseCrashlytics/run\"\n";
+		};
+		FD7D81FE463FF747D3DBE1AB /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-DevFest NantesTests-checkManifestLockResult.txt",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -755,7 +755,7 @@
 		};
 		7555FFA6242A565B00829871 /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 335DDDADCA8EF96DDC2FF0DA /* Pods-DevFest Nantes.debug.xcconfig */;
+			baseConfigurationReference = E7FA56E1E579AD433ED1E71B /* Pods-DevFest Nantes.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Apple Development";
@@ -786,7 +786,7 @@
 		};
 		7555FFA7242A565B00829871 /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 642F83E11D7437F95EA9CC78 /* Pods-DevFest Nantes.release.xcconfig */;
+			baseConfigurationReference = 7CE5E9DBCF97049EA4BE040B /* Pods-DevFest Nantes.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Apple Development";
@@ -817,7 +817,7 @@
 		};
 		CB3979D32919B78F00BDAE6F /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 255F875C06EF30F068FC16DC /* Pods-DevFest NantesTests.debug.xcconfig */;
+			baseConfigurationReference = C2DD5C06850D7A242C93E51B /* Pods-DevFest NantesTests.debug.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
@@ -842,7 +842,7 @@
 		};
 		CB3979D42919B78F00BDAE6F /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 209C5897DA14B899729D8AC7 /* Pods-DevFest NantesTests.release.xcconfig */;
+			baseConfigurationReference = FDC47FE0FFEF883C3EF45B93 /* Pods-DevFest NantesTests.release.xcconfig */;
 			buildSettings = {
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
