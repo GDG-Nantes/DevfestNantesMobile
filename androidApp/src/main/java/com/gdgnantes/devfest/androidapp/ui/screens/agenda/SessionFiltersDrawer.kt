@@ -153,7 +153,7 @@ private fun FiltersComplexity(
     )
 
     FilterItem(
-        text = stringResource(R.string.complexity_beginer),
+        text = stringResource(R.string.complexity_beginner),
         checked =
         sessionFilters.any {
             it.type == SessionFilter.FilterType.COMPLEXITY &&

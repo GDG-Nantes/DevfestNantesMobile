@@ -70,7 +70,7 @@ fun SessionComplexityPreview() {
 
 fun Complexity.labelResId() =
     when (this) {
-        Complexity.BEGINNER -> R.string.complexity_beginer
+        Complexity.BEGINNER -> R.string.complexity_beginner
         Complexity.INTERMEDIATE -> R.string.complexity_intermediate
         Complexity.ADVANCED -> R.string.complexity_advanced
     }
