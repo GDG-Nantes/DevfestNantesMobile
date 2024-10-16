@@ -1,7 +1,12 @@
 Change Log
 ==========
 
-Version 3.0.2 *(2024-10-??)*
+Version 3.0.3 *(2024-10-03)*
+----------------------------
+
+* 🐛 Fix typo in word beginNer.
+
+Version 3.0.2 *(2024-10-03)*
 ----------------------------
 
 * 🐛 Fixes openFeedback integration.
