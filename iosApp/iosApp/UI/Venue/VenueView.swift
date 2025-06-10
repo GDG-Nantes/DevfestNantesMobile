@@ -7,7 +7,6 @@
 //
 
 import SwiftUI
-import URLImage
 import shared
 
 
@@ -19,67 +18,98 @@ struct VenueView: View {
     var body: some View {
 
         NavigationView {
-                ScrollView {
-                        VStack {
-                            if let content = viewModel.venueContent {
-                            Card {
+            ScrollView {
+                VStack {
+                    if let content = viewModel.venueContent {
+                        Card {
                             VStack(spacing: 16) {
-                                        URLImage(url: URL(string: content.imageUrl)!) { image in
+                                if let url = URL(string: content.imageUrl) {
+                                    AsyncImage(url: url) { phase in
+                                        switch phase {
+                                        case .empty:
+                                            ProgressView()
+                                                .frame(height: 200)
+                                        case .success(let image):
                                             image
                                                 .resizable()
                                                 .aspectRatio(contentMode: .fill)
+                                        case .failure:
+                                            Image(systemName: "photo")
+                                                .resizable()
+                                                .aspectRatio(contentMode: .fit)
+                                        @unknown default:
+                                            EmptyView()
                                         }
-                                    
-                                    Text(content.name)
-                                        .bold()
-                                        .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
-                                        .padding(.horizontal, 8)
-                                    
-                                    Text(content.address)
-                                        .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
-                                        .padding(.horizontal, 8)
-                                    
-                                    CustomButton(url: URL(string: "\(WebLinks.goTo.url)\(content.latitude),\(content.longitude)")!)  {
-                                        Text(L10n.venueGoToButton)
-                                    }.foregroundColor(Color(Asset.devFestRed.color))
-                                        .simultaneousGesture(TapGesture().onEnded {
-                                            FirebaseAnalyticsService.shared.eventVenueNavigationClicked()
-                                        })
-                                    
-                                    Text(content.description)
-                                        .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
-                                        .padding(.horizontal, 8)
+                                    }
+                                    .frame(height: 200)
                                 }
-                        .padding(8)
-                    }
-                                Card {
-                                    VStack {
-                                        Text(L10n.plan)
-                                            .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
-                                            .foregroundColor(Color(Asset.devFestRed.color))
-                                            HStack(alignment: .top, spacing: 40) {
-                                                Button(action: {
-                                                    print("Plan")
-                                                }, label: {
-                                                        NavigationLink(destination: PhotoDetailView(image: Asset.floorplan.image)) {
-                                                            URLImage(url: URL(string: content.planUrl)!) { image in
-                                                                image
-                                                                    .resizable()
-                                                                    .aspectRatio(contentMode: .fill)
-                                                            }
-                                                        }
-                                                })
-                                                .padding(.vertical, 5)
-                                                .padding(.horizontal, 10)
-                                                .overlay(
-                                                    RoundedRectangle(cornerRadius: 20)
-                                                        .stroke(Color(Asset.devFestBlue.color), lineWidth: 1)
-                                                )
-                                                .background(
-                                                    RoundedRectangle(cornerRadius: 20, style: .continuous).fill(Color.white)
-                                                )
-                                        }.padding(8)
-                        }.padding(8)
+                                
+                                Text(content.name)
+                                    .bold()
+                                    .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
+                                    .padding(.horizontal, 8)
+                                
+                                Text(content.address)
+                                    .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
+                                    .padding(.horizontal, 8)
+                                
+                                CustomButton(url: URL(string: "\(WebLinks.goTo.url)\(content.latitude),\(content.longitude)")!)  {
+                                    Text(L10n.venueGoToButton)
+                                }.foregroundColor(Color(Asset.devFestRed.color))
+                                    .simultaneousGesture(TapGesture().onEnded {
+                                        FirebaseAnalyticsService.shared.eventVenueNavigationClicked()
+                                    })
+                                
+                                Text(content.description)
+                                    .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
+                                    .padding(.horizontal, 8)
+                            }
+                            .padding(8)
+                        }
+                        Card {
+                            VStack {
+                                Text(L10n.plan)
+                                    .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
+                                    .foregroundColor(Color(Asset.devFestRed.color))
+                                HStack(alignment: .top, spacing: 40) {
+                                    Button(action: {
+                                        print("Plan")
+                                    }, label: {
+                                        NavigationLink(destination: PhotoDetailView(image: Asset.floorplan.image)) {
+                                            if let planUrl = URL(string: content.planUrl) {
+                                                AsyncImage(url: planUrl) { phase in
+                                                    switch phase {
+                                                    case .empty:
+                                                        ProgressView()
+                                                            .frame(height: 100)
+                                                    case .success(let image):
+                                                        image
+                                                            .resizable()
+                                                            .aspectRatio(contentMode: .fill)
+                                                    case .failure:
+                                                        Image(systemName: "photo")
+                                                            .resizable()
+                                                            .aspectRatio(contentMode: .fit)
+                                                    @unknown default:
+                                                        EmptyView()
+                                                    }
+                                                }
+                                                .frame(height: 100)
+                                            }
+                                        }
+                                    })
+                                    .padding(.vertical, 5)
+                                    .padding(.horizontal, 10)
+                                    .overlay(
+                                        RoundedRectangle(cornerRadius: 20)
+                                            .stroke(Color(Asset.devFestBlue.color), lineWidth: 1)
+                                    )
+                                    .background(
+                                        RoundedRectangle(cornerRadius: 20, style: .continuous).fill(Color.white)
+                                    )
+                                }.padding(8)
+                            }.padding(8)
+                        }
                     }
                 }
             }
@@ -90,7 +120,6 @@ struct VenueView: View {
                 FirebaseAnalyticsService.shared.pageEvent(page: AnalyticsPage.venue, className: "VenueView")
             }
         }
-    }
     }
 }
 

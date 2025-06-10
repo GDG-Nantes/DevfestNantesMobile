@@ -8,8 +8,6 @@
 
 import SwiftUI
 import shared
-import URLImage
-import shared
 
 
 struct AgendaDetailView: View {

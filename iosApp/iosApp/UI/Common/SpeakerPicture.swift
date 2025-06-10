@@ -7,7 +7,6 @@
 //
 
 import SwiftUI
-import URLImage
 import shared
 
 struct SpeakerPicture: View {
@@ -16,15 +15,28 @@ struct SpeakerPicture: View {
     var body: some View {
         Group {
             if let urlString = speaker.photoUrl, let url = URL(string: urlString) {
-                URLImage(url: url) { image in
-                    image
-                        .resizable()
-                        .aspectRatio(contentMode: .fill)
+                AsyncImage(url: url) { phase in
+                    switch phase {
+                    case .empty:
+                        ProgressView()
+                            .frame(width: 128, height: 128)
+                    case .success(let image):
+                        image
+                            .resizable()
+                            .aspectRatio(contentMode: .fill)
+                    case .failure:
+                        Image(systemName: "person.circle")
+                            .resizable()
+                            .frame(width: 128, height: 128)
+                            .clipShape(Circle())
+                    @unknown default:
+                        EmptyView()
+                    }
                 }
                 .frame(width: 128, height: 128)
                 .clipShape(Circle())
             } else {
-                Image("person.circle")
+                Image(systemName: "person.circle")
                     .resizable()
                     .frame(width: 128, height: 128)
                     .clipShape(Circle())
