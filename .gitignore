@@ -110,3 +110,28 @@ androidApp/mapping.txt
 
 # Design
 *.afdesign
+
+# This prevents the built framework from being committed.
+iosApp/Frameworks/shared.xcframework/
+
+# GoogleService-Info.plist (optional, if you don't want to commit it)
+iosApp/iosApp/GoogleService-Info.plist
+
+# CocoaPods (should already be removed, but ensure it's ignored)
+Pods/
+Podfile
+Podfile.lock
+*.xcworkspace
+
+# Swift Package Manager
+iosApp/Frameworks/Package.resolved
+iosApp/Frameworks/.build/
+
+# Xcode user data
+iosApp/iosApp.xcodeproj/xcuserdata/
+
+# Xcode derived data
+DerivedData/
+
+# General
+.DS_Store
