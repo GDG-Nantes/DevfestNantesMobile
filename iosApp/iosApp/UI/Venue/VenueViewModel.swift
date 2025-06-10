@@ -10,8 +10,8 @@ import Foundation
 import shared
 import Combine
 import KMPNativeCoroutinesAsync
-import NSLogger
 import SwiftUI
+import os
 
 @MainActor
 class VenueViewModel: BaseViewModel {
@@ -38,7 +38,8 @@ class VenueViewModel: BaseViewModel {
                     self.venueContent = VenueContent(from: venueData)
                 }
             } catch {
-                Logger.shared.log(.network, .error, "Observe Venue error: \(error)")
+                Logger(subsystem: Bundle.main.bundleIdentifier ?? "DevFestNantes", category: "Venue").error("Observe Venue error: \(error.localizedDescription)")
+                // Handle error appropriately
             }
         }
     }
