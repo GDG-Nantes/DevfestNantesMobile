@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 60;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -22,7 +22,6 @@
 		0077EADD2DF8A88B006E0B5F /* FirebaseMessaging in Frameworks */ = {isa = PBXBuildFile; productRef = 0077EADC2DF8A88B006E0B5F /* FirebaseMessaging */; };
 		0077EADF2DF8A88B006E0B5F /* FirebasePerformance in Frameworks */ = {isa = PBXBuildFile; productRef = 0077EADE2DF8A88B006E0B5F /* FirebasePerformance */; };
 		0077EAE12DF8A88B006E0B5F /* FirebaseRemoteConfig in Frameworks */ = {isa = PBXBuildFile; productRef = 0077EAE02DF8A88B006E0B5F /* FirebaseRemoteConfig */; };
-		0077EAE32DF8A89A006E0B5F /* shared in Frameworks */ = {isa = PBXBuildFile; productRef = 0077EAE22DF8A89A006E0B5F /* shared */; };
 		00D69FD028D2032300498D05 /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 00D69FCF28D2032300498D05 /* libsqlite3.tbd */; };
 		058557BB273AAA24004C7B11 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 058557BA273AAA24004C7B11 /* Assets.xcassets */; };
 		058557D9273AAEEB004C7B11 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 058557D8273AAEEB004C7B11 /* Preview Assets.xcassets */; };
@@ -145,7 +144,6 @@
 				0077EADD2DF8A88B006E0B5F /* FirebaseMessaging in Frameworks */,
 				0077EAD02DF8A852006E0B5F /* ApolloAPI in Frameworks */,
 				0077EADB2DF8A88B006E0B5F /* FirebaseCrashlytics in Frameworks */,
-				0077EAE32DF8A89A006E0B5F /* shared in Frameworks */,
 				0077EAD72DF8A88B006E0B5F /* FirebaseAnalytics in Frameworks */,
 				0077EACE2DF8A852006E0B5F /* Apollo-Dynamic in Frameworks */,
 			);
@@ -399,7 +397,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = YES;
 				LastSwiftUpdateCheck = 1410;
-				LastUpgradeCheck = 1430;
+				LastUpgradeCheck = 1620;
 				ORGANIZATIONNAME = orgName;
 				TargetAttributes = {
 					7555FF7A242A565900829871 = {
@@ -422,7 +420,6 @@
 			);
 			mainGroup = 7555FF72242A565900829871;
 			packageReferences = (
-				00F6A2812DF83A6500355F6A /* XCLocalSwiftPackageReference "Frameworks" */,
 				0077EAC32DF8A81D006E0B5F /* XCRemoteSwiftPackageReference "KMP-NativeCoroutines" */,
 				0077EACA2DF8A852006E0B5F /* XCRemoteSwiftPackageReference "apollo-ios" */,
 				0077EAD52DF8A88B006E0B5F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
@@ -475,7 +472,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${SRCROOT}/scripts/build-shared-xcframework.sh\"\n";
+			shellScript = "cd \"$SRCROOT/..\"\n./gradlew :shared:embedAndSignAppleFrameworkForXcode\n";
 		};
 		454FFC6B2083FF400649C68F /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -515,7 +512,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if which swiftgen >/dev/null; then\n  swiftgen config run --config \"${SRCROOT}/iosApp/SwiftGen/swiftgen.yml\"\nelse\n  echo \"warning: SwiftGen not installed. Run 'brew install swiftgen'\"\nfi\n";
+			shellScript = "if which swiftgen >/dev/null; then\n  swiftgen config run --config \"$SRCROOT/iosApp/SwiftGen/swiftgen.yml\"\nelse\n  echo \"warning: SwiftGen not installed. Run 'brew install swiftgen'\"\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -852,13 +849,6 @@
 		};
 /* End XCConfigurationList section */
 
-/* Begin XCLocalSwiftPackageReference section */
-		00F6A2812DF83A6500355F6A /* XCLocalSwiftPackageReference "Frameworks" */ = {
-			isa = XCLocalSwiftPackageReference;
-			relativePath = Frameworks;
-		};
-/* End XCLocalSwiftPackageReference section */
-
 /* Begin XCRemoteSwiftPackageReference section */
 		0077EAC32DF8A81D006E0B5F /* XCRemoteSwiftPackageReference "KMP-NativeCoroutines" */ = {
 			isa = XCRemoteSwiftPackageReference;
@@ -956,10 +946,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 0077EAD52DF8A88B006E0B5F /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
 			productName = FirebaseRemoteConfig;
-		};
-		0077EAE22DF8A89A006E0B5F /* shared */ = {
-			isa = XCSwiftPackageProductDependency;
-			productName = shared;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
