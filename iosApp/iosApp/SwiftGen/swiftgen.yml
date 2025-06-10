@@ -1,11 +1,13 @@
 strings:
-    inputs: ${PROJECT_DIR}/iosApp/Resources/en.lproj
-    outputs:
-        templateName: structured-swift4
-        output: Strings.swift
+  inputs:
+    - ${PROJECT_DIR}/iosApp/Resources/en.lproj/Localizable.strings
+  outputs:
+    - templateName: structured-swift4
+      output: ${PROJECT_DIR}/iosApp/iosApp/SwiftGen/Strings.swift
 
 xcassets:
-    inputs: ${PROJECT_DIR}/iosApp/Resources/Assets.xcassets
-    outputs:
-        templateName: swift4
-        output: Assets.swift
+  inputs:
+    - ${PROJECT_DIR}/iosApp/Resources/Assets.xcassets
+  outputs:
+    - templateName: swift4
+      output: ${PROJECT_DIR}/iosApp/iosApp/SwiftGen/Assets.swift
