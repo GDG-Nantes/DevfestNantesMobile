@@ -7,7 +7,6 @@
 //
 
 import SwiftUI
-import URLImage
 import shared
 
 struct SpeakersView: View {
@@ -25,13 +24,27 @@ struct SpeakersView: View {
                                         ForEach(viewModel.speakers(for: letter).map(SpeakerWrapper.init), id: \.id) { speakerWrapper in
                                             NavigationLink(destination: SpeakerDetails(speakerId: speakerWrapper.id)) {
                                                 HStack {
-                                                    if let photo = speakerWrapper.speaker.photoUrl {
-                                                        URLImage(url: URL(string: photo)!) { image in
-                                                            image
-                                                                .resizable()
-                                                                .aspectRatio(contentMode: .fill)
-                                                                .clipShape(Circle())
-                                                        }.frame(width: 40, height: 40)
+                                                    if let photo = speakerWrapper.speaker.photoUrl, let url = URL(string: photo) {
+                                                        AsyncImage(url: url) { phase in
+                                                            switch phase {
+                                                            case .empty:
+                                                                ProgressView()
+                                                                    .frame(width: 40, height: 40)
+                                                            case .success(let image):
+                                                                image
+                                                                    .resizable()
+                                                                    .aspectRatio(contentMode: .fill)
+                                                                    .clipShape(Circle())
+                                                            case .failure:
+                                                                Image(systemName: "person.circle")
+                                                                    .resizable()
+                                                                    .frame(width: 40, height: 40)
+                                                                    .clipShape(Circle())
+                                                            @unknown default:
+                                                                EmptyView()
+                                                            }
+                                                        }
+                                                        .frame(width: 40, height: 40)
                                                     }
                                                     
                                                     Text(speakerWrapper.speaker.name)

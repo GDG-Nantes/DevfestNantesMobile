@@ -7,7 +7,6 @@
 //
 
 import SwiftUI
-import URLImage
 import shared
 
 struct AboutView: View {
@@ -105,13 +104,26 @@ struct AboutView: View {
                                                     Button(action: { UIApplication.shared.open(URL(string: partnerUrl)!)
                                                         FirebaseAnalyticsService.shared.eventLinkPartnerOpened(partnerName: partnerUrl)
                                                     }) {
-                                                        if let logo =  partner.logoUrl  {
-                                                            URLImage(url: URL(string:logo)!) { image in
-                                                                image
-                                                                    .renderingMode(.original)
-                                                                    .resizable()
-                                                                    .aspectRatio(contentMode: .fit)
+                                                        if let logo = partner.logoUrl, let logoUrl = URL(string: logo) {
+                                                            AsyncImage(url: logoUrl) { phase in
+                                                                switch phase {
+                                                                case .empty:
+                                                                    ProgressView()
+                                                                        .frame(maxHeight: 50)
+                                                                case .success(let image):
+                                                                    image
+                                                                        .renderingMode(.original)
+                                                                        .resizable()
+                                                                        .aspectRatio(contentMode: .fit)
+                                                                case .failure:
+                                                                    Image(systemName: "photo")
+                                                                        .resizable()
+                                                                        .aspectRatio(contentMode: .fit)
+                                                                @unknown default:
+                                                                    EmptyView()
+                                                                }
                                                             }
+                                                            .frame(maxHeight: 50)
                                                         }
                                                     }
                                                     .frame(maxHeight: 50)

@@ -8,7 +8,6 @@
 
 import SwiftUI
 import shared
-import URLImage
 
 ///SwiftUI speaker View
 struct SpeakerView: View {
@@ -20,13 +19,27 @@ struct SpeakerView: View {
         
         VStack(alignment: .leading) {
             HStack(alignment: .top) {
-                if let photo = speaker.photoUrl {
-                    URLImage(url: URL(string: photo)!) { image in
-                        image
-                            .resizable()
-                            .aspectRatio(contentMode: .fill)
-                            .clipShape(Circle())
-                    }.frame(width: 60, height: 60)
+                if let photo = speaker.photoUrl, let url = URL(string: photo) {
+                    AsyncImage(url: url) { phase in
+                        switch phase {
+                        case .empty:
+                            ProgressView()
+                                .frame(width: 60, height: 60)
+                        case .success(let image):
+                            image
+                                .resizable()
+                                .aspectRatio(contentMode: .fill)
+                                .clipShape(Circle())
+                        case .failure:
+                            Image(systemName: "person.circle")
+                                .resizable()
+                                .frame(width: 60, height: 60)
+                                .clipShape(Circle())
+                        @unknown default:
+                            EmptyView()
+                        }
+                    }
+                    .frame(width: 60, height: 60)
                 }
                 VStack(alignment: .leading) {
                     Text("\(speaker.name ), \(speaker.company ?? "")")
