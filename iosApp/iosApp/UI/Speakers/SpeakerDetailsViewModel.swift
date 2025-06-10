@@ -9,8 +9,8 @@
 import shared
 import Combine
 import KMPNativeCoroutinesAsync
-import NSLogger
 import SwiftUI
+import os
 
 
 class SpeakerDetailsViewModel: BaseViewModel {
@@ -37,7 +37,8 @@ class SpeakerDetailsViewModel: BaseViewModel {
                     self.speaker = speakerReslut
                 }
             } catch {
-                Logger.shared.log(.network, .error, "Observe Venue error: \(error)")
+                Logger(subsystem: Bundle.main.bundleIdentifier ?? "DevFestNantes", category: "SpeakerDetails").error("Observe Venue error: \(error.localizedDescription)")
+                // Handle error appropriately
             }
         }
     }
@@ -50,7 +51,8 @@ class SpeakerDetailsViewModel: BaseViewModel {
                     self.speakerSession = speakerSessionResult
                 }
             } catch {
-                Logger.shared.log(.network, .error, "Observe Venue error: \(error)")
+                Logger(subsystem: Bundle.main.bundleIdentifier ?? "DevFestNantes", category: "SpeakerDetails").error("Observe Venue error: \(error.localizedDescription)")
+                // Handle error appropriately
             }
         }
     }

@@ -8,7 +8,7 @@
 
 import Foundation
 import FirebaseRemoteConfig
-import NSLogger
+import os
 
 enum ValueKey: String {
     case openfeedback_enabled
@@ -38,12 +38,11 @@ class RCValues {
         RemoteConfig.remoteConfig().configSettings = settings
         RemoteConfig.remoteConfig().fetch { _, error in
             if let error = error {
-                Logger.shared.log(.network, .error, "RemoteConfig error: \(error)")
+                Logger(subsystem: Bundle.main.bundleIdentifier ?? "DevFestNantes", category: "RemoteConfig").error("RemoteConfig error: \(error.localizedDescription)")
                 return
             }
-            
             RemoteConfig.remoteConfig().activate { _, _ in
-                Logger.shared.log(.network, .info, "Retrieved values from the cloud!")
+                Logger(subsystem: Bundle.main.bundleIdentifier ?? "DevFestNantes", category: "RemoteConfig").info("Retrieved values from the cloud!")
             }
         }
     }

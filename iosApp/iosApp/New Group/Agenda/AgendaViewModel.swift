@@ -10,8 +10,8 @@ import Foundation
 import shared
 import Combine
 import KMPNativeCoroutinesAsync
-import NSLogger
 import SwiftUI
+import os
 
 
 class AgendaViewModel: BaseViewModel {
@@ -68,7 +68,7 @@ class AgendaViewModel: BaseViewModel {
                 }
             }
         } catch {
-            Logger.shared.log(.network, .error, "Observe Sessions error: \(error)")
+            Logger(subsystem: Bundle.main.bundleIdentifier ?? "DevFestNantes", category: "Agenda").error("Observe Sessions error: \(error.localizedDescription)")
         }
     }
     
@@ -101,7 +101,7 @@ class AgendaViewModel: BaseViewModel {
                     }
                 }
             } catch {
-                Logger.shared.log(.network, .error, "Observe Rooms error: \(error)")
+                Logger(subsystem: Bundle.main.bundleIdentifier ?? "DevFestNantes", category: "Agenda").error("Observe Rooms error: \(error.localizedDescription)")
             }
         }
     }

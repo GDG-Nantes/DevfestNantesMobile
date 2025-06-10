@@ -10,8 +10,8 @@ import Foundation
 import shared
 import Combine
 import KMPNativeCoroutinesAsync
-import NSLogger
 import SwiftUI
+import os
 
 @MainActor
 class AboutViewModel: BaseViewModel {
@@ -29,7 +29,8 @@ class AboutViewModel: BaseViewModel {
                 }
             }
         } catch {
-            Logger.shared.log(.network, .error, "Observe Partners error: \(error)")
+            Logger(subsystem: Bundle.main.bundleIdentifier ?? "DevFestNantes", category: "About").error("Observe Partners error: \(error.localizedDescription)")
+            // Handle error appropriately, e.g., show an alert to the user
         }
     }
 }

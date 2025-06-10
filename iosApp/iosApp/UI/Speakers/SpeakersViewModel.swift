@@ -10,8 +10,8 @@ import Foundation
 import shared
 import Combine
 import KMPNativeCoroutinesAsync
-import NSLogger
 import SwiftUI
+import os
 
 @MainActor
 class SpeakersViewModel: BaseViewModel {
@@ -30,7 +30,8 @@ class SpeakersViewModel: BaseViewModel {
                     }
                 }
             } catch {
-                Logger.shared.log(.network, .error, "Observe Speakers error: \(error)")
+                Logger(subsystem: Bundle.main.bundleIdentifier ?? "DevFestNantes", category: "Speakers").error("Observe Speakers error: \(error.localizedDescription)")
+                // Handle error appropriately, e.g., show an alert to the user
             }
         }
     }
