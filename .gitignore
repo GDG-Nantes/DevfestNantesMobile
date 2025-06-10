@@ -123,15 +123,8 @@ Podfile
 Podfile.lock
 *.xcworkspace
 
-# Swift Package Manager
-iosApp/Frameworks/Package.resolved
-iosApp/Frameworks/.build/
-
 # Xcode user data
 iosApp/iosApp.xcodeproj/xcuserdata/
 
 # Xcode derived data
 DerivedData/
-
-# General
-.DS_Store
