@@ -20,7 +20,7 @@ class AboutViewModel: BaseViewModel {
     ///Asynchronous method to retrieve partners
     func observePartners() async {
         do {
-            let partnersSequence = asyncSequence(for: store.getPartners())
+            let partnersSequence = asyncSequence(for: store.partners)
             for try await partners in partnersSequence {
                 DispatchQueue.main.async {
                     for key in partners.keys.sorted() {

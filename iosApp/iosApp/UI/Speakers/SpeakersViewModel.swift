@@ -22,7 +22,7 @@ class SpeakersViewModel: BaseViewModel {
     func observeSpeakers() async {
         Task {
             do {
-                let speakersSequence = asyncSequence(for: store.getSpeakers())
+                let speakersSequence = asyncSequence(for: store.speakers)
                 for try await speakers in speakersSequence {
                     DispatchQueue.main.async {
                         self.speakersContent = speakers

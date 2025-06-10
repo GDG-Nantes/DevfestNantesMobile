@@ -61,7 +61,7 @@ class AgendaViewModel: BaseViewModel {
     ///Asynchronous method to retrieve sessions
     func observeSessions() async {
         do {
-            let sessionsSequence = asyncSequence(for: store.getSessions())
+            let sessionsSequence = asyncSequence(for: store.sessions)
             for try await sessions in sessionsSequence {
                 DispatchQueue.main.async {
                     self.sessionsChanged(sessions: sessions)
@@ -94,7 +94,7 @@ class AgendaViewModel: BaseViewModel {
     func observeRooms() async {
         Task {
             do {
-                let roomsSequence = asyncSequence(for: store.getRooms())
+                let roomsSequence = asyncSequence(for: store.rooms)
                 for try await rooms in roomsSequence {
                     DispatchQueue.main.async {
                         self.roomsContent = Array(rooms)
