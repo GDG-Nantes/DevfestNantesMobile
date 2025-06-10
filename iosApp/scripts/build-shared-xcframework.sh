@@ -6,12 +6,12 @@ PROJECT_ROOT="$(cd "$(dirname "$0")/../.." && pwd)"
 SHARED_MODULE_PATH="$PROJECT_ROOT/shared"
 IOS_FRAMEWORKS_PATH="$PROJECT_ROOT/iosApp/Frameworks"
 
-# Build the XCFramework using Gradle
+# Build the XCFramework using Gradle (Release)
 cd "$PROJECT_ROOT"
-./gradlew :shared:assembleXCFramework
+./gradlew :shared:podPublishReleaseXCFramework
 
 # Find the built XCFramework
-XCFRAMEWORK_PATH="$SHARED_MODULE_PATH/build/XCFrameworks/release/shared.xcframework"
+XCFRAMEWORK_PATH="$SHARED_MODULE_PATH/build/cocoapods/publish/release/shared.xcframework"
 
 if [ ! -d "$XCFRAMEWORK_PATH" ]; then
   echo "Error: XCFramework not found at $XCFRAMEWORK_PATH"
