@@ -1,7 +1,7 @@
 # App - DevFest Nantes
 
 KMM Mobile repo for the Android and iOS mobile app of
-the [DevFest Nantes 2024](https://devfest.gdgnantes.com/).
+the [DevFest Nantes](https://devfest.gdgnantes.com/).
 
 Get it on :
 
