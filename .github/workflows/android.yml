@@ -116,3 +116,4 @@ jobs:
           cache-read-only: false
 
       - name: Build Debug APK
+        run: ./gradlew assembleDebug
