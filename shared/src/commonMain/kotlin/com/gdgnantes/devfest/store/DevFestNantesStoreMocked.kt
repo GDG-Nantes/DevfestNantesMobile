@@ -74,8 +74,8 @@ internal class DevFestNantesStoreMocked : DevFestNantesStore {
                 emit(roomStubs.toSet())
             }
 
-    override suspend fun getSession(id: String): Session =
-        sessionsCache.first { session -> session.id == id }
+    override suspend fun getSession(id: String): Session? =
+        sessionsCache.firstOrNull { session -> session.id == id }
 
     override val sessions: Flow<List<Session>>
         get() =
@@ -83,8 +83,8 @@ internal class DevFestNantesStoreMocked : DevFestNantesStore {
                 emit(sessionsCache)
             }
 
-    override suspend fun getSpeaker(id: String): Speaker =
-        speakersCache.first { speaker -> speaker.id == id }
+    override suspend fun getSpeaker(id: String): Speaker? =
+        speakersCache.firstOrNull { speaker -> speaker.id == id }
 
     override suspend fun getSpeakerSessions(speakerId: String): List<Session> = emptyList()
 
