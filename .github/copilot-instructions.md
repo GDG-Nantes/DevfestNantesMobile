@@ -1,1 +1,2 @@
 // Always prefer Swift Package Manager (SPM) over CocoaPods for iOS dependencies.
+// All dependencies used in build.gradle.kts or build.gradle files must always be defined in the libs.versions.toml file.

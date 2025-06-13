@@ -7,7 +7,7 @@ plugins {
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.ksp)
     alias(libs.plugins.kmp.native.coroutines)
-    alias(libs.plugins.appollo)
+    alias(libs.plugins.appollo) // Now uses Apollo v4 plugin id
 }
 
 detekt {

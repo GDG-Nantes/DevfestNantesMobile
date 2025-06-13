@@ -1,6 +1,7 @@
 package com.gdgnantes.devfest.store.graphql
 
-import com.apollographql.apollo3.ApolloClient
+import com.apollographql.apollo.ApolloClient
+import com.apollographql.apollo.api.http.HttpHeader
 import com.gdgnantes.devfest.model.ContentLanguage
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
@@ -16,7 +17,7 @@ class GraphQLStoreJvmTest {
     fun setUp() {
         apolloClient = ApolloClient.Builder()
             .serverUrl("https://confetti-app.dev/graphql")
-            .httpHeaders(listOf(com.apollographql.apollo3.api.http.HttpHeader("conference", "devfestnantes2024")))
+            .httpHeaders(listOf(HttpHeader("conference", "devfestnantes2024")))
             .build()
         store = GraphQLStore(apolloClient)
     }
