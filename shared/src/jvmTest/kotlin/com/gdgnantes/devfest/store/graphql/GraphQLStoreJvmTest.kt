@@ -76,6 +76,13 @@ class GraphQLStoreJvmTest {
     }
 
     @Test
+    fun speakers_flow_emits_non_empty_speakers_list() = runTest {
+        val speakers = store.speakers.first()
+        assertNotNull(speakers)
+        assert(speakers.isNotEmpty()) { "Speakers list should not be empty" }
+    }
+
+    @Test
     fun getVenue_returns_venue() = runTest {
         val venue = store.getVenue(ContentLanguage.ENGLISH)
         assertNotNull(venue)
