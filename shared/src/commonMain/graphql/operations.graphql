@@ -53,8 +53,8 @@ fragment SessionDetails on Session {
     complexity
     description
     language
-    startInstant
-    endInstant
+    startsAt
+    endsAt
     rooms {
         ...RoomDetails
     }
@@ -64,6 +64,10 @@ fragment SessionDetails on Session {
     feedbackId
     tags
     type
+    links {
+        type
+        url
+    }
 }
 
 fragment RoomDetails on Room {
@@ -86,5 +90,6 @@ fragment SpeakerDetails on Speaker {
 
 fragment SocialDetails on Social {
     name
-    link
+    url
+    icon
 }

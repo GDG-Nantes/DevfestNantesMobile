@@ -17,6 +17,7 @@ class MainActivityTest {
 
     @Test
     fun ensureHeaderIsDisplayed() {
+        activityTestRule.waitForIdle() // Ensure Compose is idle before querying
         val toolbarTitle =
             activityTestRule.onNode(hasTestTag("topAppBar"), useUnmergedTree = true)
         toolbarTitle.assertIsDisplayed()
