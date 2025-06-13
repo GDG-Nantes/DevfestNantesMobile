@@ -50,7 +50,7 @@ fun SessionDetails.toSession(): Session {
         id = id,
         abstract = description ?: "",
         category =
-        tag?.run {
+            tag?.run {
             Category(
                 id = lowercase(),
                 label = this
@@ -61,9 +61,9 @@ fun SessionDetails.toSession(): Session {
         openFeedbackFormId = feedbackId ?: id,
         room = rooms.firstOrNull()?.roomDetails?.toRoom(),
         scheduleSlot =
-        ScheduleSlot(
-            startDate = startsAt.toIso8601Z(),
-            endDate = endsAt.toIso8601Z()
+            ScheduleSlot(
+                startDate = startsAt.toIso8601Z(),
+                endDate = endsAt.toIso8601Z()
         ),
         speakers = speakers.map { it.speakerDetails.toSpeaker() },
         title = title,
@@ -157,10 +157,15 @@ private fun String.toComplexity(): Complexity? {
 private fun Any.toIso8601Z(): String =
     this.toString().let {
         // If already ends with 'Z', assume it's correct
-        if (it.endsWith("Z")) it
-        // If it matches yyyy-MM-dd'T'HH:mm, add :00+02:00 (Paris time in summer)
-        else if (Regex("\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}").matches(it)) it + ":00+02:00"
-        // If it matches yyyy-MM-dd'T'HH:mm:ss, add +02:00
-        else if (Regex("\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}").matches(it)) it + "+02:00"
-        else it // fallback, may still fail
+        if (it.endsWith("Z")) {
+            it
+        } else if (Regex("\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}").matches(it)) {
+            // If it matches yyyy-MM-dd'T'HH:mm, add :00+02:00 (Paris time in summer)
+            "$it:00+02:00"
+        } else if (Regex("\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}").matches(it)) {
+            // If it matches yyyy-MM-dd'T'HH:mm:ss, add +02:00
+            "$it+02:00"
+        } else {
+            it // fallback, may still fail
+        }
     }
