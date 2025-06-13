@@ -1,15 +1,15 @@
 package com.gdgnantes.devfest.store.graphql
 
-import com.apollographql.apollo3.ApolloClient
-import com.apollographql.apollo3.api.CompiledField
-import com.apollographql.apollo3.api.Executable
-import com.apollographql.apollo3.api.http.HttpHeader
-import com.apollographql.apollo3.cache.normalized.api.CacheKey
-import com.apollographql.apollo3.cache.normalized.api.CacheKeyGenerator
-import com.apollographql.apollo3.cache.normalized.api.CacheKeyGeneratorContext
-import com.apollographql.apollo3.cache.normalized.api.CacheResolver
-import com.apollographql.apollo3.cache.normalized.api.DefaultCacheResolver
-import com.apollographql.apollo3.cache.normalized.normalizedCache
+import com.apollographql.apollo.ApolloClient
+import com.apollographql.apollo.api.CompiledField
+import com.apollographql.apollo.api.Executable
+import com.apollographql.apollo.api.http.HttpHeader
+import com.apollographql.apollo.cache.normalized.api.CacheKey
+import com.apollographql.apollo.cache.normalized.api.CacheKeyGenerator
+import com.apollographql.apollo.cache.normalized.api.CacheKeyGeneratorContext
+import com.apollographql.apollo.cache.normalized.api.CacheResolver
+import com.apollographql.apollo.cache.normalized.api.DefaultCacheResolver
+import com.apollographql.apollo.cache.normalized.normalizedCache
 
 val cacheKeyGenerator =
     object : CacheKeyGenerator {

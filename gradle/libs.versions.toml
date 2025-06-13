@@ -5,7 +5,7 @@ agp = "8.6.1"
 androidXTestVersion = "1.5.0"
 androidXTestRunnerVersion = "1.6.2"
 androidXJUnitVersion = "1.2.1"
-appollo = "3.8.5"
+appollo = "4.0.0"
 browser = "1.8.0"
 coil = "2.7.0"
 composeBom = "2024.09.02"
@@ -64,9 +64,9 @@ androidx-test-rules = { group = "androidx.test", name = "rules", version.ref = "
 androidx-test-runner = { group = "androidx.test", name = "runner", version.ref = "androidXTestRunnerVersion" }
 androidx-test-truth = { group = "androidx.test.ext", name = "truth", version.ref = "androidXTestVersion" }
 
-appollo-runtime = { group = "com.apollographql.apollo3", name = "apollo-runtime", version.ref = "appollo" }
-appollo-normalized-cache = { group = "com.apollographql.apollo3", name = "apollo-normalized-cache", version.ref = "appollo" }
-appollo-normalized-cache-sqlite = { group = "com.apollographql.apollo3", name = "apollo-normalized-cache-sqlite", version.ref = "appollo" }
+appollo-runtime = { group = "com.apollographql.apollo", name = "apollo-runtime", version.ref = "appollo" }
+appollo-normalized-cache = { group = "com.apollographql.apollo", name = "apollo-normalized-cache", version.ref = "appollo" }
+appollo-normalized-cache-sqlite = { group = "com.apollographql.apollo", name = "apollo-normalized-cache-sqlite", version.ref = "appollo" }
 
 coil-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil" }
 
@@ -110,7 +110,7 @@ test = ["junit", "androidx-compose-ui-test-junit4", "kotlinx-coroutines-test"]
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
 android-library = { id = "com.android.library", version.ref = "agp" }
-appollo = { id = "com.apollographql.apollo3", version.ref = "appollo" }
+appollo = { id = "com.apollographql.apollo", version.ref = "appollo" }
 crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "firebaseCrashlyticsPlugin" }
 dagger-hilt = { id = "com.google.dagger.hilt.android", version.ref = "dagger" }
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
