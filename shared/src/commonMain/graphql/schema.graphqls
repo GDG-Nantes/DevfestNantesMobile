@@ -142,6 +142,113 @@ enum __DirectiveLocation {
   INPUT_FIELD_DEFINITION
 }
 
+scalar Boolean
+
+scalar Float
+
+"""
+ A type representing a formatted kotlinx.datetime.Instant
+"""
+scalar Instant
+
+scalar Int
+
+"""
+ A type representing a formatted kotlinx.datetime.LocalDate
+"""
+scalar LocalDate
+
+"""
+ A type representing a formatted kotlinx.datetime.LocalDateTime
+"""
+scalar LocalDateTime
+
+scalar String
+
+enum ConferenceField {
+  DAYS
+}
+
+enum LinkType {
+  YouTube
+
+  Audio
+
+  AudioUncompressed
+
+  Other
+}
+
+enum OrderByDirection {
+  ASCENDING
+
+  DESCENDING
+}
+
+enum SessionField {
+  STARTS_AT
+}
+
+type BookmarkConnection {
+  nodes: [Session!]!
+}
+
+type Bookmarks {
+  sessionIds: [String!]!
+
+  id: String!
+}
+
+type Conference {
+  id: String!
+
+  name: String!
+
+  timezone: String!
+
+  days: [LocalDate!]!
+
+  themeColor: String
+}
+
+type Link {
+  type: LinkType!
+
+  url: String!
+}
+
+type Mutation {
+  addBookmark(sessionId: String!): Bookmarks!
+
+  removeBookmark(sessionId: String!): Bookmarks!
+
+  """
+   Deletes the current user account, requires authentication
+  """
+  deleteAccount: Boolean!
+}
+
+type PageInfo {
+  endCursor: String
+}
+
+type Partner {
+  name: String!
+
+  """
+   @param dark returns the logo for use on a dark background or fallbacks to the light mode if none exist
+  """
+  logoUrl(dark: Boolean = false): String!
+
+  url: String!
+}
+
+type PartnerGroup {
+  title: String!
+
+  partners: [Partner!]!
+}
+
 type Query {
   rooms: [Room!]!
 
@@ -151,7 +258,7 @@ type Query {
   }
   ): SessionConnection!
 
-  speakers: [Speaker!]! @deprecated(reason: "No longer supported")
+  speakers: [Speaker!]! @deprecated(reason: "Use speakersPage instead")
 
   speakersPage(first: Int = null, after: String = null): SpeakerConnection!
 
@@ -167,22 +274,11 @@ type Query {
 
   config: Conference!
 
-  bookmarks: Bookmarks @deprecated(reason: "No longer supported")
+  bookmarks: Bookmarks @deprecated(reason: "Use bookmarkConnection instead")
 
   bookmarkConnection: BookmarkConnection
 
   conferences(orderBy: ConferenceOrderByInput = null): [Conference!]!
-}
-
-type Mutation {
-  addBookmark(sessionId: String!): Bookmarks!
-
-  removeBookmark(sessionId: String!): Bookmarks!
-
-  """
-   Deletes the current user account, requires authentication
-  """
-  deleteAccount: Boolean!
 }
 
 type Room {
@@ -193,26 +289,66 @@ type Room {
   capacity: Int
 }
 
+type Session {
+  id: String!
+
+  title: String!
+
+  description: String
+
+  """
+   A shorter version of description for use when real estate is scarce like watches for an example.
+   This field might have the same value as description if a shortDescription is not available.
+  """
+  shortDescription: String
+
+  """
+   An [IETF language code](https://en.wikipedia.org/wiki/IETF_language_tag) like en-US.
+  """
+  language: String
+
+  tags: [String!]!
+
+  startInstant: Instant! @deprecated(reason: "use startsAt instead")
+
+  endInstant: Instant! @deprecated(reason: "use endsAt instead")
+
+  startsAt: LocalDateTime!
+
+  endsAt: LocalDateTime!
+
+  complexity: String
+
+  feedbackId: String
+
+  """
+   One of "break", "lunch", "party", "keynote", "talk" or any other conference-specific format.
+  """
+  type: String!
+
+  links: [Link!]!
+
+  speakers: [Speaker!]!
+
+  room: Room
+
+  rooms: [Room!]!
+}
+
 type SessionConnection {
   nodes: [Session!]!
 
   pageInfo: PageInfo!
 }
 
-scalar Int
+type Social {
+  icon: String
 
-scalar String
+  link: String! @deprecated(reason: "use url instead")
 
-input SessionFilterInput {
-  startsAt: LocalDateTimeFilterInput = null
+  name: String!
 
-  endsAt: LocalDateTimeFilterInput = null
-}
-
-input SessionOrderByInput {
-  field: SessionField!
-
-  direction: OrderByDirection!
+  url: String!
 }
 
 type Speaker {
@@ -263,85 +399,11 @@ type Venue {
   """
   floorPlanUrl: String
 
-  coordinates: String @deprecated(reason: "No longer supported")
+  coordinates: String @deprecated(reason: "use latitude and longitude instead")
 
-  descriptionFr: String! @deprecated(reason: "No longer supported")
+  descriptionFr: String! @deprecated(reason: "use description(language: \"fr\") instead")
 
   description(language: String = "en"): String!
-}
-
-type PartnerGroup {
-  title: String!
-
-  partners: [Partner!]!
-}
-
-type Session {
-  id: String!
-
-  title: String!
-
-  description: String
-
-  """
-   A shorter version of description for use when real estate is scarce like watches for an example.
-   This field might have the same value as description if a shortDescription is not available.
-  """
-  shortDescription: String
-
-  """
-   An [IETF language code](https://en.wikipedia.org/wiki/IETF_language_tag) like en-US.
-  """
-  language: String
-
-  tags: [String!]!
-
-  startInstant: Instant! @deprecated(reason: "No longer supported")
-
-  endInstant: Instant! @deprecated(reason: "No longer supported")
-
-  startsAt: LocalDateTime!
-
-  endsAt: LocalDateTime!
-
-  complexity: String
-
-  feedbackId: String
-
-  """
-   One of "break", "lunch", "party", "keynote", "talk" or any other conference-specific format.
-  """
-  type: String!
-
-  links: [Link!]!
-
-  speakers: [Speaker!]!
-
-  room: Room
-
-  rooms: [Room!]!
-}
-
-type Conference {
-  id: String!
-
-  name: String!
-
-  timezone: String!
-
-  days: [LocalDate!]!
-
-  themeColor: String
-}
-
-type Bookmarks {
-  sessionIds: [String!]!
-
-  id: String!
-}
-
-type BookmarkConnection {
-  nodes: [Session!]!
 }
 
 input ConferenceOrderByInput {
@@ -350,84 +412,22 @@ input ConferenceOrderByInput {
   direction: OrderByDirection!
 }
 
-scalar Boolean
-
-type PageInfo {
-  endCursor: String
-}
-
 input LocalDateTimeFilterInput {
   before: LocalDateTime = null
 
   after: LocalDateTime = null
 }
 
-enum SessionField {
-  STARTS_AT
+input SessionFilterInput {
+  startsAt: LocalDateTimeFilterInput = null
+
+  endsAt: LocalDateTimeFilterInput = null
 }
 
-enum OrderByDirection {
-  ASCENDING
+input SessionOrderByInput {
+  field: SessionField!
 
-  DESCENDING
-}
-
-type Social {
-  icon: String
-
-  link: String! @deprecated(reason: "No longer supported")
-
-  name: String!
-
-  url: String!
-}
-
-scalar Float
-
-type Partner {
-  name: String!
-
-  url: String!
-
-  """
-   @param dark returns the logo for use on a dark background or fallbacks to the light mode if none exist
-  """
-  logoUrl(dark: Boolean = false): String!
-}
-
-"""
- A type representing a formatted kotlinx.datetime.Instant
-"""
-scalar Instant
-
-"""
- A type representing a formatted kotlinx.datetime.LocalDateTime
-"""
-scalar LocalDateTime
-
-type Link {
-  type: LinkType!
-
-  url: String!
-}
-
-"""
- A type representing a formatted kotlinx.datetime.LocalDate
-"""
-scalar LocalDate
-
-enum ConferenceField {
-  DAYS
-}
-
-enum LinkType {
-  YouTube
-
-  Audio
-
-  AudioUncompressed
-
-  Other
+  direction: OrderByDirection!
 }
 
 """
@@ -439,7 +439,7 @@ directive @skip (if: Boolean!) on FIELD|FRAGMENT_SPREAD|INLINE_FRAGMENT
 
 directive @include (if: Boolean!) on FIELD|FRAGMENT_SPREAD|INLINE_FRAGMENT
 
-directive @deprecated (reason: String = "No longer supported") on FIELD_DEFINITION|ARGUMENT_DEFINITION|INPUT_FIELD_DEFINITION|ENUM_VALUE
+directive @deprecated (reason: String! = "No longer supported") on FIELD_DEFINITION|ARGUMENT_DEFINITION|INPUT_FIELD_DEFINITION|ENUM_VALUE
 
 directive @defer (label: String, if: Boolean! = true) on FRAGMENT_SPREAD|INLINE_FRAGMENT
 

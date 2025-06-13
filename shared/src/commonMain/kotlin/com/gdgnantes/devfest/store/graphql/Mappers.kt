@@ -62,8 +62,8 @@ fun SessionDetails.toSession(): Session {
         room = rooms.firstOrNull()?.roomDetails?.toRoom(),
         scheduleSlot =
         ScheduleSlot(
-            startDate = startInstant.toString(),
-            endDate = endInstant.toString()
+            startDate = startsAt.toIso8601Z(),
+            endDate = endsAt.toIso8601Z()
         ),
         speakers = speakers.map { it.speakerDetails.toSpeaker() },
         title = title,
@@ -96,7 +96,7 @@ fun SpeakerDetails.Social.toSocial(): SocialItem {
     return with(socialDetails) {
         SocialItem.Builder()
             .setType(name.toSocialType())
-            .setLink(link)
+            .setLink(url)
             .build()
     }
 }
@@ -153,3 +153,14 @@ private fun String.toComplexity(): Complexity? {
         else -> null
     }
 }
+
+private fun Any.toIso8601Z(): String =
+    this.toString().let {
+        // If already ends with 'Z', assume it's correct
+        if (it.endsWith("Z")) it
+        // If it matches yyyy-MM-dd'T'HH:mm, add :00+02:00 (Paris time in summer)
+        else if (Regex("\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}").matches(it)) it + ":00+02:00"
+        // If it matches yyyy-MM-dd'T'HH:mm:ss, add +02:00
+        else if (Regex("\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}").matches(it)) it + "+02:00"
+        else it // fallback, may still fail
+    }

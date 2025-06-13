@@ -80,4 +80,18 @@ class GraphQLStoreJvmTest {
         val venue = store.getVenue(ContentLanguage.ENGLISH)
         assertNotNull(venue)
     }
+
+    @Test
+    fun scheduleSlot_dates_are_parseable_by_android_java() = runTest {
+        val sessions = store.sessions.first()
+        val format = java.text.SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssXXX")
+        for (session in sessions) {
+            try {
+                format.parse(session.scheduleSlot.startDate)
+                format.parse(session.scheduleSlot.endDate)
+            } catch (e: Exception) {
+                throw AssertionError("Unparseable date: ${'$'}{session.scheduleSlot.startDate} or ${'$'}{session.scheduleSlot.endDate}", e)
+            }
+        }
+    }
 }
