@@ -47,16 +47,17 @@ fun AgendaColumn(
 
     LazyColumn(
         state = listState,
-        modifier =
-        Modifier
-            .fillMaxHeight()
+        modifier = Modifier.fillMaxHeight()
     ) {
-        sessionsGroupedByStartTime.forEach {
-            stickyHeader {
-                TimeSeparator(prettyTime = it.key)
+        sessionsGroupedByStartTime.forEach { (timeKey, sessions) ->
+            stickyHeader(timeKey) {
+                TimeSeparator(prettyTime = timeKey)
             }
 
-            items(it.value.sortedBy { session -> session.room?.sortIndex }) { session ->
+            items(
+                items = sessions.sortedBy { session -> session.room?.sortIndex },
+                key = { session -> session.id }
+            ) { session ->
                 AgendaRow(
                     session = session,
                     onSessionClick = onSessionClick
