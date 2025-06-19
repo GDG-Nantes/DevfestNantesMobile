@@ -2,18 +2,26 @@ name: 'Get AVD Info'
 description: 'Get the AVD info based on its API level.'
 inputs:
   api-level:
+    description: 'Android API level to use'
     required: true
 outputs:
   arch:
+    description: 'The architecture to use (x86 or x86_64)'
     value: ${{ steps.get-avd-arch.outputs.arch }}
   target:
+    description: 'The system image target to use'
     value: ${{ steps.get-avd-target.outputs.target }}
 runs:
   using: "composite"
   steps:
     - id: get-avd-arch
-      run: echo "arch=$(if [ ${{ inputs.api-level }} -ge 30 ]; then echo x86_64; else echo x86; fi)" >> $GITHUB_OUTPUT
       shell: bash
+      run: |
+        if [ ${{ inputs.api-level }} -ge 30 ]; then
+          echo "arch=x86_64" >> $GITHUB_OUTPUT
+        else
+          echo "arch=x86" >> $GITHUB_OUTPUT
+        fi
     - id: get-avd-target
-      run: echo "target=$(echo default)" >> $GITHUB_OUTPUT
       shell: bash
+      run: echo "target=default" >> $GITHUB_OUTPUT
