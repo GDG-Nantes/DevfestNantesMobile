@@ -27,6 +27,9 @@ jobs:
           cache-overwrite-existing: true
           cache-read-only: true
 
+      - name: Create local.properties
+        run: echo "sdk.dir=$ANDROID_HOME" > ./local.properties
+
       - name: Check Detekt
         run: ./gradlew detekt
 
@@ -50,6 +53,9 @@ jobs:
           gradle-version: wrapper
           cache-overwrite-existing: true
           cache-read-only: true
+
+      - name: Create local.properties
+        run: echo "sdk.dir=$ANDROID_HOME" > ./local.properties
 
       - name: Unit tests
         run: ./gradlew testDebugUnitTest
@@ -75,6 +81,9 @@ jobs:
           gradle-version: wrapper
           cache-overwrite-existing: true
           cache-read-only: true
+
+      - name: Create local.properties
+        run: echo "sdk.dir=$ANDROID_HOME" > ./local.properties
 
       # API 30+ emulators only have x86_64 system images.
       - name: Get AVD info
@@ -114,6 +123,9 @@ jobs:
           gradle-version: wrapper
           cache-overwrite-existing: true
           cache-read-only: false
+          
+      - name: Create local.properties
+        run: echo "sdk.dir=$ANDROID_HOME" > ./local.properties
 
       - name: Build Debug APK
         run: ./gradlew assembleDebug
