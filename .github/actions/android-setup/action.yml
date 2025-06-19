@@ -19,7 +19,6 @@ runs:
         java-version: ${{ inputs.java-version }}
     - uses: gradle/actions/setup-gradle@v4
       continue-on-error: true
-      timeout-minutes: 5
       with:
         gradle-version: wrapper
         cache-overwrite-existing: true
