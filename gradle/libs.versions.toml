@@ -9,6 +9,7 @@ appollo = "4.3.0"
 browser = "1.8.0"
 coil = "2.7.0"
 composeBom = "2025.06.00"
+composeMultiplatform = "1.5.10"
 composeNavigation = "2.9.0"
 dagger = "2.56.2"
 detekt = "1.23.8"
@@ -111,6 +112,7 @@ test = ["junit", "androidx-compose-ui-test-junit4", "kotlinx-coroutines-test"]
 android-application = { id = "com.android.application", version.ref = "agp" }
 android-library = { id = "com.android.library", version.ref = "agp" }
 appollo = { id = "com.apollographql.apollo", version.ref = "appollo" }
+compose-multiplatform = { id = "org.jetbrains.compose", version.ref = "composeMultiplatform" }
 crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "firebaseCrashlyticsPlugin" }
 dagger-hilt = { id = "com.google.dagger.hilt.android", version.ref = "dagger" }
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }

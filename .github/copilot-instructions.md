@@ -4,3 +4,4 @@
 new features or refactoring code.
 // Document the migration strategy and process in a ComposeMultiplatformMigration.md file for future talks or REX.
 // Commit changes frequently as you progress with the migration to Compose Multiplatform.
+// Never commit changes until all tests pass.
