@@ -39,6 +39,17 @@ sessions.
 5. **Cleanup**
     - Remove obsolete native UI code and update documentation.
 
+## 2025-06-20: shared-ui Compose Multiplatform module migration
+
+- Cleaned up `shared-ui` module to be Compose Multiplatform only.
+- Removed all duplicated `Button` and `ButtonTest` classes from `main/` and `test/` sources, keeping only the multiplatform versions in `commonMain/` and `commonTest/`.
+- Implemented a minimal `SimpleButton` composable and a multiplatform-compatible placeholder test.
+- Updated build scripts to use Compose Multiplatform 1.8.2 and Kotlin 2.1.21, with direct dependency declarations as required.
+- Ensured all dependencies are defined in `libs.versions.toml` where possible, and removed Compose Multiplatform plugin from the version catalog.
+- Verified a clean build and passing tests for Android and iOS targets.
+
+_This step ensures a clean, multiplatform-ready foundation for future UI migration._
+
 ## Next Steps
 
 - [ ] Create shared Compose Multiplatform UI module
