@@ -14,7 +14,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.MaterialTheme
-import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
@@ -35,6 +34,7 @@ import com.gdgnantes.devfest.androidapp.utils.onNavigationClick
 import com.gdgnantes.devfest.model.ContentLanguage
 import com.gdgnantes.devfest.model.Venue
 import com.gdgnantes.devfest.model.stubs.buildVenueStub
+import com.gdgnantes.devfest.ui.components.SimpleButton
 import timber.log.Timber
 
 @Composable
@@ -103,12 +103,13 @@ fun VenueDetails(
                 )
 
                 if (latitude != null && longitude != null) {
-                    Button(onClick = {
-                        onNavigationClick()
-                        onNavigationClick(context, latitude, longitude)
-                    }) {
-                        Text(stringResource(id = R.string.venue_go_to_button))
-                    }
+                    SimpleButton(
+                        text = stringResource(id = R.string.venue_go_to_button),
+                        onClick = {
+                            onNavigationClick()
+                            onNavigationClick(context, latitude, longitude)
+                        }
+                    )
                 }
 
                 Text(

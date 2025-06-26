@@ -96,6 +96,7 @@ dependencies {
     detektPlugins(libs.detekt.fomatting)
 
     implementation(project(":shared"))
+    implementation(project(":shared-ui"))
 
     implementation(libs.bundles.accompanist)
     implementation(libs.androidx.browser)
