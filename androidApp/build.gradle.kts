@@ -77,7 +77,7 @@ android {
         compose = true
     }
 
-    packagingOptions {
+    packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"
         }
@@ -96,6 +96,7 @@ dependencies {
     detektPlugins(libs.detekt.fomatting)
 
     implementation(project(":shared"))
+    implementation(project(":shared-ui"))
 
     implementation(libs.bundles.accompanist)
     implementation(libs.androidx.browser)
