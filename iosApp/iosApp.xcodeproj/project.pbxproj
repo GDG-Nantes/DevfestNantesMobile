@@ -490,7 +490,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if which swiftgen >/dev/null; then\n  swiftgen config run --config \"$SRCROOT/iosApp/SwiftGen/swiftgen.yml\"\nelse\n  echo \"warning: SwiftGen not installed. Run 'brew install swiftgen'\"\nfi\n";
+			shellScript = "if which swiftgen >/dev/null; then\n  cd \"$SRCROOT/iosApp/SwiftGen\"\n  swiftgen config run\nelse\n  echo \"warning: SwiftGen not installed. Run 'brew install swiftgen'\"\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
