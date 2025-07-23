@@ -2,5 +2,7 @@
 // Always prefer Swift Package Manager (SPM) over CocoaPods for iOS dependencies.
 // All dependencies used in build.gradle.kts or build.gradle files must always be defined in the libs.versions.toml file.
 
-Always add your findings on the iOS build issues to the `IOS_BUILD_ISSUES.md` file in the root directory of the project.
-// This file is used to track and document any issues encountered during the iOS build process,
+## iOS issues Prevention Measures
+1. **Version Alignment**: Always verify KSP compatibility when updating Kotlin versions
+2. **Path Testing**: Test SwiftGen configuration manually before relying on build integration
+3. **Documentation**: Maintain clear documentation of working directory contexts for build scripts

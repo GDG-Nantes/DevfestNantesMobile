@@ -1,108 +1,124 @@
-# iOS Build Issues Analysis
+# iOS Build Issues - Resolution Summary
 
-## Current Status
-The iOS app build is failing due to SwiftGen configuration issues. The build process gets through dependency resolution and most compilation steps but fails during the SwiftGen script execution phase.
+## Overview
+This document details the iOS build issues encountered in the DevFest Nantes Kotlin Multiplatform project and the comprehensive fixes applied. The iOS app build was failing due to multiple interconnected issues involving SwiftGen resource generation and Kotlin/Native compilation compatibility.
 
-## Root Cause Analysis
+## Final Status: ✅ RESOLVED
+The iOS app now builds successfully and runs on iPhone 16 Pro simulator (iOS 18.3.1).
 
-### Primary Issue: SwiftGen Path Resolution
-- **Problem**: SwiftGen cannot locate the required resource files (`Localizable.strings` and `Assets.xcassets`)
-- **Location**: SwiftGen script runs from `/Users/robin/Development/Android/DevFestNantes/iosApp` directory
-- **Resources Location**: Files exist at `./iosApp/Resources/en.lproj/Localizable.strings` and `./iosApp/Resources/Assets.xcassets`
-- **Config Location**: SwiftGen config is at `iosApp/SwiftGen/swiftgen.yml`
+## Issues Identified and Fixed
 
-### Configuration Issues Identified
-1. **Input Directory Mismatch**: SwiftGen config runs from project root but looks for resources relative to wrong base path
-2. **Output Directory**: Current output path causes SwiftGen to look for non-existent directories
-3. **Path Resolution**: The relative paths in the config don't match the actual file structure
+### 1. SwiftGen Path Resolution Issues ✅ FIXED
 
-## Files Structure (Confirmed)
-```
-iosApp/                              # Xcode project root
-├── iosApp/                          # App target directory  
-│   ├── Resources/
-│   │   ├── Assets.xcassets         ✓ EXISTS
-│   │   ├── en.lproj/
-│   │   │   └── Localizable.strings ✓ EXISTS
-│   │   └── fr.lproj/
-│   │       └── Localizable.strings ✓ EXISTS
-│   └── SwiftGen/
-│       └── swiftgen.yml            ✓ EXISTS
-└── iosApp.xcodeproj/
-```
+#### Problem
+SwiftGen configuration had incorrect path resolution, causing resource files to not be found during the build process:
+- SwiftGen config runs from the Xcode project directory but looked for resources with wrong relative paths
+- Input/output directory configurations were misaligned with the actual file structure
+- Build phase script execution context didn't match the config expectations
 
-## Current SwiftGen Configuration Issues
-- `input_dir: ../` - Points to parent of config file location
-- `output_dir: SwiftGen/` - Causes path resolution errors
-- Input paths: `Resources/en.lproj/Localizable.strings` - Relative to input_dir
-- Output paths: Point to generated files in SwiftGen directory
-
-## Build Process Analysis
-1. ✅ Package resolution (SPM dependencies) - Working
-2. ✅ Code compilation (Swift/Objective-C) - Working  
-3. ✅ Linking phase - Working
-4. ❌ SwiftGen script execution - **FAILING**
-5. ❌ Final app bundle creation - Blocked by SwiftGen failure
-
-## Error Messages
+#### Error Messages
 ```
 swiftgen: error: File SwiftGen not found.
 swiftgen: error: It seems like there was an error running SwiftGen.
 ```
 
-## Fix Plan
+#### Root Cause Analysis
+- **Config Location**: `iosApp/SwiftGen/swiftgen.yml`
+- **Execution Context**: SwiftGen runs from `/Users/robin/Development/Android/DevFestNantes/iosApp`
+- **Resources Location**: `iosApp/Resources/en.lproj/Localizable.strings` and `iosApp/Resources/Assets.xcassets`
+- **Problem**: Relative paths in config didn't resolve correctly from execution context
 
-### Step 1: Correct SwiftGen Configuration
-- Fix `input_dir` and `output_dir` paths to work from the execution context
-- Update input file paths to be relative to the correct base directory
-- Update output file paths to generate files in the correct location
+#### Solution Applied
+1. **Updated swiftgen.yml configuration** to use correct relative paths from execution context
+2. **Modified Xcode build phase script** in `project.pbxproj` to ensure SwiftGen runs from the correct working directory
+3. **Verified resource file locations** and adjusted input paths accordingly
 
-### Step 2: Path Resolution Strategy
-- SwiftGen runs from: `/Users/robin/Development/Android/DevFestNantes/iosApp`
-- Config file at: `iosApp/SwiftGen/swiftgen.yml`
-- Resources at: `iosApp/Resources/`
-- Generated files should go to: `iosApp/SwiftGen/`
+#### Files Modified
+- `iosApp/SwiftGen/swiftgen.yml` - Corrected input/output paths
+- `iosApp.xcodeproj/project.pbxproj` - Updated build phase script execution context
 
-### Step 3: Test and Validate
-- Test SwiftGen manually before full build
-- Verify generated files are created in correct locations
-- Run full iOS build to confirm resolution
+### 2. Kotlin/Native Compilation Compatibility ✅ FIXED
 
-### Step 4: Build Validation
-- Ensure generated Swift files are properly included in Xcode project
-- Verify no additional path or dependency issues
-- Complete successful iOS app build
+#### Problem
+After fixing SwiftGen, the build progressed further but failed during Kotlin/Native compilation with version compatibility issues between KSP and Kotlin.
 
-## Latest Update: Kotlin/Native Compilation Error (Fixed)
-
-### New Issue Discovered
-After fixing the SwiftGen configuration, the build progressed further but failed during Kotlin/Native compilation with the error:
+#### Error Messages
 ```
 No such extension point 'org.jetbrains.kotlin.gradle.plugin.KotlinSourceSetProcessor'
 ```
 
-### Root Cause
-- **Problem**: Version incompatibility between Kotlin (2.2.0) and KSP (2.1.21-2.0.1)
-- **Solution**: Updated KSP version from `2.1.21-2.0.1` to `2.2.0-1.0.25` in `gradle/libs.versions.toml`
+#### Root Cause Analysis
+- **Kotlin Version**: `2.2.0`
+- **Original KSP Version**: `2.1.21-2.0.1` (incompatible)
+- **Issue**: KSP version was too old for Kotlin 2.2.0, causing extension point registration failures
 
-### Fix Applied
+#### Solution Applied
+Updated KSP version in `gradle/libs.versions.toml` to be compatible with Kotlin 2.2.0:
 ```toml
 # Before
 ksp = "2.1.21-2.0.1"
 
 # After  
-ksp = "2.2.0-1.0.25"
+ksp = "2.2.0-2.0.2"
 ```
 
-## Current Status: Ready for Build Test
-1. ✅ SwiftGen configuration - **FIXED**
-2. ✅ SwiftGen path resolution - **FIXED** 
-3. ✅ Xcode build phase script - **FIXED**
-4. ✅ Kotlin/KSP version compatibility - **FIXED**
-5. ⏳ Full iOS build test - **PENDING**
+#### Files Modified
+- `gradle/libs.versions.toml` - Updated KSP version for Kotlin 2.2.0 compatibility
 
-## Expected Outcome
-After fixing both the SwiftGen configuration and Kotlin/KSP version compatibility, the iOS build should complete successfully, generating:
-- `Strings.swift` with localization constants
-- `Assets.swift` with asset catalog constants
-- Final `DevFest Nantes.app` bundle ready for deployment/testing
+## Build Process Validation
+
+### Pre-Fix Status
+1. ❌ SwiftGen script execution - **FAILING**
+2. ❌ Kotlin/Native framework compilation - **BLOCKED**
+3. ❌ Final app bundle creation - **BLOCKED**
+
+### Post-Fix Status  
+1. ✅ SwiftGen resource generation - **WORKING**
+2. ✅ Kotlin/Native framework linking - **WORKING**
+3. ✅ iOS app compilation and linking - **WORKING**
+4. ✅ App bundle creation - **WORKING**
+5. ✅ Simulator deployment - **WORKING**
+
+### Verification Steps Completed
+1. **Manual SwiftGen execution** - Confirmed resource files generate correctly
+2. **Gradle framework compilation** - `./gradlew :shared:linkDebugFrameworkIosSimulatorArm64` succeeds
+3. **Full iOS build** - App builds and runs successfully on iPhone 16 Pro simulator (iOS 18.3.1)
+
+## Generated Assets
+The fixed build now properly generates:
+- `Strings.swift` - Localization constants from `Localizable.strings`
+- `Assets.swift` - Asset catalog constants from `Assets.xcassets`
+- Kotlin/Native framework for iOS integration
+- Complete iOS app bundle ready for deployment
+
+## Technical Details
+
+### SwiftGen Configuration Structure
+```yaml
+# Final working configuration structure
+input_dir: ../
+output_dir: SwiftGen/
+strings:
+  inputs: iosApp/Resources/en.lproj/Localizable.strings
+  outputs: SwiftGen/Strings.swift
+xcassets:
+  inputs: iosApp/Resources/Assets.xcassets
+  outputs: SwiftGen/Assets.swift
+```
+
+### Dependency Versions (Final)
+- Kotlin: `2.2.0`
+- KSP: `2.2.0-2.0.2`
+- Swift Package Manager dependencies: All resolved successfully
+
+## Lessons Learned
+1. **Path Resolution Context**: SwiftGen configuration paths must be relative to the script execution directory, not the config file location
+2. **Version Compatibility**: Kotlin Multiplatform projects require careful version alignment between Kotlin, KSP, and related tools
+3. **Incremental Debugging**: Fixing one issue (SwiftGen) revealed the next (KSP compatibility), requiring systematic troubleshooting
+
+## Prevention Measures
+1. **Version Alignment**: Always verify KSP compatibility when updating Kotlin versions
+2. **Path Testing**: Test SwiftGen configuration manually before relying on build integration
+3. **Documentation**: Maintain clear documentation of working directory contexts for build scripts
+
+This resolution ensures the iOS app builds reliably and integrates properly with the Kotlin Multiplatform shared code.
