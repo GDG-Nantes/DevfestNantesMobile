@@ -38,8 +38,8 @@ internal enum L10n {
   internal static let buttonDialogDataCollectionConsentCustomize = L10n.tr("Localizable", "button_dialog_data_collection_consent_customize", fallback: "Customize")
   /// Advanced
   internal static let complexityAdvanced = L10n.tr("Localizable", "complexity_advanced", fallback: "Advanced")
-  /// Beginer
-  internal static let complexityBeginer = L10n.tr("Localizable", "complexity_beginer", fallback: "Beginer")
+  /// Beginner
+  internal static let complexityBeginer = L10n.tr("Localizable", "complexity_beginer", fallback: "Beginner")
   /// Intermediate
   internal static let complexityIntermediate = L10n.tr("Localizable", "complexity_intermediate", fallback: "Intermediate")
   /// DevFest Nantes about logo header.

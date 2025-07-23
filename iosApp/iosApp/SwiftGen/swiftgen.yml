@@ -3,8 +3,8 @@
 ## In case your config entries all use a common input/output parent directory, you can specify those here.
 ##   Every input/output paths in the rest of the config will then be expressed relative to these.
 ##   Those two top-level keys are optional and default to "." (the directory of the config file).
-# input_dir: MyLib/Sources/
-# output_dir: MyLib/Generated/
+# input_dir: ../
+# output_dir: SwiftGen/
 
 
 ## Generate constants for your localized strings.
@@ -12,10 +12,10 @@
 ##   SwiftGen will parse all `.strings` files found in that folder.
 strings:
   inputs:
-    - Resources/en.lproj/Localizable.strings
+    - ../Resources/en.lproj/Localizable.strings
   outputs:
     - templateName: structured-swift4
-      output: SwiftGen/Strings.swift
+      output: Strings.swift
 
 
 ## Generate constants for your Assets Catalogs, including constants for images, colors, ARKit resources, etc.
@@ -24,10 +24,10 @@ strings:
 ##   - To know which params are supported for a template, use `swiftgen template doc xcassets swift5` to open the template documentation on GitHub.
 xcassets:
   inputs:
-    - Resources/Assets.xcassets
+    - ../Resources/Assets.xcassets
   outputs:
     - templateName: swift4
-      output: SwiftGen/Assets.swift
+      output: Assets.swift
 
 
 ## Generate constants for your storyboards and XIBs.
