@@ -94,7 +94,20 @@ jobs:
         run: xcrun simctl list devices available
       
       - name: Build shared framework
-        run: ./gradlew :shared:embedAndSignAppleFrameworkForXcode
+        run: |
+          # Set required Xcode environment variables for the Gradle task
+          export SDK_NAME=iphonesimulator
+          export CONFIGURATION=Debug
+          export TARGET_BUILD_DIR=${{ github.workspace }}/build/ios
+          export BUILT_PRODUCTS_DIR=${{ github.workspace }}/build/ios
+          export FRAMEWORKS_FOLDER_PATH=Frameworks
+          export ARCHS=arm64
+          
+          # Create the target directory
+          mkdir -p "$TARGET_BUILD_DIR"
+          
+          # Run the Gradle task with Xcode environment
+          ./gradlew :shared:embedAndSignAppleFrameworkForXcode
       
       - name: Cache SwiftGen generated files
         uses: actions/cache@v4
@@ -122,7 +135,7 @@ jobs:
             -project iosApp/iosApp.xcodeproj \
             -scheme "DevFest Nantes" \
             -configuration Debug \
-            -destination 'platform=iOS Simulator,name=iPhone 16 Pro,OS=18.1' \
+            -destination 'platform=iOS Simulator,name=iPhone 16 Pro,OS=18.3' \
             -derivedDataPath build \
             build \
             CODE_SIGNING_ALLOWED=NO \
