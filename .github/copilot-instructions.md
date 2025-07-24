@@ -2,10 +2,39 @@
 
 This is a Kotlin Multiplatform project with an androidApp and an iosApp modules.
 
+## Project Documentation
+
+Before making changes, please review the comprehensive project documentation:
+
+- **[README.md](../README.md)** - Project overview, setup instructions, and quick start guide
+- **[ARCHITECTURE.md](../documentation/ARCHITECTURE.md)** - Complete architecture overview, module structure, and design patterns
+- **[DEVELOPMENT.md](../documentation/DEVELOPMENT.md)** - Detailed development setup guide for both Android and iOS
+- **[CONTRIBUTING.md](../CONTRIBUTING.md)** - Contribution guidelines, coding standards, and development workflow
+
+These documents provide essential context for understanding the project structure, development patterns, and best practices.
+
+## Architecture Context
+
+This project follows Clean Architecture with Kotlin Multiplatform Mobile (KMM):
+
+### Module Structure
+- **`shared/`** - Core business logic, data models, GraphQL client, and store pattern implementation
+- **`shared-ui/`** - Shared UI components (experimental)
+- **`androidApp/`** - Android-specific UI using Jetpack Compose, Hilt DI, and MVVM pattern
+- **`iosApp/`** - iOS-specific UI using SwiftUI, native patterns, and KMP-NativeCoroutines
+
+### Key Patterns
+- **Repository Pattern**: `DevFestNantesStore` interface for data access abstraction
+- **Builder Pattern**: `DevFestNantesStoreBuilder` for configuration
+- **MVVM**: ViewModels for business logic, reactive state management
+- **Reactive Streams**: StateFlow (Android) and Combine (iOS) for data flow
+
 ## General Guidelines
 
 - Always prefer Swift Package Manager (SPM) over CocoaPods for iOS dependencies
 - All dependencies used in build.gradle.kts or build.gradle files must always be defined in the libs.versions.toml file
+- Follow the architectural patterns documented in documentation/ARCHITECTURE.md
+- Refer to CONTRIBUTING.md for detailed coding standards and conventions
 
 ## iOS Development Standards
 
