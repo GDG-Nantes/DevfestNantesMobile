@@ -1,0 +1,17 @@
+blank_issues_enabled: false
+contact_links:
+  - name: 🎪 DevFest Nantes Event Information
+    url: https://devfest.gdgnantes.com/
+    about: Official DevFest Nantes website for event information
+  - name: 💬 Community Discussions
+    url: https://github.com/GDG-Nantes/DevfestNantesMobile/discussions
+    about: Ask questions and discuss ideas with the community
+  - name: 📖 Documentation
+    url: https://github.com/GDG-Nantes/DevfestNantesMobile/tree/main/documentation
+    about: Comprehensive project documentation and guides
+  - name: 🚀 Android App (Play Store)
+    url: https://play.google.com/store/apps/details?id=com.gdgnantes.devfest.androidapp
+    about: Download the Android app from Google Play Store
+  - name: 🍎 iOS App (App Store)
+    url: https://apps.apple.com/fr/app/devfest-nantes/id6443489706
+    about: Download the iOS app from Apple App Store
