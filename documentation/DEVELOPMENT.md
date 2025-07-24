@@ -23,9 +23,9 @@ This guide provides step-by-step instructions for setting up the DevFest Nantes 
 - **Java:** JDK 11 or higher
 
 #### For iOS Development (macOS only)
-- **Operating System:** macOS 13.0 (Ventura) or later
-- **Xcode:** 15.0 or later
-- **iOS Deployment Target:** 15.0+
+- **Operating System:** macOS 14.0 (Sonoma) or later
+- **Xcode:** 16.0 or later
+- **iOS Deployment Target:** 15.0+ (for broad device compatibility)
 - **RAM:** 8 GB minimum, 16 GB recommended
 
 ### Required Tools
@@ -36,7 +36,7 @@ Download and install the latest stable version of [Android Studio](https://devel
 **Installation:**
 1. Download Android Studio from the official website
 2. Follow the installation wizard
-3. Install Android SDK (API 34 minimum)
+3. Install Android SDK (API 36 minimum for latest features, API 23+ for device support)
 4. Install Android SDK Build-Tools
 5. Configure Android Virtual Device (AVD) for testing
 
@@ -75,7 +75,9 @@ Download and install JDK 11 from [Eclipse Temurin](https://adoptium.net/).
 1. Open Android Studio
 2. Go to `Settings/Preferences > Appearance & Behavior > System Settings > Android SDK`
 3. Install the following:
-   - Android 14 (API level 34)
+   - Android 16 API Preview (API level 36) for latest features
+   - Android 14 (API level 34) for stable development
+   - Android 6.0 (API level 23) for minimum support
    - Android SDK Build-Tools 34.0.0+
    - Android Emulator
    - Android SDK Platform-Tools
@@ -162,7 +164,7 @@ DevfestNantesMobile/
 1. Open AVD Manager (Tools > AVD Manager)
 2. Create a new virtual device:
    - Device: Pixel 7 Pro (recommended)
-   - System Image: Android 14 (API 34)
+   - System Image: Android 14 (API 34) or Android 16 Preview (API 36)
    - Configuration: Default settings
 
 #### 4. Build and Run Android App
