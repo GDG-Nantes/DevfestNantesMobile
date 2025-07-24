@@ -130,15 +130,19 @@ jobs:
           fi
       
       - name: List available schemes
-        run: xcodebuild -project iosApp/iosApp.xcodeproj -list
+        run: |
+          echo "Listing project schemes and targets..."
+          xcodebuild -project iosApp/iosApp.xcodeproj -list
+          echo "Project listing complete."
       
       - name: Build iOS App for Simulator
         run: |
+          echo "Starting iOS build..."
           xcodebuild \
             -project iosApp/iosApp.xcodeproj \
             -scheme "iosApp" \
             -configuration Debug \
-            -destination 'platform=iOS Simulator,name=iPhone 16 Pro,OS=18.3' \
+            -destination 'platform=iOS Simulator,name=iPhone 16 Pro,OS=18.3.1' \
             -derivedDataPath build \
             build \
             CODE_SIGNING_ALLOWED=NO \
