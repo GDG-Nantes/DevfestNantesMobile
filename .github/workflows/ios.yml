@@ -129,11 +129,14 @@ jobs:
             echo "SwiftGen files already exist and are cached"
           fi
       
+      - name: List available schemes
+        run: xcodebuild -project iosApp/iosApp.xcodeproj -list
+      
       - name: Build iOS App for Simulator
         run: |
           xcodebuild \
             -project iosApp/iosApp.xcodeproj \
-            -scheme "DevFest Nantes" \
+            -scheme "iosApp" \
             -configuration Debug \
             -destination 'platform=iOS Simulator,name=iPhone 16 Pro,OS=18.3' \
             -derivedDataPath build \
