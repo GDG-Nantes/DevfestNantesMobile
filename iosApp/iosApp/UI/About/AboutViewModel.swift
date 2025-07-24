@@ -22,7 +22,7 @@ class AboutViewModel: BaseViewModel {
         self.partnersContent = []
 
         do {
-            let partnersSequence = asyncSequence(for: store.getPartners())
+            let partnersSequence = asyncSequence(for: store.partners)
             var newContentArray = [PartnerContent]()
             for try await partners in partnersSequence {
                 let sortedKeys = partners.keys.sorted()
@@ -36,7 +36,7 @@ class AboutViewModel: BaseViewModel {
             }
             self.partnersContent = newContentArray
         } catch {
-            Logger.shared.log(.network, .error, "Observe Partners error: \(error)")
+            Logger(subsystem: Bundle.main.bundleIdentifier ?? "DevFestNantes", category: "About").error("Observe Partners error: \(error.localizedDescription)")
         }
     }
 }
