@@ -29,7 +29,7 @@ tasks.withType<DetektCreateBaselineTask>().configureEach {
 android {
     compileSdk = AndroidSdk.compile
     defaultConfig {
-        applicationId = "com.gdgnantes.devfest.androidapp"
+        applicationId = "com.gdgnantes.devfest.mobile.androidapp"
         minSdk = AndroidSdk.min
         targetSdk = AndroidSdk.target
         versionCode = 28
