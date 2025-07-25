@@ -5,6 +5,7 @@
 ## Build generated
 build/
 DerivedData/
+*.xcarchive
 
 ## Various settings
 *.pbxuser
@@ -27,6 +28,9 @@ xcuserdata/
 *.ipa
 *.dSYM.zip
 *.dSYM
+
+# App Store export artifacts
+DevFestNantes-AppStore/
 
 ## Playgrounds
 timeline.xctimeline

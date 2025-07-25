@@ -22,6 +22,11 @@ cd "$IOS_DIR"
 echo -e "${BLUE}🧹 Cleaning build folder...${NC}"
 xcodebuild -project iosApp.xcodeproj -scheme iosApp clean
 
+# Clean up previous build artifacts
+echo -e "${BLUE}🗑️  Cleaning previous build artifacts...${NC}"
+rm -rf "$IOS_DIR"/DevFestNantes.xcarchive
+rm -rf "$IOS_DIR"/DevFestNantes-AppStore
+
 # Build shared framework first
 echo -e "${BLUE}🔧 Building shared Kotlin framework...${NC}"
 cd "$PROJECT_ROOT"
