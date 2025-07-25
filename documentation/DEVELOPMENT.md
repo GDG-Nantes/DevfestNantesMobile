@@ -20,7 +20,7 @@ This guide provides step-by-step instructions for setting up the DevFest Nantes 
 - **Operating System:** Windows 10+, macOS 10.14+, or Linux (Ubuntu 18.04+)
 - **RAM:** 8 GB minimum, 16 GB recommended
 - **Storage:** 4 GB available space minimum
-- **Java:** JDK 11 or higher
+- **Java:** JDK 17
 
 #### For iOS Development (macOS only)
 - **Operating System:** macOS 14.0 (Sonoma) or later
@@ -51,60 +51,6 @@ Install Xcode from the Mac App Store or [Apple Developer Portal](https://develop
 
 #### 3. Git
 Install Git from [git-scm.com](https://git-scm.com/) or use your system's package manager.
-
-## Environment Setup
-
-### 1. Java Development Kit (JDK)
-
-#### Option A: Using SDKMAN (Recommended)
-```bash
-# Install SDKMAN
-curl -s "https://get.sdkman.io" | bash
-source "$HOME/.sdkman/bin/sdkman-init.sh"
-
-# Install Java 11
-sdk install java 11.0.22-tem
-sdk use java 11.0.22-tem
-```
-
-#### Option B: Manual Installation
-Download and install JDK 11 from [Eclipse Temurin](https://adoptium.net/).
-
-### 2. Android SDK Configuration
-
-1. Open Android Studio
-2. Go to `Settings/Preferences > Appearance & Behavior > System Settings > Android SDK`
-3. Install the following:
-   - Android 16 API Preview (API level 36) for latest features
-   - Android 14 (API level 34) for stable development
-   - Android 6.0 (API level 23) for minimum support
-   - Android SDK Build-Tools 34.0.0+
-   - Android Emulator
-   - Android SDK Platform-Tools
-
-### 3. Environment Variables
-
-Add the following to your shell profile (`~/.bashrc`, `~/.zshrc`, etc.):
-
-```bash
-# Android SDK
-export ANDROID_HOME=$HOME/Library/Android/sdk  # macOS
-# export ANDROID_HOME=$HOME/Android/Sdk        # Linux
-# export ANDROID_HOME=%LOCALAPPDATA%\Android\Sdk  # Windows
-
-export PATH=$PATH:$ANDROID_HOME/emulator
-export PATH=$PATH:$ANDROID_HOME/platform-tools
-export PATH=$PATH:$ANDROID_HOME/tools/bin
-
-# Java (if not using SDKMAN)
-export JAVA_HOME=/path/to/your/jdk11
-export PATH=$PATH:$JAVA_HOME/bin
-```
-
-Reload your shell configuration:
-```bash
-source ~/.zshrc  # or ~/.bashrc
-```
 
 ## Project Setup
 
@@ -394,9 +340,9 @@ kmpNativeCoroutines = "1.0.0-ALPHA-45"
 
 After successful setup:
 
-1. **Read the [Architecture Guide](documentation/ARCHITECTURE.md)** to understand the codebase structure
-2. **Review [Contributing Guidelines](CONTRIBUTING.md)** for development workflow
-3. **Check [API Documentation](documentation/API.md)** for GraphQL integration details
+1. **Read the [Architecture Guide](ARCHITECTURE.md)** to understand the codebase structure
+2. **Review [Contributing Guidelines](../CONTRIBUTING.md)** for development workflow
+3. **Check [API Documentation](API.md)** for GraphQL integration details
 4. **Run the test suites** to ensure everything works correctly
 5. **Start with small changes** to familiarize yourself with the codebase
 
@@ -404,7 +350,7 @@ After successful setup:
 
 If you encounter issues not covered in this guide:
 
-1. Check the [Troubleshooting Guide](documentation/TROUBLESHOOTING.md)
+1. Check the [Troubleshooting Guide](TROUBLESHOOTING.md)
 2. Search existing [GitHub Issues](https://github.com/GDG-Nantes/DevfestNantesMobile/issues)
 3. Create a new issue with detailed error information
 4. Ask for help in the project's discussion forum

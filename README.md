@@ -6,7 +6,8 @@ A Kotlin Multiplatform Mobile (KMM) application for the [DevFest Nantes](https:/
 
 Get the app from the official app stores:
 
-* **Android:** [Play Store](https://play.google.com/store/apps/details?id=com.gdgnantes.devfest.androidapp)
+* **Android:
+  ** [Play Store](https://play.google.com/store/apps/details?id=com.gdgnantes.devfest.mobile.androidapp)
 * **iOS:** [App Store](https://apps.apple.com/fr/app/devfest-nantes/id6443489706)
 
 ## 🏗️ Project Architecture
@@ -52,8 +53,8 @@ DevFestNantes/
 
 1. **Android Development:**
    - [Android Studio](https://developer.android.com/studio) (latest stable)
-   - JDK 11 or higher
-   - Android SDK 34+
+   - JDK 17
+   - Android SDK 36
 
 2. **iOS Development:**
    - [Xcode](https://developer.apple.com/xcode/) 15.0+
