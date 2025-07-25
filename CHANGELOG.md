@@ -1,7 +1,38 @@
-Change Log
-==========
+# Change Log
 
-Version 3.0.4 *(2024-10-??)*
+## Versioning Strategy
+
+This project uses **Calendar Versioning (CalVer)** with the `YYYY.0M.MICRO` format:
+- **YYYY**: Full year
+- **0M**: Zero-padded month  
+- **MICRO**: Patch version
+
+Version management is handled by project maintainers. Contributors should not modify version numbers or codes. Current releases and version history are tracked through [GitHub releases](https://github.com/GDG-Nantes/DevfestNantesMobile/releases).
+
+---
+
+## Version 2025.07.00 *(2025-07-25)*
+
+🔄 **BREAKING CHANGE: Migration to Calendar Versioning (CalVer)**
+
+### Versioning Changes
+* 📅 **Android**: Migrated from semantic versioning to CalVer format
+* 📅 **iOS**: Migrated from semantic versioning to CalVer format  
+* 📋 Adopted CalVer format: `YYYY.0M.MICRO`
+
+### Benefits
+* ✨ Clear release timeline visibility
+* 📅 Better alignment with DevFest Nantes conference schedule
+* 🔮 Predictable versioning for time-based releases
+* 📊 Industry standard for conference and event-based apps
+
+---
+
+## Legacy Semantic Versions
+
+*Note: Previous versions used semantic versioning (SemVer) format.*
+
+## Version 3.0.4 *(2024-10-??)*
 ----------------------------
 
 Version 3.0.3 *(2024-10-18)*

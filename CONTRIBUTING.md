@@ -409,6 +409,15 @@ We welcome feature requests! Please:
 
 ## Development Environment Notes
 
+### Versioning Guidelines
+
+The project uses **Calendar Versioning (CalVer)** with the format `YYYY.0M.MICRO`:
+- See [documentation/VERSIONING.md](documentation/VERSIONING.md) for complete details
+- **Contributors should NOT modify version numbers**: Version management is handled exclusively by maintainers
+- **Do not change**: `versionName`, `versionCode` (Android) or `MARKETING_VERSION` (iOS) in pull requests
+- Reference current versions through [GitHub releases](https://github.com/GDG-Nantes/DevfestNantesMobile/releases)
+- Focus on implementing features and fixing bugs, not version management
+
 ### OpenFeedback Integration
 
 - OpenFeedback is **disabled by default** in development

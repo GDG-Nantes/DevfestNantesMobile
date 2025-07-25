@@ -123,6 +123,14 @@ The app follows a clean architecture pattern with clear separation of concerns:
 - **Analytics:** Firebase Analytics and Crashlytics
 - **Version Management:** Gradle version catalog (`gradle/libs.versions.toml`)
 
+### Versioning Strategy
+The project uses **Calendar Versioning (CalVer)** with the `YYYY.0M.MICRO` format:
+- **YYYY**: Full year (e.g., 2025)
+- **0M**: Zero-padded month (e.g., 07 for July)
+- **MICRO**: Patch version (e.g., 00)
+
+This approach aligns releases with the DevFest Nantes conference schedule and provides clear timeline visibility. Version management is handled by project maintainers through GitHub releases.
+
 ### Development Tools
 - **Code Quality:** Detekt for static analysis
 - **Build System:** Gradle with Kotlin DSL
@@ -168,6 +176,7 @@ We welcome contributions! Please see our [contribution guidelines](CONTRIBUTING.
 
 - **[Architecture Guide](documentation/ARCHITECTURE.md)** - Detailed architecture overview
 - **[Development Setup](documentation/DEVELOPMENT.md)** - Complete setup instructions
+- **[Versioning Strategy](documentation/VERSIONING.md)** - Calendar versioning implementation and guidelines
 - **[API Documentation](documentation/API.md)** - GraphQL API integration details
 - **[Testing Guide](documentation/TESTING.md)** - Testing strategies and best practices
 - **[Troubleshooting](documentation/TROUBLESHOOTING.md)** - Common issues and solutions
