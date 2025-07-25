@@ -9,6 +9,14 @@ Debug symbols (dSYMs) are essential for:
 - App Store crash analysis and debugging
 - Symbolicated crash reports
 
+## Common Firebase dSYM Issues
+
+When using Firebase via Swift Package Manager (SPM), you may encounter these upload errors:
+- Missing dSYM for FirebaseAnalytics.framework
+- Missing dSYM for GoogleAppMeasurement.framework
+
+This is because SPM-distributed Firebase frameworks often don't include separate dSYM files or have debug symbols embedded differently.
+
 ## Build Configuration
 
 ### Xcode Project Settings
@@ -17,9 +25,11 @@ The project is configured with the following build settings for Release configur
 
 ```
 DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym"
+GENERATE_DEBUG_SYMBOLS = YES
+STRIP_DEBUG_SYMBOLS_DURING_COPY = NO
 ```
 
-This ensures that debug symbols are generated during Release builds.
+This ensures that debug symbols are generated and preserved during Release builds.
 
 ### Build Phases
 
@@ -30,26 +40,51 @@ The project includes these important build phases:
 3. **Sources** - Compiles Swift source files
 4. **Resources** - Processes app resources
 5. **Frameworks** - Links frameworks and libraries
-6. **Firebase Crashlytics** - Uploads dSYMs to Firebase Crashlytics (NEW)
+6. **Extract Firebase dSYMs** - Extracts dSYMs from Firebase frameworks (NEW)
+7. **Firebase Crashlytics** - Uploads dSYMs to Firebase Crashlytics
 
 ## Building for App Store
 
-### 1. Archive the App
+### Method 1: Automated Build Script (Recommended)
+
+Use the enhanced build script that automatically handles dSYM extraction:
+
+```bash
+./scripts/build-ios-release.sh
+```
+
+This script will:
+- Build the archive with proper settings
+- Verify dSYMs are present
+- Automatically extract missing Firebase dSYMs
+- Export for App Store with validation
+
+### Method 2: Manual Build Process
+
+#### 1. Archive the App
 
 ```bash
 # Clean build folder first
-xcodebuild -project iosApp/iosApp.xcodeproj -scheme "DevFest Nantes" clean
+xcodebuild -project iosApp/iosApp.xcodeproj -scheme iosApp clean
 
 # Create archive for App Store
 xcodebuild -project iosApp/iosApp.xcodeproj \
-           -scheme "DevFest Nantes" \
+           -scheme iosApp \
            -configuration Release \
            -destination generic/platform=iOS \
            -archivePath "DevFestNantes.xcarchive" \
            archive
 ```
 
-### 2. Export for App Store
+#### 2. Extract Missing Firebase dSYMs
+
+If Firebase dSYMs are missing, use the extraction script:
+
+```bash
+./scripts/extract-firebase-dsyms.sh ./DevFestNantes.xcarchive
+```
+
+#### 3. Export for App Store
 
 ```bash
 # Export the archive
@@ -69,8 +104,11 @@ ls -la DevFestNantes.xcarchive/dSYMs/
 
 # Should show files like:
 # DevFest Nantes.app.dSYM/
-# FirebaseAnalytics.framework.dSYM/
-# GoogleAppMeasurement.framework.dSYM/
+# FirebaseAnalytics.framework.dSYM/         (if successfully extracted)
+# GoogleAppMeasurement.framework.dSYM/      (if successfully extracted)
+
+# Verify UUIDs
+find DevFestNantes.xcarchive/dSYMs/ -name "*.dSYM" -exec dwarfdump --uuid {} \;
 ```
 
 ### 4. Upload to App Store Connect

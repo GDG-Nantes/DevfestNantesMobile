@@ -75,20 +75,83 @@ if [ -d "$DSYM_DIR" ]; then
         echo -e "${GREEN}✅ FirebaseAnalytics dSYM found${NC}"
         echo -e "   UUID: $(dwarfdump --uuid "$FIREBASE_ANALYTICS_DSYM" 2>/dev/null | head -1 || echo 'Could not read UUID')"
     else
-        echo -e "${YELLOW}⚠️  FirebaseAnalytics dSYM not found (may be expected if using SPM)${NC}"
+        echo -e "${YELLOW}⚠️  FirebaseAnalytics dSYM not found - attempting manual extraction...${NC}"
+        
+        # Try to manually extract Firebase Analytics dSYM
+        APP_PATH="$ARCHIVE_PATH/Products/Applications/DevFest Nantes.app"
+        FIREBASE_FRAMEWORK="$APP_PATH/Frameworks/FirebaseAnalytics.framework/FirebaseAnalytics"
+        
+        if [ -f "$FIREBASE_FRAMEWORK" ]; then
+            echo -e "${BLUE}🛠️  Extracting FirebaseAnalytics dSYM manually...${NC}"
+            if dsymutil "$FIREBASE_FRAMEWORK" -o "$FIREBASE_ANALYTICS_DSYM" 2>/dev/null; then
+                echo -e "${GREEN}✅ Successfully extracted FirebaseAnalytics dSYM${NC}"
+                echo -e "   UUID: $(dwarfdump --uuid "$FIREBASE_ANALYTICS_DSYM" 2>/dev/null | head -1 || echo 'Could not read UUID')"
+            else
+                echo -e "${YELLOW}⚠️  Could not extract FirebaseAnalytics dSYM (framework may not contain debug symbols)${NC}"
+            fi
+        else
+            echo -e "${YELLOW}⚠️  FirebaseAnalytics framework not found in app bundle${NC}"
+        fi
     fi
     
     if [ -d "$GOOGLE_APP_MEASUREMENT_DSYM" ]; then
         echo -e "${GREEN}✅ GoogleAppMeasurement dSYM found${NC}"
         echo -e "   UUID: $(dwarfdump --uuid "$GOOGLE_APP_MEASUREMENT_DSYM" 2>/dev/null | head -1 || echo 'Could not read UUID')"
     else
-        echo -e "${YELLOW}⚠️  GoogleAppMeasurement dSYM not found (may be expected if using SPM)${NC}"
+        echo -e "${YELLOW}⚠️  GoogleAppMeasurement dSYM not found - attempting manual extraction...${NC}"
+        
+        # Try to manually extract Google App Measurement dSYM
+        GOOGLE_FRAMEWORK="$APP_PATH/Frameworks/GoogleAppMeasurement.framework/GoogleAppMeasurement"
+        
+        if [ -f "$GOOGLE_FRAMEWORK" ]; then
+            echo -e "${BLUE}🛠️  Extracting GoogleAppMeasurement dSYM manually...${NC}"
+            if dsymutil "$GOOGLE_FRAMEWORK" -o "$GOOGLE_APP_MEASUREMENT_DSYM" 2>/dev/null; then
+                echo -e "${GREEN}✅ Successfully extracted GoogleAppMeasurement dSYM${NC}"
+                echo -e "   UUID: $(dwarfdump --uuid "$GOOGLE_APP_MEASUREMENT_DSYM" 2>/dev/null | head -1 || echo 'Could not read UUID')"
+            else
+                echo -e "${YELLOW}⚠️  Could not extract GoogleAppMeasurement dSYM (framework may not contain debug symbols)${NC}"
+            fi
+        else
+            echo -e "${YELLOW}⚠️  GoogleAppMeasurement framework not found in app bundle${NC}"
+        fi
     fi
+    
+    # Final check for Firebase frameworks
+    echo -e "${BLUE}🔍 Final dSYM verification...${NC}"
+    ls -la "$DSYM_DIR"
     
 else
     echo -e "${RED}❌ No dSYMs found in archive!${NC}"
     echo -e "${RED}This will cause App Store Connect upload to fail.${NC}"
     exit 1
+fi
+
+# Additional manual dSYM extraction for any missing Firebase frameworks
+echo -e "${BLUE}🔧 Checking for additional Firebase frameworks to extract...${NC}"
+APP_FRAMEWORKS_PATH="$ARCHIVE_PATH/Products/Applications/DevFest Nantes.app/Frameworks"
+
+if [ -d "$APP_FRAMEWORKS_PATH" ]; then
+    for framework in "$APP_FRAMEWORKS_PATH"/*.framework; do
+        if [ -d "$framework" ]; then
+            framework_name=$(basename "$framework" .framework)
+            if [[ "$framework_name" == *Firebase* ]] || [[ "$framework_name" == *Google* ]]; then
+                framework_dsym="$DSYM_DIR/${framework_name}.framework.dSYM"
+                if [ ! -d "$framework_dsym" ]; then
+                    framework_binary="$framework/$framework_name"
+                    if [ -f "$framework_binary" ]; then
+                        echo -e "${BLUE}🛠️  Extracting dSYM for $framework_name...${NC}"
+                        if dsymutil "$framework_binary" -o "$framework_dsym" 2>/dev/null; then
+                            echo -e "${GREEN}✅ Successfully extracted $framework_name dSYM${NC}"
+                        else
+                            echo -e "${YELLOW}⚠️  Could not extract $framework_name dSYM${NC}"
+                        fi
+                    fi
+                fi
+            fi
+        fi
+    done
+else
+    echo -e "${YELLOW}⚠️  App frameworks directory not found${NC}"
 fi
 
 # Export for App Store
@@ -133,6 +196,12 @@ if [ -f "$IPA_PATH" ]; then
     echo -e "${GREEN}✅ Build complete! Ready for App Store upload.${NC}"
     echo -e "${BLUE}📁 Archive: $ARCHIVE_PATH${NC}"
     echo -e "${BLUE}📱 IPA: $IPA_PATH${NC}"
+    echo ""
+    echo -e "${GREEN}📋 dSYM Summary:${NC}"
+    find "$DSYM_DIR" -name "*.dSYM" -type d | while read dsym; do
+        dsym_name=$(basename "$dsym")
+        echo -e "${GREEN}  ✅ $dsym_name${NC}"
+    done
     echo ""
     echo -e "${YELLOW}📤 To upload to App Store Connect:${NC}"
     echo -e "   1. Open Xcode and use the Organizer (Window > Organizer)"
