@@ -85,6 +85,12 @@ Fixes #(issue number)
 - [ ] 📋 I have documented any new dependency choices
 - [ ] 🔒 Dependencies are from trusted sources
 
+## Versioning
+<!-- Confirm you have not modified version numbers -->
+
+- [ ] 🚫 I have NOT modified `versionName`, `versionCode`, or `MARKETING_VERSION`
+- [ ] 📋 Version management is handled by maintainers during releases
+
 ## Breaking Changes
 <!-- If this PR includes breaking changes, describe them here -->
 

@@ -7,6 +7,7 @@ This directory contains comprehensive documentation for the DevFest Nantes mobil
 ### Essential Guides
 - **[ARCHITECTURE.md](ARCHITECTURE.md)** - Complete architecture overview, module structure, and design patterns
 - **[DEVELOPMENT.md](DEVELOPMENT.md)** - Detailed development setup guide for both Android and iOS
+- **[VERSIONING.md](VERSIONING.md)** - Calendar versioning strategy and implementation details
 - **[DOC_IMPROVEMENTS.md](DOC_IMPROVEMENTS.md)** - Documentation improvement tracking and quality standards
 
 ### Planned Documentation
@@ -42,6 +43,11 @@ This directory contains comprehensive documentation for the DevFest Nantes mobil
 - **[../CONTRIBUTING.md](../CONTRIBUTING.md)** - Contribution guidelines and standards
 - **[../CHANGELOG.md](../CHANGELOG.md)** - Version history and changes
 - **[../.github/copilot-instructions.md](../.github/copilot-instructions.md)** - AI assistant coding instructions
+
+### Technical Documentation
+- **[VERSIONING.md](VERSIONING.md)** - Calendar versioning strategy and implementation
+- **[ARCHITECTURE.md](ARCHITECTURE.md)** - Detailed architecture overview
+- **[DEVELOPMENT.md](DEVELOPMENT.md)** - Complete setup instructions
 
 ### Build Configuration
 - **[../gradle/libs.versions.toml](../gradle/libs.versions.toml)** - Dependency version catalog
