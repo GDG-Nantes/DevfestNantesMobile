@@ -33,6 +33,24 @@ cd "$PROJECT_ROOT"
 ./gradlew :shared:linkReleaseFrameworkIosFat
 cd "$IOS_DIR"
 
+# Bump CURRENT_PROJECT_VERSION
+echo -e "${BLUE}📊 Bumping build version...${NC}"
+CURRENT_VERSION=$(xcodebuild -project iosApp.xcodeproj -scheme iosApp -showBuildSettings | grep CURRENT_PROJECT_VERSION | awk '{print $3}')
+NEW_VERSION=$((CURRENT_VERSION + 1))
+
+echo -e "${BLUE}🔄 Updating CURRENT_PROJECT_VERSION from $CURRENT_VERSION to $NEW_VERSION${NC}"
+
+# Update the project file with new version
+xcrun agvtool new-version -all "$NEW_VERSION"
+
+# Verify the version was updated
+UPDATED_VERSION=$(xcodebuild -project iosApp.xcodeproj -scheme iosApp -showBuildSettings | grep CURRENT_PROJECT_VERSION | awk '{print $3}')
+if [ "$UPDATED_VERSION" = "$NEW_VERSION" ]; then
+    echo -e "${GREEN}✅ Build version successfully updated to $NEW_VERSION${NC}"
+else
+    echo -e "${YELLOW}⚠️  Version update verification failed. Expected: $NEW_VERSION, Got: $UPDATED_VERSION${NC}"
+fi
+
 # Verify build settings
 echo -e "${BLUE}🔍 Verifying build settings...${NC}"
 DEBUG_FORMAT=$(xcodebuild -project iosApp.xcodeproj -scheme iosApp -configuration Release -destination generic/platform=iOS -showBuildSettings | grep DEBUG_INFORMATION_FORMAT | awk '{print $3}')

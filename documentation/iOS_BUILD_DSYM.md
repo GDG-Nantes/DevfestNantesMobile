@@ -54,10 +54,14 @@ Use the enhanced build script that automatically handles dSYM extraction:
 ```
 
 This script will:
+- Clean previous build artifacts
+- Build the shared Kotlin framework
+- **Automatically bump the build version** (CURRENT_PROJECT_VERSION)
 - Build the archive with proper settings
 - Verify dSYMs are present
 - Automatically extract missing Firebase dSYMs
 - Export for App Store with validation
+- Upload directly to App Store Connect
 
 ### Method 2: Manual Build Process
 
@@ -121,6 +125,36 @@ xcrun altool --upload-app \
              --username "your-apple-id@example.com" \
              --password "app-specific-password"
 ```
+
+## Version Management
+
+### Automatic Build Version Bumping
+
+The build script automatically increments the `CURRENT_PROJECT_VERSION` for each build to ensure unique version numbers for App Store Connect.
+
+**How it works:**
+- Reads the current `CURRENT_PROJECT_VERSION` from Xcode project
+- Increments the version by 1
+- Updates the project using `xcrun agvtool new-version`
+- Verifies the update was successful
+
+**Manual version management:**
+```bash
+# Check current build version
+agvtool what-version
+
+# Set a specific build version
+agvtool new-version -all 42
+
+# Increment build version by 1
+agvtool next-version -all
+```
+
+**Important Notes:**
+- Marketing version (`CFBundleShortVersionString`) remains unchanged
+- Only build version (`CFBundleVersion`) is auto-incremented
+- Version changes are included in the git commit after successful build
+- Each App Store submission requires a unique build version
 
 ## Troubleshooting dSYM Issues
 
