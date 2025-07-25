@@ -229,6 +229,9 @@ xcodebuild -project iosApp/iosApp.xcodeproj -scheme iosApp -configuration Debug 
 
 # Run tests
 xcodebuild test -project iosApp/iosApp.xcodeproj -scheme iosApp -destination 'platform=iOS Simulator,name=iPhone 16 Pro,OS=18.3.1'
+
+# Build for App Store (with proper dSYM generation)
+./scripts/build-ios-release.sh
 ```
 
 ## IDE Configuration
