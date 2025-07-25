@@ -55,3 +55,22 @@ This project follows Clean Architecture with Kotlin Multiplatform Mobile (KMM):
 - **Simulator Testing**: Always test iOS builds using the iPhone 16 Pro simulator running iOS 18.3.1 to ensure compatibility with the latest iOS version and hardware configuration
 - Use command: `xcodebuild -project iosApp/iosApp.xcodeproj -scheme iosApp -configuration Debug -destination 'platform=iOS Simulator,name=iPhone 16 Pro,OS=18.3.1' build`
 - This ensures builds work correctly on the latest simulator hardware and iOS version
+
+## Development Workflow
+
+### GitHub CLI Usage
+- **Prefer GitHub CLI** if it is installed on the developer's computer for creating pull requests and managing repository interactions
+- Use `gh pr create` to create pull requests from the command line
+- Use `gh pr view` to review existing pull requests
+- Use `gh repo clone` for cloning repositories when available
+
+### Pull Request Guidelines
+- When creating a pull request, follow the pull request template located in `.github/pull_request_template.md`
+- **Only use relevant sections** from the template - not all sections need to be filled out for every pull request
+- Focus on the sections that make sense for your specific changes:
+  - Always include: Description, Type of Change, Changes Made
+  - Include Platform Testing sections only if your changes affect Android/iOS
+  - Include Screenshots/Videos only for UI changes
+  - Include Breaking Changes section only if applicable
+- Use meaningful commit messages following conventional commit format
+- Ensure your branch is up-to-date with the main branch before creating the pull request
