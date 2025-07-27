@@ -3,6 +3,7 @@ package com.gdgnantes.devfest.androidapp
 import android.app.Application
 import com.gdgnantes.devfest.androidapp.core.ApplicationInitializer
 import com.gdgnantes.devfest.androidapp.core.CoroutinesDispatcherProvider
+import com.gdgnantes.devfest.androidapp.core.performance.PerformanceInitializer
 import dagger.hilt.android.HiltAndroidApp
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.cancelChildren
@@ -21,6 +22,9 @@ class DevFestNantesApplication : Application() {
     lateinit var coroutineScope: CoroutineScope
 
     override fun onCreate() {
+        // Start performance monitoring as early as possible
+        PerformanceInitializer.startAppStartupTrace()
+        
         super.onCreate()
 
         coroutineScope = CoroutineScope(coroutineDispatcherProvider.main)

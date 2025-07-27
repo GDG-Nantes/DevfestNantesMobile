@@ -7,11 +7,14 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0011BE942E36D8270084BE4D /* PerformanceMonitoring.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0011BE922E36D8270084BE4D /* PerformanceMonitoring.swift */; };
+		0011BE952E36D8270084BE4D /* IOSPerformanceMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0011BE912E36D8270084BE4D /* IOSPerformanceMonitor.swift */; };
 		003EC8D22DF8D7E1000E5689 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */ = {isa = PBXBuildFile; productRef = 003EC8D12DF8D7E1000E5689 /* FirebaseAnalyticsWithoutAdIdSupport */; };
 		003EC8D42DF8D7E1000E5689 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 003EC8D32DF8D7E1000E5689 /* FirebaseCrashlytics */; };
 		003EC8D62DF8D7E1000E5689 /* FirebaseRemoteConfig in Frameworks */ = {isa = PBXBuildFile; productRef = 003EC8D52DF8D7E1000E5689 /* FirebaseRemoteConfig */; };
 		003EC8D92DF8D84B000E5689 /* KMPNativeCoroutinesAsync in Frameworks */ = {isa = PBXBuildFile; productRef = 003EC8D82DF8D84B000E5689 /* KMPNativeCoroutinesAsync */; };
 		003EC8DB2DF8D84B000E5689 /* KMPNativeCoroutinesCombine in Frameworks */ = {isa = PBXBuildFile; productRef = 003EC8DA2DF8D84B000E5689 /* KMPNativeCoroutinesCombine */; };
+		003EC8DD2DF8D7E1000E5689 /* FirebasePerformance in Frameworks */ = {isa = PBXBuildFile; productRef = 003EC8DC2DF8D7E1000E5689 /* FirebasePerformance */; };
 		058557BB273AAA24004C7B11 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 058557BA273AAA24004C7B11 /* Assets.xcassets */; };
 		058557D9273AAEEB004C7B11 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 058557D8273AAEEB004C7B11 /* Preview Assets.xcassets */; };
 		2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2152FB032600AC8F00CF470E /* iOSApp.swift */; };
@@ -66,6 +69,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0011BE912E36D8270084BE4D /* IOSPerformanceMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IOSPerformanceMonitor.swift; sourceTree = "<group>"; };
+		0011BE922E36D8270084BE4D /* PerformanceMonitoring.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerformanceMonitoring.swift; sourceTree = "<group>"; };
 		006B310E2C7A8FBB0024C17B /* DevFestNantesStore-extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DevFestNantesStore-extension.swift"; sourceTree = "<group>"; };
 		00D69FCF28D2032300498D05 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		058557BA273AAA24004C7B11 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -123,6 +128,7 @@
 				003EC8D92DF8D84B000E5689 /* KMPNativeCoroutinesAsync in Frameworks */,
 				003EC8DB2DF8D84B000E5689 /* KMPNativeCoroutinesCombine in Frameworks */,
 				003EC8D62DF8D7E1000E5689 /* FirebaseRemoteConfig in Frameworks */,
+				003EC8DD2DF8D7E1000E5689 /* FirebasePerformance in Frameworks */,
 				003EC8D22DF8D7E1000E5689 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */,
 				003EC8D42DF8D7E1000E5689 /* FirebaseCrashlytics in Frameworks */,
 			);
@@ -138,6 +144,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0011BE932E36D8270084BE4D /* Performance */ = {
+			isa = PBXGroup;
+			children = (
+				0011BE912E36D8270084BE4D /* IOSPerformanceMonitor.swift */,
+				0011BE922E36D8270084BE4D /* PerformanceMonitoring.swift */,
+			);
+			path = Performance;
+			sourceTree = "<group>";
+		};
 		058557D7273AAEEB004C7B11 /* Preview Content */ = {
 			isa = PBXGroup;
 			children = (
@@ -168,6 +183,7 @@
 		7555FF7D242A565900829871 /* iosApp */ = {
 			isa = PBXGroup;
 			children = (
+				0011BE932E36D8270084BE4D /* Performance */,
 				2152FB032600AC8F00CF470E /* iOSApp.swift */,
 				7555FF8C242A565B00829871 /* Info.plist */,
 				CB3979C829199C0B00BDAE6F /* Model */,
@@ -538,6 +554,8 @@
 				CBDFA0382AB1B74000302D34 /* BaseViewModel.swift in Sources */,
 				CBA5C23028DB4F5100D2779B /* CardView.swift in Sources */,
 				CB3F424428A6A02300D1C75B /* AgendaCellView.swift in Sources */,
+				0011BE942E36D8270084BE4D /* PerformanceMonitoring.swift in Sources */,
+				0011BE952E36D8270084BE4D /* IOSPerformanceMonitor.swift in Sources */,
 				CBDFA0342AB0F5C500302D34 /* SpeakerPicture.swift in Sources */,
 				CB179BF628D4C36A00BB9934 /* Strings.swift in Sources */,
 				CBCB60FA28E48F27001E9B1A /* FirebaseAnalyticsService.swift in Sources */,
@@ -894,6 +912,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 003EC8D72DF8D84B000E5689 /* XCRemoteSwiftPackageReference "KMP-NativeCoroutines" */;
 			productName = KMPNativeCoroutinesCombine;
+		};
+		003EC8DC2DF8D7E1000E5689 /* FirebasePerformance */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 003EC8D02DF8D7E1000E5689 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebasePerformance;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

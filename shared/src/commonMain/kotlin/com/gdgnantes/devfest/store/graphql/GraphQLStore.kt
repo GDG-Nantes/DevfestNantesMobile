@@ -130,9 +130,17 @@ internal class GraphQLStore(private val apolloClient: ApolloClient) : DevFestNan
             println("Apollo error: ${response.exception}")
             return emptyList()
         }
-        return response.data?.sessions?.nodes
+        val sessions =
+            response.data?.sessions?.nodes
             ?.map { it.sessionDetails.toSession() }
-            ?.filter { it.speakers.any { speaker -> speaker.id == speakerId } } ?: emptyList()
+            ?.filter { it.speakers.any { speaker -> speaker.id == speakerId } }
+            ?: emptyList()
+
+        // Log session count for debugging
+        val sessionCount = sessions.size
+        println("Found $sessionCount sessions for speaker $speakerId")
+
+        return sessions
     }
 
     override val speakers: Flow<List<Speaker>>
