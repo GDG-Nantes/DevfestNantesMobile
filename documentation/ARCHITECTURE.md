@@ -87,6 +87,7 @@ androidApp/
 ├── src/main/java/com/gdgnantes/devfest/androidapp/
 │   ├── core/                    # Core Android components
 │   │   ├── injection/           # Dagger Hilt modules
+│   │   ├── performance/         # Firebase Performance implementation
 │   │   └── ApplicationInitializer.kt
 │   ├── ui/                      # UI layer
 │   │   ├── components/          # Reusable Compose components
@@ -123,6 +124,7 @@ iosApp/
 │   │   └── Data/                # Data transformation helpers
 │   ├── Extension/               # Swift extensions
 │   ├── Analytics/               # iOS analytics implementation
+│   ├── Performance/             # Firebase Performance implementation
 │   └── Resources/               # iOS resources and assets
 ```
 
@@ -440,3 +442,9 @@ fun SessionDetails.toSession(): Session {
 ---
 
 This architecture provides a solid foundation for the DevFest Nantes app while maintaining flexibility for future enhancements and platform-specific optimizations.
+
+## Related Documentation
+
+- **[Performance Monitoring](PERFORMANCE_MONITORING.md)** - Firebase Performance implementation and monitoring strategies
+- **[Development Setup](DEVELOPMENT.md)** - Complete development environment setup
+- **[API Documentation](API.md)** - GraphQL API integration details

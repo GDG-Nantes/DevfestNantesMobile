@@ -177,6 +177,7 @@ We welcome contributions! Please see our [contribution guidelines](CONTRIBUTING.
 
 - **[Architecture Guide](documentation/ARCHITECTURE.md)** - Detailed architecture overview
 - **[Development Setup](documentation/DEVELOPMENT.md)** - Complete setup instructions
+- **[Performance Monitoring](documentation/PERFORMANCE_MONITORING.md)** - Firebase Performance implementation and usage
 - **[Versioning Strategy](documentation/VERSIONING.md)** - Calendar versioning implementation and guidelines
 - **[API Documentation](documentation/API.md)** - GraphQL API integration details
 - **[Testing Guide](documentation/TESTING.md)** - Testing strategies and best practices
