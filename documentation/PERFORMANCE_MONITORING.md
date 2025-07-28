@@ -504,6 +504,38 @@ If you encounter SPM build failures:
 2. Reset package caches: File > Packages > Reset Package Caches
 3. Update packages: File > Packages > Update to Latest Package Versions
 
+#### GitHub Actions / CI Build Issues (iOS)
+**Issue**: Build fails with "Cannot find type 'Trace' in scope" or similar Firebase Performance type errors.
+
+**Root Cause**: CI environments may have different package resolution behavior or module import paths.
+
+**Solutions**:
+1. **Explicit Import**: Ensure all Firebase Performance imports are explicit:
+   ```swift
+   import Foundation
+   import os
+   import Firebase
+   import FirebasePerformance  // Explicit import required for CI
+   ```
+
+2. **Package Resolution**: In GitHub Actions, add package resolution step:
+   ```yaml
+   - name: Resolve Swift Package Dependencies
+     run: |
+       cd iosApp
+       xcodebuild -resolvePackageDependencies -project iosApp.xcodeproj
+   ```
+
+3. **Clean Build**: Ensure clean build in CI:
+   ```yaml
+   - name: Build iOS
+     run: |
+       cd iosApp
+       xcodebuild clean build -project iosApp.xcodeproj -scheme iosApp -configuration Debug
+   ```
+
+4. **Firebase Version Pinning**: Consider pinning Firebase iOS SDK version in Package.swift or project settings to ensure consistent builds across environments.
+
 ## Production Deployment
 
 ### Pre-Production Checklist

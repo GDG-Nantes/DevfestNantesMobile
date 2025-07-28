@@ -1,6 +1,7 @@
 import Foundation
 import os
 import Firebase
+import FirebasePerformance
 
 /**
  * iOS native Firebase Performance monitoring.
