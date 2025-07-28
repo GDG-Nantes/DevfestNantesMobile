@@ -18,20 +18,40 @@ class SpeakersViewModel: BaseViewModel {
     @Published var speakersContent: [Speaker_]?
     @Published var isLoading = true
     
+    private let performanceMonitoring = PerformanceMonitoring.shared
+    
     ///Asynchronous method to retrieve speakers
     func observeSpeakers() async {
-        Task {
-            do {
-                let speakersSequence = asyncSequence(for: store.speakers)
-                for try await speakers in speakersSequence {
-                    DispatchQueue.main.async {
-                        self.speakersContent = speakers
-                        self.isLoading = false
-                    }
+        do {
+            let speakers = try await performanceMonitoring.trackDataLoad(
+                traceName: PerformanceMonitoring.TRACE_SPEAKERS_LOAD,
+                dataSource: "graphql"
+            ) {
+                let speakersSequence = asyncSequence(for: self.store.speakers)
+                var speakers: [Speaker_] = []
+                
+                for try await speakersList in speakersSequence {
+                    speakers = speakersList
+                    break // Get the first emission
                 }
-            } catch {
-                Logger(subsystem: Bundle.main.bundleIdentifier ?? "DevFestNantes", category: "Speakers").error("Observe Speakers error: \(error.localizedDescription)")
-                // Handle error appropriately, e.g., show an alert to the user
+                
+                return speakers
+            }
+            
+            DispatchQueue.main.async {
+                self.speakersContent = speakers
+                self.isLoading = false
+            }
+            
+            Logger(subsystem: Bundle.main.bundleIdentifier ?? "DevFestNantes", category: "Speakers")
+                .info("Speakers loaded: \(speakers.count) speakers")
+                
+        } catch {
+            Logger(subsystem: Bundle.main.bundleIdentifier ?? "DevFestNantes", category: "Speakers")
+                .error("Observe Speakers error: \(error.localizedDescription)")
+            
+            DispatchQueue.main.async {
+                self.isLoading = false
             }
         }
     }

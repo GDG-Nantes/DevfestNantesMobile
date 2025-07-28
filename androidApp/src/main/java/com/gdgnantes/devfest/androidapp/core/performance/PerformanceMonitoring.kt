@@ -15,18 +15,13 @@ import javax.inject.Singleton
 class PerformanceMonitoring @Inject constructor() {
     companion object {
         // Custom trace names for key user flows
-        const val TRACE_APP_STARTUP = "app_startup"
         const val TRACE_AGENDA_LOAD = "agenda_load"
         const val TRACE_SPEAKERS_LOAD = "speakers_load"
         const val TRACE_SESSION_DETAILS_LOAD = "session_details_load"
         const val TRACE_SPEAKER_DETAILS_LOAD = "speaker_details_load"
-        const val TRACE_VENUE_LOAD = "venue_load"
-        const val TRACE_PARTNERS_LOAD = "partners_load"
 
         // Custom attributes
         const val ATTR_DATA_SOURCE = "data_source"
-        const val ATTR_SESSION_COUNT = "session_count"
-        const val ATTR_SPEAKER_COUNT = "speaker_count"
         const val ATTR_ERROR_TYPE = "error_type"
     }
 

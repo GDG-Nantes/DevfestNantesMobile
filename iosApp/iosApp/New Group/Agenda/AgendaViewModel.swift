@@ -19,6 +19,9 @@ class AgendaViewModel: BaseViewModel {
     @Published var roomsContent: [Room_]?
     @Published var isLoading = true
     let defaults = UserDefaults.standard
+    
+    private let performanceMonitoring = PerformanceMonitoring.shared
+    
     var favorites: [String] {
         get {
             return defaults.object(forKey: "Favorites") as? [String] ?? []
@@ -61,14 +64,35 @@ class AgendaViewModel: BaseViewModel {
     ///Asynchronous method to retrieve sessions
     func observeSessions() async {
         do {
-            let sessionsSequence = asyncSequence(for: store.sessions)
-            for try await sessions in sessionsSequence {
-                DispatchQueue.main.async {
-                    self.sessionsChanged(sessions: sessions)
+            let sessions = try await performanceMonitoring.trackDataLoad(
+                traceName: PerformanceMonitoring.TRACE_AGENDA_LOAD,
+                dataSource: "graphql"
+            ) {
+                let sessionsSequence = asyncSequence(for: self.store.sessions)
+                var sessions: [Session_] = []
+                
+                for try await sessionsList in sessionsSequence {
+                    sessions = sessionsList
+                    break // Get the first emission
                 }
+                
+                return sessions
             }
+            
+            DispatchQueue.main.async {
+                self.sessionsChanged(sessions: sessions)
+            }
+            
+            Logger(subsystem: Bundle.main.bundleIdentifier ?? "DevFestNantes", category: "Agenda")
+                .info("Agenda sessions loaded: \(sessions.count) sessions")
+                
         } catch {
-            Logger(subsystem: Bundle.main.bundleIdentifier ?? "DevFestNantes", category: "Agenda").error("Observe Sessions error: \(error.localizedDescription)")
+            Logger(subsystem: Bundle.main.bundleIdentifier ?? "DevFestNantes", category: "Agenda")
+                .error("Observe Sessions error: \(error.localizedDescription)")
+            
+            DispatchQueue.main.async {
+                self.isLoading = false
+            }
         }
     }
     

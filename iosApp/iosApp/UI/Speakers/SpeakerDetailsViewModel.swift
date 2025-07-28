@@ -18,6 +18,8 @@ class SpeakerDetailsViewModel: BaseViewModel {
     @Published var speakerSession: [Session_]?
     var speakerId: String
     
+    private let performanceMonitoring = PerformanceMonitoring.shared
+    
     init(speakerId: String) {
         self.speakerId = speakerId
         super.init()
@@ -30,30 +32,40 @@ class SpeakerDetailsViewModel: BaseViewModel {
     
 
     func getSpeaker(speakerId: String) async {
-        Task {
-            do {
-                let speakerReslut = try await asyncFunction(for: store.getSpeaker(id: speakerId))
-                DispatchQueue.main.async {
-                    self.speaker = speakerReslut
-                }
-            } catch {
-                Logger(subsystem: Bundle.main.bundleIdentifier ?? "DevFestNantes", category: "SpeakerDetails").error("Observe Venue error: \(error.localizedDescription)")
-                // Handle error appropriately
+        do {
+            let speakerResult = try await performanceMonitoring.trackDataLoad(
+                traceName: PerformanceMonitoring.TRACE_SPEAKER_DETAILS_LOAD,
+                dataSource: "graphql"
+            ) {
+                try await asyncFunction(for: self.store.getSpeaker(id: speakerId))
             }
+            
+            DispatchQueue.main.async {
+                self.speaker = speakerResult
+            }
+            
+            Logger(subsystem: Bundle.main.bundleIdentifier ?? "DevFestNantes", category: "SpeakerDetails")
+                .info("Speaker details loaded: \(speakerResult?.name ?? "Unknown")")
+                
+        } catch {
+            Logger(subsystem: Bundle.main.bundleIdentifier ?? "DevFestNantes", category: "SpeakerDetails")
+                .error("Get Speaker error: \(error.localizedDescription)")
         }
     }
     
     func getSpeakerSession(speakerId: String) async {
-        Task {
-            do {
-                let speakerSessionResult = try await asyncFunction(for: store.getSpeakerSessions(speakerId: speakerId))
-                DispatchQueue.main.async {
-                    self.speakerSession = speakerSessionResult
-                }
-            } catch {
-                Logger(subsystem: Bundle.main.bundleIdentifier ?? "DevFestNantes", category: "SpeakerDetails").error("Observe Venue error: \(error.localizedDescription)")
-                // Handle error appropriately
+        do {
+            let speakerSessionResult = try await asyncFunction(for: store.getSpeakerSessions(speakerId: speakerId))
+            DispatchQueue.main.async {
+                self.speakerSession = speakerSessionResult
             }
+            
+            Logger(subsystem: Bundle.main.bundleIdentifier ?? "DevFestNantes", category: "SpeakerDetails")
+                .info("Speaker sessions loaded: \(speakerSessionResult.count) sessions")
+                
+        } catch {
+            Logger(subsystem: Bundle.main.bundleIdentifier ?? "DevFestNantes", category: "SpeakerDetails")
+                .error("Get Speaker Sessions error: \(error.localizedDescription)")
         }
     }
 }

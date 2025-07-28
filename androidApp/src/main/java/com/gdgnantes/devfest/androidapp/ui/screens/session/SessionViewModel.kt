@@ -27,7 +27,7 @@ class SessionViewModel @AssistedInject constructor(
     init {
         viewModelScope.launch {
             performanceMonitoring.traceDataLoading(
-                operation = "session_details_load",
+                operation = PerformanceMonitoring.TRACE_SESSION_DETAILS_LOAD,
                 dataSource = "graphql"
             ) {
                 val sessionData = store.getSession(sessionId)

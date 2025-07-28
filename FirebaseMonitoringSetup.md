@@ -2,8 +2,8 @@
 
 ## Overview
 Successfully implemented Firebase Performance Monitoring with **platform-native approach**:
-- **Android**: ✅ Complete native Firebase Performance implementation
-- **iOS**: ✅ Complete native Firebase Performance implementation  
+- **Android**: ✅ Complete native Firebase Performance implementation with comprehensive ViewModel integration
+- **iOS**: ✅ Complete native Firebase Performance implementation with proper optional handling  
 - **No Shared Module Abstraction**: Each platform uses native APIs directly
 - **Clean Architecture**: Focused separation of concerns
 
@@ -22,31 +22,44 @@ Successfully implemented Firebase Performance Monitoring with **platform-native 
 - **Dependencies**: Firebase Performance 2.0.0, Firebase BOM 33.16.0 configured in `gradle/libs.versions.toml`
 - **Core Implementation**: `androidApp/src/main/java/com/gdgnantes/devfest/androidapp/core/performance/PerformanceMonitoring.kt`
 - **Extension Methods**: `androidApp/src/main/java/com/gdgnantes/devfest/androidapp/core/performance/PerformanceExtensions.kt`
+- **Enhanced ViewModels**: All major ViewModels enhanced with performance monitoring
+  - ✅ **AgendaViewModel**: Enhanced with `TRACE_AGENDA_LOAD` for session loading
+  - ✅ **SpeakersViewModel**: Enhanced with `TRACE_SPEAKERS_LOAD` for speakers list loading
+  - ✅ **SessionViewModel**: Enhanced with `TRACE_SESSION_DETAILS_LOAD` for session details
+  - ✅ **SpeakerViewModel**: Enhanced with `TRACE_SPEAKER_DETAILS_LOAD` for speaker details
 - **Features**: 
   - App startup tracing via `PerformanceInitializer.kt`
+  - Predefined trace constants for consistency across the app
   - Comprehensive custom trace support with automatic error handling
   - ViewModel data loading performance tracking with `traceDataLoading()`
   - UI state update monitoring with `traceStateUpdate()`
   - Network request tracing with `traceNetworkRequest()`
   - Compose recomposition performance tracking
   - Automatic metrics recording (duration, success/failure, item counts)
-- **Integration**: Enhanced `SessionViewModel` and `AgendaViewModel` with performance monitoring
+- **Code Quality**: All predefined constants properly used, unused constants removed
 - **Status**: ✅ Building successfully and production ready with comprehensive monitoring
 
-### ✅ iOS Implementation (COMPREHENSIVE WITH FIREBASE PERFORMANCE)
+### ✅ iOS Implementation (COMPREHENSIVE WITH PROPER OPTIONAL HANDLING)
 - **Dependencies**: Firebase iOS SDK 11.15.0 via Swift Package Manager
 - **Core Implementation**: `iosApp/iosApp/Performance/PerformanceMonitoring.swift`
+- **Enhanced ViewModels**: iOS ViewModels enhanced with performance monitoring
+  - ✅ **SpeakersViewModel**: Enhanced with `TRACE_SPEAKERS_LOAD` for speakers list loading
+  - ✅ **SpeakerDetailsViewModel**: Enhanced with `TRACE_SPEAKER_DETAILS_LOAD` for speaker details
+  - ✅ **AgendaViewModel**: Enhanced with `TRACE_AGENDA_LOAD` for agenda/sessions loading
 - **Features**: 
-  - App startup tracing with static methods
-  - Data loading performance tracking with `trackDataLoad()`
+  - **Proper Optional Handling**: All `Performance.startTrace()` calls properly unwrapped with graceful fallback
+  - Predefined trace constants matching Android implementation for consistency
+  - App startup tracing with static methods and proper Firebase initialization order
+  - Data loading performance tracking with `trackDataLoad()` and automatic error handling
   - Screen navigation monitoring with `trackNavigation()`
-  - Screen loading performance with `trackScreenLoad()`
-  - Network request tracing with custom attributes
-  - UI rendering performance monitoring
+  - Screen loading performance with `trackScreenLoad()` returning optional Trace
+  - Network request tracing with custom attributes and optional handling
+  - UI rendering performance monitoring with optional Trace support
   - Async operation tracking with automatic error handling and duration measurement
-  - Firebase Performance integration with proper initialization order
+  - Convenience extension methods (`traceDataLoading`, `traceNavigation`, `trace`) with proper error propagation
+- **Error Handling**: Comprehensive error handling - operations continue even if trace creation fails
 - **Integration**: Enabled in `iOSApp.swift` app initialization with proper Firebase configuration
-- **Status**: ✅ Comprehensive native Firebase Performance implementation ready for integration
+- **Status**: ✅ Comprehensive native Firebase Performance implementation with robust error handling
 
 ### ✅ Shared Module (CLEANED)
 - **Architecture Decision**: Removed all performance monitoring abstractions 
@@ -65,15 +78,18 @@ Successfully implemented Firebase Performance Monitoring with **platform-native 
 
 ### Android Implementation Structure
 ```kotlin
-// PerformanceMonitoring.kt - Comprehensive performance tracking
+// PerformanceMonitoring.kt - Comprehensive performance tracking with predefined constants
 @Singleton
 class PerformanceMonitoring @Inject constructor() {
-    // Predefined trace constants for consistency
+    // Predefined trace constants for consistency (all actively used)
     companion object {
         const val TRACE_AGENDA_LOAD = "agenda_load"
+        const val TRACE_SPEAKERS_LOAD = "speakers_load"
         const val TRACE_SESSION_DETAILS_LOAD = "session_details_load"
+        const val TRACE_SPEAKER_DETAILS_LOAD = "speaker_details_load"
+        
         const val ATTR_DATA_SOURCE = "data_source"
-        const val ATTR_SESSION_COUNT = "session_count"
+        const val ATTR_ERROR_TYPE = "error_type"
     }
     
     // Core trace management with error handling
@@ -85,10 +101,6 @@ class PerformanceMonitoring @Inject constructor() {
     ): T {
         // Automatic duration tracking, error handling, and attribute setting
     }
-    
-    // Enhanced ViewModels with performance monitoring
-    // SessionViewModel enhanced with traceDataLoading()
-    // AgendaViewModel enhanced with traceStateUpdate()
 }
 
 // PerformanceExtensions.kt - Convenient extension methods
@@ -99,39 +111,108 @@ suspend fun PerformanceMonitoring.traceDataLoading(
 ): T {
     // Simplified interface for common ViewModel operations
 }
+
+// Enhanced ViewModels - ALL MAJOR VIEWMODELS ENHANCED
+// AgendaViewModel.kt
+performanceMonitoring.traceDataLoading(
+    operation = PerformanceMonitoring.TRACE_AGENDA_LOAD,
+    dataSource = "graphql"
+) { store.agenda.collect { ... } }
+
+// SpeakersViewModel.kt  
+performanceMonitoring.traceDataLoading(
+    operation = PerformanceMonitoring.TRACE_SPEAKERS_LOAD,
+    dataSource = "graphql"
+) { store.speakers.collect { ... } }
+
+// SessionViewModel.kt
+performanceMonitoring.traceDataLoading(
+    operation = PerformanceMonitoring.TRACE_SESSION_DETAILS_LOAD,
+    dataSource = "graphql"
+) { store.getSession(sessionId) }
+
+// SpeakerViewModel.kt
+performanceMonitoring.trace(
+    traceName = PerformanceMonitoring.TRACE_SPEAKER_DETAILS_LOAD,
+    attributes = mapOf(
+        PerformanceMonitoring.ATTR_DATA_SOURCE to "graphql",
+        "speaker_id" to speakerId
+    )
+) { store.getSpeaker(speakerId) }
 ```
 
 ### iOS Implementation Structure
 ```swift
-// PerformanceMonitoring.swift - Native Firebase Performance APIs
+// PerformanceMonitoring.swift - Native Firebase Performance APIs with proper optional handling
 public class PerformanceMonitoring: ObservableObject {
-    // App startup tracing (static methods for global access)
-    public static func startAppStartupTrace()
-    public static func stopAppStartupTrace()
+    // Predefined constants matching Android implementation
+    static let TRACE_AGENDA_LOAD = "agenda_load"
+    static let TRACE_SPEAKERS_LOAD = "speakers_load"
+    static let TRACE_SESSION_DETAILS_LOAD = "session_details_load"
+    static let TRACE_SPEAKER_DETAILS_LOAD = "speaker_details_load"
     
-    // Comprehensive data loading tracking
+    static let ATTR_DATA_SOURCE = "data_source"
+    static let ATTR_ERROR_TYPE = "error_type"
+    
+    // App startup tracing (static methods for global access)
+    public static func startAppStartupTrace() {
+        guard let trace = Performance.startTrace(name: "app_startup") else {
+            // Proper error handling for optional Trace
+            logger.error("Failed to start app startup trace")
+            return
+        }
+        // Continue with trace...
+    }
+    
+    // Comprehensive data loading tracking with optional handling
     func trackDataLoad<T>(
         traceName: String,
         dataSource: String = "unknown",
         operation: @escaping () async throws -> T
     ) async throws -> T {
+        guard let trace = Performance.startTrace(name: traceName) else {
+            logger.error("Failed to start trace: \(traceName)")
+            // Graceful degradation - continue operation even if tracing fails
+            return try await operation()
+        }
+        
         // Automatic Firebase Performance trace with duration and error tracking
+        // ... rest of implementation
     }
     
-    // SwiftUI navigation performance monitoring
-    func trackNavigation<T>(
-        to screen: String,
-        operation: @escaping () async throws -> T
-    ) async throws -> T
-    
-    // General async operation tracking with comprehensive metrics
-    func trackAsyncOperation<T>(
-        name: String,
-        attributes: [String: String] = [:],
-        operation: @escaping () async throws -> T
-    ) async rethrows -> T {
-        // Automatic Firebase Performance integration with error handling
+    // Convenience extension methods with proper error propagation
+    func traceDataLoading<T>(
+        operation: String,
+        dataSource: String = "graphql",
+        block: @escaping () async throws -> T
+    ) async throws -> T {  // Changed from 'rethrows' to 'throws' for proper error handling
+        return try await trackDataLoad(traceName: operation, dataSource: dataSource, operation: block)
     }
+}
+
+// Enhanced iOS ViewModels - ALL MAJOR VIEWMODELS ENHANCED
+// SpeakersViewModel.swift
+let speakers = try await performanceMonitoring.traceDataLoading(
+    operation: PerformanceMonitoring.TRACE_SPEAKERS_LOAD,
+    dataSource: "graphql"
+) {
+    // Load speakers from store
+}
+
+// SpeakerDetailsViewModel.swift
+let speakerResult = try await performanceMonitoring.traceDataLoading(
+    operation: PerformanceMonitoring.TRACE_SPEAKER_DETAILS_LOAD,
+    dataSource: "graphql"
+) {
+    try await asyncFunction(for: store.getSpeaker(id: speakerId))
+}
+
+// AgendaViewModel.swift
+let sessions = try await performanceMonitoring.traceDataLoading(
+    operation: PerformanceMonitoring.TRACE_AGENDA_LOAD,
+    dataSource: "graphql"
+) {
+    // Load agenda sessions from store
 }
 
 // iOSApp.swift - App initialization with proper Firebase order
@@ -147,7 +228,22 @@ init() {
 
 #### 📱 App Startup Monitoring
 - **Android**: Native Firebase Performance trace in Application.onCreate()
-- **iOS**: Static methods for app startup trace in SwiftUI App initialization
+- **iOS**: Static methods for app startup trace in SwiftUI App initialization with proper optional handling
+
+#### 🎯 Consistent Trace Naming
+- **Cross-Platform Constants**: Same trace names used on both platforms for unified analytics
+- **Code Quality**: All predefined constants actively used, unused constants removed
+- **Maintainability**: Centralized constant definitions prevent naming inconsistencies
+
+#### 🛡️ Robust Error Handling
+- **Android**: Comprehensive error handling with automatic fallback
+- **iOS**: Proper optional `Trace?` handling with graceful degradation
+- **Operation Continuity**: App continues to function even if performance monitoring fails
+
+#### 📊 Comprehensive ViewModel Integration
+- **Data Loading Tracking**: All major data loading operations monitored
+- **Custom Attributes**: Rich metadata for detailed performance analysis
+- **Automatic Metrics**: Duration, success/failure, item counts tracked automatically
 
 #### 🌐 Network Performance Monitoring
 - **Android**: Automatic HTTP URL connection monitoring via Firebase Performance

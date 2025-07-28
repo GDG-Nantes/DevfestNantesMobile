@@ -68,7 +68,7 @@ class AgendaViewModel @Inject constructor(
         autoRefreshJob =
             viewModelScope.launch {
                 performanceMonitoring.traceDataLoading(
-                    operation = "agenda_load",
+                    operation = PerformanceMonitoring.TRACE_AGENDA_LOAD,
                     dataSource = "graphql"
                 ) {
                     store.agenda
