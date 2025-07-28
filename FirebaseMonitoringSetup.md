@@ -85,8 +85,11 @@ public class PerformanceMonitoring: ObservableObject {
 
 // iOSApp.swift - App initialization
 init() {
-    PerformanceMonitoring.startAppStartupTrace()
+    // Firebase MUST be configured before any Firebase Performance APIs
     FirebaseApp.configure()
+    
+    PerformanceMonitoring.startAppStartupTrace()
+    _ = RCValues.sharedInstance
     PerformanceMonitoring.stopAppStartupTrace()
 }
 ```
@@ -165,6 +168,42 @@ firebase-performance = { id = "com.google.firebase.firebase-perf", version.ref =
 2. **Gradual Rollout**: Consider gradual release deployment
 3. **Performance Baseline**: Establish production performance baselines
 4. **Continuous Monitoring**: Monitor for performance regressions
+
+## Troubleshooting
+
+### iOS Firebase Performance Issues
+
+#### Problem: App crashes with "Firebase is not configured" error
+**Error Message**: `[FirebasePerformance][I-PRF200007] Failed creating trace app_startup. Firebase is not configured.`
+
+**Solution**: Ensure `FirebaseApp.configure()` is called **before** any Firebase Performance APIs:
+
+```swift
+// ❌ WRONG - Will crash
+init() {
+    PerformanceMonitoring.startAppStartupTrace() // Called before Firebase is configured
+    FirebaseApp.configure()
+}
+
+// ✅ CORRECT - Firebase configured first
+init() {
+    FirebaseApp.configure() // Configure Firebase first
+    PerformanceMonitoring.startAppStartupTrace() // Now safe to use Firebase Performance
+}
+```
+
+**Root Cause**: Firebase Performance requires Firebase Core to be initialized before any Performance APIs can be used.
+
+### Build Issues
+
+#### iOS Build Warnings
+- **Retroactive Protocol Conformance**: Safe to ignore, related to shared module types
+- **Build Phase Warnings**: Safe to ignore, related to script optimization
+- **dSYM Warnings**: Related to Crashlytics, doesn't affect Performance functionality
+
+#### Android Build Issues
+- **KSP Version Compatibility**: Ensure Kotlin and KSP versions are aligned in `libs.versions.toml`
+- **Firebase BOM**: Use Firebase BOM for consistent dependency versions
 
 ## Documentation References
 

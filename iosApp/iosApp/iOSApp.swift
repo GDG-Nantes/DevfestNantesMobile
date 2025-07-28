@@ -13,15 +13,14 @@ var remoteConfig = RemoteConfig.remoteConfig()
 
 @main
 struct iOSApp: App {
-    // register app delegate for Firebase setup
-      @UIApplicationDelegateAdaptor(AppDelegate.self) var delegate
     
     init() {
+        //Firebase initialization
+        FirebaseApp.configure()
+        
         // Start app startup performance monitoring
         PerformanceMonitoring.startAppStartupTrace()
         
-        //Firebase initialization
-        FirebaseApp.configure()
         _ = RCValues.sharedInstance
         
         // Stop app startup performance monitoring
