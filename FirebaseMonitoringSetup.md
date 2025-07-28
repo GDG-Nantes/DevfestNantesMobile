@@ -36,6 +36,7 @@ Successfully implemented Firebase Performance Monitoring with **platform-native 
   - Network request tracing with `traceNetworkRequest()`
   - Compose recomposition performance tracking
   - Automatic metrics recording (duration, success/failure, item counts)
+- **Testing**: All tests passing (unit tests + instrumented tests) with protobuf conflict resolved
 - **Code Quality**: All predefined constants properly used, unused constants removed
 - **Status**: ✅ Building successfully and production ready with comprehensive monitoring
 
@@ -349,6 +350,31 @@ init() {
 #### Android Build Issues
 - **KSP Version Compatibility**: Ensure Kotlin and KSP versions are aligned in `libs.versions.toml`
 - **Firebase BOM**: Use Firebase BOM for consistent dependency versions
+
+#### Android Test Issues
+
+##### Protobuf Dependency Conflicts
+**Issue**: AndroidTest fails with `NoSuchMethodError: No static method registerDefaultInstance` during Firebase Performance initialization.
+
+**Root Cause**: Conflicting protobuf versions between Firebase Performance and Espresso test dependencies.
+
+**Solution**: Exclude protobuf-lite from Espresso dependencies in `androidApp/build.gradle.kts`:
+
+```kotlin
+androidTestImplementation(libs.androidx.test.espresso) {
+    exclude(group = "com.google.protobuf", module = "protobuf-lite")
+}
+androidTestImplementation(libs.androidx.test.espresso.contrib) {
+    exclude(group = "com.google.protobuf", module = "protobuf-lite")
+}
+androidTestImplementation(libs.androidx.test.espresso.intents) {
+    exclude(group = "com.google.protobuf", module = "protobuf-lite")
+}
+```
+
+**Why this works**: Firebase BOM manages the correct protobuf version for Firebase Performance, while Espresso brings in an incompatible version. Excluding protobuf from Espresso allows Firebase's version to be used consistently.
+
+**Verification**: Both unit tests (`./gradlew :androidApp:testDebugUnitTest`) and instrumented tests (`./gradlew :androidApp:connectedDebugAndroidTest`) pass successfully after this fix.
 
 ## Documentation References
 
