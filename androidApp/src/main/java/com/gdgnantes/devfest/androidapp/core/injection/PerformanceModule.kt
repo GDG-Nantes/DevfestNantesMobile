@@ -14,7 +14,6 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 abstract class PerformanceModule {
-
     @Binds
     @IntoSet
     abstract fun bindPerformanceInitializer(performanceInitializer: PerformanceInitializer): ApplicationInitializer

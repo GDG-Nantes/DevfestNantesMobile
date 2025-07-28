@@ -10,9 +10,9 @@ import javax.inject.Singleton
  * Centralized performance monitoring for the DevFest Nantes app.
  * Provides utilities for tracking custom performance metrics.
  */
+@Suppress("TooGenericExceptionCaught")
 @Singleton
 class PerformanceMonitoring @Inject constructor() {
-
     companion object {
         // Custom trace names for key user flows
         const val TRACE_APP_STARTUP = "app_startup"
@@ -22,7 +22,7 @@ class PerformanceMonitoring @Inject constructor() {
         const val TRACE_SPEAKER_DETAILS_LOAD = "speaker_details_load"
         const val TRACE_VENUE_LOAD = "venue_load"
         const val TRACE_PARTNERS_LOAD = "partners_load"
-        
+
         // Custom attributes
         const val ATTR_DATA_SOURCE = "data_source"
         const val ATTR_SESSION_COUNT = "session_count"
@@ -53,7 +53,7 @@ class PerformanceMonitoring @Inject constructor() {
                 trace.putAttribute(key, value)
             }
             trace.stop()
-            Timber.d("Stopped performance trace: ${trace}")
+            Timber.d("Stopped performance trace: $trace")
         } catch (e: Exception) {
             Timber.e(e, "Error stopping performance trace")
         }
@@ -89,20 +89,21 @@ class PerformanceMonitoring @Inject constructor() {
     ): T {
         val trace = startTrace(traceName)
         val startTime = System.currentTimeMillis()
-        
+
         return try {
             val result = block()
             val duration = System.currentTimeMillis() - startTime
-            
+
             val attributes = mutableMapOf(ATTR_DATA_SOURCE to dataSource)
             itemCount?.let { attributes["item_count"] = it.toString() }
-            
+
             recordMetric(trace, "duration_ms", duration)
             stopTrace(trace, attributes)
-            
+
             result
         } catch (e: Exception) {
-            val attributes = mapOf(
+            val attributes =
+                mapOf(
                 ATTR_DATA_SOURCE to dataSource,
                 ATTR_ERROR_TYPE to e.javaClass.simpleName
             )
@@ -122,20 +123,23 @@ class PerformanceMonitoring @Inject constructor() {
     ): T {
         val trace = startTrace("screen_navigation_$screenName")
         val startTime = System.currentTimeMillis()
-        
+
         return try {
             val result = block()
             val duration = System.currentTimeMillis() - startTime
-            
+
             recordMetric(trace, "navigation_duration_ms", duration)
             stopTrace(trace, mapOf("screen_name" to screenName))
-            
+
             result
         } catch (e: Exception) {
-            stopTrace(trace, mapOf(
+            stopTrace(
+                trace,
+                mapOf(
                 "screen_name" to screenName,
                 ATTR_ERROR_TYPE to e.javaClass.simpleName
-            ))
+                )
+            )
             throw e
         }
     }
@@ -144,6 +148,7 @@ class PerformanceMonitoring @Inject constructor() {
 /**
  * Extension function to easily track code blocks with performance monitoring.
  */
+@Suppress("TooGenericExceptionCaught")
 suspend inline fun <T> PerformanceMonitoring.trace(
     traceName: String,
     attributes: Map<String, String> = emptyMap(),
@@ -151,14 +156,14 @@ suspend inline fun <T> PerformanceMonitoring.trace(
 ): T {
     val trace = startTrace(traceName)
     val startTime = System.currentTimeMillis()
-    
+
     return try {
         val result = block()
         val duration = System.currentTimeMillis() - startTime
-        
+
         recordMetric(trace, "duration_ms", duration)
         stopTrace(trace, attributes)
-        
+
         result
     } catch (e: Exception) {
         val errorAttributes = attributes + mapOf(PerformanceMonitoring.ATTR_ERROR_TYPE to e.javaClass.simpleName)

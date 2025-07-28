@@ -10,20 +10,20 @@ import javax.inject.Inject
  * Initializer that sets up performance monitoring for app startup.
  */
 class PerformanceInitializer @Inject constructor() : ApplicationInitializer {
-    
     companion object {
         private var appStartTrace: Trace? = null
-        
+
         /**
          * Call this from Application.onCreate() to start tracking app startup.
          */
         fun startAppStartupTrace() {
-            appStartTrace = FirebasePerformance.getInstance().newTrace("app_startup").apply {
+            appStartTrace =
+                FirebasePerformance.getInstance().newTrace("app_startup").apply {
                 start()
                 Timber.d("Started app startup trace")
             }
         }
-        
+
         /**
          * Call this when the app is fully initialized to stop the startup trace.
          */
@@ -35,15 +35,16 @@ class PerformanceInitializer @Inject constructor() : ApplicationInitializer {
             }
         }
     }
-    
+
+    @Suppress("TooGenericExceptionCaught")
     override suspend fun invoke(params: Unit?): Result<Unit> {
         return try {
             // Enable performance monitoring
             FirebasePerformance.getInstance().isPerformanceCollectionEnabled = true
-            
+
             // Stop the app startup trace since initialization is complete
             stopAppStartupTrace()
-            
+
             Timber.d("Performance monitoring initialized with Android Firebase Performance")
             Result.success(Unit)
         } catch (e: Exception) {

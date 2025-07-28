@@ -24,7 +24,7 @@ class DevFestNantesApplication : Application() {
     override fun onCreate() {
         // Start performance monitoring as early as possible
         PerformanceInitializer.startAppStartupTrace()
-        
+
         super.onCreate()
 
         coroutineScope = CoroutineScope(coroutineDispatcherProvider.main)
