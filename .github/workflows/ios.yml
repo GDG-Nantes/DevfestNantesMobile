@@ -179,8 +179,7 @@ jobs:
           echo "Resolving Swift Package dependencies..."
           xcodebuild \
             -project iosApp/iosApp.xcodeproj \
-            -resolvePackageDependencies \
-            -derivedDataPath build
+            -resolvePackageDependencies
           echo "Package dependencies resolved."
 
       - name: Build iOS App for Simulator
