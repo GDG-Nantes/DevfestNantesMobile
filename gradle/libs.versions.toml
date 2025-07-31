@@ -15,6 +15,7 @@ detekt = "1.23.8"
 espresso = "3.6.1"
 firebaseBom = "33.16.0"
 firebaseCrashlyticsPlugin = "3.0.4"
+firebasePerfPlugin = "2.0.0"
 googleServicesPlugin = "4.4.3"
 hilt = "1.2.0"
 junit = "4.13.2"
@@ -80,6 +81,7 @@ firebase-analytics-ktx = { group = "com.google.firebase", name = "firebase-analy
 firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebaseBom" }
 firebase-config-ktx = { group = "com.google.firebase", name = "firebase-config-ktx" }
 firebase-crashlytics-ktx = { group = "com.google.firebase", name = "firebase-crashlytics-ktx" }
+firebase-perf-ktx = { group = "com.google.firebase", name = "firebase-perf-ktx" }
 
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 
@@ -114,6 +116,7 @@ appollo = { id = "com.apollographql.apollo", version.ref = "appollo" }
 crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "firebaseCrashlyticsPlugin" }
 dagger-hilt = { id = "com.google.dagger.hilt.android", version.ref = "dagger" }
 detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
+firebase-perf = { id = "com.google.firebase.firebase-perf", version.ref = "firebasePerfPlugin" }
 google-services = { id = "com.google.gms.google-services", version.ref = "googleServicesPlugin" }
 kmp-native-coroutines = { id = "com.rickclephas.kmp.nativecoroutines", version.ref = "kmpNativeCoroutines" }
 kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }

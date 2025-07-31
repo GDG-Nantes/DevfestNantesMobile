@@ -7,11 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0011BE942E36D8270084BE4D /* PerformanceMonitoring.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0011BE922E36D8270084BE4D /* PerformanceMonitoring.swift */; };
+		001CB9D72E3829B400614907 /* AgendaDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001CB9D32E3829B400614907 /* AgendaDetailView.swift */; };
+		001CB9D82E3829B400614907 /* AgendaViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001CB9D52E3829B400614907 /* AgendaViewModel.swift */; };
+		001CB9D92E3829B400614907 /* AgendaView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001CB9D42E3829B400614907 /* AgendaView.swift */; };
+		001CB9DA2E3829B400614907 /* AgendaCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 001CB9D22E3829B400614907 /* AgendaCellView.swift */; };
 		003EC8D22DF8D7E1000E5689 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */ = {isa = PBXBuildFile; productRef = 003EC8D12DF8D7E1000E5689 /* FirebaseAnalyticsWithoutAdIdSupport */; };
 		003EC8D42DF8D7E1000E5689 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 003EC8D32DF8D7E1000E5689 /* FirebaseCrashlytics */; };
 		003EC8D62DF8D7E1000E5689 /* FirebaseRemoteConfig in Frameworks */ = {isa = PBXBuildFile; productRef = 003EC8D52DF8D7E1000E5689 /* FirebaseRemoteConfig */; };
 		003EC8D92DF8D84B000E5689 /* KMPNativeCoroutinesAsync in Frameworks */ = {isa = PBXBuildFile; productRef = 003EC8D82DF8D84B000E5689 /* KMPNativeCoroutinesAsync */; };
 		003EC8DB2DF8D84B000E5689 /* KMPNativeCoroutinesCombine in Frameworks */ = {isa = PBXBuildFile; productRef = 003EC8DA2DF8D84B000E5689 /* KMPNativeCoroutinesCombine */; };
+		003EC8DD2DF8D7E1000E5689 /* FirebasePerformance in Frameworks */ = {isa = PBXBuildFile; productRef = 003EC8DC2DF8D7E1000E5689 /* FirebasePerformance */; };
 		058557BB273AAA24004C7B11 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 058557BA273AAA24004C7B11 /* Assets.xcassets */; };
 		058557D9273AAEEB004C7B11 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 058557D8273AAEEB004C7B11 /* Preview Assets.xcassets */; };
 		2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2152FB032600AC8F00CF470E /* iOSApp.swift */; };
@@ -24,7 +30,6 @@
 		CB179BF428D4C33A00BB9934 /* swiftgen.yml in Resources */ = {isa = PBXBuildFile; fileRef = CB179BF328D4C33A00BB9934 /* swiftgen.yml */; };
 		CB179BF628D4C36A00BB9934 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB179BF528D4C36A00BB9934 /* Strings.swift */; };
 		CB3979D02919B78E00BDAE6F /* DevFest_NantesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB3979CF2919B78E00BDAE6F /* DevFest_NantesTests.swift */; };
-		CB3F424428A6A02300D1C75B /* AgendaCellView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB3F424328A6A02300D1C75B /* AgendaCellView.swift */; };
 		CB4041DB291A764A000C3CCC /* MockDevFestNantesStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB4041DA291A764A000C3CCC /* MockDevFestNantesStore.swift */; };
 		CB46914329196228004C6120 /* Complexity-extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB46914229196228004C6120 /* Complexity-extension.swift */; };
 		CB46914529196271004C6120 /* SpeakerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB46914429196271004C6120 /* SpeakerView.swift */; };
@@ -32,8 +37,6 @@
 		CB4980F228F609E3001D0484 /* RCValues.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB4980F128F609E3001D0484 /* RCValues.swift */; };
 		CB4980F428FD73C7001D0484 /* PhotoDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB4980F328FD73C7001D0484 /* PhotoDetailView.swift */; };
 		CB4980F728FDE6AC001D0484 /* UIImage-extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB4980F628FDE6AC001D0484 /* UIImage-extension.swift */; };
-		CB73E81028A5587E0014B9AF /* AgendaDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB73E80F28A5587E0014B9AF /* AgendaDetailView.swift */; };
-		CB837AB6287B7D1200FEDAA1 /* AgendaView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB837AB5287B7D1200FEDAA1 /* AgendaView.swift */; };
 		CB837AB8287B7D6500FEDAA1 /* VenueView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB837AB7287B7D6500FEDAA1 /* VenueView.swift */; };
 		CB837ABA287B7D9200FEDAA1 /* AboutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB837AB9287B7D9200FEDAA1 /* AboutView.swift */; };
 		CBA5C22E28DB194E00D2779B /* PartnersContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBA5C22D28DB194E00D2779B /* PartnersContent.swift */; };
@@ -48,7 +51,6 @@
 		CBDFA0342AB0F5C500302D34 /* SpeakerPicture.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDFA0332AB0F5C500302D34 /* SpeakerPicture.swift */; };
 		CBDFA0362AB1B72200302D34 /* SpeakerDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDFA0352AB1B72200302D34 /* SpeakerDetailsViewModel.swift */; };
 		CBDFA0382AB1B74000302D34 /* BaseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDFA0372AB1B74000302D34 /* BaseViewModel.swift */; };
-		CBDFA03A2AB1BABC00302D34 /* AgendaViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDFA0392AB1BABC00302D34 /* AgendaViewModel.swift */; };
 		CBDFA03C2AB1BEFD00302D34 /* VenueViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDFA03B2AB1BEFD00302D34 /* VenueViewModel.swift */; };
 		CBDFA03E2AB1BFBC00302D34 /* AboutViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDFA03D2AB1BFBC00302D34 /* AboutViewModel.swift */; };
 		CBDFA0402AB1EDA200302D34 /* SpeakersViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDFA03F2AB1EDA200302D34 /* SpeakersViewModel.swift */; };
@@ -66,6 +68,11 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		0011BE922E36D8270084BE4D /* PerformanceMonitoring.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PerformanceMonitoring.swift; sourceTree = "<group>"; };
+		001CB9D22E3829B400614907 /* AgendaCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgendaCellView.swift; sourceTree = "<group>"; };
+		001CB9D32E3829B400614907 /* AgendaDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgendaDetailView.swift; sourceTree = "<group>"; };
+		001CB9D42E3829B400614907 /* AgendaView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgendaView.swift; sourceTree = "<group>"; };
+		001CB9D52E3829B400614907 /* AgendaViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgendaViewModel.swift; sourceTree = "<group>"; };
 		006B310E2C7A8FBB0024C17B /* DevFestNantesStore-extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DevFestNantesStore-extension.swift"; sourceTree = "<group>"; };
 		00D69FCF28D2032300498D05 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		058557BA273AAA24004C7B11 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -84,7 +91,6 @@
 		CB179BF528D4C36A00BB9934 /* Strings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
 		CB3979CD2919B78E00BDAE6F /* DevFest NantesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "DevFest NantesTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CB3979CF2919B78E00BDAE6F /* DevFest_NantesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevFest_NantesTests.swift; sourceTree = "<group>"; };
-		CB3F424328A6A02300D1C75B /* AgendaCellView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgendaCellView.swift; sourceTree = "<group>"; };
 		CB4041DA291A764A000C3CCC /* MockDevFestNantesStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockDevFestNantesStore.swift; sourceTree = "<group>"; };
 		CB46914229196228004C6120 /* Complexity-extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Complexity-extension.swift"; sourceTree = "<group>"; };
 		CB46914429196271004C6120 /* SpeakerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeakerView.swift; sourceTree = "<group>"; };
@@ -92,8 +98,6 @@
 		CB4980F128F609E3001D0484 /* RCValues.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RCValues.swift; sourceTree = "<group>"; };
 		CB4980F328FD73C7001D0484 /* PhotoDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhotoDetailView.swift; sourceTree = "<group>"; };
 		CB4980F628FDE6AC001D0484 /* UIImage-extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImage-extension.swift"; sourceTree = "<group>"; };
-		CB73E80F28A5587E0014B9AF /* AgendaDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgendaDetailView.swift; sourceTree = "<group>"; };
-		CB837AB5287B7D1200FEDAA1 /* AgendaView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgendaView.swift; sourceTree = "<group>"; };
 		CB837AB7287B7D6500FEDAA1 /* VenueView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VenueView.swift; sourceTree = "<group>"; };
 		CB837AB9287B7D9200FEDAA1 /* AboutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
 		CBA5C22D28DB194E00D2779B /* PartnersContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PartnersContent.swift; sourceTree = "<group>"; };
@@ -108,7 +112,6 @@
 		CBDFA0332AB0F5C500302D34 /* SpeakerPicture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeakerPicture.swift; sourceTree = "<group>"; };
 		CBDFA0352AB1B72200302D34 /* SpeakerDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeakerDetailsViewModel.swift; sourceTree = "<group>"; };
 		CBDFA0372AB1B74000302D34 /* BaseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewModel.swift; sourceTree = "<group>"; };
-		CBDFA0392AB1BABC00302D34 /* AgendaViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgendaViewModel.swift; sourceTree = "<group>"; };
 		CBDFA03B2AB1BEFD00302D34 /* VenueViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VenueViewModel.swift; sourceTree = "<group>"; };
 		CBDFA03D2AB1BFBC00302D34 /* AboutViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewModel.swift; sourceTree = "<group>"; };
 		CBDFA03F2AB1EDA200302D34 /* SpeakersViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeakersViewModel.swift; sourceTree = "<group>"; };
@@ -123,6 +126,7 @@
 				003EC8D92DF8D84B000E5689 /* KMPNativeCoroutinesAsync in Frameworks */,
 				003EC8DB2DF8D84B000E5689 /* KMPNativeCoroutinesCombine in Frameworks */,
 				003EC8D62DF8D7E1000E5689 /* FirebaseRemoteConfig in Frameworks */,
+				003EC8DD2DF8D7E1000E5689 /* FirebasePerformance in Frameworks */,
 				003EC8D22DF8D7E1000E5689 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */,
 				003EC8D42DF8D7E1000E5689 /* FirebaseCrashlytics in Frameworks */,
 			);
@@ -138,6 +142,25 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		0011BE932E36D8270084BE4D /* Performance */ = {
+			isa = PBXGroup;
+			children = (
+				0011BE922E36D8270084BE4D /* PerformanceMonitoring.swift */,
+			);
+			path = Performance;
+			sourceTree = "<group>";
+		};
+		001CB9D62E3829B400614907 /* Agenda */ = {
+			isa = PBXGroup;
+			children = (
+				001CB9D22E3829B400614907 /* AgendaCellView.swift */,
+				001CB9D32E3829B400614907 /* AgendaDetailView.swift */,
+				001CB9D42E3829B400614907 /* AgendaView.swift */,
+				001CB9D52E3829B400614907 /* AgendaViewModel.swift */,
+			);
+			path = Agenda;
+			sourceTree = "<group>";
+		};
 		058557D7273AAEEB004C7B11 /* Preview Content */ = {
 			isa = PBXGroup;
 			children = (
@@ -168,6 +191,8 @@
 		7555FF7D242A565900829871 /* iosApp */ = {
 			isa = PBXGroup;
 			children = (
+				001CB9D62E3829B400614907 /* Agenda */,
+				0011BE932E36D8270084BE4D /* Performance */,
 				2152FB032600AC8F00CF470E /* iOSApp.swift */,
 				7555FF8C242A565B00829871 /* Info.plist */,
 				CB3979C829199C0B00BDAE6F /* Model */,
@@ -236,7 +261,6 @@
 			children = (
 				7555FF82242A565900829871 /* ContentView.swift */,
 				CB46914029157375004C6120 /* Common */,
-				CB73E80E28A5501B0014B9AF /* Agenda */,
 				CB179BD128D0D8FF00BB9934 /* Venue */,
 				CBDFA0212AAF565000302D34 /* Speakers */,
 				CB179BE128D37E4C00BB9934 /* About */,
@@ -286,18 +310,6 @@
 				006B310E2C7A8FBB0024C17B /* DevFestNantesStore-extension.swift */,
 			);
 			path = Extension;
-			sourceTree = "<group>";
-		};
-		CB73E80E28A5501B0014B9AF /* Agenda */ = {
-			isa = PBXGroup;
-			children = (
-				CB837AB5287B7D1200FEDAA1 /* AgendaView.swift */,
-				CB73E80F28A5587E0014B9AF /* AgendaDetailView.swift */,
-				CB3F424328A6A02300D1C75B /* AgendaCellView.swift */,
-				CBDFA0392AB1BABC00302D34 /* AgendaViewModel.swift */,
-			);
-			name = Agenda;
-			path = "../New Group/Agenda";
 			sourceTree = "<group>";
 		};
 		CBCB60F628E48EBC001E9B1A /* Analytics */ = {
@@ -531,13 +543,17 @@
 				CB179BDE28D365E800BB9934 /* AgendaContent.swift in Sources */,
 				CB4980F428FD73C7001D0484 /* PhotoDetailView.swift in Sources */,
 				2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */,
+				001CB9D72E3829B400614907 /* AgendaDetailView.swift in Sources */,
+				001CB9D82E3829B400614907 /* AgendaViewModel.swift in Sources */,
+				001CB9D92E3829B400614907 /* AgendaView.swift in Sources */,
+				001CB9DA2E3829B400614907 /* AgendaCellView.swift in Sources */,
 				CBDFA0302AB0F3E000302D34 /* SpeakerDetailsView.swift in Sources */,
 				CB4980F228F609E3001D0484 /* RCValues.swift in Sources */,
 				CB4691472919661A004C6120 /* Bundle-extension.swift in Sources */,
 				CBDFA03C2AB1BEFD00302D34 /* VenueViewModel.swift in Sources */,
 				CBDFA0382AB1B74000302D34 /* BaseViewModel.swift in Sources */,
 				CBA5C23028DB4F5100D2779B /* CardView.swift in Sources */,
-				CB3F424428A6A02300D1C75B /* AgendaCellView.swift in Sources */,
+				0011BE942E36D8270084BE4D /* PerformanceMonitoring.swift in Sources */,
 				CBDFA0342AB0F5C500302D34 /* SpeakerPicture.swift in Sources */,
 				CB179BF628D4C36A00BB9934 /* Strings.swift in Sources */,
 				CBCB60FA28E48F27001E9B1A /* FirebaseAnalyticsService.swift in Sources */,
@@ -546,11 +562,8 @@
 				CBCB610228E99990001E9B1A /* WebLinks.swift in Sources */,
 				CBDFA0232AAF566500302D34 /* SpeakersView.swift in Sources */,
 				CB46914329196228004C6120 /* Complexity-extension.swift in Sources */,
-				CB837AB6287B7D1200FEDAA1 /* AgendaView.swift in Sources */,
 				CB837ABA287B7D9200FEDAA1 /* AboutView.swift in Sources */,
 				CBDFA0322AB0F4FC00302D34 /* SocialIcon.swift in Sources */,
-				CB73E81028A5587E0014B9AF /* AgendaDetailView.swift in Sources */,
-				CBDFA03A2AB1BABC00302D34 /* AgendaViewModel.swift in Sources */,
 				CB179BDB28D24C9C00BB9934 /* CategoryView.swift in Sources */,
 				CBCB60ED28E47FC5001E9B1A /* LoadingView.swift in Sources */,
 				CB4980F728FDE6AC001D0484 /* UIImage-extension.swift in Sources */,
@@ -714,7 +727,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 16;
+				CURRENT_PROJECT_VERSION = 18;
 				DEVELOPMENT_ASSET_PATHS = "\"iosApp/Preview Content\"";
 				DEVELOPMENT_TEAM = ULPJX5LPF7;
 				ENABLE_PREVIEWS = YES;
@@ -726,6 +739,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 2025.07.00;
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.gdgnantes.devfest.iosApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -743,7 +757,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 16;
+				CURRENT_PROJECT_VERSION = 18;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_ASSET_PATHS = "\"iosApp/Preview Content\"";
 				DEVELOPMENT_TEAM = ULPJX5LPF7;
@@ -757,6 +771,7 @@
 					"@executable_path/Frameworks",
 				);
 				MARKETING_VERSION = 2025.07.00;
+				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.gdgnantes.devfest.iosApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
@@ -775,7 +790,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 18;
 				DEVELOPMENT_TEAM = ULPJX5LPF7;
 				GENERATE_INFOPLIST_FILE = YES;
 				HEADER_SEARCH_PATHS = "\"${SRCROOT}/Pods/Firebase/CoreOnly/Sources\"";
@@ -799,7 +814,7 @@
 				BUNDLE_LOADER = "$(TEST_HOST)";
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
+				CURRENT_PROJECT_VERSION = 18;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = ULPJX5LPF7;
 				GENERATE_INFOPLIST_FILE = YES;
@@ -894,6 +909,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 003EC8D72DF8D84B000E5689 /* XCRemoteSwiftPackageReference "KMP-NativeCoroutines" */;
 			productName = KMPNativeCoroutinesCombine;
+		};
+		003EC8DC2DF8D7E1000E5689 /* FirebasePerformance */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 003EC8D02DF8D7E1000E5689 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebasePerformance;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};

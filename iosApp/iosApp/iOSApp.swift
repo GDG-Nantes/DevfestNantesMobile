@@ -6,6 +6,7 @@ import KMPNativeCoroutinesCombine
 import FirebaseCore
 import FirebaseCrashlytics
 import FirebaseRemoteConfig
+import Firebase
 
 ///RemoteConfig properties
 var remoteConfig = RemoteConfig.remoteConfig()
@@ -16,7 +17,14 @@ struct iOSApp: App {
     init() {
         //Firebase initialization
         FirebaseApp.configure()
+        
+        // Start app startup performance monitoring
+        PerformanceMonitoring.startAppStartupTrace()
+        
         _ = RCValues.sharedInstance
+        
+        // Stop app startup performance monitoring
+        PerformanceMonitoring.stopAppStartupTrace()
     }
     
     var body: some Scene {

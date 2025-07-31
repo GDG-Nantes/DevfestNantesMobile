@@ -40,7 +40,7 @@ DevFestNantes/
 - **Dagger Hilt** for dependency injection
 - **Navigation Component** for app navigation
 - **Material 3** design system
-- **Firebase** for analytics and crash reporting
+- **Firebase** for analytics, crash reporting, and performance monitoring (with user consent)
 
 #### iOS
 - **SwiftUI** for native iOS UI
@@ -115,13 +115,14 @@ The app follows a clean architecture pattern with clear separation of concerns:
 - **⭐ Bookmarks:** Save favorite sessions for easy access
 - **🔄 Offline Support:** Cached data for offline viewing
 - **🌐 Multi-language:** Support for French and English
+- **🔒 Privacy-First:** User consent system for analytics and performance monitoring
 
 ## 🔧 Dependencies & Tooling
 
 ### Core Dependencies
 - **GraphQL Server:** Powered by [Confetti](https://github.com/joreilly/Confetti)
 - **Feedback System:** [OpenFeedback.io](https://openfeedback.io/) integration
-- **Analytics:** Firebase Analytics and Crashlytics
+- **Analytics:** Firebase Analytics, Crashlytics, and Performance Monitoring (respects user consent)
 - **Version Management:** Gradle version catalog (`gradle/libs.versions.toml`)
 
 ### Versioning Strategy
@@ -177,6 +178,7 @@ We welcome contributions! Please see our [contribution guidelines](CONTRIBUTING.
 
 - **[Architecture Guide](documentation/ARCHITECTURE.md)** - Detailed architecture overview
 - **[Development Setup](documentation/DEVELOPMENT.md)** - Complete setup instructions
+- **[Performance Monitoring](documentation/PERFORMANCE_MONITORING.md)** - Firebase Performance implementation and usage
 - **[Versioning Strategy](documentation/VERSIONING.md)** - Calendar versioning implementation and guidelines
 - **[API Documentation](documentation/API.md)** - GraphQL API integration details
 - **[Testing Guide](documentation/TESTING.md)** - Testing strategies and best practices

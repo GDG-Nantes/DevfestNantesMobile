@@ -87,6 +87,7 @@ androidApp/
 ├── src/main/java/com/gdgnantes/devfest/androidapp/
 │   ├── core/                    # Core Android components
 │   │   ├── injection/           # Dagger Hilt modules
+│   │   ├── performance/         # Firebase Performance implementation
 │   │   └── ApplicationInitializer.kt
 │   ├── ui/                      # UI layer
 │   │   ├── components/          # Reusable Compose components
@@ -96,7 +97,7 @@ androidApp/
 │   │   │   ├── session/         # Session details
 │   │   │   └── venue/           # Venue information
 │   │   └── theme/               # Material Design theme
-│   ├── services/                # Platform services
+│   ├── services/                # Platform services (consent management, etc.)
 │   └── utils/                   # Android utilities
 ```
 
@@ -123,6 +124,7 @@ iosApp/
 │   │   └── Data/                # Data transformation helpers
 │   ├── Extension/               # Swift extensions
 │   ├── Analytics/               # iOS analytics implementation
+│   ├── Performance/             # Firebase Performance implementation
 │   └── Resources/               # iOS resources and assets
 ```
 
@@ -431,12 +433,52 @@ fun SessionDetails.toSession(): Session {
 4. **Performance Optimization:** Data loading optimizations
 5. **Testing Strategy:** Comprehensive test coverage
 
-### Migration Considerations
+## Privacy and Data Collection
+
+### User Consent Management (Android)
+
+The app implements a privacy-first approach with comprehensive user consent management for all data collection services:
+
+**Consent System Architecture:**
+```
+┌─────────────────────────────────────────────────────────────┐
+│                    User Consent Layer                       │
+│  ┌─────────────────────────────────────────────────────────┐ │
+│  │          DataCollectionSettingsService                 │ │
+│  │  ┌─────────────────┐  ┌─────────────────────────────┐   │ │
+│  │  │   SharedPrefs   │  │    Firebase SDK Control    │   │ │
+│  │  │   Storage       │  │  - Analytics enabled       │   │ │
+│  │  │                 │  │  - Crashlytics enabled     │   │ │
+│  │  │                 │  │  - Performance enabled     │   │ │
+│  │  └─────────────────┘  └─────────────────────────────┘   │ │
+│  └─────────────────────────────────────────────────────────┘ │
+└─────────────────────────────────────────────────────────────┘
+```
+
+**Key Components:**
+- **DataCollectionSettingsService**: Manages consent state and Firebase SDK configuration
+- **DataCollectionAgreementDialog**: Initial consent flow on app first launch
+- **Settings Integration**: Allows users to modify consent preferences anytime
+- **Real-time Updates**: Consent changes take effect immediately without app restart
+
+**Services Under Consent Control:**
+- **Google Analytics**: User interaction tracking
+- **Firebase Crashlytics**: Crash reporting and stability monitoring  
+- **Firebase Performance Monitoring**: App performance and network monitoring
+
+### Future Considerations
 
 - Gradual migration to Compose Multiplatform when stable
 - Enhanced shared business logic
 - Improved platform abstraction layers
+- **iOS Consent System**: Implement matching user consent management for iOS platform
 
 ---
 
 This architecture provides a solid foundation for the DevFest Nantes app while maintaining flexibility for future enhancements and platform-specific optimizations.
+
+## Related Documentation
+
+- **[Performance Monitoring](PERFORMANCE_MONITORING.md)** - Firebase Performance implementation and monitoring strategies
+- **[Development Setup](DEVELOPMENT.md)** - Complete development environment setup
+- **[API Documentation](API.md)** - GraphQL API integration details

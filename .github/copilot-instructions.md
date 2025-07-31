@@ -52,6 +52,7 @@ This project follows Clean Architecture with Kotlin Multiplatform Mobile (KMM):
 3. **Documentation**: Maintain clear documentation of working directory contexts for build scripts
 
 ### Build Testing
+- **Shared Framework Generation**: Before building iOS, generate the Kotlin framework with `./gradlew :shared:linkDebugFrameworkIosSimulatorArm64`
 - **Simulator Testing**: Always test iOS builds using the iPhone 16 Pro simulator running iOS 18.3.1 to ensure compatibility with the latest iOS version and hardware configuration
 - Use command: `xcodebuild -project iosApp/iosApp.xcodeproj -scheme iosApp -configuration Debug -destination 'platform=iOS Simulator,name=iPhone 16 Pro,OS=18.3.1' build`
 - This ensures builds work correctly on the latest simulator hardware and iOS version

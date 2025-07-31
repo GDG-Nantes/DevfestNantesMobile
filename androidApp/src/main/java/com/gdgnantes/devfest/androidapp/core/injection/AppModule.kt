@@ -9,6 +9,8 @@ import com.gdgnantes.devfest.androidapp.core.CoroutinesDispatcherProvider
 import com.gdgnantes.devfest.androidapp.core.DataSharingInitializer
 import com.gdgnantes.devfest.androidapp.core.LoggerInitializer
 import com.gdgnantes.devfest.androidapp.core.OpenFeedbackInitializer
+import com.gdgnantes.devfest.androidapp.core.performance.PerformanceInitializer
+import com.gdgnantes.devfest.androidapp.core.performance.PerformanceMonitoring
 import com.gdgnantes.devfest.androidapp.services.BookmarksStoreImpl
 import com.gdgnantes.devfest.androidapp.services.DataCollectionSettingsService
 import com.gdgnantes.devfest.androidapp.services.DataCollectionSettingsServiceImpl
@@ -19,6 +21,7 @@ import com.gdgnantes.devfest.store.DevFestNantesStoreBuilder
 import com.google.firebase.analytics.ktx.analytics
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.firebase.ktx.Firebase
+import com.google.firebase.perf.FirebasePerformance
 import com.google.firebase.remoteconfig.ktx.remoteConfig
 import com.google.firebase.remoteconfig.ktx.remoteConfigSettings
 import dagger.Binds
@@ -64,9 +67,15 @@ abstract class AppModule {
         fun applicationInitializers(
             dataSharingInitializer: DataSharingInitializer,
             loggerInitializer: LoggerInitializer,
-            openFeedbackInitializer: OpenFeedbackInitializer
+            openFeedbackInitializer: OpenFeedbackInitializer,
+            performanceInitializer: PerformanceInitializer
         ): Set<ApplicationInitializer> =
-            setOf(dataSharingInitializer, loggerInitializer, openFeedbackInitializer)
+            setOf(
+                dataSharingInitializer,
+                loggerInitializer,
+                openFeedbackInitializer,
+                performanceInitializer
+            )
 
         @Provides
         fun analytics() = Firebase.analytics
@@ -84,6 +93,15 @@ abstract class AppModule {
 
         @Provides
         fun crashlytics() = FirebaseCrashlytics.getInstance()
+
+        @Provides
+        fun firebasePerformance() = FirebasePerformance.getInstance()
+
+        @AppScope
+        @Provides
+        fun providePerformanceMonitoring(firebasePerformance: FirebasePerformance): PerformanceMonitoring {
+            return PerformanceMonitoring(firebasePerformance)
+        }
 
         @AppScope
         @Provides

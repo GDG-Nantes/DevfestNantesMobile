@@ -2,6 +2,9 @@ package com.gdgnantes.devfest.androidapp.ui.screens.agenda
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.gdgnantes.devfest.androidapp.core.performance.PerformanceMonitoring
+import com.gdgnantes.devfest.androidapp.core.performance.traceDataLoading
+import com.gdgnantes.devfest.androidapp.core.performance.traceStateUpdate
 import com.gdgnantes.devfest.androidapp.ui.UiState
 import com.gdgnantes.devfest.androidapp.utils.SessionFilter
 import com.gdgnantes.devfest.model.Agenda.Companion.DAY_ONE_ISO
@@ -23,12 +26,14 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import timber.log.Timber
 import javax.inject.Inject
 
 @HiltViewModel
 class AgendaViewModel @Inject constructor(
     private val store: DevFestNantesStore,
-    private val bookmarksStore: BookmarksStore
+    private val bookmarksStore: BookmarksStore,
+    private val performanceMonitoring: PerformanceMonitoring
 ) : ViewModel() {
     private var autoRefreshJob: Job? = null
 
@@ -62,19 +67,30 @@ class AgendaViewModel @Inject constructor(
         autoRefreshJob?.cancel()
         autoRefreshJob =
             viewModelScope.launch {
-                store.agenda
-                    .map { agenda -> agenda.days }
-                    .onEach { _unfilteredDays.value = it }
-                    .onEach { _uiState.emit(UiState.SUCCESS) }
-                    .combine(_sessionFilters) { _, _ -> }
-                    .combine(bookmarksStore.bookmarkedSessionIds) { _, _ -> }
-                    .collect { updateFilteredDays() }
+                performanceMonitoring.traceDataLoading(
+                    operation = PerformanceMonitoring.TRACE_AGENDA_LOAD,
+                    dataSource = "graphql"
+                ) {
+                    store.agenda
+                        .map { agenda -> agenda.days }
+                        .onEach { days ->
+                            _unfilteredDays.value = days
+                            Timber.d("Agenda loaded with ${days.values.sumOf { it.sessions.size }} sessions")
+                        }
+                        .onEach { _uiState.emit(UiState.SUCCESS) }
+                        .combine(_sessionFilters) { _, _ -> }
+                        .combine(bookmarksStore.bookmarkedSessionIds) { _, _ -> }
+                        .collect { updateFilteredDays() }
+                }
             }
     }
 
     fun onSessionFiltersChanged(filters: Set<SessionFilter>) {
         viewModelScope.launch {
-            _sessionFilters.emit(filters)
+            performanceMonitoring.traceStateUpdate("agenda") {
+                _sessionFilters.emit(filters)
+                Timber.d("Session filters updated: ${filters.size} active filters")
+            }
         }
     }
 
