@@ -33,7 +33,7 @@ android {
         applicationId = "com.gdgnantes.devfest.mobile.androidapp"
         minSdk = AndroidSdk.min
         targetSdk = AndroidSdk.target
-        versionCode = 30
+        versionCode = 31
         versionName = "2025.07.00"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 

@@ -362,3 +362,22 @@ If you encounter issues not covered in this guide:
 - Android + iOS: 60-90 minutes
 
 Happy coding! 🚀
+
+### 4. Updating GraphQL Schema
+
+To update your local `schema.graphqls` file from the Apollo GraphQL server, use the Apollo Gradle
+plugin:
+
+```
+./gradlew downloadApolloSchema \
+  --endpoint="https://confetti-app.dev/graphql" \
+  --schema="shared/src/commonMain/graphql/schema.graphqls" \
+  --header="conference:devfestnantes2025"
+```
+
+- The `--endpoint` flag should match the URL in your Apollo client configuration.
+- The `--header` flag allows you to specify custom HTTP headers (e.g.,
+  `conference:devfestnantes2025`) as defined in `Apollo.kt`.
+- You can add multiple `--header` flags if needed.
+
+This ensures your local schema matches the server and respects authentication/context requirements.
