@@ -81,7 +81,7 @@ DevFestNantes/
 3. **iOS Setup:**
    ```bash
    # Generate the Kotlin framework for iOS
-   ./gradlew :shared:generateDummyFramework
+   ./gradlew :shared:linkDebugFrameworkIosSimulatorArm64
    
    # Open iOS project in Xcode
    open iosApp/iosApp.xcodeproj
@@ -138,6 +138,12 @@ This approach aligns releases with the DevFest Nantes conference schedule and pr
 - **Build System:** Gradle with Kotlin DSL
 - **Testing:** JUnit, KMM test framework
 - **CI/CD:** GitHub Actions (configuration in `.github/`)
+
+## 🔄 Updating GraphQL Schema
+
+See [documentation/DEVELOPMENT.md](documentation/DEVELOPMENT.md#4-updating-graphql-schema) for
+instructions on updating your local `schema.graphqls` file using the Apollo Gradle plugin and custom
+headers.
 
 ## 🧪 Testing
 
@@ -196,4 +202,3 @@ This project is adapted from the Android Makers app:
 - [Android Makers - iOS app](https://github.com/paug/AndroidMakersApp-iOS)
 
 Special thanks to the GDG Nantes community and all contributors who make this project possible.
-

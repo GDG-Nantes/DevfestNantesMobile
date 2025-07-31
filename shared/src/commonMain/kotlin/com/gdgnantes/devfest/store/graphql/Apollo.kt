@@ -44,7 +44,7 @@ val cacheResolver =
 val apolloClient =
     ApolloClient.Builder()
         .serverUrl("https://confetti-app.dev/graphql")
-        .httpHeaders(listOf(HttpHeader("conference", "devfestnantes2024")))
+        .httpHeaders(listOf(HttpHeader("conference", "devfestnantes2025")))
         .normalizedCache(
             normalizedCache,
             cacheKeyGenerator = cacheKeyGenerator,
