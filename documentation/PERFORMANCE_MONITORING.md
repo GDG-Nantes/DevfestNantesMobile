@@ -14,12 +14,13 @@ This guide covers the implementation and usage of Firebase Performance Monitorin
 
 ## Overview
 
-The DevFest Nantes app implements Firebase Performance Monitoring using a **platform-native approach** to ensure optimal performance and maintainability.
+The DevFest Nantes app implements Firebase Performance Monitoring using a **platform-native approach** with **user consent management** to ensure optimal performance, maintainability, and privacy compliance.
 
 ### Platform Support
-- **Android**: Native Firebase Performance implementation with comprehensive ViewModel integration
-- **iOS**: Native Firebase Performance implementation with proper optional handling
+- **Android**: Native Firebase Performance implementation with comprehensive ViewModel integration and user consent system
+- **iOS**: Native Firebase Performance implementation with proper optional handling (consent system planned)
 - **Architecture**: No shared abstraction layer - each platform uses native APIs directly
+- **Privacy**: User consent required before enabling performance monitoring
 
 ### Key Benefits
 - **Performance**: Direct platform APIs without abstraction overhead
@@ -27,6 +28,23 @@ The DevFest Nantes app implements Firebase Performance Monitoring using a **plat
 - **Maintainability**: Simpler architecture without complex abstraction layers
 - **Debugging**: Platform tools work directly with platform implementations
 - **Future-Proof**: Independent platform feature adoption
+- **Privacy Compliant**: User consent management ensures GDPR/privacy regulation compliance
+
+### User Consent System (Android)
+
+The Android app implements a comprehensive consent management system that allows users to control what data they share:
+
+**Available Services:**
+- **Google Analytics**: User interaction and app usage analytics
+- **Firebase Crashlytics**: Crash reporting and stability monitoring
+- **Firebase Performance Monitoring**: App performance and network monitoring
+
+**Consent Features:**
+- Initial consent dialog on first app launch
+- Granular control over each service in settings
+- Ability to consent to all or customize individual services
+- Settings can be changed at any time from the app settings
+- Performance monitoring is disabled by default until user consent is given
 
 ## Architecture
 
@@ -68,6 +86,59 @@ const val TRACE_SPEAKER_DETAILS_LOAD = "speaker_details_load"
 
 ### Android Implementation
 
+#### User Consent System
+
+**DataCollectionSettingsService** - Manages user consent for all Firebase services:
+
+```kotlin
+interface DataCollectionSettingsService {
+    val isDataCollectionAgreementSet: Boolean
+    val dataCollectionServicesActivationStatus: Flow<Map<DataCollectionService, Boolean>>
+    
+    fun changeDataServiceActivationStatus(
+        dataCollectionService: DataCollectionService,
+        enabled: Boolean
+    )
+    fun consentToAllServices()
+    fun disallowAllServices()
+}
+
+enum class DataCollectionService {
+    GOOGLE_ANALYTICS,
+    FIREBASE_CRASHLYTICS,
+    FIREBASE_PERFORMANCE,
+}
+```
+
+**Consent Flow Implementation:**
+
+```kotlin
+@Singleton
+class DataCollectionSettingsServiceImpl @Inject constructor(
+    private val firebasePerformance: FirebasePerformance,
+    // other Firebase services...
+) : DataCollectionSettingsService {
+    
+    private fun updatesFirebasePerformanceActivationStatus() {
+        firebasePerformance.isPerformanceCollectionEnabled =
+            enabledDataServices.contains(DataCollectionService.FIREBASE_PERFORMANCE.name)
+    }
+    
+    override fun consentToAllServices() {
+        DataCollectionService.values().map { it.name }.toSet().let {
+            enabledDataServices.addAll(it)
+        }
+        synchronise()
+    }
+}
+```
+
+**Consent UI Components:**
+
+- **DataCollectionAgreementDialog**: Initial consent dialog shown on first app launch
+- **DataCollectionViewModel**: Manages consent state and user interactions
+- **Settings Screen**: Allows users to modify consent preferences anytime
+
 #### Dependencies
 
 Configure in `gradle/libs.versions.toml`:
@@ -87,11 +158,13 @@ firebase-performance = { id = "com.google.firebase.firebase-perf", version.ref =
 
 #### Core Implementation
 
-**PerformanceMonitoring.kt** - Main performance tracking class:
+**PerformanceMonitoring.kt** - Main performance tracking class (respects user consent):
 
 ```kotlin
 @Singleton
-class PerformanceMonitoring @Inject constructor() {
+class PerformanceMonitoring @Inject constructor(
+    private val firebasePerformance: FirebasePerformance
+) {
     companion object {
         // Predefined trace constants
         const val TRACE_AGENDA_LOAD = "agenda_load"
@@ -104,13 +177,19 @@ class PerformanceMonitoring @Inject constructor() {
         const val ATTR_ERROR_TYPE = "error_type"
     }
     
+    /**
+     * Tracks data loading performance.
+     * Only collects data if user has consented to Firebase Performance.
+     */
     suspend fun <T> trackDataLoad(
         traceName: String,
         dataSource: String,
         itemCount: Int? = null,
         block: suspend () -> T
     ): T {
-        val trace = FirebasePerformance.getInstance().newTrace(traceName)
+        // Performance monitoring automatically respects user consent
+        // via firebasePerformance.isPerformanceCollectionEnabled
+        val trace = firebasePerformance.newTrace(traceName)
         trace.start()
         
         return try {
@@ -126,6 +205,13 @@ class PerformanceMonitoring @Inject constructor() {
         }
     }
 }
+```
+
+**Key Features:**
+- **Automatic Consent Respect**: Firebase Performance SDK automatically checks `isPerformanceCollectionEnabled`
+- **No Data Collection Without Consent**: When disabled, traces are created but no data is sent to Firebase
+- **Graceful Degradation**: App functionality continues normally regardless of consent status
+- **Real-time Updates**: Consent changes take effect immediately without app restart
 ```
 
 **PerformanceExtensions.kt** - Convenience methods:
@@ -182,6 +268,21 @@ class AgendaViewModel @Inject constructor(
 
 ### iOS Implementation
 
+#### User Consent System (In Development)
+
+The iOS app includes localized strings for consent management, indicating planned implementation:
+
+**Localized Consent Strings:**
+- `legal_data_collection_consent_dialog_body`: "We use third party tools to measure and improve performances..."
+- `legal_data_collection_consent_dialog_button_consent`: "Consent"
+- `button_dialog_data_collection_consent_customize`: "Customize"
+
+**Future Implementation Notes:**
+- iOS consent system to match Android functionality
+- Will use native iOS APIs for preference management
+- Firebase Performance SDK supports `isPerformanceCollectionEnabled` property
+- Consent state should be synchronized across app launches
+
 #### Dependencies
 
 Configure Firebase iOS SDK via Swift Package Manager:
@@ -208,17 +309,11 @@ public class PerformanceMonitoring: ObservableObject {
     static let ATTR_DATA_SOURCE = "data_source"
     static let ATTR_ERROR_TYPE = "error_type"
     
-    // App startup tracing
-    public static func startAppStartupTrace() {
-        guard let trace = Performance.startTrace(name: "app_startup") else {
-            Logger(subsystem: Bundle.main.bundleIdentifier ?? "DevFestNantes", category: "Performance")
-                .error("Failed to start app startup trace")
-            return
-        }
-        // Store trace for later stopping
-    }
-    
-    // Data loading tracking with proper optional handling
+    /**
+     * Tracks data loading performance.
+     * Respects user consent when implemented - Firebase Performance SDK
+     * automatically handles consent via Performance.isDataCollectionEnabled
+     */
     func trackDataLoad<T>(
         traceName: String,
         dataSource: String = "unknown",
@@ -241,16 +336,14 @@ public class PerformanceMonitoring: ObservableObject {
             throw error
         }
     }
-    
-    // Convenience method for common operations
-    func traceDataLoading<T>(
-        operation: String,
-        dataSource: String = "graphql",
-        block: @escaping () async throws -> T
-    ) async throws -> T {
-        return try await trackDataLoad(traceName: operation, dataSource: dataSource, operation: block)
-    }
 }
+```
+
+**Key Features:**
+- **Future Consent Integration**: Ready for consent system implementation
+- **Graceful Degradation**: App continues working if Performance monitoring fails
+- **Consistent Naming**: Matches Android trace and attribute names
+- **Proper Error Handling**: Logs failures but doesn't crash the app
 ```
 
 #### ViewModel Integration
@@ -315,6 +408,57 @@ struct iOSApp: App {
 ```
 
 ## Usage Examples
+
+### User Consent Management (Android)
+
+#### Checking Consent Status
+
+```kotlin
+@HiltViewModel
+class ExampleViewModel @Inject constructor(
+    private val dataCollectionSettingsService: DataCollectionSettingsService,
+    private val performanceMonitoring: PerformanceMonitoring
+) : ViewModel() {
+    
+    fun checkPerformanceConsentStatus() {
+        dataCollectionSettingsService.dataCollectionServicesActivationStatus
+            .map { statusMap -> 
+                statusMap[DataCollectionService.FIREBASE_PERFORMANCE] ?: false
+            }
+            .collect { isPerformanceEnabled ->
+                // Performance monitoring will automatically respect this setting
+                // No additional checks needed in performance monitoring calls
+            }
+    }
+}
+```
+
+#### Managing User Consent
+
+```kotlin
+@HiltViewModel 
+class DataCollectionViewModel @Inject constructor(
+    private val dataCollectionSettingsService: DataCollectionSettingsService
+) : ViewModel() {
+    
+    // Enable all services (show in consent dialog)
+    fun onConsentToAll() {
+        dataCollectionSettingsService.consentToAllServices()
+    }
+    
+    // Enable/disable specific service (show in settings)
+    fun onPerformanceToggle(enabled: Boolean) {
+        dataCollectionSettingsService.changeDataServiceActivationStatus(
+            DataCollectionService.FIREBASE_PERFORMANCE,
+            enabled
+        )
+    }
+    
+    // Check if user has made initial consent decision
+    val hasUserSetConsent: Boolean 
+        get() = dataCollectionSettingsService.isDataCollectionAgreementSet
+}
+```
 
 ### Tracing Data Loading Operations
 
@@ -389,6 +533,66 @@ func trackNavigation(to screen: String) {
 ```
 
 ## Testing
+
+### Testing User Consent System
+
+#### Unit Tests for Consent Management
+
+```kotlin
+@Test
+fun `when user consents to performance monitoring, Firebase Performance is enabled`() {
+    // Given
+    val dataCollectionService = DataCollectionSettingsServiceImpl(
+        analyticsService = mockAnalytics,
+        sharedPreferences = mockPreferences,
+        firebaseCrashlytics = mockCrashlytics,
+        firebasePerformance = mockPerformance
+    )
+    
+    // When
+    dataCollectionService.changeDataServiceActivationStatus(
+        DataCollectionService.FIREBASE_PERFORMANCE,
+        enabled = true
+    )
+    
+    // Then
+    verify(mockPerformance).isPerformanceCollectionEnabled = true
+}
+
+@Test
+fun `when user revokes performance consent, Firebase Performance is disabled`() {
+    // Test revoking consent disables performance monitoring
+}
+```
+
+#### Testing Performance Monitoring with Consent
+
+```kotlin
+@Test
+fun `performance monitoring works regardless of consent status`() {
+    // Performance monitoring should work gracefully whether consent is given or not
+    // When consent is disabled, traces are created but no data is sent to Firebase
+}
+```
+
+### Testing without User Consent
+
+For development and testing, you can work with performance monitoring even without giving consent:
+
+```kotlin
+// Development/Test configuration
+@Provides
+@Singleton
+fun providePerformanceMonitoring(): PerformanceMonitoring {
+    return if (BuildConfig.DEBUG) {
+        // In debug builds, you can bypass consent for development
+        MockPerformanceMonitoring()
+    } else {
+        // Production respects user consent
+        PerformanceMonitoring()
+    }
+}
+```
 
 ### Running Tests
 
@@ -538,13 +742,40 @@ If you encounter SPM build failures:
 
 ## Production Deployment
 
+### User Consent and Privacy Compliance
+
+#### Pre-Production Consent Checklist
+
+- [ ] **Consent Dialog Implementation**: Verify initial consent dialog appears on first app launch
+- [ ] **Settings Integration**: Confirm users can modify consent preferences in app settings
+- [ ] **Consent Persistence**: Verify consent choices are saved and persist across app launches
+- [ ] **Real-time Updates**: Confirm consent changes take effect immediately without app restart
+- [ ] **Default State**: Verify all data collection is disabled by default until user consent
+- [ ] **Clear Communication**: Ensure consent dialog clearly explains what data is collected and why
+
+#### Privacy Regulation Compliance
+
+**GDPR Compliance Features:**
+- ✅ **Explicit Consent**: Users must actively consent, not just dismiss a dialog
+- ✅ **Granular Control**: Users can consent to individual services (Analytics, Crashlytics, Performance)
+- ✅ **Easy Withdrawal**: Users can withdraw consent at any time through settings
+- ✅ **Clear Information**: Consent dialog explains what data is collected and how it's used
+- ✅ **No Default Consent**: All data collection disabled until explicit user consent
+
+**Consent Flow Best Practices:**
+1. **First Launch**: Show consent dialog before any data collection
+2. **Clear Language**: Use plain language to explain data collection
+3. **Easy Access**: Provide clear path to consent settings from main app settings
+4. **Respect Choices**: Honor user decisions immediately and persistently
+
 ### Pre-Production Checklist
 
-- [ ] **Performance Data Collection**: Verify data appears in Firebase Performance Console
+- [ ] **Performance Data Collection**: Verify data appears in Firebase Performance Console (only with consent)
 - [ ] **Platform Testing**: Test on physical devices for both Android and iOS
-- [ ] **Metrics Validation**: Confirm custom traces and metrics are recorded correctly
+- [ ] **Metrics Validation**: Confirm custom traces and metrics are recorded correctly (with consent)
 - [ ] **Load Testing**: Validate performance under various app usage scenarios
 - [ ] **Error Handling**: Verify app continues to function when Firebase Performance fails
+- [ ] **Consent System**: Test complete consent flow from initial dialog to settings changes
 
 ### Monitoring Setup
 

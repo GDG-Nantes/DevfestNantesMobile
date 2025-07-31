@@ -97,7 +97,7 @@ androidApp/
 │   │   │   ├── session/         # Session details
 │   │   │   └── venue/           # Venue information
 │   │   └── theme/               # Material Design theme
-│   ├── services/                # Platform services
+│   ├── services/                # Platform services (consent management, etc.)
 │   └── utils/                   # Android utilities
 ```
 
@@ -433,11 +433,45 @@ fun SessionDetails.toSession(): Session {
 4. **Performance Optimization:** Data loading optimizations
 5. **Testing Strategy:** Comprehensive test coverage
 
-### Migration Considerations
+## Privacy and Data Collection
+
+### User Consent Management (Android)
+
+The app implements a privacy-first approach with comprehensive user consent management for all data collection services:
+
+**Consent System Architecture:**
+```
+┌─────────────────────────────────────────────────────────────┐
+│                    User Consent Layer                       │
+│  ┌─────────────────────────────────────────────────────────┐ │
+│  │          DataCollectionSettingsService                 │ │
+│  │  ┌─────────────────┐  ┌─────────────────────────────┐   │ │
+│  │  │   SharedPrefs   │  │    Firebase SDK Control    │   │ │
+│  │  │   Storage       │  │  - Analytics enabled       │   │ │
+│  │  │                 │  │  - Crashlytics enabled     │   │ │
+│  │  │                 │  │  - Performance enabled     │   │ │
+│  │  └─────────────────┘  └─────────────────────────────┘   │ │
+│  └─────────────────────────────────────────────────────────┘ │
+└─────────────────────────────────────────────────────────────┘
+```
+
+**Key Components:**
+- **DataCollectionSettingsService**: Manages consent state and Firebase SDK configuration
+- **DataCollectionAgreementDialog**: Initial consent flow on app first launch
+- **Settings Integration**: Allows users to modify consent preferences anytime
+- **Real-time Updates**: Consent changes take effect immediately without app restart
+
+**Services Under Consent Control:**
+- **Google Analytics**: User interaction tracking
+- **Firebase Crashlytics**: Crash reporting and stability monitoring  
+- **Firebase Performance Monitoring**: App performance and network monitoring
+
+### Future Considerations
 
 - Gradual migration to Compose Multiplatform when stable
 - Enhanced shared business logic
 - Improved platform abstraction layers
+- **iOS Consent System**: Implement matching user consent management for iOS platform
 
 ---
 
