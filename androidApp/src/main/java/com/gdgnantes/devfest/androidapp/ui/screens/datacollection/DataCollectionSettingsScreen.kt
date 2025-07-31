@@ -158,6 +158,11 @@ fun DataCollectionToolSwitch(
                 stringResource(
                     id = R.string.legal_data_collection_firebase_crashlytics_title
                 )
+
+            DataCollectionService.FIREBASE_PERFORMANCE ->
+                stringResource(
+                    id = R.string.legal_data_collection_firebase_performance_title
+                )
         }
 
     val description =
@@ -170,6 +175,11 @@ fun DataCollectionToolSwitch(
             DataCollectionService.FIREBASE_CRASHLYTICS ->
                 stringResource(
                     id = R.string.legal_data_collection_firebase_crashlytics_description
+                )
+
+            DataCollectionService.FIREBASE_PERFORMANCE ->
+                stringResource(
+                    id = R.string.legal_data_collection_firebase_performance_description
                 )
         }
 
@@ -272,7 +282,8 @@ fun PreviewDataCollectionSettingsScreen() {
                     mutableStateOf(
                         mapOf(
                             DataCollectionService.FIREBASE_CRASHLYTICS to true,
-                            DataCollectionService.GOOGLE_ANALYTICS to false
+                            DataCollectionService.GOOGLE_ANALYTICS to false,
+                            DataCollectionService.FIREBASE_PERFORMANCE to false
                         )
                     )
                 },

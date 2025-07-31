@@ -59,6 +59,8 @@
   <string name="legal_data_collection_firebase_crashlytics_title" translatable="false">Firebase Crashlytics</string>
   <string name="legal_data_collection_google_analytics_description">We use Google Analytics to collect anonymous data to measure how users interact with the app.</string>
   <string name="legal_data_collection_firebase_crashlytics_description">We use Firebase Crashlytics to collect anonymous data when a bug occurs. It helps us to improve the stability of the app.</string>
+  <string name="legal_data_collection_firebase_performance_description">We use Firebase Performance Monitoring to collect anonymous data about app performance. This helps us optimize speed and reliability.</string>
+  <string name="legal_data_collection_firebase_performance_title" translatable="false">Firebase Performance Monitoring</string>
   <string name="legal_data_collection_accept_all">Accept all</string>
   <string name="screen_data_collection">Data collection</string>
   <string name="settings_data_collection_subtitle">Customize data collection</string>

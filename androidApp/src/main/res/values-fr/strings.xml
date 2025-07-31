@@ -50,6 +50,7 @@
   <string name="legal_data_collection_body">Les données anonymes que vous partagez nous aide à améliorer l\'application.</string>
   <string name="legal_data_collection_google_analytics_description">Nous utilisons Google Analytics pour collecter des données anonymes afin de mesurer la façon dont les utilisateurs interagissent avec l\'application.</string>
   <string name="legal_data_collection_firebase_crashlytics_description">Nous utilisons Firebase Crashlytics pour collecter des données anonymes lorsqu\'un bug se produit. Cela nous aide à améliorer la stabilité de l\'application.</string>
+  <string name="legal_data_collection_firebase_performance_description">Nous utilisons Firebase Performance Monitoring pour collecter des données anonymes sur les performances des applications. Cela nous permet d\'améliorer la vitesse et la fiabilité.</string>
   <string name="legal_data_collection_accept_all">Accepter tout</string>
   <string name="screen_data_collection">Partage de données</string>
   <string name="settings_data_collection_subtitle">Personnaliser le partage de vos données.</string>

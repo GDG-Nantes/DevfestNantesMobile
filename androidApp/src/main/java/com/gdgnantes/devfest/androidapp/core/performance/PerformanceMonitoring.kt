@@ -12,7 +12,9 @@ import javax.inject.Singleton
  */
 @Suppress("TooGenericExceptionCaught")
 @Singleton
-class PerformanceMonitoring @Inject constructor() {
+class PerformanceMonitoring @Inject constructor(
+    private val firebasePerformance: FirebasePerformance
+) {
     companion object {
         // Custom trace names for key user flows
         const val TRACE_AGENDA_LOAD = "agenda_load"
@@ -31,7 +33,7 @@ class PerformanceMonitoring @Inject constructor() {
      * @return The Trace object to stop later
      */
     fun startTrace(traceName: String): Trace {
-        return FirebasePerformance.getInstance().newTrace(traceName).apply {
+        return firebasePerformance.newTrace(traceName).apply {
             start()
             Timber.d("Started performance trace: $traceName")
         }
@@ -103,38 +105,6 @@ class PerformanceMonitoring @Inject constructor() {
                 ATTR_ERROR_TYPE to e.javaClass.simpleName
             )
             stopTrace(trace, attributes)
-            throw e
-        }
-    }
-
-    /**
-     * Tracks screen navigation performance.
-     * @param screenName The name of the screen being navigated to
-     * @param block The navigation code to execute
-     */
-    suspend fun <T> trackScreenNavigation(
-        screenName: String,
-        block: suspend () -> T
-    ): T {
-        val trace = startTrace("screen_navigation_$screenName")
-        val startTime = System.currentTimeMillis()
-
-        return try {
-            val result = block()
-            val duration = System.currentTimeMillis() - startTime
-
-            recordMetric(trace, "navigation_duration_ms", duration)
-            stopTrace(trace, mapOf("screen_name" to screenName))
-
-            result
-        } catch (e: Exception) {
-            stopTrace(
-                trace,
-                mapOf(
-                "screen_name" to screenName,
-                ATTR_ERROR_TYPE to e.javaClass.simpleName
-                )
-            )
             throw e
         }
     }

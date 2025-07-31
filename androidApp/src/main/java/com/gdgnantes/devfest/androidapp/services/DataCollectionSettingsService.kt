@@ -1,8 +1,10 @@
 package com.gdgnantes.devfest.androidapp.services
 
 import android.content.SharedPreferences
+import androidx.core.content.edit
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.crashlytics.FirebaseCrashlytics
+import com.google.firebase.perf.FirebasePerformance
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
@@ -26,6 +28,7 @@ class DataCollectionSettingsServiceImpl @Inject constructor(
     private val analyticsService: FirebaseAnalytics,
     private val sharedPreferences: SharedPreferences,
     private val firebaseCrashlytics: FirebaseCrashlytics,
+    private val firebasePerformance: FirebasePerformance,
 ) : DataCollectionSettingsService {
     private val enabledDataServices: MutableSet<String> = HashSet()
 
@@ -81,7 +84,7 @@ class DataCollectionSettingsServiceImpl @Inject constructor(
     }
 
     private fun save() {
-        with(sharedPreferences.edit()) {
+        sharedPreferences.edit {
             putStringSet(SHARED_PREFERENCES_KEY_ENABLED_DATA_SERVICES, enabledDataServices)
             apply()
         }
@@ -89,15 +92,20 @@ class DataCollectionSettingsServiceImpl @Inject constructor(
 
     override fun updatesDataServicesActivationStatus() {
         updatesFirebaseActivationStatusCrashlytics()
+        updatesFirebasePerformanceActivationStatus()
         updatesGoogleAnalyticsActivationStatusCrashlytics()
     }
 
     private fun updatesFirebaseActivationStatusCrashlytics() {
-        firebaseCrashlytics.setCrashlyticsCollectionEnabled(
+        firebaseCrashlytics.isCrashlyticsCollectionEnabled =
             enabledDataServices.contains(
                 DataCollectionService.FIREBASE_CRASHLYTICS.name
-            )
         )
+    }
+
+    private fun updatesFirebasePerformanceActivationStatus() {
+        firebasePerformance.isPerformanceCollectionEnabled =
+            enabledDataServices.contains(DataCollectionService.FIREBASE_PERFORMANCE.name)
     }
 
     private fun updatesGoogleAnalyticsActivationStatusCrashlytics() {
@@ -122,5 +130,6 @@ class DataCollectionSettingsServiceImpl @Inject constructor(
 
 enum class DataCollectionService {
     GOOGLE_ANALYTICS,
-    FIREBASE_CRASHLYTICS
+    FIREBASE_CRASHLYTICS,
+    FIREBASE_PERFORMANCE,
 }
