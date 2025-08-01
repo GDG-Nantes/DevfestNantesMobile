@@ -11,7 +11,7 @@
   <string name="empty_day">Sorry, there is no conference available for the selected filters.</string>
   <string name="screen_session">Session details</string>
   <string name="venue_go_to_button">Go to</string>
-  <string name="screen_about_header_body">The Devfest (i.e Developers Festival), is a technical conference destined to developers. It\'s meant for students, professionals, or any curious techie.\nThis year\'s edition will be scary!</string>
+  <string name="screen_about_header_body">The Devfest (i.e Developers Festival), is a technical conference destined to developers. It\'s meant for students, professionals, or any curious techie.\nThis year step into the magical world of legends and tales!</string>
   <string name="complexity_beginner">Beginner</string>
   <string name="complexity_intermediate">Intermediate</string>
   <string name="complexity_expert">Expert</string>
