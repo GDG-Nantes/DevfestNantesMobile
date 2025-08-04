@@ -113,8 +113,8 @@ internal enum L10n {
   /// About
   internal static let screenAbout = L10n.tr("Localizable", "screen_about", fallback: "About")
   /// The Devfest (i.e Developers Festival), is a technical conference destined to developers. It's meant for students, professionals, or any curious techie
-  /// This year's edition be scary !
-  internal static let screenAboutHeaderBody = L10n.tr("Localizable", "screen_about_header_body", fallback: "The Devfest (i.e Developers Festival), is a technical conference destined to developers. It's meant for students, professionals, or any curious techie\nThis year's edition be scary !")
+  /// This year step into the magical world of legends and tales!
+  internal static let screenAboutHeaderBody = L10n.tr("Localizable", "screen_about_header_body", fallback: "The Devfest (i.e Developers Festival), is a technical conference destined to developers. It's meant for students, professionals, or any curious techie\nThis year step into the magical world of legends and tales!")
   /// Agenda
   internal static let screenAgenda = L10n.tr("Localizable", "screen_agenda", fallback: "Agenda")
   /// Data collection
