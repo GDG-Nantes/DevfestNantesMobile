@@ -6,8 +6,7 @@ A Kotlin Multiplatform Mobile (KMM) application for the [DevFest Nantes](https:/
 
 Get the app from the official app stores:
 
-* **Android:
-  ** [Play Store](https://play.google.com/store/apps/details?id=com.gdgnantes.devfest.mobile.androidapp)
+* **Android:** [Play Store](https://play.google.com/store/apps/details?id=com.gdgnantes.devfest.mobile.androidapp)
 * **iOS:** [App Store](https://apps.apple.com/fr/app/devfest-nantes/id6443489706)
 
 ## 🏗️ Project Architecture
