@@ -193,8 +193,7 @@ jobs:
             -project iosApp/iosApp.xcodeproj \
             -scheme "iosApp" \
             -configuration Debug \
-            # Use any available iOS Simulator for maximum compatibility on CI
-            -destination 'platform=iOS Simulator' \
+            -destination 'platform=iOS Simulator,name=iPhone 16 Pro,OS=iOS 18.4' \
             -derivedDataPath build \
             build \
             CODE_SIGNING_ALLOWED=NO \
