@@ -193,7 +193,7 @@ jobs:
             -project iosApp/iosApp.xcodeproj \
             -scheme "iosApp" \
             -configuration Debug \
-            -destination 'platform=iOS Simulator,name=iPhone 16 Pro,OS=iOS 18.4' \
+            -destination 'platform=iOS Simulator' \
             -derivedDataPath build \
             build \
             CODE_SIGNING_ALLOWED=NO \
