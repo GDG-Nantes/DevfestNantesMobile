@@ -1,6 +1,9 @@
 package com.gdgnantes.devfest.androidapp.utils
 
-class SessionFilter(val type: FilterType, val value: Any) {
+import kotlinx.serialization.Serializable
+
+@Serializable
+class SessionFilter(val type: FilterType, val value: String) {
     enum class FilterType {
         BOOKMARK,
         COMPLEXITY,
