@@ -28,7 +28,8 @@
   <string name="web_external_disclaimer_title">Redirection</string>
   <string name="local_communities_title">Local communities</string>
   <string name="local_communities_button">🌍 Local communities website</string>
-  <string name="session_filters_action">Open session filters</string>
+  <string name="session_filters_action_enabled">Session filters are active. Tap to change filters.</string>
+  <string name="session_filters_action_disabled">No session filters applied. Tap to add filters.</string>
   <string name="session_filters_drawer_title">Filters</string>
   <string name="session_filters_drawer_languages_label">Languages</string>
   <string name="session_filters_drawer_rooms_label">Rooms</string>
