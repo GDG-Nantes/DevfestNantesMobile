@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.gdgnantes.devfest.androidapp.core.performance.PerformanceMonitoring
 import com.gdgnantes.devfest.androidapp.core.performance.traceDataLoading
-import com.gdgnantes.devfest.androidapp.services.FiltersService
+import com.gdgnantes.devfest.androidapp.services.SessionFiltersService
 import com.gdgnantes.devfest.androidapp.ui.UiState
 import com.gdgnantes.devfest.androidapp.utils.SessionFilter
 import com.gdgnantes.devfest.model.Agenda.Companion.DAY_ONE_ISO
@@ -34,7 +34,7 @@ class AgendaViewModel @Inject constructor(
     private val store: DevFestNantesStore,
     private val bookmarksStore: BookmarksStore,
     private val performanceMonitoring: PerformanceMonitoring,
-    private val filtersService: FiltersService
+    private val sessionFiltersService: SessionFiltersService
 ) : ViewModel() {
     private var autoRefreshJob: Job? = null
 
@@ -57,7 +57,7 @@ class AgendaViewModel @Inject constructor(
 
     val rooms = store.rooms.stateIn(viewModelScope, SharingStarted.Lazily, emptySet())
 
-    val sessionFilters = filtersService.filters
+    val sessionFilters = sessionFiltersService.filters
 
     init {
         onRefresh()
@@ -87,7 +87,7 @@ class AgendaViewModel @Inject constructor(
 
     fun onSessionFiltersChanged(filters: Set<SessionFilter>) {
         viewModelScope.launch {
-            filtersService.setFilters(filters)
+            sessionFiltersService.setFilters(filters)
             Timber.d("Session filters updated: ${filters.size} active filters")
         }
     }

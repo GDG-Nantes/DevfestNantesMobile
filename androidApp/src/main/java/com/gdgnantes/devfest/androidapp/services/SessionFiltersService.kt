@@ -9,15 +9,14 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.serialization.json.Json
 import javax.inject.Inject
 
-interface FiltersService {
+interface SessionFiltersService {
     val filters: StateFlow<Set<SessionFilter>>
     fun setFilters(filters: Set<SessionFilter>)
-    fun clearFilters()
 }
 
-class FiltersServiceImpl @Inject constructor(
+class SessionFiltersServiceImpl @Inject constructor(
     private val sharedPreferences: SharedPreferences
-) : FiltersService {
+) : SessionFiltersService {
     companion object {
         private const val SHARED_PREFERENCES_KEY_FILTERS = "SHARED_PREFERENCES_KEY_AGENDA_FILTERS"
     }
@@ -28,11 +27,6 @@ class FiltersServiceImpl @Inject constructor(
     override fun setFilters(filters: Set<SessionFilter>) {
         _filters.value = filters
         saveFilters(filters)
-    }
-
-    override fun clearFilters() {
-        _filters.value = emptySet()
-        saveFilters(emptySet())
     }
 
     private fun saveFilters(filters: Set<SessionFilter>) {

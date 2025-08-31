@@ -14,9 +14,9 @@ import com.gdgnantes.devfest.androidapp.core.performance.PerformanceMonitoring
 import com.gdgnantes.devfest.androidapp.services.BookmarksStoreImpl
 import com.gdgnantes.devfest.androidapp.services.DataCollectionSettingsService
 import com.gdgnantes.devfest.androidapp.services.DataCollectionSettingsServiceImpl
-import com.gdgnantes.devfest.androidapp.services.FiltersService
-import com.gdgnantes.devfest.androidapp.services.FiltersServiceImpl
 import com.gdgnantes.devfest.androidapp.services.FirebaseAnalyticsService
+import com.gdgnantes.devfest.androidapp.services.SessionFiltersService
+import com.gdgnantes.devfest.androidapp.services.SessionFiltersServiceImpl
 import com.gdgnantes.devfest.store.BookmarksStore
 import com.gdgnantes.devfest.store.DevFestNantesStore
 import com.gdgnantes.devfest.store.DevFestNantesStoreBuilder
@@ -53,7 +53,7 @@ abstract class AppModule {
 
     @AppScope
     @Binds
-    abstract fun filtersService(impl: FiltersServiceImpl): FiltersService
+    abstract fun filtersService(impl: SessionFiltersServiceImpl): SessionFiltersService
 
     companion object {
         const val REMOTE_CONFIG_MINIMUM_FETCH_INTERVAL = 300L

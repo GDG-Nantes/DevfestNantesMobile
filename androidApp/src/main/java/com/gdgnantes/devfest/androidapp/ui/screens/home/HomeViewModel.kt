@@ -2,7 +2,7 @@ package com.gdgnantes.devfest.androidapp.ui.screens.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.gdgnantes.devfest.androidapp.services.FiltersService
+import com.gdgnantes.devfest.androidapp.services.SessionFiltersService
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -12,10 +12,10 @@ import javax.inject.Inject
 
 @HiltViewModel
 class HomeViewModel @Inject constructor(
-    filtersService: FiltersService
+    sessionFiltersService: SessionFiltersService
 ) : ViewModel() {
     val isAgendaFiltered: StateFlow<Boolean> =
-        filtersService.filters
+        sessionFiltersService.filters
             .map { it.isNotEmpty() }
             .stateIn(
                 viewModelScope,
