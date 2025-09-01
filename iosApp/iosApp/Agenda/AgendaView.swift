@@ -13,11 +13,7 @@ struct AgendaView: View {
     @ObservedObject var viewModel = AgendaViewModel()
     
     @State private var day = "2025-10-16"
-    @State private var showFavoritesOnly = false
-    @State private var selectedRoom: Room_?
-    @State private var selectedComplexity: Complexity?
-    @State private var selectedLanguage: SessionLanguage?
-    @State private var selectedSessionType: SessionType?
+    // Use Set<SessionFilter> for all filter state
     @State private var scrollToSectionID: Date? = nil
     @State private var firstAppear = true
     
@@ -41,8 +37,8 @@ struct AgendaView: View {
                         List {
                             ForEach(viewModel.agendaContent.sections.filter { $0.day.contains(day) }, id: \.date) { section in
                                 let filteredSessions = getFilteredSessions(sessions: section.sessions)
-                                let sessionsToShow = showFavoritesOnly ? filteredSessions.filter { viewModel.favorites.contains($0.id) } : filteredSessions
-                                
+                                let isFavorites = viewModel.sessionFilters.contains { $0.type == .bookmark }
+                                let sessionsToShow = isFavorites ? filteredSessions.filter { viewModel.favorites.contains($0.id) } : filteredSessions
                                 if !sessionsToShow.isEmpty {
                                     Section(header: Text(sectionTimeFormatter.string(from: section.date)).id(section.date)) {
                                         ForEach(sessionsToShow, id: \.id) { session in
@@ -121,66 +117,120 @@ struct AgendaView: View {
             .navigationBarTitle(L10n.screenAgenda)
             .navigationBarItems(trailing:
                                     Menu("\(Image(systemName: "line.3.horizontal.decrease.circle"))") {
-                let selected = Binding(
-                    get: { self.showFavoritesOnly },
-                    set: { self.showFavoritesOnly = $0 == self.showFavoritesOnly ? false : $0 }
-                )
-                Picker("", selection: selected) {
-                    Text(L10n.filterFavorites).tag(true)
+                // Multi-value filter menus using SessionFilter
+                Menu("\(Image(systemName: "line.3.horizontal.decrease.circle"))") {
+                    // Favorites filter (single select)
+                    Button(action: {
+                        var newFilters = viewModel.sessionFilters
+                        let filter = SessionFilter(type: .bookmark, value: "bookmark")
+                        if newFilters.contains(filter) {
+                            newFilters.remove(filter)
+                        } else {
+                            newFilters.insert(filter)
+                        }
+                        viewModel.sessionFilters = newFilters
+                    }) {
+                        Label(L10n.filterFavorites, systemImage: viewModel.sessionFilters.contains { $0.type == .bookmark } ? "star.fill" : "star")
+                    }
+                    // Language filter (multi-select)
                     Menu(L10n.sessionFiltersDrawerLanguagesLabel) {
-                        let selected = Binding(
-                            get: { self.selectedLanguage },
-                            set: { self.selectedLanguage = $0 == self.selectedLanguage ? nil : $0 })
-                        Picker(L10n.sessionFiltersDrawerLanguagesLabel, selection: selected) {
-                            Text(L10n.languageFrench).tag(Optional(SessionLanguage.french))
-                            Text(L10n.languageEnglish).tag(Optional(SessionLanguage.english))
-                        }
-                    }
-                    Menu(L10n.sessionFiltersDrawerComplexityLabel) {
-                        let selected = Binding(
-                            get: { self.selectedComplexity },
-                            set: { self.selectedComplexity = $0 == self.selectedComplexity ? nil : $0 })
-                        Picker(L10n.sessionFiltersDrawerComplexityLabel, selection: selected) {
-                            Text(L10n.complexityBeginer).tag(Optional(Complexity.beginner))
-                            Text(L10n.complexityIntermediate).tag(Optional(Complexity.intermediate))
-                            Text(L10n.complexityAdvanced).tag(Optional(Complexity.advanced))
-                        }
-                    }
-                    if let rooms = viewModel.roomsContent {
-                        Menu(L10n.sessionFiltersDrawerRoomsLabel) {
-                            let selected = Binding(
-                                get: { self.selectedRoom },
-                                set: { self.selectedRoom = $0 == self.selectedRoom ? nil : $0 })
-                            Picker(L10n.sessionFiltersDrawerRoomsLabel, selection: selected) {
-                                ForEach(rooms, id: \.id) { room in
-                                    Text(room.name).tag(Optional(room))
+                        ForEach([SessionLanguage.french.rawValue, SessionLanguage.english.rawValue], id: \ .self) { lang in
+                            Button(action: {
+                                var newFilters = viewModel.sessionFilters
+                                let filter = SessionFilter(type: .language, value: lang)
+                                if newFilters.contains(filter) {
+                                    newFilters.remove(filter)
+                                } else {
+                                    newFilters.insert(filter)
+                                }
+                                viewModel.sessionFilters = newFilters
+                            }) {
+                                HStack {
+                                    Image(systemName: viewModel.sessionFilters.contains { $0.type == .language && $0.value == lang } ? "checkmark.square" : "square")
+                                    Text(lang == SessionLanguage.french.rawValue ? L10n.languageFrench : L10n.languageEnglish)
                                 }
                             }
-                        }}
-                    Menu(L10n.sessionFiltersDrawerTypeLabel) {
-                        let selected = Binding(
-                            get: { self.selectedSessionType },
-                            set: { self.selectedSessionType = $0 == self.selectedSessionType ? nil : $0 })
-                        Picker(L10n.sessionFiltersDrawerTypeLabel, selection: selected) {
-                            Text(L10n.sessionTypeConference).tag(Optional(SessionType.conference))
-                            Text(L10n.sessionTypeQuickie).tag(Optional(SessionType.quickie))
-                            Text(L10n.sessionTypeCodelab).tag(Optional(SessionType.codelab))
                         }
                     }
-                }
-                ///Adds remove button filters
-                if showFavoritesOnly || selectedRoom != nil || selectedLanguage != nil || selectedComplexity != nil || selectedSessionType != nil {
-                    Button(action: {
-                        self.showFavoritesOnly = false
-                        self.selectedRoom = nil
-                        self.selectedLanguage = nil
-                        self.selectedSessionType = nil
-                        self.selectedComplexity = nil
-                    }) {
-                        Label(L10n.filterClear, systemImage: "trash")
+                    // Complexity filter (multi-select)
+                    Menu(L10n.sessionFiltersDrawerComplexityLabel) {
+                        ForEach([Complexity.beginner.rawValue, Complexity.intermediate.rawValue, Complexity.advanced.rawValue], id: \ .self) { comp in
+                            Button(action: {
+                                var newFilters = viewModel.sessionFilters
+                                let filter = SessionFilter(type: .complexity, value: comp)
+                                if newFilters.contains(filter) {
+                                    newFilters.remove(filter)
+                                } else {
+                                    newFilters.insert(filter)
+                                }
+                                viewModel.sessionFilters = newFilters
+                            }) {
+                                HStack {
+                                    Image(systemName: viewModel.sessionFilters.contains { $0.type == .complexity && $0.value == comp } ? "checkmark.square" : "square")
+                                    Text(
+                                        comp == Complexity.beginner.rawValue ? L10n.complexityBeginer :
+                                        comp == Complexity.intermediate.rawValue ? L10n.complexityIntermediate :
+                                        L10n.complexityAdvanced
+                                    )
+                                }
+                            }
+                        }
                     }
-                }
-                
+                    // Room filter (multi-select)
+                    if let rooms = viewModel.roomsContent {
+                        Menu(L10n.sessionFiltersDrawerRoomsLabel) {
+                            ForEach(rooms, id: \ .id) { room in
+                                Button(action: {
+                                    var newFilters = viewModel.sessionFilters
+                                    let filter = SessionFilter(type: .room, value: room.id)
+                                    if newFilters.contains(filter) {
+                                        newFilters.remove(filter)
+                                    } else {
+                                        newFilters.insert(filter)
+                                    }
+                                    viewModel.sessionFilters = newFilters
+                                }) {
+                                    HStack {
+                                        Image(systemName: viewModel.sessionFilters.contains { $0.type == .room && $0.value == room.id } ? "checkmark.square" : "square")
+                                        Text(room.name)
+                                    }
+                                }
+                            }
+                        }
+                    }
+                    // Session type filter (multi-select)
+                    Menu(L10n.sessionFiltersDrawerTypeLabel) {
+                        ForEach([SessionType.conference.rawValue, SessionType.quickie.rawValue, SessionType.codelab.rawValue], id: \ .self) { type in
+                            Button(action: {
+                                var newFilters = viewModel.sessionFilters
+                                let filter = SessionFilter(type: .type, value: type)
+                                if newFilters.contains(filter) {
+                                    newFilters.remove(filter)
+                                } else {
+                                    newFilters.insert(filter)
+                                }
+                                viewModel.sessionFilters = newFilters
+                            }) {
+                                HStack {
+                                    Image(systemName: viewModel.sessionFilters.contains { $0.type == .type && $0.value == type } ? "checkmark.square" : "square")
+                                    Text(
+                                        type == SessionType.conference.rawValue ? L10n.sessionTypeConference :
+                                        type == SessionType.quickie.rawValue ? L10n.sessionTypeQuickie :
+                                        L10n.sessionTypeCodelab
+                                    )
+                                }
+                            }
+                        }
+                    }
+                    // Clear filters button
+                    if !viewModel.sessionFilters.isEmpty {
+                        Button(action: {
+                            viewModel.clearFilters()
+                        }) {
+                            Label(L10n.filterClear, systemImage: "trash")
+                        }
+                    }
+                }                
             })
             .task {
                 RCValues.sharedInstance.fetchCloudValues()
@@ -214,19 +264,40 @@ struct AgendaView: View {
     }
     
     private func getFilteredSessions(sessions: [AgendaContent.Session]) -> [AgendaContent.Session] {
-        var selectedSession: [AgendaContent.Session] = sessions
-        if let unwrappedLanguage = selectedLanguage {
-            selectedSession = selectedSession.filter { $0.language == unwrappedLanguage }
+        var filtered = sessions
+        let selectedLanguages = viewModel.sessionFilters.filter { $0.type == .language }.map { $0.value }
+        let selectedSessionTypes = viewModel.sessionFilters.filter { $0.type == .type }.map { $0.value }
+        let selectedRooms = viewModel.sessionFilters.filter { $0.type == .room }.map { $0.value }
+        let selectedComplexities = viewModel.sessionFilters.filter { $0.type == .complexity }.map { $0.value }
+
+        if !selectedLanguages.isEmpty {
+            filtered = filtered.filter { session in
+                if let lang = session.language?.name {
+                    selectedLanguages.contains(lang)
+                } else {
+                    false
+                }
+            }
         }
-        if let unwrappedSessionType = selectedSessionType {
-            selectedSession = selectedSession.filter { $0.sessionType == unwrappedSessionType }
+        if !selectedSessionTypes.isEmpty {
+            filtered = filtered.filter { session in
+                selectedSessionTypes.contains(session.sessionType?.name ?? "")
+            }
         }
-        if let unwrappedRoom = selectedRoom {
-            selectedSession = selectedSession.filter { unwrappedRoom.name.contains($0.room) }
+        if !selectedRooms.isEmpty {
+            filtered = filtered.filter { session in
+                selectedRooms.contains(session.room)
+            }
         }
-        if let unwrappedComplexity = selectedComplexity {
-            selectedSession = selectedSession.filter { $0.complexity == unwrappedComplexity }
+        if !selectedComplexities.isEmpty {
+            filtered = filtered.filter { session in
+                if let comp = session.complexity?.name {
+                    selectedComplexities.contains(comp)
+                } else {
+                    false
+                }
+            }
         }
-        return selectedSession
+        return filtered
     }
 }

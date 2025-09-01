@@ -18,6 +18,8 @@
 		003EC8D92DF8D84B000E5689 /* KMPNativeCoroutinesAsync in Frameworks */ = {isa = PBXBuildFile; productRef = 003EC8D82DF8D84B000E5689 /* KMPNativeCoroutinesAsync */; };
 		003EC8DB2DF8D84B000E5689 /* KMPNativeCoroutinesCombine in Frameworks */ = {isa = PBXBuildFile; productRef = 003EC8DA2DF8D84B000E5689 /* KMPNativeCoroutinesCombine */; };
 		003EC8DD2DF8D7E1000E5689 /* FirebasePerformance in Frameworks */ = {isa = PBXBuildFile; productRef = 003EC8DC2DF8D7E1000E5689 /* FirebasePerformance */; };
+		00D442852E6638F100199668 /* SessionFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00D442842E6638F100199668 /* SessionFilter.swift */; };
+		00D442862E6638F100199668 /* SessionFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00D442842E6638F100199668 /* SessionFilter.swift */; };
 		058557BB273AAA24004C7B11 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 058557BA273AAA24004C7B11 /* Assets.xcassets */; };
 		058557D9273AAEEB004C7B11 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 058557D8273AAEEB004C7B11 /* Preview Assets.xcassets */; };
 		2152FB042600AC8F00CF470E /* iOSApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2152FB032600AC8F00CF470E /* iOSApp.swift */; };
@@ -74,6 +76,7 @@
 		001CB9D42E3829B400614907 /* AgendaView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgendaView.swift; sourceTree = "<group>"; };
 		001CB9D52E3829B400614907 /* AgendaViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgendaViewModel.swift; sourceTree = "<group>"; };
 		006B310E2C7A8FBB0024C17B /* DevFestNantesStore-extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DevFestNantesStore-extension.swift"; sourceTree = "<group>"; };
+		00D442842E6638F100199668 /* SessionFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionFilter.swift; sourceTree = "<group>"; };
 		00D69FCF28D2032300498D05 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 		058557BA273AAA24004C7B11 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		058557D8273AAEEB004C7B11 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -273,6 +276,7 @@
 			children = (
 				CBDFA0372AB1B74000302D34 /* BaseViewModel.swift */,
 				CB179BDC28D365B400BB9934 /* Data */,
+				00D442842E6638F100199668 /* SessionFilter.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -556,6 +560,7 @@
 				0011BE942E36D8270084BE4D /* PerformanceMonitoring.swift in Sources */,
 				CBDFA0342AB0F5C500302D34 /* SpeakerPicture.swift in Sources */,
 				CB179BF628D4C36A00BB9934 /* Strings.swift in Sources */,
+				00D442852E6638F100199668 /* SessionFilter.swift in Sources */,
 				CBCB60FA28E48F27001E9B1A /* FirebaseAnalyticsService.swift in Sources */,
 				CBA5C23228DBC5CA00D2779B /* Assets.swift in Sources */,
 				7555FF83242A565900829871 /* ContentView.swift in Sources */,
@@ -574,6 +579,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				00D442862E6638F100199668 /* SessionFilter.swift in Sources */,
 				CB4041DB291A764A000C3CCC /* MockDevFestNantesStore.swift in Sources */,
 				CB3979D02919B78E00BDAE6F /* DevFest_NantesTests.swift in Sources */,
 			);
