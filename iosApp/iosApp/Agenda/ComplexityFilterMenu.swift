@@ -10,20 +10,23 @@ struct ComplexityFilterItem: Identifiable {
 
 struct ComplexityFilterMenu: View {
     @ObservedObject var viewModel: AgendaViewModel
-    var body: some View {
+
+    private var filterItems: [ComplexityFilterItem] {
         let complexities: [Complexity] = [.beginner, .intermediate, .advanced]
-        let filterItems: [ComplexityFilterItem] = complexities.map { comp in
+        return complexities.map { comp in
             let label: String = {
-                switch comp {
-                case .beginner: return L10n.complexityBeginer
-                case .intermediate: return L10n.complexityIntermediate
-                case .advanced: return L10n.complexityAdvanced
-                default: return comp.text
-                }
+                if comp == .beginner { return L10n.complexityBeginer }
+                if comp == .intermediate { return L10n.complexityIntermediate }
+                if comp == .advanced { return L10n.complexityAdvanced }
+                return "" // fallback, should never happen
             }()
-            let isSelected = viewModel.sessionFilters.contains { $0.type == .complexity && $0.value == comp.rawValue }
-            return ComplexityFilterItem(id: comp.rawValue, label: label, isSelected: isSelected)
+            let value = comp.name // Use uppercase enum name for filter value/id
+            let isSelected = viewModel.sessionFilters.contains { $0.type == .complexity && $0.value == value }
+            return ComplexityFilterItem(id: value, label: label, isSelected: isSelected)
         }
+    }
+
+    var body: some View {
         Menu(L10n.sessionFiltersDrawerComplexityLabel) {
             ForEach(filterItems) { item in
                 Button(action: {
