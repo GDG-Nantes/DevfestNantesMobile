@@ -6,6 +6,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
@@ -97,7 +98,7 @@ fun AgendaFilterDrawer(
             onSessionFiltersChanged = onSessionFiltersChanged
         )
         // Add spacing before the button
-        androidx.compose.foundation.layout.Spacer(modifier = Modifier.height(24.dp))
+        Spacer(modifier = Modifier.height(24.dp))
         // Add the clear filters button
         Button(
             modifier =
