@@ -7,6 +7,7 @@ import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.serialization.json.Json
+import timber.log.Timber
 import javax.inject.Inject
 
 interface SessionFiltersService {
@@ -42,6 +43,22 @@ class SessionFiltersServiceImpl @Inject constructor(
     private fun loadFilters(): Set<SessionFilter> {
         val stringSet =
             sharedPreferences.getStringSet(SHARED_PREFERENCES_KEY_FILTERS, emptySet()) ?: emptySet()
-        return stringSet.mapNotNull { Json.decodeFromString<SessionFilter>(it) }.toSet()
+        return stringSet.mapNotNull { filterString ->
+            try {
+                Json.decodeFromString<SessionFilter>(filterString)
+            } catch (e: kotlinx.serialization.SerializationException) {
+                Timber.e(
+                    e,
+                    "SerializationException: Failed to deserialize SessionFilter: $filterString"
+                )
+                null
+            } catch (e: IllegalArgumentException) {
+                Timber.e(
+                    e,
+                    "IllegalArgumentException: Failed to deserialize SessionFilter: $filterString"
+                )
+                null
+            }
+        }.toSet()
     }
 }
