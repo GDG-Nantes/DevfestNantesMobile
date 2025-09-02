@@ -43,7 +43,7 @@ extension WebLinks {
         case .github:
             return "https://github.com/GDG-Nantes/DevfestNantesMobile"
         case .openFeedback:
-            return "https://openfeedback.io/devfestnantes24/"
+            return "https://openfeedback.io/devfestnantes2025/"
         case .goTo:
             return "http://maps.apple.com/?daddr="
         }
