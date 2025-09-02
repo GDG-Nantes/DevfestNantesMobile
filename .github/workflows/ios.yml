@@ -189,7 +189,7 @@ jobs:
       - name: Build iOS App for Simulator
         run: |
           echo "Starting iOS build..."
-          ech "Find the latest available iOS Simulator runtime"
+          echo "Find the latest available iOS Simulator runtime"
           LATEST_RUNTIME=$(xcrun simctl list runtimes | grep 'iOS' | grep -v unavailable | sort -r | head -n1 | awk -F '[()]' '{print $2}')
           echo "Using latest simulator runtime: $LATEST_RUNTIME"
           xcodebuild \
