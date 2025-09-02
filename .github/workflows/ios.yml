@@ -73,6 +73,9 @@ jobs:
             echo "SwiftGen already installed"
           fi
       
+      - name: Install iOS 18.3 Simulator Runtime
+        run: xcrun simctl runtime install iOS-18-3
+      
       - name: Cache Xcode DerivedData
         uses: actions/cache@v4
         with:
