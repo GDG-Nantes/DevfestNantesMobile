@@ -4,6 +4,7 @@ import shared
 struct FavoritesFilterMenu: View {
     @ObservedObject var viewModel: AgendaViewModel
     var body: some View {
+        let isSelected = viewModel.sessionFilters.contains { $0.type == .bookmark }
         Button(action: {
             var newFilters = viewModel.sessionFilters
             let filter = SessionFilter(type: .bookmark, value: "bookmark")
@@ -14,7 +15,7 @@ struct FavoritesFilterMenu: View {
             }
             viewModel.sessionFilters = newFilters
         }) {
-            Label(L10n.filterFavorites, systemImage: viewModel.sessionFilters.contains { $0.type == .bookmark } ? "star.fill" : "star")
+            Label(L10n.filterFavorites, systemImage: isSelected ? "star.fill" : "star")
         }
     }
 }

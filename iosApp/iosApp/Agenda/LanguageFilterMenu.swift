@@ -3,12 +3,25 @@ import shared
 
 struct LanguageFilterMenu: View {
     @ObservedObject var viewModel: AgendaViewModel
+    struct LanguageItem {
+        let value: String
+        let label: String
+    }
+
+    var languageItems: [LanguageItem] {
+        [
+            LanguageItem(value: SessionLanguage.french.name, label: L10n.languageFrench),
+            LanguageItem(value: SessionLanguage.english.name, label: L10n.languageEnglish)
+        ]
+    }
+
     var body: some View {
         Menu(L10n.sessionFiltersDrawerLanguagesLabel) {
-            ForEach([SessionLanguage.french.rawValue, SessionLanguage.english.rawValue], id: \ .self) { lang in
+            ForEach(languageItems, id: \ .value) { item in
+                let isSelected = viewModel.sessionFilters.contains { $0.type == .language && $0.value == item.value }
                 Button(action: {
                     var newFilters = viewModel.sessionFilters
-                    let filter = SessionFilter(type: .language, value: lang)
+                    let filter = SessionFilter(type: .language, value: item.value)
                     if newFilters.contains(filter) {
                         newFilters.remove(filter)
                     } else {
@@ -17,8 +30,8 @@ struct LanguageFilterMenu: View {
                     viewModel.sessionFilters = newFilters
                 }) {
                     HStack {
-                        Image(systemName: viewModel.sessionFilters.contains { $0.type == .language && $0.value == lang } ? "checkmark.square" : "square")
-                        Text(lang == SessionLanguage.french.rawValue ? L10n.languageFrench : L10n.languageEnglish)
+                        Image(systemName: isSelected ? "checkmark.square" : "square")
+                        Text(item.label)
                     }
                 }
             }

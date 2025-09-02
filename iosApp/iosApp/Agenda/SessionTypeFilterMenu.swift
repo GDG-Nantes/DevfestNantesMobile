@@ -3,12 +3,26 @@ import shared
 
 struct SessionTypeFilterMenu: View {
     @ObservedObject var viewModel: AgendaViewModel
+    struct SessionTypeItem {
+        let value: String
+        let label: String
+    }
+
+    var sessionTypeItems: [SessionTypeItem] {
+        [
+            SessionTypeItem(value: SessionType.conference.name, label: L10n.sessionTypeConference),
+            SessionTypeItem(value: SessionType.quickie.name, label: L10n.sessionTypeQuickie),
+            SessionTypeItem(value: SessionType.codelab.name, label: L10n.sessionTypeCodelab)
+        ]
+    }
+
     var body: some View {
         Menu(L10n.sessionFiltersDrawerTypeLabel) {
-            ForEach([SessionType.conference.rawValue, SessionType.quickie.rawValue, SessionType.codelab.rawValue], id: \ .self) { type in
+            ForEach(sessionTypeItems, id: \ .value) { item in
+                let isSelected = viewModel.sessionFilters.contains { $0.type == .type && $0.value == item.value }
                 Button(action: {
                     var newFilters = viewModel.sessionFilters
-                    let filter = SessionFilter(type: .type, value: type)
+                    let filter = SessionFilter(type: .type, value: item.value)
                     if newFilters.contains(filter) {
                         newFilters.remove(filter)
                     } else {
@@ -17,12 +31,8 @@ struct SessionTypeFilterMenu: View {
                     viewModel.sessionFilters = newFilters
                 }) {
                     HStack {
-                        Image(systemName: viewModel.sessionFilters.contains { $0.type == .type && $0.value == type } ? "checkmark.square" : "square")
-                        Text(
-                            type == SessionType.conference.rawValue ? L10n.sessionTypeConference :
-                            type == SessionType.quickie.rawValue ? L10n.sessionTypeQuickie :
-                            L10n.sessionTypeCodelab
-                        )
+                        Image(systemName: isSelected ? "checkmark.square" : "square")
+                        Text(item.label)
                     }
                 }
             }
