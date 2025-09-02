@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.gdgnantes.devfest.androidapp.core.performance.PerformanceMonitoring
 import com.gdgnantes.devfest.androidapp.core.performance.traceDataLoading
-import com.gdgnantes.devfest.androidapp.core.performance.traceStateUpdate
+import com.gdgnantes.devfest.androidapp.services.SessionFiltersService
 import com.gdgnantes.devfest.androidapp.ui.UiState
 import com.gdgnantes.devfest.androidapp.utils.SessionFilter
 import com.gdgnantes.devfest.model.Agenda.Companion.DAY_ONE_ISO
@@ -33,7 +33,8 @@ import javax.inject.Inject
 class AgendaViewModel @Inject constructor(
     private val store: DevFestNantesStore,
     private val bookmarksStore: BookmarksStore,
-    private val performanceMonitoring: PerformanceMonitoring
+    private val performanceMonitoring: PerformanceMonitoring,
+    private val sessionFiltersService: SessionFiltersService
 ) : ViewModel() {
     private var autoRefreshJob: Job? = null
 
@@ -56,8 +57,7 @@ class AgendaViewModel @Inject constructor(
 
     val rooms = store.rooms.stateIn(viewModelScope, SharingStarted.Lazily, emptySet())
 
-    private val _sessionFilters = MutableStateFlow<Set<SessionFilter>>(emptySet())
-    val sessionFilters = _sessionFilters.asStateFlow()
+    val sessionFilters = sessionFiltersService.filters
 
     init {
         onRefresh()
@@ -78,7 +78,7 @@ class AgendaViewModel @Inject constructor(
                             Timber.d("Agenda loaded with ${days.values.sumOf { it.sessions.size }} sessions")
                         }
                         .onEach { _uiState.emit(UiState.SUCCESS) }
-                        .combine(_sessionFilters) { _, _ -> }
+                        .combine(sessionFilters) { _, _ -> }
                         .combine(bookmarksStore.bookmarkedSessionIds) { _, _ -> }
                         .collect { updateFilteredDays() }
                 }
@@ -87,10 +87,8 @@ class AgendaViewModel @Inject constructor(
 
     fun onSessionFiltersChanged(filters: Set<SessionFilter>) {
         viewModelScope.launch {
-            performanceMonitoring.traceStateUpdate("agenda") {
-                _sessionFilters.emit(filters)
-                Timber.d("Session filters updated: ${filters.size} active filters")
-            }
+            sessionFiltersService.setFilters(filters)
+            Timber.d("Session filters updated: ${filters.size} active filters")
         }
     }
 
@@ -105,7 +103,7 @@ class AgendaViewModel @Inject constructor(
                                 AgendaDay(
                                     value.dayIndex, date,
                                     value.sessions
-                                        .filterSessions(_sessionFilters.value)
+                                        .filterSessions(sessionFilters.value)
                                         .sortedBy { session -> session.scheduleSlot.startDate }
                                 )
                         }

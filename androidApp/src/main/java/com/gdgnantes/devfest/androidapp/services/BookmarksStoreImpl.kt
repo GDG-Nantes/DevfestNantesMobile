@@ -1,6 +1,7 @@
 package com.gdgnantes.devfest.androidapp.services
 
 import android.content.SharedPreferences
+import androidx.core.content.edit
 import com.gdgnantes.devfest.store.BookmarksStore
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -47,7 +48,7 @@ class BookmarksStoreImpl @Inject constructor(private val sharedPreferences: Shar
     }
 
     private fun save() {
-        with(sharedPreferences.edit()) {
+        sharedPreferences.edit {
             putStringSet(PREF_SELECTED_SESSIONS, bookmarkedSessions)
             apply()
         }

@@ -2,6 +2,7 @@ package com.gdgnantes.devfest.androidapp.ui.screens
 
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.FilterAlt
 import androidx.compose.material.icons.filled.FilterList
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.DrawerValue
@@ -11,11 +12,13 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.rememberDrawerState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -29,6 +32,7 @@ import com.gdgnantes.devfest.androidapp.ui.components.appbars.BottomAppBar
 import com.gdgnantes.devfest.androidapp.ui.components.appbars.TopAppBar
 import com.gdgnantes.devfest.androidapp.ui.screens.about.About
 import com.gdgnantes.devfest.androidapp.ui.screens.agenda.Agenda
+import com.gdgnantes.devfest.androidapp.ui.screens.home.HomeViewModel
 import com.gdgnantes.devfest.androidapp.ui.screens.speakers.list.Speakers
 import com.gdgnantes.devfest.androidapp.ui.screens.venue.Venue
 import com.gdgnantes.devfest.model.Session
@@ -55,6 +59,8 @@ fun Home(
     onSettingsClick: () -> Unit,
 ) {
     val homeNavController = rememberNavController()
+    val homeViewModel: HomeViewModel = hiltViewModel()
+    val isAgendaFiltered by homeViewModel.isAgendaFiltered.collectAsState()
 
     homeNavController.addOnDestinationChangedListener { _, destination, _ ->
         destination.route?.let { route ->
@@ -91,10 +97,19 @@ fun Home(
                                     }
                                 }
                             }) {
-                                Icon(
-                                    imageVector = Icons.Filled.FilterList,
-                                    contentDescription = stringResource(id = R.string.session_filters_action)
-                                )
+                                if (isAgendaFiltered) {
+                                    Icon(
+                                        imageVector = Icons.Filled.FilterAlt,
+                                        contentDescription =
+                                            stringResource(id = R.string.session_filters_action_enabled),
+                                    )
+                                } else {
+                                    Icon(
+                                        imageVector = Icons.Filled.FilterList,
+                                        contentDescription =
+                                            stringResource(id = R.string.session_filters_action_disabled),
+                                    )
+                                }
                             }
                         }
                         else -> {}

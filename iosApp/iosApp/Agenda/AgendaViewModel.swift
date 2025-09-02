@@ -19,9 +19,14 @@ class AgendaViewModel: BaseViewModel {
     @Published var roomsContent: [Room_]?
     @Published var isLoading = true
     let defaults = UserDefaults.standard
-    
+
+    // Filters as Set of SessionFilter
+    @Published var sessionFilters: Set<SessionFilter> {
+        didSet { saveFilters() }
+    }
+
     private let performanceMonitoring = PerformanceMonitoring.shared
-    
+
     var favorites: [String] {
         get {
             return defaults.object(forKey: "Favorites") as? [String] ?? []
@@ -30,11 +35,29 @@ class AgendaViewModel: BaseViewModel {
             defaults.set(newValue, forKey: "Favorites")
         }
     }
-    
+
     ///Initialization of the model with store and the UserDefaults object
     override init() {
+        if let data = defaults.data(forKey: "AgendaSessionFilters"),
+           let filters = try? JSONDecoder().decode(Set<SessionFilter>.self, from: data) {
+            self.sessionFilters = filters
+        } else {
+            self.sessionFilters = []
+        }
         super.init()
         self.favorites = defaults.object(forKey: "Favorites") as? [String] ?? []
+    }
+
+    // MARK: - Persistence helpers
+    private func saveFilters() {
+        if let data = try? JSONEncoder().encode(sessionFilters) {
+            defaults.set(data, forKey: "AgendaSessionFilters")
+        }
+    }
+
+    func clearFilters() {
+        sessionFilters = []
+        defaults.removeObject(forKey: "AgendaSessionFilters")
     }
     
     // MARK: - Favorites management

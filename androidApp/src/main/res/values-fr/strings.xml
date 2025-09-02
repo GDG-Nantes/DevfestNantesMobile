@@ -26,7 +26,8 @@
   <string name="web_external_disclaimer_title">Redirection</string>
   <string name="local_communities_title">Communautés locales</string>
   <string name="local_communities_button">🌍 Page des communautés tech Nantaises</string>
-  <string name="session_filters_action">Ouvrir les filtres de session</string>
+  <string name="session_filters_action_enabled">Filtres de session actifs. Touchez pour modifier les filtres.</string>
+  <string name="session_filters_action_disabled">Aucun filtre de session appliqué. Touchez pour ajouter des filtres.</string>
   <string name="session_filters_drawer_title">Filtres</string>
   <string name="session_filters_drawer_languages_label">Langues</string>
   <string name="session_filters_drawer_rooms_label">Salles</string>
@@ -67,4 +68,5 @@
   <string name="settings_version_support_subtitle">Signaler un problème.</string>
   <string name="settings_legal">Mentions légales</string>
   <string name="venue_plan_content_description">Plan de la citée des congrès. Présente les différents espaces et les salles de la conférence.</string>
+  <string name="session_filters_clear">Réinitialiser les filtres</string>
 </resources>

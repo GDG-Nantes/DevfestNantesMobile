@@ -15,8 +15,8 @@ struct AgendaContent {
         let id: String
         let abstract: String
         let category: shared.Category?
-        let language: SessionLanguage?
-        let complexity: Complexity?
+        let language: shared.SessionLanguage?
+        let complexity: shared.Complexity?
         let openFeedbackFormId: String?
         let speakers: [Speaker_]
         let room: String

@@ -15,6 +15,8 @@ import com.gdgnantes.devfest.androidapp.services.BookmarksStoreImpl
 import com.gdgnantes.devfest.androidapp.services.DataCollectionSettingsService
 import com.gdgnantes.devfest.androidapp.services.DataCollectionSettingsServiceImpl
 import com.gdgnantes.devfest.androidapp.services.FirebaseAnalyticsService
+import com.gdgnantes.devfest.androidapp.services.SessionFiltersService
+import com.gdgnantes.devfest.androidapp.services.SessionFiltersServiceImpl
 import com.gdgnantes.devfest.store.BookmarksStore
 import com.gdgnantes.devfest.store.DevFestNantesStore
 import com.gdgnantes.devfest.store.DevFestNantesStoreBuilder
@@ -48,6 +50,10 @@ abstract class AppModule {
     abstract fun dataSharingSettingsService(
         dataCollectionSettingsServiceImpl: DataCollectionSettingsServiceImpl
     ): DataCollectionSettingsService
+
+    @AppScope
+    @Binds
+    abstract fun filtersService(impl: SessionFiltersServiceImpl): SessionFiltersService
 
     companion object {
         const val REMOTE_CONFIG_MINIMUM_FETCH_INTERVAL = 300L
