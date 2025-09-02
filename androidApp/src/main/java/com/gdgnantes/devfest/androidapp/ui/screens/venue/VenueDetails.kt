@@ -16,7 +16,6 @@ import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.MaterialTheme
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -44,82 +43,79 @@ fun VenueDetails(
     onNavigationClick: () -> Unit,
     onVenuePlanClick: () -> Unit,
 ) {
-    Scaffold {
-        Column(
-            modifier =
+    Column(
+        modifier =
             modifier
                 .fillMaxWidth()
                 .fillMaxHeight()
-                .padding(it)
                 .verticalScroll(rememberScrollState()),
-            verticalArrangement = Arrangement.spacedBy(4.dp)
-        ) {
-            val context = LocalContext.current
+        verticalArrangement = Arrangement.spacedBy(4.dp)
+    ) {
+        val context = LocalContext.current
 
-            AsyncImage(
-                modifier =
+        AsyncImage(
+            modifier =
                 Modifier
                     .fillMaxWidth()
                     .height(200.dp),
-                model =
+            model =
                 ImageRequest.Builder(LocalContext.current)
                     .data(venue.imageUrl)
                     .networkCachePolicy(CachePolicy.ENABLED)
                     .diskCachePolicy(CachePolicy.ENABLED)
                     .crossfade(true)
                     .build(),
-                onError = { state ->
-                    Timber.w(state.result.throwable, "Venue's image loading failed")
-                },
-                contentDescription = stringResource(R.string.venue_image_content_description),
-                contentScale = ContentScale.Crop
-            )
+            onError = { state ->
+                Timber.w(state.result.throwable, "Venue's image loading failed")
+            },
+            contentDescription = stringResource(R.string.venue_image_content_description),
+            contentScale = ContentScale.Crop
+        )
 
-            Column(
-                modifier =
+        Column(
+            modifier =
                 modifier
                     .fillMaxWidth()
                     .fillMaxHeight()
                     .padding(8.dp),
-                verticalArrangement = Arrangement.spacedBy(16.dp),
-            ) {
-                Text(
-                    text = venue.name,
-                    style = MaterialTheme.typography.h5,
-                )
+            verticalArrangement = Arrangement.spacedBy(16.dp),
+        ) {
+            Text(
+                text = venue.name,
+                style = MaterialTheme.typography.h5,
+            )
 
-                val latitude = venue.latitude
-                val longitude = venue.longitude
-                Text(
-                    modifier =
+            val latitude = venue.latitude
+            val longitude = venue.longitude
+            Text(
+                modifier =
                     Modifier.clickable {
                         if (latitude != null && longitude != null) {
                             onNavigationClick()
                             onNavigationClick(context, latitude, longitude)
                         }
                     },
-                    text = venue.address,
-                    style = MaterialTheme.typography.subtitle2,
-                )
+                text = venue.address,
+                style = MaterialTheme.typography.subtitle2,
+            )
 
-                if (latitude != null && longitude != null) {
-                    Button(onClick = {
-                        onNavigationClick()
-                        onNavigationClick(context, latitude, longitude)
-                    }) {
-                        Text(stringResource(id = R.string.venue_go_to_button))
-                    }
+            if (latitude != null && longitude != null) {
+                Button(onClick = {
+                    onNavigationClick()
+                    onNavigationClick(context, latitude, longitude)
+                }) {
+                    Text(stringResource(id = R.string.venue_go_to_button))
                 }
+            }
 
-                Text(
-                    modifier = Modifier.fillMaxWidth(),
-                    text = venue.description,
-                    style = MaterialTheme.typography.subtitle2,
-                )
+            Text(
+                modifier = Modifier.fillMaxWidth(),
+                text = venue.description,
+                style = MaterialTheme.typography.subtitle2,
+            )
 
-                venue.floorPlanUrl?.let { floorPlanUrl ->
-                    VenueFloorPlanButton(floorPlanUrl = floorPlanUrl, onClick = onVenuePlanClick)
-                }
+            venue.floorPlanUrl?.let { floorPlanUrl ->
+                VenueFloorPlanButton(floorPlanUrl = floorPlanUrl, onClick = onVenuePlanClick)
             }
         }
     }

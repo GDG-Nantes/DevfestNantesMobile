@@ -20,13 +20,13 @@ import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
@@ -88,45 +88,41 @@ fun Speakers(
     val context = LocalDensity.current
     val alphabetHeightInPixels = remember { with(context) { alphabetItemHeight.toPx() } }
     var alphabetRelativeDragYOffset: Float? by remember { mutableStateOf(null) }
-    var alphabetDistanceFromTopOfScreen: Float by remember { mutableStateOf(0F) }
+    var alphabetDistanceFromTopOfScreen: Float by remember { mutableFloatStateOf(0F) }
 
-    Scaffold {
-        if (uiState == UiState.STARTING) {
-            LoadingLayout(
-                modifier =
+    if (uiState == UiState.STARTING) {
+        LoadingLayout(
+            modifier =
                 modifier
-                    .padding(it)
                     .fillMaxSize()
-            )
-        } else {
-            Surface(
-                modifier =
+        )
+    } else {
+        Surface(
+            modifier =
                 modifier
-                    .padding(it)
                     .fillMaxSize(),
-                color = MaterialTheme.colorScheme.background
-            ) {
-                BoxWithConstraints {
-                    SpeakersListWithScroller(
-                        speakers = speakers,
-                        onAlphabetListDrag = { relativeDragYOffset, containerDistance ->
-                            alphabetRelativeDragYOffset = relativeDragYOffset
-                            alphabetDistanceFromTopOfScreen = containerDistance
-                        },
-                        onSpeakerClick = onSpeakerClick
-                    )
+            color = MaterialTheme.colorScheme.background
+        ) {
+            BoxWithConstraints {
+                SpeakersListWithScroller(
+                    speakers = speakers,
+                    onAlphabetListDrag = { relativeDragYOffset, containerDistance ->
+                        alphabetRelativeDragYOffset = relativeDragYOffset
+                        alphabetDistanceFromTopOfScreen = containerDistance
+                    },
+                    onSpeakerClick = onSpeakerClick
+                )
 
-                    val yOffset = alphabetRelativeDragYOffset
-                    if (yOffset != null) {
-                        ScrollingBubble(
-                            boxConstraintMaxWidth = this.maxWidth,
-                            bubbleOffsetYFloat = yOffset + alphabetDistanceFromTopOfScreen,
-                            currAlphabetScrolledOn =
+                val yOffset = alphabetRelativeDragYOffset
+                if (yOffset != null) {
+                    ScrollingBubble(
+                        boxConstraintMaxWidth = this.maxWidth,
+                        bubbleOffsetYFloat = yOffset + alphabetDistanceFromTopOfScreen,
+                        currAlphabetScrolledOn =
                             yOffset.getIndexOfCharBasedOnYPosition(
                                 alphabetHeightInPixels = alphabetHeightInPixels,
                             ),
-                        )
-                    }
+                    )
                 }
             }
         }
@@ -148,9 +144,9 @@ fun ScrollingBubble(
             .offset(
                 x = (boxConstraintMaxWidth - (bubbleSize + alphabetItemHeight)),
                 y =
-                with(LocalDensity.current) {
-                    bubbleOffsetYFloat.toDp() - (bubbleSize / 2)
-                },
+                    with(LocalDensity.current) {
+                        bubbleOffsetYFloat.toDp() - (bubbleSize / 2)
+                    },
             ),
         shape = CircleShape,
         color = MaterialTheme.colorScheme.primary,

@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
-import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -31,51 +30,48 @@ fun About(
     onLocalCommunitiesClick: () -> Unit,
     onGithubClick: () -> Unit,
 ) {
-    Scaffold {
-        Column(
-            modifier =
+    Column(
+        modifier =
             modifier
                 .fillMaxWidth()
                 .fillMaxHeight()
-                .padding(it)
                 .verticalScroll(state = rememberScrollState()),
-            verticalArrangement = Arrangement.spacedBy(16.dp),
-        ) {
-            AboutHeader(modifier.padding(horizontal = 8.dp))
+        verticalArrangement = Arrangement.spacedBy(16.dp),
+    ) {
+        AboutHeader(modifier.padding(horizontal = 8.dp))
 
-            AboutLinks(
-                modifier.padding(horizontal = 8.dp),
-                onCodeOfConductClick = onCodeOfConductClick,
-                onDevFestNantesWebsiteClick = onDevFestNantesWebsiteClick
-            )
+        AboutLinks(
+            modifier.padding(horizontal = 8.dp),
+            onCodeOfConductClick = onCodeOfConductClick,
+            onDevFestNantesWebsiteClick = onDevFestNantesWebsiteClick
+        )
 
-            AboutSocial(
-                modifier.padding(horizontal = 8.dp),
-                onFacebookClick = onFacebookClick,
-                onTwitterClick = onTwitterClick,
-                onLinkedInClick = onLinkedInClick,
-                onYouTubeClick = onYouTubeClick
-            )
+        AboutSocial(
+            modifier.padding(horizontal = 8.dp),
+            onFacebookClick = onFacebookClick,
+            onTwitterClick = onTwitterClick,
+            onLinkedInClick = onLinkedInClick,
+            onYouTubeClick = onYouTubeClick
+        )
 
-            Partners(
-                modifier.padding(horizontal = 8.dp),
-                onPartnerClick = onPartnerClick
-            )
+        Partners(
+            modifier.padding(horizontal = 8.dp),
+            onPartnerClick = onPartnerClick
+        )
 
-            AboutLocalCommunities(
-                modifier.padding(horizontal = 8.dp),
-                onClick = onLocalCommunitiesClick
-            )
+        AboutLocalCommunities(
+            modifier.padding(horizontal = 8.dp),
+            onClick = onLocalCommunitiesClick
+        )
 
-            GithubCard(
-                modifier
-                    .padding(horizontal = 8.dp)
-                    .align(Alignment.CenterHorizontally),
-                onCLick = onGithubClick
-            )
+        GithubCard(
+            modifier
+                .padding(horizontal = 8.dp)
+                .align(Alignment.CenterHorizontally),
+            onCLick = onGithubClick
+        )
 
-            AboutVersion(modifier.padding(8.dp))
-        }
+        AboutVersion(modifier.padding(8.dp))
     }
 }
 

@@ -47,7 +47,6 @@ fun AgendaFilterDrawer(
             .verticalScroll(rememberScrollState())
     ) {
         HeaderItem(
-            modifier = modifier,
             text = R.string.session_filters_drawer_title
         )
         FilterItem(
@@ -75,7 +74,6 @@ fun AgendaFilterDrawer(
         )
 
         HeaderItem(
-            modifier = modifier,
             text = R.string.session_filters_drawer_rooms_label
         )
         for (room in rooms) {

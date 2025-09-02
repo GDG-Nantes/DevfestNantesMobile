@@ -136,78 +136,79 @@ fun Home(
                     }
                 }
             )
-        }
-    ) {
-        NavHost(
-            homeNavController,
-            startDestination = Screen.Agenda.route,
-            modifier = modifier.padding(it)
-        ) {
-            composable(Screen.Agenda.route) {
-                Agenda(
-                    agendaFilterDrawerState = agendaFilterDrawerState,
-                    onSessionClick = onSessionClick
-                )
-            }
+        },
+        content = { paddingValues ->
+            NavHost(
+                homeNavController,
+                startDestination = Screen.Agenda.route,
+                modifier = modifier.padding(paddingValues)
+            ) {
+                composable(Screen.Agenda.route) {
+                    Agenda(
+                        agendaFilterDrawerState = agendaFilterDrawerState,
+                        onSessionClick = onSessionClick
+                    )
+                }
 
-            composable(Screen.Speakers.route) {
-                Speakers(
-                    onSpeakerClick = onSpeakerClick
-                )
-            }
+                composable(Screen.Speakers.route) {
+                    Speakers(
+                        onSpeakerClick = onSpeakerClick
+                    )
+                }
 
-            composable(Screen.Venue.route) {
-                Venue(
-                    onNavigationClick = { analyticsService.eventVenueNavigationClicked() },
-                    onVenuePlanClick = { url ->
-                        externalContentService.openUrl(url)
-                        analyticsService.eventVenueFloorPlanClicked()
-                    },
-                )
-            }
-
-            composable(Screen.About.route) {
-                About(
-                    onCodeOfConductClick = {
-                        externalContentService.openUrl(CODE_OF_CONDUCT.url)
-                        analyticsService.eventLinkCodeOfConductOpened()
-                    },
-                    onDevFestNantesWebsiteClick = {
-                        externalContentService.openUrl(WEBSITE.url)
-                        analyticsService.eventLinkDevFestWebsiteOpened()
-                    },
-                    onFacebookClick = {
-                        externalContentService.openUrl(SOCIAL_FACEBOOK.url)
-                        analyticsService.eventLinkFacebookOpened()
-                    },
-                    onTwitterClick = {
-                        externalContentService.openUrl(SOCIAL_TWITTER.url)
-                        analyticsService.eventLinkTwitterOpened()
-                    },
-                    onLinkedInClick = {
-                        externalContentService.openUrl(SOCIAL_LINKEDIN.url)
-                        analyticsService.eventLinkLinkedinOpened()
-                    },
-                    onYouTubeClick = {
-                        externalContentService.openUrl(SOCIAL_YOUTUBE.url)
-                        analyticsService.eventLinkYoutubeOpened()
-                    },
-                    onPartnerClick = { partner ->
-                        partner.url?.let { url ->
+                composable(Screen.Venue.route) {
+                    Venue(
+                        onNavigationClick = { analyticsService.eventVenueNavigationClicked() },
+                        onVenuePlanClick = { url ->
                             externalContentService.openUrl(url)
-                            analyticsService.eventLinkPartnerOpened(partner.name ?: "")
+                            analyticsService.eventVenueFloorPlanClicked()
+                        },
+                    )
+                }
+
+                composable(Screen.About.route) {
+                    About(
+                        onCodeOfConductClick = {
+                            externalContentService.openUrl(CODE_OF_CONDUCT.url)
+                            analyticsService.eventLinkCodeOfConductOpened()
+                        },
+                        onDevFestNantesWebsiteClick = {
+                            externalContentService.openUrl(WEBSITE.url)
+                            analyticsService.eventLinkDevFestWebsiteOpened()
+                        },
+                        onFacebookClick = {
+                            externalContentService.openUrl(SOCIAL_FACEBOOK.url)
+                            analyticsService.eventLinkFacebookOpened()
+                        },
+                        onTwitterClick = {
+                            externalContentService.openUrl(SOCIAL_TWITTER.url)
+                            analyticsService.eventLinkTwitterOpened()
+                        },
+                        onLinkedInClick = {
+                            externalContentService.openUrl(SOCIAL_LINKEDIN.url)
+                            analyticsService.eventLinkLinkedinOpened()
+                        },
+                        onYouTubeClick = {
+                            externalContentService.openUrl(SOCIAL_YOUTUBE.url)
+                            analyticsService.eventLinkYoutubeOpened()
+                        },
+                        onPartnerClick = { partner ->
+                            partner.url?.let { url ->
+                                externalContentService.openUrl(url)
+                                analyticsService.eventLinkPartnerOpened(partner.name ?: "")
+                            }
+                        },
+                        onLocalCommunitiesClick = {
+                            externalContentService.openUrl(NANTES_TECH_COMMUNITIES.url)
+                            analyticsService.eventLinkLocalCommunitiesOpened()
+                        },
+                        onGithubClick = {
+                            externalContentService.openUrl(GITHUB.url)
+                            analyticsService.eventLinkGithubOpened()
                         }
-                    },
-                    onLocalCommunitiesClick = {
-                        externalContentService.openUrl(NANTES_TECH_COMMUNITIES.url)
-                        analyticsService.eventLinkLocalCommunitiesOpened()
-                    },
-                    onGithubClick = {
-                        externalContentService.openUrl(GITHUB.url)
-                        analyticsService.eventLinkGithubOpened()
-                    }
-                )
+                    )
+                }
             }
         }
-    }
+    )
 }
