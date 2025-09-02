@@ -30,7 +30,10 @@ class SessionFiltersServiceImpl @Inject constructor(
     }
 
     private fun saveFilters(filters: Set<SessionFilter>) {
-        val stringSet = filters.map { Json.encodeToString(it) }.toSet()
+        val stringSet =
+            filters.map {
+                Json.encodeToString(SessionFilter.serializer(), it)
+            }.toSet()
         sharedPreferences.edit {
             putStringSet(SHARED_PREFERENCES_KEY_FILTERS, stringSet)
         }
