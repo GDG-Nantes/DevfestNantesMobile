@@ -4,7 +4,7 @@ enum class WebLinks(val url: String) {
     CODE_OF_CONDUCT("https://devfest.gdgnantes.com/code-of-conduct"),
     GITHUB("https://github.com/GDG-Nantes/DevfestNantesMobile"),
     NANTES_TECH_COMMUNITIES("https://nantes.community/"),
-    OPENFEEDBACK_BASE_URL("https://openfeedback.io/devfestnantes24/"),
+    OPENFEEDBACK_BASE_URL("https://openfeedback.io/devfestnantes2025/"),
     SOCIAL_FACEBOOK("https://facebook.com/gdgnantes"),
     SOCIAL_TWITTER("https://twitter.com/gdgnantes"),
     SOCIAL_LINKEDIN("https://www.linkedin.com/in/gdg-nantes"),
