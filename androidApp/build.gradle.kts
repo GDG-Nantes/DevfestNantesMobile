@@ -34,8 +34,8 @@ android {
         applicationId = "com.gdgnantes.devfest.mobile.androidapp"
         minSdk = AndroidSdk.min
         targetSdk = AndroidSdk.target
-        versionCode = 34
-        versionName = "2025.09.00"
+        versionCode = 35
+        versionName = "2025.09.01"
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
         buildConfigField("String", "OPEN_FEEDBACK_ENABLED", "\"false\"")
