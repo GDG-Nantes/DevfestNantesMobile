@@ -2,6 +2,9 @@
 
 package com.gdgnantes.devfest.androidapp.ui.screens.agenda
 
+import androidx.compose.foundation.layout.WindowInsetsSides
+import androidx.compose.foundation.layout.only
+import androidx.compose.material3.DrawerDefaults
 import androidx.compose.material3.DrawerState
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.ModalDrawerSheet
@@ -59,7 +62,11 @@ fun AgendaLayout(
     ModalNavigationDrawer(
         drawerState = agendaFilterDrawerState,
         drawerContent = {
-            ModalDrawerSheet {
+            ModalDrawerSheet(
+                windowInsets = DrawerDefaults
+                    .windowInsets
+                    .only(sides = WindowInsetsSides.Start)
+            ) {
                 AgendaFilterDrawer(
                     rooms = rooms.value,
                     sessionFilters = sessionFilters.value,
