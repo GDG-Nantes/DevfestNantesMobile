@@ -63,7 +63,8 @@ fun AgendaLayout(
         drawerState = agendaFilterDrawerState,
         drawerContent = {
             ModalDrawerSheet(
-                windowInsets = DrawerDefaults
+                windowInsets =
+                    DrawerDefaults
                     .windowInsets
                     .only(sides = WindowInsetsSides.Start)
             ) {
