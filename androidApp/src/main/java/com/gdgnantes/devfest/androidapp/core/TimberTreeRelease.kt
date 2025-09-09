@@ -11,7 +11,7 @@ class TimberTreeRelease : Timber.Tree() {
     override fun log(priority: Int, tag: String?, message: String, t: Throwable?) {
         if (!isLoggable(tag, priority)) return
         Log.println(priority, tag ?: DEFAULT_TAG, message)
-        if (priority == Log.ERROR) {
+        if (priority == Log.ERROR || priority == Log.WARN) {
             val crashlytics = FirebaseCrashlytics.getInstance()
             if (t != null) {
                 crashlytics.recordException(t)
