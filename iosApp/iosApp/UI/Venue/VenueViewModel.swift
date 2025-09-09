@@ -16,6 +16,7 @@ import os
 @MainActor
 class VenueViewModel: BaseViewModel {
     @Published var venueContent: VenueContent?
+    @Published var isLoading: Bool = true
     
     ///Detect phone language
     var currentLanguage: ContentLanguage {
@@ -31,15 +32,20 @@ class VenueViewModel: BaseViewModel {
     
     ///Asynchronous method to retrieve venue
     func observeVenue() async {
+        self.isLoading = true
         Task {
             do {
                 let venueData = try await asyncFunction(for: store.getVenue(language: currentLanguage))
                 DispatchQueue.main.async {
                     self.venueContent = VenueContent(from: venueData)
+                    self.isLoading = false
                 }
             } catch {
                 DevFestLogger(category: "Venue").log(.error, "Observe Venue error: \(error.localizedDescription)", error: error)
                 // Handle error appropriately
+                DispatchQueue.main.async {
+                    self.isLoading = false
+                }
             }
         }
     }

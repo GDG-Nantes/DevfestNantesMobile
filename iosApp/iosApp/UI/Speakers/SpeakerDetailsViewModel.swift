@@ -16,6 +16,7 @@ import os
 class SpeakerDetailsViewModel: BaseViewModel {
     @Published var speaker: Speaker_?
     @Published var speakerSession: [Session_]?
+    @Published var isLoading: Bool = true
     var speakerId: String
     
     private let performanceMonitoring = PerformanceMonitoring.shared
@@ -43,12 +44,16 @@ class SpeakerDetailsViewModel: BaseViewModel {
             
             DispatchQueue.main.async {
                 self.speaker = speakerResult
+                // L'état de chargement sera arrêté une fois les sessions récupérées également
             }
             
             logger.log(.info, "Speaker details loaded: \(speakerResult?.name ?? "Unknown")")
             
         } catch {
             logger.log(.error, "Get Speaker error: \(error.localizedDescription)")
+            DispatchQueue.main.async {
+                self.isLoading = false
+            }
         }
     }
     
@@ -57,11 +62,15 @@ class SpeakerDetailsViewModel: BaseViewModel {
             let speakerSessionResult = try await asyncFunction(for: store.getSpeakerSessions(speakerId: speakerId))
             DispatchQueue.main.async {
                 self.speakerSession = speakerSessionResult
+                self.isLoading = false
             }
             
             logger.log(.info, "Speaker sessions loaded: \(speakerSessionResult.count) sessions")
         } catch {
             logger.log(.error, "Get Speaker Sessions error: \(error.localizedDescription)")
+            DispatchQueue.main.async {
+                self.isLoading = false
+            }
         }
     }
 }
