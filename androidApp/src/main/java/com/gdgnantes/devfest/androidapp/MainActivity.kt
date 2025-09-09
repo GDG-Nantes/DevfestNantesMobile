@@ -3,6 +3,7 @@ package com.gdgnantes.devfest.androidapp
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.activity.enableEdgeToEdge
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.NavController
 import androidx.navigation.NavDestination
@@ -53,6 +54,9 @@ class MainActivity : ComponentActivity(), NavController.OnDestinationChangedList
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         installSplashScreen()
+
+        // Enable edge-to-edge display for Android 15+ compatibility
+        enableEdgeToEdge()
 
         setContent {
             DevFestNantesTheme {

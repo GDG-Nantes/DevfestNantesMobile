@@ -101,6 +101,7 @@ dependencies {
 
     implementation(libs.bundles.accompanist)
     implementation(libs.androidx.browser)
+    implementation(libs.androidx.activity.ktx)
 
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.compose.activity)
