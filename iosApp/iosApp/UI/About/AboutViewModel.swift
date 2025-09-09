@@ -16,27 +16,34 @@ import os
 @MainActor
 class AboutViewModel: BaseViewModel {
     @Published var partnersContent: [PartnerContent]?
+    @Published var isLoading = true
     
     /// Asynchronous method to retrieve partners
     func observePartners() async {
+        self.isLoading = true
         self.partnersContent = []
 
         do {
             let partnersSequence = asyncSequence(for: store.partners)
             var newContentArray = [PartnerContent]()
+            // Consommer uniquement la première émission pour éviter une attente infinie
             for try await partners in partnersSequence {
                 let sortedKeys = partners.keys.sorted()
                 for key in sortedKeys {
-                    let newPartnerContent = PartnerContent(categoryName: key, partners: partners[key]!)
-
-                    if !newContentArray.contains(newPartnerContent) {
-                        newContentArray.append(newPartnerContent)
+                    if let list = partners[key] {
+                        let newPartnerContent = PartnerContent(categoryName: key, partners: list)
+                        if !newContentArray.contains(newPartnerContent) {
+                            newContentArray.append(newPartnerContent)
+                        }
                     }
                 }
+                break
             }
             self.partnersContent = newContentArray
+            self.isLoading = false
         } catch {
             DevFestLogger(category: "About").log(.error, "Observe Partners error: \(error.localizedDescription)", error: error)
+            self.isLoading = false
         }
     }
 }
