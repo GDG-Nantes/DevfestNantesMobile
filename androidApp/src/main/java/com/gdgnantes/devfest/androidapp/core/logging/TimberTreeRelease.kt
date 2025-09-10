@@ -1,10 +1,12 @@
-package com.gdgnantes.devfest.androidapp.core
+package com.gdgnantes.devfest.androidapp.core.logging
 
 import android.util.Log
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import timber.log.Timber
+import javax.inject.Inject
 
-class TimberTreeRelease : Timber.Tree() {
+class TimberTreeRelease @Inject constructor(private val firebaseCrashlytics: FirebaseCrashlytics) :
+    Timber.Tree() {
     override fun isLoggable(tag: String?, priority: Int) =
         !(priority == Log.VERBOSE || priority == Log.DEBUG)
 
@@ -12,11 +14,10 @@ class TimberTreeRelease : Timber.Tree() {
         if (!isLoggable(tag, priority)) return
         Log.println(priority, tag ?: DEFAULT_TAG, message)
         if (priority == Log.ERROR || priority == Log.WARN) {
-            val crashlytics = FirebaseCrashlytics.getInstance()
             if (t != null) {
-                crashlytics.recordException(t)
+                firebaseCrashlytics.recordException(t)
             } else {
-                crashlytics.log(message)
+                firebaseCrashlytics.log(message)
             }
         }
     }
