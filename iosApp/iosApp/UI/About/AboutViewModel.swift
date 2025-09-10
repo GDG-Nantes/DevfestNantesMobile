@@ -36,7 +36,7 @@ class AboutViewModel: BaseViewModel {
             }
             self.partnersContent = newContentArray
         } catch {
-            Logger(subsystem: Bundle.main.bundleIdentifier ?? "DevFestNantes", category: "About").error("Observe Partners error: \(error.localizedDescription)")
+            DevFestLogger(category: "About").log(.error, "Observe Partners error: \(error.localizedDescription)", error: error)
         }
     }
 }

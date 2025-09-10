@@ -38,7 +38,7 @@ class VenueViewModel: BaseViewModel {
                     self.venueContent = VenueContent(from: venueData)
                 }
             } catch {
-                Logger(subsystem: Bundle.main.bundleIdentifier ?? "DevFestNantes", category: "Venue").error("Observe Venue error: \(error.localizedDescription)")
+                DevFestLogger(category: "Venue").log(.error, "Observe Venue error: \(error.localizedDescription)", error: error)
                 // Handle error appropriately
             }
         }
