@@ -43,11 +43,11 @@ class SpeakersViewModel: BaseViewModel {
                 self.isLoading = false
             }
             
-            Logger(subsystem: Bundle.main.bundleIdentifier ?? "DevFestNantes", category: "Speakers")
+            DevFestLogger(category: "Speakers")
                 .info("Speakers loaded: \(speakers.count) speakers")
                 
         } catch {
-            Logger(subsystem: Bundle.main.bundleIdentifier ?? "DevFestNantes", category: "Speakers")
+            DevFestLogger(category: "Speakers")
                 .error("Observe Speakers error: \(error.localizedDescription)")
             
             DispatchQueue.main.async {

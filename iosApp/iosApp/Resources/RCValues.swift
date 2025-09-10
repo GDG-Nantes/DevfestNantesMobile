@@ -38,11 +38,11 @@ class RCValues {
         RemoteConfig.remoteConfig().configSettings = settings
         RemoteConfig.remoteConfig().fetch { _, error in
             if let error = error {
-                Logger(subsystem: Bundle.main.bundleIdentifier ?? "DevFestNantes", category: "RemoteConfig").error("RemoteConfig error: \(error.localizedDescription)")
+                DevFestLogger(category: "RemoteConfig").log(.error, "RemoteConfig error: \(error.localizedDescription)", error: error)
                 return
             }
             RemoteConfig.remoteConfig().activate { _, _ in
-                Logger(subsystem: Bundle.main.bundleIdentifier ?? "DevFestNantes", category: "RemoteConfig").info("Retrieved values from the cloud!")
+                DevFestLogger(category: "RemoteConfig").log(.info, "Retrieved values from the cloud!")
             }
         }
     }

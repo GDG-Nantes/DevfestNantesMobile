@@ -9,7 +9,7 @@ import FirebasePerformance
  */
 public class PerformanceMonitoring: ObservableObject {
     
-    private let logger = Logger(subsystem: Bundle.main.bundleIdentifier ?? "DevFestNantes", category: "PerformanceMonitoring")
+    private let logger = DevFestLogger(category: "PerformanceMonitoring")
     
     // MARK: - Singleton
     
@@ -38,14 +38,14 @@ public class PerformanceMonitoring: ObservableObject {
         guard appStartupTrace == nil else { return }
         
         guard let trace = Performance.startTrace(name: "app_startup") else {
-            Logger(subsystem: Bundle.main.bundleIdentifier ?? "DevFestNantes", category: "PerformanceMonitoring")
+            DevFestLogger(category: "PerformanceMonitoring").log(.error, "Failed to start data load trace: \(traceName) - Performance.startTrace returned nil")
                 .error("Failed to start app startup trace - Performance.startTrace returned nil")
             return
         }
         
         appStartupTrace = trace
         
-        Logger(subsystem: Bundle.main.bundleIdentifier ?? "DevFestNantes", category: "PerformanceMonitoring")
+        DevFestLogger(category: "PerformanceMonitoring").log(.info, "Started data load trace: \(traceName)")
             .info("Started native iOS app startup trace")
     }
     
@@ -57,7 +57,7 @@ public class PerformanceMonitoring: ObservableObject {
         
         trace.stop()
         
-        Logger(subsystem: Bundle.main.bundleIdentifier ?? "DevFestNantes", category: "PerformanceMonitoring")
+        DevFestLogger(category: "PerformanceMonitoring").log(.info, "Completed data load trace: \(traceName) in \(Int(duration))ms")
             .info("Stopped native iOS app startup trace")
         appStartupTrace = nil
     }
@@ -76,7 +76,7 @@ public class PerformanceMonitoring: ObservableObject {
         operation: @escaping () async throws -> T
     ) async throws -> T {
         guard let trace = Performance.startTrace(name: traceName) else {
-            logger.error("Failed to start data load trace: \(traceName) - Performance.startTrace returned nil")
+            logger.log(.error, "Failed to start data load trace: \(traceName) - Performance.startTrace returned nil")
             // Still execute the operation even if tracing fails
             return try await operation()
         }
@@ -86,7 +86,7 @@ public class PerformanceMonitoring: ObservableObject {
         trace.setValue(traceName, forAttribute: "operation")
         trace.setValue(dataSource, forAttribute: PerformanceMonitoring.ATTR_DATA_SOURCE)
         
-        logger.info("Started data load trace: \(traceName)")
+        logger.log(.info, "Started data load trace: \(traceName)")
         
         do {
             let result = try await operation()
@@ -96,7 +96,7 @@ public class PerformanceMonitoring: ObservableObject {
             trace.setValue("true", forAttribute: "success")
             trace.stop()
             
-            logger.info("Completed data load trace: \(traceName) in \(Int(duration))ms")
+            logger.log(.info, "Completed data load trace: \(traceName) in \(Int(duration))ms")
             return result
         } catch {
             let duration = Date().timeIntervalSince(startTime) * 1000
@@ -106,7 +106,7 @@ public class PerformanceMonitoring: ObservableObject {
             trace.setValue(String(describing: type(of: error)), forAttribute: PerformanceMonitoring.ATTR_ERROR_TYPE)
             trace.stop()
             
-            logger.error("Failed data load trace: \(traceName) - \(error.localizedDescription)")
+            logger.log(.error, "Failed data load trace: \(traceName) - \(error.localizedDescription)", error: error)
             throw error
         }
     }
@@ -119,7 +119,7 @@ public class PerformanceMonitoring: ObservableObject {
         operation: @escaping () async throws -> T
     ) async throws -> T {
         guard let trace = Performance.startTrace(name: "screen_navigation_\(screen)") else {
-            logger.error("Failed to start navigation trace to: \(screen) - Performance.startTrace returned nil")
+            logger.log(.error, "Failed to start navigation trace to: \(screen) - Performance.startTrace returned nil")
             // Still execute the operation even if tracing fails
             return try await operation()
         }
@@ -128,7 +128,7 @@ public class PerformanceMonitoring: ObservableObject {
         
         trace.setValue(screen, forAttribute: "screen_name")
         
-        logger.info("Started navigation trace to: \(screen)")
+        logger.log(.info, "Started navigation trace to: \(screen)")
         
         do {
             let result = try await operation()
@@ -138,7 +138,7 @@ public class PerformanceMonitoring: ObservableObject {
             trace.setValue("true", forAttribute: "success")
             trace.stop()
             
-            logger.info("Completed navigation trace to: \(screen) in \(Int(duration))ms")
+            logger.log(.info, "Completed navigation trace to: \(screen) in \(Int(duration))ms")
             return result
         } catch {
             let duration = Date().timeIntervalSince(startTime) * 1000
@@ -148,7 +148,7 @@ public class PerformanceMonitoring: ObservableObject {
             trace.setValue(String(describing: type(of: error)), forAttribute: PerformanceMonitoring.ATTR_ERROR_TYPE)
             trace.stop()
             
-            logger.error("Failed navigation trace to: \(screen) - \(error.localizedDescription)")
+            logger.log(.error, "Failed navigation trace to: \(screen) - \(error.localizedDescription)", error: error)
             throw error
         }
     }
@@ -161,13 +161,13 @@ public class PerformanceMonitoring: ObservableObject {
      */
     func trackScreenLoad(screenName: String) -> Trace? {
         guard let trace = Performance.startTrace(name: "screen_load_\(screenName)") else {
-            logger.error("Failed to start screen load trace for: \(screenName) - Performance.startTrace returned nil")
+            logger.log(.error, "Failed to start screen load trace for: \(screenName) - Performance.startTrace returned nil")
             return nil
         }
         
         trace.setValue(screenName, forAttribute: "screen_name")
         
-        logger.info("Started screen load trace for: \(screenName)")
+        logger.log(.info, "Started screen load trace for: \(screenName)")
         return trace
     }
     
@@ -176,7 +176,7 @@ public class PerformanceMonitoring: ObservableObject {
      */
     func stopScreenLoadTrace(_ trace: Trace?, success: Bool = true, itemCount: Int? = nil) {
         guard let trace = trace else {
-            logger.warning("Cannot stop screen load trace - trace is nil")
+            logger.log(.warning, "Cannot stop screen load trace - trace is nil")
             return
         }
         
@@ -187,7 +187,7 @@ public class PerformanceMonitoring: ObservableObject {
         }
         
         trace.stop()
-        logger.info("Stopped screen load trace - success: \(success)")
+        logger.log(.info, "Stopped screen load trace - success: \(success)")
     }
     
     // MARK: - Network Request Tracking
@@ -198,14 +198,14 @@ public class PerformanceMonitoring: ObservableObject {
      */
     func trackNetworkRequest(url: String, httpMethod: String) -> Trace? {
         guard let trace = Performance.startTrace(name: "network_request") else {
-            logger.error("Failed to start network request trace for: \(url) - Performance.startTrace returned nil")
+            logger.log(.error, "Failed to start network request trace for: \(url) - Performance.startTrace returned nil")
             return nil
         }
         
         trace.setValue(url, forAttribute: "url")
         trace.setValue(httpMethod, forAttribute: "http_method")
         
-        logger.info("Started network request trace for: \(url)")
+        logger.log(.info, "Started network request trace for: \(url)")
         return trace
     }
     
@@ -214,7 +214,7 @@ public class PerformanceMonitoring: ObservableObject {
      */
     func stopNetworkRequestTrace(_ trace: Trace?, responseCode: Int, responseSize: Int64? = nil) {
         guard let trace = trace else {
-            logger.warning("Cannot stop network request trace - trace is nil")
+            logger.log(.warning, "Cannot stop network request trace - trace is nil")
             return
         }
         
@@ -225,7 +225,7 @@ public class PerformanceMonitoring: ObservableObject {
         }
         
         trace.stop()
-        logger.info("Stopped network request trace with response code: \(responseCode)")
+        logger.log(.info, "Stopped network request trace with response code: \(responseCode)")
     }
     
     // MARK: - UI Rendering Tracking
@@ -236,13 +236,13 @@ public class PerformanceMonitoring: ObservableObject {
      */
     func trackUIRendering(componentName: String) -> Trace? {
         guard let trace = Performance.startTrace(name: "ui_render_\(componentName)") else {
-            logger.error("Failed to start UI rendering trace for: \(componentName) - Performance.startTrace returned nil")
+            logger.log(.error, "Failed to start UI rendering trace for: \(componentName) - Performance.startTrace returned nil")
             return nil
         }
         
         trace.setValue(componentName, forAttribute: "component")
         
-        logger.info("Started UI rendering trace for: \(componentName)")
+        logger.log(.info, "Started UI rendering trace for: \(componentName)")
         return trace
     }
     
@@ -251,12 +251,12 @@ public class PerformanceMonitoring: ObservableObject {
      */
     func stopUIRenderingTrace(_ trace: Trace?) {
         guard let trace = trace else {
-            logger.warning("Cannot stop UI rendering trace - trace is nil")
+            logger.log(.warning, "Cannot stop UI rendering trace - trace is nil")
             return
         }
         
         trace.stop()
-        logger.info("Stopped UI rendering trace")
+        logger.log(.info, "Stopped UI rendering trace")
     }
     
     // MARK: - General Purpose Async Tracking
@@ -270,7 +270,7 @@ public class PerformanceMonitoring: ObservableObject {
         operation: @escaping () async throws -> T
     ) async rethrows -> T {
         guard let trace = Performance.startTrace(name: name) else {
-            logger.error("Failed to start async operation trace: \(name) - Performance.startTrace returned nil")
+            logger.log(.error, "Failed to start async operation trace: \(name) - Performance.startTrace returned nil")
             // Still execute the operation even if tracing fails
             return try await operation()
         }
@@ -282,7 +282,7 @@ public class PerformanceMonitoring: ObservableObject {
             trace.setValue(value, forAttribute: key)
         }
         
-        logger.info("Started async operation trace: \(name)")
+        logger.log(.info, "Started async operation trace: \(name)")
         
         do {
             let result = try await operation()
@@ -292,7 +292,7 @@ public class PerformanceMonitoring: ObservableObject {
             trace.setValue("true", forAttribute: "success")
             trace.stop()
             
-            logger.info("Completed async operation trace: \(name) in \(Int(duration))ms")
+            logger.log(.info, "Completed async operation trace: \(name) in \(Int(duration))ms")
             return result
         } catch {
             let duration = Date().timeIntervalSince(startTime) * 1000
@@ -302,7 +302,7 @@ public class PerformanceMonitoring: ObservableObject {
             trace.setValue(String(describing: type(of: error)), forAttribute: PerformanceMonitoring.ATTR_ERROR_TYPE)
             trace.stop()
             
-            logger.error("Failed async operation trace: \(name) - \(error.localizedDescription)")
+            logger.log(.error, "Failed async operation trace: \(name) - \(error.localizedDescription)", error: error)
             throw error
         }
     }

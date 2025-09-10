@@ -106,11 +106,11 @@ class AgendaViewModel: BaseViewModel {
                 self.sessionsChanged(sessions: sessions)
             }
             
-            Logger(subsystem: Bundle.main.bundleIdentifier ?? "DevFestNantes", category: "Agenda")
+            DevFestLogger(category: "Agenda")
                 .info("Agenda sessions loaded: \(sessions.count) sessions")
                 
         } catch {
-            Logger(subsystem: Bundle.main.bundleIdentifier ?? "DevFestNantes", category: "Agenda")
+            DevFestLogger(category: "Agenda")
                 .error("Observe Sessions error: \(error.localizedDescription)")
             
             DispatchQueue.main.async {
@@ -148,7 +148,7 @@ class AgendaViewModel: BaseViewModel {
                     }
                 }
             } catch {
-                Logger(subsystem: Bundle.main.bundleIdentifier ?? "DevFestNantes", category: "Agenda").error("Observe Rooms error: \(error.localizedDescription)")
+                DevFestLogger(category: "Agenda").log(.error, "Observe Rooms error: \(error.localizedDescription)", error: error)
             }
         }
     }

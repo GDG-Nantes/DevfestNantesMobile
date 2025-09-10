@@ -44,11 +44,11 @@ class SpeakerDetailsViewModel: BaseViewModel {
                 self.speaker = speakerResult
             }
             
-            Logger(subsystem: Bundle.main.bundleIdentifier ?? "DevFestNantes", category: "SpeakerDetails")
+            DevFestLogger(category: "SpeakerDetails")
                 .info("Speaker details loaded: \(speakerResult?.name ?? "Unknown")")
                 
         } catch {
-            Logger(subsystem: Bundle.main.bundleIdentifier ?? "DevFestNantes", category: "SpeakerDetails")
+            DevFestLogger(category: "SpeakerDetails")
                 .error("Get Speaker error: \(error.localizedDescription)")
         }
     }
@@ -60,11 +60,11 @@ class SpeakerDetailsViewModel: BaseViewModel {
                 self.speakerSession = speakerSessionResult
             }
             
-            Logger(subsystem: Bundle.main.bundleIdentifier ?? "DevFestNantes", category: "SpeakerDetails")
+            DevFestLogger(category: "SpeakerDetails")
                 .info("Speaker sessions loaded: \(speakerSessionResult.count) sessions")
                 
         } catch {
-            Logger(subsystem: Bundle.main.bundleIdentifier ?? "DevFestNantes", category: "SpeakerDetails")
+            DevFestLogger(category: "SpeakerDetails")
                 .error("Get Speaker Sessions error: \(error.localizedDescription)")
         }
     }
