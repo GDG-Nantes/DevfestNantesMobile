@@ -106,12 +106,10 @@ class AgendaViewModel: BaseViewModel {
                 self.sessionsChanged(sessions: sessions)
             }
             
-            DevFestLogger(category: "Agenda")
-                .info("Agenda sessions loaded: \(sessions.count) sessions")
+            DevFestLogger(category: "Agenda").log(.info, "Agenda sessions loaded: \(sessions.count) sessions")
                 
         } catch {
-            DevFestLogger(category: "Agenda")
-                .error("Observe Sessions error: \(error.localizedDescription)")
+            DevFestLogger(category: "Agenda").log(.error, "Observe Sessions error: \(error.localizedDescription)", error: error)
             
             DispatchQueue.main.async {
                 self.isLoading = false

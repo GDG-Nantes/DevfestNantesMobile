@@ -18,6 +18,7 @@
 		003EC8D92DF8D84B000E5689 /* KMPNativeCoroutinesAsync in Frameworks */ = {isa = PBXBuildFile; productRef = 003EC8D82DF8D84B000E5689 /* KMPNativeCoroutinesAsync */; };
 		003EC8DB2DF8D84B000E5689 /* KMPNativeCoroutinesCombine in Frameworks */ = {isa = PBXBuildFile; productRef = 003EC8DA2DF8D84B000E5689 /* KMPNativeCoroutinesCombine */; };
 		003EC8DD2DF8D7E1000E5689 /* FirebasePerformance in Frameworks */ = {isa = PBXBuildFile; productRef = 003EC8DC2DF8D7E1000E5689 /* FirebasePerformance */; };
+		007DF0992E71D0D4007B2627 /* DevFestLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 007DF0982E71D0D4007B2627 /* DevFestLogger.swift */; };
 		00D442852E6638F100199668 /* SessionFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00D442842E6638F100199668 /* SessionFilter.swift */; };
 		00D442862E6638F100199668 /* SessionFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00D442842E6638F100199668 /* SessionFilter.swift */; };
 		00D442892E6707A600199668 /* AgendaNavigationBarItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00D442872E6707A600199668 /* AgendaNavigationBarItems.swift */; };
@@ -83,6 +84,7 @@
 		001CB9D42E3829B400614907 /* AgendaView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgendaView.swift; sourceTree = "<group>"; };
 		001CB9D52E3829B400614907 /* AgendaViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgendaViewModel.swift; sourceTree = "<group>"; };
 		006B310E2C7A8FBB0024C17B /* DevFestNantesStore-extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "DevFestNantesStore-extension.swift"; sourceTree = "<group>"; };
+		007DF0982E71D0D4007B2627 /* DevFestLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevFestLogger.swift; sourceTree = "<group>"; };
 		00D442842E6638F100199668 /* SessionFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionFilter.swift; sourceTree = "<group>"; };
 		00D442872E6707A600199668 /* AgendaNavigationBarItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgendaNavigationBarItems.swift; sourceTree = "<group>"; };
 		00D4428A2E67096900199668 /* ClearFiltersButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClearFiltersButton.swift; sourceTree = "<group>"; };
@@ -341,6 +343,7 @@
 			isa = PBXGroup;
 			children = (
 				CBCB60F928E48F27001E9B1A /* FirebaseAnalyticsService.swift */,
+				007DF0982E71D0D4007B2627 /* DevFestLogger.swift */,
 			);
 			path = Analytics;
 			sourceTree = "<group>";
@@ -580,6 +583,7 @@
 				00D442912E67096900199668 /* ClearFiltersButton.swift in Sources */,
 				00D442922E67096900199668 /* FavoritesFilterMenu.swift in Sources */,
 				00D442932E67096900199668 /* LanguageFilterMenu.swift in Sources */,
+				007DF0992E71D0D4007B2627 /* DevFestLogger.swift in Sources */,
 				00D442942E67096900199668 /* SessionTypeFilterMenu.swift in Sources */,
 				00D442952E67096900199668 /* RoomFilterMenu.swift in Sources */,
 				CBDFA0382AB1B74000302D34 /* BaseViewModel.swift in Sources */,

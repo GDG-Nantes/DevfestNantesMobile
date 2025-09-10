@@ -18,6 +18,7 @@ public class PerformanceMonitoring: ObservableObject {
     // MARK: - Constants
     
     // Custom trace names for key user flows (matching Android implementation)
+    static let TRACE_STRATUP = "app_startup"
     static let TRACE_AGENDA_LOAD = "agenda_load"
     static let TRACE_SPEAKERS_LOAD = "speakers_load"
     static let TRACE_SESSION_DETAILS_LOAD = "session_details_load"
@@ -37,16 +38,14 @@ public class PerformanceMonitoring: ObservableObject {
     public static func startAppStartupTrace() {
         guard appStartupTrace == nil else { return }
         
-        guard let trace = Performance.startTrace(name: "app_startup") else {
-            DevFestLogger(category: "PerformanceMonitoring").log(.error, "Failed to start data load trace: \(traceName) - Performance.startTrace returned nil")
-                .error("Failed to start app startup trace - Performance.startTrace returned nil")
+        guard let trace = Performance.startTrace(name: TRACE_STRATUP) else {
+            DevFestLogger(category: "PerformanceMonitoring").log(.error, "Failed to start data load trace: \(TRACE_STRATUP) - Performance.startTrace returned nil")
             return
         }
         
         appStartupTrace = trace
         
-        DevFestLogger(category: "PerformanceMonitoring").log(.info, "Started data load trace: \(traceName)")
-            .info("Started native iOS app startup trace")
+        DevFestLogger(category: "PerformanceMonitoring").log(.info, "Started data load trace: \(TRACE_STRATUP)")
     }
     
     /**
@@ -57,8 +56,7 @@ public class PerformanceMonitoring: ObservableObject {
         
         trace.stop()
         
-        DevFestLogger(category: "PerformanceMonitoring").log(.info, "Completed data load trace: \(traceName) in \(Int(duration))ms")
-            .info("Stopped native iOS app startup trace")
+        DevFestLogger(category: "PerformanceMonitoring").log(.info, "Stopped native iOS app trace: \(TRACE_STRATUP)")
         appStartupTrace = nil
     }
     

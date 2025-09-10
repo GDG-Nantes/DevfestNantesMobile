@@ -19,6 +19,7 @@ class SpeakerDetailsViewModel: BaseViewModel {
     var speakerId: String
     
     private let performanceMonitoring = PerformanceMonitoring.shared
+    private let logger = DevFestLogger(category: "SpeakerDetailsViewModel")
     
     init(speakerId: String) {
         self.speakerId = speakerId
@@ -27,10 +28,10 @@ class SpeakerDetailsViewModel: BaseViewModel {
         Task {
             await getSpeaker(speakerId: speakerId)
             await getSpeakerSession(speakerId: speakerId)
-        }        
+        }
     }
     
-
+    
     func getSpeaker(speakerId: String) async {
         do {
             let speakerResult = try await performanceMonitoring.trackDataLoad(
@@ -44,12 +45,10 @@ class SpeakerDetailsViewModel: BaseViewModel {
                 self.speaker = speakerResult
             }
             
-            DevFestLogger(category: "SpeakerDetails")
-                .info("Speaker details loaded: \(speakerResult?.name ?? "Unknown")")
-                
+            logger.log(.info, "Speaker details loaded: \(speakerResult?.name ?? "Unknown")")
+            
         } catch {
-            DevFestLogger(category: "SpeakerDetails")
-                .error("Get Speaker error: \(error.localizedDescription)")
+            logger.log(.error, "Get Speaker error: \(error.localizedDescription)")
         }
     }
     
@@ -60,12 +59,9 @@ class SpeakerDetailsViewModel: BaseViewModel {
                 self.speakerSession = speakerSessionResult
             }
             
-            DevFestLogger(category: "SpeakerDetails")
-                .info("Speaker sessions loaded: \(speakerSessionResult.count) sessions")
-                
+            logger.log(.info, "Speaker sessions loaded: \(speakerSessionResult.count) sessions")
         } catch {
-            DevFestLogger(category: "SpeakerDetails")
-                .error("Get Speaker Sessions error: \(error.localizedDescription)")
+            logger.log(.error, "Get Speaker Sessions error: \(error.localizedDescription)")
         }
     }
 }
