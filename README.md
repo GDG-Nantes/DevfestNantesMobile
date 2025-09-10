@@ -190,9 +190,11 @@ We welcome contributions! Please see our [contribution guidelines](CONTRIBUTING.
 - **[Troubleshooting](documentation/TROUBLESHOOTING.md)** - Common issues and solutions
 - **[Build System](documentation/BUILD.md)** - Gradle and build configuration details
 
-## � License
+## 👩‍⚖️ License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+[![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+ 
+This project is licensed under the Apache license 2.0 - see the [LICENSE](LICENSE) file for details.
 
 ## 🙏 Acknowledgments
 
