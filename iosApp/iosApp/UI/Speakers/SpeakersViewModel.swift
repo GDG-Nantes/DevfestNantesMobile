@@ -19,6 +19,7 @@ class SpeakersViewModel: BaseViewModel {
     @Published var isLoading = true
     
     private let performanceMonitoring = PerformanceMonitoring.shared
+    private let logger = DevFestLogger(category: "SpeakersViewModel")
     
     ///Asynchronous method to retrieve speakers
     func observeSpeakers() async {
@@ -43,26 +44,24 @@ class SpeakersViewModel: BaseViewModel {
                 self.isLoading = false
             }
             
-            DevFestLogger(category: "Speakers")
-                .info("Speakers loaded: \(speakers.count) speakers")
-                
+            logger.log(.info, "Speakers loaded: \(speakers.count) speakers")
+            
         } catch {
-            DevFestLogger(category: "Speakers")
-                .error("Observe Speakers error: \(error.localizedDescription)")
+            logger.log(.error, "Observe Speakers error: \(error.localizedDescription)")
             
             DispatchQueue.main.async {
                 self.isLoading = false
             }
         }
     }
-
+    
     ///Function to get the first letters of speaker names
     func getAlphabets() -> [String] {
         let letters = speakersContent?.compactMap { $0.name.prefix(1).uppercased() }
         let uniqueLetters = Array(Set(letters ?? []))
         return uniqueLetters.sorted()
     }
-
+    
     ///Function to get speakers by the first letter of their name
     func speakers(for letter: String) -> [Speaker_] {
         return speakersContent?.filter {
