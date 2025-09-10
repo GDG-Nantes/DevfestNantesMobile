@@ -8,6 +8,7 @@ import dagger.hilt.android.HiltAndroidApp
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.cancelChildren
 import kotlinx.coroutines.launch
+import timber.log.Timber
 import javax.inject.Inject
 import javax.inject.Provider
 
@@ -19,6 +20,9 @@ class DevFestNantesApplication : Application() {
     @Inject
     lateinit var coroutineDispatcherProvider: CoroutinesDispatcherProvider
 
+    @Inject
+    lateinit var timerTree: Timber.Tree
+
     lateinit var coroutineScope: CoroutineScope
 
     override fun onCreate() {
@@ -26,6 +30,8 @@ class DevFestNantesApplication : Application() {
         PerformanceInitializer.startAppStartupTrace()
 
         super.onCreate()
+
+        Timber.plant(timerTree)
 
         coroutineScope = CoroutineScope(coroutineDispatcherProvider.main)
 

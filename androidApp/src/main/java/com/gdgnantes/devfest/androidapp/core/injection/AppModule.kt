@@ -4,11 +4,13 @@ import android.app.Application
 import android.content.SharedPreferences
 import androidx.preference.PreferenceManager
 import com.gdgnantes.devfest.analytics.AnalyticsService
+import com.gdgnantes.devfest.androidapp.BuildConfig
 import com.gdgnantes.devfest.androidapp.core.ApplicationInitializer
 import com.gdgnantes.devfest.androidapp.core.CoroutinesDispatcherProvider
 import com.gdgnantes.devfest.androidapp.core.DataSharingInitializer
-import com.gdgnantes.devfest.androidapp.core.LoggerInitializer
 import com.gdgnantes.devfest.androidapp.core.OpenFeedbackInitializer
+import com.gdgnantes.devfest.androidapp.core.logging.TimberTreeDebug
+import com.gdgnantes.devfest.androidapp.core.logging.TimberTreeRelease
 import com.gdgnantes.devfest.androidapp.core.performance.PerformanceInitializer
 import com.gdgnantes.devfest.androidapp.core.performance.PerformanceMonitoring
 import com.gdgnantes.devfest.androidapp.services.BookmarksStoreImpl
@@ -33,6 +35,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import dagger.multibindings.ElementsIntoSet
 import kotlinx.coroutines.Dispatchers
+import timber.log.Timber
 
 @Module
 @InstallIn(SingletonComponent::class)
@@ -72,13 +75,11 @@ abstract class AppModule {
         @ElementsIntoSet
         fun applicationInitializers(
             dataSharingInitializer: DataSharingInitializer,
-            loggerInitializer: LoggerInitializer,
             openFeedbackInitializer: OpenFeedbackInitializer,
             performanceInitializer: PerformanceInitializer
         ): Set<ApplicationInitializer> =
             setOf(
                 dataSharingInitializer,
-                loggerInitializer,
                 openFeedbackInitializer,
                 performanceInitializer
             )
@@ -121,6 +122,19 @@ abstract class AppModule {
             return DevFestNantesStoreBuilder()
                 .setUseMockServer(false)
                 .build()
+        }
+
+        @AppScope
+        @Provides
+        fun timberTree(
+            timberTreeDebug: TimberTreeDebug,
+            timberTreeRelease: TimberTreeRelease
+        ): Timber.Tree {
+            return if (BuildConfig.DEBUG) {
+                timberTreeDebug
+            } else {
+                timberTreeRelease
+            }
         }
     }
 }
