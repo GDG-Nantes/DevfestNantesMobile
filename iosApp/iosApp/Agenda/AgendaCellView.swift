@@ -9,51 +9,66 @@
 import SwiftUI
 import shared
 
+
 struct AgendaCellView: View {
-    //Store an observable object instance
     @ObservedObject var viewModel = AgendaViewModel()
-    
-    //Session data
+
+    // Données
     var session: AgendaContent.Session
     var isBookmarked = true
-    
-    //Setup UI
+
     var body: some View {
-        HStack(alignment: .top) {
-            VStack(alignment: .leading) {
-                Text(session.title)
-                    .foregroundColor(Color(Asset.devFestRed.color))
-                    .multilineTextAlignment(.leading)
-                    .font(.headline)
-                    .padding(.bottom, 4)
-                HStack {
-                    if let categorylabel = session.category?.label {
-                        CategoryView(categoryLabel:  categorylabel)
-                    }
-                    Text("\(session.durationAndLanguage)")
-                        .font(.footnote)
-                }
-                Text("\(session.room)")
-                    .font(.footnote)
-                Spacer()
-                Text(session.speakers.map { $0.name }.joined(separator: ", "))
-                    .font(.footnote)
-                Spacer()
-            }
-            Spacer()
-            VStack {
-                if session.isATalk && isBookmarked {
-                    Image(systemName:  viewModel.favorites.contains(session.id) ? "star.fill" : "star")
-                        .foregroundColor(Color(Asset.devFestYellow.color))
-                        .padding(8)
-                        .onTapGesture { self.viewModel.toggleFavorite(ofSession: session)
-                            FirebaseAnalyticsService.shared.eventBookmark(page: .agenda, sessionId: session.id, bookmarked: viewModel.favorites.contains(session.id))
+        GlassRowContainer(corner: 16) {
+            HStack(alignment: .top, spacing: 12) {
+                // Contenu à gauche
+                VStack(alignment: .leading, spacing: 6) {
+                    Text(session.title)
+                        .foregroundColor(Color(Asset.devFestRed.color))
+                        .font(.headline)
+                        .multilineTextAlignment(.leading)
+
+                    HStack(spacing: 8) {
+                        if let categorylabel = session.category?.label {
+                            CategoryView(categoryLabel: categorylabel)
                         }
-                Spacer()
+                        Text(session.durationAndLanguage)
+                            .font(.footnote)
+                            .foregroundStyle(.secondary)
+                    }
+
+                    Text(session.room)
+                        .font(.footnote)
+                        .foregroundStyle(.secondary)
+
+                    Text(session.speakers.map { $0.name }.joined(separator: ", "))
+                        .font(.footnote)
+                        .foregroundStyle(.secondary)
+                        .lineLimit(1)
+                }
+
+                Spacer(minLength: 0)
+
+                // Favori à droite
+                if session.isATalk && isBookmarked {
+                    Button {
+                        viewModel.toggleFavorite(ofSession: session)
+                        FirebaseAnalyticsService.shared.eventBookmark(
+                            page: .agenda,
+                            sessionId: session.id,
+                            bookmarked: viewModel.favorites.contains(session.id)
+                        )
+                    } label: {
+                        Image(systemName: viewModel.favorites.contains(session.id) ? "star.fill" : "star")
+                            .font(.system(size: 18, weight: .semibold))
+                            .foregroundColor(Color(Asset.devFestYellow.color))
+                            .padding(8)
+                            .contentShape(Rectangle())
+                    }
+                    .buttonStyle(.plain)
                 }
             }
         }
-        .padding(8)
-
+        // densité compacte (gouttières visibles entre rows)
+        .padding(Edge.Set.vertical, 4)
     }
 }

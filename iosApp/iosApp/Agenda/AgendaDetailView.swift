@@ -9,112 +9,142 @@
 import SwiftUI
 import shared
 
-
 struct AgendaDetailView: View {
-    //Session data
-    var content : AgendaContent.Session?
-    
-    
-    //Store an observable object instance
+    var content: AgendaContent.Session?
     @ObservedObject var viewModel = AgendaViewModel()
     var day: String
-    
-    //Method to convert a date in string format to ISO 8601 format
-    func getDate(date: String) -> Date {
-        let newFormatter = ISO8601DateFormatter()
-        return newFormatter.date(from: date) ?? Date()// replace Date String
-    }
-    
-    //Formatting the time
-    var timeFormatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "HH:mm"
-        return formatter
-    }()
-    
-    //Formatting the date
-    var fullDateFormatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateStyle = .medium
-        return formatter
-    }()
-    
-    //Initialization of this view with Session, global viewmodel and the day
+
     init(session: AgendaContent.Session, day: String) {
         self.content = session
         self.day = day
     }
+
+    private func iso(_ s: String) -> Date {
+        let f = ISO8601DateFormatter()
+        return f.date(from: s) ?? Date()
+    }
     
-    //Setup UI
+    private let timeFormatter: DateFormatter = {
+        let f = DateFormatter()
+        f.dateFormat = "HH:mm"
+        return f
+    }()
+    
+    private let fullDateFormatter: DateFormatter = {
+        let f = DateFormatter()
+        f.dateStyle = .medium
+        return f
+    }()
+
     var body: some View {
         content.map { session in
-            ScrollView {
-                VStack(alignment: .leading, spacing: 8) {
-                    Text(session.title)
-                        .foregroundColor(Color(Asset.devFestRed.color))
-                        .font(.title)
-                        .padding(.bottom, 8)
-                        .padding(.top, 16)
-                    Text("\(fullDateFormatter.string(from: getDate(date: session.startDate))), \(timeFormatter.string(from: getDate(date: session.startDate))) - \(timeFormatter.string(from: getDate(date: session.endDate))), \(session.room)")
-                        .bold()
-                        .font(.headline)
-                        .padding(.bottom, 8)
-                    Divider().padding(.bottom, 8)
-                    Text("\(session.durationAndLanguage)")
-                        .font(.footnote)
-                    
-                    HStack {
-                        if let sessionTypeLabel = session.sessionType?.name.capitalized {
-                            CategoryView(categoryLabel: sessionTypeLabel)
-                        }
-                        if let categoryLabel = session.category?.label {
-                            CategoryView(categoryLabel: categoryLabel)
-                        }
-                        if let complexityLabel = session.complexity?.text {
-                            CategoryView(categoryLabel:  complexityLabel)
-                        }
-                    }
-                    Divider().padding(.top, 8)
-                    Text(session.abstract)
-                        .font(.body)
-                    Divider().padding(.top, 8)
+            ZStack {
+                DevFestSiteBackground()
+                ScrollView {
+                    VStack(spacing: 12) {
+                        Card {
+                            VStack(alignment: .leading, spacing: 14) {
+                                VStack(alignment: .leading, spacing: 10) {
+                                    Text(session.title)
+                                        .foregroundColor(Color(Asset.devFestRed.color))
+                                        .font(.title2.weight(.bold))
 
-                    ForEach(session.speakers, id: \.self) { speaker in
-                        SpeakerView(speaker: speaker)
-                        Divider().padding(.top, 8)
-                    }
-                    //Use Remote config for display openFeedback)
-                    if session.isATalk && RCValues.sharedInstance.bool(forKey: .openfeedback_enabled){
-                            VStack(spacing: 16) {
-                                Spacer()
-                                CustomButton(url: URL(string: "\(WebLinks.openFeedback.url)/\(day)/\(session.id)")!) {
-                                    Text(L10n.sessionFeedbackLabel)
-                                }.foregroundColor(Color(Asset.devFestRed.color))
-                                    .frame(minWidth: 0, maxWidth: .infinity, alignment: .center)
-                                    .simultaneousGesture(TapGesture().onEnded {
-                                        FirebaseAnalyticsService.shared.eventFeedbackClicked(openFeedbackId: session.openFeedbackFormId ?? "")
-                                    })
-                                Text(L10n.poweredOpenfeedback)
-                                    .frame(maxWidth: .infinity, alignment: .trailing)
-                                    .font(.callout)
-                                    .foregroundColor(Color(UIColor.placeholderText))
-                                Divider().padding(.top, 8)
+                                    Text("\(fullDateFormatter.string(from: iso(session.startDate))), \(timeFormatter.string(from: iso(session.startDate))) – \(timeFormatter.string(from: iso(session.endDate))), \(session.room)")
+                                        .font(.subheadline.weight(.semibold))
+                                        .foregroundStyle(.primary)
+                                        .lineLimit(2)
+                                }
+
+                                VStack(alignment: .leading, spacing: 10) {
+                                    Text(session.durationAndLanguage)
+                                        .font(.footnote)
+                                        .foregroundStyle(.secondary)
+
+                                    HStack(spacing: 8) {
+                                        if let type = session.sessionType?.name.capitalized {
+                                            CategoryView(categoryLabel: type)
+                                        }
+                                        if let cat = session.category?.label {
+                                            CategoryView(categoryLabel: cat)
+                                        }
+                                        if let complexity = session.complexity?.text {
+                                            CategoryView(categoryLabel: complexity)
+                                        }
+                                    }
+                                }
+
+                                if !session.abstract.isEmpty {
+                                    VStack(alignment: .leading, spacing: 10) {
+                                        Text(session.abstract)
+                                            .font(.body)
+                                            .foregroundStyle(.primary)
+                                    }
+                                }
+
+                                // Feedback (si activé)
+                                if session.isATalk && RCValues.sharedInstance.bool(forKey: .openfeedback_enabled) {
+                                    VStack(alignment: .leading, spacing: 8) {
+                                        CustomButton(url: URL(string: "\(WebLinks.openFeedback.url)/\(day)/\(session.id)")!) {
+                                            Text(L10n.sessionFeedbackLabel)
+                                        }
+                                        .foregroundColor(Color(Asset.devFestRed.color))
+                                        .frame(maxWidth: .infinity)
+                                        .simultaneousGesture(TapGesture().onEnded {
+                                            FirebaseAnalyticsService.shared.eventFeedbackClicked(
+                                                openFeedbackId: session.openFeedbackFormId ?? ""
+                                            )
+                                        })
+
+                                        Text(L10n.poweredOpenfeedback)
+                                            .font(.callout)
+                                            .foregroundColor(Color(UIColor.placeholderText))
+                                            .frame(maxWidth: .infinity, alignment: .trailing)
+                                    }
+                                }
                             }
+                        }
+
+                        if !session.speakers.isEmpty {
+                            Card {
+                                VStack(alignment: .leading, spacing: 12) {
+                                    Text(L10n.screenSpeaker)
+                                        .font(.headline)
+                                        .foregroundColor(Color(Asset.devFestRed.color))
+                                    ForEach(session.speakers, id: \.self) { speaker in
+                                        SpeakerView(speaker: speaker)
+                                        if speaker.id != session.speakers.last?.id {
+                                            Divider().opacity(0.25)
+                                        }
+                                    }
+                                }
+                            }
+                        }
+
+                        Spacer(minLength: 8)
                     }
-                }.padding(.horizontal)
+                    .padding(.horizontal, 12)
+                    .padding(.vertical, 8)
+                }
+                .navigationBarTitle(Text(session.title), displayMode: .inline)
+                .toolbar {
+                    ToolbarItem(placement: .navigationBarTrailing) {
+                        Button {
+                            viewModel.toggleFavorite(ofSession: session)
+                            FirebaseAnalyticsService.shared.eventBookmark(
+                                page: .sessionDetails,
+                                sessionId: session.id,
+                                bookmarked: viewModel.favorites.contains(session.id)
+                            )
+                        } label: {
+                            Image(systemName: viewModel.favorites.contains(session.id) ? "star.fill" : "star")
+                                .foregroundColor(Color(Asset.devFestYellow.color))
+                        }
+                    }
+                }
             }
-            .navigationBarTitle(Text(session.title), displayMode: .inline)
-            .navigationBarItems(trailing:
-                                    Image(systemName:  viewModel.favorites.contains(session.id) ? "star.fill" : "star")
-                .foregroundColor(Color(Asset.devFestYellow.color))
-                .padding(8)
-                .onTapGesture { self.viewModel.toggleFavorite(ofSession: session)
-                    FirebaseAnalyticsService.shared.eventBookmark(page: .sessionDetails, sessionId: session.id, bookmarked: viewModel.favorites.contains(session.id))
-                })
         }
-        .onAppear{
+        .onAppear {
             FirebaseAnalyticsService.shared.pageEvent(page: AnalyticsPage.sessionDetails, className: "AgendaDetailView")
         }
     }
 }
-

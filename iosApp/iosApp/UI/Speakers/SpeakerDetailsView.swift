@@ -20,56 +20,70 @@ struct SpeakerDetails: View {
     
     var body: some View {
         LoadingView(isShowing: $viewModel.isLoading) {
-            ScrollView {
-                VStack(alignment: .center) {
-                    if let speaker = viewModel.speaker {
-                        SpeakerPicture(speaker: speaker)
-                            .frame(width: 128, height: 128)
-                        
-                        Text(speaker.getFullNameAndCompany())
-                            .font(.headline)
-                            .fontWeight(.bold)
-                            .padding(.top, 8)
-                        
-                        if let city = speaker.city {
-                            Text(city)
-                                .font(.subheadline)
-                        }
-                        
-                        if let socials = speaker.socials {
-                            SocialIconsView(socials: socials) { socialItem in
-                                onSocialLinkClick(socialitem: socialItem)
+            ZStack {
+                DevFestSiteBackground()
+                ScrollView {
+                    VStack(alignment: .center, spacing: 12) {
+                        if let speaker = viewModel.speaker {
+                            Card {
+                                VStack(alignment: .center, spacing: 10) {
+                                    SpeakerPicture(speaker: speaker)
+                                        .frame(width: 128, height: 128)
+                                    
+                                    Text(speaker.getFullNameAndCompany())
+                                        .font(.headline)
+                                        .fontWeight(.bold)
+                                        .padding(.top, 4)
+                                    
+                                    if let city = speaker.city {
+                                        Text(city)
+                                            .font(.subheadline)
+                                            .foregroundStyle(.secondary)
+                                    }
+                                    
+                                    if let socials = speaker.socials {
+                                        SocialIconsView(socials: socials) { socialItem in
+                                            onSocialLinkClick(socialitem: socialItem)
+                                        }
+                                    }
+                                    
+                                    if let bio = speaker.bio {
+                                        Text(bio)
+                                            .font(.body)
+                                            .foregroundStyle(.primary)
+                                            .padding(.top, 6)
+                                    }
+                                }
+                                .frame(maxWidth: .infinity)
                             }
                         }
                         
-                        if let bio = speaker.bio {
-                            Text(bio)
-                                .font(.body)
-                                .padding(.top, 12)
-                        }
-                    }
-                    VStack(alignment: .leading) {
-                        Text("Talks")
-                            .font(.headline)
-                            .bold()
-                            .padding(.top, 16)
-                        
-                        if let speakerSessions = viewModel.speakerSession {
-                            ForEach(speakerSessions, id: \.id) { session in
-                                NavigationLink(destination: AgendaDetailView(session: AgendaContent.Session(from: session), day: "day")) {
-                                    AgendaCellView(session: AgendaContent.Session(from: session), isBookmarked: false)
-                                        .foregroundColor(.primary)
-                                        .background(Color.secondary.opacity(0.3))
-                                        .cornerRadius(12)
-                                        .frame(maxWidth: .infinity)
+                        Card {
+                            VStack(alignment: .leading, spacing: 12) {
+                                Text("Talks")
+                                    .font(.headline)
+                                    .bold()
+                                    .foregroundColor(Color(Asset.devFestRed.color))
+                                
+                                if let speakerSessions = viewModel.speakerSession {
+                                    VStack(spacing: 8) {
+                                        ForEach(speakerSessions, id: \.id) { session in
+                                            NavigationLink(destination: AgendaDetailView(session: AgendaContent.Session(from: session), day: "day")) {
+                                                AgendaCellView(session: AgendaContent.Session(from: session), isBookmarked: false)
+                                                    .foregroundColor(.primary)
+                                                    .frame(maxWidth: .infinity)
+                                            }
+                                        }
+                                    }
                                 }
                             }
+                            .frame(maxWidth: .infinity, alignment: .leading)
                         }
+                        
+                        Spacer(minLength: 8)
                     }
-                    
-                    Spacer()
+                    .padding(.horizontal)
                 }
-                .padding(.horizontal)
             }
         }
     }
@@ -77,12 +91,3 @@ struct SpeakerDetails: View {
     func onSocialLinkClick(socialitem: SocialItem) {
     }
 }
-
-
-
-
-//struct SpeakerDetails_Previews: PreviewProvider {
-//    static var previews: some View {
-//    }
-//}
-
