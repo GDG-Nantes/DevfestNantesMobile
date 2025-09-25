@@ -1,40 +1,37 @@
-//
-//  Card.swift
-//  iosApp
-//
-//  Created by Stéphane Rihet on 21/09/2022.
-//  Copyright © 2022 orgName. All rights reserved.
-//
-
 import SwiftUI
 
-/// SwiftUI View
 struct Card<Content: View>: View {
     let content: () -> Content
-    
+    private let corner: CGFloat = 16
+    private let inner: CGFloat = 14
+    private let outer: CGFloat = 8
+
     var body: some View {
-        Group {
-            if #available(iOS 26.0, *) {
-                GlassEffectContainer {
-                    VStack {
-                        content()
-                    }
-                    .frame(minWidth: 0, maxWidth: .infinity)
-                    .padding(12)
-                    .glassEffect(.regular, in: .rect(cornerRadius: 12))
-                }
-                .clipShape(RoundedRectangle(cornerRadius: 12, style: .continuous))
-                .padding(8)
-            } else {
-                VStack {
-                    content()
-                }
-                .frame(minWidth: 0, maxWidth: .infinity)
-                .padding(12)
-                .background(Color(Asset.secondaryBackground.color))
-                .clipShape(RoundedRectangle(cornerRadius: 8, style: .continuous))
-                .padding(8)
+        if #available(iOS 26.0, *) {
+            VStack(alignment: .leading, spacing: 0) {
+                content()
+                    .padding(inner)
             }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .background {
+                GlassEffectContainer {
+                    Color.clear
+                        .glassEffect(.regular, in: .rect(cornerRadius: corner))
+                }
+            }
+            .clipShape(RoundedRectangle(cornerRadius: corner, style: .continuous))
+            .padding(outer)
+        } else {
+            VStack(alignment: .leading, spacing: 0) {
+                content().padding(inner)
+            }
+            .frame(maxWidth: .infinity, alignment: .leading)
+            .background(
+                RoundedRectangle(cornerRadius: corner, style: .continuous)
+                    .fill(Color(Asset.secondaryBackground.color))
+            )
+            .clipShape(RoundedRectangle(cornerRadius: corner, style: .continuous))
+            .padding(outer)
         }
     }
 }

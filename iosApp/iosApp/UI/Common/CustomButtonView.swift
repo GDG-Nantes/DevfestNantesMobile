@@ -13,32 +13,39 @@ import SafariServices
 struct CustomButton<Label: View>: View {
     private var label: () -> Label
     private let url: URL
-    
-    //Display or not the website in the app
     @State private var showSafari = false
     
-    //Initialization of CustomButton
     init(url: URL, @ViewBuilder label: @escaping () -> Label) {
         self.url = url
         self.label = label
     }
     
-    //setup UI
     var body: some View {
-        Button(action: {
-            self.showSafari = true
-        }, label: label)
-        .padding(.vertical, 5)
-        .padding(.horizontal, 10)
-        .overlay(
-            RoundedRectangle(cornerRadius: 20)
-                .stroke(Color(Asset.devFestBlue.color), lineWidth: 1)
-        )
-        .sheet(isPresented: $showSafari) { SafariView(url: self.url) }
+        if #available(iOS 26.0, *) {
+            Button(action: { showSafari = true }, label: label)
+                .buttonStyle(LiquidGlassButtonStyle())
+                .sheet(isPresented: $showSafari) { SafariView(url: url) }
+        } else {
+            Button(action: { showSafari = true }, label: label)
+                .buttonStyle(MaterialCapsuleButtonStyle())
+                .sheet(isPresented: $showSafari) { SafariView(url: url) }
+        }
     }
 }
 
-///Safari view in app
+private struct MaterialCapsuleButtonStyle: ButtonStyle {
+    func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .font(.callout.weight(.semibold))
+            .padding(.vertical, 8)
+            .padding(.horizontal, 14)
+            .background(.thinMaterial, in: Capsule())
+            .overlay(Capsule().stroke(.white.opacity(0.15), lineWidth: 1))
+            .scaleEffect(configuration.isPressed ? 0.98 : 1)
+            .animation(.easeOut(duration: 0.12), value: configuration.isPressed)
+    }
+}
+
 struct SafariView: UIViewControllerRepresentable {
     let url: URL
     

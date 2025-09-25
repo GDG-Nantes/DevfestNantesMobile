@@ -64,6 +64,8 @@
 		CBDFA03C2AB1BEFD00302D34 /* VenueViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDFA03B2AB1BEFD00302D34 /* VenueViewModel.swift */; };
 		CBDFA03E2AB1BFBC00302D34 /* AboutViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDFA03D2AB1BFBC00302D34 /* AboutViewModel.swift */; };
 		CBDFA0402AB1EDA200302D34 /* SpeakersViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDFA03F2AB1EDA200302D34 /* SpeakersViewModel.swift */; };
+		F5010D532E730D470048CCCE /* GlassRowContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5010D522E730D470048CCCE /* GlassRowContainer.swift */; };
+		F58368862E70701E001A9B8A /* LiquidGlassButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = F58368852E70701E001A9B8A /* LiquidGlassButtonStyle.swift */; };
 		F5BA00E32E7014DA00A31383 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F5BA00E22E7014DA00A31383 /* GoogleService-Info.plist */; };
 /* End PBXBuildFile section */
 
@@ -134,6 +136,8 @@
 		CBDFA03B2AB1BEFD00302D34 /* VenueViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VenueViewModel.swift; sourceTree = "<group>"; };
 		CBDFA03D2AB1BFBC00302D34 /* AboutViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewModel.swift; sourceTree = "<group>"; };
 		CBDFA03F2AB1EDA200302D34 /* SpeakersViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeakersViewModel.swift; sourceTree = "<group>"; };
+		F5010D522E730D470048CCCE /* GlassRowContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlassRowContainer.swift; sourceTree = "<group>"; };
+		F58368852E70701E001A9B8A /* LiquidGlassButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiquidGlassButtonStyle.swift; sourceTree = "<group>"; };
 		F5BA00E22E7014DA00A31383 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -316,6 +320,8 @@
 		CB46914029157375004C6120 /* Common */ = {
 			isa = PBXGroup;
 			children = (
+				F5010D522E730D470048CCCE /* GlassRowContainer.swift */,
+				F58368852E70701E001A9B8A /* LiquidGlassButtonStyle.swift */,
 				CBA5C22F28DB4F5100D2779B /* CardView.swift */,
 				CB179BE428D3894500BB9934 /* CustomButtonView.swift */,
 				CBCB60EC28E47FC5001E9B1A /* LoadingView.swift */,
@@ -578,6 +584,7 @@
 				CBDFA0302AB0F3E000302D34 /* SpeakerDetailsView.swift in Sources */,
 				CB4980F228F609E3001D0484 /* RCValues.swift in Sources */,
 				CB4691472919661A004C6120 /* Bundle-extension.swift in Sources */,
+				F58368862E70701E001A9B8A /* LiquidGlassButtonStyle.swift in Sources */,
 				CBDFA03C2AB1BEFD00302D34 /* VenueViewModel.swift in Sources */,
 				00D442902E67096900199668 /* ComplexityFilterMenu.swift in Sources */,
 				00D442912E67096900199668 /* ClearFiltersButton.swift in Sources */,
@@ -600,6 +607,7 @@
 				CB46914329196228004C6120 /* Complexity-extension.swift in Sources */,
 				CB837ABA287B7D9200FEDAA1 /* AboutView.swift in Sources */,
 				CBDFA0322AB0F4FC00302D34 /* SocialIcon.swift in Sources */,
+				F5010D532E730D470048CCCE /* GlassRowContainer.swift in Sources */,
 				CB179BDB28D24C9C00BB9934 /* CategoryView.swift in Sources */,
 				CBCB60ED28E47FC5001E9B1A /* LoadingView.swift in Sources */,
 				CB4980F728FDE6AC001D0484 /* UIImage-extension.swift in Sources */,
@@ -770,12 +778,12 @@
 				INFOPLIST_FILE = iosApp/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "DevFest Nantes";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2025.09.02;
+				MARKETING_VERSION = 2025.09.25;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.gdgnantes.devfest.iosApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -803,12 +811,12 @@
 				INFOPLIST_FILE = iosApp/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "DevFest Nantes";
 				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.developer-tools";
-				IPHONEOS_DEPLOYMENT_TARGET = 16.6;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 2025.09.02;
+				MARKETING_VERSION = 2025.09.25;
 				OTHER_LDFLAGS = "-ObjC";
 				PRODUCT_BUNDLE_IDENTIFIER = com.gdgnantes.devfest.iosApp;
 				PRODUCT_NAME = "$(TARGET_NAME)";

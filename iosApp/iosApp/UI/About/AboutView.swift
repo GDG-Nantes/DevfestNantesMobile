@@ -10,16 +10,14 @@ import SwiftUI
 import shared
 
 struct AboutView: View {
-    //Store an observable object instance
     @ObservedObject var viewModel = AboutViewModel()
     
-    //Setup UI
     var body: some View {
         NavigationView {
             ZStack {
+                DevFestSiteBackground()
                 ScrollView {
                     VStack {
-                        //Header
                         Card {
                             VStack(spacing: 16) {
                                 Image("ic_about_header")
@@ -42,7 +40,7 @@ struct AboutView: View {
                                 }.padding(8)
                             }.padding(8)
                         }
-                        //Social link
+                        
                         Card {
                             VStack {
                                 Text(L10n.aboutSocialTitle)
@@ -56,7 +54,7 @@ struct AboutView: View {
                                     }
                                     .simultaneousGesture(TapGesture().onEnded {
                                         FirebaseAnalyticsService.shared.eventLinkFacebookOpened()
-                                                })
+                                    })
                         
                                     Link(destination: URL(string: WebLinks.socialTwitter.url)!) {
                                         Image("ic_network_twitter")
@@ -64,28 +62,30 @@ struct AboutView: View {
                                             .foregroundColor(Color(Asset.icColor.color))
                                     }
                                     .simultaneousGesture(TapGesture().onEnded {
-                                        FirebaseAnalyticsService.shared.eventLinkTwitterOpened()})
+                                        FirebaseAnalyticsService.shared.eventLinkTwitterOpened()
+                                    })
 
                                     Link(destination: URL(string: WebLinks.socialLinkedin.url)!) {
                                         Image("ic_network_linkedin")
                                             .renderingMode(.template)
                                             .foregroundColor(Color(Asset.icColor.color))
                                     }
-                                        .simultaneousGesture(TapGesture().onEnded {
-                                        FirebaseAnalyticsService.shared.eventLinkLinkedinOpened()})
+                                    .simultaneousGesture(TapGesture().onEnded {
+                                        FirebaseAnalyticsService.shared.eventLinkLinkedinOpened()
+                                    })
                                     
                                     Link(destination: URL(string: WebLinks.socielYoutube.url)!) {
                                         Image("ic_network_youtube")
                                             .renderingMode(.template)
                                             .foregroundColor(Color(Asset.icColor.color))
                                     }
-                                            .simultaneousGesture(TapGesture().onEnded {
-                                        FirebaseAnalyticsService.shared.eventLinkYoutubeOpened()})
-
+                                    .simultaneousGesture(TapGesture().onEnded {
+                                        FirebaseAnalyticsService.shared.eventLinkYoutubeOpened()
+                                    })
                                 }.padding(8)
                             }.padding(8)
                         }
-                        //Partners
+                        
                         if let content = viewModel.partnersContent {
                             Card {
                                 VStack(spacing: 16) {
@@ -104,81 +104,89 @@ struct AboutView: View {
                                                     Button(action: { UIApplication.shared.open(URL(string: partnerUrl)!)
                                                         FirebaseAnalyticsService.shared.eventLinkPartnerOpened(partnerName: partnerUrl)
                                                     }) {
-                                                        if let logo = partner.logoUrl, let logoUrl = URL(string: logo) {
-                                                            AsyncImage(url: logoUrl) { phase in
-                                                                switch phase {
-                                                                case .empty:
-                                                                    ProgressView()
-                                                                        .frame(maxHeight: 50)
-                                                                case .success(let image):
-                                                                    image
-                                                                        .renderingMode(.original)
-                                                                        .resizable()
-                                                                        .aspectRatio(contentMode: .fit)
-                                                                case .failure:
-                                                                    Image(systemName: "photo")
-                                                                        .resizable()
-                                                                        .aspectRatio(contentMode: .fit)
-                                                                @unknown default:
-                                                                    EmptyView()
+                                                        GlassRowContainer(corner: 20) {
+                                                            HStack {
+                                                                Spacer(minLength: 0)
+                                                                if let logo = partner.logoUrl, let logoUrl = URL(string: logo) {
+                                                                    AsyncImage(url: logoUrl) { phase in
+                                                                        switch phase {
+                                                                        case .empty:
+                                                                            ProgressView()
+                                                                                .frame(height: 50)
+                                                                        case .success(let image):
+                                                                            image
+                                                                                .renderingMode(.original)
+                                                                                .resizable()
+                                                                                .aspectRatio(contentMode: .fit)
+                                                                                .frame(height: 50)
+                                                                        case .failure:
+                                                                            Image(systemName: "photo")
+                                                                                .resizable()
+                                                                                .aspectRatio(contentMode: .fit)
+                                                                                .frame(height: 50)
+                                                                        @unknown default:
+                                                                            EmptyView()
+                                                                        }
+                                                                    }
                                                                 }
+                                                                Spacer(minLength: 0)
                                                             }
-                                                            .frame(maxHeight: 50)
                                                         }
                                                     }
-                                                    .frame(maxHeight: 50)
-                                                    .padding(8)
-                                                    .background(
-                                                        RoundedRectangle(cornerRadius: 20, style: .continuous).fill(Color(Asset.lauchScreenBackground.color))
-                                                    )
                                                 }
                                             }
                                         }
                                     }
                                     Spacer(minLength: 8)
                                 }.padding(8)
-                            }}
-                        //Local communities
+                            }
+                        }
+                        
                         Card {
                             VStack {
                                 Text(L10n.localCommunitiesTitle)
                                     .frame(minWidth: 0, maxWidth: .infinity, alignment: .leading)
                                     .foregroundColor(Color(Asset.devFestRed.color))
                                 HStack(alignment: .top, spacing: 40) {
-                                    CustomButton(url: URL(string: WebLinks.nantestechCommunities.url)!) {
+                                    Button(action: {
+                                        if let url = URL(string: WebLinks.nantestechCommunities.url) {
+                                            UIApplication.shared.open(url)
+                                            FirebaseAnalyticsService.shared.eventLinkLocalCommunitiesOpened()
+                                        }
+                                    }) {
                                         Image("local_communities_logo")
+                                            .padding(6)
+                                            .background(
+                                                RoundedRectangle(cornerRadius: 12, style: .continuous)
+                                                    .fill(Color.white)
+                                            )
                                     }
-                                    .background(
-                                        RoundedRectangle(cornerRadius: 20, style: .continuous).fill(Color.white)
-                                    )
-                                    .simultaneousGesture(TapGesture().onEnded {
-                                        FirebaseAnalyticsService.shared.eventLinkLocalCommunitiesOpened()
-                                    })
                                     .foregroundColor(Color(Asset.devFestRed.color))
                                 }.padding(8)
                             }.padding(8)
                         }
-                        //Github repo
+                        
                         Card {
-                            VStack {
+                            VStack(alignment: .center, spacing: 8) {
                                 CustomButton(url: URL(string: WebLinks.github.url)!) {
-                                    HStack(spacing: 0) {
+                                    HStack(spacing: 6) {
                                         Image("ic_network_github")
-                                                    .renderingMode(.template)
-                                                    .foregroundColor(Color(Asset.icColor.color))
-                                        Text(" \(L10n.forkMeOnGithub)")
+                                            .renderingMode(.template)
+                                            .foregroundColor(Color(Asset.icColor.color))
+                                        Text("\(L10n.forkMeOnGithub)")
                                             .foregroundColor(Color(Asset.icColor.color))
                                     }
                                 }
-                                Text("Version \("\(Bundle.main.releaseVersionNumber ?? "") (\(Bundle.main.buildVersionNumber ?? ""))")")
+                                Text("Version \(Bundle.main.releaseVersionNumber ?? "") (\(Bundle.main.buildVersionNumber ?? ""))")
                                     .font(.footnote)
-                            }.padding(8)
+                            }
+                            .frame(maxWidth: .infinity, alignment: .center)
+                            .padding(8)
                         }
                     }
                     .frame(minWidth: 0, maxWidth: .infinity)
                 }
                 .padding(0)
-                .background(Color(UIColor.systemBackground))
             }
             .task {
                 await viewModel.observePartners()
