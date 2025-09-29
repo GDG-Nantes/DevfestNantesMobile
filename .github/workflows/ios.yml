@@ -132,7 +132,7 @@ jobs:
       - name: Create mock GoogleService-Info.plist for CI
         run: |
           # Create a minimal mock GoogleService-Info.plist file for CI builds
-          cat > /Users/runner/Downloads/GoogleService-Info.plist << 'EOF'
+          cat > iosApp/iosApp/GoogleService-Info.plist << 'EOF'
           <?xml version="1.0" encoding="UTF-8"?>
           <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
           <plist version="1.0">
