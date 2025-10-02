@@ -26,9 +26,11 @@ import com.gdgnantes.devfest.model.Venue
 fun GetPartnerGroupsQuery.PartnerGroup.toPartnersGroup(): Pair<PartnerCategory, List<Partner>> {
     val partnerCategory =
         when (title.lowercase()) {
+            "pxl" -> PartnerCategory.PXL
             "platinium" -> PartnerCategory.PLATINIUM
             "gold" -> PartnerCategory.GOLD
             "virtual" -> PartnerCategory.VIRTUAL
+            "velotypie" -> PartnerCategory.VELOTYPE
             else -> PartnerCategory.PARTNERS
         }
     return partnerCategory to partners.map { it.toPartner() }

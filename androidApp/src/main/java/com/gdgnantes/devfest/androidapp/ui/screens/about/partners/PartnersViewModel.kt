@@ -17,6 +17,9 @@ import javax.inject.Inject
 class PartnersViewModel @Inject constructor(
     store: DevFestNantesStore,
 ) : ViewModel() {
+    private val _exclusivePartners = MutableStateFlow<List<Partner>>(emptyList())
+    val exclusivePartners: StateFlow<List<Partner>> = _exclusivePartners.asStateFlow()
+
     private val _platiniumPartners = MutableStateFlow<List<Partner>>(emptyList())
     val platiniumPartners: StateFlow<List<Partner>> = _platiniumPartners.asStateFlow()
 
@@ -26,16 +29,17 @@ class PartnersViewModel @Inject constructor(
     private val _virtualPartners = MutableStateFlow<List<Partner>>(emptyList())
     val virtualPartners: StateFlow<List<Partner>> = _virtualPartners.asStateFlow()
 
-    private val _partnersPartners = MutableStateFlow<List<Partner>>(emptyList())
-    val partnersPartners: StateFlow<List<Partner>> = _partnersPartners.asStateFlow()
+    private val _velotypePartners = MutableStateFlow<List<Partner>>(emptyList())
+    val velotypePartners: StateFlow<List<Partner>> = _velotypePartners.asStateFlow()
 
     init {
         viewModelScope.launch {
             store.partners.collectLatest {
+                _exclusivePartners.value = it[PartnerCategory.PXL] ?: emptyList()
                 _platiniumPartners.value = it[PartnerCategory.PLATINIUM] ?: emptyList()
                 _goldPartners.value = it[PartnerCategory.GOLD] ?: emptyList()
                 _virtualPartners.value = it[PartnerCategory.VIRTUAL] ?: emptyList()
-                _partnersPartners.value = it[PartnerCategory.PARTNERS] ?: emptyList()
+                _velotypePartners.value = it[PartnerCategory.VELOTYPE] ?: emptyList()
             }
         }
     }
