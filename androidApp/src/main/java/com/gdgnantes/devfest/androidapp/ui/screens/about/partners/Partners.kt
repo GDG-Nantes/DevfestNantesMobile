@@ -30,10 +30,11 @@ fun Partners(
 ) {
     Partners(
         modifier = modifier,
+        exclusivePartners = viewModel.exclusivePartners.collectAsState(),
         platiniumPartners = viewModel.platiniumPartners.collectAsState(),
         goldPartners = viewModel.goldPartners.collectAsState(),
         virtualPartners = viewModel.virtualPartners.collectAsState(),
-        partnersPartners = viewModel.partnersPartners.collectAsState(),
+        velotypePartners = viewModel.velotypePartners.collectAsState(),
         onPartnerClick = onPartnerClick
     )
 }
@@ -41,10 +42,11 @@ fun Partners(
 @Composable
 fun Partners(
     modifier: Modifier = Modifier,
+    exclusivePartners: State<List<Partner>>,
     platiniumPartners: State<List<Partner>>,
     goldPartners: State<List<Partner>>,
     virtualPartners: State<List<Partner>>,
-    partnersPartners: State<List<Partner>>,
+    velotypePartners: State<List<Partner>>,
     onPartnerClick: (Partner) -> Unit
 ) {
     Column(
@@ -54,6 +56,12 @@ fun Partners(
         Text(
             text = stringResource(R.string.partners_title),
             style = MaterialTheme.typography.titleMedium,
+        )
+
+        PartnersGroup(
+            title = stringResource(R.string.partners_exclusive_platinium_title),
+            partners = exclusivePartners.value,
+            onPartnerClick = onPartnerClick
         )
 
         PartnersGroup(
@@ -74,8 +82,8 @@ fun Partners(
             onPartnerClick = onPartnerClick
         )
         PartnersGroup(
-            title = stringResource(R.string.partners_partners_title),
-            partners = partnersPartners.value,
+            title = stringResource(R.string.partners_velotype_title),
+            partners = velotypePartners.value,
             onPartnerClick = onPartnerClick
         )
     }
