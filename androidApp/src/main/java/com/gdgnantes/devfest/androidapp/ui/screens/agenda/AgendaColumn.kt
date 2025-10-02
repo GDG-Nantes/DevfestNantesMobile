@@ -18,6 +18,7 @@ import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
@@ -37,12 +38,15 @@ fun AgendaColumn(
     onSessionClick: (Session) -> Unit,
 ) {
     val listState = rememberLazyListState()
-
     val sessionsGroupedByStartTime = groupSessionsByStartTime(sessionsPerStartTime)
+    val hasAutoScrolled = rememberSaveable { androidx.compose.runtime.mutableStateOf(false) }
 
     LaunchedEffect(key1 = sessionsPerStartTime) {
-        val index = getCurrentStartTimeIndex(sessionsGroupedByStartTime)
-        listState.scrollToItem(index)
+        if (!hasAutoScrolled.value) {
+            val index = getCurrentStartTimeIndex(sessionsGroupedByStartTime)
+            listState.scrollToItem(index)
+            hasAutoScrolled.value = true
+        }
     }
 
     LazyColumn(
