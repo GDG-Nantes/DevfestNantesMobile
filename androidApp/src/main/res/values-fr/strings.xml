@@ -69,4 +69,6 @@
   <string name="settings_legal">Mentions légales</string>
   <string name="venue_plan_content_description">Plan de la citée des congrès. Présente les différents espaces et les salles de la conférence.</string>
   <string name="session_filters_clear">Réinitialiser les filtres</string>
+  <string name="partners_exclusive_platinium_title">PARTENAIRE PLATINIUM EXCLUSIF</string>
+  <string name="partners_velotype_title">VELOTYPIE</string>
 </resources>
