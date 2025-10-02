@@ -1,12 +1,18 @@
-@file:OptIn(ExperimentalFoundationApi::class)
+@file:OptIn(ExperimentalFoundationApi::class, ExperimentalMaterialApi::class)
 
 package com.gdgnantes.devfest.androidapp.ui.screens.agenda
 
 import androidx.compose.foundation.ExperimentalFoundationApi
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.rememberPagerState
+import androidx.compose.material.ExperimentalMaterialApi
+import androidx.compose.material.pullrefresh.PullRefreshIndicator
+import androidx.compose.material.pullrefresh.pullRefresh
+import androidx.compose.material.pullrefresh.rememberPullRefreshState
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Tab
 import androidx.compose.material3.TabRow
 import androidx.compose.material3.TabRowDefaults
@@ -14,6 +20,7 @@ import androidx.compose.material3.TabRowDefaults.tabIndicatorOffset
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.rememberCoroutineScope
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import com.gdgnantes.devfest.androidapp.ui.UiState
@@ -21,8 +28,6 @@ import com.gdgnantes.devfest.androidapp.ui.components.LoadingLayout
 import com.gdgnantes.devfest.androidapp.utils.getDayFromIso8601
 import com.gdgnantes.devfest.model.AgendaDay
 import com.gdgnantes.devfest.model.Session
-import com.google.accompanist.swiperefresh.SwipeRefresh
-import com.google.accompanist.swiperefresh.SwipeRefreshState
 import kotlinx.coroutines.launch
 
 @Composable
@@ -45,7 +50,7 @@ fun AgendaPager(
             selectedTabIndex = pagerState.currentPage,
             // Override the indicator, using the provided pagerTabIndicatorOffset modifier
             indicator = { tabPositions ->
-                TabRowDefaults.Indicator(
+                TabRowDefaults.SecondaryIndicator(
                     Modifier.tabIndicatorOffset(
                         tabPositions[pagerState.currentPage]
                     )
@@ -72,10 +77,9 @@ fun AgendaPager(
         HorizontalPager(
             state = pagerState,
         ) { page ->
-            SwipeRefresh(
-                state = SwipeRefreshState(isRefreshing = uiState == UiState.LOADING),
-                onRefresh = onRefresh,
-            ) {
+            val isRefreshing = uiState == UiState.LOADING
+            val pullRefreshState = rememberPullRefreshState(isRefreshing, onRefresh)
+            Box(modifier = Modifier.pullRefresh(pullRefreshState)) {
                 if (uiState == UiState.STARTING) {
                     LoadingLayout()
                 } else {
@@ -89,6 +93,14 @@ fun AgendaPager(
                         )
                     }
                 }
+                PullRefreshIndicator(
+                    refreshing = isRefreshing,
+                    state = pullRefreshState,
+                    modifier = Modifier.align(Alignment.TopCenter),
+                    contentColor = MaterialTheme.colorScheme.primary,
+                    backgroundColor = MaterialTheme.colorScheme.surface,
+                    scale = true // enables Material3-style scaling animation
+                )
             }
         }
     }

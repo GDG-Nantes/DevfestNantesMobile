@@ -36,7 +36,6 @@ timber = "5.0.1"
 accompanist-pager = { group = "com.google.accompanist", name = "accompanist-pager", version.ref = "accompanist" }
 accompanist-pager-indicators = { group = "com.google.accompanist", name = "accompanist-pager-indicators", version.ref = "accompanist" }
 accompanist-systemuicontroller = { group = "com.google.accompanist", name = "accompanist-systemuicontroller", version.ref = "accompanist" }
-accompanist-swiperefresh = { group = "com.google.accompanist", name = "accompanist-swiperefresh", version.ref = "accompanist" }
 
 androidx-browser = { group = "androidx.browser", name = "browser", version.ref = "browser" }
 androidx-compose-bom = { module = "androidx.compose:compose-bom", version.ref = "composeBom" }
@@ -104,7 +103,7 @@ openfeedback-viewmodel = { module = "io.openfeedback:openfeedback-viewmodel", ve
 timber = { module = "com.jakewharton.timber:timber", version.ref = "timber" }
 
 [bundles]
-accompanist = ["accompanist-pager", "accompanist-pager-indicators", "accompanist-systemuicontroller", "accompanist-swiperefresh"]
+accompanist = ["accompanist-pager", "accompanist-pager-indicators", "accompanist-systemuicontroller"]
 android-test = ["androidx-compose-ui-test-junit4", "androidx-test-espresso", "androidx-test-espresso-contrib", "androidx-test-espresso-intents", "androidx-test-ext-junit", "androidx-test-rules", "androidx-test-truth"]
 appollo = ["appollo-runtime", "appollo-normalized-cache", "appollo-normalized-cache-sqlite"]
 debug = ["androidx-compose-ui-tooling", "androidx-compose-ui-test-manifest"]
