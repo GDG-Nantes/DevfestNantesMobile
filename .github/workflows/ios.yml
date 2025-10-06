@@ -85,7 +85,7 @@ jobs:
             ${{ runner.os }}-xcode-deriveddata-
       
       - name: Select Xcode version
-        run: sudo xcode-select -s /Applications/Xcode_26.app/Contents/Developer
+        run: sudo xcode-select -s /Applications/Xcode_26.0.1.app/Contents/Developer
       
       - name: Show Xcode version
         run: xcodebuild -version
