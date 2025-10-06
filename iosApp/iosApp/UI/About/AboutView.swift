@@ -95,9 +95,11 @@ struct AboutView: View {
                                     
                                     ForEach(content, id: \.self) { category in
                                         VStack {
-                                            Text(category.categoryName.name)
+                                            Text(localizedCategoryName(for: category.categoryName.name))
                                                 .font(.title2)
                                                 .bold()
+                                                .multilineTextAlignment(.center)
+                                                .frame(maxWidth: .infinity, alignment: .center)
                                                 .padding(20)
                                             ForEach(category.partners, id: \.self) { partner in
                                                 if let partnerUrl = partner.url {
@@ -196,6 +198,24 @@ struct AboutView: View {
         .padding(0)
         .onAppear{
             FirebaseAnalyticsService.shared.pageEvent(page: AnalyticsPage.about, className: "AboutView")
+        }
+    }
+    
+    /// Maps partner category names to their localized titles
+    private func localizedCategoryName(for categoryName: String) -> String {
+        switch categoryName.lowercased() {
+        case "pxl":
+            return L10n.partnersExclusivePlatiniumTitle
+        case "platinium":
+            return L10n.partnersPlatiniumTitle
+        case "gold":
+            return L10n.partnersGoldTitle
+        case "virtual":
+            return L10n.partnersVirtualTitle
+        case "velotype":
+            return L10n.partnersVelotypeTitle
+        default:
+            return categoryName // Fallback to original name
         }
     }
 }
