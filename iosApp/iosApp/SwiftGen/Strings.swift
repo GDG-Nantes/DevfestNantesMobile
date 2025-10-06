@@ -96,12 +96,16 @@ internal enum L10n {
   internal static let loading = L10n.tr("Localizable", "loading", fallback: "Loading...")
   /// Local communities
   internal static let localCommunitiesTitle = L10n.tr("Localizable", "local_communities_title", fallback: "Local communities")
+  /// EXCLUSIVE PLATINIUM PARTNER
+  internal static let partnersExclusivePlatiniumTitle = L10n.tr("Localizable", "partners_exclusive_platinium_title", fallback: "EXCLUSIVE PLATINIUM PARTNER")
   /// GOLD
   internal static let partnersGoldTitle = L10n.tr("Localizable", "partners_gold_title", fallback: "GOLD")
   /// PLATINIUM
   internal static let partnersPlatiniumTitle = L10n.tr("Localizable", "partners_platinium_title", fallback: "PLATINIUM")
   /// Partners
   internal static let partnersTitle = L10n.tr("Localizable", "partners_title", fallback: "Partners")
+  /// VELOTYPE
+  internal static let partnersVelotypeTitle = L10n.tr("Localizable", "partners_velotype_title", fallback: "VELOTYPE")
   /// VIRTUAL
   internal static let partnersVirtualTitle = L10n.tr("Localizable", "partners_virtual_title", fallback: "VIRTUAL")
   /// Session details
