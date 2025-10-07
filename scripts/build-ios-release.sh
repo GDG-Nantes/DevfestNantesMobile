@@ -72,6 +72,7 @@ xcodebuild -project iosApp.xcodeproj \
            -configuration Release \
            -destination generic/platform=iOS \
            -archivePath "$ARCHIVE_PATH" \
+           -allowProvisioningUpdates \
            archive
 
 # Verify dSYMs
@@ -179,6 +180,7 @@ fi
 
 # Export for App Store
 echo -e "${BLUE}📤 Exporting for App Store...${NC}"
+echo -e "${BLUE}Using automatic provisioning profile management${NC}"
 EXPORT_PATH="$IOS_DIR/DevFestNantes-AppStore"
 rm -rf "$EXPORT_PATH"
 
@@ -190,7 +192,7 @@ if [ ! -f "$IOS_DIR/exportOptions.plist" ]; then
 <plist version="1.0">
 <dict>
     <key>method</key>
-    <string>app-store</string>
+    <string>app-store-connect</string>
     <key>uploadBitcode</key>
     <false/>
     <key>uploadSymbols</key>
@@ -203,24 +205,39 @@ if [ ! -f "$IOS_DIR/exportOptions.plist" ]; then
     <string>upload</string>
     <key>stripSwiftSymbols</key>
     <true/>
+    <key>signingStyle</key>
+    <string>automatic</string>
+    <key>manageAppVersionAndBuildNumber</key>
+    <false/>
 </dict>
 </plist>
 EOF
 fi
 
+# Capture xcodebuild output to check for success
+EXPORT_LOG=$(mktemp)
 xcodebuild -exportArchive \
            -archivePath "$ARCHIVE_PATH" \
            -exportPath "$EXPORT_PATH" \
-           -exportOptionsPlist "$IOS_DIR/exportOptions.plist"
+           -exportOptionsPlist "$IOS_DIR/exportOptions.plist" \
+           -allowProvisioningUpdates 2>&1 | tee "$EXPORT_LOG"
 
-# Check if upload was successful (upload destination doesn't create local IPA)
-if grep -q "destination.*upload" "$IOS_DIR/exportOptions.plist"; then
-    # Check for upload success in the output above
-    echo -e "${GREEN}✅ App uploaded successfully to App Store Connect!${NC}"
-    echo -e "${BLUE}📁 Archive: $ARCHIVE_PATH${NC}"
-    echo -e "${BLUE}� Upload: Direct to App Store Connect${NC}"
+EXPORT_EXIT_CODE=${PIPESTATUS[0]}
+
+# Check if upload was successful
+if grep -q "<string>upload</string>" "$IOS_DIR/exportOptions.plist"; then
+    # Using upload destination - check for success message
+    if [ $EXPORT_EXIT_CODE -eq 0 ] && grep -q "EXPORT SUCCEEDED" "$EXPORT_LOG"; then
+        echo -e "${GREEN}✅ App uploaded successfully to App Store Connect!${NC}"
+        echo -e "${BLUE}📁 Archive: $ARCHIVE_PATH${NC}"
+        echo -e "${BLUE}☁️  Upload: Direct to App Store Connect${NC}"
+    else
+        echo -e "${RED}❌ Upload failed! Check output above for errors.${NC}"
+        rm -f "$EXPORT_LOG"
+        exit 1
+    fi
 else
-    # For export destination, check for IPA file
+    # Using export destination - check for IPA file
     IPA_PATH="$EXPORT_PATH/DevFest Nantes.ipa"
     if [ -f "$IPA_PATH" ]; then
         echo -e "${GREEN}✅ Build complete! Ready for App Store upload.${NC}"
@@ -228,9 +245,13 @@ else
         echo -e "${BLUE}📱 IPA: $IPA_PATH${NC}"
     else
         echo -e "${RED}❌ Export failed! IPA not found.${NC}"
+        rm -f "$EXPORT_LOG"
         exit 1
     fi
 fi
+
+# Clean up temp log
+rm -f "$EXPORT_LOG"
 
 echo ""
 echo -e "${GREEN}📋 dSYM Summary:${NC}"
