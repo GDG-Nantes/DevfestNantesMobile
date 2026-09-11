@@ -27,3 +27,18 @@ connected devices before running/building.
 For device interaction (`android layout`, `android screen`) and journey/UI test evaluation,
 follow the detailed guidance in the `android-cli` skill's `references/interact.md` and
 `references/journeys.md` if available in the agent's environment.
+
+## GitHub CLI
+
+Prefer the `gh` CLI over raw GitHub web/API requests (curl, WebFetch, etc.) for anything
+involving this repository's GitHub data or actions — issues, pull requests, checks,
+releases, workflow runs. It's authenticated, faster, and avoids scraping HTML.
+
+- Issues: `gh issue list|view|create|comment ...`
+- Pull requests: `gh pr list|view|create|checkout|diff|review|comment ...`
+- CI/checks: `gh run list|view|watch`, `gh pr checks`
+- Releases: `gh release list|view|create`
+- Arbitrary API access when no subcommand fits: `gh api repos/{owner}/{repo}/...`
+
+Only fall back to web fetches or raw HTTP requests for things `gh` cannot do (e.g.
+browsing content outside GitHub, or GitHub UI-only features with no API equivalent).
