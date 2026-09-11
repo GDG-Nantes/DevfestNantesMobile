@@ -42,3 +42,30 @@ releases, workflow runs. It's authenticated, faster, and avoids scraping HTML.
 
 Only fall back to web fetches or raw HTTP requests for things `gh` cannot do (e.g.
 browsing content outside GitHub, or GitHub UI-only features with no API equivalent).
+
+## Community Android skills (optional, not versioned)
+
+This repo touches Clean Architecture, Compose UI/Navigation, Kotlin Coroutines, Retrofit and
+Gradle build logic — areas covered by the community skill collection
+[new-silvermoon/awesome-android-agent-skills](https://github.com/new-silvermoon/awesome-android-agent-skills).
+These skills are **not part of this repo** and must be installed once per machine, outside
+any git-tracked project, so use them if your agent environment has them available:
+
+```bash
+git clone https://github.com/new-silvermoon/awesome-android-agent-skills.git \
+  ~/.claude/community-skills-src/awesome-android-agent-skills
+
+src=~/.claude/community-skills-src/awesome-android-agent-skills/.github/skills
+for dir in "$src"/*/*/; do
+  name=$(basename "$dir")
+  [ -e ~/.claude/skills/"$name" ] || ln -s "$dir" ~/.claude/skills/"$name"
+done
+```
+
+This symlinks each skill (`android-architecture`, `android-viewmodel`, `android-data-layer`,
+`compose-ui`, `compose-navigation`, `coil-compose`, `android-accessibility`,
+`xml-to-compose-migration`, `rxjava-to-coroutines-migration`, `compose-performance-audit`,
+`gradle-build-performance`, `kotlin-concurrency-expert`, `android-coroutines`,
+`android-retrofit`, `android-testing`, `android-emulator-skill`, `android-gradle-logic`) into
+`~/.claude/skills/`, so a later `git pull` in the cloned source keeps them up to date. Nothing
+is written into this repo.
