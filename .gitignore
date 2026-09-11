@@ -128,3 +128,6 @@ iosApp/iosApp.xcodeproj/xcuserdata/
 
 # Xcode derived data
 DerivedData/
+
+# Claude Code local configuration (user-specific, contains personal paths)
+.claude/
