@@ -1,0 +1,91 @@
+# Roadmap: DevFest Nantes App Modernization
+
+## Overview
+
+This is a purely technical modernization of an existing KMP conference app (Android/Jetpack Compose + iOS/SwiftUI sharing business logic via the `shared` module) — no new user-facing features, no behavior regressions. The journey starts by fixing the currently-broken iOS CI pipeline so every later phase has a trustworthy signal, then stages the dependency/build-tooling upgrade (Kotlin 2.4.0, AGP 9.2.0, Gradle 9.7.1, Compose/Apollo/Firebase) on its own before touching architecture. With the build system settled, the codebase is decomposed into a Now in Android-inspired multi-module graph (`core-*`/`feature-*`) while iOS keeps consuming a single umbrella framework. Only once the module skeleton is stable does DI get decentralized from Hilt to Koin module-by-module. Test coverage retrofit comes last, because constructor-injected, Koin-wired code is what makes fakes and tests cheap to write.
+
+## Phases
+
+**Phase Numbering:**
+- Integer phases (1, 2, 3): Planned milestone work
+- Decimal phases (2.1, 2.2): Urgent insertions (marked with INSERTED)
+
+Decimal phases appear between their surrounding integers in numeric order.
+
+- [ ] **Phase 1: CI Pipeline Fixed & Optimized** - iOS CI is fixed at the root cause (dynamic simulator resolution) and both Android/iOS jobs run cached and split in a matrix
+- [ ] **Phase 2: Dependency & Build Tooling Upgrade** - The project builds and runs on Kotlin 2.4.0, AGP 9.2.0, Gradle 9.7.1 and updated libraries, staged bump by bump with zero behavior change
+- [ ] **Phase 3: Multi-Module Architecture Extraction** - The codebase is split into a `core-*`/`feature-*` module graph with unidirectional dependencies, iOS still consuming one umbrella framework
+- [ ] **Phase 4: Hilt to Koin DI Migration** - Dependency injection is fully decentralized via Koin, one module per Gradle module, with a CI-verified DI graph
+- [ ] **Phase 5: Test Coverage Retrofit** - Business-logic test coverage (ViewModels, Store/repository, GraphQL mappers) is measurably improved on a hardened fixture foundation
+
+## Phase Details
+
+### Phase 1: CI Pipeline Fixed & Optimized
+**Goal**: The GitHub Actions CI pipeline reliably builds and validates both Android and iOS on every push, using dynamic simulator resolution and caching for speed
+**Depends on**: Nothing (first phase)
+**Requirements**: CI-01, CICD-01, CICD-02, CICD-03
+**Success Criteria** (what must be TRUE):
+  1. The iOS CI job completes successfully end-to-end using dynamic simulator resolution (e.g. `xcrun simctl list` or an explicitly pinned macOS/Xcode runner image) rather than a hardcoded device name that breaks on the next runner-image rotation
+  2. The Gradle build cache (`gradle/actions/setup-gradle`) is active in CI and measurably reduces repeated-build time
+  3. The Konan cache (`~/.konan`) is active in CI and measurably reduces Kotlin/Native compile time
+  4. Android and iOS jobs run as separate matrix entries (`ubuntu-latest`/`macos-latest`) rather than a single combined job
+**Plans**: TBD
+
+### Phase 2: Dependency & Build Tooling Upgrade
+**Goal**: The project builds and runs on the modernized toolchain with zero observable behavior change, each dependency group staged and verified independently
+**Depends on**: Phase 1
+**Requirements**: BUILD-01, BUILD-02, BUILD-03, BUILD-04, BUILD-05, BUILD-06, BUILD-07
+**Success Criteria** (what must be TRUE):
+  1. The project compiles and CI passes on Kotlin 2.4.0
+  2. The project builds on Gradle 9.7.1 and on AGP 9.2.0 using the new `com.android.kotlin.multiplatform.library` plugin in place of the forbidden `kotlin.multiplatform` + `com.android.library` coexistence
+  3. The app runs unchanged for users on Compose BOM 2026.08.00, Apollo GraphQL 5.0.1, and the latest stable Firebase BOM/Coroutines/kotlinx-serialization/kotlinx-datetime
+  4. Build files are migrated to the Gradle Declarative DSL (`.gradle.dcl`) wherever AGP/KMP support allows; any module left on Kotlin DSL (`.kts`) is explicitly documented with the reason support is missing
+**Plans**: TBD
+
+### Phase 3: Multi-Module Architecture Extraction
+**Goal**: The codebase is decomposed into a Now in Android-inspired multi-module graph adapted to KMP, with clean dependency direction and a single iOS-facing framework
+**Depends on**: Phase 2
+**Requirements**: ARCH-01, ARCH-02, ARCH-03, ARCH-04
+**Success Criteria** (what must be TRUE):
+  1. Build logic is defined through convention plugins that read the existing version catalog (`libs.versions.toml`), with no duplicated build configuration across modules
+  2. The `core-*` modules (model, network, data, analytics, ui, testing) exist and never depend on any `feature-*` module — the dependency graph is strictly unidirectional
+  3. The `feature-*` modules (agenda, speakers, venue, bookmarks, session-detail, settings) exist, each with its own ViewModel(s), Compose screens, and Koin module
+  4. `iosApp` continues to build and consume a single umbrella Kotlin/Native framework aggregating all KMP modules, despite `shared` now being split across several Gradle modules
+**Plans**: TBD
+**UI hint**: yes
+
+### Phase 4: Hilt to Koin DI Migration
+**Goal**: Dependency injection is fully decentralized from Dagger Hilt to Koin, module by module, with CI verifying the graph stays wired correctly
+**Depends on**: Phase 3
+**Requirements**: DI-01, DI-02, DI-03, DI-04, DI-05, DI-06
+**Success Criteria** (what must be TRUE):
+  1. No Dagger Hilt annotations or modules remain anywhere in the codebase — Koin is the sole DI framework
+  2. Each `core-*`/`feature-*` Gradle module declares its own Koin `module { }`, composed through a single `initKoin()` entry point
+  3. Platform-specific dependencies (Android `Context`, `SharedPreferences`, etc.) are supplied via `expect`/`actual` declarations or per-platform Koin modules
+  4. ViewModels and Stores receive all dependencies through constructor injection — no `get()` calls appear outside the DI wiring layer
+  5. A `core-testing` module centralizes shared test fakes/doubles (in the spirit of `DevFestNantesStoreMocked`) for use across feature modules, and a `checkModules()` Koin test runs in CI to verify the complete DI graph
+**Plans**: TBD
+
+### Phase 5: Test Coverage Retrofit
+**Goal**: Business-logic test coverage is measurably improved on a hardened test-fixture foundation, prioritizing ViewModels, Store/repository, and GraphQL mappers over a strict percentage target
+**Depends on**: Phase 4
+**Requirements**: TEST-01, TEST-02, TEST-03, TEST-04
+**Success Criteria** (what must be TRUE):
+  1. The known blocking test fragilities are fixed first: `StoreStubs.kt`'s RNG is seeded and `SimpleDateFormat` thread-safety issues are resolved in the tested code paths
+  2. `commonTest` coverage of Store/repository logic and GraphQL-to-model mappers is extended into the new `core-data`/feature modules, following the existing `DevFestNantesStoreContractTest` pattern
+  3. ViewModel test coverage is extended across feature modules, made practical by constructor injection via Koin
+  4. Compose smoke tests on critical Android screens are maintained or extended per feature module (`androidTest`), built on the shared `core-testing` fakes
+**Plans**: TBD
+
+## Progress
+
+**Execution Order:**
+Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
+
+| Phase | Plans Complete | Status | Completed |
+|-------|----------------|--------|-----------|
+| 1. CI Pipeline Fixed & Optimized | 0/TBD | Not started | - |
+| 2. Dependency & Build Tooling Upgrade | 0/TBD | Not started | - |
+| 3. Multi-Module Architecture Extraction | 0/TBD | Not started | - |
+| 4. Hilt to Koin DI Migration | 0/TBD | Not started | - |
+| 5. Test Coverage Retrofit | 0/TBD | Not started | - |

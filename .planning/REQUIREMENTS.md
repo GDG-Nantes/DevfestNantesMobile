@@ -91,37 +91,37 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| CI-01 | TBD | Pending |
-| BUILD-01 | TBD | Pending |
-| BUILD-02 | TBD | Pending |
-| BUILD-03 | TBD | Pending |
-| BUILD-04 | TBD | Pending |
-| BUILD-05 | TBD | Pending |
-| BUILD-06 | TBD | Pending |
-| BUILD-07 | TBD | Pending |
-| ARCH-01 | TBD | Pending |
-| ARCH-02 | TBD | Pending |
-| ARCH-03 | TBD | Pending |
-| ARCH-04 | TBD | Pending |
-| DI-01 | TBD | Pending |
-| DI-02 | TBD | Pending |
-| DI-03 | TBD | Pending |
-| DI-04 | TBD | Pending |
-| DI-05 | TBD | Pending |
-| DI-06 | TBD | Pending |
-| TEST-01 | TBD | Pending |
-| TEST-02 | TBD | Pending |
-| TEST-03 | TBD | Pending |
-| TEST-04 | TBD | Pending |
-| CICD-01 | TBD | Pending |
-| CICD-02 | TBD | Pending |
-| CICD-03 | TBD | Pending |
+| CI-01 | Phase 1 | Pending |
+| BUILD-01 | Phase 2 | Pending |
+| BUILD-02 | Phase 2 | Pending |
+| BUILD-03 | Phase 2 | Pending |
+| BUILD-04 | Phase 2 | Pending |
+| BUILD-05 | Phase 2 | Pending |
+| BUILD-06 | Phase 2 | Pending |
+| BUILD-07 | Phase 2 | Pending |
+| ARCH-01 | Phase 3 | Pending |
+| ARCH-02 | Phase 3 | Pending |
+| ARCH-03 | Phase 3 | Pending |
+| ARCH-04 | Phase 3 | Pending |
+| DI-01 | Phase 4 | Pending |
+| DI-02 | Phase 4 | Pending |
+| DI-03 | Phase 4 | Pending |
+| DI-04 | Phase 4 | Pending |
+| DI-05 | Phase 4 | Pending |
+| DI-06 | Phase 4 | Pending |
+| TEST-01 | Phase 5 | Pending |
+| TEST-02 | Phase 5 | Pending |
+| TEST-03 | Phase 5 | Pending |
+| TEST-04 | Phase 5 | Pending |
+| CICD-01 | Phase 1 | Pending |
+| CICD-02 | Phase 1 | Pending |
+| CICD-03 | Phase 1 | Pending |
 
 **Coverage:**
 - v1 requirements: 25 total
-- Mapped to phases: 0 (à compléter par la roadmap)
-- Unmapped: 25 ⚠️ (attendu avant création de la roadmap)
+- Mapped to phases: 25 (5 phases)
+- Unmapped: 0 ✓
 
 ---
 *Requirements defined: 2026-09-12*
-*Last updated: 2026-09-12 after initial definition*
+*Last updated: 2026-09-12 after roadmap creation (25/25 requirements mapped across 5 phases)*
