@@ -5,6 +5,11 @@ on:
     branches: [ "main" ]
   pull_request:
     branches: [ "main" ]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
 env:
   JAVA_VERSION: 17
 
@@ -18,7 +23,7 @@ jobs:
       - uses: ./.github/actions/android-setup
         with:
           java-version: ${{ env.JAVA_VERSION }}
-          cache-read-only: 'true'
+          cache-read-only: ${{ github.event_name == 'pull_request' }}
 
       - name: Check Detekt
         run: ./gradlew detekt
@@ -35,7 +40,7 @@ jobs:
       - uses: ./.github/actions/android-setup
         with:
           java-version: ${{ env.JAVA_VERSION }}
-          cache-read-only: 'true'
+          cache-read-only: ${{ github.event_name == 'pull_request' }}
 
       - name: Unit tests
         run: ./gradlew testDebugUnitTest
@@ -53,7 +58,7 @@ jobs:
       - uses: ./.github/actions/android-setup
         with:
           java-version: ${{ env.JAVA_VERSION }}
-          cache-read-only: 'true'
+          cache-read-only: ${{ github.event_name == 'pull_request' }}
 
       # API 30+ emulators only have x86_64 system images.
       - name: Get AVD info
@@ -85,7 +90,7 @@ jobs:
       - uses: ./.github/actions/android-setup
         with:
           java-version: ${{ env.JAVA_VERSION }}
-          cache-read-only: 'false'
+          cache-read-only: ${{ github.event_name == 'pull_request' }}
 
       - name: Build Debug APK
         run: ./gradlew assembleDebug

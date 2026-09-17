@@ -9,7 +9,7 @@ Requirements pour ce chantier de modernisation. Chaque requirement mappe vers un
 
 ### CI-IOS (CI iOS cassée)
 
-- [ ] **CI-01**: La CI iOS GitHub Actions se termine avec succès grâce à une résolution dynamique du simulateur (`xcrun simctl list` ou version macOS/Xcode explicitement épinglée), corrigeant la cause racine plutôt qu'un re-pin qui recassera à la prochaine rotation d'image runner
+- [x] **CI-01**: La CI iOS GitHub Actions se termine avec succès grâce à une résolution dynamique du simulateur (`xcrun simctl list` ou version macOS/Xcode explicitement épinglée), corrigeant la cause racine plutôt qu'un re-pin qui recassera à la prochaine rotation d'image runner
 
 ### BUILD (Dépendances & build system)
 
@@ -46,9 +46,9 @@ Requirements pour ce chantier de modernisation. Chaque requirement mappe vers un
 
 ### CICD (Optimisation CI/CD)
 
-- [ ] **CICD-01**: Le cache Gradle (`gradle/actions/setup-gradle`) est configuré en CI
-- [ ] **CICD-02**: Le cache Konan (`~/.konan`) est configuré en CI pour accélérer la compilation Kotlin/Native
-- [ ] **CICD-03**: Les jobs Android et iOS sont séparés dans une matrice CI (`ubuntu-latest`/`macos-latest`)
+- [x] **CICD-01**: Le cache Gradle (`gradle/actions/setup-gradle`) est configuré en CI
+- [x] **CICD-02**: Le cache Konan (`~/.konan`) est configuré en CI pour accélérer la compilation Kotlin/Native
+- [x] **CICD-03**: Les jobs Android et iOS sont séparés dans une matrice CI (`ubuntu-latest`/`macos-latest`)
 
 ## v2 Requirements
 
@@ -91,7 +91,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| CI-01 | Phase 1 | Pending |
+| CI-01 | Phase 1 | Complete |
 | BUILD-01 | Phase 2 | Pending |
 | BUILD-02 | Phase 2 | Pending |
 | BUILD-03 | Phase 2 | Pending |
@@ -113,11 +113,12 @@ Which phases cover which requirements. Updated during roadmap creation.
 | TEST-02 | Phase 5 | Pending |
 | TEST-03 | Phase 5 | Pending |
 | TEST-04 | Phase 5 | Pending |
-| CICD-01 | Phase 1 | Pending |
-| CICD-02 | Phase 1 | Pending |
-| CICD-03 | Phase 1 | Pending |
+| CICD-01 | Phase 1 | Complete |
+| CICD-02 | Phase 1 | Complete |
+| CICD-03 | Phase 1 | Complete |
 
 **Coverage:**
+
 - v1 requirements: 25 total
 - Mapped to phases: 25 (5 phases)
 - Unmapped: 0 ✓

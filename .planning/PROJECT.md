@@ -22,16 +22,16 @@ La CI/CD doit refonctionner et le projet doit redevenir maintenable (build moder
 - ✓ Analytics (Firebase Analytics/Crashlytics/Performance) — existing
 - ✓ Intégration OpenFeedback conditionnelle — existing
 - ✓ Cible Android (API 23-36, Jetpack Compose) et iOS (SwiftUI, via Cocoapods) — existing
+- ✓ CI iOS : pipeline GitHub Actions réparé (résolution dynamique du simulateur "latest plain iPhone" + Xcode le plus récent installé, au lieu du nom "iPhone 16" en dur) — Phase 1
+- ✓ DevOps : CI/CD GitHub Actions optimisée (cache Gradle en lecture seule sur les runs `pull_request` pour les deux workflows, action composite `android-setup` partagée par Android et iOS, preuve de run réel en `pull_request` sur les quatre jobs Android) — Phase 1
 
 ### Active
 
-- [ ] CI iOS : corriger le pipeline GitHub Actions cassé (échec à l'étape "Build iOS App for Simulator" — simulateur "iPhone 16" introuvable)
 - [ ] Build & dépendances : mise à jour complète de toutes les dépendances (Kotlin, AGP, Compose, Apollo, Hilt/Koin, Firebase, etc.)
 - [ ] Build & dépendances : migration des fichiers de build vers le nouveau Gradle Declarative DSL (`.gradle.dcl`) — migration complète si le support AGP/KMP le permet, sinon migration partielle documentée module par module avec fallback en Kotlin DSL (`.kts`) là où le support manque encore
 - [ ] Architecture : découpage du projet en architecture multi-modules (modules `core-*` : data, network, ui, analytics, testing + modules `feature-*` : agenda, speakers, venue, bookmarks, session-detail, settings), inspirée de Now in Android et adaptée au contexte KMP (Android + iOS)
 - [ ] DI : migration complète de Hilt vers Koin (fonctionne nativement en KMP, Android et iOS), avec un module Koin déclaré par module Gradle (DI décentralisée)
 - [ ] Qualité : amélioration significative de la couverture de tests unitaires et UI, priorité sur la logique métier (ViewModels, Store/repository, mappers GraphQL→model) — pas d'objectif % strict imposé
-- [ ] DevOps : mise à niveau de la CI/CD GitHub Actions pour optimiser les temps de build KMP (cache Gradle/Kotlin, parallélisation des modules, builds incrémentaux)
 
 ### Out of Scope
 
@@ -61,7 +61,9 @@ La CI/CD doit refonctionner et le projet doit redevenir maintenable (build moder
 
 | Decision | Rationale | Outcome |
 |----------|-----------|---------|
-| Ordre des chantiers : CI iOS d'abord, puis deps/Gradle DSL, puis multi-module, puis DI, puis tests | Le CI cassé est bloquant et un quick win ; les fondations de build doivent être stables avant de refactorer l'architecture | — Pending |
+| Ordre des chantiers : CI iOS d'abord, puis deps/Gradle DSL, puis multi-module, puis DI, puis tests | Le CI cassé est bloquant et un quick win ; les fondations de build doivent être stables avant de refactorer l'architecture | ✓ Phase 1 shipped — CI iOS réparé + cache Gradle read-only en PR sur les deux workflows |
+| Cache Gradle : expression `cache-read-only` dupliquée à chaque site d'appel plutôt que déplacée dans l'input par défaut de l'action composite `android-setup` | Les métadonnées d'une composite action sont parsées statiquement ; une expression dans l'input default serait transmise à `setup-gradle` en texte brut non interpolé et coercée en chaîne toujours vraie | Phase 1 |
+| `cancel-in-progress: true` conservé tel quel sur `ios.yml`/`android.yml` (pas de `cancel-in-progress` conditionnel par event, pas de `queue`) | Comportement de coût voulu (D-07), auto-cicatrisant au push suivant ; `queue` + `cancel-in-progress` est une erreur de validation GitHub bloquante | Phase 1 — accepté comme risque documenté (T-01-05) |
 | DI : migration complète Hilt → Koin | Hilt ne fonctionne pas dans le module `shared` KMP ; Koin est natif KMP et permet une vraie DI décentralisée par module | — Pending |
 | Découpage multi-module : feature + core (façon Now in Android complet) | Vision NIA complète demandée explicitement par l'utilisateur, adaptée au contexte KMP (Android + iOS) | — Pending |
 | Gradle Declarative DSL : migration complète si possible, sinon partielle documentée | La techno est en incubation ; éviter de bloquer tout le projet sur un support incomplet côté AGP/KMP | — Pending |
@@ -87,4 +89,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-09-12 after initialization*
+*Last updated: 2026-09-17 after Phase 1*
