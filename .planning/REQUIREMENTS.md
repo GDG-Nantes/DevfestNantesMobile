@@ -46,9 +46,9 @@ Requirements pour ce chantier de modernisation. Chaque requirement mappe vers un
 
 ### CICD (Optimisation CI/CD)
 
-- [ ] **CICD-01**: Le cache Gradle (`gradle/actions/setup-gradle`) est configuré en CI
-- [ ] **CICD-02**: Le cache Konan (`~/.konan`) est configuré en CI pour accélérer la compilation Kotlin/Native
-- [ ] **CICD-03**: Les jobs Android et iOS sont séparés dans une matrice CI (`ubuntu-latest`/`macos-latest`)
+- [x] **CICD-01**: Le cache Gradle (`gradle/actions/setup-gradle`) est configuré en CI
+- [x] **CICD-02**: Le cache Konan (`~/.konan`) est configuré en CI pour accélérer la compilation Kotlin/Native
+- [x] **CICD-03**: Les jobs Android et iOS sont séparés dans une matrice CI (`ubuntu-latest`/`macos-latest`)
 
 ## v2 Requirements
 
@@ -113,9 +113,9 @@ Which phases cover which requirements. Updated during roadmap creation.
 | TEST-02 | Phase 5 | Pending |
 | TEST-03 | Phase 5 | Pending |
 | TEST-04 | Phase 5 | Pending |
-| CICD-01 | Phase 1 | Pending |
-| CICD-02 | Phase 1 | Pending |
-| CICD-03 | Phase 1 | Pending |
+| CICD-01 | Phase 1 | Complete |
+| CICD-02 | Phase 1 | Complete |
+| CICD-03 | Phase 1 | Complete |
 
 **Coverage:**
 

@@ -2,17 +2,17 @@
 gsd_state_version: "1.0"
 current_phase: 01
 current_phase_name: CI Pipeline Fixed & Optimized
-status: executing
-stopped_at: Completed 01-02-PLAN.md
-last_updated: "2026-09-17T13:32:56.764Z"
+status: verifying
+stopped_at: Completed 01-03-PLAN.md
+last_updated: "2026-09-17T14:11:14.971Z"
 last_activity: 2026-09-17
 last_activity_desc: Phase 01 execution started
-state_head: 20faa555c991fe37da600fc39d2998a1f7a719f9
+state_head: 95a7ad54ea067cb6431b7fa9c367a9a6fdce3082
 progress:
   total_phases: 5
   completed_phases: 0
   total_plans: 3
-  completed_plans: 2
+  completed_plans: 3
   percent: 0
 ---
 
@@ -29,7 +29,7 @@ See: .planning/PROJECT.md (updated 2026-09-12)
 
 Phase: 01 (CI Pipeline Fixed & Optimized) — EXECUTING
 Plan: 3 of 3
-Status: Ready to execute
+Status: Phase complete — ready for verification
 Last activity: 2026-09-17 — Phase 01 execution started
 
 Progress: [░░░░░░░░░░] 0%
@@ -60,6 +60,7 @@ Progress: [░░░░░░░░░░] 0%
 |------|----------|-------|-------|
 | Phase 01 P01 | 18min | 2 tasks | 1 files |
 | Phase 01 P02 | 2min | 2 tasks | 1 files |
+| Phase 01 P03 | 21min | 1 tasks | 1 files |
 
 ## Accumulated Context
 
@@ -72,6 +73,7 @@ Recent decisions affecting current work:
 - Roadmap: CICD-01/02/03 (cache Gradle/Konan, matrice CI) regroupés dans la Phase 1 avec CI-01 plutôt qu'une phase CICD séparée — même surface CI, évite une phase à faible densité
 - Roadmap: Gradle Declarative DSL traité comme migration partielle documentée (BUILD-07), pas de blocage sur un support AGP/KMP incomplet
 - [Phase 01]: iOS Xcode/simulator resolution kept shell+jq (no marketplace action); no fallback step for empty simulator resolution per D-01/D-02 — Avoids new unaudited third-party dependency; xcodebuild's own destination error is the accepted failure mode per locked CONTEXT.md decisions
+- [Phase 01]: Phase 01 (CI Pipeline Fixed & Optimized) complete: ios.yml routed through the shared android-setup composite action with branch-aware Gradle cache policy; Konan cache and macos-latest/ubuntu-latest job separation confirmed intact via live workflow_dispatch run 35228437188
 
 ### Pending Todos
 
@@ -93,6 +95,6 @@ Items acknowledged and deferred at milestone close, most recent first:
 
 ## Session Continuity
 
-Last session: 2026-09-17T13:32:56.750Z
-Stopped at: Completed 01-02-PLAN.md
+Last session: 2026-09-17T14:01:44.585Z
+Stopped at: Completed 01-03-PLAN.md
 Resume file: None
