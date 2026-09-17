@@ -33,13 +33,13 @@ Decimal phases appear between their surrounding integers in numeric order.
   3. The Konan cache (`~/.konan`) is active in CI and measurably reduces Kotlin/Native compile time
   4. Android and iOS jobs run as separate matrix entries (`ubuntu-latest`/`macos-latest`) rather than a single combined job
 
-**Plans:** 1/3 plans executed (2 waves)
+**Plans:** 2/3 plans executed (2 waves)
 
 Plans:
 **Wave 1**
 
 - [x] 01-01-PLAN.md — Tracer: dynamic Xcode + simulator resolution in `ios.yml`, proven by a live green CI run (D-01, D-02, D-07)
-- [ ] 01-02-PLAN.md — Branch-aware Gradle cache policy at all four `android.yml` call sites, plus concurrency (D-04, D-07)
+- [x] 01-02-PLAN.md — Branch-aware Gradle cache policy at all four `android.yml` call sites, plus concurrency (D-04, D-07)
 
 **Wave 2** *(blocked on Wave 1 completion)*
 
@@ -110,7 +110,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. CI Pipeline Fixed & Optimized | 1/3 | In Progress|  |
+| 1. CI Pipeline Fixed & Optimized | 2/3 | In Progress|  |
 | 2. Dependency & Build Tooling Upgrade | 0/TBD | Not started | - |
 | 3. Multi-Module Architecture Extraction | 0/TBD | Not started | - |
 | 4. Hilt to Koin DI Migration | 0/TBD | Not started | - |
