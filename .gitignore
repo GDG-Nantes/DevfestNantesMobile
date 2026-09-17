@@ -131,3 +131,10 @@ DerivedData/
 
 # Claude Code local configuration (user-specific, contains personal paths)
 .claude/
+
+# GSD runtime/tooling state (local, machine-generated — not project content)
+.gsd/
+.planning/state.json
+.planning/milestone.lock
+.planning/research/.cache/
+*.swp
