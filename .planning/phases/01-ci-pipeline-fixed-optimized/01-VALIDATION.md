@@ -3,7 +3,7 @@ phase: "1"
 slug: "ci-pipeline-fixed-optimized"
 # status lifecycle: draft (seeded by plan-phase) → validated (set by validate-phase §6)
 # audit-milestone §5.5 distinguishes NOT-VALIDATED (draft) from PARTIAL (validated + nyquist_compliant: false) (#2117)
-status: draft
+status: validated
 nyquist_compliant: true
 wave_0_complete: true
 created: "2026-09-17"
@@ -49,11 +49,11 @@ confirmation rides the phase pull request. Adding such a trigger is outside this
 
 | Task ID | Plan | Wave | Requirement | Threat Ref | Secure Behavior | Test Type | Automated Command | File Exists | Status |
 |---------|------|------|-------------|------------|-----------------|-----------|-------------------|-------------|--------|
-| 1-01-01 | 01 | 1 | CI-01 | T-01-01 / T-01-02 / T-01-03 | Only workflow-computed `steps.*.outputs.*` values are interpolated into `run:` blocks; every shell expansion is double-quoted | structural + live e2e | Plan 01 Task 1 static gate, then `gh workflow run` + `completed:success` + `BUILD SUCCEEDED` log assertion | ✅ | ⬜ pending |
-| 1-01-02 | 01 | 1 | — (D-07) | — | n/a | structural | Plan 01 Task 2 Ruby concurrency gate | ✅ | ⬜ pending |
-| 1-02-01 | 02 | 1 | CICD-01 | T-01-04 / T-01-09 | No `pull_request` run may write the shared Gradle cache; the expression stays at the call site | structural | Plan 02 Task 1 per-job cache-policy gate + composite-action integrity gate | ✅ | ⬜ pending |
-| 1-02-02 | 02 | 1 | — (D-07) | T-01-05 | n/a | structural | Plan 02 Task 2 Ruby concurrency gate + four-jobs-on-ubuntu gate | ✅ | ⬜ pending |
-| 1-03-01 | 03 | 2 | CICD-01, CICD-02, CICD-03 | T-01-06 / T-01-07 / T-01-08 / T-01-09 | iOS job cache is read-only on PRs; a swallowed Gradle-setup failure cannot produce a green job | structural + live e2e | Plan 03 composite-reuse/Konan-ordering gate, job-separation gate, composite-action integrity gate, then `gh workflow run` + `completed:success` + `BUILD SUCCEEDED` | ✅ | ⬜ pending |
+| 1-01-01 | 01 | 1 | CI-01 | T-01-01 / T-01-02 / T-01-03 | Only workflow-computed `steps.*.outputs.*` values are interpolated into `run:` blocks; every shell expansion is double-quoted | structural + live e2e | Plan 01 Task 1 static gate, then `gh workflow run` + `completed:success` + `BUILD SUCCEEDED` log assertion | ✅ | ✅ green |
+| 1-01-02 | 01 | 1 | — (D-07) | — | n/a | structural | Plan 01 Task 2 Ruby concurrency gate | ✅ | ✅ green |
+| 1-02-01 | 02 | 1 | CICD-01 | T-01-04 / T-01-09 | No `pull_request` run may write the shared Gradle cache; the expression stays at the call site | structural | Plan 02 Task 1 per-job cache-policy gate + composite-action integrity gate | ✅ | ✅ green |
+| 1-02-02 | 02 | 1 | — (D-07) | T-01-05 | n/a | structural | Plan 02 Task 2 Ruby concurrency gate + four-jobs-on-ubuntu gate | ✅ | ✅ green |
+| 1-03-01 | 03 | 2 | CICD-01, CICD-02, CICD-03 | T-01-06 / T-01-07 / T-01-08 / T-01-09 | iOS job cache is read-only on PRs; a swallowed Gradle-setup failure cannot produce a green job | structural + live e2e | Plan 03 composite-reuse/Konan-ordering gate, job-separation gate, composite-action integrity gate, then `gh workflow run` + `completed:success` + `BUILD SUCCEEDED` | ✅ | ✅ green |
 
 *Status: ⬜ pending · ✅ green · ❌ red · ⚠️ flaky*
 
@@ -97,4 +97,17 @@ summaries is the intended evidence.
 - [x] Feedback latency < 1s for structural gates (live-run latency is inherent to CI and is bounded by the workflow's own 30-minute job timeout)
 - [x] `nyquist_compliant: true` set in frontmatter
 
-**Approval:** pending — `status` stays `draft` until `/gsd-validate-phase` signs it off.
+**Approval:** signed off — `/gsd-validate-phase` confirmed all five per-task gates green and both
+manual-only checks (Android CI four-job green run, Gradle cache read-only on PRs) satisfied via
+UAT against real `pull_request` run logs (`gh run view` on run 35259554036 / log bundle
+`logs_95495542942`: all four jobs `BUILD SUCCESSFUL`, `Cache is read-only: will not save state for
+use in subsequent builds.` in each job's Setup Gradle post-action step, no `Saved cache entry`
+lines anywhere in the logs).
+
+## Validation Audit 2026-09-17
+
+| Metric | Count |
+|--------|-------|
+| Gaps found | 0 |
+| Resolved | 0 |
+| Escalated | 0 |
