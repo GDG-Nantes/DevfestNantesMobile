@@ -13,7 +13,7 @@ This is a purely technical modernization of an existing KMP conference app (Andr
 
 Decimal phases appear between their surrounding integers in numeric order.
 
-- [ ] **Phase 1: CI Pipeline Fixed & Optimized** - iOS CI is fixed at the root cause (dynamic simulator resolution) and both Android/iOS jobs run cached and split in a matrix
+- [x] **Phase 1: CI Pipeline Fixed & Optimized** - iOS CI is fixed at the root cause (dynamic simulator resolution) and both Android/iOS jobs run cached and split in a matrix (completed 2026-09-17)
 - [ ] **Phase 2: Dependency & Build Tooling Upgrade** - The project builds and runs on Kotlin 2.4.0, AGP 9.2.0, Gradle 9.7.1 and updated libraries, staged bump by bump with zero behavior change
 - [ ] **Phase 3: Multi-Module Architecture Extraction** - The codebase is split into a `core-*`/`feature-*` module graph with unidirectional dependencies, iOS still consuming one umbrella framework
 - [ ] **Phase 4: Hilt to Koin DI Migration** - Dependency injection is fully decentralized via Koin, one module per Gradle module, with a CI-verified DI graph
@@ -33,7 +33,7 @@ Decimal phases appear between their surrounding integers in numeric order.
   3. The Konan cache (`~/.konan`) is active in CI and measurably reduces Kotlin/Native compile time
   4. Android and iOS jobs run as separate matrix entries (`ubuntu-latest`/`macos-latest`) rather than a single combined job
 
-**Plans:** 3/3 plans executed (2 waves)
+**Plans:** 3/3 plans complete
 
 Plans:
 **Wave 1**
@@ -110,7 +110,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. CI Pipeline Fixed & Optimized | 3/3 | In Progress|  |
+| 1. CI Pipeline Fixed & Optimized | 3/3 | Complete    | 2026-09-17 |
 | 2. Dependency & Build Tooling Upgrade | 0/TBD | Not started | - |
 | 3. Multi-Module Architecture Extraction | 0/TBD | Not started | - |
 | 4. Hilt to Koin DI Migration | 0/TBD | Not started | - |
