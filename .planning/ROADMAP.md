@@ -29,7 +29,12 @@ Decimal phases appear between their surrounding integers in numeric order.
   2. The Gradle build cache (`gradle/actions/setup-gradle`) is active in CI and measurably reduces repeated-build time
   3. The Konan cache (`~/.konan`) is active in CI and measurably reduces Kotlin/Native compile time
   4. Android and iOS jobs run as separate matrix entries (`ubuntu-latest`/`macos-latest`) rather than a single combined job
-**Plans**: TBD
+**Plans:** 3 plans (2 waves)
+
+Plans:
+- [ ] 01-01-PLAN.md — Tracer: dynamic Xcode + simulator resolution in `ios.yml`, proven by a live green CI run (D-01, D-02, D-07)
+- [ ] 01-02-PLAN.md — Branch-aware Gradle cache policy at all four `android.yml` call sites, plus concurrency (D-04, D-07)
+- [ ] 01-03-PLAN.md — `ios.yml` routed through the shared `android-setup` composite action with branch-aware caching; Konan cache and job separation asserted intact (D-05, D-04, D-06, D-03)
 
 ### Phase 2: Dependency & Build Tooling Upgrade
 **Goal**: The project builds and runs on the modernized toolchain with zero observable behavior change, each dependency group staged and verified independently
@@ -84,7 +89,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
-| 1. CI Pipeline Fixed & Optimized | 0/TBD | Not started | - |
+| 1. CI Pipeline Fixed & Optimized | 0/3 | Not started | - |
 | 2. Dependency & Build Tooling Upgrade | 0/TBD | Not started | - |
 | 3. Multi-Module Architecture Extraction | 0/TBD | Not started | - |
 | 4. Hilt to Koin DI Migration | 0/TBD | Not started | - |
