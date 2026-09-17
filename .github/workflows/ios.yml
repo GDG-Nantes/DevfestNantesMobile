@@ -84,15 +84,39 @@ jobs:
             ${{ runner.os }}-xcode-deriveddata-${{ hashFiles('iosApp/iosApp.xcodeproj/project.pbxproj') }}-
             ${{ runner.os }}-xcode-deriveddata-
       
-      - name: Select Xcode version
-        run: sudo xcode-select -s /Applications/Xcode_26.0.1.app/Contents/Developer
-      
+      - name: Select latest installed Xcode
+        run: |
+          LATEST_XCODE=$(ls -d /Applications/Xcode_*.app 2>/dev/null \
+            | sed -E 's#.*/Xcode_([0-9.]+)\.app#\1#' \
+            | sort -V \
+            | tail -1)
+          echo "Selected Xcode: ${LATEST_XCODE}"
+          sudo xcode-select -s "/Applications/Xcode_${LATEST_XCODE}.app/Contents/Developer"
+
       - name: Show Xcode version
         run: xcodebuild -version
-      
+
       - name: Show available simulators
         run: xcrun simctl list devices available
-      
+
+      - name: Resolve latest plain iPhone simulator
+        id: sim
+        run: |
+          DEVICE_NAME=$(xcrun simctl list devices available --json \
+            | jq -r '
+                .devices
+                | to_entries[]
+                | select(.key | test("com.apple.CoreSimulator.SimRuntime.iOS"))
+                | .value[]
+                | select(.isAvailable == true)
+                | select(.name | test("^iPhone [0-9]+$"))
+                | .name
+              ' \
+            | sort -t' ' -k2 -n -u \
+            | tail -1)
+          echo "Resolved simulator: ${DEVICE_NAME}"
+          echo "device_name=$DEVICE_NAME" >> "$GITHUB_OUTPUT"
+
       - name: Build shared framework
         run: |
           # Set required Xcode environment variables for the Gradle task
@@ -189,7 +213,7 @@ jobs:
             -project iosApp/iosApp.xcodeproj \
             -scheme "iosApp" \
             -configuration Debug \
-            -destination 'platform=iOS Simulator,name=iPhone 16' \
+            -destination "platform=iOS Simulator,name=${{ steps.sim.outputs.device_name }}" \
             -derivedDataPath build \
             build \
             CODE_SIGNING_ALLOWED=NO \
