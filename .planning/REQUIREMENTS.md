@@ -9,7 +9,7 @@ Requirements pour ce chantier de modernisation. Chaque requirement mappe vers un
 
 ### CI-IOS (CI iOS cassée)
 
-- [ ] **CI-01**: La CI iOS GitHub Actions se termine avec succès grâce à une résolution dynamique du simulateur (`xcrun simctl list` ou version macOS/Xcode explicitement épinglée), corrigeant la cause racine plutôt qu'un re-pin qui recassera à la prochaine rotation d'image runner
+- [x] **CI-01**: La CI iOS GitHub Actions se termine avec succès grâce à une résolution dynamique du simulateur (`xcrun simctl list` ou version macOS/Xcode explicitement épinglée), corrigeant la cause racine plutôt qu'un re-pin qui recassera à la prochaine rotation d'image runner
 
 ### BUILD (Dépendances & build system)
 
@@ -91,7 +91,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| CI-01 | Phase 1 | Pending |
+| CI-01 | Phase 1 | Complete |
 | BUILD-01 | Phase 2 | Pending |
 | BUILD-02 | Phase 2 | Pending |
 | BUILD-03 | Phase 2 | Pending |
@@ -118,6 +118,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | CICD-03 | Phase 1 | Pending |
 
 **Coverage:**
+
 - v1 requirements: 25 total
 - Mapped to phases: 25 (5 phases)
 - Unmapped: 0 ✓

@@ -3,16 +3,16 @@ gsd_state_version: "1.0"
 current_phase: 01
 current_phase_name: CI Pipeline Fixed & Optimized
 status: executing
-stopped_at: Phase 1 context gathered
-last_updated: "2026-09-17T12:59:09.828Z"
-last_activity: 2026-09-12
-last_activity_desc: Roadmap created, 25/25 v1 requirements mapped across 5 phases
-state_head: 9d54d600d31be4ad57c1aaf58a836aa729b36de4
+stopped_at: Completed 01-01-PLAN.md
+last_updated: "2026-09-17T13:22:32.984Z"
+last_activity: 2026-09-17
+last_activity_desc: Phase 01 execution started
+state_head: 1b23b8337bab6a7aea2134548dd90a7ab97f0d86
 progress:
   total_phases: 5
   completed_phases: 0
   total_plans: 3
-  completed_plans: 0
+  completed_plans: 1
   percent: 0
 ---
 
@@ -23,14 +23,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-09-12)
 
 **Core value:** La CI/CD doit refonctionner et le projet doit redevenir maintenable (build moderne, architecture modulaire, DI décentralisée, couverture de tests solide) sans jamais régresser le comportement existant de l'application pour les utilisateurs.
-**Current focus:** Phase 1 - CI Pipeline Fixed & Optimized
+**Current focus:** Phase 01 — CI Pipeline Fixed & Optimized
 
 ## Current Position
 
-Phase: 01 (CI Pipeline Fixed & Optimized) — READY TO EXECUTE
-Plan: 0 of TBD in current phase
+Phase: 01 (CI Pipeline Fixed & Optimized) — EXECUTING
+Plan: 2 of 3
 Status: Ready to execute
-Last activity: 2026-09-12 — Roadmap created, 25/25 v1 requirements mapped across 5 phases
+Last activity: 2026-09-17 — Phase 01 execution started
 
 Progress: [░░░░░░░░░░] 0%
 
@@ -54,6 +54,11 @@ Progress: [░░░░░░░░░░] 0%
 - Trend: N/A
 
 *Updated after each plan completion*
+**Per-Plan Metrics:**
+
+| Plan | Duration | Tasks | Files |
+|------|----------|-------|-------|
+| Phase 01 P01 | 18min | 2 tasks | 1 files |
 
 ## Accumulated Context
 
@@ -65,6 +70,7 @@ Recent decisions affecting current work:
 - Roadmap: Ordre strictement séquentiel CI iOS -> deps/build -> multi-module -> DI -> tests (aucune parallélisation entre phases, chaque phase dépend de la précédente)
 - Roadmap: CICD-01/02/03 (cache Gradle/Konan, matrice CI) regroupés dans la Phase 1 avec CI-01 plutôt qu'une phase CICD séparée — même surface CI, évite une phase à faible densité
 - Roadmap: Gradle Declarative DSL traité comme migration partielle documentée (BUILD-07), pas de blocage sur un support AGP/KMP incomplet
+- [Phase 01]: iOS Xcode/simulator resolution kept shell+jq (no marketplace action); no fallback step for empty simulator resolution per D-01/D-02 — Avoids new unaudited third-party dependency; xcodebuild's own destination error is the accepted failure mode per locked CONTEXT.md decisions
 
 ### Pending Todos
 
@@ -86,6 +92,6 @@ Items acknowledged and deferred at milestone close, most recent first:
 
 ## Session Continuity
 
-Last session: 2026-09-17T09:49:41.292Z
-Stopped at: Phase 1 context gathered
-Resume file: .planning/phases/01-ci-pipeline-fixed-optimized/01-CONTEXT.md
+Last session: 2026-09-17T13:22:32.974Z
+Stopped at: Completed 01-01-PLAN.md
+Resume file: None
