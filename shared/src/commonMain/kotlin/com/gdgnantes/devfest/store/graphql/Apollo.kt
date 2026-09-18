@@ -1,15 +1,14 @@
 package com.gdgnantes.devfest.store.graphql
 
 import com.apollographql.apollo.ApolloClient
-import com.apollographql.apollo.api.CompiledField
-import com.apollographql.apollo.api.Executable
 import com.apollographql.apollo.api.http.HttpHeader
-import com.apollographql.apollo.cache.normalized.api.CacheKey
-import com.apollographql.apollo.cache.normalized.api.CacheKeyGenerator
-import com.apollographql.apollo.cache.normalized.api.CacheKeyGeneratorContext
-import com.apollographql.apollo.cache.normalized.api.CacheResolver
-import com.apollographql.apollo.cache.normalized.api.DefaultCacheResolver
-import com.apollographql.apollo.cache.normalized.normalizedCache
+import com.apollographql.cache.normalized.api.CacheKey
+import com.apollographql.cache.normalized.api.CacheKeyGenerator
+import com.apollographql.cache.normalized.api.CacheKeyGeneratorContext
+import com.apollographql.cache.normalized.api.CacheResolver
+import com.apollographql.cache.normalized.api.DefaultCacheResolver
+import com.apollographql.cache.normalized.api.ResolverContext
+import com.apollographql.cache.normalized.normalizedCache
 
 val cacheKeyGenerator =
     object : CacheKeyGenerator {
@@ -27,18 +26,13 @@ val cacheKeyGenerator =
 
 val cacheResolver =
     object : CacheResolver {
-        override fun resolveField(
-            field: CompiledField,
-            variables: Executable.Variables,
-            parent: Map<String, Any?>,
-            parentId: String
-        ): Any? {
-            val id = field.resolveArgument("id", variables)?.toString()
+        override fun resolveField(context: ResolverContext): Any? {
+            val id = context.field.argumentValue("id", context.variables).getOrNull()?.toString()
             if (id != null) {
                 return CacheKey(id)
             }
 
-            return DefaultCacheResolver.resolveField(field, variables, parent, parentId)
+            return DefaultCacheResolver.resolveField(context)
         }
     }
 val apolloClient =

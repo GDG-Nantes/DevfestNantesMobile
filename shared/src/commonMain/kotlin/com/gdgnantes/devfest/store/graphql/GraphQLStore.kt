@@ -1,8 +1,8 @@
 package com.gdgnantes.devfest.store.graphql
 
 import com.apollographql.apollo.ApolloClient
-import com.apollographql.apollo.cache.normalized.FetchPolicy
-import com.apollographql.apollo.cache.normalized.fetchPolicy
+import com.apollographql.cache.normalized.FetchPolicy
+import com.apollographql.cache.normalized.fetchPolicy
 import com.gdgnantes.devfest.graphql.GetPartnerGroupsQuery
 import com.gdgnantes.devfest.graphql.GetRoomsQuery
 import com.gdgnantes.devfest.graphql.GetSessionQuery

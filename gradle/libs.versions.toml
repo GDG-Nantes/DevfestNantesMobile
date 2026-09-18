@@ -5,7 +5,8 @@ agp = "9.4.0"
 androidXTestVersion = "1.5.0"
 androidXTestRunnerVersion = "1.6.2"
 androidXJUnitVersion = "1.2.1"
-appollo = "4.4.3"
+appollo = "5.2.0"
+appolloCache = "1.0.8"
 browser = "1.8.0"
 coil = "2.7.0"
 composeBom = "2026.09.00"
@@ -66,8 +67,8 @@ androidx-test-runner = { group = "androidx.test", name = "runner", version.ref =
 androidx-test-truth = { group = "androidx.test.ext", name = "truth", version.ref = "androidXTestVersion" }
 
 appollo-runtime = { group = "com.apollographql.apollo", name = "apollo-runtime", version.ref = "appollo" }
-appollo-normalized-cache = { group = "com.apollographql.apollo", name = "apollo-normalized-cache", version.ref = "appollo" }
-appollo-normalized-cache-sqlite = { group = "com.apollographql.apollo", name = "apollo-normalized-cache-sqlite", version.ref = "appollo" }
+appollo-normalized-cache = { group = "com.apollographql.cache", name = "normalized-cache", version.ref = "appolloCache" }
+appollo-normalized-cache-sqlite = { group = "com.apollographql.cache", name = "normalized-cache-sqlite", version.ref = "appolloCache" }
 
 coil-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil" }
 
