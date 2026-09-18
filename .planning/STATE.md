@@ -3,16 +3,16 @@ gsd_state_version: "1.0"
 current_phase: 02
 current_phase_name: Dependency & Build Tooling Upgrade
 status: executing
-stopped_at: Completed 02-02-PLAN.md
-last_updated: "2026-09-18T09:36:31.018Z"
+stopped_at: Completed 02-03-PLAN.md
+last_updated: "2026-09-18T14:28:43.673Z"
 last_activity: 2026-09-18
 last_activity_desc: Phase 02 execution started
-state_head: c56d6ab34632fa238770473e7ea9fa4e5190fa47
+state_head: 4ab7f0189ccc2f6e003bc8ce5b018e3f1126aa25
 progress:
   total_phases: 5
   completed_phases: 1
   total_plans: 8
-  completed_plans: 5
+  completed_plans: 6
   percent: 20
 ---
 
@@ -28,7 +28,7 @@ See: .planning/PROJECT.md (updated 2026-09-17)
 ## Current Position
 
 Phase: 02 (Dependency & Build Tooling Upgrade) — EXECUTING
-Plan: 3 of 5
+Plan: 2 of 5
 Status: Ready to execute
 Last activity: 2026-09-18 — Phase 02 execution started
 
@@ -63,6 +63,7 @@ Progress: [██░░░░░░░░] 20%
 | Phase 01 P03 | 21min | 1 tasks | 1 files |
 | Phase 02 P01 | 75min | 2 tasks | 4 files |
 | Phase 02 P02 | 43min | 3 tasks | 16 files |
+| Phase 02 P03 | 180min | 2 tasks | 6 files |
 
 ## Accumulated Context
 
@@ -80,6 +81,9 @@ Recent decisions affecting current work:
 - [Phase 02]: minSdk raised 23 -> 26 (user-authorized) to resolve AGP 8.13's lint tool being unable to read Kotlin 2.4's @Metadata format, mis-flagging 6 forEach call sites as NewApi — User explicitly authorized mid-execution; real fix (API level genuinely available) rather than a lint suppression, which the plan's threat model prohibits
 - [Phase 02]: D-03 commit fold: Gradle 9.7.1 + AGP 9.4.0 landed in one commit instead of Task 1's planned standalone wrapper commit — Gradle 9.7.1 does not build under AGP 8.13.0 (removed internal API org.gradle.api.problems.internal.InternalProblems)
 - [Phase 02]: Detekt pinned to 2.0.0-alpha.6 under the dev.detekt group/plugin-id, approved via the blocking-human package-legitimacy checkpoint — official detekt org's own pre-1.0 next-major line, closest compat baseline to this stage's targets
+- [Phase 02]: Compose BOM 2026.09.00 forced compileSdk 36->37 (AAR metadata floor); targetSdk deliberately decoupled and kept at 36 per user direction, tracked as a follow-up decision
+- [Phase 02]: Apollo 5.2.0 + appolloCache 1.0.8: normalized cache migrated to com.apollographql.cache artifact group; CacheResolver adapted to v5's ResolverContext signature; resolveArgument replaced with argumentValue (hard DEPRECATION_ERROR under Kotlin 2.4)
+- [Phase 02]: User-authorized deviation: GraphQLStore.kt's CacheAndNetwork Flow accessors changed map->mapNotNull to stop a network-failure emission from clobbering correctly-cached offline data (pre-existing bug surfaced by D-07 verification, not a migration regression)
 
 ### Pending Todos
 
@@ -90,6 +94,7 @@ None yet.
 - Phase 3: la home des écrans About/Partners (feature-settings vs nouveau feature-about) reste une décision ouverte à trancher avant l'extraction des feature modules (voir research/SUMMARY.md)
 - Phase 3: l'export() du framework umbrella iOS doit être validé par un spike avant la découpe complète des modules — risque architectural le plus élevé du chantier (three-framework problem)
 - Phase 2: versions AGP 9.x / KGP / KSP2 à revérifier via `android docs search` juste avant l'implémentation (recherche datée, tooling en mouvement rapide)
+- Follow-up (not blocking): bump targetSdk 36->37 in a dedicated future stage after reviewing Android 17's behavior-change surface (kb://android/about/versions/17/behavior-changes-all / -17) — deliberately deferred from 02-03 per user direction to avoid folding a runtime-behavior-change decision into the Compose-BOM commit
 
 ## Deferred Items
 
@@ -101,6 +106,6 @@ Items acknowledged and deferred at milestone close, most recent first:
 
 ## Session Continuity
 
-Last session: 2026-09-18T09:36:31.005Z
-Stopped at: Completed 02-02-PLAN.md
+Last session: 2026-09-18T14:28:43.659Z
+Stopped at: Completed 02-03-PLAN.md
 Resume file: None
