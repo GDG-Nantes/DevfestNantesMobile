@@ -3,16 +3,16 @@ gsd_state_version: "1.0"
 current_phase: 02
 current_phase_name: Dependency & Build Tooling Upgrade
 status: executing
-stopped_at: Completed 02-01-PLAN.md
-last_updated: "2026-09-18T08:46:25.035Z"
+stopped_at: Completed 02-02-PLAN.md
+last_updated: "2026-09-18T09:36:31.018Z"
 last_activity: 2026-09-18
 last_activity_desc: Phase 02 execution started
-state_head: aecf5957b0ff612ff097293fa17e1ce0863a67e9
+state_head: c56d6ab34632fa238770473e7ea9fa4e5190fa47
 progress:
   total_phases: 5
   completed_phases: 1
   total_plans: 8
-  completed_plans: 4
+  completed_plans: 5
   percent: 20
 ---
 
@@ -28,7 +28,7 @@ See: .planning/PROJECT.md (updated 2026-09-17)
 ## Current Position
 
 Phase: 02 (Dependency & Build Tooling Upgrade) — EXECUTING
-Plan: 2 of 5
+Plan: 3 of 5
 Status: Ready to execute
 Last activity: 2026-09-18 — Phase 02 execution started
 
@@ -62,6 +62,7 @@ Progress: [██░░░░░░░░] 20%
 | Phase 01 P02 | 2min | 2 tasks | 1 files |
 | Phase 01 P03 | 21min | 1 tasks | 1 files |
 | Phase 02 P01 | 75min | 2 tasks | 4 files |
+| Phase 02 P02 | 43min | 3 tasks | 16 files |
 
 ## Accumulated Context
 
@@ -77,6 +78,8 @@ Recent decisions affecting current work:
 - [Phase 01]: Phase 01 (CI Pipeline Fixed & Optimized) complete: ios.yml routed through the shared android-setup composite action with branch-aware Gradle cache policy; Konan cache and macos-latest/ubuntu-latest job separation confirmed intact via live workflow_dispatch run 35228437188
 - [Phase 02]: Version-target policy: newest-verified (Kotlin 2.4.20, AGP 9.4.0, Compose BOM 2026.09.00, Apollo 5.2.0) for BUILD-01/02/04/05, not the REQUIREMENTS.md-pinned 2026-09-12 snapshot — Checkpoint resolved by developer in 02-01; keeps Phase 3 from immediately needing another toolchain bump
 - [Phase 02]: minSdk raised 23 -> 26 (user-authorized) to resolve AGP 8.13's lint tool being unable to read Kotlin 2.4's @Metadata format, mis-flagging 6 forEach call sites as NewApi — User explicitly authorized mid-execution; real fix (API level genuinely available) rather than a lint suppression, which the plan's threat model prohibits
+- [Phase 02]: D-03 commit fold: Gradle 9.7.1 + AGP 9.4.0 landed in one commit instead of Task 1's planned standalone wrapper commit — Gradle 9.7.1 does not build under AGP 8.13.0 (removed internal API org.gradle.api.problems.internal.InternalProblems)
+- [Phase 02]: Detekt pinned to 2.0.0-alpha.6 under the dev.detekt group/plugin-id, approved via the blocking-human package-legitimacy checkpoint — official detekt org's own pre-1.0 next-major line, closest compat baseline to this stage's targets
 
 ### Pending Todos
 
@@ -98,6 +101,6 @@ Items acknowledged and deferred at milestone close, most recent first:
 
 ## Session Continuity
 
-Last session: 2026-09-18T08:46:25.020Z
-Stopped at: Completed 02-01-PLAN.md
+Last session: 2026-09-18T09:36:31.005Z
+Stopped at: Completed 02-02-PLAN.md
 Resume file: None

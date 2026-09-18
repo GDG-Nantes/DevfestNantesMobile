@@ -14,8 +14,8 @@ Requirements pour ce chantier de modernisation. Chaque requirement mappe vers un
 ### BUILD (Dépendances & build system)
 
 - [x] **BUILD-01**: Le projet compile avec Kotlin 2.4.0
-- [ ] **BUILD-02**: Le projet migre vers AGP 9.2.0 et le nouveau plugin `com.android.kotlin.multiplatform.library` (remplace la coexistence `kotlin.multiplatform` + `com.android.library` interdite en AGP 9+)
-- [ ] **BUILD-03**: Le projet utilise Gradle 9.7.1
+- [x] **BUILD-02**: Le projet migre vers AGP 9.2.0 et le nouveau plugin `com.android.kotlin.multiplatform.library` (remplace la coexistence `kotlin.multiplatform` + `com.android.library` interdite en AGP 9+)
+- [x] **BUILD-03**: Le projet utilise Gradle 9.7.1
 - [ ] **BUILD-04**: Compose BOM est mis à jour vers 2026.08.00
 - [ ] **BUILD-05**: Apollo GraphQL est mis à jour vers 5.0.1
 - [ ] **BUILD-06**: Firebase BOM, Kotlin Coroutines, kotlinx-serialization et kotlinx-datetime sont mis à jour vers leurs dernières versions stables
@@ -95,8 +95,8 @@ Which phases cover which requirements. Updated during roadmap creation.
 |-------------|-------|--------|
 | CI-01 | Phase 1 | Complete |
 | BUILD-01 | Phase 2 | Complete |
-| BUILD-02 | Phase 2 | Pending |
-| BUILD-03 | Phase 2 | Pending |
+| BUILD-02 | Phase 2 | Complete |
+| BUILD-03 | Phase 2 | Complete |
 | BUILD-04 | Phase 2 | Pending |
 | BUILD-05 | Phase 2 | Pending |
 | BUILD-06 | Phase 2 | Pending |

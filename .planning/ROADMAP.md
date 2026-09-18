@@ -57,7 +57,7 @@ Plans:
   3. The app runs unchanged for users on Compose BOM 2026.08.00, Apollo GraphQL 5.0.1, and the latest stable Firebase BOM/Coroutines/kotlinx-serialization/kotlinx-datetime
   4. Build files are migrated to the Gradle Declarative DSL (`.gradle.dcl`) wherever AGP/KMP support allows; any module left on Kotlin DSL (`.kts`) is explicitly documented with the reason support is missing
 
-**Plans:** 1/5 plans executed
+**Plans:** 2/5 plans executed
 
 Plans:
 **Wave 1**
@@ -66,7 +66,7 @@ Plans:
 
 **Wave 2** *(blocked on Wave 1)*
 
-- [ ] 02-02-PLAN.md — Gradle 9.7.1 wrapper with distribution checksum, then AGP 9 `com.android.kotlin.multiplatform.library` swap plus the forced Detekt/Hilt/Firebase-perf bumps and the packaging DSL fix (BUILD-02, BUILD-03, D-04, D-05)
+- [x] 02-02-PLAN.md — Gradle 9.7.1 wrapper with distribution checksum, then AGP 9 `com.android.kotlin.multiplatform.library` swap plus the forced Detekt/Hilt/Firebase-perf bumps and the packaging DSL fix (BUILD-02, BUILD-03, D-04, D-05)
 
 **Wave 3** *(blocked on Wave 2)*
 
@@ -132,7 +132,7 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 | Phase | Plans Complete | Status | Completed |
 |-------|----------------|--------|-----------|
 | 1. CI Pipeline Fixed & Optimized | 3/3 | Complete    | 2026-09-17 |
-| 2. Dependency & Build Tooling Upgrade | 1/5 | In Progress|  |
+| 2. Dependency & Build Tooling Upgrade | 2/5 | In Progress|  |
 | 3. Multi-Module Architecture Extraction | 0/TBD | Not started | - |
 | 4. Hilt to Koin DI Migration | 0/TBD | Not started | - |
 | 5. Test Coverage Retrofit | 0/TBD | Not started | - |
