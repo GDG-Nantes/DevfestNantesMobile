@@ -13,13 +13,15 @@ Requirements pour ce chantier de modernisation. Chaque requirement mappe vers un
 
 ### BUILD (Dépendances & build system)
 
-- [ ] **BUILD-01**: Le projet compile avec Kotlin 2.4.0
+- [x] **BUILD-01**: Le projet compile avec Kotlin 2.4.0
 - [ ] **BUILD-02**: Le projet migre vers AGP 9.2.0 et le nouveau plugin `com.android.kotlin.multiplatform.library` (remplace la coexistence `kotlin.multiplatform` + `com.android.library` interdite en AGP 9+)
 - [ ] **BUILD-03**: Le projet utilise Gradle 9.7.1
 - [ ] **BUILD-04**: Compose BOM est mis à jour vers 2026.08.00
 - [ ] **BUILD-05**: Apollo GraphQL est mis à jour vers 5.0.1
 - [ ] **BUILD-06**: Firebase BOM, Kotlin Coroutines, kotlinx-serialization et kotlinx-datetime sont mis à jour vers leurs dernières versions stables
 - [ ] **BUILD-07**: Les fichiers de build sont migrés vers le Gradle Declarative DSL (`.gradle.dcl`) là où le support AGP/KMP le permet ; les modules non supportés restent documentés en Kotlin DSL (`.kts`) avec la raison du blocage
+
+> **D-03 version-target deviation (02-01 checkpoint, 2026-09-18):** BUILD-01/02/04/05 pin exact version numbers as they read above, snapshotted 2026-09-12. The developer selected the `newest-verified` checkpoint option in 02-01-PLAN.md: this milestone targets the newest verified stable releases found during each plan's own live re-verification against registry `maven-metadata.xml`, not the literal numbers above. Concretely: Kotlin **2.4.20** (not 2.4.0, BUILD-01 — shipped in 02-01), AGP **9.4.0** (not 9.2.0, BUILD-02 — 02-02), Compose BOM **2026.09.00** (not 2026.08.00, BUILD-04 — 02-03), Apollo **5.2.0** (not 5.0.1, BUILD-05 — 02-03). Each requirement is satisfied by a superset of its literal text; checked off only once its plan ships the newest-verified number. See `02-01-SUMMARY.md` and `STATE.md` § Decisions for the full rationale.
 
 ### ARCH (Architecture multi-module)
 
@@ -92,7 +94,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | Requirement | Phase | Status |
 |-------------|-------|--------|
 | CI-01 | Phase 1 | Complete |
-| BUILD-01 | Phase 2 | Pending |
+| BUILD-01 | Phase 2 | Complete |
 | BUILD-02 | Phase 2 | Pending |
 | BUILD-03 | Phase 2 | Pending |
 | BUILD-04 | Phase 2 | Pending |

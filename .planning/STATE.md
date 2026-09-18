@@ -3,16 +3,16 @@ gsd_state_version: "1.0"
 current_phase: 02
 current_phase_name: Dependency & Build Tooling Upgrade
 status: executing
-stopped_at: Phase 2 context gathered
-last_updated: "2026-09-17T20:47:29.134Z"
-last_activity: 2026-09-17
-last_activity_desc: Phase 01 complete, transitioned to Phase 2
-state_head: 90fcb5c3d2e28abb3791128be051ad9b5731a6c7
+stopped_at: Completed 02-01-PLAN.md
+last_updated: "2026-09-18T08:46:25.035Z"
+last_activity: 2026-09-18
+last_activity_desc: Phase 02 execution started
+state_head: aecf5957b0ff612ff097293fa17e1ce0863a67e9
 progress:
   total_phases: 5
   completed_phases: 1
   total_plans: 8
-  completed_plans: 3
+  completed_plans: 4
   percent: 20
 ---
 
@@ -23,14 +23,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-09-17)
 
 **Core value:** La CI/CD doit refonctionner et le projet doit redevenir maintenable (build moderne, architecture modulaire, DI décentralisée, couverture de tests solide) sans jamais régresser le comportement existant de l'application pour les utilisateurs.
-**Current focus:** Phase 2 — Dependency & Build Tooling Upgrade
+**Current focus:** Phase 02 — Dependency & Build Tooling Upgrade
 
 ## Current Position
 
-Phase: 02 (Dependency & Build Tooling Upgrade) — READY TO EXECUTE
-Plan: Not started
+Phase: 02 (Dependency & Build Tooling Upgrade) — EXECUTING
+Plan: 2 of 5
 Status: Ready to execute
-Last activity: 2026-09-17 — Phase 01 complete, transitioned to Phase 2
+Last activity: 2026-09-18 — Phase 02 execution started
 
 Progress: [██░░░░░░░░] 20%
 
@@ -61,6 +61,7 @@ Progress: [██░░░░░░░░] 20%
 | Phase 01 P01 | 18min | 2 tasks | 1 files |
 | Phase 01 P02 | 2min | 2 tasks | 1 files |
 | Phase 01 P03 | 21min | 1 tasks | 1 files |
+| Phase 02 P01 | 75min | 2 tasks | 4 files |
 
 ## Accumulated Context
 
@@ -74,6 +75,8 @@ Recent decisions affecting current work:
 - Roadmap: Gradle Declarative DSL traité comme migration partielle documentée (BUILD-07), pas de blocage sur un support AGP/KMP incomplet
 - [Phase 01]: iOS Xcode/simulator resolution kept shell+jq (no marketplace action); no fallback step for empty simulator resolution per D-01/D-02 — Avoids new unaudited third-party dependency; xcodebuild's own destination error is the accepted failure mode per locked CONTEXT.md decisions
 - [Phase 01]: Phase 01 (CI Pipeline Fixed & Optimized) complete: ios.yml routed through the shared android-setup composite action with branch-aware Gradle cache policy; Konan cache and macos-latest/ubuntu-latest job separation confirmed intact via live workflow_dispatch run 35228437188
+- [Phase 02]: Version-target policy: newest-verified (Kotlin 2.4.20, AGP 9.4.0, Compose BOM 2026.09.00, Apollo 5.2.0) for BUILD-01/02/04/05, not the REQUIREMENTS.md-pinned 2026-09-12 snapshot — Checkpoint resolved by developer in 02-01; keeps Phase 3 from immediately needing another toolchain bump
+- [Phase 02]: minSdk raised 23 -> 26 (user-authorized) to resolve AGP 8.13's lint tool being unable to read Kotlin 2.4's @Metadata format, mis-flagging 6 forEach call sites as NewApi — User explicitly authorized mid-execution; real fix (API level genuinely available) rather than a lint suppression, which the plan's threat model prohibits
 
 ### Pending Todos
 
@@ -95,6 +98,6 @@ Items acknowledged and deferred at milestone close, most recent first:
 
 ## Session Continuity
 
-Last session: 2026-09-17T19:34:37.882Z
-Stopped at: Phase 2 context gathered
-Resume file: .planning/phases/02-dependency-build-tooling-upgrade/02-CONTEXT.md
+Last session: 2026-09-18T08:46:25.020Z
+Stopped at: Completed 02-01-PLAN.md
+Resume file: None
