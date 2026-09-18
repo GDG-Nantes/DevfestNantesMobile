@@ -1,5 +1,6 @@
 import io.gitlab.arturbosch.detekt.Detekt
 import io.gitlab.arturbosch.detekt.DetektCreateBaselineTask
+import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 plugins {
     alias(libs.plugins.android.application)
@@ -13,6 +14,21 @@ plugins {
     alias(libs.plugins.crashlytics)
     alias(libs.plugins.firebase.perf)
     alias(libs.plugins.secrets)
+}
+
+configurations.configureEach {
+    resolutionStrategy {
+        // Kotlin 2.4.20's compiler emits @Metadata format 2.4.0, but Dagger/Hilt 2.57.2's
+        // shaded room-compiler-processing bundles kotlin-metadata-jvm 2.2.20 (max readable
+        // format 2.2.0), so hiltJavaCompileDebug fails with
+        // "Provided Metadata instance has version 2.4.0, while maximum supported version is
+        // 2.2.0." Force the reader library itself to the Kotlin version this stage bumps to;
+        // kotlin-metadata-jvm's read API is designed to be forward-compatible across Kotlin
+        // releases. Forced sibling of the Kotlin bump, same class as the ksp/kmpNativeCoroutines
+        // bumps above — no Dagger/Hilt version change needed, and Hilt 2.59+ would force AGP 9
+        // anyway (out of scope for this stage).
+        force("org.jetbrains.kotlin:kotlin-metadata-jvm:${libs.versions.kotlin.get()}")
+    }
 }
 
 detekt {
@@ -65,14 +81,6 @@ android {
         sourceCompatibility = JavaVersion.VERSION_17
         targetCompatibility = JavaVersion.VERSION_17
     }
-    kotlinOptions {
-        jvmTarget = JavaVersion.VERSION_17.toString()
-
-        freeCompilerArgs = freeCompilerArgs + listOf(
-            "-Xopt-in=kotlin.RequiresOptIn",
-            "-Xopt-in=kotlin.Experimental",
-        )
-    }
 
     buildFeatures {
         buildConfig = true
@@ -92,6 +100,16 @@ android {
         }
     }
     namespace = "com.gdgnantes.devfest.androidapp"
+}
+
+kotlin {
+    compilerOptions {
+        jvmTarget.set(JvmTarget.JVM_17)
+        freeCompilerArgs.addAll(
+            "-Xopt-in=kotlin.RequiresOptIn",
+            "-Xopt-in=kotlin.Experimental",
+        )
+    }
 }
 
 dependencies {
