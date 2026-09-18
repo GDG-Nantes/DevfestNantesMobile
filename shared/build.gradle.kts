@@ -3,7 +3,7 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 plugins {
     alias(libs.plugins.detekt)
     alias(libs.plugins.kotlin.multiplatform)
-    alias(libs.plugins.android.library)
+    alias(libs.plugins.android.kotlin.multiplatform.library)
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.ksp)
     alias(libs.plugins.kmp.native.coroutines)
@@ -25,7 +25,10 @@ detekt {
 }
 
 kotlin {
-    androidTarget {
+    android {
+        namespace = "com.gdgnantes.devfest"
+        compileSdk = AndroidSdk.compile
+        minSdk = AndroidSdk.min
         compilerOptions {
             jvmTarget.set(JvmTarget.JVM_11)
         }
@@ -71,20 +74,6 @@ kotlin.sourceSets.all {
 apollo {
     service("service") {
         packageName.set("com.gdgnantes.devfest.graphql")
-    }
-}
-
-android {
-    compileSdk = AndroidSdk.compile
-    sourceSets["main"].manifest.srcFile("src/androidMain/AndroidManifest.xml")
-    defaultConfig {
-        minSdk = AndroidSdk.min
-    }
-    namespace = "com.gdgnantes.devfest"
-
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
     }
 }
 
