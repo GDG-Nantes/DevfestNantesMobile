@@ -22,6 +22,7 @@ import com.gdgnantes.devfest.store.DevFestNantesStore
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
+import kotlinx.coroutines.flow.mapNotNull
 
 internal class GraphQLStore(private val apolloClient: ApolloClient) : DevFestNantesStore {
     override val agenda: Flow<Agenda>
@@ -38,10 +39,10 @@ internal class GraphQLStore(private val apolloClient: ApolloClient) : DevFestNan
             apolloClient.query(GetPartnerGroupsQuery())
                 .fetchPolicy(FetchPolicy.CacheAndNetwork)
                 .toFlow()
-                .map { response ->
+                .mapNotNull { response ->
                     if (response.exception != null) {
                         println("Apollo error: ${response.exception}")
-                        return@map emptyMap()
+                        return@mapNotNull null
                     }
                     response.data?.partnerGroups
                         ?.map { it.toPartnersGroup() }
@@ -73,10 +74,10 @@ internal class GraphQLStore(private val apolloClient: ApolloClient) : DevFestNan
             apolloClient.query(GetRoomsQuery())
                 .fetchPolicy(FetchPolicy.CacheAndNetwork)
                 .toFlow()
-                .map { response ->
+                .mapNotNull { response ->
                     if (response.exception != null) {
                         println("Apollo error: ${response.exception}")
-                        return@map emptySet()
+                        return@mapNotNull null
                     }
                     response.data?.rooms
                         ?.map { it.roomDetails.toRoom() }
@@ -101,10 +102,10 @@ internal class GraphQLStore(private val apolloClient: ApolloClient) : DevFestNan
             apolloClient.query(GetSessionsQuery())
                 .fetchPolicy(FetchPolicy.CacheAndNetwork)
                 .toFlow()
-                .map { response ->
+                .mapNotNull { response ->
                     if (response.exception != null) {
                         println("Apollo error: ${response.exception}")
-                        return@map emptyList()
+                        return@mapNotNull null
                     }
                     response.data?.sessions?.nodes
                         ?.map { it.sessionDetails.toSession() } ?: emptyList()
@@ -148,10 +149,10 @@ internal class GraphQLStore(private val apolloClient: ApolloClient) : DevFestNan
             apolloClient.query(GetSpeakersQuery())
                 .fetchPolicy(FetchPolicy.CacheAndNetwork)
                 .toFlow()
-                .map { response ->
+                .mapNotNull { response ->
                     if (response.exception != null) {
                         println("Apollo error: ${response.exception}")
-                        return@map emptyList()
+                        return@mapNotNull null
                     }
                     response.data?.speakers
                         ?.map { it.speakerDetails.toSpeaker() } ?: emptyList()
