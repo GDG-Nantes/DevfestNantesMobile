@@ -70,6 +70,7 @@ La CI/CD doit refonctionner et le projet doit redevenir maintenable (build moder
 | Couverture de tests : pas d'objectif % strict, priorité à la logique métier | L'utilisateur préfère une couverture qualitative (ViewModels, Store, mappers) à un chiffre arbitraire | — Pending |
 | Aucune nouvelle fonctionnalité utilisateur pendant ce chantier | Chantier purement technique — réduire le risque de régression en isolant modernisation et évolution fonctionnelle | — Pending |
 | Pas de deadline stricte liée à la prochaine édition | Chantier de fond mené phase par phase sans pression de date | — Pending |
+| Phase 2 : montée de version en groupes séquentiels (un commit par groupe), avec un CI vert entre chaque étape | Des montées majeures cumulées seraient impossibles à diagnostiquer en cas d'échec ; chaque groupe obtient son propre commit revertible et son propre signal vert avant d'attaquer le suivant | ✓ Phase 2 shipped — Kotlin 2.4.20, AGP 9.4.0 + plugin `com.android.kotlin.multiplatform.library`, Gradle 9.7.1, Compose BOM 2026.09.00, Apollo 5.2.0 (cache migré vers `com.apollographql.cache`), Firebase BOM 34.19.0/Coroutines 1.11.0/kotlinx-serialization 1.11.0/kotlinx-datetime 0.8.0 ; pilote Gradle Declarative DSL réussi sur `settings.gradle.dcl` (androidApp/shared restent en Kotlin DSL, support AGP/KMP DCL non mûr pour ces modules) — détail complet dans `.planning/STATE.md` § Phase 02 version deviations / DCL pilot outcome |
 
 ## Evolution
 
