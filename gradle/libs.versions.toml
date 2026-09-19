@@ -29,7 +29,7 @@ material = "1.13.0"
 preference = "1.2.1"
 openfeedback = "1.0.0-alpha.3"
 secretsPlugin = "2.0.1"
-spalshscreen = "1.0.1"
+spalshscreen = "1.2.0"
 timber = "5.0.1"
 
 [libraries]
