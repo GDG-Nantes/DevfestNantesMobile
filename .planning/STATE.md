@@ -3,16 +3,16 @@ gsd_state_version: "1.0"
 current_phase: 02
 current_phase_name: Dependency & Build Tooling Upgrade
 status: executing
-stopped_at: Completed 02-03-PLAN.md
-last_updated: "2026-09-18T14:28:43.673Z"
-last_activity: 2026-09-18
+stopped_at: Completed 02-04-PLAN.md
+last_updated: "2026-09-19T08:44:05.836Z"
+last_activity: 2026-09-19
 last_activity_desc: Phase 02 execution started
-state_head: 4ab7f0189ccc2f6e003bc8ce5b018e3f1126aa25
+state_head: 736c8434ae1303c0cd4cb1b1d05ed5fc71cdd929
 progress:
   total_phases: 5
   completed_phases: 1
   total_plans: 8
-  completed_plans: 6
+  completed_plans: 7
   percent: 20
 ---
 
@@ -28,9 +28,9 @@ See: .planning/PROJECT.md (updated 2026-09-17)
 ## Current Position
 
 Phase: 02 (Dependency & Build Tooling Upgrade) — EXECUTING
-Plan: 2 of 5
+Plan: 5 of 5
 Status: Ready to execute
-Last activity: 2026-09-18 — Phase 02 execution started
+Last activity: 2026-09-19 — Completed 02-04-PLAN.md (Firebase/coroutines/serialization/datetime bump)
 
 Progress: [██░░░░░░░░] 20%
 
@@ -64,6 +64,7 @@ Progress: [██░░░░░░░░] 20%
 | Phase 02 P01 | 75min | 2 tasks | 4 files |
 | Phase 02 P02 | 43min | 3 tasks | 16 files |
 | Phase 02 P03 | 180min | 2 tasks | 6 files |
+| Phase 02 P04 | 75min | 2 tasks | 6 files |
 
 ## Accumulated Context
 
@@ -84,6 +85,9 @@ Recent decisions affecting current work:
 - [Phase 02]: Compose BOM 2026.09.00 forced compileSdk 36->37 (AAR metadata floor); targetSdk deliberately decoupled and kept at 36 per user direction, tracked as a follow-up decision
 - [Phase 02]: Apollo 5.2.0 + appolloCache 1.0.8: normalized cache migrated to com.apollographql.cache artifact group; CacheResolver adapted to v5's ResolverContext signature; resolveArgument replaced with argumentValue (hard DEPRECATION_ERROR under Kotlin 2.4)
 - [Phase 02]: User-authorized deviation: GraphQLStore.kt's CacheAndNetwork Flow accessors changed map->mapNotNull to stop a network-failure emission from clobbering correctly-cached offline data (pre-existing bug surfaced by D-07 verification, not a migration regression)
+- [Phase 02]: kotlinx-datetime 0.8.0's Instant typealias survived (assumption A2 resolved) but Clock.System does not resolve through the typealias; ScheduleSlot.kt/Agenda.kt needed zero changes, but androidApp's UI-layer Agenda.kt needed a one-line kotlin.time.Clock import swap
+- [Phase 02]: Firebase BOM 34.x removed the -ktx artifact constraints (Firebase stopped publishing -ktx modules July 2025); repointed the four firebase-*-ktx catalog aliases at their merged plain artifacts, updated two production files' imports, and added a dependency substitution for the transitive firebase-auth-ktx pulled in via openfeedback
+- [Phase 02]: Added three R8 -dontwarn rules (R8-generated, verbatim) for openfeedback's stale kotlinx-datetime 0.6.x Clock/Instant class references, safe because OPEN_FEEDBACK_ENABLED=false makes those code paths unreachable at runtime
 
 ### Pending Todos
 
@@ -95,6 +99,7 @@ None yet.
 - Phase 3: l'export() du framework umbrella iOS doit être validé par un spike avant la découpe complète des modules — risque architectural le plus élevé du chantier (three-framework problem)
 - Phase 2: versions AGP 9.x / KGP / KSP2 à revérifier via `android docs search` juste avant l'implémentation (recherche datée, tooling en mouvement rapide)
 - Follow-up (not blocking): bump targetSdk 36->37 in a dedicated future stage after reviewing Android 17's behavior-change surface (kb://android/about/versions/17/behavior-changes-all / -17) — deliberately deferred from 02-03 per user direction to avoid folding a runtime-behavior-change decision into the Compose-BOM commit
+- Follow-up (not blocking): the firebase-auth-ktx -> firebase-auth:24.2.0 dependency substitution in androidApp/build.gradle.kts is version-coupled to the pinned firebaseBom (34.19.0); re-verify the literal version if firebaseBom is bumped again in a future stage
 
 ## Deferred Items
 
@@ -106,6 +111,6 @@ Items acknowledged and deferred at milestone close, most recent first:
 
 ## Session Continuity
 
-Last session: 2026-09-18T14:28:43.659Z
-Stopped at: Completed 02-03-PLAN.md
+Last session: 2026-09-19T08:44:05.821Z
+Stopped at: Completed 02-04-PLAN.md
 Resume file: None
