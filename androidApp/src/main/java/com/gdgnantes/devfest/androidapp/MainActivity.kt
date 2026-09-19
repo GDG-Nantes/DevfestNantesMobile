@@ -40,6 +40,7 @@ class MainActivity : ComponentActivity(), NavController.OnDestinationChangedList
     @InstallIn(ActivityComponent::class)
     interface ViewModelFactoryProvider {
         fun sessionViewModelFactory(): SessionViewModel.SessionViewModelFactory
+
         fun speakerViewModelFactory(): SpeakerViewModel.SpeakerViewModelFactory
     }
 

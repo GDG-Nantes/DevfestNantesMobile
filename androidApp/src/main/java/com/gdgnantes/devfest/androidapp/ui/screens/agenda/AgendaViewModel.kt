@@ -101,7 +101,8 @@ class AgendaViewModel @Inject constructor(
                             val date = if (key == 1) DAY_ONE_ISO else DAY_TWO_ISO
                             this[key] =
                                 AgendaDay(
-                                    value.dayIndex, date,
+                                    value.dayIndex,
+                                    date,
                                     value.sessions
                                         .filterSessions(sessionFilters.value)
                                         .sortedBy { session -> session.scheduleSlot.startDate }

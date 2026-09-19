@@ -22,16 +22,16 @@ complexity:
   active: true
   LongParameterList:
     active: true
-    functionThreshold: 16
-    constructorThreshold: 7
+    allowedFunctionParameters: 16
+    allowedConstructorParameters: 7
     ignoreDefaultParameters: true
     ignoreDataClasses: true
     ignoreAnnotatedParameter: [ 'Composable' ]
   LongMethod:
     active: true
-    threshold: 160
+    allowedLines: 160
 
-formatting:
+ktlint:
   active: true
   android: false
   autoCorrect: true

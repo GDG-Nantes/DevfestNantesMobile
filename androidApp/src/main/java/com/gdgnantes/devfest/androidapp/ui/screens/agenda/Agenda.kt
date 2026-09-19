@@ -19,12 +19,12 @@ import com.gdgnantes.devfest.androidapp.utils.SessionFilter
 import com.gdgnantes.devfest.model.AgendaDay
 import com.gdgnantes.devfest.model.Room
 import com.gdgnantes.devfest.model.Session
-import kotlinx.datetime.Clock
 import kotlinx.datetime.Instant
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 import kotlinx.datetime.todayIn
+import kotlin.time.Clock
 
 @Composable
 fun Agenda(

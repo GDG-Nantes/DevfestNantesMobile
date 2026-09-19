@@ -12,6 +12,7 @@ import javax.inject.Inject
 
 interface SessionFiltersService {
     val filters: StateFlow<Set<SessionFilter>>
+
     fun setFilters(filters: Set<SessionFilter>)
 }
 

@@ -6,7 +6,9 @@ import kotlinx.coroutines.flow.Flow
 interface BookmarksStore {
     @NativeCoroutines
     val bookmarkedSessionIds: Flow<Set<String>>
+
     fun isBookmarked(id: String): Boolean
+
     fun setBookmarked(sessionId: String, bookmarked: Boolean)
 
     @NativeCoroutines

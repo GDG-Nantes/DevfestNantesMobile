@@ -9,7 +9,9 @@ data class SocialItem private constructor(
         private var _type: SocialType? = null
 
         fun setLink(link: String): Builder = apply { _link = link }
+
         fun setType(type: SocialType): Builder = apply { _type = type }
+
         fun build(): SocialItem {
             return _link?.run { formatLink(this, _type) }
                 .run { SocialItem(_type ?: SocialType.WEBSITE, this) }
