@@ -2,17 +2,17 @@
 gsd_state_version: "1.0"
 current_phase: 02
 current_phase_name: Dependency & Build Tooling Upgrade
-status: executing
-stopped_at: Completed 02-04-PLAN.md
-last_updated: "2026-09-19T08:44:05.836Z"
+status: verifying
+stopped_at: Completed 02-05-PLAN.md — Phase 02 fully complete, ready for verification
+last_updated: "2026-09-19T09:51:27.645Z"
 last_activity: 2026-09-19
 last_activity_desc: Phase 02 execution started
-state_head: 736c8434ae1303c0cd4cb1b1d05ed5fc71cdd929
+state_head: 1e497a0f30ee3ad621b8ce10eb60d1fea5fd6363
 progress:
   total_phases: 5
   completed_phases: 1
   total_plans: 8
-  completed_plans: 7
+  completed_plans: 8
   percent: 20
 ---
 
@@ -29,7 +29,7 @@ See: .planning/PROJECT.md (updated 2026-09-17)
 
 Phase: 02 (Dependency & Build Tooling Upgrade) — EXECUTING
 Plan: 5 of 5
-Status: Ready to execute
+Status: Phase complete — ready for verification
 Last activity: 2026-09-19 — Completed 02-04-PLAN.md (Firebase/coroutines/serialization/datetime bump)
 
 Progress: [██░░░░░░░░] 20%
@@ -65,6 +65,7 @@ Progress: [██░░░░░░░░] 20%
 | Phase 02 P02 | 43min | 3 tasks | 16 files |
 | Phase 02 P03 | 180min | 2 tasks | 6 files |
 | Phase 02 P04 | 75min | 2 tasks | 6 files |
+| Phase 02 P05 | 50min | 2 tasks | 3 files |
 
 ## Accumulated Context
 
@@ -88,6 +89,8 @@ Recent decisions affecting current work:
 - [Phase 02]: kotlinx-datetime 0.8.0's Instant typealias survived (assumption A2 resolved) but Clock.System does not resolve through the typealias; ScheduleSlot.kt/Agenda.kt needed zero changes, but androidApp's UI-layer Agenda.kt needed a one-line kotlin.time.Clock import swap
 - [Phase 02]: Firebase BOM 34.x removed the -ktx artifact constraints (Firebase stopped publishing -ktx modules July 2025); repointed the four firebase-*-ktx catalog aliases at their merged plain artifacts, updated two production files' imports, and added a dependency substitution for the transitive firebase-auth-ktx pulled in via openfeedback
 - [Phase 02]: Added three R8 -dontwarn rules (R8-generated, verbatim) for openfeedback's stale kotlinx-datetime 0.6.x Clock/Instant class references, safe because OPEN_FEEDBACK_ENABLED=false makes those code paths unreachable at runtime
+- [Phase 02]: settings.gradle.kts converted to settings.gradle.dcl (Gradle Declarative DSL pilot, D-08/D-09) — succeeded on the primary attempt; androidApp/shared deliberately stay on Kotlin DSL, corroborated by a live 2026-09-19 re-check confirming Declarative Gradle's module-level Software Types support remains experimental/unready
+- [Phase 02]: BUILD-01..BUILD-07 version outcomes consolidated into a single STATE.md record, discharging D-03's documentation obligation for the whole phase
 
 ### Pending Todos
 
@@ -109,6 +112,7 @@ None yet.
 
 **Target 1 (primary): `settings.gradle.kts` → `settings.gradle.dcl` — CONVERTED, project builds and CI is green through it.**
 Despite the software-type DSL (used for full project/module definitions like `javaApplication`) genuinely being unready per the above, this repo's `settings.gradle.kts` never used software types — its entire content is `pluginManagement { repositories { ... } }`, `dependencyResolutionManagement { repositories { ... } }`, `rootProject.name = ...`, and two `include(...)` calls. These are core Gradle settings-file APIs, not part of the experimental "ecosystem" plugin surface, and Gradle 9.7.1 (stable, no experimental flags, no nightly build) parses a `.dcl`-suffixed settings file containing them without error. Converted 1:1 (repository lists unchanged: Google, Maven Central, Gradle Plugin Portal in both `pluginManagement` and `dependencyResolutionManagement`; `rootProject.name = "DevFest_Nantes"`; both `include(":androidApp")`/`include(":shared")` preserved).
+
 - `@file:Suppress("UnstableApiUsage")`: dropped, no DCL equivalent needed — this is a Kotlin-compiler annotation suppressing a Kotlin-DSL-specific warning, not a Gradle construct; DCL has no such warning to suppress.
 - `enableFeaturePreview("TYPESAFE_PROJECT_ACCESSORS")`: dropped — no DCL equivalent found (DCL settings files have no `enableFeaturePreview(...)` call form). Verified safe by search: `grep -rn 'projects\.\(shared\|androidApp\)' **/*.kts` returns zero hits project-wide; both build scripts use the string form `project(":shared")` (see `androidApp/build.gradle.kts:137`), never the typesafe accessor form the flag enables. Dropping it is behavior-preserving, confirmed by a full local build (not assumed).
 - The commented-out `//repositoriesMode.set(RepositoriesMode.FAIL_ON_PROJECT_REPOS)` line was not carried across (dead code, and DCL is declarative-only — no commented-out imperative statements to preserve).
@@ -139,6 +143,7 @@ Despite the software-type DSL (used for full project/module definitions like `ja
 **kotlinx-datetime `Instant`/`Clock` migration surface (assumption A2, closes an open research question so Phase 3 does not re-investigate):** `kotlinx.datetime.Instant`'s typealias to `kotlin.time.Instant` survived (deprecated, not removed) into kotlinx-datetime 0.8.0 — `ScheduleSlot.kt`/`Agenda.kt` (shared/model) needed zero code changes. However `kotlinx.datetime.Clock`'s typealias does **not** carry `.System` through to `kotlin.time.Clock` the same way — any call site using `Clock.System` directly (not just `Instant`) needs its import swapped to `kotlin.time.Clock`. One such call site existed outside the shared/model scope: `androidApp/.../ui/screens/agenda/Agenda.kt`, fixed with a one-line import swap. Grep for `kotlinx.datetime.Clock` before assuming a future kotlinx-datetime bump is a no-op.
 
 **Apollo cache import paths actually used (authoritative, for Phase 3 reuse):**
+
 - Cache-normalized wildcard: `com.apollographql.cache.normalized.*` (was `com.apollographql.apollo.cache.normalized.*`)
 - `MemoryCacheFactory`: `com.apollographql.cache.normalized.memory.MemoryCacheFactory` (own `memory` subpackage — was `...api.MemoryCacheFactory`)
 - `SqlNormalizedCacheFactory`: `com.apollographql.cache.normalized.sql.SqlNormalizedCacheFactory` (same subpackage name, new root group)
@@ -158,6 +163,6 @@ Items acknowledged and deferred at milestone close, most recent first:
 
 ## Session Continuity
 
-Last session: 2026-09-19T08:44:05.821Z
-Stopped at: Completed 02-04-PLAN.md
+Last session: 2026-09-19T09:51:27.629Z
+Stopped at: Completed 02-05-PLAN.md — Phase 02 fully complete, ready for verification
 Resume file: None
