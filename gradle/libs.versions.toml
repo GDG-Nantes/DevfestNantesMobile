@@ -1,30 +1,31 @@
 [versions]
 accompanist = "0.36.0"
 activity = "1.9.2"
-agp = "8.13.0"
+agp = "9.4.0"
 androidXTestVersion = "1.5.0"
 androidXTestRunnerVersion = "1.6.2"
 androidXJUnitVersion = "1.2.1"
-appollo = "4.3.3"
+appollo = "5.2.0"
+appolloCache = "1.0.8"
 browser = "1.8.0"
 coil = "2.7.0"
-composeBom = "2025.09.01"
+composeBom = "2026.09.00"
 composeNavigation = "2.9.5"
-dagger = "2.57.2"
-detekt = "1.23.8"
+dagger = "2.60.1"
+detekt = "2.0.0-alpha.6"
 espresso = "3.6.1"
-firebaseBom = "33.16.0"
-firebaseCrashlyticsPlugin = "3.0.6"
-firebasePerfPlugin = "2.0.1"
-googleServicesPlugin = "4.4.3"
+firebaseBom = "34.19.0"
+firebaseCrashlyticsPlugin = "3.0.8"
+firebasePerfPlugin = "2.0.2"
+googleServicesPlugin = "4.5.0"
 hilt = "1.3.0"
 junit = "4.13.2"
-kmpNativeCoroutines = "1.0.0-ALPHA-45"
-kotlin = "2.2.0"
-ksp = "2.2.20-2.0.3"
-kotlinxCoroutines = "1.10.2"
-kotlinxDatetime = "0.6.2"
-kotlinxSerialization = "1.9.0"
+kmpNativeCoroutines = "1.0.6"
+kotlin = "2.4.20"
+ksp = "2.3.12"
+kotlinxCoroutines = "1.11.0"
+kotlinxDatetime = "0.8.0"
+kotlinxSerialization = "1.11.0"
 material = "1.13.0"
 preference = "1.2.1"
 openfeedback = "1.0.0-alpha.3"
@@ -66,8 +67,8 @@ androidx-test-runner = { group = "androidx.test", name = "runner", version.ref =
 androidx-test-truth = { group = "androidx.test.ext", name = "truth", version.ref = "androidXTestVersion" }
 
 appollo-runtime = { group = "com.apollographql.apollo", name = "apollo-runtime", version.ref = "appollo" }
-appollo-normalized-cache = { group = "com.apollographql.apollo", name = "apollo-normalized-cache", version.ref = "appollo" }
-appollo-normalized-cache-sqlite = { group = "com.apollographql.apollo", name = "apollo-normalized-cache-sqlite", version.ref = "appollo" }
+appollo-normalized-cache = { group = "com.apollographql.cache", name = "normalized-cache", version.ref = "appolloCache" }
+appollo-normalized-cache-sqlite = { group = "com.apollographql.cache", name = "normalized-cache-sqlite", version.ref = "appolloCache" }
 
 coil-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil" }
 
@@ -75,13 +76,13 @@ dagger-hilt-android = { group = "com.google.dagger", name = "hilt-android", vers
 dagger-hilt-android-testing = { group = "com.google.dagger", name = "hilt-android-testing", version.ref = "dagger" }
 dagger-hilt-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "dagger" }
 
-detekt-fomatting = { module = "io.gitlab.arturbosch.detekt:detekt-formatting", version.ref = "detekt" }
+detekt-fomatting = { module = "dev.detekt:detekt-rules-ktlint-wrapper", version.ref = "detekt" }
 
-firebase-analytics-ktx = { group = "com.google.firebase", name = "firebase-analytics-ktx" }
+firebase-analytics-ktx = { group = "com.google.firebase", name = "firebase-analytics" }
 firebase-bom = { group = "com.google.firebase", name = "firebase-bom", version.ref = "firebaseBom" }
-firebase-config-ktx = { group = "com.google.firebase", name = "firebase-config-ktx" }
-firebase-crashlytics-ktx = { group = "com.google.firebase", name = "firebase-crashlytics-ktx" }
-firebase-perf-ktx = { group = "com.google.firebase", name = "firebase-perf-ktx" }
+firebase-config-ktx = { group = "com.google.firebase", name = "firebase-config" }
+firebase-crashlytics-ktx = { group = "com.google.firebase", name = "firebase-crashlytics" }
+firebase-perf-ktx = { group = "com.google.firebase", name = "firebase-perf" }
 
 junit = { group = "junit", name = "junit", version.ref = "junit" }
 
@@ -111,15 +112,14 @@ test = ["junit", "androidx-compose-ui-test-junit4", "kotlinx-coroutines-test"]
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
-android-library = { id = "com.android.library", version.ref = "agp" }
+android-kotlin-multiplatform-library = { id = "com.android.kotlin.multiplatform.library", version.ref = "agp" }
 appollo = { id = "com.apollographql.apollo", version.ref = "appollo" }
 crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "firebaseCrashlyticsPlugin" }
 dagger-hilt = { id = "com.google.dagger.hilt.android", version.ref = "dagger" }
-detekt = { id = "io.gitlab.arturbosch.detekt", version.ref = "detekt" }
+detekt = { id = "dev.detekt", version.ref = "detekt" }
 firebase-perf = { id = "com.google.firebase.firebase-perf", version.ref = "firebasePerfPlugin" }
 google-services = { id = "com.google.gms.google-services", version.ref = "googleServicesPlugin" }
 kmp-native-coroutines = { id = "com.rickclephas.kmp.nativecoroutines", version.ref = "kmpNativeCoroutines" }
-kotlin-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
 kotlin-cocoapods = { id = "org.jetbrains.kotlin.native.cocoapods", version.ref = "kotlin" }
 kotlin-compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
 kotlin-multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }

@@ -14,13 +14,16 @@ import javax.inject.Inject
 interface DataCollectionSettingsService {
     val isDataCollectionAgreementSet: Boolean
     val dataCollectionServicesActivationStatus: Flow<Map<DataCollectionService, Boolean>>
+
     fun changeDataServiceActivationStatus(
         dataCollectionService: DataCollectionService,
         enabled: Boolean
     )
 
     fun consentToAllServices()
+
     fun disallowAllServices()
+
     fun updatesDataServicesActivationStatus()
 }
 

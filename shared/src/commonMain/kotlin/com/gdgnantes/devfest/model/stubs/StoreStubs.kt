@@ -41,6 +41,7 @@ fun buildSessionStub(): Session {
 
 const val STUB_STARTING_HOUR = 9
 const val STUB_ENDING_HOUR = 30
+
 fun buildScheduleSlotStub(): ScheduleSlot {
     val day = DAY_ONE
     val start =

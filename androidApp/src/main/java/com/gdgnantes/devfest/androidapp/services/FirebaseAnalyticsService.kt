@@ -6,7 +6,7 @@ import com.gdgnantes.devfest.analytics.AnalyticsParam
 import com.gdgnantes.devfest.analytics.AnalyticsService
 import com.gdgnantes.devfest.model.SocialType
 import com.google.firebase.analytics.FirebaseAnalytics
-import com.google.firebase.analytics.ktx.logEvent
+import com.google.firebase.analytics.logEvent
 import timber.log.Timber
 import javax.inject.Inject
 
