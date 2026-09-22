@@ -89,7 +89,7 @@ Plans:
 
   1. Build logic is defined through convention plugins that read the existing version catalog (`libs.versions.toml`), with no duplicated build configuration across modules
   2. The `core-*` modules (model, network, data, analytics, ui, testing) exist and never depend on any `feature-*` module — the dependency graph is strictly unidirectional
-  3. The `feature-*` modules (agenda, speakers, venue, bookmarks, session-detail, settings) exist, each with its own ViewModel(s), Compose screens, and Koin module
+  3. The `feature-*` modules (agenda, speakers, venue, session-detail, about, settings) exist, each with its own ViewModel(s) and Compose screens (per-module Koin modules are delivered in Phase 4 via DI-02; bookmarks has no screen and lives in `core-data`/`core-ui` — see 03-CONTEXT.md D-04..D-06)
   4. `iosApp` continues to build and consume a single umbrella Kotlin/Native framework aggregating all KMP modules, despite `shared` now being split across several Gradle modules
 
 **Plans**: TBD
