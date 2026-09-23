@@ -1,13 +1,13 @@
 ---
 gsd_state_version: "1.0"
 current_phase: 03
-current_phase_name: multi-module-architecture-extraction
+current_phase_name: Multi-Module Architecture Extraction
 status: executing
-stopped_at: Phase 3 context gathered
-last_updated: "2026-09-23T05:51:14.801Z"
-last_activity: 2026-09-19
-last_activity_desc: Phase 02 complete, transitioned to Phase 3
-state_head: 40e055c17d8dafaac8a3513e7945fa57b4b4c40a
+stopped_at: Phase 03 Plan 01 HALTED at Task 2 CI gate (D-09 abort signal - Swift name collision flip, see 03-01-SUMMARY.md)
+last_updated: "2026-09-23T10:25:54.358Z"
+last_activity: 2026-09-23
+last_activity_desc: Phase 03 execution started
+state_head: d5ffc49994b08ce6fcfa2416d82f87f7db4f57bc
 progress:
   total_phases: 5
   completed_phases: 2
@@ -23,14 +23,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-09-17)
 
 **Core value:** La CI/CD doit refonctionner et le projet doit redevenir maintenable (build moderne, architecture modulaire, DI décentralisée, couverture de tests solide) sans jamais régresser le comportement existant de l'application pour les utilisateurs.
-**Current focus:** Phase 02 — Dependency & Build Tooling Upgrade
+**Current focus:** Phase 03 — Multi-Module Architecture Extraction
 
 ## Current Position
 
-Phase: 03 (multi-module-architecture-extraction) — READY TO EXECUTE
-Plan: Not started
-Status: Ready to execute
-Last activity: 2026-09-19 — Phase 02 complete, transitioned to Phase 3
+Phase: 03 (Multi-Module Architecture Extraction) — EXECUTING
+Plan: 1 of 9
+Status: Executing Phase 03
+Last activity: 2026-09-23 — Phase 03 execution started
 
 Progress: [████░░░░░░] 40%
 
@@ -67,6 +67,7 @@ Progress: [████░░░░░░] 40%
 | Phase 02 P03 | 180min | 2 tasks | 6 files |
 | Phase 02 P04 | 75min | 2 tasks | 6 files |
 | Phase 02 P05 | 50min | 2 tasks | 3 files |
+| Phase 03 P01 | 95min | 2 tasks | 77 files |
 
 ## Accumulated Context
 
@@ -100,7 +101,8 @@ None yet.
 ### Blockers/Concerns
 
 - Phase 3: la home des écrans About/Partners (feature-settings vs nouveau feature-about) reste une décision ouverte à trancher avant l'extraction des feature modules (voir research/SUMMARY.md)
-- Phase 3: l'export() du framework umbrella iOS doit être validé par un spike avant la découpe complète des modules — risque architectural le plus élevé du chantier (three-framework problem)
+- **Phase 3 — BLOCKING (03-01 tracer HALTED, D-09 abort signal, 2026-09-23):** moving `Venue`/`Session`/`Speaker`/`Room`/`Partner` from package `com.gdgnantes.devfest.model` into `com.gdgnantes.devfest.core.model` flipped which of two same-simple-named Kotlin classes (the domain model vs. the Apollo-generated `GetXQuery.X`/`fragment.XDetails.X` GraphQL response class already colliding on that name) keeps the unprefixed Swift name vs. gets suffixed `_`. Kotlin/Native's ObjC header generator resolves same-simple-name collisions across the whole compiled framework by an alphabetical-FQN tie-break (shortest proof: `com.gdgnantes.devfest.model.Venue` sorted AFTER `com.gdgnantes.devfest.graphql.GetVenueQuery.Venue` at baseline — domain model got `Venue_`; `com.gdgnantes.devfest.core.model.Venue` sorts BEFORE `...graphql...` post-rename — domain model now gets clean `Venue`, GraphQL type flips to `Venue_`). This broke ~10 pre-existing Swift files (`VenueContent.swift`, `AgendaContent.swift`, `AgendaViewModel.swift`, `AgendaView.swift`, `AgendaCellView.swift`, `AgendaDetailView.swift`, `SpeakerDetailsViewModel.swift`, `SpeakersViewModel.swift`, `SpeakerDetailsView.swift`, `SpeakerView.swift`, `AboutViewModel.swift`) that hardcode the `_`-suffixed name expecting it to be the domain model. iOS CI failed on Swift compilation (run 35847334261, PR #419) — the swift-names-gate.sh gate (missing-name + collision-COUNT checks) did not catch this because the collision COUNT stayed the same, only the per-name IDENTITY swapped. This is systemic (affects 5 of the domain-model types the codebase already has, and will recur for every future package rename of a colliding name) — needs a human/architectural decision before Phase 3 continues past this tracer. See `.planning/phases/03-multi-module-architecture-extraction/03-01-SUMMARY.md` (status: halted) for the full diagnosis and options.
+- Phase 3: l'export() du framework umbrella iOS doit être validé par un spike avant la découpe complète des modules — risque architectural le plus élevé du chantier (three-framework problem) — **partially validated by 03-01: the export()/api mechanics work as designed; the newly-discovered risk is the Swift-name collision-flip above, a different (related) failure mode**
 - Phase 2: AGP 9.x/KGP/KSP2 version re-verification was performed live during Phase 2 (each plan re-checked Maven Central/Google Maven metadata immediately before its own commit); outcomes are recorded per-requirement in `## Phase 02 version deviations` below — discharged, no longer open.
 - Follow-up (not blocking): bump targetSdk 36->37 in a dedicated future stage after reviewing Android 17's behavior-change surface (kb://android/about/versions/17/behavior-changes-all / -17) — deliberately deferred from 02-03 per user direction to avoid folding a runtime-behavior-change decision into the Compose-BOM commit
 - Follow-up (not blocking): the firebase-auth-ktx -> firebase-auth:24.2.0 dependency substitution in androidApp/build.gradle.kts is version-coupled to the pinned firebaseBom (34.19.0); re-verify the literal version if firebaseBom is bumped again in a future stage
@@ -126,6 +128,10 @@ Despite the software-type DSL (used for full project/module definitions like `ja
 **`androidApp`/`shared` remain on Kotlin DSL (`.kts`), unchanged by this pilot — reason (discharges BUILD-07's "documented with the reason support is missing" clause):** D-08 scoped the pilot to one low-risk leaf target only; neither module's build file was attempted, per the plan's explicit scope boundary. Independent of that scoping decision, the live re-check above confirms AGP/KMP DCL support for a module of this shape would not be viable today even if attempted: `shared/build.gradle.kts` applies 7 plugins including `com.android.kotlin.multiplatform.library` (AGP 9's new KMP plugin), Detekt, KSP, Apollo, and `kmpNativeCoroutines`; `androidApp/build.gradle.kts` applies 8 plugins including Dagger Hilt, Firebase Crashlytics/Performance, and Compose. Declarative Gradle's only path to expressing a module like this is its "Software Types" model (`javaApplication`/`androidApplication`/`kotlinJvmLibrary` etc.) via the experimental `org.gradle.experimental.android-ecosystem`/`kmp-ecosystem` settings plugins — exactly the surface the Declarative Gradle project's own docs call "not ready for adoption," gated behind nightly Gradle builds and IDE internal-mode flags, with no stable-Gradle path found. This is a genuinely different case from the settings file's plain repository/include declarations, which map onto core (non-experimental) Gradle settings APIs DCL already parses correctly on stable Gradle.
 
 **Phase 3 interaction (per assumption A5/D-09):** the pilot target chosen here is the settings file, which is orthogonal to Phase 3's module split (Phase 3 changes `shared`'s internal module boundaries, not the root settings file's repository/include shape) — no re-pilot expected to be forced by Phase 3, but Phase 3 should re-run the same live status check before assuming DCL's software-type surface has matured enough to attempt `shared`'s or any new `core-*`/`feature-*` module's build file.
+
+**Phase 03 re-check (03-01 tracer, 2026-09-23):** `includeBuild("build-logic")` inside `settings.gradle.dcl`'s `pluginManagement` parsed and resolved correctly on Gradle 9.7.1 (confirmed by `./gradlew projects` listing `Included build ':build-logic'` and `:core:model`) — D-20's fallback branch was not needed.
+`build-logic/settings.gradle.kts` and every new module's `build.gradle.kts` (`core/model/build.gradle.kts`, `build-logic/convention/build.gradle.kts`) stay plain Kotlin DSL per D-20/RESEARCH Pitfall 2 — no `.dcl` file exists anywhere under `build-logic/` or `core/`, matching the same software-types-not-ready assessment as Phase 2's pilot.
+No re-pilot of DCL's software-type surface was attempted; nothing found this session changes the Phase 02 assessment above.
 
 ## Phase 02 version deviations
 
@@ -164,6 +170,6 @@ Items acknowledged and deferred at milestone close, most recent first:
 
 ## Session Continuity
 
-Last session: 2026-09-22T21:15:25.110Z
-Stopped at: Phase 3 context gathered
-Resume file: .planning/phases/03-multi-module-architecture-extraction/03-CONTEXT.md
+Last session: 2026-09-23T10:25:54.338Z
+Stopped at: Phase 03 Plan 01 HALTED at Task 2 CI gate (D-09 abort signal - Swift name collision flip, see 03-01-SUMMARY.md)
+Resume file: .planning/phases/03-multi-module-architecture-extraction/03-01-SUMMARY.md
