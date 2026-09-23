@@ -1,4 +1,4 @@
-package com.gdgnantes.devfest.model
+package com.gdgnantes.devfest.core.model
 
 enum class WebLinks(val url: String) {
     CODE_OF_CONDUCT("https://devfest.gdgnantes.com/code-of-conduct"),

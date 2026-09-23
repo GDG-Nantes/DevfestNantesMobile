@@ -17,8 +17,8 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.gdgnantes.devfest.androidapp.R
 import com.gdgnantes.devfest.androidapp.ui.theme.DevFestNantesTheme
-import com.gdgnantes.devfest.model.Category
-import com.gdgnantes.devfest.model.SessionType
+import com.gdgnantes.devfest.core.model.Category
+import com.gdgnantes.devfest.core.model.SessionType
 
 @Composable
 fun SessionType(

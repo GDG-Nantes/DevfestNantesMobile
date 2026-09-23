@@ -1,6 +1,6 @@
-package com.gdgnantes.devfest.model.stubs
+package com.gdgnantes.devfest.core.model.stubs
 
-import com.gdgnantes.devfest.model.Room
+import com.gdgnantes.devfest.core.model.Room
 
 val roomStubs: List<Room> =
     listOf(

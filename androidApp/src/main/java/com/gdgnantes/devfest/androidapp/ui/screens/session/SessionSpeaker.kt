@@ -17,9 +17,9 @@ import androidx.compose.ui.unit.dp
 import com.gdgnantes.devfest.androidapp.ui.components.SocialIcon
 import com.gdgnantes.devfest.androidapp.ui.screens.speakers.SpeakerPicture
 import com.gdgnantes.devfest.androidapp.ui.theme.DevFestNantesTheme
-import com.gdgnantes.devfest.model.SocialItem
-import com.gdgnantes.devfest.model.Speaker
-import com.gdgnantes.devfest.model.stubs.buildSpeakerStub
+import com.gdgnantes.devfest.core.model.SocialItem
+import com.gdgnantes.devfest.core.model.Speaker
+import com.gdgnantes.devfest.core.model.stubs.buildSpeakerStub
 
 @Composable
 fun SessionSpeaker(

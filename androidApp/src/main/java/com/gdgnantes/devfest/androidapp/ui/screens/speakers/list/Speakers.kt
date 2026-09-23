@@ -43,7 +43,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.gdgnantes.devfest.androidapp.ui.UiState
 import com.gdgnantes.devfest.androidapp.ui.components.LoadingLayout
 import com.gdgnantes.devfest.androidapp.ui.screens.speakers.SpeakerPicture
-import com.gdgnantes.devfest.model.Speaker
+import com.gdgnantes.devfest.core.model.Speaker
 import kotlinx.coroutines.launch
 
 /*

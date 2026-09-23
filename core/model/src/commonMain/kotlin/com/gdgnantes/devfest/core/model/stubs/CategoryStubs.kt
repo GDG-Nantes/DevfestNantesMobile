@@ -1,6 +1,6 @@
-package com.gdgnantes.devfest.model.stubs
+package com.gdgnantes.devfest.core.model.stubs
 
-import com.gdgnantes.devfest.model.Category
+import com.gdgnantes.devfest.core.model.Category
 import kotlinx.serialization.json.Json
 
 const val CATEGORY_STUBS_JSON =

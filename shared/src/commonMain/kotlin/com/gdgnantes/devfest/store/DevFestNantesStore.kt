@@ -1,13 +1,13 @@
 package com.gdgnantes.devfest.store
 
-import com.gdgnantes.devfest.model.Agenda
-import com.gdgnantes.devfest.model.ContentLanguage
-import com.gdgnantes.devfest.model.Partner
-import com.gdgnantes.devfest.model.PartnerCategory
-import com.gdgnantes.devfest.model.Room
-import com.gdgnantes.devfest.model.Session
-import com.gdgnantes.devfest.model.Speaker
-import com.gdgnantes.devfest.model.Venue
+import com.gdgnantes.devfest.core.model.Agenda
+import com.gdgnantes.devfest.core.model.ContentLanguage
+import com.gdgnantes.devfest.core.model.Partner
+import com.gdgnantes.devfest.core.model.PartnerCategory
+import com.gdgnantes.devfest.core.model.Room
+import com.gdgnantes.devfest.core.model.Session
+import com.gdgnantes.devfest.core.model.Speaker
+import com.gdgnantes.devfest.core.model.Venue
 import com.rickclephas.kmp.nativecoroutines.NativeCoroutines
 import kotlinx.coroutines.flow.Flow
 

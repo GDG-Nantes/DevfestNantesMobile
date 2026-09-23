@@ -1,7 +1,7 @@
-package com.gdgnantes.devfest.model.stubs
+package com.gdgnantes.devfest.core.model.stubs
 
-import com.gdgnantes.devfest.model.SocialItem
-import com.gdgnantes.devfest.model.SocialType
+import com.gdgnantes.devfest.core.model.SocialItem
+import com.gdgnantes.devfest.core.model.SocialType
 
 val SOCIAL_ITEMS_STUBS: List<SocialItem> =
     listOf(

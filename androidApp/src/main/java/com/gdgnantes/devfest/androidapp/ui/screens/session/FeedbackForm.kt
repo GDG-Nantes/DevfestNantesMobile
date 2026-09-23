@@ -12,7 +12,7 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.gdgnantes.devfest.androidapp.BuildConfig
 import com.gdgnantes.devfest.androidapp.R
-import com.gdgnantes.devfest.model.Session
+import com.gdgnantes.devfest.core.model.Session
 import io.openfeedback.OpenFeedback
 
 @Composable

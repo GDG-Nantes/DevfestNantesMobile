@@ -1,4 +1,4 @@
-package com.gdgnantes.devfest.model
+package com.gdgnantes.devfest.core.model
 
 data class AgendaDay(
     val dayIndex: Int,

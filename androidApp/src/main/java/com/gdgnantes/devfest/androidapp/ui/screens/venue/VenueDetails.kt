@@ -31,9 +31,9 @@ import com.gdgnantes.devfest.androidapp.R
 import com.gdgnantes.devfest.androidapp.ui.screens.venue.plan.VenueFloorPlanButton
 import com.gdgnantes.devfest.androidapp.ui.theme.DevFestNantesTheme
 import com.gdgnantes.devfest.androidapp.utils.onNavigationClick
-import com.gdgnantes.devfest.model.ContentLanguage
-import com.gdgnantes.devfest.model.Venue
-import com.gdgnantes.devfest.model.stubs.buildVenueStub
+import com.gdgnantes.devfest.core.model.ContentLanguage
+import com.gdgnantes.devfest.core.model.Venue
+import com.gdgnantes.devfest.core.model.stubs.buildVenueStub
 import timber.log.Timber
 
 @Composable

@@ -35,16 +35,16 @@ import com.gdgnantes.devfest.androidapp.ui.screens.agenda.Agenda
 import com.gdgnantes.devfest.androidapp.ui.screens.home.HomeViewModel
 import com.gdgnantes.devfest.androidapp.ui.screens.speakers.list.Speakers
 import com.gdgnantes.devfest.androidapp.ui.screens.venue.Venue
-import com.gdgnantes.devfest.model.Session
-import com.gdgnantes.devfest.model.Speaker
-import com.gdgnantes.devfest.model.WebLinks.CODE_OF_CONDUCT
-import com.gdgnantes.devfest.model.WebLinks.GITHUB
-import com.gdgnantes.devfest.model.WebLinks.NANTES_TECH_COMMUNITIES
-import com.gdgnantes.devfest.model.WebLinks.SOCIAL_FACEBOOK
-import com.gdgnantes.devfest.model.WebLinks.SOCIAL_LINKEDIN
-import com.gdgnantes.devfest.model.WebLinks.SOCIAL_TWITTER
-import com.gdgnantes.devfest.model.WebLinks.SOCIAL_YOUTUBE
-import com.gdgnantes.devfest.model.WebLinks.WEBSITE
+import com.gdgnantes.devfest.core.model.Session
+import com.gdgnantes.devfest.core.model.Speaker
+import com.gdgnantes.devfest.core.model.WebLinks.CODE_OF_CONDUCT
+import com.gdgnantes.devfest.core.model.WebLinks.GITHUB
+import com.gdgnantes.devfest.core.model.WebLinks.NANTES_TECH_COMMUNITIES
+import com.gdgnantes.devfest.core.model.WebLinks.SOCIAL_FACEBOOK
+import com.gdgnantes.devfest.core.model.WebLinks.SOCIAL_LINKEDIN
+import com.gdgnantes.devfest.core.model.WebLinks.SOCIAL_TWITTER
+import com.gdgnantes.devfest.core.model.WebLinks.SOCIAL_YOUTUBE
+import com.gdgnantes.devfest.core.model.WebLinks.WEBSITE
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)

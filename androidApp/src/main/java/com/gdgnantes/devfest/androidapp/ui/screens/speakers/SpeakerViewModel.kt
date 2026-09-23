@@ -6,8 +6,8 @@ import androidx.lifecycle.viewModelScope
 import com.gdgnantes.devfest.androidapp.core.performance.PerformanceMonitoring
 import com.gdgnantes.devfest.androidapp.core.performance.trace
 import com.gdgnantes.devfest.androidapp.ui.UiState
-import com.gdgnantes.devfest.model.Session
-import com.gdgnantes.devfest.model.Speaker
+import com.gdgnantes.devfest.core.model.Session
+import com.gdgnantes.devfest.core.model.Speaker
 import com.gdgnantes.devfest.store.DevFestNantesStore
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory

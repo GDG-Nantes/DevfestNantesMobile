@@ -7,10 +7,10 @@ import com.gdgnantes.devfest.androidapp.core.performance.traceDataLoading
 import com.gdgnantes.devfest.androidapp.services.SessionFiltersService
 import com.gdgnantes.devfest.androidapp.ui.UiState
 import com.gdgnantes.devfest.androidapp.utils.SessionFilter
-import com.gdgnantes.devfest.model.Agenda.Companion.DAY_ONE_ISO
-import com.gdgnantes.devfest.model.Agenda.Companion.DAY_TWO_ISO
-import com.gdgnantes.devfest.model.AgendaDay
-import com.gdgnantes.devfest.model.Session
+import com.gdgnantes.devfest.core.model.Agenda.Companion.DAY_ONE_ISO
+import com.gdgnantes.devfest.core.model.Agenda.Companion.DAY_TWO_ISO
+import com.gdgnantes.devfest.core.model.AgendaDay
+import com.gdgnantes.devfest.core.model.Session
 import com.gdgnantes.devfest.store.BookmarksStore
 import com.gdgnantes.devfest.store.DevFestNantesStore
 import dagger.hilt.android.lifecycle.HiltViewModel

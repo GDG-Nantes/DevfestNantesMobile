@@ -15,7 +15,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.gdgnantes.devfest.androidapp.ui.theme.DevFestNantesTheme
-import com.gdgnantes.devfest.model.Category
+import com.gdgnantes.devfest.core.model.Category
 
 @Composable
 fun SessionCategory(

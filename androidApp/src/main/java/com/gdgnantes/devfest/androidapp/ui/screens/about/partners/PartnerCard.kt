@@ -20,8 +20,8 @@ import coil.request.ImageRequest
 import com.gdgnantes.devfest.androidapp.R
 import com.gdgnantes.devfest.androidapp.ui.theme.DevFestNantesTheme
 import com.gdgnantes.devfest.androidapp.ui.theme.partnersLogoBackground
-import com.gdgnantes.devfest.model.Partner
-import com.gdgnantes.devfest.model.stubs.buildPartnerStub
+import com.gdgnantes.devfest.core.model.Partner
+import com.gdgnantes.devfest.core.model.stubs.buildPartnerStub
 import timber.log.Timber
 
 @Composable

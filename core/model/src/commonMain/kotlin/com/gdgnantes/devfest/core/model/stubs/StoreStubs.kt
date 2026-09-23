@@ -1,14 +1,14 @@
-package com.gdgnantes.devfest.model.stubs
+package com.gdgnantes.devfest.core.model.stubs
 
-import com.gdgnantes.devfest.model.Agenda.Companion.DAY_ONE
-import com.gdgnantes.devfest.model.Complexity
-import com.gdgnantes.devfest.model.ContentLanguage
-import com.gdgnantes.devfest.model.Partner
-import com.gdgnantes.devfest.model.ScheduleSlot
-import com.gdgnantes.devfest.model.Session
-import com.gdgnantes.devfest.model.SessionLanguage
-import com.gdgnantes.devfest.model.Speaker
-import com.gdgnantes.devfest.model.Venue
+import com.gdgnantes.devfest.core.model.Agenda.Companion.DAY_ONE
+import com.gdgnantes.devfest.core.model.Complexity
+import com.gdgnantes.devfest.core.model.ContentLanguage
+import com.gdgnantes.devfest.core.model.Partner
+import com.gdgnantes.devfest.core.model.ScheduleSlot
+import com.gdgnantes.devfest.core.model.Session
+import com.gdgnantes.devfest.core.model.SessionLanguage
+import com.gdgnantes.devfest.core.model.Speaker
+import com.gdgnantes.devfest.core.model.Venue
 import kotlin.random.Random
 import kotlin.time.DurationUnit
 import kotlin.time.toDuration

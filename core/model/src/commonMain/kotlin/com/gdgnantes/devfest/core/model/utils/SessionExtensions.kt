@@ -1,7 +1,7 @@
-package com.gdgnantes.devfest.utils
+package com.gdgnantes.devfest.core.model.utils
 
-import com.gdgnantes.devfest.model.Session
-import com.gdgnantes.devfest.model.SessionLanguage
+import com.gdgnantes.devfest.core.model.Session
+import com.gdgnantes.devfest.core.model.SessionLanguage
 
 const val MILLISECONDS_IN_MINUTE = 60000
 

@@ -20,11 +20,11 @@ import com.gdgnantes.devfest.androidapp.ui.components.SessionComplexity
 import com.gdgnantes.devfest.androidapp.ui.components.SessionType
 import com.gdgnantes.devfest.androidapp.ui.theme.DevFestNantesTheme
 import com.gdgnantes.devfest.androidapp.utils.getFormattedRange
-import com.gdgnantes.devfest.model.Session
-import com.gdgnantes.devfest.model.SocialItem
-import com.gdgnantes.devfest.model.Speaker
-import com.gdgnantes.devfest.model.stubs.buildSessionStub
-import com.gdgnantes.devfest.utils.getDurationAndLanguageString
+import com.gdgnantes.devfest.core.model.Session
+import com.gdgnantes.devfest.core.model.SocialItem
+import com.gdgnantes.devfest.core.model.Speaker
+import com.gdgnantes.devfest.core.model.stubs.buildSessionStub
+import com.gdgnantes.devfest.core.model.utils.getDurationAndLanguageString
 
 @Composable
 fun SessionDetails(

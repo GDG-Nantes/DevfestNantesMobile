@@ -5,7 +5,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.gdgnantes.devfest.androidapp.core.performance.PerformanceMonitoring
 import com.gdgnantes.devfest.androidapp.core.performance.traceDataLoading
-import com.gdgnantes.devfest.model.Session
+import com.gdgnantes.devfest.core.model.Session
 import com.gdgnantes.devfest.store.DevFestNantesStore
 import dagger.assisted.Assisted
 import dagger.assisted.AssistedFactory

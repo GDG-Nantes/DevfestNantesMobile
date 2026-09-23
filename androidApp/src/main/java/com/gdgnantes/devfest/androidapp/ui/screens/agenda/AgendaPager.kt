@@ -26,8 +26,8 @@ import androidx.compose.ui.platform.LocalContext
 import com.gdgnantes.devfest.androidapp.ui.UiState
 import com.gdgnantes.devfest.androidapp.ui.components.LoadingLayout
 import com.gdgnantes.devfest.androidapp.utils.getDayFromIso8601
-import com.gdgnantes.devfest.model.AgendaDay
-import com.gdgnantes.devfest.model.Session
+import com.gdgnantes.devfest.core.model.AgendaDay
+import com.gdgnantes.devfest.core.model.Session
 import kotlinx.coroutines.launch
 
 @Composable

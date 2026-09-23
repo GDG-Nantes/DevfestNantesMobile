@@ -26,9 +26,9 @@ import com.gdgnantes.devfest.androidapp.ui.UiState
 import com.gdgnantes.devfest.androidapp.ui.components.LoadingLayout
 import com.gdgnantes.devfest.androidapp.ui.components.appbars.TopAppBar
 import com.gdgnantes.devfest.androidapp.ui.screens.speakers.SpeakerViewModel
-import com.gdgnantes.devfest.model.Session
-import com.gdgnantes.devfest.model.SocialItem
-import com.gdgnantes.devfest.model.Speaker
+import com.gdgnantes.devfest.core.model.Session
+import com.gdgnantes.devfest.core.model.SocialItem
+import com.gdgnantes.devfest.core.model.Speaker
 
 @Composable
 fun SpeakerLayout(

@@ -1,6 +1,6 @@
 package com.gdgnantes.devfest.analytics
 
-import com.gdgnantes.devfest.model.SocialType
+import com.gdgnantes.devfest.core.model.SocialType
 
 @Suppress("TooManyFunctions")
 interface AnalyticsService {

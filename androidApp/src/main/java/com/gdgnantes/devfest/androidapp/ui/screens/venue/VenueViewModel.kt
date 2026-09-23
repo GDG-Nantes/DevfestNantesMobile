@@ -6,7 +6,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.gdgnantes.devfest.androidapp.ui.UiState
 import com.gdgnantes.devfest.androidapp.utils.toContentLanguage
-import com.gdgnantes.devfest.model.Venue
+import com.gdgnantes.devfest.core.model.Venue
 import com.gdgnantes.devfest.store.DevFestNantesStore
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow

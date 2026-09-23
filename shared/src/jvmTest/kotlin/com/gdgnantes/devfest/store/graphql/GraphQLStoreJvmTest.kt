@@ -2,7 +2,7 @@ package com.gdgnantes.devfest.store.graphql
 
 import com.apollographql.apollo.ApolloClient
 import com.apollographql.apollo.api.http.HttpHeader
-import com.gdgnantes.devfest.model.ContentLanguage
+import com.gdgnantes.devfest.core.model.ContentLanguage
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import kotlin.test.BeforeTest

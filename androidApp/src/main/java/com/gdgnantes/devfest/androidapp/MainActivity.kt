@@ -25,9 +25,9 @@ import com.gdgnantes.devfest.androidapp.ui.screens.speakers.SpeakerViewModel
 import com.gdgnantes.devfest.androidapp.ui.screens.speakers.details.SpeakerLayout
 import com.gdgnantes.devfest.androidapp.ui.theme.DevFestNantesTheme
 import com.gdgnantes.devfest.androidapp.utils.assistedViewModel
-import com.gdgnantes.devfest.model.Session
-import com.gdgnantes.devfest.model.SessionType
-import com.gdgnantes.devfest.model.WebLinks
+import com.gdgnantes.devfest.core.model.Session
+import com.gdgnantes.devfest.core.model.SessionType
+import com.gdgnantes.devfest.core.model.WebLinks
 import dagger.hilt.EntryPoint
 import dagger.hilt.InstallIn
 import dagger.hilt.android.AndroidEntryPoint

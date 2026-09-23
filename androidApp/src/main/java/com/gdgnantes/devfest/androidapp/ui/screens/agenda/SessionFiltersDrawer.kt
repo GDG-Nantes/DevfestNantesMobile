@@ -28,10 +28,10 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.gdgnantes.devfest.androidapp.R
 import com.gdgnantes.devfest.androidapp.utils.SessionFilter
-import com.gdgnantes.devfest.model.Complexity
-import com.gdgnantes.devfest.model.Room
-import com.gdgnantes.devfest.model.SessionLanguage
-import com.gdgnantes.devfest.model.SessionType
+import com.gdgnantes.devfest.core.model.Complexity
+import com.gdgnantes.devfest.core.model.Room
+import com.gdgnantes.devfest.core.model.SessionLanguage
+import com.gdgnantes.devfest.core.model.SessionType
 
 @Composable
 fun AgendaFilterDrawer(

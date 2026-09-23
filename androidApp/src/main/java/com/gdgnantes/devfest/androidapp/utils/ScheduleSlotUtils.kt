@@ -4,7 +4,7 @@ import android.content.Context
 import android.content.res.Resources
 import android.text.format.DateUtils
 import androidx.core.os.ConfigurationCompat
-import com.gdgnantes.devfest.model.ScheduleSlot
+import com.gdgnantes.devfest.core.model.ScheduleSlot
 import java.util.Formatter
 import java.util.TimeZone
 

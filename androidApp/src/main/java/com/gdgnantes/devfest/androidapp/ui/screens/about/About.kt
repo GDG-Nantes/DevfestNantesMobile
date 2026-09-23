@@ -15,7 +15,7 @@ import androidx.compose.ui.unit.dp
 import com.gdgnantes.devfest.androidapp.ui.components.GithubCard
 import com.gdgnantes.devfest.androidapp.ui.screens.about.partners.Partners
 import com.gdgnantes.devfest.androidapp.ui.theme.DevFestNantesTheme
-import com.gdgnantes.devfest.model.Partner
+import com.gdgnantes.devfest.core.model.Partner
 
 @Composable
 fun About(
