@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.android.kotlin.multiplatform.library) apply false
     alias(libs.plugins.crashlytics) apply false
     alias(libs.plugins.dagger.hilt) apply false
+    alias(libs.plugins.detekt) apply false
     alias(libs.plugins.google.services) apply false
     alias(libs.plugins.kmp.native.coroutines) apply false
     alias(libs.plugins.kotlin.cocoapods) apply false
