@@ -44,11 +44,14 @@ kotlin {
         iosTarget.binaries.framework {
             baseName = "shared"
             isStatic = true
+            export(project(":core:model"))
         }
     }
 
     sourceSets {
         commonMain.dependencies {
+            api(project(":core:model"))
+
             implementation(libs.bundles.appollo)
 
             implementation(libs.kotlinx.datetime)

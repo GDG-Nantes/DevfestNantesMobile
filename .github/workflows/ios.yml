@@ -36,7 +36,8 @@ jobs:
             ~/.konan
             shared/build
             shared/.gradle
-          key: ${{ runner.os }}-kmp-${{ hashFiles('shared/**/*.kt', 'shared/build.gradle.kts', 'gradle/libs.versions.toml') }}
+            core/*/build
+          key: ${{ runner.os }}-kmp-${{ hashFiles('shared/**/*.kt', 'shared/build.gradle.kts', 'core/**/*.kt', 'core/**/build.gradle.kts', 'build-logic/**/*.kt', 'build-logic/**/*.kts', 'gradle/libs.versions.toml') }}
           restore-keys: |
             ${{ runner.os }}-kmp-
       
@@ -72,7 +73,7 @@ jobs:
           path: |
             ~/Library/Developer/Xcode/DerivedData
             build
-          key: ${{ runner.os }}-xcode-deriveddata-${{ hashFiles('iosApp/iosApp.xcodeproj/project.pbxproj') }}-${{ hashFiles('shared/**/*.kt') }}
+          key: ${{ runner.os }}-xcode-deriveddata-${{ hashFiles('iosApp/iosApp.xcodeproj/project.pbxproj') }}-${{ hashFiles('shared/**/*.kt', 'core/**/*.kt') }}
           restore-keys: |
             ${{ runner.os }}-xcode-deriveddata-${{ hashFiles('iosApp/iosApp.xcodeproj/project.pbxproj') }}-
             ${{ runner.os }}-xcode-deriveddata-
