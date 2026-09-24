@@ -11,9 +11,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.gdgnantes.devfest.androidapp.R
-import com.gdgnantes.devfest.androidapp.utils.getDateFromIso8601
 import com.gdgnantes.devfest.core.model.Session
 import com.gdgnantes.devfest.core.model.WebLinks
+import com.gdgnantes.devfest.core.ui.utils.getDateFromIso8601
 import java.text.SimpleDateFormat
 
 @Composable

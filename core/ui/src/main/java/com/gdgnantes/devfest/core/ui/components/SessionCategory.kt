@@ -1,4 +1,4 @@
-package com.gdgnantes.devfest.androidapp.ui.components
+package com.gdgnantes.devfest.core.ui.components
 
 import android.content.res.Configuration
 import androidx.compose.foundation.BorderStroke
@@ -14,8 +14,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.gdgnantes.devfest.androidapp.ui.theme.DevFestNantesTheme
 import com.gdgnantes.devfest.core.model.Category
+import com.gdgnantes.devfest.core.ui.theme.DevFestNantesTheme
 
 @Composable
 fun SessionCategory(

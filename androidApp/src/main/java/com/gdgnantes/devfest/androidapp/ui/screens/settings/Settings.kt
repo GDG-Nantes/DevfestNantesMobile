@@ -20,8 +20,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.gdgnantes.devfest.androidapp.BuildConfig
 import com.gdgnantes.devfest.androidapp.R
-import com.gdgnantes.devfest.androidapp.ui.components.appbars.TopAppBar
 import com.gdgnantes.devfest.androidapp.ui.screens.Screen
+import com.gdgnantes.devfest.core.ui.components.appbars.TopAppBar
 import com.gdgnantes.devfest.core.ui.R as CoreUiR
 
 @OptIn(ExperimentalMaterial3Api::class)

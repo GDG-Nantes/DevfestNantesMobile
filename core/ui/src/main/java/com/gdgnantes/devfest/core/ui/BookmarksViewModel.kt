@@ -1,4 +1,4 @@
-package com.gdgnantes.devfest.androidapp.ui
+package com.gdgnantes.devfest.core.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

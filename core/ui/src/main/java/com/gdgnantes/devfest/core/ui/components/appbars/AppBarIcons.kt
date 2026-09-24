@@ -1,4 +1,4 @@
-package com.gdgnantes.devfest.androidapp.ui.components.appbars
+package com.gdgnantes.devfest.core.ui.components.appbars
 
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowBack
@@ -12,8 +12,8 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
-import com.gdgnantes.devfest.androidapp.ui.theme.DevFestNantesTheme
 import com.gdgnantes.devfest.core.ui.R
+import com.gdgnantes.devfest.core.ui.theme.DevFestNantesTheme
 
 object AppBarIcons {
     @Composable

@@ -1,4 +1,4 @@
-package com.gdgnantes.devfest.androidapp.ui.screens.speakers
+package com.gdgnantes.devfest.core.ui.components
 
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.runtime.Composable

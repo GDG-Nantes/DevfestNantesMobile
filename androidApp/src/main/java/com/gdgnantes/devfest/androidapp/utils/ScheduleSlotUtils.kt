@@ -5,6 +5,8 @@ import android.content.res.Resources
 import android.text.format.DateUtils
 import androidx.core.os.ConfigurationCompat
 import com.gdgnantes.devfest.core.model.ScheduleSlot
+import com.gdgnantes.devfest.core.ui.utils.getDateFromIso8601
+import com.gdgnantes.devfest.core.ui.utils.titlecaseFirstCharIfItIsLowercase
 import java.util.Formatter
 import java.util.TimeZone
 

@@ -16,13 +16,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.gdgnantes.devfest.androidapp.ui.components.SessionCategory
-import com.gdgnantes.devfest.androidapp.ui.theme.DevFestNantesTheme
 import com.gdgnantes.devfest.core.model.Session
 import com.gdgnantes.devfest.core.model.SessionType
 import com.gdgnantes.devfest.core.model.stubs.buildSessionStub
 import com.gdgnantes.devfest.core.model.utils.getDurationAndLanguageString
 import com.gdgnantes.devfest.core.model.utils.getDurationString
+import com.gdgnantes.devfest.core.ui.components.SessionCategory
+import com.gdgnantes.devfest.core.ui.theme.DevFestNantesTheme
 
 @Composable
 fun SpeakerSession(

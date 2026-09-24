@@ -1,7 +1,7 @@
-package com.gdgnantes.devfest.androidapp.ui.screens.agenda
+package com.gdgnantes.devfest.core.ui.utils
 
 import androidx.test.ext.junit.runners.AndroidJUnit4
-import com.gdgnantes.devfest.androidapp.utils.getDateFromIso8601
+import com.gdgnantes.devfest.core.ui.utils.getDateFromIso8601
 import org.junit.Test
 import org.junit.runner.RunWith
 import java.text.SimpleDateFormat

@@ -29,14 +29,14 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.gdgnantes.devfest.androidapp.R
-import com.gdgnantes.devfest.androidapp.ui.BookmarksViewModel
-import com.gdgnantes.devfest.androidapp.ui.components.LoadingLayout
-import com.gdgnantes.devfest.androidapp.ui.components.appbars.TopAppBar
-import com.gdgnantes.devfest.androidapp.ui.theme.bookmarked
 import com.gdgnantes.devfest.core.analytics.AnalyticsPage
 import com.gdgnantes.devfest.core.model.Session
 import com.gdgnantes.devfest.core.model.SocialItem
 import com.gdgnantes.devfest.core.model.Speaker
+import com.gdgnantes.devfest.core.ui.BookmarksViewModel
+import com.gdgnantes.devfest.core.ui.components.LoadingLayout
+import com.gdgnantes.devfest.core.ui.components.appbars.TopAppBar
+import com.gdgnantes.devfest.core.ui.theme.bookmarked
 import com.gdgnantes.devfest.core.ui.R as CoreUiR
 
 @Composable

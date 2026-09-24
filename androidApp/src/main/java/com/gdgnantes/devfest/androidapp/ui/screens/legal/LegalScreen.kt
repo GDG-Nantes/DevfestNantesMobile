@@ -19,7 +19,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.viewinterop.AndroidView
 import com.gdgnantes.devfest.androidapp.ui.screens.Screen
-import com.gdgnantes.devfest.androidapp.ui.theme.DevFestNantesTheme
+import com.gdgnantes.devfest.core.ui.components.appbars.TopAppBar
+import com.gdgnantes.devfest.core.ui.theme.DevFestNantesTheme
 import com.gdgnantes.devfest.core.ui.R as CoreUiR
 
 @Composable
@@ -29,7 +30,7 @@ fun LegalScreen(
 ) {
     Scaffold(
         topBar = {
-            com.gdgnantes.devfest.androidapp.ui.components.appbars.TopAppBar(
+            TopAppBar(
                 title = stringResource(id = Screen.Legal.title),
                 modifier = Modifier.testTag("topAppBar"),
                 navigationIcon = {

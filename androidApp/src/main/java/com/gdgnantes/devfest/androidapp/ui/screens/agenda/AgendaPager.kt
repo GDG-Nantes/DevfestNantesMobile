@@ -23,11 +23,11 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import com.gdgnantes.devfest.androidapp.ui.UiState
-import com.gdgnantes.devfest.androidapp.ui.components.LoadingLayout
-import com.gdgnantes.devfest.androidapp.utils.getDayFromIso8601
 import com.gdgnantes.devfest.core.model.AgendaDay
 import com.gdgnantes.devfest.core.model.Session
+import com.gdgnantes.devfest.core.ui.UiState
+import com.gdgnantes.devfest.core.ui.components.LoadingLayout
+import com.gdgnantes.devfest.core.ui.utils.getDayFromIso8601
 import kotlinx.coroutines.launch
 
 @Composable

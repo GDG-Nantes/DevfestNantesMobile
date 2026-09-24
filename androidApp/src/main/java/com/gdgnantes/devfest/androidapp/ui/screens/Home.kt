@@ -27,7 +27,6 @@ import androidx.navigation.compose.rememberNavController
 import com.gdgnantes.devfest.androidapp.R
 import com.gdgnantes.devfest.androidapp.services.ExternalContentService
 import com.gdgnantes.devfest.androidapp.ui.components.appbars.BottomAppBar
-import com.gdgnantes.devfest.androidapp.ui.components.appbars.TopAppBar
 import com.gdgnantes.devfest.androidapp.ui.screens.about.About
 import com.gdgnantes.devfest.androidapp.ui.screens.agenda.Agenda
 import com.gdgnantes.devfest.androidapp.ui.screens.home.HomeViewModel
@@ -45,6 +44,7 @@ import com.gdgnantes.devfest.core.model.WebLinks.SOCIAL_LINKEDIN
 import com.gdgnantes.devfest.core.model.WebLinks.SOCIAL_TWITTER
 import com.gdgnantes.devfest.core.model.WebLinks.SOCIAL_YOUTUBE
 import com.gdgnantes.devfest.core.model.WebLinks.WEBSITE
+import com.gdgnantes.devfest.core.ui.components.appbars.TopAppBar
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)

@@ -5,9 +5,9 @@ import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.gdgnantes.devfest.androidapp.ui.UiState
-import com.gdgnantes.devfest.androidapp.ui.components.LoadingLayout
 import com.gdgnantes.devfest.core.model.Venue
+import com.gdgnantes.devfest.core.ui.UiState
+import com.gdgnantes.devfest.core.ui.components.LoadingLayout
 
 @Composable
 fun Venue(

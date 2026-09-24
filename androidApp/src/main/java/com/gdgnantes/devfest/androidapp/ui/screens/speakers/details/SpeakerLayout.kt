@@ -22,13 +22,13 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.gdgnantes.devfest.androidapp.R
-import com.gdgnantes.devfest.androidapp.ui.UiState
-import com.gdgnantes.devfest.androidapp.ui.components.LoadingLayout
-import com.gdgnantes.devfest.androidapp.ui.components.appbars.TopAppBar
 import com.gdgnantes.devfest.androidapp.ui.screens.speakers.SpeakerViewModel
 import com.gdgnantes.devfest.core.model.Session
 import com.gdgnantes.devfest.core.model.SocialItem
 import com.gdgnantes.devfest.core.model.Speaker
+import com.gdgnantes.devfest.core.ui.UiState
+import com.gdgnantes.devfest.core.ui.components.LoadingLayout
+import com.gdgnantes.devfest.core.ui.components.appbars.TopAppBar
 import com.gdgnantes.devfest.core.ui.R as CoreUiR
 
 @Composable

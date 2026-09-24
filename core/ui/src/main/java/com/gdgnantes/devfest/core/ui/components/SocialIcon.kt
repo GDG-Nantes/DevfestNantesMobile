@@ -1,4 +1,4 @@
-package com.gdgnantes.devfest.androidapp.ui.components
+package com.gdgnantes.devfest.core.ui.components
 
 import androidx.annotation.DrawableRes
 import androidx.compose.foundation.clickable

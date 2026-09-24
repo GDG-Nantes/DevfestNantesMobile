@@ -23,8 +23,8 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.core.os.ConfigurationCompat
-import com.gdgnantes.devfest.androidapp.utils.getDateFromIso8601
 import com.gdgnantes.devfest.core.model.Session
+import com.gdgnantes.devfest.core.ui.utils.getDateFromIso8601
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import java.text.DateFormat

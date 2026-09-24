@@ -1,4 +1,4 @@
-package com.gdgnantes.devfest.androidapp.ui.components
+package com.gdgnantes.devfest.core.ui.components
 
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.Box
@@ -11,7 +11,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.gdgnantes.devfest.androidapp.ui.theme.DevFestNantesTheme
+import com.gdgnantes.devfest.core.ui.theme.DevFestNantesTheme
 
 @Composable
 fun LoadingLayout(modifier: Modifier = Modifier) {

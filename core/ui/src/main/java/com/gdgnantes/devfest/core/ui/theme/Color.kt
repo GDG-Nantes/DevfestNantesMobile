@@ -1,4 +1,4 @@
-package com.gdgnantes.devfest.androidapp.ui.theme
+package com.gdgnantes.devfest.core.ui.theme
 
 import androidx.compose.ui.graphics.Color
 

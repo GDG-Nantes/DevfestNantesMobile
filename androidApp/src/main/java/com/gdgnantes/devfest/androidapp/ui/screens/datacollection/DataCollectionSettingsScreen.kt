@@ -36,7 +36,8 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import com.gdgnantes.devfest.androidapp.R
 import com.gdgnantes.devfest.androidapp.services.DataCollectionService
 import com.gdgnantes.devfest.androidapp.ui.screens.Screen
-import com.gdgnantes.devfest.androidapp.ui.theme.DevFestNantesTheme
+import com.gdgnantes.devfest.core.ui.components.appbars.TopAppBar
+import com.gdgnantes.devfest.core.ui.theme.DevFestNantesTheme
 import com.gdgnantes.devfest.core.ui.R as CoreUiR
 
 @Composable
@@ -66,7 +67,7 @@ fun DataCollectionSettingsScreen(
 ) {
     Scaffold(
         topBar = {
-            com.gdgnantes.devfest.androidapp.ui.components.appbars.TopAppBar(
+            TopAppBar(
                 title = stringResource(id = Screen.DataCollection.title),
                 modifier = Modifier.testTag("topAppBar"),
                 navigationIcon = {

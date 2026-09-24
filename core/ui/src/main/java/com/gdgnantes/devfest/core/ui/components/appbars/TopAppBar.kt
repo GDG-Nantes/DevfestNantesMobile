@@ -1,4 +1,4 @@
-package com.gdgnantes.devfest.androidapp.ui.components.appbars
+package com.gdgnantes.devfest.core.ui.components.appbars
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -11,8 +11,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.gdgnantes.devfest.androidapp.ui.components.appbars.AppBarIcons.Back
-import com.gdgnantes.devfest.androidapp.ui.theme.DevFestNantesTheme
+import com.gdgnantes.devfest.core.ui.components.appbars.AppBarIcons.Back
+import com.gdgnantes.devfest.core.ui.theme.DevFestNantesTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

@@ -40,10 +40,10 @@ import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.gdgnantes.devfest.androidapp.ui.UiState
-import com.gdgnantes.devfest.androidapp.ui.components.LoadingLayout
-import com.gdgnantes.devfest.androidapp.ui.screens.speakers.SpeakerPicture
 import com.gdgnantes.devfest.core.model.Speaker
+import com.gdgnantes.devfest.core.ui.UiState
+import com.gdgnantes.devfest.core.ui.components.LoadingLayout
+import com.gdgnantes.devfest.core.ui.components.SpeakerPicture
 import kotlinx.coroutines.launch
 
 /*
