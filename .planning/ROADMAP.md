@@ -99,12 +99,12 @@ Plans (strictly sequential — every step edits `settings.gradle.dcl` and the ap
 
 **Wave 1**
 
-- [ ] 03-01-PLAN.md — (HALTED at Task 2 CI gate: Swift-name collision flip; resolved by 03-10 + 03-11) Tracer: `build-logic` (devfest.detekt, devfest.kmp.library) + `:core:model` pure move/repackage, re-exported by the `:shared` umbrella; Swift-name gate; CI green; iOS simulator checkpoint 1 (D-09, D-10, D-12, D-13, D-16, D-20)
+- [x] 03-01-PLAN.md — (halt resolved by 03-10 + 03-11) Tracer: `build-logic` (devfest.detekt, devfest.kmp.library) + `:core:model` pure move/repackage, re-exported by the `:shared` umbrella; Swift-name gate; CI green; iOS simulator checkpoint 1 (D-09, D-10, D-12, D-13, D-16, D-20)
 - [x] 03-10-PLAN.md — (03-01 halted; no depends_on on 03-01, runs on 03-01's landed commits) 03-01 halt fix: Apollo schema-type holders renamed via `@targetName` (GraphQLVenue/Session/Speaker/Room/Partner), Swift call sites updated once (D-11 amendment), `swift-names-gate.sh` strengthened (member sets + type-level collisions) and re-baselined; CI green (D-11, D-16)
 
 **Wave 2** *(blocked on Wave 1)*
 
-- [ ] 03-11-PLAN.md — D-12 iOS simulator checkpoint 1 (carried over from 03-01) + re-summarize 03-01 as complete; 03-02..03-09 runnable on the next `/gsd-execute-phase 3` run (D-09, D-12)
+- [x] 03-11-PLAN.md — D-12 iOS simulator checkpoint 1 (carried over from 03-01) + re-summarize 03-01 as complete; 03-02..03-09 runnable on the next `/gsd-execute-phase 3` run (D-09, D-12)
 
 **Wave 3** *(blocked on Wave 2)*
 

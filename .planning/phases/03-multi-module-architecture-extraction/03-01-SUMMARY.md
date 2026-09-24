@@ -87,18 +87,27 @@ coverage:
       - kind: other
         ref: "swift-names-gate.sh check -> SWIFT-NAMES-OK (name-existence + collision-count gate)"
         status: pass
+      - kind: other
+        ref: "swift-names-gate.sh check (strengthened in 03-10: member sets + type-level collisions) -> SWIFT-NAMES-OK"
+        status: pass
+      - kind: integration
+        ref: "CI-GREEN-BOTH df23c87a48edfa312676209dfaf9fab417e84c8a — android.yml https://github.com/GDG-Nantes/DevfestNantesMobile/actions/runs/35986942103, ios.yml https://github.com/GDG-Nantes/DevfestNantesMobile/actions/runs/35986942105 (03-10 Task 2)"
+        status: pass
     human_judgment: true
-    rationale: "The gate that passed (name-existence + collision-COUNT) does not detect a same-count IDENTITY swap between two colliding names — which is exactly what broke iOS CI. This deliverable is NOT actually achieved: iOS CI failed on Swift compilation across ~10 files. See Deviations / Known Stubs below."
+    rationale: "D3 was completed by 03-10 after the halt: the Apollo schema-type holders were renamed via @targetName, removing the identity-swap collision, and the Swift call sites were updated once under the D-11 amendment."
   - id: D4
     description: "iOS simulator smoke run (agenda/speakers/venue/about) — D-12 checkpoint 1"
     human_judgment: true
-    verification: []
-    rationale: "Never reached. Task 3 (the checkpoint) requires Task 2's CI-GREEN-BOTH gate, which failed. Per the plan's own explicit instruction, iOS CI failure on Swift compilation is the D-09 abort signal: stop, do not continue."
+    verification:
+      - kind: manual
+        ref: "03-11 Task 1 — D-12 checkpoint 1 approved 2026-09-24"
+        status: pass
+    rationale: "D4 was carried over to and completed by 03-11 Task 1 (D-12 checkpoint 1), approved by the human on the fixed 03-10 umbrella framework."
 
 # Metrics
 duration: 95min
 completed: 2026-09-23
-status: halted
+status: complete
 ---
 
 # Phase 3 Plan 1: Tracer — build-logic + core/model extraction Summary
@@ -235,6 +244,16 @@ None - no external service configuration required.
 - Android: https://github.com/GDG-Nantes/DevfestNantesMobile/actions/runs/35847334085 (success)
 - iOS: https://github.com/GDG-Nantes/DevfestNantesMobile/actions/runs/35847334261 (failure — Swift compilation)
 - PR: https://github.com/GDG-Nantes/DevfestNantesMobile/pull/419
+
+## Halt Resolution (03-10 + 03-11)
+
+- **User decision** (STATE.md `[Phase 03]` 2026-09-23 Decisions entry): options 1+3 — (1) rename the Apollo-generated response types away from the domain-model names via Apollo Gradle config, and (3) strengthen `swift-names-gate.sh` to diff each colliding type's member set, not just name+count. Both were planned and executed outside this plan's scope, in 03-10.
+- **Mechanism** (03-10 Task 1): an Apollo 5.2.0 `@targetName` schema extension, added in `shared/src/commonMain/graphql/extra.graphqls`, renames the five colliding Apollo schema-type holders to `GraphQLVenue`/`GraphQLSession`/`GraphQLSpeaker`/`GraphQLRoom`/`GraphQLPartner` — permanently removing the Kotlin/Native Swift-name collision independent of any future package layout, with the GraphQL wire name, operation IDs/documents and cache type policies unchanged (verified byte-identical before/after).
+- **Correction to this SUMMARY's collision table above**: the classes that actually collide with each domain model are Apollo's **schema-type holders** (`com.gdgnantes.devfest.graphql.type.{Venue,Session,Speaker,Room,Partner}` — each with only `init()` + `companion` and a nested `Data` protocol), not the response models (`GetXQuery.X`/`fragment.XDetails.X`) this SUMMARY originally named. 03-10 verified this directly against the real Objective-C header before making any change.
+- **Strengthened gate** (03-10 Task 2): `swift-names-gate.sh` gained a `selftest` mode, a `SWIFT_GATE_HEADER` override, and two new checks — `SWIFT-TYPE-COLLISION` (a type-level name ending in `_`) and `SWIFT-MEMBERS-CHANGED` (a referenced type's member set differs from baseline) — that catch an identity swap behind an unchanged Swift name, which the original name-existence + collision-count gate could not. Replaying the real pre-fix header through the strengthened gate reproduces the exact 03-01 failure (`SWIFT-TYPE-COLLISION Venue_` and siblings), proving it would have caught this before push.
+- **D-11 amendment**: recorded in `.planning/phases/03-multi-module-architecture-extraction/03-CONTEXT.md` directly under the original D-11 bullet, as a one-time, bounded exception (the five collision families only).
+- **Superseded assumption**: this plan's Task 2 declared "Swift sources need no change" for the `:core:model` repackage. That assumption did not hold — 9 Swift files / 15 lines needed updating (underscore-suffixed domain references → unsuffixed) once the collision identity was fixed in 03-10, per the D-11 amendment. `iosApp/**/*.swift` was otherwise unchanged from `main`.
+- **Resume instruction**: 03-01 is now `status: complete`. `03-02`..`03-09` become runnable on the **next** `/gsd-execute-phase 3` run (the current run computed `blocked_by` before this flip).
 
 ---
 *Phase: 03-multi-module-architecture-extraction*
