@@ -19,3 +19,4 @@ rootProject.name = "DevFest_Nantes"
 include(":androidApp")
 include(":shared")
 include(":core:model")
+include(":core:network")

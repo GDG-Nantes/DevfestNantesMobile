@@ -7,7 +7,6 @@ plugins {
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.ksp)
     alias(libs.plugins.kmp.native.coroutines)
-    alias(libs.plugins.appollo)
 }
 
 detekt {
@@ -52,7 +51,7 @@ kotlin {
         commonMain.dependencies {
             api(project(":core:model"))
 
-            implementation(libs.bundles.appollo)
+            implementation(project(":core:network"))
 
             implementation(libs.kotlinx.datetime)
             implementation(libs.kotlinx.serialization.json)
@@ -72,14 +71,6 @@ kotlin.targets.withType(org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarge
 
 kotlin.sourceSets.all {
     languageSettings.optIn("kotlin.experimental.ExperimentalObjCName")
-}
-
-apollo {
-    service("service") {
-        packageName.set("com.gdgnantes.devfest.graphql")
-        plugin("com.apollographql.cache:normalized-cache-apollo-compiler-plugin:${libs.versions.appolloCache.get()}")
-        pluginArgument("com.apollographql.cache.packageName", packageName.get())
-    }
 }
 
 dependencies {
