@@ -30,6 +30,7 @@ Requirements pour ce chantier de modernisation. Chaque requirement mappe vers un
 - [ ] **ARCH-03**: Les modules `feature-*` (agenda, speakers, venue, session-detail, about, settings) existent, chacun possédant ses propres ViewModel(s) et écrans Compose
 
 > **Amendement Phase 3 (03-CONTEXT.md D-04..D-06, 2026-09-22) :** le module Koin par feature est livré en Phase 4 (DI-02) — Hilt reste en place pendant la Phase 3. `feature-bookmarks` est retiré (aucun écran : `BookmarksStore` → `core-data`, toggle + `BookmarksViewModel` → `core-ui`) et `feature-about` est ajouté (About + Partners).
+
 - [ ] **ARCH-04**: `iosApp` continue de consommer un seul framework Kotlin/Native (framework umbrella agrégeant tous les modules KMP) malgré le découpage de `shared` en plusieurs modules Gradle
 
 ### DI (Migration Hilt → Koin)

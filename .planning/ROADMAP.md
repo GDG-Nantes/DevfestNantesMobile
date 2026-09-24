@@ -92,7 +92,7 @@ Plans:
   3. The `feature-*` modules (agenda, speakers, venue, session-detail, about, settings) exist, each with its own ViewModel(s) and Compose screens (per-module Koin modules are delivered in Phase 4 via DI-02; bookmarks has no screen and lives in `core-data`/`core-ui` — see 03-CONTEXT.md D-04..D-06)
   4. `iosApp` continues to build and consume a single umbrella Kotlin/Native framework aggregating all KMP modules, despite `shared` now being split across several Gradle modules
 
-**Plans:** 1/11 plans executed
+**Plans:** 2/11 plans executed
 **UI hint**: yes
 
 Plans (strictly sequential — every step edits `settings.gradle.dcl` and the app/umbrella build files; D-18 bottom-up order):
@@ -100,7 +100,7 @@ Plans (strictly sequential — every step edits `settings.gradle.dcl` and the ap
 **Wave 1**
 
 - [ ] 03-01-PLAN.md — (HALTED at Task 2 CI gate: Swift-name collision flip; resolved by 03-10 + 03-11) Tracer: `build-logic` (devfest.detekt, devfest.kmp.library) + `:core:model` pure move/repackage, re-exported by the `:shared` umbrella; Swift-name gate; CI green; iOS simulator checkpoint 1 (D-09, D-10, D-12, D-13, D-16, D-20)
-- [ ] 03-10-PLAN.md — (03-01 halted; no depends_on on 03-01, runs on 03-01's landed commits) 03-01 halt fix: Apollo schema-type holders renamed via `@targetName` (GraphQLVenue/Session/Speaker/Room/Partner), Swift call sites updated once (D-11 amendment), `swift-names-gate.sh` strengthened (member sets + type-level collisions) and re-baselined; CI green (D-11, D-16)
+- [x] 03-10-PLAN.md — (03-01 halted; no depends_on on 03-01, runs on 03-01's landed commits) 03-01 halt fix: Apollo schema-type holders renamed via `@targetName` (GraphQLVenue/Session/Speaker/Room/Partner), Swift call sites updated once (D-11 amendment), `swift-names-gate.sh` strengthened (member sets + type-level collisions) and re-baselined; CI green (D-11, D-16)
 
 **Wave 2** *(blocked on Wave 1)*
 
@@ -176,6 +176,6 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 |-------|----------------|--------|-----------|
 | 1. CI Pipeline Fixed & Optimized | 3/3 | Complete    | 2026-09-17 |
 | 2. Dependency & Build Tooling Upgrade | 5/5 | Complete    | 2026-09-19 |
-| 3. Multi-Module Architecture Extraction | 1/11 | In Progress|  |
+| 3. Multi-Module Architecture Extraction | 2/11 | In Progress|  |
 | 4. Hilt to Koin DI Migration | 0/TBD | Not started | - |
 | 5. Test Coverage Retrofit | 0/TBD | Not started | - |
