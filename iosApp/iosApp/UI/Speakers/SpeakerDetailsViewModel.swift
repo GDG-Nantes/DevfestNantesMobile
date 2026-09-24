@@ -14,8 +14,8 @@ import os
 
 
 class SpeakerDetailsViewModel: BaseViewModel {
-    @Published var speaker: Speaker_?
-    @Published var speakerSession: [Session_]?
+    @Published var speaker: Speaker?
+    @Published var speakerSession: [Session]?
     @Published var isLoading: Bool = true
     var speakerId: String
     

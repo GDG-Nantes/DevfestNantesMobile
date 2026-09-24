@@ -100,7 +100,7 @@ struct SpeakersView: View {
 // MARK: - Sous-vues / Helpers
 
 struct SpeakerWrapper: Identifiable {
-    var speaker: Speaker_
+    var speaker: Speaker
     var id: String { speaker.id }
 }
 

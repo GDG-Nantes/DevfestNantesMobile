@@ -16,7 +16,7 @@ import os
 
 class AgendaViewModel: BaseViewModel {
     @Published var agendaContent: AgendaContent = AgendaContent(sections: [])
-    @Published var roomsContent: [Room_]?
+    @Published var roomsContent: [Room]?
     @Published var isLoading = true
     let defaults = UserDefaults.standard
 
@@ -92,7 +92,7 @@ class AgendaViewModel: BaseViewModel {
                 dataSource: "graphql"
             ) {
                 let sessionsSequence = asyncSequence(for: self.store.sessions)
-                var sessions: [Session_] = []
+                var sessions: [Session] = []
                 
                 for try await sessionsList in sessionsSequence {
                     sessions = sessionsList
@@ -118,7 +118,7 @@ class AgendaViewModel: BaseViewModel {
     }
     
     ///Allows you to classify sessions by time section
-    private func sessionsChanged(sessions: [Session_]) {
+    private func sessionsChanged(sessions: [Session]) {
         let groupedSessions = Dictionary(grouping: sessions) { getDate(date: $0.scheduleSlot.startDate) }
         let sortedKeys = groupedSessions.keys.sorted()
         var sections = [AgendaContent.Section]()
