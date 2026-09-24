@@ -92,7 +92,7 @@ Plans:
   3. The `feature-*` modules (agenda, speakers, venue, session-detail, about, settings) exist, each with its own ViewModel(s) and Compose screens (per-module Koin modules are delivered in Phase 4 via DI-02; bookmarks has no screen and lives in `core-data`/`core-ui` — see 03-CONTEXT.md D-04..D-06)
   4. `iosApp` continues to build and consume a single umbrella Kotlin/Native framework aggregating all KMP modules, despite `shared` now being split across several Gradle modules
 
-**Plans:** 5/11 plans executed
+**Plans:** 6/11 plans executed
 **UI hint**: yes
 
 Plans (strictly sequential — every step edits `settings.gradle.dcl` and the app/umbrella build files; D-18 bottom-up order):
@@ -116,7 +116,7 @@ Plans (strictly sequential — every step edits `settings.gradle.dcl` and the ap
 
 **Wave 5** *(blocked on Wave 4)*
 
-- [ ] 03-04-PLAN.md — `:core:testing` + Android convention plugins (library, hilt, feature, application); `:androidApp` adopts them with identical output (D-02, D-13, D-19)
+- [x] 03-04-PLAN.md — `:core:testing` + Android convention plugins (library, hilt, feature, application); `:androidApp` adopts them with identical output (D-02, D-13, D-19)
 
 **Wave 6** *(blocked on Wave 5)*
 
@@ -176,6 +176,6 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 |-------|----------------|--------|-----------|
 | 1. CI Pipeline Fixed & Optimized | 3/3 | Complete    | 2026-09-17 |
 | 2. Dependency & Build Tooling Upgrade | 5/5 | Complete    | 2026-09-19 |
-| 3. Multi-Module Architecture Extraction | 5/11 | In Progress|  |
+| 3. Multi-Module Architecture Extraction | 6/11 | In Progress|  |
 | 4. Hilt to Koin DI Migration | 0/TBD | Not started | - |
 | 5. Test Coverage Retrofit | 0/TBD | Not started | - |
