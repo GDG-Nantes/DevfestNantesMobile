@@ -3,16 +3,16 @@ gsd_state_version: "1.0"
 current_phase: 03
 current_phase_name: Multi-Module Architecture Extraction
 status: executing
-stopped_at: "Completed 03-11-PLAN.md (D-12 checkpoint 1 approved; 03-01 halt resolved, status: complete)"
-last_updated: "2026-09-24T13:27:31.512Z"
+stopped_at: Completed 03-02-PLAN.md
+last_updated: "2026-09-24T14:05:22.974Z"
 last_activity: 2026-09-24
 last_activity_desc: Phase 03 execution started
-state_head: 3211411a2c2cdd5ccc0ac01125221bcd83443b8e
+state_head: de0d83dbe817d01adf31a1dd0badfde15961cad5
 progress:
   total_phases: 5
   completed_phases: 2
   total_plans: 19
-  completed_plans: 11
+  completed_plans: 12
   percent: 40
 ---
 
@@ -28,7 +28,7 @@ See: .planning/PROJECT.md (updated 2026-09-17)
 ## Current Position
 
 Phase: 03 (Multi-Module Architecture Extraction) — EXECUTING
-Plan: 3 of 11
+Plan: 4 of 11
 Status: Ready to execute
 Last activity: 2026-09-24 — Phase 03 execution started
 
@@ -70,6 +70,7 @@ Progress: [████░░░░░░] 40%
 | Phase 03 P01 | 95min | 2 tasks | 77 files |
 | Phase 03 P10 | 70min | 2 tasks | 16 files |
 | Phase 03 P11 | 15min | 2 tasks | 4 files |
+| Phase 03 P02 | 65min | 2 tasks | 31 files |
 
 ## Accumulated Context
 
@@ -97,6 +98,7 @@ Recent decisions affecting current work:
 - [Phase 02]: BUILD-01..BUILD-07 version outcomes consolidated into a single STATE.md record, discharging D-03's documentation obligation for the whole phase
 - [Phase 03]: 03-01 halt resolution (user, 2026-09-23): options 1+3, planned OUTSIDE 03-01's scope — (1) rename Apollo-generated response types away from domain-model names (Venue/Session/Speaker/Room/Partner) via Apollo Gradle config; (3) strengthen swift-names-gate.sh to diff each colliding type's member set, not just name+count. Requires replanning before 03-01 Task 2 CI gate / Task 3 can pass. — Durable fix for the K/N Swift-name collision flip; option 2 alone would leave 4 latent flips for 03-02/03-03
 - [Phase 03]: 03-01 halt resolved — Apollo schema-type holders renamed via @targetName (GraphQL<Type>), swift-names-gate.sh strengthened (member sets + type-level collisions), D-11 one-time Swift rename amendment; 03-02..03-09 runnable on next /gsd-execute-phase 3
+- [Phase 03]: [Phase 03] 03-02: extracted :core:network (Apollo, implementation-only, never export()-ed, D-11) and :core:analytics (exported, D-11) as two-commit-per-module moves (D-16); discovered and closed a Kotlin/Native ObjC-header leak where public extension functions/properties on non-exported :core:network receiver types forced module-prefixed shadow declarations into shared.h — fixed by marking 8 declarations (Mappers.kt's 7 toXxx() functions, RoomSortIndex.kt's sortIndex property) internal — No explicit export() line existed for :core:network, but public extension-function receivers alone were enough to leak its non-exported Apollo types into the iOS umbrella header; the acceptance check "no export line" alone could not have caught this — swift-names-gate.sh's member/collision diff did.
 
 ### Pending Todos
 
@@ -174,6 +176,6 @@ Items acknowledged and deferred at milestone close, most recent first:
 
 ## Session Continuity
 
-Last session: 2026-09-24T13:27:31.491Z
-Stopped at: Completed 03-11-PLAN.md (D-12 checkpoint 1 approved; 03-01 halt resolved, status: complete)
+Last session: 2026-09-24T14:05:22.952Z
+Stopped at: Completed 03-02-PLAN.md
 Resume file: None
