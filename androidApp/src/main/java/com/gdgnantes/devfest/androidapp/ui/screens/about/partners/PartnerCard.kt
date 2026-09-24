@@ -17,11 +17,11 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import com.gdgnantes.devfest.androidapp.R
 import com.gdgnantes.devfest.androidapp.ui.theme.DevFestNantesTheme
 import com.gdgnantes.devfest.androidapp.ui.theme.partnersLogoBackground
 import com.gdgnantes.devfest.core.model.Partner
 import com.gdgnantes.devfest.core.model.stubs.buildPartnerStub
+import com.gdgnantes.devfest.core.ui.R
 import timber.log.Timber
 
 @Composable

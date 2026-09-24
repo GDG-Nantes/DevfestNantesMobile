@@ -20,6 +20,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.gdgnantes.devfest.androidapp.R
 import com.gdgnantes.devfest.androidapp.ui.theme.DevFestNantesTheme
+import com.gdgnantes.devfest.core.ui.R as CoreUiR
 
 @Composable
 fun GithubCard(
@@ -42,7 +43,7 @@ fun GithubCard(
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
             Icon(
-                painter = painterResource(id = R.drawable.github),
+                painter = painterResource(id = CoreUiR.drawable.github),
                 contentDescription = stringResource(R.string.content_description_logo_github),
                 tint = if (isSystemInDarkTheme()) Color.White else Color.Black
             )

@@ -3,7 +3,6 @@
   <string name="title_activity_main">Home</string>
   <string name="screen_home">Home</string>
   <string name="screen_agenda">Agenda</string>
-  <string name="action_back">Back</string>
   <string name="screen_venue">Venue</string>
   <string name="screen_about">About</string>
   <string name="app_name" translatable="false">DevFest Nantes</string>
@@ -39,9 +38,6 @@
   <string name="partners_platinium_title" translatable="false">PLATINIUM</string>
   <string name="partners_gold_title" translatable="false">GOLD</string>
   <string name="partners_virtual_title" translatable="false">VIRTUAL</string>
-  <string name="content_description_logo">%1$s logo. Link to the web page.</string>
-  <string name="content_description_speaker_website_icon">Website icon. Link to the speaker\'s website.</string>
-  <string name="content_description_speaker_picture">%1$s\'s profile picture.</string>
   <string name="content_description_about_header">DevFest Nantes about logo header.</string>
   <string name="screen_speakers">Speakers</string>
   <string name="screen_speaker">Speaker</string>

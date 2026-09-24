@@ -37,6 +37,7 @@ import com.gdgnantes.devfest.core.analytics.AnalyticsPage
 import com.gdgnantes.devfest.core.model.Session
 import com.gdgnantes.devfest.core.model.SocialItem
 import com.gdgnantes.devfest.core.model.Speaker
+import com.gdgnantes.devfest.core.ui.R as CoreUiR
 
 @Composable
 fun SessionLayout(
@@ -134,7 +135,7 @@ fun SessionLayout(
                         Icon(
                             imageVector = Icons.Filled.ArrowBack,
                             tint = MaterialTheme.colorScheme.onSurface,
-                            contentDescription = stringResource(id = R.string.action_back)
+                            contentDescription = stringResource(id = CoreUiR.string.action_back)
                         )
                     }
                 }

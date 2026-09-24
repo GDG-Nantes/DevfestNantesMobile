@@ -37,6 +37,7 @@ import com.gdgnantes.devfest.androidapp.R
 import com.gdgnantes.devfest.androidapp.services.DataCollectionService
 import com.gdgnantes.devfest.androidapp.ui.screens.Screen
 import com.gdgnantes.devfest.androidapp.ui.theme.DevFestNantesTheme
+import com.gdgnantes.devfest.core.ui.R as CoreUiR
 
 @Composable
 fun DataCollectionSettingsScreen(
@@ -73,7 +74,7 @@ fun DataCollectionSettingsScreen(
                         Icon(
                             imageVector = Icons.Filled.ArrowBack,
                             tint = MaterialTheme.colorScheme.onSurface,
-                            contentDescription = stringResource(id = R.string.action_back)
+                            contentDescription = stringResource(id = CoreUiR.string.action_back)
                         )
                     }
                 }

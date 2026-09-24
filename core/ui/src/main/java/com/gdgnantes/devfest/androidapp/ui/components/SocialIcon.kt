@@ -11,9 +11,9 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.gdgnantes.devfest.androidapp.R
 import com.gdgnantes.devfest.core.model.SocialItem
 import com.gdgnantes.devfest.core.model.SocialType
+import com.gdgnantes.devfest.core.ui.R
 
 @Composable
 fun SocialIcon(

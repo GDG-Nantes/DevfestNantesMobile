@@ -18,9 +18,9 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.viewinterop.AndroidView
-import com.gdgnantes.devfest.androidapp.R
 import com.gdgnantes.devfest.androidapp.ui.screens.Screen
 import com.gdgnantes.devfest.androidapp.ui.theme.DevFestNantesTheme
+import com.gdgnantes.devfest.core.ui.R as CoreUiR
 
 @Composable
 fun LegalScreen(
@@ -37,7 +37,7 @@ fun LegalScreen(
                         Icon(
                             imageVector = Icons.Filled.ArrowBack,
                             tint = MaterialTheme.colorScheme.onSurface,
-                            contentDescription = stringResource(id = R.string.action_back)
+                            contentDescription = stringResource(id = CoreUiR.string.action_back)
                         )
                     }
                 }

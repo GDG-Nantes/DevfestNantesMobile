@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+  <string name="action_back">Retour</string>
+  <string name="content_description_logo">Logo de %1$s logo. Lien vers la page web.</string>
+  <string name="content_description_speaker_website_icon">Icon de site web. Lien vers le site web du speaker.</string>
+  <string name="content_description_speaker_picture">Photo de profil d\'%1$s.</string>
+</resources>

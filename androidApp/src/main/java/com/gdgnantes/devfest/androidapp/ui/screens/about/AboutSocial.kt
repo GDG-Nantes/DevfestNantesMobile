@@ -17,6 +17,7 @@ import androidx.compose.ui.unit.dp
 import com.gdgnantes.devfest.androidapp.R
 import com.gdgnantes.devfest.androidapp.ui.components.SocialIcon
 import com.gdgnantes.devfest.androidapp.ui.theme.DevFestNantesTheme
+import com.gdgnantes.devfest.core.ui.R as CoreUiR
 
 @Composable
 fun AboutSocial(
@@ -42,30 +43,30 @@ fun AboutSocial(
             horizontalArrangement = Arrangement.SpaceAround
         ) {
             SocialIcon(
-                resourceId = R.drawable.ic_network_facebook,
+                resourceId = CoreUiR.drawable.ic_network_facebook,
                 contentDescription =
                 stringResource(
-                    id = R.string.content_description_logo,
+                    id = CoreUiR.string.content_description_logo,
                     "Facebook"
                 ),
                 onClick = onFacebookClick
             )
 
             SocialIcon(
-                resourceId = R.drawable.ic_network_twitter,
+                resourceId = CoreUiR.drawable.ic_network_twitter,
                 contentDescription =
                 stringResource(
-                    id = R.string.content_description_logo,
+                    id = CoreUiR.string.content_description_logo,
                     "Twitter"
                 ),
                 onClick = onTwitterClick
             )
 
             SocialIcon(
-                resourceId = R.drawable.ic_network_linkedin,
+                resourceId = CoreUiR.drawable.ic_network_linkedin,
                 contentDescription =
                 stringResource(
-                    id = R.string.content_description_logo,
+                    id = CoreUiR.string.content_description_logo,
                     "LinkedIn"
                 ),
                 onClick = onLinkedInClick
@@ -75,7 +76,7 @@ fun AboutSocial(
                 resourceId = R.drawable.ic_network_youtube,
                 contentDescription =
                 stringResource(
-                    id = R.string.content_description_logo,
+                    id = CoreUiR.string.content_description_logo,
                     "Youtube"
                 ),
                 onClick = onYouTubeClick

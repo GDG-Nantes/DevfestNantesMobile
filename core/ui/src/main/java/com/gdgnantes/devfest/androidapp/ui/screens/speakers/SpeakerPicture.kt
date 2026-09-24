@@ -9,8 +9,8 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import coil.compose.AsyncImage
 import coil.request.ImageRequest
-import com.gdgnantes.devfest.androidapp.R
 import com.gdgnantes.devfest.core.model.Speaker
+import com.gdgnantes.devfest.core.ui.R
 
 @Composable
 fun SpeakerPicture(
