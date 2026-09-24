@@ -45,6 +45,7 @@ kotlin {
             isStatic = true
             export(project(":core:model"))
             export(project(":core:analytics"))
+            export(project(":core:data"))
         }
     }
 
@@ -52,6 +53,7 @@ kotlin {
         commonMain.dependencies {
             api(project(":core:model"))
             api(project(":core:analytics"))
+            api(project(":core:data"))
 
             implementation(project(":core:network"))
 

@@ -136,6 +136,7 @@ dependencies {
 
     implementation(project(":shared"))
     implementation(project(":core:analytics"))
+    implementation(project(":core:data"))
 
     implementation(libs.bundles.accompanist)
     implementation(libs.androidx.browser)

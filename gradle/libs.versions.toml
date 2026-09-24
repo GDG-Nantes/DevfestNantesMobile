@@ -8,6 +8,7 @@ androidXJUnitVersion = "1.2.1"
 appollo = "5.2.0"
 appolloCache = "1.0.8"
 browser = "1.8.0"
+coreKtx = "1.16.0"
 coil = "2.7.0"
 composeBom = "2026.09.00"
 composeNavigation = "2.9.5"
@@ -53,6 +54,7 @@ androidx-compose-ui-test-junit4 = { group = "androidx.compose.ui", name = "ui-te
 androidx-compose-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-test-manifest" }
 androidx-compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
 androidx-compose-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
+androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-hilt-compiler = { group = "androidx.hilt", name = "hilt-compiler", version.ref = "hilt" }
 androidx-hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "hilt" }
 androidx-preference = { group = "androidx.preference", name = "preference", version.ref = "preference" }
