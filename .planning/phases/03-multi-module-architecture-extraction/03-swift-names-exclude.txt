@@ -1,0 +1,5 @@
+# Reviewed list of header names whose Swift references bind outside the
+# Kotlin/Native-exported umbrella framework. Format: NAME<TAB>reason.
+# Add an entry ONLY with per-name evidence of a non-Kotlin binding (recorded
+# in the plan SUMMARY that added it).
+Link	SwiftUI.Link — iosApp/iosApp/UI/About/AboutView.swift uses Link(destination:); the exported Kotlin Link is Apollo's schema-type holder (init() + companion only)
