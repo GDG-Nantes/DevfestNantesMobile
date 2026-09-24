@@ -3,7 +3,9 @@ package com.gdgnantes.devfest.buildlogic
 import com.android.build.api.dsl.CommonExtension
 import org.gradle.api.JavaVersion
 import org.gradle.api.Project
+import org.gradle.api.tasks.testing.Test
 import org.gradle.kotlin.dsl.dependencies
+import org.gradle.kotlin.dsl.withType
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.dsl.KotlinAndroidProjectExtension
 
@@ -32,6 +34,15 @@ internal fun Project.configureAndroidCommon(commonExtension: CommonExtension) {
 
     commonExtension.testOptions.unitTests.isReturnDefaultValues = true
     commonExtension.testOptions.unitTests.isIncludeAndroidResources = true
+
+    // Leaf modules (e.g. :core:ui today, every future :feature:* module) legitimately have
+    // zero unit tests until Phase 5 adds coverage — `testDebugUnitTest` must not fail the
+    // whole module graph's `./gradlew testDebugUnitTest` CI job just because a module hasn't
+    // grown tests yet (Gradle's default `failOnNoDiscoveredTests = true` would otherwise fail
+    // any such leaf module the instant it applies the Hilt convention plugin).
+    tasks.withType<Test>().configureEach {
+        failOnNoDiscoveredTests.set(false)
+    }
 
     extensions.configure(KotlinAndroidProjectExtension::class.java) {
         compilerOptions {
