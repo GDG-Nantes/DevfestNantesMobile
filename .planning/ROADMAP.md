@@ -92,44 +92,49 @@ Plans:
   3. The `feature-*` modules (agenda, speakers, venue, session-detail, about, settings) exist, each with its own ViewModel(s) and Compose screens (per-module Koin modules are delivered in Phase 4 via DI-02; bookmarks has no screen and lives in `core-data`/`core-ui` — see 03-CONTEXT.md D-04..D-06)
   4. `iosApp` continues to build and consume a single umbrella Kotlin/Native framework aggregating all KMP modules, despite `shared` now being split across several Gradle modules
 
-**Plans:** 1/9 plans executed
+**Plans:** 1/11 plans executed
 **UI hint**: yes
 
 Plans (strictly sequential — every step edits `settings.gradle.dcl` and the app/umbrella build files; D-18 bottom-up order):
 
 **Wave 1**
 
-- [x] 03-01-PLAN.md — Tracer: `build-logic` (devfest.detekt, devfest.kmp.library) + `:core:model` pure move/repackage, re-exported by the `:shared` umbrella; Swift-name gate; CI green; iOS simulator checkpoint 1 (D-09, D-10, D-12, D-13, D-16, D-20)
+- [ ] 03-01-PLAN.md — (HALTED at Task 2 CI gate: Swift-name collision flip; resolved by 03-10 + 03-11) Tracer: `build-logic` (devfest.detekt, devfest.kmp.library) + `:core:model` pure move/repackage, re-exported by the `:shared` umbrella; Swift-name gate; CI green; iOS simulator checkpoint 1 (D-09, D-10, D-12, D-13, D-16, D-20)
+- [ ] 03-10-PLAN.md — (03-01 halted; no depends_on on 03-01, runs on 03-01's landed commits) 03-01 halt fix: Apollo schema-type holders renamed via `@targetName` (GraphQLVenue/Session/Speaker/Room/Partner), Swift call sites updated once (D-11 amendment), `swift-names-gate.sh` strengthened (member sets + type-level collisions) and re-baselined; CI green (D-11, D-16)
 
 **Wave 2** *(blocked on Wave 1)*
 
-- [ ] 03-02-PLAN.md — `:core:network` (Apollo, internal, not exported) + `:core:analytics` (contract + Firebase androidMain impls, exported) (D-03, D-11)
+- [ ] 03-11-PLAN.md — D-12 iOS simulator checkpoint 1 (carried over from 03-01) + re-summarize 03-01 as complete; 03-02..03-09 runnable on the next `/gsd-execute-phase 3` run (D-09, D-12)
 
 **Wave 3** *(blocked on Wave 2)*
 
-- [ ] 03-03-PLAN.md — `:core:data` (store layer, BookmarksStoreImpl androidMain, jvm/common tests), exported; iOS checkpoint 2 + Android smoke 1 (D-06, D-11, D-12, D-18, D-19)
+- [ ] 03-02-PLAN.md — `:core:network` (Apollo, internal, not exported) + `:core:analytics` (contract + Firebase androidMain impls, exported) (D-03, D-11)
 
 **Wave 4** *(blocked on Wave 3)*
 
-- [ ] 03-04-PLAN.md — `:core:testing` + Android convention plugins (library, hilt, feature, application); `:androidApp` adopts them with identical output (D-02, D-13, D-19)
+- [ ] 03-03-PLAN.md — `:core:data` (store layer, BookmarksStoreImpl androidMain, jvm/common tests), exported; iOS checkpoint 2 + Android smoke 1 (D-06, D-11, D-12, D-18, D-19)
 
 **Wave 5** *(blocked on Wave 4)*
 
-- [ ] 03-05-PLAN.md — `:core:ui` (theme, UiState, BookmarksViewModel, shared components, shared resources) + resources gate; Android smoke 2 (D-06, D-08, D-17)
+- [ ] 03-04-PLAN.md — `:core:testing` + Android convention plugins (library, hilt, feature, application); `:androidApp` adopts them with identical output (D-02, D-13, D-19)
 
 **Wave 6** *(blocked on Wave 5)*
 
-- [ ] 03-06-PLAN.md — `:feature:venue` + `:feature:about` with callback-only `*Route` entry points (D-05, D-07)
+- [ ] 03-05-PLAN.md — `:core:ui` (theme, UiState, BookmarksViewModel, shared components, shared resources) + resources gate; Android smoke 2 (D-06, D-08, D-17)
 
 **Wave 7** *(blocked on Wave 6)*
 
-- [ ] 03-07-PLAN.md — `:feature:settings` (incl. consent service) + `:feature:speakers` (D-03, D-05, D-07)
+- [ ] 03-06-PLAN.md — `:feature:venue` + `:feature:about` with callback-only `*Route` entry points (D-05, D-07)
 
 **Wave 8** *(blocked on Wave 7)*
 
-- [ ] 03-08-PLAN.md — `:feature:agenda` + `:feature:session-detail` (OpenFeedbackConfig via AppModule); Android smoke 3 (D-02, D-05, D-07, D-18)
+- [ ] 03-07-PLAN.md — `:feature:settings` (incl. consent service) + `:feature:speakers` (D-03, D-05, D-07)
 
 **Wave 9** *(blocked on Wave 8)*
+
+- [ ] 03-08-PLAN.md — `:feature:agenda` + `:feature:session-detail` (OpenFeedbackConfig via AppModule); Android smoke 3 (D-02, D-05, D-07, D-18)
+
+**Wave 10** *(blocked on Wave 9)*
 
 - [ ] 03-09-PLAN.md — `:shared` thinned to a source-less umbrella, `buildSrc` removed, phase gates (graph direction, no duplicated config, full suite, CI) (D-04, D-10, D-11, D-13, D-20)
 
@@ -171,6 +176,6 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 |-------|----------------|--------|-----------|
 | 1. CI Pipeline Fixed & Optimized | 3/3 | Complete    | 2026-09-17 |
 | 2. Dependency & Build Tooling Upgrade | 5/5 | Complete    | 2026-09-19 |
-| 3. Multi-Module Architecture Extraction | 1/9 | In Progress|  |
+| 3. Multi-Module Architecture Extraction | 1/11 | In Progress|  |
 | 4. Hilt to Koin DI Migration | 0/TBD | Not started | - |
 | 5. Test Coverage Retrofit | 0/TBD | Not started | - |
