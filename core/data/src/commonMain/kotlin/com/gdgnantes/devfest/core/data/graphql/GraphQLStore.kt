@@ -1,8 +1,9 @@
-package com.gdgnantes.devfest.store.graphql
+package com.gdgnantes.devfest.core.data.graphql
 
 import com.apollographql.apollo.ApolloClient
 import com.apollographql.cache.normalized.FetchPolicy
 import com.apollographql.cache.normalized.fetchPolicy
+import com.gdgnantes.devfest.core.data.DevFestNantesStore
 import com.gdgnantes.devfest.core.model.Agenda
 import com.gdgnantes.devfest.core.model.ContentLanguage
 import com.gdgnantes.devfest.core.model.Partner
@@ -18,7 +19,6 @@ import com.gdgnantes.devfest.core.network.graphql.GetSessionQuery
 import com.gdgnantes.devfest.core.network.graphql.GetSessionsQuery
 import com.gdgnantes.devfest.core.network.graphql.GetSpeakersQuery
 import com.gdgnantes.devfest.core.network.graphql.GetVenueQuery
-import com.gdgnantes.devfest.store.DevFestNantesStore
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map

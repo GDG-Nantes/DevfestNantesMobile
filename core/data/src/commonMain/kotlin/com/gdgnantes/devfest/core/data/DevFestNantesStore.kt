@@ -1,4 +1,4 @@
-package com.gdgnantes.devfest.store
+package com.gdgnantes.devfest.core.data
 
 import com.gdgnantes.devfest.core.model.Agenda
 import com.gdgnantes.devfest.core.model.ContentLanguage

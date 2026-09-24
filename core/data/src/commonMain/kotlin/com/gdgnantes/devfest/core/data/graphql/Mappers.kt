@@ -1,7 +1,8 @@
 @file:Suppress("TooManyFunctions")
 
-package com.gdgnantes.devfest.store.graphql
+package com.gdgnantes.devfest.core.data.graphql
 
+import com.gdgnantes.devfest.core.data.domain.sortIndex
 import com.gdgnantes.devfest.core.model.Category
 import com.gdgnantes.devfest.core.model.Complexity
 import com.gdgnantes.devfest.core.model.Partner
@@ -21,7 +22,6 @@ import com.gdgnantes.devfest.core.network.graphql.GetVenueQuery
 import com.gdgnantes.devfest.core.network.graphql.fragment.RoomDetails
 import com.gdgnantes.devfest.core.network.graphql.fragment.SessionDetails
 import com.gdgnantes.devfest.core.network.graphql.fragment.SpeakerDetails
-import com.gdgnantes.devfest.domain.sortIndex
 
 internal fun GetPartnerGroupsQuery.PartnerGroup.toPartnersGroup(): Pair<PartnerCategory, List<Partner>> {
     val partnerCategory =

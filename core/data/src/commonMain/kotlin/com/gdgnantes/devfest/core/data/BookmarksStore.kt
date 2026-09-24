@@ -1,4 +1,4 @@
-package com.gdgnantes.devfest.store
+package com.gdgnantes.devfest.core.data
 
 import com.rickclephas.kmp.nativecoroutines.NativeCoroutines
 import kotlinx.coroutines.flow.Flow

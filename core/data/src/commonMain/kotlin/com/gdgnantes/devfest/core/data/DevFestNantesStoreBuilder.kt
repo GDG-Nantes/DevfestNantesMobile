@@ -1,7 +1,7 @@
-package com.gdgnantes.devfest.store
+package com.gdgnantes.devfest.core.data
 
+import com.gdgnantes.devfest.core.data.graphql.GraphQLStore
 import com.gdgnantes.devfest.core.network.apolloClient
-import com.gdgnantes.devfest.store.graphql.GraphQLStore
 
 class DevFestNantesStoreBuilder {
     private var useMockServer: Boolean = false

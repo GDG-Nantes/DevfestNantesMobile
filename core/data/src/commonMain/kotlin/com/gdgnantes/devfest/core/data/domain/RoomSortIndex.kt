@@ -1,4 +1,4 @@
-package com.gdgnantes.devfest.domain
+package com.gdgnantes.devfest.core.data.domain
 
 import com.gdgnantes.devfest.core.network.graphql.fragment.RoomDetails
 

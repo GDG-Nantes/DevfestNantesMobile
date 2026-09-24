@@ -1,13 +1,26 @@
-package com.gdgnantes.devfest.store
+package com.gdgnantes.devfest.core.data.graphql
 
+import com.apollographql.apollo.ApolloClient
+import com.apollographql.apollo.api.http.HttpHeader
 import com.gdgnantes.devfest.core.model.ContentLanguage
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
+import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertNotNull
 
-class DevFestNantesStoreContractTest {
-    private val store: DevFestNantesStore = DevFestNantesStoreMocked()
+class GraphQLStoreJvmTest {
+    private lateinit var apolloClient: ApolloClient
+    private lateinit var store: GraphQLStore
+
+    @BeforeTest
+    fun setUp() {
+        apolloClient = ApolloClient.Builder()
+            .serverUrl("https://confetti-app.dev/graphql")
+            .httpHeaders(listOf(HttpHeader("conference", "devfestnantes2024")))
+            .build()
+        store = GraphQLStore(apolloClient)
+    }
 
     @Test
     fun agenda_flow_emits_agenda() = runTest {
@@ -47,7 +60,7 @@ class DevFestNantesStoreContractTest {
 
     @Test
     fun getSpeaker_returns_speaker_or_null() = runTest {
-        store.getSpeaker("someId")
+        val speaker = store.getSpeaker("someId")
         // Accept null or Speaker, just check no crash
     }
 
@@ -64,8 +77,29 @@ class DevFestNantesStoreContractTest {
     }
 
     @Test
+    fun speakers_flow_emits_non_empty_speakers_list() = runTest {
+        val speakers = store.speakers.first()
+        assertNotNull(speakers)
+        assert(speakers.isNotEmpty()) { "Speakers list should not be empty" }
+    }
+
+    @Test
     fun getVenue_returns_venue() = runTest {
         val venue = store.getVenue(ContentLanguage.ENGLISH)
         assertNotNull(venue)
+    }
+
+    @Test
+    fun scheduleSlot_dates_are_parseable_by_android_java() = runTest {
+        val sessions = store.sessions.first()
+        val format = java.text.SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssXXX")
+        for (session in sessions) {
+            try {
+                format.parse(session.scheduleSlot.startDate)
+                format.parse(session.scheduleSlot.endDate)
+            } catch (e: Exception) {
+                throw AssertionError("Unparseable date: ${'$'}{session.scheduleSlot.startDate} or ${'$'}{session.scheduleSlot.endDate}", e)
+            }
+        }
     }
 }

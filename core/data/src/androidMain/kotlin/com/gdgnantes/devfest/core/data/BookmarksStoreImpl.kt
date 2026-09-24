@@ -1,8 +1,7 @@
-package com.gdgnantes.devfest.androidapp.services
+package com.gdgnantes.devfest.core.data
 
 import android.content.SharedPreferences
 import androidx.core.content.edit
-import com.gdgnantes.devfest.store.BookmarksStore
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
