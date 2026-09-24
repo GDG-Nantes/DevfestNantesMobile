@@ -15,15 +15,15 @@ import com.gdgnantes.devfest.core.model.SocialItem
 import com.gdgnantes.devfest.core.model.SocialType
 import com.gdgnantes.devfest.core.model.Speaker
 import com.gdgnantes.devfest.core.model.Venue
+import com.gdgnantes.devfest.core.network.graphql.GetPartnerGroupsQuery
+import com.gdgnantes.devfest.core.network.graphql.GetSessionQuery
+import com.gdgnantes.devfest.core.network.graphql.GetVenueQuery
+import com.gdgnantes.devfest.core.network.graphql.fragment.RoomDetails
+import com.gdgnantes.devfest.core.network.graphql.fragment.SessionDetails
+import com.gdgnantes.devfest.core.network.graphql.fragment.SpeakerDetails
 import com.gdgnantes.devfest.domain.sortIndex
-import com.gdgnantes.devfest.graphql.GetPartnerGroupsQuery
-import com.gdgnantes.devfest.graphql.GetSessionQuery
-import com.gdgnantes.devfest.graphql.GetVenueQuery
-import com.gdgnantes.devfest.graphql.fragment.RoomDetails
-import com.gdgnantes.devfest.graphql.fragment.SessionDetails
-import com.gdgnantes.devfest.graphql.fragment.SpeakerDetails
 
-fun GetPartnerGroupsQuery.PartnerGroup.toPartnersGroup(): Pair<PartnerCategory, List<Partner>> {
+internal fun GetPartnerGroupsQuery.PartnerGroup.toPartnersGroup(): Pair<PartnerCategory, List<Partner>> {
     val partnerCategory =
         when (title.lowercase()) {
             "pxl" -> PartnerCategory.PXL
@@ -36,7 +36,7 @@ fun GetPartnerGroupsQuery.PartnerGroup.toPartnersGroup(): Pair<PartnerCategory, 
     return partnerCategory to partners.map { it.toPartner() }
 }
 
-fun GetPartnerGroupsQuery.Partner.toPartner(): Partner {
+internal fun GetPartnerGroupsQuery.Partner.toPartner(): Partner {
     return Partner(
         name = name,
         logoUrl = logoUrl,
@@ -44,9 +44,9 @@ fun GetPartnerGroupsQuery.Partner.toPartner(): Partner {
     )
 }
 
-fun GetSessionQuery.Session.toSession(): Session = sessionDetails.toSession()
+internal fun GetSessionQuery.Session.toSession(): Session = sessionDetails.toSession()
 
-fun SessionDetails.toSession(): Session {
+internal fun SessionDetails.toSession(): Session {
     val tag = if (tags.isNotEmpty()) tags.joinToString(", ") else null
     return Session(
         id = id,
@@ -73,7 +73,7 @@ fun SessionDetails.toSession(): Session {
     )
 }
 
-fun RoomDetails.toRoom(): Room {
+internal fun RoomDetails.toRoom(): Room {
     return Room(
         id = id,
         name = name,
@@ -81,7 +81,7 @@ fun RoomDetails.toRoom(): Room {
     )
 }
 
-fun SpeakerDetails.toSpeaker(): Speaker {
+internal fun SpeakerDetails.toSpeaker(): Speaker {
     return Speaker(
         id = id,
         bio = bio,
@@ -94,7 +94,7 @@ fun SpeakerDetails.toSpeaker(): Speaker {
     )
 }
 
-fun SpeakerDetails.Social.toSocial(): SocialItem {
+internal fun SpeakerDetails.Social.toSocial(): SocialItem {
     return with(socialDetails) {
         SocialItem.Builder()
             .setType(name.toSocialType())
@@ -103,7 +103,7 @@ fun SpeakerDetails.Social.toSocial(): SocialItem {
     }
 }
 
-fun GetVenueQuery.Venue.toVenue(): Venue {
+internal fun GetVenueQuery.Venue.toVenue(): Venue {
     return Venue(
         address = address ?: "",
         description = description,

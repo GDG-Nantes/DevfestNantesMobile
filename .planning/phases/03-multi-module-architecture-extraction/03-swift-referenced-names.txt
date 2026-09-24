@@ -17,6 +17,5 @@ SessionType
 SocialItem
 SocialType
 Speaker
-SpeakerDetails
 Venue
 WebLinks

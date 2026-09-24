@@ -1,8 +1,8 @@
 package com.gdgnantes.devfest.domain
 
-import com.gdgnantes.devfest.graphql.fragment.RoomDetails
+import com.gdgnantes.devfest.core.network.graphql.fragment.RoomDetails
 
-val RoomDetails.sortIndex: Int
+internal val RoomDetails.sortIndex: Int
     get() {
         return when (id) {
             "Jules Verne" -> 0

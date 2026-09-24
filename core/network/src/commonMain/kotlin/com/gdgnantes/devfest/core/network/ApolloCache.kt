@@ -1,4 +1,4 @@
-package com.gdgnantes.devfest.store.graphql
+package com.gdgnantes.devfest.core.network
 
 import com.apollographql.cache.normalized.api.NormalizedCacheFactory
 import com.apollographql.cache.normalized.memory.MemoryCacheFactory

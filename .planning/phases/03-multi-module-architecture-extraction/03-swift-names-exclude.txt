@@ -3,3 +3,4 @@
 # Add an entry ONLY with per-name evidence of a non-Kotlin binding (recorded
 # in the plan SUMMARY that added it).
 Link	SwiftUI.Link — iosApp/iosApp/UI/About/AboutView.swift uses Link(destination:); the exported Kotlin Link is Apollo's schema-type holder (init() + companion only)
+SpeakerDetails	Native SwiftUI View struct — iosApp/iosApp/UI/Speakers/SpeakerDetailsView.swift defines struct SpeakerDetails: View; the Kotlin SpeakerDetails was Apollo's fragment response class (core:network-internal, moved out of shared.h in 03-02 when :core:network became implementation-only/non-exported per D-11)

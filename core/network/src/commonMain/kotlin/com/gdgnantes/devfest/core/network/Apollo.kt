@@ -1,4 +1,4 @@
-package com.gdgnantes.devfest.store.graphql
+package com.gdgnantes.devfest.core.network
 
 import com.apollographql.apollo.ApolloClient
 import com.apollographql.apollo.api.http.HttpHeader
