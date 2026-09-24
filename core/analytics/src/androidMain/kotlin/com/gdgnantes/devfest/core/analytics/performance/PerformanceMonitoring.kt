@@ -1,4 +1,4 @@
-package com.gdgnantes.devfest.androidapp.core.performance
+package com.gdgnantes.devfest.core.analytics.performance
 
 import com.google.firebase.perf.FirebasePerformance
 import com.google.firebase.perf.metrics.Trace

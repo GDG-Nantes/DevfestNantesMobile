@@ -3,7 +3,6 @@ package com.gdgnantes.devfest.androidapp.core.injection
 import android.app.Application
 import android.content.SharedPreferences
 import androidx.preference.PreferenceManager
-import com.gdgnantes.devfest.analytics.AnalyticsService
 import com.gdgnantes.devfest.androidapp.BuildConfig
 import com.gdgnantes.devfest.androidapp.core.ApplicationInitializer
 import com.gdgnantes.devfest.androidapp.core.CoroutinesDispatcherProvider
@@ -12,13 +11,14 @@ import com.gdgnantes.devfest.androidapp.core.OpenFeedbackInitializer
 import com.gdgnantes.devfest.androidapp.core.logging.TimberTreeDebug
 import com.gdgnantes.devfest.androidapp.core.logging.TimberTreeRelease
 import com.gdgnantes.devfest.androidapp.core.performance.PerformanceInitializer
-import com.gdgnantes.devfest.androidapp.core.performance.PerformanceMonitoring
 import com.gdgnantes.devfest.androidapp.services.BookmarksStoreImpl
 import com.gdgnantes.devfest.androidapp.services.DataCollectionSettingsService
 import com.gdgnantes.devfest.androidapp.services.DataCollectionSettingsServiceImpl
-import com.gdgnantes.devfest.androidapp.services.FirebaseAnalyticsService
 import com.gdgnantes.devfest.androidapp.services.SessionFiltersService
 import com.gdgnantes.devfest.androidapp.services.SessionFiltersServiceImpl
+import com.gdgnantes.devfest.core.analytics.AnalyticsService
+import com.gdgnantes.devfest.core.analytics.FirebaseAnalyticsService
+import com.gdgnantes.devfest.core.analytics.performance.PerformanceMonitoring
 import com.gdgnantes.devfest.store.BookmarksStore
 import com.gdgnantes.devfest.store.DevFestNantesStore
 import com.gdgnantes.devfest.store.DevFestNantesStoreBuilder

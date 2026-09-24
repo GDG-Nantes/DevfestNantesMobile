@@ -1,4 +1,4 @@
-package com.gdgnantes.devfest.analytics
+package com.gdgnantes.devfest.core.analytics
 
 enum class AnalyticsEvent {
     ADD_TO_BOOKMARKS,

@@ -24,8 +24,6 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.gdgnantes.devfest.analytics.AnalyticsPage
-import com.gdgnantes.devfest.analytics.AnalyticsService
 import com.gdgnantes.devfest.androidapp.R
 import com.gdgnantes.devfest.androidapp.services.ExternalContentService
 import com.gdgnantes.devfest.androidapp.ui.components.appbars.BottomAppBar
@@ -35,6 +33,8 @@ import com.gdgnantes.devfest.androidapp.ui.screens.agenda.Agenda
 import com.gdgnantes.devfest.androidapp.ui.screens.home.HomeViewModel
 import com.gdgnantes.devfest.androidapp.ui.screens.speakers.list.Speakers
 import com.gdgnantes.devfest.androidapp.ui.screens.venue.Venue
+import com.gdgnantes.devfest.core.analytics.AnalyticsPage
+import com.gdgnantes.devfest.core.analytics.AnalyticsService
 import com.gdgnantes.devfest.core.model.Session
 import com.gdgnantes.devfest.core.model.Speaker
 import com.gdgnantes.devfest.core.model.WebLinks.CODE_OF_CONDUCT

@@ -1,4 +1,4 @@
-package com.gdgnantes.devfest.analytics
+package com.gdgnantes.devfest.core.analytics
 
 import com.gdgnantes.devfest.core.model.SocialType
 

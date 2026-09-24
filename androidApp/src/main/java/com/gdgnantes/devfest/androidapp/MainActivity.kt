@@ -10,8 +10,6 @@ import androidx.navigation.NavDestination
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.gdgnantes.devfest.analytics.AnalyticsPage
-import com.gdgnantes.devfest.analytics.AnalyticsService
 import com.gdgnantes.devfest.androidapp.services.ExternalContentService
 import com.gdgnantes.devfest.androidapp.ui.screens.Home
 import com.gdgnantes.devfest.androidapp.ui.screens.Screen
@@ -25,6 +23,8 @@ import com.gdgnantes.devfest.androidapp.ui.screens.speakers.SpeakerViewModel
 import com.gdgnantes.devfest.androidapp.ui.screens.speakers.details.SpeakerLayout
 import com.gdgnantes.devfest.androidapp.ui.theme.DevFestNantesTheme
 import com.gdgnantes.devfest.androidapp.utils.assistedViewModel
+import com.gdgnantes.devfest.core.analytics.AnalyticsPage
+import com.gdgnantes.devfest.core.analytics.AnalyticsService
 import com.gdgnantes.devfest.core.model.Session
 import com.gdgnantes.devfest.core.model.SessionType
 import com.gdgnantes.devfest.core.model.WebLinks

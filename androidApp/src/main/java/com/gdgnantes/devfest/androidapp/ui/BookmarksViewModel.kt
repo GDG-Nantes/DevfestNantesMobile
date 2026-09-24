@@ -2,8 +2,8 @@ package com.gdgnantes.devfest.androidapp.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.gdgnantes.devfest.analytics.AnalyticsPage
-import com.gdgnantes.devfest.analytics.AnalyticsService
+import com.gdgnantes.devfest.core.analytics.AnalyticsPage
+import com.gdgnantes.devfest.core.analytics.AnalyticsService
 import com.gdgnantes.devfest.store.BookmarksStore
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow

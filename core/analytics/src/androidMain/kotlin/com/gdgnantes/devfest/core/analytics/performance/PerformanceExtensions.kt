@@ -1,4 +1,4 @@
-package com.gdgnantes.devfest.androidapp.core.performance
+package com.gdgnantes.devfest.core.analytics.performance
 
 /**
  * Extension function to trace ViewModel data loading operations.

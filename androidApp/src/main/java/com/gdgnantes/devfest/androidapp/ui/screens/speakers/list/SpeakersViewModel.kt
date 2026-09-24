@@ -2,9 +2,9 @@ package com.gdgnantes.devfest.androidapp.ui.screens.speakers.list
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.gdgnantes.devfest.androidapp.core.performance.PerformanceMonitoring
-import com.gdgnantes.devfest.androidapp.core.performance.traceDataLoading
 import com.gdgnantes.devfest.androidapp.ui.UiState
+import com.gdgnantes.devfest.core.analytics.performance.PerformanceMonitoring
+import com.gdgnantes.devfest.core.analytics.performance.traceDataLoading
 import com.gdgnantes.devfest.core.model.Speaker
 import com.gdgnantes.devfest.store.DevFestNantesStore
 import dagger.hilt.android.lifecycle.HiltViewModel

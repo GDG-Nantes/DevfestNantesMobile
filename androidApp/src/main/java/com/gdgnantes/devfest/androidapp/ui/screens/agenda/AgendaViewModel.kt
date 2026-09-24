@@ -2,11 +2,11 @@ package com.gdgnantes.devfest.androidapp.ui.screens.agenda
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.gdgnantes.devfest.androidapp.core.performance.PerformanceMonitoring
-import com.gdgnantes.devfest.androidapp.core.performance.traceDataLoading
 import com.gdgnantes.devfest.androidapp.services.SessionFiltersService
 import com.gdgnantes.devfest.androidapp.ui.UiState
 import com.gdgnantes.devfest.androidapp.utils.SessionFilter
+import com.gdgnantes.devfest.core.analytics.performance.PerformanceMonitoring
+import com.gdgnantes.devfest.core.analytics.performance.traceDataLoading
 import com.gdgnantes.devfest.core.model.Agenda.Companion.DAY_ONE_ISO
 import com.gdgnantes.devfest.core.model.Agenda.Companion.DAY_TWO_ISO
 import com.gdgnantes.devfest.core.model.AgendaDay
