@@ -135,6 +135,7 @@ dependencies {
     detektPlugins(libs.detekt.fomatting)
 
     implementation(project(":shared"))
+    implementation(project(":core:analytics"))
 
     implementation(libs.bundles.accompanist)
     implementation(libs.androidx.browser)

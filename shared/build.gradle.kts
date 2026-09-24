@@ -44,12 +44,14 @@ kotlin {
             baseName = "shared"
             isStatic = true
             export(project(":core:model"))
+            export(project(":core:analytics"))
         }
     }
 
     sourceSets {
         commonMain.dependencies {
             api(project(":core:model"))
+            api(project(":core:analytics"))
 
             implementation(project(":core:network"))
 
