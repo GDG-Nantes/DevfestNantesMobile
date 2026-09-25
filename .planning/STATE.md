@@ -3,16 +3,16 @@ gsd_state_version: "1.0"
 current_phase: 03
 current_phase_name: Multi-Module Architecture Extraction
 status: executing
-stopped_at: Completed 03-04-PLAN.md
-last_updated: "2026-09-24T18:09:24.613Z"
+stopped_at: Completed 03-05-PLAN.md
+last_updated: "2026-09-25T13:00:05.696Z"
 last_activity: 2026-09-24
 last_activity_desc: Phase 03 execution started
-state_head: 9b86813a9d8986174028ab85a19ef3fabeadaa99
+state_head: c9e16c2ebeb90eb2b319393db95fe3b85b103e1c
 progress:
   total_phases: 5
   completed_phases: 2
   total_plans: 19
-  completed_plans: 14
+  completed_plans: 15
   percent: 40
 ---
 
@@ -28,7 +28,7 @@ See: .planning/PROJECT.md (updated 2026-09-17)
 ## Current Position
 
 Phase: 03 (Multi-Module Architecture Extraction) — EXECUTING
-Plan: 6 of 11
+Plan: 7 of 11
 Status: Ready to execute
 Last activity: 2026-09-24 — Phase 03 execution started
 
@@ -73,6 +73,7 @@ Progress: [████░░░░░░] 40%
 | Phase 03 P02 | 65min | 2 tasks | 31 files |
 | Phase 03 P03 | 165min | 3 tasks | 24 files |
 | Phase 03 P04 | 140min | 2 tasks | 14 files |
+| Phase 03-multi-module-architecture-extraction P05 | 30min | 3 tasks | 67 files |
 
 ## Accumulated Context
 
@@ -104,6 +105,7 @@ Recent decisions affecting current work:
 - [Phase 03]: [Phase 03] 03-03: extracted :core:data (store layer: DevFestNantesStore, GraphQLStore, BookmarksStore/BookmarksStoreImpl) as a two-commit-per-module move (D-16), exported to Swift via :shared api+export(); discovered and fixed a Kotlin/Native NO-SOURCE regression -- with shared/src truly empty, compileKotlinIos*/linkDebugFramework*/linkReleaseFramework* report NO-SOURCE and are skipped entirely, producing no shared.framework for iOS at all. Fixed by adding one internal marker file (SharedFrameworkPlaceholder.kt); recorded as a permanent D-10 amendment so 03-09 (final umbrella-thinning plan) does not undo it. — Kotlin/Native's compile+link tasks treat a zero-file source set as NO-SOURCE and skip the link step, which would have silently broken the iOS build precisely when :shared reaches its D-10 zero-Kotlin-sources goal -- the placeholder is the minimal, non-exported fix. User approved at the 03-03 checkpoint (2026-09-24).
 - [Phase 03]: core:testing's fakeDevFestNantesStore() wraps public DevFestNantesStoreBuilder (mock mode) instead of internal DevFestNantesStoreMocked, which is not visible across the module boundary
 - [Phase 03]: AGP 9's CommonExtension is non-generic; a single configureAndroidCommon(commonExtension: CommonExtension) serves both Library and Application conventions, configured via direct property access (not nested-block DSL sugar, which is script-only)
+- [Phase 03]: [Phase 03] 03-05: :core:ui extracted (theme, UiState, BookmarksViewModel, shared components, DateUtils/StringExtensions) via two-commit D-16 pattern; resources-gate.sh established as the reusable resource-ownership gate for 03-06..03-08 — CI green on both workflows post-repackage; failOnNoDiscoveredTests disabled in build-logic AndroidCommon.kt so leaf modules with only instrumentation tests (like :core:ui) don't fail CI's bare testDebugUnitTest; smoke checkpoint 2 approved by user 2026-09-24
 
 ### Pending Todos
 
@@ -181,6 +183,6 @@ Items acknowledged and deferred at milestone close, most recent first:
 
 ## Session Continuity
 
-Last session: 2026-09-24T18:09:24.592Z
-Stopped at: Completed 03-04-PLAN.md
+Last session: 2026-09-25T12:59:57.494Z
+Stopped at: Completed 03-05-PLAN.md
 Resume file: None
