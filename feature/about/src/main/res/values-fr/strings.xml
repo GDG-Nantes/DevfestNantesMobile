@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+  <string name="screen_about_header_body">Le DevFest, ou \'Developers Festival\', est une conférence technique destinée aux développeuses et développeurs. Elle s\'adresse aussi bien aux étudiantes et étudiants, aux professionnels ou tout simplement aux curieuses et curieux technophiles.\nCette année plongez dans le monde enchanté des contes et légendes !</string>
+  <string name="about_code_of_conduct">Code de conduite</string>
+  <string name="about_website">Site web</string>
+  <string name="about_social_title">Nous suivre</string>
+  <string name="local_communities_title">Communautés locales</string>
+  <string name="partners_title">Partenaires</string>
+  <string name="content_description_about_header">Logo d\'en tête du DevFest Nantes.</string>
+  <string name="content_description_local_communities_logo">Logo des communautés tech Nantaises. Clicquez pour ouvrir la page web.</string>
+  <string name="content_description_logo_github">Logo de Github</string>
+  <string name="partners_exclusive_platinium_title">PARTENAIRE PLATINIUM EXCLUSIF</string>
+  <string name="partners_velotype_title">VELOTYPIE</string>
+</resources>

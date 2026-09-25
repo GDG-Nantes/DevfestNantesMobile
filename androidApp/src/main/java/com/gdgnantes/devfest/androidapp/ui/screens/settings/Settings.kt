@@ -87,7 +87,7 @@ fun Settings(
                 title = stringResource(id = R.string.settings_version_label),
                 subtitle =
                 stringResource(
-                    R.string.app_version,
+                    CoreUiR.string.app_version,
                     BuildConfig.VERSION_NAME,
                     BuildConfig.VERSION_CODE
                 )

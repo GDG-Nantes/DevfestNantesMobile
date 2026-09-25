@@ -24,6 +24,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
+import com.gdgnantes.devfest.androidapp.BuildConfig
 import com.gdgnantes.devfest.androidapp.R
 import com.gdgnantes.devfest.androidapp.services.ExternalContentService
 import com.gdgnantes.devfest.androidapp.ui.components.appbars.BottomAppBar
@@ -168,6 +169,8 @@ fun Home(
 
                 composable(Screen.About.route) {
                     About(
+                        versionName = BuildConfig.VERSION_NAME,
+                        versionCode = BuildConfig.VERSION_CODE,
                         onCodeOfConductClick = {
                             externalContentService.openUrl(CODE_OF_CONDUCT.url)
                             analyticsService.eventLinkCodeOfConductOpened()

@@ -11,13 +11,14 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
-import com.gdgnantes.devfest.androidapp.BuildConfig
-import com.gdgnantes.devfest.androidapp.R
+import com.gdgnantes.devfest.core.ui.R
 import com.gdgnantes.devfest.core.ui.theme.DevFestNantesTheme
 
 @Composable
 fun AboutVersion(
-    modifier: Modifier = Modifier
+    modifier: Modifier = Modifier,
+    versionName: String,
+    versionCode: Int,
 ) {
     Text(
         modifier = modifier.fillMaxWidth(),
@@ -25,8 +26,8 @@ fun AboutVersion(
         text =
         stringResource(
             R.string.app_version,
-            BuildConfig.VERSION_NAME,
-            BuildConfig.VERSION_CODE
+            versionName,
+            versionCode
         ),
         style = MaterialTheme.typography.labelSmall
     )
@@ -38,7 +39,7 @@ fun AboutVersion(
 fun AboutVersionPreview() {
     DevFestNantesTheme {
         Scaffold {
-            AboutVersion(modifier = Modifier.padding(it))
+            AboutVersion(modifier = Modifier.padding(it), versionName = "2025.10.00", versionCode = 37)
         }
     }
 }

@@ -9,41 +9,25 @@
   <string name="agenda_empty">empty</string>
   <string name="empty_day">Sorry, there is no conference available for the selected filters.</string>
   <string name="screen_session">Session details</string>
-  <string name="screen_about_header_body">The Devfest (i.e Developers Festival), is a technical conference destined to developers. It\'s meant for students, professionals, or any curious techie.\nThis year step into the magical world of legends and tales!</string>
   <string name="complexity_beginner">Beginner</string>
   <string name="complexity_intermediate">Intermediate</string>
   <string name="complexity_expert">Expert</string>
   <string name="session_feedback_label">Provide feedback</string>
-  <string name="about_code_of_conduct">Code of conduct</string>
   <string name="about_terms_of_service">Terms of service</string>
-  <string name="about_website">Website</string>
-  <string name="app_version" translatable="false" formatted="false">Version %s (%d)</string>
-  <string name="about_social_title">Follow us</string>
   <string name="bookmarked">Favorite</string>
   <string name="btn_ok">OK</string>
   <string name="btn_cancel">Cancel</string>
   <string name="web_external_disclaimer_text">You will be redirected to an external web page. We can not be held responsible for the content available on the site you are going to visit.</string>
   <string name="web_external_disclaimer_title">Redirection</string>
-  <string name="local_communities_title">Local communities</string>
   <string name="local_communities_button">🌍 Local communities website</string>
   <string name="session_filters_action_enabled">Session filters are active. Tap to change filters.</string>
   <string name="session_filters_action_disabled">No session filters applied. Tap to add filters.</string>
   <string name="session_filters_drawer_title">Filters</string>
   <string name="session_filters_drawer_languages_label">Languages</string>
   <string name="session_filters_drawer_rooms_label">Rooms</string>
-  <string name="partners_title">Partners</string>
-  <string name="partners_exclusive_platinium_title">EXCLUSIVE PLATINIUM PARTNER</string>
-  <string name="partners_platinium_title" translatable="false">PLATINIUM</string>
-  <string name="partners_gold_title" translatable="false">GOLD</string>
-  <string name="partners_virtual_title" translatable="false">VIRTUAL</string>
-  <string name="content_description_about_header">DevFest Nantes about logo header.</string>
   <string name="screen_speakers">Speakers</string>
   <string name="screen_speaker">Speaker</string>
-  <string name="partners_velotype_title">VELOTYPE</string>
   <string name="complexity_advanced">Advanced</string>
-  <string name="content_description_local_communities_logo">Logo of the Local communities. Click to open the website.</string>
-  <string name="fork_me_on_github" translatable="false">Fork me on Github</string>
-  <string name="content_description_logo_github">Github logo</string>
   <string name="settings_action">Open application settings.</string>
   <string name="screen_settings">Settings</string>
   <string name="content_description_data_collection_logo">Lock icon.</string>

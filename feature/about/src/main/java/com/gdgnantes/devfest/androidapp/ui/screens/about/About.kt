@@ -20,6 +20,8 @@ import com.gdgnantes.devfest.core.ui.theme.DevFestNantesTheme
 @Composable
 fun About(
     modifier: Modifier = Modifier,
+    versionName: String,
+    versionCode: Int,
     onCodeOfConductClick: () -> Unit,
     onDevFestNantesWebsiteClick: () -> Unit,
     onFacebookClick: () -> Unit,
@@ -71,7 +73,7 @@ fun About(
             onCLick = onGithubClick
         )
 
-        AboutVersion(modifier.padding(8.dp))
+        AboutVersion(modifier.padding(8.dp), versionName = versionName, versionCode = versionCode)
     }
 }
 
@@ -80,6 +82,8 @@ fun About(
 fun AboutPreview() {
     DevFestNantesTheme {
         About(
+            versionName = "2025.10.00",
+            versionCode = 37,
             onCodeOfConductClick = {},
             onDevFestNantesWebsiteClick = {},
             onFacebookClick = {},

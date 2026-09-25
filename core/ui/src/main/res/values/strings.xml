@@ -4,4 +4,5 @@
   <string name="content_description_logo">%1$s logo. Link to the web page.</string>
   <string name="content_description_speaker_website_icon">Website icon. Link to the speaker\'s website.</string>
   <string name="content_description_speaker_picture">%1$s\'s profile picture.</string>
+  <string name="app_version" translatable="false" formatted="false">Version %s (%d)</string>
 </resources>

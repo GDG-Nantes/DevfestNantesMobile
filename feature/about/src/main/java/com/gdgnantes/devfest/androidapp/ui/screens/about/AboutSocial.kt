@@ -14,9 +14,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.gdgnantes.devfest.androidapp.R
 import com.gdgnantes.devfest.core.ui.components.SocialIcon
 import com.gdgnantes.devfest.core.ui.theme.DevFestNantesTheme
+import com.gdgnantes.devfest.feature.about.R
 import com.gdgnantes.devfest.core.ui.R as CoreUiR
 
 @Composable
