@@ -1,4 +1,4 @@
-package com.gdgnantes.devfest.androidapp.ui.screens.settings
+package com.gdgnantes.devfest.feature.settings
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column

@@ -1,4 +1,4 @@
-package com.gdgnantes.devfest.androidapp.ui.screens.settings
+package com.gdgnantes.devfest.feature.settings
 
 import android.content.res.Configuration
 import androidx.compose.foundation.clickable

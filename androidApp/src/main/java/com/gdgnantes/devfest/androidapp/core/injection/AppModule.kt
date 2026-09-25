@@ -11,8 +11,6 @@ import com.gdgnantes.devfest.androidapp.core.OpenFeedbackInitializer
 import com.gdgnantes.devfest.androidapp.core.logging.TimberTreeDebug
 import com.gdgnantes.devfest.androidapp.core.logging.TimberTreeRelease
 import com.gdgnantes.devfest.androidapp.core.performance.PerformanceInitializer
-import com.gdgnantes.devfest.androidapp.services.DataCollectionSettingsService
-import com.gdgnantes.devfest.androidapp.services.DataCollectionSettingsServiceImpl
 import com.gdgnantes.devfest.androidapp.services.SessionFiltersService
 import com.gdgnantes.devfest.androidapp.services.SessionFiltersServiceImpl
 import com.gdgnantes.devfest.core.analytics.AnalyticsService
@@ -22,6 +20,8 @@ import com.gdgnantes.devfest.core.data.BookmarksStore
 import com.gdgnantes.devfest.core.data.BookmarksStoreImpl
 import com.gdgnantes.devfest.core.data.DevFestNantesStore
 import com.gdgnantes.devfest.core.data.DevFestNantesStoreBuilder
+import com.gdgnantes.devfest.feature.settings.services.DataCollectionSettingsService
+import com.gdgnantes.devfest.feature.settings.services.DataCollectionSettingsServiceImpl
 import com.google.firebase.Firebase
 import com.google.firebase.analytics.analytics
 import com.google.firebase.crashlytics.FirebaseCrashlytics

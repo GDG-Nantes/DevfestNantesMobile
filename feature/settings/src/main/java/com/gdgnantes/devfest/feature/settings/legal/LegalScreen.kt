@@ -1,4 +1,4 @@
-package com.gdgnantes.devfest.androidapp.ui.screens.legal
+package com.gdgnantes.devfest.feature.settings.legal
 
 import android.content.res.Configuration
 import android.view.ViewGroup

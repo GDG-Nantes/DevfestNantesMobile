@@ -14,12 +14,8 @@ import com.gdgnantes.devfest.androidapp.BuildConfig
 import com.gdgnantes.devfest.androidapp.services.ExternalContentService
 import com.gdgnantes.devfest.androidapp.ui.screens.Home
 import com.gdgnantes.devfest.androidapp.ui.screens.Screen
-import com.gdgnantes.devfest.androidapp.ui.screens.datacollection.DataCollectionAgreementDialog
-import com.gdgnantes.devfest.androidapp.ui.screens.datacollection.DataCollectionSettingsScreen
-import com.gdgnantes.devfest.androidapp.ui.screens.legal.LegalScreen
 import com.gdgnantes.devfest.androidapp.ui.screens.session.SessionLayout
 import com.gdgnantes.devfest.androidapp.ui.screens.session.SessionViewModel
-import com.gdgnantes.devfest.androidapp.ui.screens.settings.Settings
 import com.gdgnantes.devfest.androidapp.ui.screens.speakers.SpeakerViewModel
 import com.gdgnantes.devfest.androidapp.ui.screens.speakers.details.SpeakerLayout
 import com.gdgnantes.devfest.androidapp.utils.assistedViewModel
@@ -29,6 +25,10 @@ import com.gdgnantes.devfest.core.model.Session
 import com.gdgnantes.devfest.core.model.SessionType
 import com.gdgnantes.devfest.core.model.WebLinks
 import com.gdgnantes.devfest.core.ui.theme.DevFestNantesTheme
+import com.gdgnantes.devfest.feature.settings.DataCollectionSettingsRoute
+import com.gdgnantes.devfest.feature.settings.LegalRoute
+import com.gdgnantes.devfest.feature.settings.SettingsRoute
+import com.gdgnantes.devfest.feature.settings.datacollection.DataCollectionAgreementDialog
 import dagger.hilt.EntryPoint
 import dagger.hilt.InstallIn
 import dagger.hilt.android.AndroidEntryPoint
@@ -141,7 +141,7 @@ class MainActivity : ComponentActivity(), NavController.OnDestinationChangedList
                     composable(
                         route = Screen.Settings.route
                     ) {
-                        Settings(
+                        SettingsRoute(
                             versionName = BuildConfig.VERSION_NAME,
                             versionCode = BuildConfig.VERSION_CODE,
                             onBackClick = { mainNavController.popBackStack() },
@@ -157,7 +157,7 @@ class MainActivity : ComponentActivity(), NavController.OnDestinationChangedList
                     composable(
                         route = Screen.DataCollection.route
                     ) {
-                        DataCollectionSettingsScreen(
+                        DataCollectionSettingsRoute(
                             onBackClick = { mainNavController.popBackStack() }
                         )
                     }
@@ -165,7 +165,7 @@ class MainActivity : ComponentActivity(), NavController.OnDestinationChangedList
                     composable(
                         route = Screen.Legal.route
                     ) {
-                        LegalScreen(
+                        LegalRoute(
                             onBackClick = { mainNavController.popBackStack() }
                         )
                     }

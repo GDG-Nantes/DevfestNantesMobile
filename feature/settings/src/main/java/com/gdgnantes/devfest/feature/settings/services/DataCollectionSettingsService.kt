@@ -1,4 +1,4 @@
-package com.gdgnantes.devfest.androidapp.services
+package com.gdgnantes.devfest.feature.settings.services
 
 import android.content.SharedPreferences
 import androidx.core.content.edit

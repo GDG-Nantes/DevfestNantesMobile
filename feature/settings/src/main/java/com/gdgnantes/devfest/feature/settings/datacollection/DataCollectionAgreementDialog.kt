@@ -1,4 +1,4 @@
-package com.gdgnantes.devfest.androidapp.ui.screens.datacollection
+package com.gdgnantes.devfest.feature.settings.datacollection
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.AlertDialog

@@ -1,8 +1,8 @@
-package com.gdgnantes.devfest.androidapp.ui.screens.datacollection
+package com.gdgnantes.devfest.feature.settings.datacollection
 
 import androidx.lifecycle.ViewModel
-import com.gdgnantes.devfest.androidapp.services.DataCollectionService
-import com.gdgnantes.devfest.androidapp.services.DataCollectionSettingsService
+import com.gdgnantes.devfest.feature.settings.services.DataCollectionService
+import com.gdgnantes.devfest.feature.settings.services.DataCollectionSettingsService
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
