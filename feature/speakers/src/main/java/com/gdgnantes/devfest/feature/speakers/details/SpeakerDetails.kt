@@ -1,4 +1,4 @@
-package com.gdgnantes.devfest.androidapp.ui.screens.speakers.details
+package com.gdgnantes.devfest.feature.speakers.details
 
 import android.annotation.SuppressLint
 import android.content.res.Configuration

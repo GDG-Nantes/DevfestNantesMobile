@@ -30,7 +30,6 @@ import com.gdgnantes.devfest.androidapp.services.ExternalContentService
 import com.gdgnantes.devfest.androidapp.ui.components.appbars.BottomAppBar
 import com.gdgnantes.devfest.androidapp.ui.screens.agenda.Agenda
 import com.gdgnantes.devfest.androidapp.ui.screens.home.HomeViewModel
-import com.gdgnantes.devfest.androidapp.ui.screens.speakers.list.Speakers
 import com.gdgnantes.devfest.core.analytics.AnalyticsPage
 import com.gdgnantes.devfest.core.analytics.AnalyticsService
 import com.gdgnantes.devfest.core.model.Session
@@ -45,6 +44,7 @@ import com.gdgnantes.devfest.core.model.WebLinks.SOCIAL_YOUTUBE
 import com.gdgnantes.devfest.core.model.WebLinks.WEBSITE
 import com.gdgnantes.devfest.core.ui.components.appbars.TopAppBar
 import com.gdgnantes.devfest.feature.about.AboutRoute
+import com.gdgnantes.devfest.feature.speakers.SpeakersRoute
 import com.gdgnantes.devfest.feature.venue.VenueRoute
 import kotlinx.coroutines.launch
 
@@ -152,7 +152,7 @@ fun Home(
                 }
 
                 composable(Screen.Speakers.route) {
-                    Speakers(
+                    SpeakersRoute(
                         onSpeakerClick = onSpeakerClick
                     )
                 }

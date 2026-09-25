@@ -16,8 +16,6 @@ import com.gdgnantes.devfest.androidapp.ui.screens.Home
 import com.gdgnantes.devfest.androidapp.ui.screens.Screen
 import com.gdgnantes.devfest.androidapp.ui.screens.session.SessionLayout
 import com.gdgnantes.devfest.androidapp.ui.screens.session.SessionViewModel
-import com.gdgnantes.devfest.androidapp.ui.screens.speakers.SpeakerViewModel
-import com.gdgnantes.devfest.androidapp.ui.screens.speakers.details.SpeakerLayout
 import com.gdgnantes.devfest.androidapp.utils.assistedViewModel
 import com.gdgnantes.devfest.core.analytics.AnalyticsPage
 import com.gdgnantes.devfest.core.analytics.AnalyticsService
@@ -29,6 +27,8 @@ import com.gdgnantes.devfest.feature.settings.DataCollectionSettingsRoute
 import com.gdgnantes.devfest.feature.settings.LegalRoute
 import com.gdgnantes.devfest.feature.settings.SettingsRoute
 import com.gdgnantes.devfest.feature.settings.datacollection.DataCollectionAgreementDialog
+import com.gdgnantes.devfest.feature.speakers.SpeakerDetailRoute
+import com.gdgnantes.devfest.feature.speakers.SpeakerViewModel
 import dagger.hilt.EntryPoint
 import dagger.hilt.InstallIn
 import dagger.hilt.android.AndroidEntryPoint
@@ -116,7 +116,7 @@ class MainActivity : ComponentActivity(), NavController.OnDestinationChangedList
                         route = "${Screen.Speaker.route}/{speakerId}"
                     ) { backStackEntry ->
                         val speakerId = backStackEntry.arguments!!.getString("speakerId")!!
-                        SpeakerLayout(
+                        SpeakerDetailRoute(
                             viewModel =
                             assistedViewModel {
                                 SpeakerViewModel.provideFactory(
