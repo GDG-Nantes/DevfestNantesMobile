@@ -7,14 +7,10 @@
   <string name="screen_about">About</string>
   <string name="app_name" translatable="false">DevFest Nantes</string>
   <string name="agenda_empty">empty</string>
-  <string name="empty_day">Sorry, there is no conference available for the selected filters.</string>
   <string name="screen_session">Session details</string>
-  <string name="complexity_beginner">Beginner</string>
-  <string name="complexity_intermediate">Intermediate</string>
   <string name="complexity_expert">Expert</string>
   <string name="session_feedback_label">Provide feedback</string>
   <string name="about_terms_of_service">Terms of service</string>
-  <string name="bookmarked">Favorite</string>
   <string name="btn_ok">OK</string>
   <string name="btn_cancel">Cancel</string>
   <string name="web_external_disclaimer_text">You will be redirected to an external web page. We can not be held responsible for the content available on the site you are going to visit.</string>
@@ -22,19 +18,7 @@
   <string name="local_communities_button">🌍 Local communities website</string>
   <string name="session_filters_action_enabled">Session filters are active. Tap to change filters.</string>
   <string name="session_filters_action_disabled">No session filters applied. Tap to add filters.</string>
-  <string name="session_filters_drawer_title">Filters</string>
-  <string name="session_filters_drawer_languages_label">Languages</string>
-  <string name="session_filters_drawer_rooms_label">Rooms</string>
   <string name="screen_speakers">Speakers</string>
-  <string name="complexity_advanced">Advanced</string>
   <string name="settings_action">Open application settings.</string>
   <string name="placeholder_session_details">Session details</string>
-  <string name="language_french">french</string>
-  <string name="language_english">english</string>
-  <string name="session_filters_drawer_complexity_label">Complexity</string>
-  <string name="session_filters_drawer_type_label">Session type</string>
-  <string name="session_type_conference">Conference</string>
-  <string name="session_type_quickie">Quickie</string>
-  <string name="session_type_codelab">Codelab</string>
-  <string name="session_filters_clear">Clear filters</string>
 </resources>

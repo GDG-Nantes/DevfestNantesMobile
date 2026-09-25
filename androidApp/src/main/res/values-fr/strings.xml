@@ -6,14 +6,10 @@
   <string name="screen_venue">Lieu</string>
   <string name="screen_about">À propos</string>
   <string name="agenda_empty">vide</string>
-  <string name="empty_day">Désolé, aucune conférence n\'est disponible pour les filtres sélectionnés.</string>
   <string name="screen_session">Session details</string>
-  <string name="complexity_beginner">Débutant</string>
-  <string name="complexity_intermediate">Intermediaire</string>
   <string name="complexity_expert">Expert</string>
   <string name="session_feedback_label">Donnez-nous votre feedback</string>
   <string name="about_terms_of_service">Mentions Légales</string>
-  <string name="bookmarked">Favori</string>
   <string name="btn_ok">Ok</string>
   <string name="btn_cancel">Annuler</string>
   <string name="web_external_disclaimer_text">Vous allez être redirigé vers une page web extérieure. Nous ne pouvons être tenus pour responsable du contenu disponible sur le site que vous allez visiter.</string>
@@ -21,19 +17,7 @@
   <string name="local_communities_button">🌍 Page des communautés tech Nantaises</string>
   <string name="session_filters_action_enabled">Filtres de session actifs. Touchez pour modifier les filtres.</string>
   <string name="session_filters_action_disabled">Aucun filtre de session appliqué. Touchez pour ajouter des filtres.</string>
-  <string name="session_filters_drawer_title">Filtres</string>
-  <string name="session_filters_drawer_languages_label">Langues</string>
-  <string name="session_filters_drawer_rooms_label">Salles</string>
   <string name="screen_speakers">Speakers</string>
-  <string name="complexity_advanced">Avancé</string>
   <string name="settings_action">Ouvrir les paramètres de l\'application.</string>
   <string name="placeholder_session_details">Détails de la session</string>
-  <string name="language_french">français</string>
-  <string name="language_english">anglais</string>
-  <string name="session_filters_drawer_complexity_label">Complexité</string>
-  <string name="session_filters_drawer_type_label">Type de session</string>
-  <string name="session_type_conference">Conférence</string>
-  <string name="session_type_quickie">Quickie</string>
-  <string name="session_type_codelab">Codelab</string>
-  <string name="session_filters_clear">Réinitialiser les filtres</string>
 </resources>

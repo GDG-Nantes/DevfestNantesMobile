@@ -15,9 +15,9 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.gdgnantes.devfest.androidapp.R
 import com.gdgnantes.devfest.core.model.Complexity
 import com.gdgnantes.devfest.core.ui.theme.DevFestNantesTheme
+import com.gdgnantes.devfest.core.ui.R as CoreUiR
 
 @Composable
 fun SessionComplexity(
@@ -70,7 +70,7 @@ fun SessionComplexityPreview() {
 
 fun Complexity.labelResId() =
     when (this) {
-        Complexity.BEGINNER -> R.string.complexity_beginner
-        Complexity.INTERMEDIATE -> R.string.complexity_intermediate
-        Complexity.ADVANCED -> R.string.complexity_advanced
+        Complexity.BEGINNER -> CoreUiR.string.complexity_beginner
+        Complexity.INTERMEDIATE -> CoreUiR.string.complexity_intermediate
+        Complexity.ADVANCED -> CoreUiR.string.complexity_advanced
     }

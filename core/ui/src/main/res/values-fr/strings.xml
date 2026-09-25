@@ -8,4 +8,11 @@
   <string name="screen_data_collection">Partage de données</string>
   <string name="settings_legal">Mentions légales</string>
   <string name="screen_speaker">Speaker</string>
+  <string name="bookmarked">Favori</string>
+  <string name="complexity_beginner">Débutant</string>
+  <string name="complexity_intermediate">Intermediaire</string>
+  <string name="complexity_advanced">Avancé</string>
+  <string name="session_type_conference">Conférence</string>
+  <string name="session_type_quickie">Quickie</string>
+  <string name="session_type_codelab">Codelab</string>
 </resources>

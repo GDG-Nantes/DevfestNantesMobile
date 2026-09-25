@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+  <string name="empty_day">Sorry, there is no conference available for the selected filters.</string>
+  <string name="session_filters_drawer_title">Filters</string>
+  <string name="session_filters_drawer_languages_label">Languages</string>
+  <string name="session_filters_drawer_rooms_label">Rooms</string>
+  <string name="language_french">french</string>
+  <string name="language_english">english</string>
+  <string name="session_filters_drawer_complexity_label">Complexity</string>
+  <string name="session_filters_drawer_type_label">Session type</string>
+  <string name="session_filters_clear">Clear filters</string>
+</resources>

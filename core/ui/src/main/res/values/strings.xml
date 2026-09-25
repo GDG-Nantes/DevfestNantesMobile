@@ -9,4 +9,11 @@
   <string name="screen_data_collection">Data collection</string>
   <string name="settings_legal">Legal notices</string>
   <string name="screen_speaker">Speaker</string>
+  <string name="bookmarked">Favorite</string>
+  <string name="complexity_beginner">Beginner</string>
+  <string name="complexity_intermediate">Intermediate</string>
+  <string name="complexity_advanced">Advanced</string>
+  <string name="session_type_conference">Conference</string>
+  <string name="session_type_quickie">Quickie</string>
+  <string name="session_type_codelab">Codelab</string>
 </resources>

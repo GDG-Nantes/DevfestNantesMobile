@@ -156,7 +156,7 @@ fun SessionLayout(
                         painterResource(
                             if (isBookmarked) R.drawable.ic_bookmarked_fab else R.drawable.ic_bookmark_fab
                         ),
-                        contentDescription = stringResource(R.string.bookmarked)
+                        contentDescription = stringResource(CoreUiR.string.bookmarked)
                     )
                 }
             }

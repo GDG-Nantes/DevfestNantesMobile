@@ -15,11 +15,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.gdgnantes.devfest.androidapp.R
 import com.gdgnantes.devfest.core.model.Category
 import com.gdgnantes.devfest.core.model.SessionType
 import com.gdgnantes.devfest.core.ui.components.SessionCategory
 import com.gdgnantes.devfest.core.ui.theme.DevFestNantesTheme
+import com.gdgnantes.devfest.core.ui.R as CoreUiR
 
 @Composable
 fun SessionType(
@@ -27,9 +27,9 @@ fun SessionType(
     type: SessionType
 ) {
     when (type) {
-        SessionType.CONFERENCE -> R.string.session_type_conference
-        SessionType.QUICKIE -> R.string.session_type_quickie
-        SessionType.CODELAB -> R.string.session_type_codelab
+        SessionType.CONFERENCE -> CoreUiR.string.session_type_conference
+        SessionType.QUICKIE -> CoreUiR.string.session_type_quickie
+        SessionType.CODELAB -> CoreUiR.string.session_type_codelab
         else -> null
     }?.let { textResource ->
         OutlinedCard(

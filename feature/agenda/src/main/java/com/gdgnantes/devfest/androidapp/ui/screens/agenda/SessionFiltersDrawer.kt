@@ -26,12 +26,13 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.gdgnantes.devfest.androidapp.R
 import com.gdgnantes.devfest.androidapp.utils.SessionFilter
 import com.gdgnantes.devfest.core.model.Complexity
 import com.gdgnantes.devfest.core.model.Room
 import com.gdgnantes.devfest.core.model.SessionLanguage
 import com.gdgnantes.devfest.core.model.SessionType
+import com.gdgnantes.devfest.feature.agenda.R
+import com.gdgnantes.devfest.core.ui.R as CoreUiR
 
 @Composable
 fun AgendaFilterDrawer(
@@ -50,7 +51,7 @@ fun AgendaFilterDrawer(
             text = R.string.session_filters_drawer_title
         )
         FilterItem(
-            text = stringResource(R.string.bookmarked),
+            text = stringResource(CoreUiR.string.bookmarked),
             image = R.drawable.ic_bookmarked,
             checked = sessionFilters.any { it.type == SessionFilter.FilterType.BOOKMARK },
             onCheck = { checked ->
@@ -165,7 +166,7 @@ private fun FiltersComplexity(
     )
 
     FilterItem(
-        text = stringResource(R.string.complexity_beginner),
+        text = stringResource(CoreUiR.string.complexity_beginner),
         checked =
         sessionFilters.any {
             it.type == SessionFilter.FilterType.COMPLEXITY &&
@@ -188,7 +189,7 @@ private fun FiltersComplexity(
         }
     )
     FilterItem(
-        text = stringResource(R.string.complexity_intermediate),
+        text = stringResource(CoreUiR.string.complexity_intermediate),
         checked =
         sessionFilters.any {
             it.type == SessionFilter.FilterType.COMPLEXITY && it.value == Complexity.INTERMEDIATE.name
@@ -213,7 +214,7 @@ private fun FiltersComplexity(
         }
     )
     FilterItem(
-        text = stringResource(R.string.complexity_advanced),
+        text = stringResource(CoreUiR.string.complexity_advanced),
         checked =
         sessionFilters.any {
             it.type == SessionFilter.FilterType.COMPLEXITY &&
@@ -249,7 +250,7 @@ private fun FiltersType(
     )
 
     FilterItem(
-        text = stringResource(R.string.session_type_conference),
+        text = stringResource(CoreUiR.string.session_type_conference),
         checked =
         sessionFilters
             .any {
@@ -277,7 +278,7 @@ private fun FiltersType(
         }
     )
     FilterItem(
-        text = stringResource(R.string.session_type_quickie),
+        text = stringResource(CoreUiR.string.session_type_quickie),
         checked =
         sessionFilters.any {
             it.type == SessionFilter.FilterType.TYPE &&
@@ -300,7 +301,7 @@ private fun FiltersType(
         }
     )
     FilterItem(
-        text = stringResource(R.string.session_type_codelab),
+        text = stringResource(CoreUiR.string.session_type_codelab),
         checked =
         sessionFilters.any {
             it.type == SessionFilter.FilterType.TYPE &&
