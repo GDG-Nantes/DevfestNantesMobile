@@ -1,4 +1,4 @@
-package com.gdgnantes.devfest.androidapp.ui.screens.about.partners
+package com.gdgnantes.devfest.feature.about.partners
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

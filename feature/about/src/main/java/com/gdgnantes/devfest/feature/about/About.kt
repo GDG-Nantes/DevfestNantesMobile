@@ -1,4 +1,4 @@
-package com.gdgnantes.devfest.androidapp.ui.screens.about
+package com.gdgnantes.devfest.feature.about
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -12,10 +12,10 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.gdgnantes.devfest.androidapp.ui.components.GithubCard
-import com.gdgnantes.devfest.androidapp.ui.screens.about.partners.Partners
 import com.gdgnantes.devfest.core.model.Partner
 import com.gdgnantes.devfest.core.ui.theme.DevFestNantesTheme
+import com.gdgnantes.devfest.feature.about.components.GithubCard
+import com.gdgnantes.devfest.feature.about.partners.Partners
 
 @Composable
 fun About(

@@ -1,4 +1,4 @@
-package com.gdgnantes.devfest.androidapp.ui.screens.about
+package com.gdgnantes.devfest.feature.about
 
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding

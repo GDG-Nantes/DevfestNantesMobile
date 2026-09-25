@@ -1,4 +1,4 @@
-package com.gdgnantes.devfest.androidapp.ui.screens.about.partners
+package com.gdgnantes.devfest.feature.about.partners
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
