@@ -10,9 +10,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.gdgnantes.devfest.androidapp.BuildConfig
-import com.gdgnantes.devfest.androidapp.R
 import com.gdgnantes.devfest.core.model.Session
+import com.gdgnantes.devfest.feature.sessiondetail.R
 import io.openfeedback.OpenFeedback
 
 @Composable
@@ -35,7 +34,8 @@ fun FeedbackForm(
             } else {
                 OpenfeedbackForm(
                     modifier = modifier,
-                    sessionId = openFeedbackFormId
+                    sessionId = openFeedbackFormId,
+                    projectId = feedbackFormViewModel.openFeedbackProjectId
                 )
             }
         }
@@ -46,6 +46,7 @@ fun FeedbackForm(
 fun OpenfeedbackForm(
     modifier: Modifier = Modifier,
     sessionId: String,
+    projectId: String,
 ) {
     Column(
         modifier = modifier
@@ -57,7 +58,7 @@ fun OpenfeedbackForm(
         )
 
         OpenFeedback(
-            projectId = BuildConfig.OPEN_FEEDBACK_PROJECT_ID,
+            projectId = projectId,
             sessionId = sessionId
         )
     }

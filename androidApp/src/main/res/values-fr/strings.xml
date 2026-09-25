@@ -8,7 +8,6 @@
   <string name="agenda_empty">vide</string>
   <string name="screen_session">Session details</string>
   <string name="complexity_expert">Expert</string>
-  <string name="session_feedback_label">Donnez-nous votre feedback</string>
   <string name="about_terms_of_service">Mentions Légales</string>
   <string name="btn_ok">Ok</string>
   <string name="btn_cancel">Annuler</string>
@@ -19,5 +18,4 @@
   <string name="session_filters_action_disabled">Aucun filtre de session appliqué. Touchez pour ajouter des filtres.</string>
   <string name="screen_speakers">Speakers</string>
   <string name="settings_action">Ouvrir les paramètres de l\'application.</string>
-  <string name="placeholder_session_details">Détails de la session</string>
 </resources>

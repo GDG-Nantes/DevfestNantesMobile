@@ -9,7 +9,6 @@
   <string name="agenda_empty">empty</string>
   <string name="screen_session">Session details</string>
   <string name="complexity_expert">Expert</string>
-  <string name="session_feedback_label">Provide feedback</string>
   <string name="about_terms_of_service">Terms of service</string>
   <string name="btn_ok">OK</string>
   <string name="btn_cancel">Cancel</string>
@@ -20,5 +19,4 @@
   <string name="session_filters_action_disabled">No session filters applied. Tap to add filters.</string>
   <string name="screen_speakers">Speakers</string>
   <string name="settings_action">Open application settings.</string>
-  <string name="placeholder_session_details">Session details</string>
 </resources>

@@ -61,6 +61,7 @@ dependencies {
     implementation(project(":feature:settings"))
     implementation(project(":feature:speakers"))
     implementation(project(":feature:agenda"))
+    implementation(project(":feature:session-detail"))
 
     implementation(libs.bundles.accompanist)
     implementation(libs.androidx.browser)

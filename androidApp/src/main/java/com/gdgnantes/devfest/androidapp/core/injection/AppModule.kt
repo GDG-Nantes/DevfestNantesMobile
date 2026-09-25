@@ -11,6 +11,7 @@ import com.gdgnantes.devfest.androidapp.core.OpenFeedbackInitializer
 import com.gdgnantes.devfest.androidapp.core.logging.TimberTreeDebug
 import com.gdgnantes.devfest.androidapp.core.logging.TimberTreeRelease
 import com.gdgnantes.devfest.androidapp.core.performance.PerformanceInitializer
+import com.gdgnantes.devfest.androidapp.ui.screens.session.OpenFeedbackConfig
 import com.gdgnantes.devfest.core.analytics.AnalyticsService
 import com.gdgnantes.devfest.core.analytics.FirebaseAnalyticsService
 import com.gdgnantes.devfest.core.analytics.performance.PerformanceMonitoring
@@ -103,6 +104,13 @@ abstract class AppModule {
 
         @Provides
         fun firebasePerformance() = FirebasePerformance.getInstance()
+
+        @Provides
+        fun openFeedbackConfig() =
+            OpenFeedbackConfig(
+                enabled = BuildConfig.OPEN_FEEDBACK_ENABLED.toBoolean(),
+                projectId = BuildConfig.OPEN_FEEDBACK_PROJECT_ID
+            )
 
         @AppScope
         @Provides

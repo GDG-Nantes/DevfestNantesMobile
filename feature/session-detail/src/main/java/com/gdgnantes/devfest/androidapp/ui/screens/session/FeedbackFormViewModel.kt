@@ -1,7 +1,6 @@
 package com.gdgnantes.devfest.androidapp.ui.screens.session
 
 import androidx.lifecycle.ViewModel
-import com.gdgnantes.devfest.androidapp.BuildConfig
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -12,7 +11,8 @@ import javax.inject.Inject
 
 @HiltViewModel
 class FeedbackFormViewModel @Inject constructor(
-    private val remoteConfig: FirebaseRemoteConfig
+    private val remoteConfig: FirebaseRemoteConfig,
+    private val openFeedbackConfig: OpenFeedbackConfig
 ) : ViewModel() {
     private val _isOpenFeedbackEnabled: MutableStateFlow<Boolean> = MutableStateFlow(false)
     val isOpenFeedbackEnabled: StateFlow<Boolean>
@@ -22,6 +22,9 @@ class FeedbackFormViewModel @Inject constructor(
         MutableStateFlow(false)
     val isOpenfeedbackFallbackRequested: StateFlow<Boolean>
         get() = _isOpenfeedbackFallbackRequested.asStateFlow()
+
+    val openFeedbackProjectId: String
+        get() = openFeedbackConfig.projectId
 
     init {
         updateConfig()
@@ -39,10 +42,10 @@ class FeedbackFormViewModel @Inject constructor(
 
     private fun updateConfig() {
         _isOpenFeedbackEnabled.value =
-            BuildConfig.OPEN_FEEDBACK_ENABLED.toBoolean() &&
+            openFeedbackConfig.enabled &&
                     remoteConfig.getBoolean("openfeedback_enabled")
         _isOpenfeedbackFallbackRequested.value =
-            BuildConfig.OPEN_FEEDBACK_ENABLED.toBoolean() &&
+            openFeedbackConfig.enabled &&
                     remoteConfig.getBoolean("openfeedback_fallback_requested_android")
     }
 }
