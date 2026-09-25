@@ -10,6 +10,7 @@ import androidx.navigation.NavDestination
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import com.gdgnantes.devfest.androidapp.BuildConfig
 import com.gdgnantes.devfest.androidapp.services.ExternalContentService
 import com.gdgnantes.devfest.androidapp.ui.screens.Home
 import com.gdgnantes.devfest.androidapp.ui.screens.Screen
@@ -141,6 +142,8 @@ class MainActivity : ComponentActivity(), NavController.OnDestinationChangedList
                         route = Screen.Settings.route
                     ) {
                         Settings(
+                            versionName = BuildConfig.VERSION_NAME,
+                            versionCode = BuildConfig.VERSION_CODE,
                             onBackClick = { mainNavController.popBackStack() },
                             onLegalClick = { mainNavController.navigate(Screen.Legal.route) },
                             onOpenDataSharing = { mainNavController.navigate(Screen.DataCollection.route) },

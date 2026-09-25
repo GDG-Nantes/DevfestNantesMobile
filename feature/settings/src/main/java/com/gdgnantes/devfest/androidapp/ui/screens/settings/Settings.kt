@@ -18,16 +18,16 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.gdgnantes.devfest.androidapp.BuildConfig
-import com.gdgnantes.devfest.androidapp.R
-import com.gdgnantes.devfest.androidapp.ui.screens.Screen
 import com.gdgnantes.devfest.core.ui.components.appbars.TopAppBar
+import com.gdgnantes.devfest.feature.settings.R
 import com.gdgnantes.devfest.core.ui.R as CoreUiR
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun Settings(
     modifier: Modifier = Modifier,
+    versionName: String,
+    versionCode: Int,
     onBackClick: () -> Unit,
     onLegalClick: () -> Unit,
     onOpenDataSharing: () -> Unit,
@@ -36,7 +36,7 @@ fun Settings(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = stringResource(id = Screen.Settings.title),
+                title = stringResource(id = CoreUiR.string.screen_settings),
                 modifier = Modifier.testTag("topAppBar"),
                 navigationIcon = {
                     IconButton(onClick = onBackClick) {
@@ -64,7 +64,7 @@ fun Settings(
                         contentDescription = stringResource(id = R.string.content_description_data_collection_logo)
                     )
                 },
-                title = stringResource(id = R.string.screen_data_collection),
+                title = stringResource(id = CoreUiR.string.screen_data_collection),
                 subtitle =
                 stringResource(
                     id = R.string.settings_data_collection_subtitle
@@ -79,7 +79,7 @@ fun Settings(
             )
 
             SettingsItem(
-                title = stringResource(id = R.string.settings_legal),
+                title = stringResource(id = CoreUiR.string.settings_legal),
                 onClick = onLegalClick
             )
 
@@ -88,8 +88,8 @@ fun Settings(
                 subtitle =
                 stringResource(
                     CoreUiR.string.app_version,
-                    BuildConfig.VERSION_NAME,
-                    BuildConfig.VERSION_CODE
+                    versionName,
+                    versionCode
                 )
             )
         }

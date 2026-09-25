@@ -11,7 +11,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.window.DialogProperties
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.gdgnantes.devfest.androidapp.R
+import com.gdgnantes.devfest.feature.settings.R
+import com.gdgnantes.devfest.core.ui.R as CoreUiR
 
 @Composable
 fun DataCollectionAgreementDialog(
@@ -26,7 +27,7 @@ fun DataCollectionAgreementDialog(
             modifier = modifier,
             onDismissRequest = { openDialog.value = false },
             title = {
-                Text(text = stringResource(id = R.string.screen_data_collection))
+                Text(text = stringResource(id = CoreUiR.string.screen_data_collection))
             },
             text = {
                 Text(text = stringResource(id = R.string.legal_data_collection_consent_dialog_body))

@@ -12,6 +12,7 @@ import androidx.compose.material.icons.outlined.Groups
 import androidx.compose.material.icons.outlined.Info
 import androidx.compose.ui.graphics.vector.ImageVector
 import com.gdgnantes.devfest.androidapp.R
+import com.gdgnantes.devfest.core.ui.R as CoreUiR
 
 sealed class Screen(
     val route: String,
@@ -51,7 +52,7 @@ sealed class Screen(
 
     data object Settings : Screen(
         route = "settings",
-        title = R.string.screen_settings,
+        title = CoreUiR.string.screen_settings,
         imageVectorFilled = null,
         imageVectorOutlined = null
     )
@@ -72,14 +73,14 @@ sealed class Screen(
 
     data object DataCollection : Screen(
         route = "datacollection",
-        title = R.string.screen_data_collection,
+        title = CoreUiR.string.screen_data_collection,
         imageVectorFilled = null,
         imageVectorOutlined = null
     )
 
     data object Legal : Screen(
         route = "legal",
-        title = R.string.settings_legal,
+        title = CoreUiR.string.settings_legal,
         imageVectorFilled = null,
         imageVectorOutlined = null
     )

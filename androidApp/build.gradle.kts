@@ -58,6 +58,7 @@ dependencies {
     implementation(project(":core:ui"))
     implementation(project(":feature:venue"))
     implementation(project(":feature:about"))
+    implementation(project(":feature:settings"))
 
     implementation(libs.bundles.accompanist)
     implementation(libs.androidx.browser)

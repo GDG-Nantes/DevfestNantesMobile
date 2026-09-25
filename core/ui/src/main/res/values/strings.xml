@@ -5,4 +5,7 @@
   <string name="content_description_speaker_website_icon">Website icon. Link to the speaker\'s website.</string>
   <string name="content_description_speaker_picture">%1$s\'s profile picture.</string>
   <string name="app_version" translatable="false" formatted="false">Version %s (%d)</string>
+  <string name="screen_settings">Settings</string>
+  <string name="screen_data_collection">Data collection</string>
+  <string name="settings_legal">Legal notices</string>
 </resources>
