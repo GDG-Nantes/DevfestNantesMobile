@@ -1,4 +1,4 @@
-package com.gdgnantes.devfest.androidapp.utils
+package com.gdgnantes.devfest.feature.sessiondetail.utils
 
 import android.content.Context
 import android.content.res.Resources

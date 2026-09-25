@@ -1,4 +1,4 @@
-package com.gdgnantes.devfest.androidapp.ui.screens.session
+package com.gdgnantes.devfest.feature.sessiondetail
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider

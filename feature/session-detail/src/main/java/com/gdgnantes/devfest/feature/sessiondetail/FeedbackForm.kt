@@ -1,4 +1,4 @@
-package com.gdgnantes.devfest.androidapp.ui.screens.session
+package com.gdgnantes.devfest.feature.sessiondetail
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
@@ -11,7 +11,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.gdgnantes.devfest.core.model.Session
-import com.gdgnantes.devfest.feature.sessiondetail.R
 import io.openfeedback.OpenFeedback
 
 @Composable

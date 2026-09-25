@@ -1,4 +1,4 @@
-package com.gdgnantes.devfest.androidapp.ui.components
+package com.gdgnantes.devfest.feature.sessiondetail.components
 
 import android.content.res.Configuration
 import androidx.compose.foundation.BorderStroke

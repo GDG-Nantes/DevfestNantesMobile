@@ -14,8 +14,6 @@ import com.gdgnantes.devfest.androidapp.BuildConfig
 import com.gdgnantes.devfest.androidapp.services.ExternalContentService
 import com.gdgnantes.devfest.androidapp.ui.screens.Home
 import com.gdgnantes.devfest.androidapp.ui.screens.Screen
-import com.gdgnantes.devfest.androidapp.ui.screens.session.SessionLayout
-import com.gdgnantes.devfest.androidapp.ui.screens.session.SessionViewModel
 import com.gdgnantes.devfest.androidapp.utils.assistedViewModel
 import com.gdgnantes.devfest.core.analytics.AnalyticsPage
 import com.gdgnantes.devfest.core.analytics.AnalyticsService
@@ -23,6 +21,8 @@ import com.gdgnantes.devfest.core.model.Session
 import com.gdgnantes.devfest.core.model.SessionType
 import com.gdgnantes.devfest.core.model.WebLinks
 import com.gdgnantes.devfest.core.ui.theme.DevFestNantesTheme
+import com.gdgnantes.devfest.feature.sessiondetail.SessionDetailRoute
+import com.gdgnantes.devfest.feature.sessiondetail.SessionViewModel
 import com.gdgnantes.devfest.feature.settings.DataCollectionSettingsRoute
 import com.gdgnantes.devfest.feature.settings.LegalRoute
 import com.gdgnantes.devfest.feature.settings.SettingsRoute
@@ -87,7 +87,7 @@ class MainActivity : ComponentActivity(), NavController.OnDestinationChangedList
                         route = "${Screen.Session.route}/{sessionId}"
                     ) { backStackEntry ->
                         val sessionId = backStackEntry.arguments!!.getString("sessionId")!!
-                        SessionLayout(
+                        SessionDetailRoute(
                             viewModel =
                             assistedViewModel {
                                 SessionViewModel.provideFactory(

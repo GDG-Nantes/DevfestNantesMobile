@@ -1,4 +1,4 @@
-package com.gdgnantes.devfest.androidapp.ui.screens.session
+package com.gdgnantes.devfest.feature.sessiondetail
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -13,7 +13,6 @@ import androidx.compose.ui.unit.dp
 import com.gdgnantes.devfest.core.model.Session
 import com.gdgnantes.devfest.core.model.WebLinks
 import com.gdgnantes.devfest.core.ui.utils.getDateFromIso8601
-import com.gdgnantes.devfest.feature.sessiondetail.R
 import java.text.SimpleDateFormat
 
 @Composable

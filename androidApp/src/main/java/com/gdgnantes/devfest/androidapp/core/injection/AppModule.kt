@@ -11,7 +11,6 @@ import com.gdgnantes.devfest.androidapp.core.OpenFeedbackInitializer
 import com.gdgnantes.devfest.androidapp.core.logging.TimberTreeDebug
 import com.gdgnantes.devfest.androidapp.core.logging.TimberTreeRelease
 import com.gdgnantes.devfest.androidapp.core.performance.PerformanceInitializer
-import com.gdgnantes.devfest.androidapp.ui.screens.session.OpenFeedbackConfig
 import com.gdgnantes.devfest.core.analytics.AnalyticsService
 import com.gdgnantes.devfest.core.analytics.FirebaseAnalyticsService
 import com.gdgnantes.devfest.core.analytics.performance.PerformanceMonitoring
@@ -21,6 +20,7 @@ import com.gdgnantes.devfest.core.data.DevFestNantesStore
 import com.gdgnantes.devfest.core.data.DevFestNantesStoreBuilder
 import com.gdgnantes.devfest.feature.agenda.services.SessionFiltersService
 import com.gdgnantes.devfest.feature.agenda.services.SessionFiltersServiceImpl
+import com.gdgnantes.devfest.feature.sessiondetail.OpenFeedbackConfig
 import com.gdgnantes.devfest.feature.settings.services.DataCollectionSettingsService
 import com.gdgnantes.devfest.feature.settings.services.DataCollectionSettingsServiceImpl
 import com.google.firebase.Firebase

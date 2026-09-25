@@ -1,4 +1,4 @@
-package com.gdgnantes.devfest.androidapp.ui.screens.session
+package com.gdgnantes.devfest.feature.sessiondetail
 
 import androidx.compose.animation.Crossfade
 import androidx.compose.animation.animateColorAsState
@@ -36,7 +36,6 @@ import com.gdgnantes.devfest.core.ui.BookmarksViewModel
 import com.gdgnantes.devfest.core.ui.components.LoadingLayout
 import com.gdgnantes.devfest.core.ui.components.appbars.TopAppBar
 import com.gdgnantes.devfest.core.ui.theme.bookmarked
-import com.gdgnantes.devfest.feature.sessiondetail.R
 import com.gdgnantes.devfest.core.ui.R as CoreUiR
 
 @Composable

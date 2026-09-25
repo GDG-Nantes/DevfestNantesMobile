@@ -1,4 +1,4 @@
-package com.gdgnantes.devfest.androidapp.ui.screens.session
+package com.gdgnantes.devfest.feature.sessiondetail
 
 import android.annotation.SuppressLint
 import androidx.compose.foundation.layout.Arrangement
@@ -15,9 +15,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import com.gdgnantes.devfest.androidapp.ui.components.SessionComplexity
-import com.gdgnantes.devfest.androidapp.ui.components.SessionType
-import com.gdgnantes.devfest.androidapp.utils.getFormattedRange
 import com.gdgnantes.devfest.core.model.Session
 import com.gdgnantes.devfest.core.model.SocialItem
 import com.gdgnantes.devfest.core.model.Speaker
@@ -25,6 +22,9 @@ import com.gdgnantes.devfest.core.model.stubs.buildSessionStub
 import com.gdgnantes.devfest.core.model.utils.getDurationAndLanguageString
 import com.gdgnantes.devfest.core.ui.components.SessionCategory
 import com.gdgnantes.devfest.core.ui.theme.DevFestNantesTheme
+import com.gdgnantes.devfest.feature.sessiondetail.components.SessionComplexity
+import com.gdgnantes.devfest.feature.sessiondetail.components.SessionType
+import com.gdgnantes.devfest.feature.sessiondetail.utils.getFormattedRange
 
 @Composable
 fun SessionDetails(
