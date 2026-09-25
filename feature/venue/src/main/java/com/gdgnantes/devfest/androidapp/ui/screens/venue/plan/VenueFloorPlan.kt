@@ -26,7 +26,7 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.CachePolicy
 import coil.request.ImageRequest
-import com.gdgnantes.devfest.androidapp.R
+import com.gdgnantes.devfest.feature.venue.R
 import timber.log.Timber
 
 @Composable

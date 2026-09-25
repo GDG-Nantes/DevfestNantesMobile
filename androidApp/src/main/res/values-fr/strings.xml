@@ -8,7 +8,6 @@
   <string name="agenda_empty">vide</string>
   <string name="empty_day">Désolé, aucune conférence n\'est disponible pour les filtres sélectionnés.</string>
   <string name="screen_session">Session details</string>
-  <string name="venue_go_to_button">S\'y rendre</string>
   <string name="screen_about_header_body">Le DevFest, ou \'Developers Festival\', est une conférence technique destinée aux développeuses et développeurs. Elle s\'adresse aussi bien aux étudiantes et étudiants, aux professionnels ou tout simplement aux curieuses et curieux technophiles.\nCette année plongez dans le monde enchanté des contes et légendes !</string>
   <string name="complexity_beginner">Débutant</string>
   <string name="complexity_intermediate">Intermediaire</string>
@@ -31,7 +30,6 @@
   <string name="session_filters_drawer_languages_label">Langues</string>
   <string name="session_filters_drawer_rooms_label">Salles</string>
   <string name="partners_title">Partenaires</string>
-  <string name="venue_image_content_description">Photo du lieu de la conférence.</string>
   <string name="content_description_about_header">Logo d\'en tête du DevFest Nantes.</string>
   <string name="screen_speakers">Speakers</string>
   <string name="screen_speaker">Speaker</string>
@@ -63,7 +61,6 @@
   <string name="settings_version_support">Support</string>
   <string name="settings_version_support_subtitle">Signaler un problème.</string>
   <string name="settings_legal">Mentions légales</string>
-  <string name="venue_plan_content_description">Plan de la citée des congrès. Présente les différents espaces et les salles de la conférence.</string>
   <string name="session_filters_clear">Réinitialiser les filtres</string>
   <string name="partners_exclusive_platinium_title">PARTENAIRE PLATINIUM EXCLUSIF</string>
   <string name="partners_velotype_title">VELOTYPIE</string>

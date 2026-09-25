@@ -9,7 +9,6 @@
   <string name="agenda_empty">empty</string>
   <string name="empty_day">Sorry, there is no conference available for the selected filters.</string>
   <string name="screen_session">Session details</string>
-  <string name="venue_go_to_button">Go to</string>
   <string name="screen_about_header_body">The Devfest (i.e Developers Festival), is a technical conference destined to developers. It\'s meant for students, professionals, or any curious techie.\nThis year step into the magical world of legends and tales!</string>
   <string name="complexity_beginner">Beginner</string>
   <string name="complexity_intermediate">Intermediate</string>
@@ -33,7 +32,6 @@
   <string name="session_filters_drawer_languages_label">Languages</string>
   <string name="session_filters_drawer_rooms_label">Rooms</string>
   <string name="partners_title">Partners</string>
-  <string name="venue_image_content_description">Picture of the conference\'s venue.</string>
   <string name="partners_exclusive_platinium_title">EXCLUSIVE PLATINIUM PARTNER</string>
   <string name="partners_platinium_title" translatable="false">PLATINIUM</string>
   <string name="partners_gold_title" translatable="false">GOLD</string>
@@ -74,6 +72,5 @@
   <string name="settings_version_support">Support</string>
   <string name="settings_version_support_subtitle">Report an issue.</string>
   <string name="settings_legal">Legal notices</string>
-  <string name="venue_plan_content_description">Plan of the conference\'s venue. Shows the different spaces and conferences rooms.</string>
   <string name="session_filters_clear">Clear filters</string>
 </resources>
