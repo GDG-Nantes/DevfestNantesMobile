@@ -1,4 +1,4 @@
-package com.gdgnantes.devfest.androidapp.ui.screens.agenda
+package com.gdgnantes.devfest.feature.agenda
 
 import android.content.res.Resources
 import androidx.compose.foundation.ExperimentalFoundationApi

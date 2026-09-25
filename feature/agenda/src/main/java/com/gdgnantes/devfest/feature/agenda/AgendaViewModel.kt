@@ -1,9 +1,7 @@
-package com.gdgnantes.devfest.androidapp.ui.screens.agenda
+package com.gdgnantes.devfest.feature.agenda
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.gdgnantes.devfest.androidapp.services.SessionFiltersService
-import com.gdgnantes.devfest.androidapp.utils.SessionFilter
 import com.gdgnantes.devfest.core.analytics.performance.PerformanceMonitoring
 import com.gdgnantes.devfest.core.analytics.performance.traceDataLoading
 import com.gdgnantes.devfest.core.data.BookmarksStore
@@ -13,6 +11,8 @@ import com.gdgnantes.devfest.core.model.Agenda.Companion.DAY_TWO_ISO
 import com.gdgnantes.devfest.core.model.AgendaDay
 import com.gdgnantes.devfest.core.model.Session
 import com.gdgnantes.devfest.core.ui.UiState
+import com.gdgnantes.devfest.feature.agenda.services.SessionFiltersService
+import com.gdgnantes.devfest.feature.agenda.utils.SessionFilter
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job

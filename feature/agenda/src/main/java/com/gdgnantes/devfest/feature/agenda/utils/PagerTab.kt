@@ -1,4 +1,4 @@
-package com.gdgnantes.devfest.androidapp.utils
+package com.gdgnantes.devfest.feature.agenda.utils
 /*
  * Copyright 2021 The Android Open Source Project
  *

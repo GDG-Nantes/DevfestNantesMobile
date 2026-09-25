@@ -1,4 +1,4 @@
-package com.gdgnantes.devfest.androidapp.ui.screens.agenda
+package com.gdgnantes.devfest.feature.agenda
 
 import android.annotation.SuppressLint
 import android.content.res.Configuration
@@ -25,7 +25,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
-import com.gdgnantes.devfest.androidapp.utils.isService
 import com.gdgnantes.devfest.core.analytics.AnalyticsPage
 import com.gdgnantes.devfest.core.model.Session
 import com.gdgnantes.devfest.core.model.SessionType
@@ -36,7 +35,7 @@ import com.gdgnantes.devfest.core.ui.BookmarksViewModel
 import com.gdgnantes.devfest.core.ui.components.SessionCategory
 import com.gdgnantes.devfest.core.ui.theme.DevFestNantesTheme
 import com.gdgnantes.devfest.core.ui.theme.bookmarked
-import com.gdgnantes.devfest.feature.agenda.R
+import com.gdgnantes.devfest.feature.agenda.utils.isService
 
 @Composable
 fun AgendaRow(

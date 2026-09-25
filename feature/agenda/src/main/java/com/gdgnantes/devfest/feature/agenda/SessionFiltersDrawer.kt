@@ -1,4 +1,4 @@
-package com.gdgnantes.devfest.androidapp.ui.screens.agenda
+package com.gdgnantes.devfest.feature.agenda
 
 import androidx.annotation.StringRes
 import androidx.compose.foundation.Image
@@ -26,12 +26,11 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import com.gdgnantes.devfest.androidapp.utils.SessionFilter
 import com.gdgnantes.devfest.core.model.Complexity
 import com.gdgnantes.devfest.core.model.Room
 import com.gdgnantes.devfest.core.model.SessionLanguage
 import com.gdgnantes.devfest.core.model.SessionType
-import com.gdgnantes.devfest.feature.agenda.R
+import com.gdgnantes.devfest.feature.agenda.utils.SessionFilter
 import com.gdgnantes.devfest.core.ui.R as CoreUiR
 
 @Composable

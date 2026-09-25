@@ -1,4 +1,4 @@
-package com.gdgnantes.devfest.androidapp.ui.screens.agenda
+package com.gdgnantes.devfest.feature.agenda
 
 import android.content.res.Configuration
 import androidx.compose.foundation.layout.Box
@@ -17,7 +17,6 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.gdgnantes.devfest.core.ui.theme.DevFestNantesTheme
-import com.gdgnantes.devfest.feature.agenda.R
 
 @Composable
 fun EmptyLayout(modifier: Modifier = Modifier) {

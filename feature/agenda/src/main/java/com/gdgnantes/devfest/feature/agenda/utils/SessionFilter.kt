@@ -1,4 +1,4 @@
-package com.gdgnantes.devfest.androidapp.utils
+package com.gdgnantes.devfest.feature.agenda.utils
 
 import kotlinx.serialization.Serializable
 
