@@ -26,7 +26,6 @@
   <string name="session_filters_drawer_languages_label">Languages</string>
   <string name="session_filters_drawer_rooms_label">Rooms</string>
   <string name="screen_speakers">Speakers</string>
-  <string name="screen_speaker">Speaker</string>
   <string name="complexity_advanced">Advanced</string>
   <string name="settings_action">Open application settings.</string>
   <string name="placeholder_session_details">Session details</string>

@@ -21,7 +21,6 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import com.gdgnantes.devfest.androidapp.R
 import com.gdgnantes.devfest.androidapp.ui.screens.speakers.SpeakerViewModel
 import com.gdgnantes.devfest.core.model.Session
 import com.gdgnantes.devfest.core.model.SocialItem
@@ -85,7 +84,7 @@ fun SpeakerLayout(
         modifier = modifier,
         topBar = {
             TopAppBar(
-                title = speaker?.name ?: stringResource(id = R.string.screen_speaker),
+                title = speaker?.name ?: stringResource(id = CoreUiR.string.screen_speaker),
                 modifier = Modifier.testTag("topAppBar"),
                 navigationIcon = {
                     IconButton(onClick = onBackClick) {

@@ -59,7 +59,7 @@ sealed class Screen(
 
     data object Speaker : Screen(
         route = "speaker",
-        title = R.string.screen_speaker,
+        title = CoreUiR.string.screen_speaker,
         imageVectorFilled = Icons.Filled.Groups,
         imageVectorOutlined = Icons.Outlined.Groups
     )
