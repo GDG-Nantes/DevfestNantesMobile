@@ -1,4 +1,4 @@
-package com.gdgnantes.devfest.androidapp.ui.screens.venue.plan
+package com.gdgnantes.devfest.feature.venue.plan
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxWidth

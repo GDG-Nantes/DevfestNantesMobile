@@ -31,7 +31,6 @@ import com.gdgnantes.devfest.androidapp.ui.screens.about.About
 import com.gdgnantes.devfest.androidapp.ui.screens.agenda.Agenda
 import com.gdgnantes.devfest.androidapp.ui.screens.home.HomeViewModel
 import com.gdgnantes.devfest.androidapp.ui.screens.speakers.list.Speakers
-import com.gdgnantes.devfest.androidapp.ui.screens.venue.Venue
 import com.gdgnantes.devfest.core.analytics.AnalyticsPage
 import com.gdgnantes.devfest.core.analytics.AnalyticsService
 import com.gdgnantes.devfest.core.model.Session
@@ -45,6 +44,7 @@ import com.gdgnantes.devfest.core.model.WebLinks.SOCIAL_TWITTER
 import com.gdgnantes.devfest.core.model.WebLinks.SOCIAL_YOUTUBE
 import com.gdgnantes.devfest.core.model.WebLinks.WEBSITE
 import com.gdgnantes.devfest.core.ui.components.appbars.TopAppBar
+import com.gdgnantes.devfest.feature.venue.VenueRoute
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -157,7 +157,7 @@ fun Home(
                 }
 
                 composable(Screen.Venue.route) {
-                    Venue(
+                    VenueRoute(
                         onNavigationClick = { analyticsService.eventVenueNavigationClicked() },
                         onVenuePlanClick = { url ->
                             externalContentService.openUrl(url)

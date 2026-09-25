@@ -1,6 +1,6 @@
 @file:OptIn(ExperimentalMaterial3Api::class)
 
-package com.gdgnantes.devfest.androidapp.ui.screens.venue
+package com.gdgnantes.devfest.feature.venue
 
 import android.content.Context
 import android.location.Location
@@ -27,13 +27,12 @@ import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import coil.request.CachePolicy
 import coil.request.ImageRequest
-import com.gdgnantes.devfest.androidapp.ui.screens.venue.plan.VenueFloorPlanButton
-import com.gdgnantes.devfest.feature.venue.R
-import com.gdgnantes.devfest.androidapp.utils.onNavigationClick
 import com.gdgnantes.devfest.core.model.ContentLanguage
 import com.gdgnantes.devfest.core.model.Venue
 import com.gdgnantes.devfest.core.model.stubs.buildVenueStub
 import com.gdgnantes.devfest.core.ui.theme.DevFestNantesTheme
+import com.gdgnantes.devfest.feature.venue.plan.VenueFloorPlanButton
+import com.gdgnantes.devfest.feature.venue.utils.onNavigationClick
 import timber.log.Timber
 
 @Composable

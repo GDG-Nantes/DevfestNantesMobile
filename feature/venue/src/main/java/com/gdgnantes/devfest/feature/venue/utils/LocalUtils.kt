@@ -1,4 +1,4 @@
-package com.gdgnantes.devfest.androidapp.utils
+package com.gdgnantes.devfest.feature.venue.utils
 
 import com.gdgnantes.devfest.core.model.ContentLanguage
 import java.util.*

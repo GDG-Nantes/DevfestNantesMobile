@@ -1,13 +1,13 @@
-package com.gdgnantes.devfest.androidapp.ui.screens.venue
+package com.gdgnantes.devfest.feature.venue
 
 import android.content.res.Resources
 import androidx.core.os.ConfigurationCompat
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.gdgnantes.devfest.androidapp.utils.toContentLanguage
 import com.gdgnantes.devfest.core.data.DevFestNantesStore
 import com.gdgnantes.devfest.core.model.Venue
 import com.gdgnantes.devfest.core.ui.UiState
+import com.gdgnantes.devfest.feature.venue.utils.toContentLanguage
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted

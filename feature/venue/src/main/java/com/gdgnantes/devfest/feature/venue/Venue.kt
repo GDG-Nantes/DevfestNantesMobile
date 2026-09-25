@@ -1,4 +1,4 @@
-package com.gdgnantes.devfest.androidapp.ui.screens.venue
+package com.gdgnantes.devfest.feature.venue
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
