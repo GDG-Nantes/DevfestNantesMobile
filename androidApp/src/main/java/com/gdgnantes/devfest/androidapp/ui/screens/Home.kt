@@ -24,27 +24,28 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.gdgnantes.devfest.analytics.AnalyticsPage
-import com.gdgnantes.devfest.analytics.AnalyticsService
+import com.gdgnantes.devfest.androidapp.BuildConfig
 import com.gdgnantes.devfest.androidapp.R
 import com.gdgnantes.devfest.androidapp.services.ExternalContentService
 import com.gdgnantes.devfest.androidapp.ui.components.appbars.BottomAppBar
-import com.gdgnantes.devfest.androidapp.ui.components.appbars.TopAppBar
-import com.gdgnantes.devfest.androidapp.ui.screens.about.About
-import com.gdgnantes.devfest.androidapp.ui.screens.agenda.Agenda
 import com.gdgnantes.devfest.androidapp.ui.screens.home.HomeViewModel
-import com.gdgnantes.devfest.androidapp.ui.screens.speakers.list.Speakers
-import com.gdgnantes.devfest.androidapp.ui.screens.venue.Venue
-import com.gdgnantes.devfest.model.Session
-import com.gdgnantes.devfest.model.Speaker
-import com.gdgnantes.devfest.model.WebLinks.CODE_OF_CONDUCT
-import com.gdgnantes.devfest.model.WebLinks.GITHUB
-import com.gdgnantes.devfest.model.WebLinks.NANTES_TECH_COMMUNITIES
-import com.gdgnantes.devfest.model.WebLinks.SOCIAL_FACEBOOK
-import com.gdgnantes.devfest.model.WebLinks.SOCIAL_LINKEDIN
-import com.gdgnantes.devfest.model.WebLinks.SOCIAL_TWITTER
-import com.gdgnantes.devfest.model.WebLinks.SOCIAL_YOUTUBE
-import com.gdgnantes.devfest.model.WebLinks.WEBSITE
+import com.gdgnantes.devfest.core.analytics.AnalyticsPage
+import com.gdgnantes.devfest.core.analytics.AnalyticsService
+import com.gdgnantes.devfest.core.model.Session
+import com.gdgnantes.devfest.core.model.Speaker
+import com.gdgnantes.devfest.core.model.WebLinks.CODE_OF_CONDUCT
+import com.gdgnantes.devfest.core.model.WebLinks.GITHUB
+import com.gdgnantes.devfest.core.model.WebLinks.NANTES_TECH_COMMUNITIES
+import com.gdgnantes.devfest.core.model.WebLinks.SOCIAL_FACEBOOK
+import com.gdgnantes.devfest.core.model.WebLinks.SOCIAL_LINKEDIN
+import com.gdgnantes.devfest.core.model.WebLinks.SOCIAL_TWITTER
+import com.gdgnantes.devfest.core.model.WebLinks.SOCIAL_YOUTUBE
+import com.gdgnantes.devfest.core.model.WebLinks.WEBSITE
+import com.gdgnantes.devfest.core.ui.components.appbars.TopAppBar
+import com.gdgnantes.devfest.feature.about.AboutRoute
+import com.gdgnantes.devfest.feature.agenda.AgendaRoute
+import com.gdgnantes.devfest.feature.speakers.SpeakersRoute
+import com.gdgnantes.devfest.feature.venue.VenueRoute
 import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -144,20 +145,20 @@ fun Home(
                 modifier = modifier.padding(paddingValues)
             ) {
                 composable(Screen.Agenda.route) {
-                    Agenda(
+                    AgendaRoute(
                         agendaFilterDrawerState = agendaFilterDrawerState,
                         onSessionClick = onSessionClick
                     )
                 }
 
                 composable(Screen.Speakers.route) {
-                    Speakers(
+                    SpeakersRoute(
                         onSpeakerClick = onSpeakerClick
                     )
                 }
 
                 composable(Screen.Venue.route) {
-                    Venue(
+                    VenueRoute(
                         onNavigationClick = { analyticsService.eventVenueNavigationClicked() },
                         onVenuePlanClick = { url ->
                             externalContentService.openUrl(url)
@@ -167,7 +168,9 @@ fun Home(
                 }
 
                 composable(Screen.About.route) {
-                    About(
+                    AboutRoute(
+                        versionName = BuildConfig.VERSION_NAME,
+                        versionCode = BuildConfig.VERSION_CODE,
                         onCodeOfConductClick = {
                             externalContentService.openUrl(CODE_OF_CONDUCT.url)
                             analyticsService.eventLinkCodeOfConductOpened()

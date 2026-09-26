@@ -12,7 +12,7 @@ import shared
 ///SwiftUI speaker View
 struct SpeakerView: View {
     //Speaker data
-    var speaker: Speaker_
+    var speaker: Speaker
     
     //setup UI
     var body: some View {
