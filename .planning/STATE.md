@@ -3,11 +3,11 @@ gsd_state_version: "1.0"
 current_phase: 03
 current_phase_name: Multi-Module Architecture Extraction
 status: executing
-stopped_at: Completed 03-08-PLAN.md
-last_updated: "2026-09-26T20:33:54.419Z"
+stopped_at: "Paused mid-03-09: Task 1 committed+pushed (1bf81ae, 2b03d4f); Task 2 local gates pass but Android CI Instrumentation-tests OOM x3 on HEAD 2b03d4f, iOS CI green"
+last_updated: "2026-09-26T21:23:58.604Z"
 last_activity: 2026-09-24
 last_activity_desc: Phase 03 execution started
-state_head: 5d61dd22b4f887fa1396e6590c03f91f496031c1
+state_head: 2b03d4f666e13ac2e87e47b41cac29ae14197fd0
 progress:
   total_phases: 5
   completed_phases: 2
@@ -125,6 +125,7 @@ None yet.
 - Phase 2: AGP 9.x/KGP/KSP2 version re-verification was performed live during Phase 2 (each plan re-checked Maven Central/Google Maven metadata immediately before its own commit); outcomes are recorded per-requirement in `## Phase 02 version deviations` below — discharged, no longer open.
 - Follow-up (not blocking): bump targetSdk 36->37 in a dedicated future stage after reviewing Android 17's behavior-change surface (kb://android/about/versions/17/behavior-changes-all / -17) — deliberately deferred from 02-03 per user direction to avoid folding a runtime-behavior-change decision into the Compose-BOM commit
 - Follow-up (not blocking): the firebase-auth-ktx -> firebase-auth:24.2.0 dependency substitution in androidApp/build.gradle.kts is version-coupled to the pinned firebaseBom (34.19.0); re-verify the literal version if firebaseBom is bumped again in a future stage
+- Phase 03 Plan 09 (final phase plan) paused mid-execution at Task 2 Gate C, per user "halt for now" instruction (2026-09-26). Task 1 (thin :shared umbrella + drop androidApp->:shared dep + delete buildSrc) is fully complete and committed: 1bf81ae (refactor: thin :shared to umbrella) and 2b03d4f (build: remove buildSrc), both pushed to feature/reno_phase_3. Task 2's local gates ALL pass: GRAPH-OK, HYGIENE-OK (with a documented verify-script fix for Gradle's quoted project-path format), SWIFT-NAMES-OK, RESOURCES-OK, all required jvmTest suites green. iOS CI is green on HEAD 2b03d4f (run 36270314707). Android CI's "Instrumentation tests (34)" job has failed 3 consecutive times on HEAD 2b03d4f (run 36270314662) with java.lang.OutOfMemoryError: Java heap space during D8 DexMergingWorkAction for feature:settings/feature:session-detail/feature:speakers androidTest APKs -- Unit tests, Build debug and Checks Linters all pass on every attempt. This looks like CI runner resource-contention flakiness (NoIsolationWorkerFactory shares the 2048M Gradle daemon heap with D8 across an unchanged module count vs the last green 03-08 run da6063d), not a regression caused by 03-09's diff (shared/build.gradle.kts, androidApp/build.gradle.kts, buildSrc removal touch nothing related to dexing/test APK assembly). NOT YET DONE: CI-GREEN-BOTH acceptance criterion, therefore no 03-09-SUMMARY.md has been written and ARCH-01/02/03/04 remain NOT marked complete (correct per the shared-ID gate). Resume plan: re-run `gh run rerun 36270314662 --failed` (or a fresh push) a few more times; if it keeps failing with the same OOM signature, the likely fix is bumping org.gradle.jvmargs heap or reducing android.yml's connectedDebugAndroidTest parallelism, then re-verify CI-GREEN-BOTH and finish Task 2 (write SUMMARY, mark ARCH-01..04 complete via ready-ids, update STATE/ROADMAP).
 
 ## Phase 02 DCL pilot outcome
 
@@ -189,6 +190,6 @@ Items acknowledged and deferred at milestone close, most recent first:
 
 ## Session Continuity
 
-Last session: 2026-09-26T20:33:54.396Z
-Stopped at: Completed 03-08-PLAN.md
-Resume file: None
+Last session: 2026-09-26T21:23:50.511Z
+Stopped at: Paused mid-03-09: Task 1 committed+pushed (1bf81ae, 2b03d4f); Task 2 local gates pass but Android CI Instrumentation-tests OOM x3 on HEAD 2b03d4f, iOS CI green
+Resume file: .planning/phases/03-multi-module-architecture-extraction/03-09-PLAN.md
