@@ -52,7 +52,7 @@ android {
 }
 
 dependencies {
-    implementation(project(":shared"))
+    implementation(project(":core:model"))
     implementation(project(":core:analytics"))
     implementation(project(":core:data"))
     implementation(project(":core:ui"))
