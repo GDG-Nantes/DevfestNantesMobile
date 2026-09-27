@@ -25,13 +25,13 @@ Requirements pour ce chantier de modernisation. Chaque requirement mappe vers un
 
 ### ARCH (Architecture multi-module)
 
-- [ ] **ARCH-01**: Le build-logic du projet utilise des convention plugins + le version catalog existant (`libs.versions.toml`), évitant la duplication de configuration entre modules
-- [ ] **ARCH-02**: Les modules `core-*` (model, network, data, analytics, ui, testing) existent et respectent le graphe de dépendances unidirectionnel (core ne dépend jamais de feature)
-- [ ] **ARCH-03**: Les modules `feature-*` (agenda, speakers, venue, session-detail, about, settings) existent, chacun possédant ses propres ViewModel(s) et écrans Compose
+- [x] **ARCH-01**: Le build-logic du projet utilise des convention plugins + le version catalog existant (`libs.versions.toml`), évitant la duplication de configuration entre modules
+- [x] **ARCH-02**: Les modules `core-*` (model, network, data, analytics, ui, testing) existent et respectent le graphe de dépendances unidirectionnel (core ne dépend jamais de feature)
+- [x] **ARCH-03**: Les modules `feature-*` (agenda, speakers, venue, session-detail, about, settings) existent, chacun possédant ses propres ViewModel(s) et écrans Compose
 
 > **Amendement Phase 3 (03-CONTEXT.md D-04..D-06, 2026-09-22) :** le module Koin par feature est livré en Phase 4 (DI-02) — Hilt reste en place pendant la Phase 3. `feature-bookmarks` est retiré (aucun écran : `BookmarksStore` → `core-data`, toggle + `BookmarksViewModel` → `core-ui`) et `feature-about` est ajouté (About + Partners).
 
-- [ ] **ARCH-04**: `iosApp` continue de consommer un seul framework Kotlin/Native (framework umbrella agrégeant tous les modules KMP) malgré le découpage de `shared` en plusieurs modules Gradle
+- [x] **ARCH-04**: `iosApp` continue de consommer un seul framework Kotlin/Native (framework umbrella agrégeant tous les modules KMP) malgré le découpage de `shared` en plusieurs modules Gradle
 
 ### DI (Migration Hilt → Koin)
 
@@ -104,10 +104,10 @@ Which phases cover which requirements. Updated during roadmap creation.
 | BUILD-05 | Phase 2 | Complete |
 | BUILD-06 | Phase 2 | Complete |
 | BUILD-07 | Phase 2 | Complete |
-| ARCH-01 | Phase 3 | Pending |
-| ARCH-02 | Phase 3 | Pending |
-| ARCH-03 | Phase 3 | Pending |
-| ARCH-04 | Phase 3 | Pending |
+| ARCH-01 | Phase 3 | Complete |
+| ARCH-02 | Phase 3 | Complete |
+| ARCH-03 | Phase 3 | Complete |
+| ARCH-04 | Phase 3 | Complete |
 | DI-01 | Phase 4 | Pending |
 | DI-02 | Phase 4 | Pending |
 | DI-03 | Phase 4 | Pending |
