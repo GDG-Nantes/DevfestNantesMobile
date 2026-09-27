@@ -27,6 +27,8 @@ class AndroidLibraryConventionPlugin : Plugin<Project> {
                 namespace = moduleNamespace()
                 configureAndroidCommon(this)
             }
+
+            configureAndroidLibraryTestDefaults()
         }
     }
 }
