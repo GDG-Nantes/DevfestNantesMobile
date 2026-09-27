@@ -6,6 +6,8 @@ import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 import org.jetbrains.kotlin.gradle.dsl.KotlinMultiplatformExtension
+import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget
+import org.jetbrains.kotlin.gradle.plugin.mpp.TestExecutable
 
 /**
  * `devfest.kmp.library` — the convention plugin every `core:*` KMP leaf module
@@ -45,6 +47,14 @@ class KmpLibraryConventionPlugin : Plugin<Project> {
                 iosX64()
                 iosArm64()
                 iosSimulatorArm64()
+
+                // The Apollo SQLite cache's sqliter driver needs libsqlite3 at link time.
+                // The iOS app gets it from Xcode; standalone iOS test executables do not.
+                targets.withType(KotlinNativeTarget::class.java).configureEach {
+                    binaries.withType(TestExecutable::class.java).configureEach {
+                        linkerOpts("-lsqlite3")
+                    }
+                }
 
                 sourceSets.configureEach {
                     languageSettings.optIn("kotlin.experimental.ExperimentalObjCName")
