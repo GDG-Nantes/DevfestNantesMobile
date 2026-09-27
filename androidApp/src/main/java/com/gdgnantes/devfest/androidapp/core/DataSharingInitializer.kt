@@ -1,6 +1,6 @@
 package com.gdgnantes.devfest.androidapp.core
 
-import com.gdgnantes.devfest.androidapp.services.DataCollectionSettingsService
+import com.gdgnantes.devfest.feature.settings.services.DataCollectionSettingsService
 import javax.inject.Inject
 
 class DataSharingInitializer @Inject constructor(

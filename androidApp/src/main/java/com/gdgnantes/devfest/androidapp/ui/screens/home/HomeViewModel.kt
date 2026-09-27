@@ -2,7 +2,7 @@ package com.gdgnantes.devfest.androidapp.ui.screens.home
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.gdgnantes.devfest.androidapp.services.SessionFiltersService
+import com.gdgnantes.devfest.feature.agenda.services.SessionFiltersService
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow

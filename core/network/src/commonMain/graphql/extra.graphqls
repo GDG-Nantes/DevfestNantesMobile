@@ -1,0 +1,15 @@
+# Schema extension: Apollo's generated Kotlin classes for these five GraphQL
+# object types collide, by simple name, with the core:model domain classes of
+# the same name (Venue, Session, Speaker, Room, Partner). Kotlin/Native's
+# ObjC/Swift header generator disambiguates same-simple-name collisions with
+# an alphabetical fully-qualified-name tie-break, so every future package
+# rename risks silently flipping which side keeps the clean Swift name (see
+# the 03-01 halt). Renaming Apollo's generated classes off the domain names
+# removes the collision permanently, independent of package layout. This file
+# must not be removed, and the target names below must stay distinct from any
+# domain-model or schema-type name.
+extend type Venue @targetName(name: "GraphQLVenue")
+extend type Session @targetName(name: "GraphQLSession")
+extend type Speaker @targetName(name: "GraphQLSpeaker")
+extend type Room @targetName(name: "GraphQLRoom")
+extend type Partner @targetName(name: "GraphQLPartner")

@@ -10,7 +10,7 @@ import SwiftUI
 import shared
 
 struct SpeakerPicture: View {
-    var speaker: Speaker_
+    var speaker: Speaker
 
     private let size: CGFloat = 128
     private let edgeWidth: CGFloat = 5

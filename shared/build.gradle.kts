@@ -1,62 +1,23 @@
-import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-
 plugins {
-    alias(libs.plugins.detekt)
-    alias(libs.plugins.kotlin.multiplatform)
-    alias(libs.plugins.android.kotlin.multiplatform.library)
-    alias(libs.plugins.kotlin.serialization)
-    alias(libs.plugins.ksp)
-    alias(libs.plugins.kmp.native.coroutines)
-    alias(libs.plugins.appollo)
-}
-
-detekt {
-    buildUponDefaultConfig = true
-    allRules = false
-    autoCorrect = false
-    config.setFrom("$rootDir/linters/detekt-config.yml")
-
-    source.setFrom(
-        "src/commonMain/kotlin",
-        "src/androidMain/kotlin",
-        "src/iosMain/kotlin",
-        // Add other source sets as needed
-    )
+    id("devfest.kmp.library")
 }
 
 kotlin {
-    android {
-        namespace = "com.gdgnantes.devfest"
-        compileSdk = AndroidSdk.compile
-        minSdk = AndroidSdk.min
-        compilerOptions {
-            jvmTarget.set(JvmTarget.JVM_11)
-        }
-    }
-
-    jvm()
-
-    listOf(
-        iosX64(),
-        iosArm64(),
-        iosSimulatorArm64()
-    ).forEach { iosTarget ->
-        iosTarget.binaries.framework {
+    targets.withType(org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarget::class.java) {
+        binaries.framework {
             baseName = "shared"
             isStatic = true
+            export(project(":core:model"))
+            export(project(":core:data"))
+            export(project(":core:analytics"))
         }
     }
 
     sourceSets {
         commonMain.dependencies {
-            implementation(libs.bundles.appollo)
-
-            implementation(libs.kotlinx.datetime)
-            implementation(libs.kotlinx.serialization.json)
-        }
-        commonTest.dependencies {
-            implementation(libs.kotlinx.coroutines.test)
-            implementation(libs.kotlin.test)
+            api(project(":core:model"))
+            api(project(":core:data"))
+            api(project(":core:analytics"))
         }
     }
 }
@@ -65,20 +26,4 @@ kotlin.targets.withType(org.jetbrains.kotlin.gradle.plugin.mpp.KotlinNativeTarge
     binaries.all {
         binaryOptions["memoryModel"] = "experimental"
     }
-}
-
-kotlin.sourceSets.all {
-    languageSettings.optIn("kotlin.experimental.ExperimentalObjCName")
-}
-
-apollo {
-    service("service") {
-        packageName.set("com.gdgnantes.devfest.graphql")
-        plugin("com.apollographql.cache:normalized-cache-apollo-compiler-plugin:${libs.versions.appolloCache.get()}")
-        pluginArgument("com.apollographql.cache.packageName", packageName.get())
-    }
-}
-
-dependencies {
-    detektPlugins(libs.detekt.fomatting)
 }

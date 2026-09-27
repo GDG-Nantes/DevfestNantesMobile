@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+  <string name="venue_go_to_button">Go to</string>
+  <string name="venue_image_content_description">Picture of the conference\'s venue.</string>
+  <string name="venue_plan_content_description">Plan of the conference\'s venue. Shows the different spaces and conferences rooms.</string>
+</resources>

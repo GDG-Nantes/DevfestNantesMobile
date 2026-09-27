@@ -10,24 +10,25 @@ import androidx.navigation.NavDestination
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.gdgnantes.devfest.analytics.AnalyticsPage
-import com.gdgnantes.devfest.analytics.AnalyticsService
+import com.gdgnantes.devfest.androidapp.BuildConfig
 import com.gdgnantes.devfest.androidapp.services.ExternalContentService
 import com.gdgnantes.devfest.androidapp.ui.screens.Home
 import com.gdgnantes.devfest.androidapp.ui.screens.Screen
-import com.gdgnantes.devfest.androidapp.ui.screens.datacollection.DataCollectionAgreementDialog
-import com.gdgnantes.devfest.androidapp.ui.screens.datacollection.DataCollectionSettingsScreen
-import com.gdgnantes.devfest.androidapp.ui.screens.legal.LegalScreen
-import com.gdgnantes.devfest.androidapp.ui.screens.session.SessionLayout
-import com.gdgnantes.devfest.androidapp.ui.screens.session.SessionViewModel
-import com.gdgnantes.devfest.androidapp.ui.screens.settings.Settings
-import com.gdgnantes.devfest.androidapp.ui.screens.speakers.SpeakerViewModel
-import com.gdgnantes.devfest.androidapp.ui.screens.speakers.details.SpeakerLayout
-import com.gdgnantes.devfest.androidapp.ui.theme.DevFestNantesTheme
 import com.gdgnantes.devfest.androidapp.utils.assistedViewModel
-import com.gdgnantes.devfest.model.Session
-import com.gdgnantes.devfest.model.SessionType
-import com.gdgnantes.devfest.model.WebLinks
+import com.gdgnantes.devfest.core.analytics.AnalyticsPage
+import com.gdgnantes.devfest.core.analytics.AnalyticsService
+import com.gdgnantes.devfest.core.model.Session
+import com.gdgnantes.devfest.core.model.SessionType
+import com.gdgnantes.devfest.core.model.WebLinks
+import com.gdgnantes.devfest.core.ui.theme.DevFestNantesTheme
+import com.gdgnantes.devfest.feature.sessiondetail.SessionDetailRoute
+import com.gdgnantes.devfest.feature.sessiondetail.SessionViewModel
+import com.gdgnantes.devfest.feature.settings.DataCollectionSettingsRoute
+import com.gdgnantes.devfest.feature.settings.LegalRoute
+import com.gdgnantes.devfest.feature.settings.SettingsRoute
+import com.gdgnantes.devfest.feature.settings.datacollection.DataCollectionAgreementDialog
+import com.gdgnantes.devfest.feature.speakers.SpeakerDetailRoute
+import com.gdgnantes.devfest.feature.speakers.SpeakerViewModel
 import dagger.hilt.EntryPoint
 import dagger.hilt.InstallIn
 import dagger.hilt.android.AndroidEntryPoint
@@ -86,7 +87,7 @@ class MainActivity : ComponentActivity(), NavController.OnDestinationChangedList
                         route = "${Screen.Session.route}/{sessionId}"
                     ) { backStackEntry ->
                         val sessionId = backStackEntry.arguments!!.getString("sessionId")!!
-                        SessionLayout(
+                        SessionDetailRoute(
                             viewModel =
                             assistedViewModel {
                                 SessionViewModel.provideFactory(
@@ -115,7 +116,7 @@ class MainActivity : ComponentActivity(), NavController.OnDestinationChangedList
                         route = "${Screen.Speaker.route}/{speakerId}"
                     ) { backStackEntry ->
                         val speakerId = backStackEntry.arguments!!.getString("speakerId")!!
-                        SpeakerLayout(
+                        SpeakerDetailRoute(
                             viewModel =
                             assistedViewModel {
                                 SpeakerViewModel.provideFactory(
@@ -140,7 +141,9 @@ class MainActivity : ComponentActivity(), NavController.OnDestinationChangedList
                     composable(
                         route = Screen.Settings.route
                     ) {
-                        Settings(
+                        SettingsRoute(
+                            versionName = BuildConfig.VERSION_NAME,
+                            versionCode = BuildConfig.VERSION_CODE,
                             onBackClick = { mainNavController.popBackStack() },
                             onLegalClick = { mainNavController.navigate(Screen.Legal.route) },
                             onOpenDataSharing = { mainNavController.navigate(Screen.DataCollection.route) },
@@ -154,7 +157,7 @@ class MainActivity : ComponentActivity(), NavController.OnDestinationChangedList
                     composable(
                         route = Screen.DataCollection.route
                     ) {
-                        DataCollectionSettingsScreen(
+                        DataCollectionSettingsRoute(
                             onBackClick = { mainNavController.popBackStack() }
                         )
                     }
@@ -162,7 +165,7 @@ class MainActivity : ComponentActivity(), NavController.OnDestinationChangedList
                     composable(
                         route = Screen.Legal.route
                     ) {
-                        LegalScreen(
+                        LegalRoute(
                             onBackClick = { mainNavController.popBackStack() }
                         )
                     }

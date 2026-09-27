@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+  <string name="screen_about_header_body">The Devfest (i.e Developers Festival), is a technical conference destined to developers. It\'s meant for students, professionals, or any curious techie.\nThis year step into the magical world of legends and tales!</string>
+  <string name="about_code_of_conduct">Code of conduct</string>
+  <string name="about_website">Website</string>
+  <string name="about_social_title">Follow us</string>
+  <string name="local_communities_title">Local communities</string>
+  <string name="partners_title">Partners</string>
+  <string name="partners_exclusive_platinium_title">EXCLUSIVE PLATINIUM PARTNER</string>
+  <string name="partners_platinium_title" translatable="false">PLATINIUM</string>
+  <string name="partners_gold_title" translatable="false">GOLD</string>
+  <string name="partners_virtual_title" translatable="false">VIRTUAL</string>
+  <string name="content_description_about_header">DevFest Nantes about logo header.</string>
+  <string name="partners_velotype_title">VELOTYPE</string>
+  <string name="content_description_local_communities_logo">Logo of the Local communities. Click to open the website.</string>
+  <string name="fork_me_on_github" translatable="false">Fork me on Github</string>
+  <string name="content_description_logo_github">Github logo</string>
+</resources>

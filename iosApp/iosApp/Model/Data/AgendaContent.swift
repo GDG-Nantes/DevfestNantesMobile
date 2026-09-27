@@ -18,7 +18,7 @@ struct AgendaContent {
         let language: shared.SessionLanguage?
         let complexity: shared.Complexity?
         let openFeedbackFormId: String?
-        let speakers: [Speaker_]
+        let speakers: [Speaker]
         let room: String
         let date: Date
         let startDate: String
@@ -50,7 +50,7 @@ struct AgendaContent {
 
 extension AgendaContent.Session {
     //Initialization session
-    init(from session: Session_) {
+    init(from session: Session) {
         let newFormatter = ISO8601DateFormatter()
         self.init(id: session.id, abstract: session.abstract, category: session.category, language: session.language, complexity: session.complexity, openFeedbackFormId: session.openFeedbackFormId, speakers: session.speakers, room: session.room?.name ?? "", date: newFormatter.date(from: session.scheduleSlot.startDate) ?? Date(), startDate: session.scheduleSlot.startDate, endDate: session.scheduleSlot.endDate,durationAndLanguage: session.getDurationAndLanguageString(), title: session.title, sessionType: session.type)
     }

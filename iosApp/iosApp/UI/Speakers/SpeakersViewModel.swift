@@ -15,7 +15,7 @@ import os
 
 @MainActor
 class SpeakersViewModel: BaseViewModel {
-    @Published var speakersContent: [Speaker_]?
+    @Published var speakersContent: [Speaker]?
     @Published var isLoading = true
     
     private let performanceMonitoring = PerformanceMonitoring.shared
@@ -29,7 +29,7 @@ class SpeakersViewModel: BaseViewModel {
                 dataSource: "graphql"
             ) {
                 let speakersSequence = asyncSequence(for: self.store.speakers)
-                var speakers: [Speaker_] = []
+                var speakers: [Speaker] = []
                 
                 for try await speakersList in speakersSequence {
                     speakers = speakersList
@@ -63,7 +63,7 @@ class SpeakersViewModel: BaseViewModel {
     }
     
     ///Function to get speakers by the first letter of their name
-    func speakers(for letter: String) -> [Speaker_] {
+    func speakers(for letter: String) -> [Speaker] {
         return speakersContent?.filter {
             $0.name.prefix(1).uppercased() == letter
         } ?? []
