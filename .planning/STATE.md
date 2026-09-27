@@ -1,44 +1,44 @@
 ---
 gsd_state_version: "1.0"
-current_phase: 03
-current_phase_name: Multi-Module Architecture Extraction
-status: executing
-stopped_at: Completed 03-09-PLAN.md (final plan of Phase 03) — Phase 03 fully complete, ARCH-01..04 marked complete
-last_updated: "2026-09-27T15:23:06.488Z"
-last_activity: 2026-09-24
-last_activity_desc: Phase 03 execution started
-state_head: 0411a355c75214c2872007c06a744e70efa26786
+current_phase: 4
+current_phase_name: Hilt to Koin DI Migration
+status: planning
+stopped_at: Phase 03 complete, ready to plan Phase 4
+last_updated: "2026-09-27T19:16:53.998Z"
+last_activity: 2026-09-27
+last_activity_desc: Phase 03 complete, transitioned to Phase 4
+state_head: 8e54925dd0ba620b0b094b659980e89cd5dc6886
 progress:
   total_phases: 5
-  completed_phases: 2
+  completed_phases: 3
   total_plans: 19
   completed_plans: 19
-  percent: 40
+  percent: 60
 ---
 
 # Project State
 
 ## Project Reference
 
-See: .planning/PROJECT.md (updated 2026-09-17)
+See: .planning/PROJECT.md (updated 2026-09-27)
 
 **Core value:** La CI/CD doit refonctionner et le projet doit redevenir maintenable (build moderne, architecture modulaire, DI décentralisée, couverture de tests solide) sans jamais régresser le comportement existant de l'application pour les utilisateurs.
-**Current focus:** Phase 03 — Multi-Module Architecture Extraction
+**Current focus:** Phase 4 — Hilt to Koin DI Migration
 
 ## Current Position
 
-Phase: 03 (Multi-Module Architecture Extraction) — EXECUTING
-Plan: 11 of 11
-Status: Ready to execute
-Last activity: 2026-09-24 — Phase 03 execution started
+Phase: 4 — Hilt to Koin DI Migration
+Plan: Not started
+Status: Ready to plan
+Last activity: 2026-09-27 — Phase 03 complete, transitioned to Phase 4
 
-Progress: [████░░░░░░] 40%
+Progress: [██████░░░░] 60%
 
 ## Performance Metrics
 
 **Velocity:**
 
-- Total plans completed: 8
+- Total plans completed: 19
 - Average duration: N/A
 - Total execution time: 0 hours
 
@@ -48,6 +48,7 @@ Progress: [████░░░░░░] 40%
 |-------|-------|-------|----------|
 | 01 | 3 | - | - |
 | 02 | 5 | - | - |
+| 03 | 11 | - | - |
 
 **Recent Trend:**
 
@@ -121,13 +122,15 @@ None yet.
 
 ### Blockers/Concerns
 
-- Phase 3: la home des écrans About/Partners (feature-settings vs nouveau feature-about) reste une décision ouverte à trancher avant l'extraction des feature modules (voir research/SUMMARY.md)
+- **Phase 3 — RESOLVED:** About/Partners live in a dedicated `:feature:about` module (D-05, 03-06).
 - **Phase 3 — RESOLVED 2026-09-24 by 03-10 + 03-11:** (history, kept for context) moving `Venue`/`Session`/`Speaker`/`Room`/`Partner` from package `com.gdgnantes.devfest.model` into `com.gdgnantes.devfest.core.model` flipped which of two same-simple-named Kotlin classes (the domain model vs. the Apollo-generated `GetXQuery.X`/`fragment.XDetails.X` GraphQL response class already colliding on that name) keeps the unprefixed Swift name vs. gets suffixed `_`. Kotlin/Native's ObjC header generator resolves same-simple-name collisions across the whole compiled framework by an alphabetical-FQN tie-break (shortest proof: `com.gdgnantes.devfest.model.Venue` sorted AFTER `com.gdgnantes.devfest.graphql.GetVenueQuery.Venue` at baseline — domain model got `Venue_`; `com.gdgnantes.devfest.core.model.Venue` sorts BEFORE `...graphql...` post-rename — domain model now gets clean `Venue`, GraphQL type flips to `Venue_`). This broke ~10 pre-existing Swift files (`VenueContent.swift`, `AgendaContent.swift`, `AgendaViewModel.swift`, `AgendaView.swift`, `AgendaCellView.swift`, `AgendaDetailView.swift`, `SpeakerDetailsViewModel.swift`, `SpeakersViewModel.swift`, `SpeakerDetailsView.swift`, `SpeakerView.swift`, `AboutViewModel.swift`) that hardcode the `_`-suffixed name expecting it to be the domain model. iOS CI failed on Swift compilation (run 35847334261, PR #419) — the swift-names-gate.sh gate (missing-name + collision-COUNT checks) did not catch this because the collision COUNT stayed the same, only the per-name IDENTITY swapped. **Resolution:** see `.planning/phases/03-multi-module-architecture-extraction/03-01-SUMMARY.md` "Halt Resolution (03-10 + 03-11)" for the full diagnosis, the @targetName mechanism, the corrected collision attribution, and the D-11 amendment.
-- Phase 3: l'export() du framework umbrella iOS doit être validé par un spike avant la découpe complète des modules — risque architectural le plus élevé du chantier (three-framework problem) — **partially validated by 03-01: the export()/api mechanics work as designed; the newly-discovered risk is the Swift-name collision-flip above, a different (related) failure mode**
+- **Phase 3 — RESOLVED:** single iOS umbrella validated end to end — `:shared` exports exactly core:model/data/analytics (D-11), keeps `SharedFrameworkPlaceholder.kt` (D-10 amendment); iOS CI green and D-12 simulator checkpoints approved (03-VERIFICATION.md passed).
 - Phase 2: AGP 9.x/KGP/KSP2 version re-verification was performed live during Phase 2 (each plan re-checked Maven Central/Google Maven metadata immediately before its own commit); outcomes are recorded per-requirement in `## Phase 02 version deviations` below — discharged, no longer open.
 - Follow-up (not blocking): bump targetSdk 36->37 in a dedicated future stage after reviewing Android 17's behavior-change surface (kb://android/about/versions/17/behavior-changes-all / -17) — deliberately deferred from 02-03 per user direction to avoid folding a runtime-behavior-change decision into the Compose-BOM commit
 - Follow-up (not blocking): the firebase-auth-ktx -> firebase-auth:24.2.0 dependency substitution in androidApp/build.gradle.kts is version-coupled to the pinned firebaseBom (34.19.0); re-verify the literal version if firebaseBom is bumped again in a future stage
 - **RESOLVED 2026-09-27:** Phase 03 Plan 09 (final phase plan) Android CI Instrumentation-tests OOM blocker. Root cause: D8's `DexMergingWorkAction` shares the Gradle daemon heap (`org.gradle.jvmargs`, was `-Xmx2048M`) while assembling `feature:settings`/`feature:session-detail`/`feature:speakers` androidTest APKs concurrently — 3 consecutive CI failures (run 36270314662 and reruns) with `java.lang.OutOfMemoryError: Java heap space`. Fix: raised the Gradle daemon heap to `-Xmx4096M` in `gradle.properties` (commit 5cb0389, user-approved deviation, Kotlin daemon heap left unchanged). CI-GREEN-BOTH is now satisfied on HEAD 5cb0389: android.yml run 36328538946 (all 4 jobs green, incl. Instrumentation tests (34)), ios.yml run 36328538965 (green). Task 1 (thin :shared umbrella + drop androidApp->:shared dep + delete buildSrc, commits 1bf81ae/2b03d4f) and Task 2 (all phase gates) are both complete; 03-09-SUMMARY.md written and ARCH-01..04 marked complete per the shared-ID gate.
+- Follow-up (not blocking, from 03-SECURITY.md note 2): `swift-names-gate.sh` and `resources-gate.sh` only run manually from `.planning`; wire them into CI (CICD-V2-01) so Swift identity-swap and resource-drift detection survive past Phase 3.
+- Follow-up (not blocking, from 03-REVIEW.md IN-01): `:core:testing` has no consumers yet — intended per D-19, to be used by Phase 5 test retrofit.
 
 ## Phase 02 DCL pilot outcome
 
@@ -192,6 +195,6 @@ Items acknowledged and deferred at milestone close, most recent first:
 
 ## Session Continuity
 
-Last session: 2026-09-27T15:23:06.453Z
-Stopped at: Completed 03-09-PLAN.md (final plan of Phase 03) — Phase 03 fully complete, ARCH-01..04 marked complete
+Last session: 2026-09-27
+Stopped at: Phase 03 complete, ready to plan Phase 4
 Resume file: None
