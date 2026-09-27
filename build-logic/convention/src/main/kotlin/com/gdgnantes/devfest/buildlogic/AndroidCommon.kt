@@ -40,7 +40,6 @@ internal fun Project.configureAndroidCommon(commonExtension: CommonExtension) {
             jvmTarget.set(JvmTarget.JVM_17)
             freeCompilerArgs.addAll(
                 "-Xopt-in=kotlin.RequiresOptIn",
-                "-Xopt-in=kotlin.Experimental",
             )
         }
     }
