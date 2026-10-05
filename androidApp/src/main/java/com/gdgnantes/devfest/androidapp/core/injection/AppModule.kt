@@ -17,7 +17,6 @@ import com.gdgnantes.devfest.core.analytics.performance.PerformanceMonitoring
 import com.gdgnantes.devfest.core.data.BookmarksStore
 import com.gdgnantes.devfest.core.data.BookmarksStoreImpl
 import com.gdgnantes.devfest.core.data.DevFestNantesStore
-import com.gdgnantes.devfest.core.data.DevFestNantesStoreBuilder
 import com.gdgnantes.devfest.feature.agenda.services.SessionFiltersService
 import com.gdgnantes.devfest.feature.agenda.services.SessionFiltersServiceImpl
 import com.gdgnantes.devfest.feature.sessiondetail.OpenFeedbackConfig
@@ -36,6 +35,7 @@ import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
 import dagger.multibindings.ElementsIntoSet
 import kotlinx.coroutines.Dispatchers
+import org.koin.mp.KoinPlatform
 import timber.log.Timber
 
 @Module
@@ -127,9 +127,7 @@ abstract class AppModule {
         @AppScope
         @Provides
         fun store(): DevFestNantesStore {
-            return DevFestNantesStoreBuilder()
-                .setUseMockServer(false)
-                .build()
+            return KoinPlatform.getKoin().get()
         }
 
         @AppScope

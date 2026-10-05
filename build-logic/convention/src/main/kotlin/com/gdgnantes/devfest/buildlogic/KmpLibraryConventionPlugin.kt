@@ -58,6 +58,7 @@ class KmpLibraryConventionPlugin : Plugin<Project> {
 
                 sourceSets.configureEach {
                     languageSettings.optIn("kotlin.experimental.ExperimentalObjCName")
+                    languageSettings.optIn("kotlin.experimental.ExperimentalObjCRefinement")
                 }
 
                 sourceSets.getByName("commonTest").dependencies {

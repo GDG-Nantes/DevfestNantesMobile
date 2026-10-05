@@ -17,6 +17,9 @@ struct iOSApp: App {
     init() {
         //Firebase initialization
         FirebaseApp.configure()
+
+        // Start the Koin graph once, before any ViewModel is created
+        IosDependencies.shared.start()
         
         // Start app startup performance monitoring
         PerformanceMonitoring.startAppStartupTrace()

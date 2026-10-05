@@ -37,7 +37,7 @@ class AgendaViewModel: BaseViewModel {
     }
 
     ///Initialization of the model with store and the UserDefaults object
-    override init() {
+    init() {
         if let data = defaults.data(forKey: "AgendaSessionFilters"),
            let filters = try? JSONDecoder().decode(Set<SessionFilter>.self, from: data) {
             self.sessionFilters = filters

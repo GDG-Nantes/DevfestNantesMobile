@@ -1,6 +1,7 @@
 plugins {
     id("devfest.android.application")
     id("devfest.android.hilt")
+    id("devfest.android.koin")
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.google.services)
     alias(libs.plugins.crashlytics)
@@ -52,6 +53,7 @@ android {
 }
 
 dependencies {
+    implementation(project(":shared"))
     implementation(project(":core:model"))
     implementation(project(":core:analytics"))
     implementation(project(":core:data"))

@@ -7,6 +7,7 @@ kotlin {
     sourceSets {
         commonMain.dependencies {
             api(libs.bundles.appollo)
+            implementation(libs.koin.core)
         }
     }
 }

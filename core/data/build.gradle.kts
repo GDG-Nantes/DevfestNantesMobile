@@ -9,6 +9,7 @@ kotlin {
         commonMain.dependencies {
             api(project(":core:model"))
             implementation(project(":core:network"))
+            implementation(libs.koin.core)
         }
         androidMain.dependencies {
             implementation(libs.dagger.hilt.android)

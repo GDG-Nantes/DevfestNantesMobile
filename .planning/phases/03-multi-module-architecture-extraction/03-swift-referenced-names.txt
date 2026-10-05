@@ -7,7 +7,7 @@ Category
 Complexity
 ContentLanguage
 DevFestNantesStore
-DevFestNantesStoreBuilder
+IosDependencies
 Partner
 PartnerCategory
 Room
