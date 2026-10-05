@@ -40,12 +40,17 @@ created: "2026-10-04"
 
 | Task ID | Plan | Wave | Requirement | Threat Ref | Secure Behavior | Test Type | Automated Command | File Exists | Status |
 |---------|------|------|-------------|------------|-----------------|-----------|-------------------|-------------|--------|
-| 4-xx | TBD | TBD | DI-01 | — | N/A | gate + build | `bash scripts/di-gate.sh && ./gradlew clean assembleDebug assembleRelease` | ❌ W0 | ⬜ pending |
-| 4-xx | TBD | TBD | DI-02 | — | N/A | unit (per-module + composite `verify()`) | `./gradlew testDebugUnitTest jvmTest` | ❌ W0 | ⬜ pending |
-| 4-xx | TBD | TBD | DI-03 | — | N/A | unit (full-graph verify with `extraTypes`) + iOS start test | `./gradlew :androidApp:testDebugUnitTest :shared:iosSimulatorArm64Test` | ❌ W0 | ⬜ pending |
-| 4-xx | TBD | TBD | DI-04 | — | N/A | script gate | `bash scripts/di-gate.sh` | ❌ W0 | ⬜ pending |
-| 4-xx | TBD | TBD | DI-05 | — | N/A | unit | `./gradlew :core:testing:jvmTest` | partial (`FakeStoresTest.kt`) | ⬜ pending |
-| 4-xx | TBD | TBD | DI-06 | — | N/A | CI wiring | `testDebugUnitTest jvmTest` in android.yml; `:shared:iosSimulatorArm64Test` in ios.yml | ❌ W0 | ⬜ pending |
+| 4-01-T1 | 04-01 | 1 | DI-01, DI-02, DI-03 | T-04-SC, T-04-01, T-04-02 | Koin coordinates verified; no Koin names in shared.h; both apps launch | tracer build + header gate + launch smokes | `./gradlew --no-daemon :feature:venue:assembleDebug :androidApp:assembleDebug :shared:linkDebugFrameworkIosSimulatorArm64 detekt`; swift-names-gate `check`; `android run …`; `ios-sim-smoke.sh` | ❌ W0 (created in task) | ⬜ pending |
+| 4-01-T2 | 04-01 | 1 | DI-02, DI-03, DI-06 | T-04-03 | duplicate definitions fail start-up | unit (module verify, full-graph verify + negative proof, JVM + iOS start-up) | `./gradlew --no-daemon :core:network:jvmTest :core:data:jvmTest :shared:jvmTest :shared:iosSimulatorArm64Test :feature:venue:testDebugUnitTest :androidApp:testDebugUnitTest detekt` | ❌ W0 (created in task) | ⬜ pending |
+| 4-01-T3 | 04-01 | 1 | DI-06 | — | N/A | CI wiring | `CI-GREEN-BOTH` + `CI-RUNS-KOIN-TESTS` (gh run logs show `:shared:jvmTest` / `:shared:iosSimulatorArm64Test`) | ❌ W0 | ⬜ pending |
+| 4-02-T1..T2 | 04-02 | 2 | DI-02, DI-03, DI-04 | T-04-05, T-04-07, T-04-08 | same SharedPreferences file and keys | unit + header gate + key diff | `./gradlew … :androidApp:testDebugUnitTest :shared:linkDebugFrameworkIosSimulatorArm64`; `PREFS-KEYS-OK` | ❌ W0 | ⬜ pending |
+| 4-02-T3 | 04-02 | 2 | DI-05 | T-04-06 | fakes unreachable from production | unit | `./gradlew --no-daemon :core:testing:jvmTest …`; `TESTING-ISOLATED-OK` | partial (`FakeStoresTest.kt`) | ⬜ pending |
+| 4-03-T1 | 04-03 | 3 | DI-01, DI-04 | T-04-09, T-04-11 | locator calls and new Hilt usage rejected | script gate + selftest | `bash scripts/di-gate.sh selftest && bash scripts/di-gate.sh` | ❌ W0 (created in task) | ⬜ pending |
+| 4-03-T2..04-05-T2 | 04-03..04-05 | 3-5 | DI-01, DI-02, DI-04, DI-05 | T-04-10, T-04-12..18 | consent/filters/bookmarks single instances, keys unchanged | per-module `verify()` + full graph + gate | `./gradlew --no-daemon :feature:<x>:testDebugUnitTest … :androidApp:testDebugUnitTest detekt && bash scripts/di-gate.sh` | ❌ W0 (created per task) | ⬜ pending |
+| 4-06-T1 | 04-06 | 6 | DI-01, DI-04 | T-04-19, T-04-21 | consent-first start order | build + order check + launch | `STARTUP-ORDER-OK`, `ANDROID-LAUNCH-OK` | ❌ W0 | ⬜ pending |
+| 4-06-T3 | 04-06 | 6 | DI-02, DI-05, DI-06 | T-04-19, T-04-20 | initializer order asserted; test deps test-scoped | unit (runtime start-up) | `./gradlew --no-daemon :androidApp:testDebugUnitTest detekt`; `TEST-DEPS-SCOPED-OK` | ❌ W0 (created in task) | ⬜ pending |
+| 4-07-T1 | 04-07 | 7 | DI-01 | T-04-24, T-04-25 | strict gate | gate + clean full build | `bash scripts/di-gate.sh`; `./gradlew --no-daemon clean && ./gradlew --no-daemon assembleDebug assembleRelease testDebugUnitTest jvmTest detekt lint :shared:iosSimulatorArm64Test …`; `NO-HILT-ON-CLASSPATH` | ✅ (from 04-03) | ⬜ pending |
+| 4-07-T2 | 04-07 | 7 | DI-01 | T-04-23, T-04-26 | release (R8) launch | release smoke + docs + CI | `android-release-smoke.sh`; `DOCS-KOIN-OK`; `CI-GREEN-BOTH` | ❌ W0 (created in task) | ⬜ pending |
 
 *Task IDs filled in by the planner. Status: ⬜ pending · ✅ green · ❌ red · ⚠️ flaky*
 
