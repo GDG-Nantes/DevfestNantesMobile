@@ -216,12 +216,6 @@ Items acknowledged and deferred at milestone close, most recent first:
 
 ## Session Continuity
 
-<<<<<<< HEAD
 Last session: 2026-10-13T13:30:00Z
 Stopped at: Phase 4 complete, ready to plan Phase 5
 Resume file: None
-=======
-Last session: 2026-09-28T21:23:25.670Z
-Stopped at: Phase 4 context gathered
-Resume file: .planning/phases/04-hilt-to-koin-di-migration/04-CONTEXT.md
->>>>>>> 4a036e0 (docs(state): record phase 4 context session)
