@@ -151,13 +151,13 @@ Plans (strictly sequential — every step edits `settings.gradle.dcl` and the ap
   4. ViewModels and Stores receive all dependencies through constructor injection — no `get()` calls appear outside the DI wiring layer
   5. A `core-testing` module centralizes shared test fakes/doubles (in the spirit of `DevFestNantesStoreMocked`) for use across feature modules, and a `checkModules()` Koin test runs in CI to verify the complete DI graph
 
-**Plans:** 7 plans
+**Plans:** 1/7 plans executed
 
 Plans (strictly sequential: one phase branch/PR, one commit per module, CI green per pushed plan, D-05):
 
 **Wave 1**
 
-- [ ] 04-01-PLAN.md — Tracer: Koin catalog/convention, `initKoin()` in `:shared`, store + `:feature:venue` on Koin alongside Hilt, iOS via `IosDependencies`, graph tests (verify, full graph, JVM + iOS start-up), CI test steps (D-01..D-06, D-10, D-12)
+- [x] 04-01-PLAN.md — Tracer: Koin catalog/convention, `initKoin()` in `:shared`, store + `:feature:venue` on Koin alongside Hilt, iOS via `IosDependencies`, graph tests (verify, full graph, JVM + iOS start-up), CI test steps (D-01..D-06, D-10, D-12)
 
 **Wave 2** *(blocked on Wave 1)*
 
@@ -207,5 +207,5 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 | 1. CI Pipeline Fixed & Optimized | 3/3 | Complete    | 2026-09-17 |
 | 2. Dependency & Build Tooling Upgrade | 5/5 | Complete    | 2026-09-19 |
 | 3. Multi-Module Architecture Extraction | 11/11 | Complete    | 2026-09-27 |
-| 4. Hilt to Koin DI Migration | 0/7 | Planned | - |
+| 4. Hilt to Koin DI Migration | 1/7 | In Progress|  |
 | 5. Test Coverage Retrofit | 0/TBD | Not started | - |
