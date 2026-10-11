@@ -11,6 +11,9 @@ kotlin {
             implementation(project(":core:network"))
             implementation(libs.koin.core)
         }
+        jvmTest.dependencies {
+            implementation(libs.koin.test)
+        }
         androidMain.dependencies {
             implementation(libs.dagger.hilt.android)
             implementation(libs.androidx.core.ktx)

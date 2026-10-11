@@ -7,7 +7,7 @@ import org.gradle.kotlin.dsl.dependencies
 /**
  * `devfest.android.koin` — adds the standard set of Koin dependencies for Android
  * modules: `koin-android` and `koin-androidx-compose` (which brings
- * `koinViewModel()`), plus `koin-test` and `junit` for per-module graph
+ * `koinViewModel()`), plus `koin-test`, `junit` and `kotlin-test-junit` for per-module graph
  * verification tests. Applies no Gradle plugin and no KSP: Koin is plain DSL
  * (DI-V2-01 defers annotations / the compiler plugin). Applied directly by
  * `:androidApp` and transitively by `devfest.android.feature` for every
@@ -21,6 +21,7 @@ class AndroidKoinConventionPlugin : Plugin<Project> {
                 add("implementation", libs.findLibrary("koin-androidx-compose").get())
                 add("testImplementation", libs.findLibrary("koin-test").get())
                 add("testImplementation", libs.findLibrary("junit").get())
+                add("testImplementation", libs.findLibrary("kotlin-test-junit").get())
             }
         }
     }

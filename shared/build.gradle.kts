@@ -21,6 +21,9 @@ kotlin {
             implementation(project(":core:network"))
             implementation(libs.koin.core)
         }
+        jvmTest.dependencies {
+            implementation(libs.koin.test)
+        }
     }
 }
 

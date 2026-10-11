@@ -9,6 +9,9 @@ kotlin {
             api(libs.bundles.appollo)
             implementation(libs.koin.core)
         }
+        jvmTest.dependencies {
+            implementation(libs.koin.test)
+        }
     }
 }
 
