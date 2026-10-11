@@ -4,10 +4,9 @@ import com.gdgnantes.devfest.core.model.SocialType
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.analytics.logEvent
 import timber.log.Timber
-import javax.inject.Inject
 
 @Suppress("TooManyFunctions")
-class FirebaseAnalyticsService @Inject constructor(private val firebaseAnalytics: FirebaseAnalytics) :
+class FirebaseAnalyticsService(private val firebaseAnalytics: FirebaseAnalytics) :
     AnalyticsService {
     override fun eventBookmark(page: AnalyticsPage, sessionId: String, bookmarked: Boolean) {
         if (bookmarked) {

@@ -1,5 +1,6 @@
 package com.gdgnantes.devfest.shared.di
 
+import com.gdgnantes.devfest.core.analytics.di.analyticsModule
 import com.gdgnantes.devfest.core.data.di.dataModule
 import com.gdgnantes.devfest.core.network.di.networkModule
 import org.koin.core.KoinApplication
@@ -10,7 +11,7 @@ import kotlin.native.HiddenFromObjC
 
 /** Modules of every KMP core module, shared by Android and iOS. */
 @HiddenFromObjC
-val sharedModules: List<Module> = listOf(networkModule, dataModule)
+val sharedModules: List<Module> = listOf(networkModule, dataModule, analyticsModule)
 
 /**
  * Single composition root. Android passes its platform modules and `androidContext`; iOS calls it

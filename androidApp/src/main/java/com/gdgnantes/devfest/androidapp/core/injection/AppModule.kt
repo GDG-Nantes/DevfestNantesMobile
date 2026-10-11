@@ -12,7 +12,6 @@ import com.gdgnantes.devfest.androidapp.core.logging.TimberTreeDebug
 import com.gdgnantes.devfest.androidapp.core.logging.TimberTreeRelease
 import com.gdgnantes.devfest.androidapp.core.performance.PerformanceInitializer
 import com.gdgnantes.devfest.core.analytics.AnalyticsService
-import com.gdgnantes.devfest.core.analytics.FirebaseAnalyticsService
 import com.gdgnantes.devfest.core.analytics.performance.PerformanceMonitoring
 import com.gdgnantes.devfest.core.data.BookmarksStore
 import com.gdgnantes.devfest.core.data.BookmarksStoreImpl
@@ -23,7 +22,7 @@ import com.gdgnantes.devfest.feature.sessiondetail.OpenFeedbackConfig
 import com.gdgnantes.devfest.feature.settings.services.DataCollectionSettingsService
 import com.gdgnantes.devfest.feature.settings.services.DataCollectionSettingsServiceImpl
 import com.google.firebase.Firebase
-import com.google.firebase.analytics.analytics
+import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.firebase.perf.FirebasePerformance
 import com.google.firebase.remoteconfig.remoteConfig
@@ -43,10 +42,6 @@ import timber.log.Timber
 abstract class AppModule {
     @AppScope
     @Binds
-    abstract fun analyticsService(firebaseAnalyticsService: FirebaseAnalyticsService): AnalyticsService
-
-    @AppScope
-    @Binds
     abstract fun bookmarksStore(bookmarksStoreImpl: BookmarksStoreImpl): BookmarksStore
 
     @AppScope
@@ -59,6 +54,8 @@ abstract class AppModule {
     @Binds
     abstract fun filtersService(impl: SessionFiltersServiceImpl): SessionFiltersService
 
+    // Temporary Hilt-to-Koin bridges inflate the provider count; AppModule disappears with Hilt (04-07).
+    @Suppress("TooManyFunctions")
     companion object {
         const val REMOTE_CONFIG_MINIMUM_FETCH_INTERVAL = 300L
 
@@ -85,8 +82,12 @@ abstract class AppModule {
                 performanceInitializer
             )
 
+        @AppScope
         @Provides
-        fun analytics() = Firebase.analytics
+        fun analyticsService(): AnalyticsService = KoinPlatform.getKoin().get()
+
+        @Provides
+        fun analytics(): FirebaseAnalytics = KoinPlatform.getKoin().get()
 
         @Provides
         fun config() =
@@ -100,10 +101,10 @@ abstract class AppModule {
                 }
 
         @Provides
-        fun crashlytics() = FirebaseCrashlytics.getInstance()
+        fun crashlytics(): FirebaseCrashlytics = KoinPlatform.getKoin().get()
 
         @Provides
-        fun firebasePerformance() = FirebasePerformance.getInstance()
+        fun firebasePerformance(): FirebasePerformance = KoinPlatform.getKoin().get()
 
         @Provides
         fun openFeedbackConfig() =
@@ -114,9 +115,7 @@ abstract class AppModule {
 
         @AppScope
         @Provides
-        fun providePerformanceMonitoring(firebasePerformance: FirebasePerformance): PerformanceMonitoring {
-            return PerformanceMonitoring(firebasePerformance)
-        }
+        fun providePerformanceMonitoring(): PerformanceMonitoring = KoinPlatform.getKoin().get()
 
         @AppScope
         @Provides
