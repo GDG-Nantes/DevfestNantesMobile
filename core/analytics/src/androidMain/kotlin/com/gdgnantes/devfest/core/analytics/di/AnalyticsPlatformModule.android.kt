@@ -12,7 +12,7 @@ import org.koin.core.module.Module
 import org.koin.dsl.bind
 import org.koin.dsl.module
 
-// Firebase SDK handles stay factories (as unscoped Hilt providers were); the app-wide services are singles.
+// Firebase SDK handles stay factories (unscoped, as before the DI migration); the app-wide services are singles.
 internal actual val analyticsPlatformModule: Module =
     module {
         factory { Firebase.analytics }

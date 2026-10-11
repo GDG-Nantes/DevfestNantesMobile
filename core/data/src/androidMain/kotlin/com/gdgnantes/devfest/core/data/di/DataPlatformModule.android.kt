@@ -9,7 +9,7 @@ import org.koin.core.module.Module
 import org.koin.dsl.bind
 import org.koin.dsl.module
 
-// Same default preferences file the Hilt provider used, so bookmarks, filters and consent survive.
+// Same default preferences file as before the DI migration, so bookmarks, filters and consent survive.
 internal actual val dataPlatformModule: Module =
     module {
         single<SharedPreferences> { PreferenceManager.getDefaultSharedPreferences(androidApplication()) }
