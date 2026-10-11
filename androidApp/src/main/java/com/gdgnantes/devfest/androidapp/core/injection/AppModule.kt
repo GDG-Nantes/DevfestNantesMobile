@@ -1,8 +1,6 @@
 package com.gdgnantes.devfest.androidapp.core.injection
 
-import android.app.Application
 import android.content.SharedPreferences
-import androidx.preference.PreferenceManager
 import com.gdgnantes.devfest.androidapp.BuildConfig
 import com.gdgnantes.devfest.androidapp.core.ApplicationInitializer
 import com.gdgnantes.devfest.androidapp.core.CoroutinesDispatcherProvider
@@ -14,7 +12,6 @@ import com.gdgnantes.devfest.androidapp.core.performance.PerformanceInitializer
 import com.gdgnantes.devfest.core.analytics.AnalyticsService
 import com.gdgnantes.devfest.core.analytics.performance.PerformanceMonitoring
 import com.gdgnantes.devfest.core.data.BookmarksStore
-import com.gdgnantes.devfest.core.data.BookmarksStoreImpl
 import com.gdgnantes.devfest.core.data.DevFestNantesStore
 import com.gdgnantes.devfest.feature.agenda.services.SessionFiltersService
 import com.gdgnantes.devfest.feature.agenda.services.SessionFiltersServiceImpl
@@ -40,10 +37,6 @@ import timber.log.Timber
 @Module
 @InstallIn(SingletonComponent::class)
 abstract class AppModule {
-    @AppScope
-    @Binds
-    abstract fun bookmarksStore(bookmarksStoreImpl: BookmarksStoreImpl): BookmarksStore
-
     @AppScope
     @Binds
     abstract fun dataSharingSettingsService(
@@ -84,6 +77,10 @@ abstract class AppModule {
 
         @AppScope
         @Provides
+        fun bookmarksStore(): BookmarksStore = KoinPlatform.getKoin().get()
+
+        @AppScope
+        @Provides
         fun analyticsService(): AnalyticsService = KoinPlatform.getKoin().get()
 
         @Provides
@@ -119,9 +116,7 @@ abstract class AppModule {
 
         @AppScope
         @Provides
-        fun sharedPreferences(application: Application): SharedPreferences {
-            return PreferenceManager.getDefaultSharedPreferences(application)
-        }
+        fun sharedPreferences(): SharedPreferences = KoinPlatform.getKoin().get()
 
         @AppScope
         @Provides

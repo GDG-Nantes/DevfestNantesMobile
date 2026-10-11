@@ -6,10 +6,8 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.map
-import javax.inject.Inject
 
-class BookmarksStoreImpl @Inject constructor(private val sharedPreferences: SharedPreferences) :
-    BookmarksStore {
+class BookmarksStoreImpl(private val sharedPreferences: SharedPreferences) : BookmarksStore {
     private val bookmarkedSessions: MutableSet<String> = HashSet()
     private val _selectedSessionIds: MutableStateFlow<Set<String>>
 
