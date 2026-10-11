@@ -13,7 +13,7 @@ val settingsModule: Module =
         viewModelOf(::DataCollectionViewModel)
 
         // Stateful consent holder: must stay a single so the dialog, the settings screen and the
-        // Hilt-built DataSharingInitializer (through its bridge) share one instance.
+        // not-yet-migrated DataSharingInitializer (through its bridge) share one instance.
         single {
             DataCollectionSettingsServiceImpl(get(), get(), get(), get())
         } bind DataCollectionSettingsService::class
