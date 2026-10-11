@@ -16,9 +16,8 @@
 
 package com.gdgnantes.devfest.androidapp.utils
 
-import android.app.Activity
+import androidx.activity.compose.LocalActivity
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.ViewModelStoreOwner
@@ -42,6 +41,6 @@ inline fun <reified VM : ViewModel> assistedViewModel(
 @Composable
 fun assistedViewModelFactory() =
     EntryPointAccessors.fromActivity(
-        LocalContext.current as Activity,
+        checkNotNull(LocalActivity.current) { "No Activity in composition" },
         MainActivity.ViewModelFactoryProvider::class.java
     )
