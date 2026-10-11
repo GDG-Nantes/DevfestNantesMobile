@@ -21,8 +21,6 @@ build-logic/convention/src/main/kotlin/com/gdgnantes/devfest/buildlogic/Dependen
 build.gradle.kts
 core/ui/build.gradle.kts
 core/ui/src/main/java/com/gdgnantes/devfest/core/ui/BookmarksViewModel.kt
-feature/about/src/main/java/com/gdgnantes/devfest/feature/about/partners/Partners.kt
-feature/about/src/main/java/com/gdgnantes/devfest/feature/about/partners/PartnersViewModel.kt
 feature/agenda/src/main/java/com/gdgnantes/devfest/feature/agenda/Agenda.kt
 feature/agenda/src/main/java/com/gdgnantes/devfest/feature/agenda/AgendaRow.kt
 feature/agenda/src/main/java/com/gdgnantes/devfest/feature/agenda/AgendaViewModel.kt
