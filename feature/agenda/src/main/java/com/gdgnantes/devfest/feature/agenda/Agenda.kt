@@ -13,7 +13,6 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
-import androidx.hilt.navigation.compose.hiltViewModel
 import com.gdgnantes.devfest.core.model.AgendaDay
 import com.gdgnantes.devfest.core.model.Room
 import com.gdgnantes.devfest.core.model.Session
@@ -24,13 +23,14 @@ import kotlinx.datetime.LocalDate
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 import kotlinx.datetime.todayIn
+import org.koin.compose.viewmodel.koinViewModel
 import kotlin.time.Clock
 
 @Composable
 fun Agenda(
     modifier: Modifier = Modifier,
     agendaFilterDrawerState: DrawerState,
-    viewModel: AgendaViewModel = hiltViewModel(),
+    viewModel: AgendaViewModel = koinViewModel(),
     onSessionClick: ((Session) -> Unit)
 ) {
     AgendaLayout(

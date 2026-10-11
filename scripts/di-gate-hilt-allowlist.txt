@@ -21,10 +21,7 @@ build-logic/convention/src/main/kotlin/com/gdgnantes/devfest/buildlogic/Dependen
 build.gradle.kts
 core/ui/build.gradle.kts
 core/ui/src/main/java/com/gdgnantes/devfest/core/ui/BookmarksViewModel.kt
-feature/agenda/src/main/java/com/gdgnantes/devfest/feature/agenda/Agenda.kt
 feature/agenda/src/main/java/com/gdgnantes/devfest/feature/agenda/AgendaRow.kt
-feature/agenda/src/main/java/com/gdgnantes/devfest/feature/agenda/AgendaViewModel.kt
-feature/agenda/src/main/java/com/gdgnantes/devfest/feature/agenda/services/SessionFiltersService.kt
 feature/session-detail/src/main/java/com/gdgnantes/devfest/feature/sessiondetail/FeedbackForm.kt
 feature/session-detail/src/main/java/com/gdgnantes/devfest/feature/sessiondetail/FeedbackFormViewModel.kt
 feature/session-detail/src/main/java/com/gdgnantes/devfest/feature/sessiondetail/SessionLayout.kt

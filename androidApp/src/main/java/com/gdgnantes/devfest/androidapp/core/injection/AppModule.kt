@@ -14,7 +14,6 @@ import com.gdgnantes.devfest.core.analytics.performance.PerformanceMonitoring
 import com.gdgnantes.devfest.core.data.BookmarksStore
 import com.gdgnantes.devfest.core.data.DevFestNantesStore
 import com.gdgnantes.devfest.feature.agenda.services.SessionFiltersService
-import com.gdgnantes.devfest.feature.agenda.services.SessionFiltersServiceImpl
 import com.gdgnantes.devfest.feature.sessiondetail.OpenFeedbackConfig
 import com.gdgnantes.devfest.feature.settings.services.DataCollectionSettingsService
 import com.google.firebase.Firebase
@@ -23,7 +22,6 @@ import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.firebase.perf.FirebasePerformance
 import com.google.firebase.remoteconfig.remoteConfig
 import com.google.firebase.remoteconfig.remoteConfigSettings
-import dagger.Binds
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -35,104 +33,104 @@ import timber.log.Timber
 
 @Module
 @InstallIn(SingletonComponent::class)
-abstract class AppModule {
+// Temporary Hilt-to-Koin bridges inflate the provider count; AppModule disappears with Hilt (04-07).
+@Suppress("TooManyFunctions")
+object AppModule {
+    const val REMOTE_CONFIG_MINIMUM_FETCH_INTERVAL = 300L
+
     @AppScope
-    @Binds
-    abstract fun filtersService(impl: SessionFiltersServiceImpl): SessionFiltersService
+    @Provides
+    fun coroutinesDispatcherProvider() =
+        CoroutinesDispatcherProvider(
+            default = Dispatchers.Default,
+            computation = Dispatchers.Default,
+            io = Dispatchers.IO,
+            main = Dispatchers.Main.immediate
+        )
 
-    // Temporary Hilt-to-Koin bridges inflate the provider count; AppModule disappears with Hilt (04-07).
-    @Suppress("TooManyFunctions")
-    companion object {
-        const val REMOTE_CONFIG_MINIMUM_FETCH_INTERVAL = 300L
+    @Provides
+    @ElementsIntoSet
+    fun applicationInitializers(
+        dataSharingInitializer: DataSharingInitializer,
+        openFeedbackInitializer: OpenFeedbackInitializer,
+        performanceInitializer: PerformanceInitializer
+    ): Set<ApplicationInitializer> =
+        setOf(
+            dataSharingInitializer,
+            openFeedbackInitializer,
+            performanceInitializer
+        )
 
-        @AppScope
-        @Provides
-        fun coroutinesDispatcherProvider() =
-            CoroutinesDispatcherProvider(
-                default = Dispatchers.Default,
-                computation = Dispatchers.Default,
-                io = Dispatchers.IO,
-                main = Dispatchers.Main.immediate
-            )
+    @AppScope
+    @Provides
+    fun bookmarksStore(): BookmarksStore = KoinPlatform.getKoin().get()
 
-        @Provides
-        @ElementsIntoSet
-        fun applicationInitializers(
-            dataSharingInitializer: DataSharingInitializer,
-            openFeedbackInitializer: OpenFeedbackInitializer,
-            performanceInitializer: PerformanceInitializer
-        ): Set<ApplicationInitializer> =
-            setOf(
-                dataSharingInitializer,
-                openFeedbackInitializer,
-                performanceInitializer
-            )
+    @AppScope
+    @Provides
+    fun analyticsService(): AnalyticsService = KoinPlatform.getKoin().get()
 
-        @AppScope
-        @Provides
-        fun bookmarksStore(): BookmarksStore = KoinPlatform.getKoin().get()
+    @Provides
+    fun analytics(): FirebaseAnalytics = KoinPlatform.getKoin().get()
 
-        @AppScope
-        @Provides
-        fun analyticsService(): AnalyticsService = KoinPlatform.getKoin().get()
-
-        @Provides
-        fun analytics(): FirebaseAnalytics = KoinPlatform.getKoin().get()
-
-        @Provides
-        fun config() =
-            Firebase.remoteConfig
-                .apply {
-                    val configSettings =
-                        remoteConfigSettings {
-                            minimumFetchIntervalInSeconds = REMOTE_CONFIG_MINIMUM_FETCH_INTERVAL
-                        }
-                    setConfigSettingsAsync(configSettings)
-                }
-
-        @Provides
-        fun crashlytics(): FirebaseCrashlytics = KoinPlatform.getKoin().get()
-
-        // DataCollectionSettingsService is stateful: the Koin single is the only instance (D-06).
-        @AppScope
-        @Provides
-        fun dataSharingSettingsService(): DataCollectionSettingsService = KoinPlatform.getKoin().get()
-
-        @Provides
-        fun firebasePerformance(): FirebasePerformance = KoinPlatform.getKoin().get()
-
-        @Provides
-        fun openFeedbackConfig() =
-            OpenFeedbackConfig(
-                enabled = BuildConfig.OPEN_FEEDBACK_ENABLED.toBoolean(),
-                projectId = BuildConfig.OPEN_FEEDBACK_PROJECT_ID
-            )
-
-        @AppScope
-        @Provides
-        fun providePerformanceMonitoring(): PerformanceMonitoring = KoinPlatform.getKoin().get()
-
-        @AppScope
-        @Provides
-        fun sharedPreferences(): SharedPreferences = KoinPlatform.getKoin().get()
-
-        @AppScope
-        @Provides
-        fun store(): DevFestNantesStore {
-            return KoinPlatform.getKoin().get()
-        }
-
-        @AppScope
-        @Provides
-        fun timberTree(
-            timberTreeDebug: TimberTreeDebug,
-            timberTreeRelease: TimberTreeRelease
-        ): Timber.Tree {
-            return if (BuildConfig.DEBUG) {
-                timberTreeDebug
-            } else {
-                timberTreeRelease
+    @Provides
+    fun config() =
+        Firebase.remoteConfig
+            .apply {
+                val configSettings =
+                    remoteConfigSettings {
+                        minimumFetchIntervalInSeconds = REMOTE_CONFIG_MINIMUM_FETCH_INTERVAL
+                    }
+                setConfigSettingsAsync(configSettings)
             }
+
+    @Provides
+    fun crashlytics(): FirebaseCrashlytics = KoinPlatform.getKoin().get()
+
+    // DataCollectionSettingsService is stateful: the Koin single is the only instance (D-06).
+    @AppScope
+    @Provides
+    fun dataSharingSettingsService(): DataCollectionSettingsService = KoinPlatform.getKoin().get()
+
+    // SessionFiltersService is stateful: the Koin single is the only instance, shared with the
+    // agenda screen (D-06).
+    @AppScope
+    @Provides
+    fun filtersService(): SessionFiltersService = KoinPlatform.getKoin().get()
+
+    @Provides
+    fun firebasePerformance(): FirebasePerformance = KoinPlatform.getKoin().get()
+
+    @Provides
+    fun openFeedbackConfig() =
+        OpenFeedbackConfig(
+            enabled = BuildConfig.OPEN_FEEDBACK_ENABLED.toBoolean(),
+            projectId = BuildConfig.OPEN_FEEDBACK_PROJECT_ID
+        )
+
+    @AppScope
+    @Provides
+    fun providePerformanceMonitoring(): PerformanceMonitoring = KoinPlatform.getKoin().get()
+
+    @AppScope
+    @Provides
+    fun sharedPreferences(): SharedPreferences = KoinPlatform.getKoin().get()
+
+    @AppScope
+    @Provides
+    fun store(): DevFestNantesStore {
+        return KoinPlatform.getKoin().get()
+    }
+
+    @AppScope
+    @Provides
+    fun timberTree(
+        timberTreeDebug: TimberTreeDebug,
+        timberTreeRelease: TimberTreeRelease
+    ): Timber.Tree {
+        return if (BuildConfig.DEBUG) {
+            timberTreeDebug
+        } else {
+            timberTreeRelease
         }
     }
 }

@@ -13,7 +13,6 @@ import com.gdgnantes.devfest.core.model.Session
 import com.gdgnantes.devfest.core.ui.UiState
 import com.gdgnantes.devfest.feature.agenda.services.SessionFiltersService
 import com.gdgnantes.devfest.feature.agenda.utils.SessionFilter
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -27,10 +26,8 @@ import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import timber.log.Timber
-import javax.inject.Inject
 
-@HiltViewModel
-class AgendaViewModel @Inject constructor(
+class AgendaViewModel(
     private val store: DevFestNantesStore,
     private val bookmarksStore: BookmarksStore,
     private val performanceMonitoring: PerformanceMonitoring,
