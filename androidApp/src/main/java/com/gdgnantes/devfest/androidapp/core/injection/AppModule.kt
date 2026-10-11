@@ -17,7 +17,6 @@ import com.gdgnantes.devfest.feature.agenda.services.SessionFiltersService
 import com.gdgnantes.devfest.feature.agenda.services.SessionFiltersServiceImpl
 import com.gdgnantes.devfest.feature.sessiondetail.OpenFeedbackConfig
 import com.gdgnantes.devfest.feature.settings.services.DataCollectionSettingsService
-import com.gdgnantes.devfest.feature.settings.services.DataCollectionSettingsServiceImpl
 import com.google.firebase.Firebase
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.crashlytics.FirebaseCrashlytics
@@ -37,12 +36,6 @@ import timber.log.Timber
 @Module
 @InstallIn(SingletonComponent::class)
 abstract class AppModule {
-    @AppScope
-    @Binds
-    abstract fun dataSharingSettingsService(
-        dataCollectionSettingsServiceImpl: DataCollectionSettingsServiceImpl
-    ): DataCollectionSettingsService
-
     @AppScope
     @Binds
     abstract fun filtersService(impl: SessionFiltersServiceImpl): SessionFiltersService
@@ -99,6 +92,11 @@ abstract class AppModule {
 
         @Provides
         fun crashlytics(): FirebaseCrashlytics = KoinPlatform.getKoin().get()
+
+        // DataCollectionSettingsService is stateful: the Koin single is the only instance (D-06).
+        @AppScope
+        @Provides
+        fun dataSharingSettingsService(): DataCollectionSettingsService = KoinPlatform.getKoin().get()
 
         @Provides
         fun firebasePerformance(): FirebasePerformance = KoinPlatform.getKoin().get()

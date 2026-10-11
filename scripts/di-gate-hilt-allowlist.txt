@@ -29,10 +29,6 @@ feature/session-detail/src/main/java/com/gdgnantes/devfest/feature/sessiondetail
 feature/session-detail/src/main/java/com/gdgnantes/devfest/feature/sessiondetail/FeedbackFormViewModel.kt
 feature/session-detail/src/main/java/com/gdgnantes/devfest/feature/sessiondetail/SessionLayout.kt
 feature/session-detail/src/main/java/com/gdgnantes/devfest/feature/sessiondetail/SessionViewModel.kt
-feature/settings/src/main/java/com/gdgnantes/devfest/feature/settings/datacollection/DataCollectionAgreementDialog.kt
-feature/settings/src/main/java/com/gdgnantes/devfest/feature/settings/datacollection/DataCollectionSettingsScreen.kt
-feature/settings/src/main/java/com/gdgnantes/devfest/feature/settings/datacollection/DataCollectionViewModel.kt
-feature/settings/src/main/java/com/gdgnantes/devfest/feature/settings/services/DataCollectionSettingsService.kt
 feature/speakers/src/main/java/com/gdgnantes/devfest/feature/speakers/SpeakerViewModel.kt
 feature/speakers/src/main/java/com/gdgnantes/devfest/feature/speakers/list/Speakers.kt
 feature/speakers/src/main/java/com/gdgnantes/devfest/feature/speakers/list/SpeakersViewModel.kt

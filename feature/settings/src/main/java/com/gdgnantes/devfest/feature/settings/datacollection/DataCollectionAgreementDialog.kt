@@ -10,14 +10,14 @@ import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.window.DialogProperties
-import androidx.hilt.navigation.compose.hiltViewModel
 import com.gdgnantes.devfest.feature.settings.R
+import org.koin.compose.viewmodel.koinViewModel
 import com.gdgnantes.devfest.core.ui.R as CoreUiR
 
 @Composable
 fun DataCollectionAgreementDialog(
     modifier: Modifier = Modifier,
-    viewModel: DataCollectionViewModel = hiltViewModel(),
+    viewModel: DataCollectionViewModel = koinViewModel(),
     onOpenDataSharing: () -> Unit,
 ) {
     val openDialog =

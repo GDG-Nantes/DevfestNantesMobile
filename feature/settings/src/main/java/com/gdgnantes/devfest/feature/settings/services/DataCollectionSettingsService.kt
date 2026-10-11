@@ -9,7 +9,6 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import javax.inject.Inject
 
 interface DataCollectionSettingsService {
     val isDataCollectionAgreementSet: Boolean
@@ -27,7 +26,7 @@ interface DataCollectionSettingsService {
     fun updatesDataServicesActivationStatus()
 }
 
-class DataCollectionSettingsServiceImpl @Inject constructor(
+class DataCollectionSettingsServiceImpl(
     private val analyticsService: FirebaseAnalytics,
     private val sharedPreferences: SharedPreferences,
     private val firebaseCrashlytics: FirebaseCrashlytics,
