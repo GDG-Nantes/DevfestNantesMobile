@@ -22,8 +22,5 @@ build.gradle.kts
 core/ui/build.gradle.kts
 core/ui/src/main/java/com/gdgnantes/devfest/core/ui/BookmarksViewModel.kt
 feature/agenda/src/main/java/com/gdgnantes/devfest/feature/agenda/AgendaRow.kt
-feature/session-detail/src/main/java/com/gdgnantes/devfest/feature/sessiondetail/FeedbackForm.kt
-feature/session-detail/src/main/java/com/gdgnantes/devfest/feature/sessiondetail/FeedbackFormViewModel.kt
 feature/session-detail/src/main/java/com/gdgnantes/devfest/feature/sessiondetail/SessionLayout.kt
-feature/session-detail/src/main/java/com/gdgnantes/devfest/feature/sessiondetail/SessionViewModel.kt
 gradle/libs.versions.toml

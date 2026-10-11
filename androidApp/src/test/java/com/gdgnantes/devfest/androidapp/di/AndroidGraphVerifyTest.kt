@@ -20,6 +20,10 @@ class AndroidGraphVerifyTest {
     // Context and Application are supplied at runtime by androidContext(), not by a module.
     private val androidRuntimeTypes = listOf(Context::class, Application::class)
 
+    // OpenFeedbackConfig is a data class built from BuildConfig constants in appModule; its primitive
+    // constructor parameters are values, not injectable dependencies.
+    private val configValueTypes = listOf(Boolean::class, String::class)
+
     // Firebase SDK handles are built by the SDK itself (Firebase.analytics, getInstance()), never by
     // Koin, so their SDK-internal constructor parameters have no definition. They are derived from the
     // SDK classes instead of being named, because the internal types are obfuscated and change per release.
@@ -32,7 +36,7 @@ class AndroidGraphVerifyTest {
     @Test
     fun full_android_graph_is_complete() {
         module { includes(sharedModules + androidModules) }
-            .verify(extraTypes = androidRuntimeTypes + firebaseSdkTypes)
+            .verify(extraTypes = androidRuntimeTypes + firebaseSdkTypes + configValueTypes)
     }
 
     @Test

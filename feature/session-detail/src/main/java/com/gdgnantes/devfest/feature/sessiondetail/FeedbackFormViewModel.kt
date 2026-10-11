@@ -2,15 +2,12 @@ package com.gdgnantes.devfest.feature.sessiondetail
 
 import androidx.lifecycle.ViewModel
 import com.google.firebase.remoteconfig.FirebaseRemoteConfig
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import timber.log.Timber
-import javax.inject.Inject
 
-@HiltViewModel
-class FeedbackFormViewModel @Inject constructor(
+class FeedbackFormViewModel(
     private val remoteConfig: FirebaseRemoteConfig,
     private val openFeedbackConfig: OpenFeedbackConfig
 ) : ViewModel() {

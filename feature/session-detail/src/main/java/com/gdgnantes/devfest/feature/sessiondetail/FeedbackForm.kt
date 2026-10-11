@@ -9,14 +9,14 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import com.gdgnantes.devfest.core.model.Session
 import io.openfeedback.OpenFeedback
+import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun FeedbackForm(
     modifier: Modifier = Modifier,
-    feedbackFormViewModel: FeedbackFormViewModel = hiltViewModel(),
+    feedbackFormViewModel: FeedbackFormViewModel = koinViewModel(),
     session: Session,
     onFeedbackFormFallbackLinkClick: (String) -> Unit
 ) {

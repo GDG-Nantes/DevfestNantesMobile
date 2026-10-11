@@ -14,14 +14,10 @@ import com.gdgnantes.devfest.core.analytics.performance.PerformanceMonitoring
 import com.gdgnantes.devfest.core.data.BookmarksStore
 import com.gdgnantes.devfest.core.data.DevFestNantesStore
 import com.gdgnantes.devfest.feature.agenda.services.SessionFiltersService
-import com.gdgnantes.devfest.feature.sessiondetail.OpenFeedbackConfig
 import com.gdgnantes.devfest.feature.settings.services.DataCollectionSettingsService
-import com.google.firebase.Firebase
 import com.google.firebase.analytics.FirebaseAnalytics
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import com.google.firebase.perf.FirebasePerformance
-import com.google.firebase.remoteconfig.remoteConfig
-import com.google.firebase.remoteconfig.remoteConfigSettings
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -36,8 +32,6 @@ import timber.log.Timber
 // Temporary Hilt-to-Koin bridges inflate the provider count; AppModule disappears with Hilt (04-07).
 @Suppress("TooManyFunctions")
 object AppModule {
-    const val REMOTE_CONFIG_MINIMUM_FETCH_INTERVAL = 300L
-
     @AppScope
     @Provides
     fun coroutinesDispatcherProvider() =
@@ -73,17 +67,6 @@ object AppModule {
     fun analytics(): FirebaseAnalytics = KoinPlatform.getKoin().get()
 
     @Provides
-    fun config() =
-        Firebase.remoteConfig
-            .apply {
-                val configSettings =
-                    remoteConfigSettings {
-                        minimumFetchIntervalInSeconds = REMOTE_CONFIG_MINIMUM_FETCH_INTERVAL
-                    }
-                setConfigSettingsAsync(configSettings)
-            }
-
-    @Provides
     fun crashlytics(): FirebaseCrashlytics = KoinPlatform.getKoin().get()
 
     // DataCollectionSettingsService is stateful: the Koin single is the only instance (D-06).
@@ -99,13 +82,6 @@ object AppModule {
 
     @Provides
     fun firebasePerformance(): FirebasePerformance = KoinPlatform.getKoin().get()
-
-    @Provides
-    fun openFeedbackConfig() =
-        OpenFeedbackConfig(
-            enabled = BuildConfig.OPEN_FEEDBACK_ENABLED.toBoolean(),
-            projectId = BuildConfig.OPEN_FEEDBACK_PROJECT_ID
-        )
 
     @AppScope
     @Provides
