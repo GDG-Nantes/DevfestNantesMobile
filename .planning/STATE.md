@@ -3,16 +3,16 @@ gsd_state_version: "1.0"
 current_phase: 04
 current_phase_name: Hilt to Koin DI Migration
 status: executing
-stopped_at: Completed 04-03-PLAN.md
-last_updated: "2026-10-11T15:44:31.491Z"
+stopped_at: Completed 04-04-PLAN.md
+last_updated: "2026-10-11T17:44:50.986Z"
 last_activity: 2026-10-05
 last_activity_desc: Phase 04 execution started
-state_head: 809db11098f6fdca568f488ff8cc4cd293a7db20
+state_head: 53a95b48ee80dae9db026e6573c80fc6f17434e9
 progress:
   total_phases: 5
   completed_phases: 3
   total_plans: 26
-  completed_plans: 22
+  completed_plans: 23
   percent: 60
 ---
 
@@ -28,7 +28,7 @@ See: .planning/PROJECT.md (updated 2026-09-27)
 ## Current Position
 
 Phase: 04 (Hilt to Koin DI Migration) — EXECUTING
-Plan: 4 of 7
+Plan: 5 of 7
 Status: Ready to execute
 Last activity: 2026-10-05 — Phase 04 execution started
 
@@ -82,6 +82,7 @@ Progress: [██████░░░░] 60%
 | Phase 04 P01 | ~1h (continuation) | 3 tasks | 36 files |
 | Phase 04 P02 | 17 min | 3 tasks | 26 files |
 | Phase 04 P03 | 1h 53m | 3 tasks | 17 files |
+| Phase 04 P04 | 1h 35m | 2 tasks | 18 files |
 
 ## Accumulated Context
 
@@ -122,6 +123,8 @@ Recent decisions affecting current work:
 - [Phase 04]: 04-02: PerformanceMonitoring is an interface seam; Firebase SDK verify() extra types derived by reflection (obfuscated gms types) — Keeps ViewModel call sites unchanged and survives Firebase releases
 - [Phase 04]: 04-02: Koin SharedPreferences stays default prefs file; Hilt providers for Koin-owned types are KoinPlatform bridges — Persisted bookmarks/filters/consent survive; one instance per singleton (D-06)
 - [Phase 04]: 04-03: DI gate scans git-tracked files only; re-run after git add. Comments must not name the removed DI framework. — Gate matches substrings case-insensitively; untracked files are invisible locally but seen by CI
+- [Phase 04]: 04-04: SpeakerViewModel declared with explicit positional lambda and resolved via koinViewModel { parametersOf(speakerId) } as route default parameter — id can never bind to a wrong parameter by type; owner stays the back-stack entry
+- [Phase 04]: 04-04: Hilt AppModule became an object once its last @Binds turned into a KoinPlatform bridge — detekt UtilityClassWithPublicConstructor; Hilt supports @Module object
 
 ### Pending Todos
 
@@ -202,6 +205,6 @@ Items acknowledged and deferred at milestone close, most recent first:
 
 ## Session Continuity
 
-Last session: 2026-10-11T15:44:31.460Z
-Stopped at: Completed 04-03-PLAN.md
+Last session: 2026-10-11T17:44:50.956Z
+Stopped at: Completed 04-04-PLAN.md
 Resume file: None
