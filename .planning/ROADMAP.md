@@ -151,7 +151,7 @@ Plans (strictly sequential — every step edits `settings.gradle.dcl` and the ap
   4. ViewModels and Stores receive all dependencies through constructor injection — no `get()` calls appear outside the DI wiring layer
   5. A `core-testing` module centralizes shared test fakes/doubles (in the spirit of `DevFestNantesStoreMocked`) for use across feature modules, and a `checkModules()` Koin test runs in CI to verify the complete DI graph
 
-**Plans:** 2/7 plans executed
+**Plans:** 3/7 plans executed
 
 Plans (strictly sequential: one phase branch/PR, one commit per module, CI green per pushed plan, D-05):
 
@@ -165,7 +165,7 @@ Plans (strictly sequential: one phase branch/PR, one commit per module, CI green
 
 **Wave 3** *(blocked on Wave 2)*
 
-- [ ] 04-03-PLAN.md — D-13 DI gate in CI (shrinking Hilt allowlist), `:feature:about`, `:feature:settings` (consent service single + bridge) (D-06, D-07, D-13)
+- [x] 04-03-PLAN.md — D-13 DI gate in CI (shrinking Hilt allowlist), `:feature:about`, `:feature:settings` (consent service single + bridge) (D-06, D-07, D-13)
 
 **Wave 4** *(blocked on Wave 3)*
 
@@ -207,5 +207,5 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 | 1. CI Pipeline Fixed & Optimized | 3/3 | Complete    | 2026-09-17 |
 | 2. Dependency & Build Tooling Upgrade | 5/5 | Complete    | 2026-09-19 |
 | 3. Multi-Module Architecture Extraction | 11/11 | Complete    | 2026-09-27 |
-| 4. Hilt to Koin DI Migration | 2/7 | In Progress|  |
+| 4. Hilt to Koin DI Migration | 3/7 | In Progress|  |
 | 5. Test Coverage Retrofit | 0/TBD | Not started | - |
