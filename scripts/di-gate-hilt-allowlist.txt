@@ -1,16 +1,7 @@
 androidApp/build.gradle.kts
-androidApp/src/main/java/com/gdgnantes/devfest/androidapp/DevFestNantesApplication.kt
 androidApp/src/main/java/com/gdgnantes/devfest/androidapp/MainActivity.kt
-androidApp/src/main/java/com/gdgnantes/devfest/androidapp/core/DataSharingInitializer.kt
-androidApp/src/main/java/com/gdgnantes/devfest/androidapp/core/OpenFeedbackInitializer.kt
 androidApp/src/main/java/com/gdgnantes/devfest/androidapp/core/injection/AppModule.kt
 androidApp/src/main/java/com/gdgnantes/devfest/androidapp/core/injection/AppScope.kt
-androidApp/src/main/java/com/gdgnantes/devfest/androidapp/core/logging/TimberTreeDebug.kt
-androidApp/src/main/java/com/gdgnantes/devfest/androidapp/core/logging/TimberTreeRelease.kt
-androidApp/src/main/java/com/gdgnantes/devfest/androidapp/core/performance/PerformanceInitializer.kt
-androidApp/src/main/java/com/gdgnantes/devfest/androidapp/services/ExternalContentService.kt
-androidApp/src/main/java/com/gdgnantes/devfest/androidapp/ui/screens/Home.kt
-androidApp/src/main/java/com/gdgnantes/devfest/androidapp/ui/screens/home/HomeViewModel.kt
 androidApp/src/main/java/com/gdgnantes/devfest/androidapp/utils/AssistedViewModelUtils.kt
 build-logic/convention/build.gradle.kts
 build-logic/convention/src/main/kotlin/com/gdgnantes/devfest/buildlogic/AndroidApplicationConventionPlugin.kt

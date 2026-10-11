@@ -4,12 +4,11 @@ import com.gdgnantes.devfest.androidapp.core.ApplicationInitializer
 import com.google.firebase.perf.FirebasePerformance
 import com.google.firebase.perf.metrics.Trace
 import timber.log.Timber
-import javax.inject.Inject
 
 /**
  * Initializer that sets up performance monitoring for app startup.
  */
-class PerformanceInitializer @Inject constructor() : ApplicationInitializer {
+class PerformanceInitializer : ApplicationInitializer {
     companion object {
         private var appStartTrace: Trace? = null
 

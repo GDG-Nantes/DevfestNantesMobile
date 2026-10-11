@@ -4,9 +4,8 @@ import android.app.Application
 import com.gdgnantes.devfest.androidapp.BuildConfig
 import io.openfeedback.viewmodels.OpenFeedbackFirebaseConfig
 import io.openfeedback.viewmodels.initializeOpenFeedback
-import javax.inject.Inject
 
-class OpenFeedbackInitializer @Inject constructor(
+class OpenFeedbackInitializer(
     private val application: Application,
 ) : ApplicationInitializer {
     override suspend operator fun invoke(params: Unit?): Result<Unit> {

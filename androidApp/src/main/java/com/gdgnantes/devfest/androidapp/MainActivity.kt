@@ -28,21 +28,17 @@ import com.gdgnantes.devfest.feature.settings.datacollection.DataCollectionAgree
 import com.gdgnantes.devfest.feature.speakers.SpeakerDetailRoute
 import dagger.hilt.EntryPoint
 import dagger.hilt.InstallIn
-import dagger.hilt.android.AndroidEntryPoint
 import dagger.hilt.android.components.ActivityComponent
-import javax.inject.Inject
+import org.koin.android.ext.android.inject
+import org.koin.core.parameter.parametersOf
 
-@AndroidEntryPoint
 class MainActivity : ComponentActivity(), NavController.OnDestinationChangedListener {
     @EntryPoint
     @InstallIn(ActivityComponent::class)
     interface ViewModelFactoryProvider
 
-    @Inject
-    lateinit var analyticsService: AnalyticsService
-
-    @Inject
-    lateinit var externalContentService: ExternalContentService
+    private val analyticsService: AnalyticsService by inject()
+    private val externalContentService: ExternalContentService by inject { parametersOf(this) }
 
     private lateinit var navController: NavController
 
