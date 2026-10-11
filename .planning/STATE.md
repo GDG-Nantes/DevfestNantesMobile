@@ -2,17 +2,17 @@
 gsd_state_version: "1.0"
 current_phase: 04
 current_phase_name: Hilt to Koin DI Migration
-status: executing
-stopped_at: Completed 04-06-PLAN.md
-last_updated: "2026-10-11T19:25:00.099Z"
+status: verifying
+stopped_at: Completed 04-07-PLAN.md
+last_updated: "2026-10-11T19:50:15.471Z"
 last_activity: 2026-10-05
 last_activity_desc: Phase 04 execution started
-state_head: c37d51da72fa335099eef6ab0c222e471a2bfd82
+state_head: 5c630597527a2ddb770424987634c7eb215d0fb2
 progress:
   total_phases: 5
   completed_phases: 3
   total_plans: 26
-  completed_plans: 25
+  completed_plans: 26
   percent: 60
 ---
 
@@ -29,7 +29,7 @@ See: .planning/PROJECT.md (updated 2026-09-27)
 
 Phase: 04 (Hilt to Koin DI Migration) — EXECUTING
 Plan: 7 of 7
-Status: Ready to execute
+Status: Phase complete — ready for verification
 Last activity: 2026-10-05 — Phase 04 execution started
 
 Progress: [██████░░░░] 60%
@@ -85,6 +85,7 @@ Progress: [██████░░░░] 60%
 | Phase 04 P04 | 1h 35m | 2 tasks | 18 files |
 | Phase 04 P05 | 23 min | 2 tasks | 18 files |
 | Phase 04 P06 | 60 min | 3 tasks | 19 files |
+| Phase 04 P07 | 23 min | 2 tasks | 22 files |
 
 ## Accumulated Context
 
@@ -130,6 +131,8 @@ Recent decisions affecting current work:
 - [Phase 04]: 04-05: FirebaseRemoteConfig is a Koin factory in sessionDetailModule (300 s interval per ViewModel creation); OpenFeedbackConfig built in the app-shell Koin appModule; BookmarksViewModel flipped with both call sites in one commit — Preserves Hilt unscoped-provider semantics and keeps BuildConfig secrets app-only
 - [Phase 04]: 04-06: Firebase strategy for KoinStartupTest is Robolectric 4.17 (testImplementation only) — Exercises the real production Firebase definitions unchanged under a real Application and gives Phase 5 a reusable Robolectric base; chosen over mockito, exclude and seam
 - [Phase 04]: 04-06: application initializers are an explicit single(named("applicationInitializers")) list; order asserted by KoinStartupTest — Consent must be applied before performance collection is forced on (DI-02, T-04-19)
+- [Phase 04]: 04-07: catalog activity pinned to 1.12.4 (resolved version on releaseRuntimeClasspath, unchanged by Hilt removal); KSP and firebase-auth-ktx substitution kept — Pin states what ships; KSP still needed by kmp-native-coroutines
+- [Phase 04]: 04-07: no Hilt artifact on classpath; com.google.dagger:dagger:2.57.2 remains as firebase-perf internal transitive — Cannot be removed without dropping Firebase Performance
 
 ### Pending Todos
 
@@ -210,6 +213,6 @@ Items acknowledged and deferred at milestone close, most recent first:
 
 ## Session Continuity
 
-Last session: 2026-10-11T19:25:00.065Z
-Stopped at: Completed 04-06-PLAN.md
+Last session: 2026-10-11T19:50:15.443Z
+Stopped at: Completed 04-07-PLAN.md
 Resume file: None

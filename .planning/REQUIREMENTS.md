@@ -35,12 +35,12 @@ Requirements pour ce chantier de modernisation. Chaque requirement mappe vers un
 
 ### DI (Migration Hilt → Koin)
 
-- [ ] **DI-01**: La DI est entièrement migrée de Dagger Hilt vers Koin
-- [ ] **DI-02**: Chaque module Gradle (`core-*`/`feature-*`) expose son propre module Koin (`module { }`), composé via un point d'entrée unique `initKoin()`
-- [ ] **DI-03**: Les dépendances liées à la plateforme (Context Android, SharedPreferences, etc.) sont fournies via `expect`/`actual` ou des modules Koin par plateforme
-- [ ] **DI-04**: Les ViewModels et Stores utilisent l'injection par constructeur — aucun appel `get()` dispersé en dehors de la couche de câblage DI
-- [ ] **DI-05**: Un module `core-testing` centralise les fakes/doubles de test partagés (à la `DevFestNantesStoreMocked`) pour tous les modules feature
-- [ ] **DI-06**: Un test `checkModules()` Koin vérifie le graphe de DI complet en CI
+- [x] **DI-01**: La DI est entièrement migrée de Dagger Hilt vers Koin
+- [x] **DI-02**: Chaque module Gradle (`core-*`/`feature-*`) expose son propre module Koin (`module { }`), composé via un point d'entrée unique `initKoin()`
+- [x] **DI-03**: Les dépendances liées à la plateforme (Context Android, SharedPreferences, etc.) sont fournies via `expect`/`actual` ou des modules Koin par plateforme
+- [x] **DI-04**: Les ViewModels et Stores utilisent l'injection par constructeur — aucun appel `get()` dispersé en dehors de la couche de câblage DI
+- [x] **DI-05**: Un module `core-testing` centralise les fakes/doubles de test partagés (à la `DevFestNantesStoreMocked`) pour tous les modules feature
+- [x] **DI-06**: Un test `checkModules()` Koin vérifie le graphe de DI complet en CI
 
 ### TEST (Couverture de tests)
 
@@ -108,12 +108,12 @@ Which phases cover which requirements. Updated during roadmap creation.
 | ARCH-02 | Phase 3 | Complete |
 | ARCH-03 | Phase 3 | Complete |
 | ARCH-04 | Phase 3 | Complete |
-| DI-01 | Phase 4 | Pending |
-| DI-02 | Phase 4 | Pending |
-| DI-03 | Phase 4 | Pending |
-| DI-04 | Phase 4 | Pending |
-| DI-05 | Phase 4 | Pending |
-| DI-06 | Phase 4 | Pending |
+| DI-01 | Phase 4 | Complete |
+| DI-02 | Phase 4 | Complete |
+| DI-03 | Phase 4 | Complete |
+| DI-04 | Phase 4 | Complete |
+| DI-05 | Phase 4 | Complete |
+| DI-06 | Phase 4 | Complete |
 | TEST-01 | Phase 5 | Pending |
 | TEST-02 | Phase 5 | Pending |
 | TEST-03 | Phase 5 | Pending |
