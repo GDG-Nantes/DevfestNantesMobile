@@ -5,14 +5,11 @@ import androidx.lifecycle.viewModelScope
 import com.gdgnantes.devfest.core.analytics.AnalyticsPage
 import com.gdgnantes.devfest.core.analytics.AnalyticsService
 import com.gdgnantes.devfest.core.data.BookmarksStore
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.stateIn
-import javax.inject.Inject
 
-@HiltViewModel
-class BookmarksViewModel @Inject constructor(
+class BookmarksViewModel(
     private val analyticsService: AnalyticsService,
     private val bookmarksStore: BookmarksStore,
 ) : ViewModel() {

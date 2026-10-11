@@ -24,7 +24,6 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import com.gdgnantes.devfest.core.analytics.AnalyticsPage
 import com.gdgnantes.devfest.core.model.Session
 import com.gdgnantes.devfest.core.model.SessionType
@@ -36,11 +35,12 @@ import com.gdgnantes.devfest.core.ui.components.SessionCategory
 import com.gdgnantes.devfest.core.ui.theme.DevFestNantesTheme
 import com.gdgnantes.devfest.core.ui.theme.bookmarked
 import com.gdgnantes.devfest.feature.agenda.utils.isService
+import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun AgendaRow(
     modifier: Modifier = Modifier,
-    bookmarksViewModel: BookmarksViewModel = hiltViewModel(),
+    bookmarksViewModel: BookmarksViewModel = koinViewModel(),
     session: Session,
     onSessionClick: ((Session) -> Unit)
 ) {

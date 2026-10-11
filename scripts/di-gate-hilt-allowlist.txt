@@ -20,7 +20,4 @@ build-logic/convention/src/main/kotlin/com/gdgnantes/devfest/buildlogic/AndroidL
 build-logic/convention/src/main/kotlin/com/gdgnantes/devfest/buildlogic/DependencyResolutionRules.kt
 build.gradle.kts
 core/ui/build.gradle.kts
-core/ui/src/main/java/com/gdgnantes/devfest/core/ui/BookmarksViewModel.kt
-feature/agenda/src/main/java/com/gdgnantes/devfest/feature/agenda/AgendaRow.kt
-feature/session-detail/src/main/java/com/gdgnantes/devfest/feature/sessiondetail/SessionLayout.kt
 gradle/libs.versions.toml

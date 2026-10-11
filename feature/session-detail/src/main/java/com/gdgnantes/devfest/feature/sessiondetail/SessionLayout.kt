@@ -27,7 +27,6 @@ import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import com.gdgnantes.devfest.core.analytics.AnalyticsPage
 import com.gdgnantes.devfest.core.model.Session
 import com.gdgnantes.devfest.core.model.SocialItem
@@ -36,6 +35,7 @@ import com.gdgnantes.devfest.core.ui.BookmarksViewModel
 import com.gdgnantes.devfest.core.ui.components.LoadingLayout
 import com.gdgnantes.devfest.core.ui.components.appbars.TopAppBar
 import com.gdgnantes.devfest.core.ui.theme.bookmarked
+import org.koin.compose.viewmodel.koinViewModel
 import com.gdgnantes.devfest.core.ui.R as CoreUiR
 
 @Composable
@@ -60,7 +60,7 @@ fun SessionLayout(
 fun SessionLayout(
     modifier: Modifier = Modifier,
     sessionState: State<Session?>,
-    bookmarksViewModel: BookmarksViewModel = hiltViewModel(),
+    bookmarksViewModel: BookmarksViewModel = koinViewModel(),
     onBackClick: () -> Unit,
     onSocialLinkClick: (SocialItem, Speaker) -> Unit,
     onFeedbackFormFallbackLinkClick: (String) -> Unit
