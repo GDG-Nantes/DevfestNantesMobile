@@ -29,7 +29,4 @@ feature/session-detail/src/main/java/com/gdgnantes/devfest/feature/sessiondetail
 feature/session-detail/src/main/java/com/gdgnantes/devfest/feature/sessiondetail/FeedbackFormViewModel.kt
 feature/session-detail/src/main/java/com/gdgnantes/devfest/feature/sessiondetail/SessionLayout.kt
 feature/session-detail/src/main/java/com/gdgnantes/devfest/feature/sessiondetail/SessionViewModel.kt
-feature/speakers/src/main/java/com/gdgnantes/devfest/feature/speakers/SpeakerViewModel.kt
-feature/speakers/src/main/java/com/gdgnantes/devfest/feature/speakers/list/Speakers.kt
-feature/speakers/src/main/java/com/gdgnantes/devfest/feature/speakers/list/SpeakersViewModel.kt
 gradle/libs.versions.toml

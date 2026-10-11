@@ -39,12 +39,12 @@ import androidx.compose.ui.layout.positionInRoot
 import androidx.compose.ui.platform.LocalDensity
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import com.gdgnantes.devfest.core.model.Speaker
 import com.gdgnantes.devfest.core.ui.UiState
 import com.gdgnantes.devfest.core.ui.components.LoadingLayout
 import com.gdgnantes.devfest.core.ui.components.SpeakerPicture
 import kotlinx.coroutines.launch
+import org.koin.compose.viewmodel.koinViewModel
 
 /*
 List of speakers made with the code and article from Keith Abdulla's the Github repository : https://github.com/ekeitho/compose-scrolling-bubble/tree/main
@@ -52,7 +52,7 @@ List of speakers made with the code and article from Keith Abdulla's the Github 
 @Composable
 fun Speakers(
     modifier: Modifier = Modifier,
-    viewModel: SpeakersViewModel = hiltViewModel(),
+    viewModel: SpeakersViewModel = koinViewModel(),
     onSpeakerClick: (Speaker) -> Unit
 ) {
     Speakers(

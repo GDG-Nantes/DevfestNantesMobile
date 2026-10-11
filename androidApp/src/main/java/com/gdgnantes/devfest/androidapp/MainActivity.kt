@@ -28,7 +28,6 @@ import com.gdgnantes.devfest.feature.settings.LegalRoute
 import com.gdgnantes.devfest.feature.settings.SettingsRoute
 import com.gdgnantes.devfest.feature.settings.datacollection.DataCollectionAgreementDialog
 import com.gdgnantes.devfest.feature.speakers.SpeakerDetailRoute
-import com.gdgnantes.devfest.feature.speakers.SpeakerViewModel
 import dagger.hilt.EntryPoint
 import dagger.hilt.InstallIn
 import dagger.hilt.android.AndroidEntryPoint
@@ -41,8 +40,6 @@ class MainActivity : ComponentActivity(), NavController.OnDestinationChangedList
     @InstallIn(ActivityComponent::class)
     interface ViewModelFactoryProvider {
         fun sessionViewModelFactory(): SessionViewModel.SessionViewModelFactory
-
-        fun speakerViewModelFactory(): SpeakerViewModel.SpeakerViewModelFactory
     }
 
     @Inject
@@ -117,13 +114,7 @@ class MainActivity : ComponentActivity(), NavController.OnDestinationChangedList
                     ) { backStackEntry ->
                         val speakerId = backStackEntry.arguments!!.getString("speakerId")!!
                         SpeakerDetailRoute(
-                            viewModel =
-                            assistedViewModel {
-                                SpeakerViewModel.provideFactory(
-                                    speakerViewModelFactory(),
-                                    speakerId
-                                )
-                            },
+                            speakerId = speakerId,
                             onBackClick = { mainNavController.popBackStack() },
                             onSessionClick = this@MainActivity::onSessionClick,
                             onSocialLinkClick = { socialItem, speaker ->
