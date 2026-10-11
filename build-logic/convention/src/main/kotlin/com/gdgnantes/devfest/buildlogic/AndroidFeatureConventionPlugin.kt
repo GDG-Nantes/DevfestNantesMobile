@@ -7,8 +7,7 @@ import org.gradle.kotlin.dsl.dependencies
 /**
  * `devfest.android.feature` — every feature module (Gradle path segment
  * `feature`) applies this and nothing else. Layers `devfest.android.library`
- * + `devfest.android.hilt` + `devfest.android.koin` (Hilt and Koin coexist until
- * the final Hilt-removal step of the DI migration, D-05) and adds the standard
+ * + `devfest.android.koin` (the only DI convention) and adds the standard
  * core-module dependency set every feature needs. Must NEVER add a dependency on another feature module
  * (ARCH-02 — features stay siblings, never depend on each other).
  */
@@ -16,7 +15,6 @@ class AndroidFeatureConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) {
         with(target) {
             pluginManager.apply("devfest.android.library")
-            pluginManager.apply("devfest.android.hilt")
             pluginManager.apply("devfest.android.koin")
 
             dependencies {

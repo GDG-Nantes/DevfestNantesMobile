@@ -1,6 +1,5 @@
 plugins {
     id("devfest.android.application")
-    id("devfest.android.hilt")
     id("devfest.android.koin")
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.google.services)

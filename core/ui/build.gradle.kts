@@ -1,6 +1,5 @@
 plugins {
     id("devfest.android.library")
-    id("devfest.android.hilt")
     id("devfest.android.koin")
 }
 

@@ -1,6 +1,6 @@
 [versions]
 accompanist = "0.36.0"
-activity = "1.9.2"
+activity = "1.12.4"
 agp = "9.4.0"
 androidXTestVersion = "1.5.0"
 androidXTestRunnerVersion = "1.6.2"
@@ -12,14 +12,12 @@ coreKtx = "1.16.0"
 coil = "2.7.0"
 composeBom = "2026.09.00"
 composeNavigation = "2.9.5"
-dagger = "2.60.1"
 detekt = "2.0.0-alpha.6"
 espresso = "3.6.1"
 firebaseBom = "34.19.0"
 firebaseCrashlyticsPlugin = "3.0.8"
 firebasePerfPlugin = "2.0.2"
 googleServicesPlugin = "4.5.0"
-hilt = "1.3.0"
 junit = "4.13.2"
 kmpNativeCoroutines = "1.0.6"
 kotlin = "2.4.20"
@@ -57,8 +55,6 @@ androidx-compose-ui-test-manifest = { group = "androidx.compose.ui", name = "ui-
 androidx-compose-ui-tooling = { group = "androidx.compose.ui", name = "ui-tooling" }
 androidx-compose-ui-tooling-preview = { group = "androidx.compose.ui", name = "ui-tooling-preview" }
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
-androidx-hilt-compiler = { group = "androidx.hilt", name = "hilt-compiler", version.ref = "hilt" }
-androidx-hilt-navigation-compose = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "hilt" }
 androidx-preference = { group = "androidx.preference", name = "preference", version.ref = "preference" }
 androidx-splashscreen = { group = "androidx.core", name = "core-splashscreen", version.ref = "spalshscreen" }
 androidx-test-core = { group = "androidx.test", name = "core-ktx", version.ref = "androidXTestVersion" }
@@ -78,9 +74,6 @@ appollo-normalized-cache-sqlite = { group = "com.apollographql.cache", name = "n
 
 coil-compose = { group = "io.coil-kt", name = "coil-compose", version.ref = "coil" }
 
-dagger-hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "dagger" }
-dagger-hilt-android-testing = { group = "com.google.dagger", name = "hilt-android-testing", version.ref = "dagger" }
-dagger-hilt-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "dagger" }
 
 detekt-fomatting = { module = "dev.detekt:detekt-rules-ktlint-wrapper", version.ref = "detekt" }
 detekt-gradlePlugin = { group = "dev.detekt", name = "detekt-gradle-plugin", version.ref = "detekt" }
@@ -131,7 +124,6 @@ android-library = { id = "com.android.library", version.ref = "agp" }
 android-kotlin-multiplatform-library = { id = "com.android.kotlin.multiplatform.library", version.ref = "agp" }
 appollo = { id = "com.apollographql.apollo", version.ref = "appollo" }
 crashlytics = { id = "com.google.firebase.crashlytics", version.ref = "firebaseCrashlyticsPlugin" }
-dagger-hilt = { id = "com.google.dagger.hilt.android", version.ref = "dagger" }
 detekt = { id = "dev.detekt", version.ref = "detekt" }
 firebase-perf = { id = "com.google.firebase.firebase-perf", version.ref = "firebasePerfPlugin" }
 google-services = { id = "com.google.gms.google-services", version.ref = "googleServicesPlugin" }
