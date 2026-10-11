@@ -93,6 +93,12 @@ dependencies {
     implementation(libs.openfeedback.viewmodel)
     implementation(libs.timber)
 
+    testImplementation(project(":core:testing"))
+    testImplementation(libs.androidx.test.core)
+    testImplementation(libs.koin.test.junit4)
+    testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(libs.robolectric)
+
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)
     androidTestImplementation(libs.androidx.test.espresso) {
         exclude(group = "com.google.protobuf", module = "protobuf-lite")

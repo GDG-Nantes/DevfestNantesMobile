@@ -30,6 +30,7 @@ kotlinxSerialization = "1.11.0"
 koin = "4.2.2"
 material = "1.13.0"
 preference = "1.2.1"
+robolectric = "4.17"
 openfeedback = "1.0.0-alpha.3"
 secretsPlugin = "2.0.1"
 spalshscreen = "1.0.1"
@@ -110,6 +111,7 @@ kotlinx-datetime = { group = "org.jetbrains.kotlinx", name = "kotlinx-datetime",
 kotlinx-serialization-json = { group = "org.jetbrains.kotlinx", name = "kotlinx-serialization-json", version.ref = "kotlinxSerialization" }
 
 material = { module = "com.google.android.material:material", version.ref = "material" }
+robolectric = { group = "org.robolectric", name = "robolectric", version.ref = "robolectric" }
 
 openfeedback-m3 = { module = "io.openfeedback:openfeedback-m3", version.ref = "openfeedback" }
 openfeedback-viewmodel = { module = "io.openfeedback:openfeedback-viewmodel", version.ref = "openfeedback" }
