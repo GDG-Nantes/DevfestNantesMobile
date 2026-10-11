@@ -7,6 +7,8 @@ kotlin {
         commonMain.dependencies {
             api(project(":core:model"))
             api(project(":core:data"))
+            api(project(":core:analytics"))
+            api(libs.koin.core)
             api(libs.kotlin.test)
             api(libs.kotlinx.coroutines.test)
         }
