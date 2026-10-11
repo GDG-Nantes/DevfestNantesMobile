@@ -3,16 +3,16 @@ gsd_state_version: "1.0"
 current_phase: 04
 current_phase_name: Hilt to Koin DI Migration
 status: executing
-stopped_at: Completed 04-04-PLAN.md
-last_updated: "2026-10-11T17:44:50.986Z"
+stopped_at: Completed 04-05-PLAN.md
+last_updated: "2026-10-11T18:10:32.477Z"
 last_activity: 2026-10-05
 last_activity_desc: Phase 04 execution started
-state_head: 53a95b48ee80dae9db026e6573c80fc6f17434e9
+state_head: c4a1f11e545cf41add9456bfa11aa67ff1cded28
 progress:
   total_phases: 5
   completed_phases: 3
   total_plans: 26
-  completed_plans: 23
+  completed_plans: 24
   percent: 60
 ---
 
@@ -28,7 +28,7 @@ See: .planning/PROJECT.md (updated 2026-09-27)
 ## Current Position
 
 Phase: 04 (Hilt to Koin DI Migration) — EXECUTING
-Plan: 5 of 7
+Plan: 6 of 7
 Status: Ready to execute
 Last activity: 2026-10-05 — Phase 04 execution started
 
@@ -83,6 +83,7 @@ Progress: [██████░░░░] 60%
 | Phase 04 P02 | 17 min | 3 tasks | 26 files |
 | Phase 04 P03 | 1h 53m | 3 tasks | 17 files |
 | Phase 04 P04 | 1h 35m | 2 tasks | 18 files |
+| Phase 04 P05 | 23 min | 2 tasks | 18 files |
 
 ## Accumulated Context
 
@@ -125,6 +126,7 @@ Recent decisions affecting current work:
 - [Phase 04]: 04-03: DI gate scans git-tracked files only; re-run after git add. Comments must not name the removed DI framework. — Gate matches substrings case-insensitively; untracked files are invisible locally but seen by CI
 - [Phase 04]: 04-04: SpeakerViewModel declared with explicit positional lambda and resolved via koinViewModel { parametersOf(speakerId) } as route default parameter — id can never bind to a wrong parameter by type; owner stays the back-stack entry
 - [Phase 04]: 04-04: Hilt AppModule became an object once its last @Binds turned into a KoinPlatform bridge — detekt UtilityClassWithPublicConstructor; Hilt supports @Module object
+- [Phase 04]: 04-05: FirebaseRemoteConfig is a Koin factory in sessionDetailModule (300 s interval per ViewModel creation); OpenFeedbackConfig built in the app-shell Koin appModule; BookmarksViewModel flipped with both call sites in one commit — Preserves Hilt unscoped-provider semantics and keeps BuildConfig secrets app-only
 
 ### Pending Todos
 
@@ -205,6 +207,6 @@ Items acknowledged and deferred at milestone close, most recent first:
 
 ## Session Continuity
 
-Last session: 2026-10-11T17:44:50.956Z
-Stopped at: Completed 04-04-PLAN.md
+Last session: 2026-10-11T18:10:32.439Z
+Stopped at: Completed 04-05-PLAN.md
 Resume file: None
