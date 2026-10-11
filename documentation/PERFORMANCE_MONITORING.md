@@ -58,7 +58,7 @@ The implementation follows a platform-native approach where each platform uses i
 │  ┌─────────────────────┐    ┌─────────────────────────────┐ │
 │  │     Android App     │    │        iOS App             │ │
 │  │  PerformanceMonitor │    │   PerformanceMonitoring    │ │
-│  │  (Kotlin/Hilt)     │    │      (Swift)               │ │
+│  │  (Kotlin/Koin)     │    │      (Swift)               │ │
 │  └─────────────────────┘    └─────────────────────────────┘ │
 └─────────────────────────────────────────────────────────────┘
 ┌─────────────────────────────────────────────────────────────┐
@@ -245,8 +245,7 @@ suspend fun <T> PerformanceMonitoring.trace(
 Enhanced ViewModels with performance monitoring:
 
 ```kotlin
-@HiltViewModel
-class AgendaViewModel @Inject constructor(
+class AgendaViewModel(
     private val store: DevFestNantesStore,
     private val performanceMonitoring: PerformanceMonitoring
 ) : ViewModel() {
@@ -414,8 +413,7 @@ struct iOSApp: App {
 #### Checking Consent Status
 
 ```kotlin
-@HiltViewModel
-class ExampleViewModel @Inject constructor(
+class ExampleViewModel(
     private val dataCollectionSettingsService: DataCollectionSettingsService,
     private val performanceMonitoring: PerformanceMonitoring
 ) : ViewModel() {
@@ -436,8 +434,7 @@ class ExampleViewModel @Inject constructor(
 #### Managing User Consent
 
 ```kotlin
-@HiltViewModel 
-class DataCollectionViewModel @Inject constructor(
+class DataCollectionViewModel(
     private val dataCollectionSettingsService: DataCollectionSettingsService
 ) : ViewModel() {
     

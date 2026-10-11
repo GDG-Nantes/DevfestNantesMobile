@@ -86,7 +86,7 @@ Android-specific implementation using modern Android development practices.
 androidApp/
 ├── src/main/java/com/gdgnantes/devfest/androidapp/
 │   ├── core/                    # Core Android components
-│   │   ├── injection/           # Dagger Hilt modules
+│   │   ├── di/                  # Koin modules (appModule, androidModules)
 │   │   ├── performance/         # Firebase Performance implementation
 │   │   └── ApplicationInitializer.kt
 │   ├── ui/                      # UI layer
@@ -103,7 +103,7 @@ androidApp/
 
 **Technology Stack:**
 - **UI Framework:** Jetpack Compose
-- **Dependency Injection:** Dagger Hilt
+- **Dependency Injection:** Koin
 - **Navigation:** Navigation Component
 - **Architecture:** MVVM with StateFlow
 - **Design System:** Material 3
@@ -160,8 +160,7 @@ graph TB
 
 #### Android (StateFlow)
 ```kotlin
-@HiltViewModel
-class AgendaViewModel @Inject constructor(
+class AgendaViewModel(
     private val store: DevFestNantesStore
 ) : ViewModel() {
     
@@ -209,20 +208,35 @@ The app implements a multi-layer caching strategy:
 
 ### Android Specifics
 
-#### Dependency Injection (Hilt)
+#### Dependency Injection (Koin)
+
+Every Gradle module owns one Koin module in a `di/XxxModule.kt` file. `initKoin()` in `:shared`
+is the single composition root: it starts Koin with `sharedModules` (network, data, analytics)
+plus the platform modules it is given. Android passes `androidModules` (core:ui, the feature
+modules and the app shell) and `androidContext`; iOS calls it with no arguments through
+`IosDependencies`.
+
 ```kotlin
-@Module
-@InstallIn(SingletonComponent::class)
-abstract class AppModule {
-    @AppScope
-    @Provides
-    fun store(): DevFestNantesStore {
-        return DevFestNantesStoreBuilder()
-            .setUseMockServer(false)
-            .build()
-    }
+// feature/venue/.../di/VenueModule.kt
+val venueModule: Module = module {
+    viewModelOf(::VenueViewModel)
 }
+
+// androidApp: started once from the Application
+initKoin(platformModules = androidModules) { androidContext(this@DevFestNantesApplication) }
+
+// Compose screens resolve their ViewModel
+val viewModel: VenueViewModel = koinViewModel()
 ```
+
+- ViewModels are plain classes with constructor parameters; parameterized ones use
+  `viewModel { (id) -> ... }`.
+- `by inject()` is limited to the Application and `MainActivity`; the D-13 gate
+  (`scripts/di-gate.sh`, run in CI) forbids any other DI framework and any other
+  service-locator use.
+- Platform bindings (Firebase, settings, performance) live in the platform modules; the
+  `PerformanceMonitoring` interface is bound to `FirebasePerformanceMonitoring` on Android.
+- Graph verification (`verify()` per module and a Robolectric start-up test) runs in CI.
 
 #### Compose UI Pattern
 ```kotlin

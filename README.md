@@ -36,7 +36,7 @@ DevFestNantes/
 
 #### Android
 - **Jetpack Compose** for modern UI
-- **Dagger Hilt** for dependency injection
+- **Koin** for dependency injection (one module per Gradle module, composed by `initKoin()` in `:shared`; ViewModels resolved with `koinViewModel()`)
 - **Navigation Component** for app navigation
 - **Material 3** design system
 - **Firebase** for analytics, crash reporting, and performance monitoring (with user consent)

@@ -170,13 +170,16 @@ suspend fun getSession(sessionId: String): Session?
 #### Architecture Patterns
 
 - Use **MVVM** with ViewModels
-- Inject dependencies with **Dagger Hilt**
+- Inject dependencies with **Koin** through constructor injection: declare each ViewModel in its
+  module's `di/XxxModule.kt` with `viewModelOf(::XxxViewModel)` (or `viewModel { (id) -> ... }` for
+  parameterized ones) and resolve it in Compose with `koinViewModel()`. `by inject()` is allowed only
+  in the Application and `MainActivity`; `scripts/di-gate.sh` enforces this and forbids any
+  service-locator use elsewhere
 - Use **StateFlow** for state management
 - Follow **Compose** best practices
 
 ```kotlin
-@HiltViewModel
-class SessionViewModel @Inject constructor(
+class SessionViewModel(
     private val sessionRepository: SessionRepository
 ) : ViewModel() {
     
@@ -198,6 +201,11 @@ class SessionViewModel @Inject constructor(
             }
         }
     }
+}
+
+// di/SessionModule.kt
+val sessionModule: Module = module {
+    viewModelOf(::SessionViewModel)
 }
 ```
 
