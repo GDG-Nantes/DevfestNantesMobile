@@ -46,7 +46,7 @@ import com.gdgnantes.devfest.feature.agenda.AgendaRoute
 import com.gdgnantes.devfest.feature.speakers.SpeakersRoute
 import com.gdgnantes.devfest.feature.venue.VenueRoute
 import kotlinx.coroutines.launch
-import org.koin.androidx.compose.koinViewModel
+import org.koin.compose.viewmodel.koinViewModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
