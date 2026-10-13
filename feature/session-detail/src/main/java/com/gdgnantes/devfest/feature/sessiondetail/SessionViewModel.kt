@@ -1,24 +1,20 @@
 package com.gdgnantes.devfest.feature.sessiondetail
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.gdgnantes.devfest.core.analytics.performance.PerformanceMonitoring
 import com.gdgnantes.devfest.core.analytics.performance.traceDataLoading
 import com.gdgnantes.devfest.core.data.DevFestNantesStore
 import com.gdgnantes.devfest.core.model.Session
-import dagger.assisted.Assisted
-import dagger.assisted.AssistedFactory
-import dagger.assisted.AssistedInject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
-class SessionViewModel @AssistedInject constructor(
+class SessionViewModel(
     private val store: DevFestNantesStore,
     private val performanceMonitoring: PerformanceMonitoring,
-    @Assisted sessionId: String
+    sessionId: String
 ) : ViewModel() {
     private val _session = MutableStateFlow<Session?>(null)
     val session: StateFlow<Session?>
@@ -35,24 +31,6 @@ class SessionViewModel @AssistedInject constructor(
 
                 Timber.d("Session loaded: ${sessionData?.title ?: "Session not found"}")
                 sessionData
-            }
-        }
-    }
-
-    @AssistedFactory
-    interface SessionViewModelFactory {
-        fun create(sessionId: String): SessionViewModel
-    }
-
-    @Suppress("UNCHECKED_CAST")
-    companion object {
-        fun provideFactory(
-            assistedFactory: SessionViewModelFactory,
-            sessionId: String
-        ): ViewModelProvider.Factory =
-            object : ViewModelProvider.Factory {
-            override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                return assistedFactory.create(sessionId) as T
             }
         }
     }

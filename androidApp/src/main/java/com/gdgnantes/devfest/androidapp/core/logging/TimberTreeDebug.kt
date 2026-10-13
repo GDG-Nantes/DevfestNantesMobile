@@ -3,9 +3,8 @@ package com.gdgnantes.devfest.androidapp.core.logging
 import android.util.Log
 import com.google.firebase.crashlytics.FirebaseCrashlytics
 import timber.log.Timber
-import javax.inject.Inject
 
-class TimberTreeDebug @Inject constructor(private val firebaseCrashlytics: FirebaseCrashlytics) :
+class TimberTreeDebug(private val firebaseCrashlytics: FirebaseCrashlytics) :
     Timber.DebugTree() {
     override fun log(priority: Int, tag: String?, message: String, t: Throwable?) {
         if (priority == Log.ERROR || priority == Log.WARN) {

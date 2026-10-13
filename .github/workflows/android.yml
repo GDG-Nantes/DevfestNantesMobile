@@ -25,6 +25,9 @@ jobs:
           java-version: ${{ env.JAVA_VERSION }}
           cache-read-only: ${{ github.event_name == 'pull_request' }}
 
+      - name: DI gate
+        run: bash scripts/di-gate.sh
+
       - name: Check Detekt
         run: ./gradlew detekt
 
@@ -43,7 +46,7 @@ jobs:
           cache-read-only: ${{ github.event_name == 'pull_request' }}
 
       - name: Unit tests
-        run: ./gradlew testDebugUnitTest
+        run: ./gradlew testDebugUnitTest jvmTest
 
   instrumentation-tests:
     name: Instrumentation tests

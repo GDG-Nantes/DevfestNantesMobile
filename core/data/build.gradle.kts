@@ -9,9 +9,14 @@ kotlin {
         commonMain.dependencies {
             api(project(":core:model"))
             implementation(project(":core:network"))
+            implementation(libs.koin.core)
+        }
+        jvmTest.dependencies {
+            implementation(libs.koin.test)
         }
         androidMain.dependencies {
-            implementation(libs.dagger.hilt.android)
+            implementation(libs.koin.android)
+            implementation(libs.androidx.preference)
             implementation(libs.androidx.core.ktx)
         }
     }

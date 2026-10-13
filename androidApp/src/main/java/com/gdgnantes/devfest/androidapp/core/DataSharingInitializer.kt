@@ -1,9 +1,8 @@
 package com.gdgnantes.devfest.androidapp.core
 
 import com.gdgnantes.devfest.feature.settings.services.DataCollectionSettingsService
-import javax.inject.Inject
 
-class DataSharingInitializer @Inject constructor(
+class DataSharingInitializer(
     private val dataCollectionSettingsService: DataCollectionSettingsService
 ) : ApplicationInitializer {
     override suspend operator fun invoke(params: Unit?): Result<Unit> {

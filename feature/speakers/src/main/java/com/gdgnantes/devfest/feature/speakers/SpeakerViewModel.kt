@@ -1,26 +1,21 @@
 package com.gdgnantes.devfest.feature.speakers
 
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.viewModelScope
 import com.gdgnantes.devfest.core.analytics.performance.PerformanceMonitoring
-import com.gdgnantes.devfest.core.analytics.performance.trace
 import com.gdgnantes.devfest.core.data.DevFestNantesStore
 import com.gdgnantes.devfest.core.model.Session
 import com.gdgnantes.devfest.core.model.Speaker
 import com.gdgnantes.devfest.core.ui.UiState
-import dagger.assisted.Assisted
-import dagger.assisted.AssistedFactory
-import dagger.assisted.AssistedInject
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.launch
 import timber.log.Timber
 
-class SpeakerViewModel @AssistedInject constructor(
+class SpeakerViewModel(
     private val store: DevFestNantesStore,
     private val performanceMonitoring: PerformanceMonitoring,
-    @Assisted private val speakerId: String
+    private val speakerId: String
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(UiState.STARTING)
     val uiState: StateFlow<UiState>
@@ -58,23 +53,5 @@ class SpeakerViewModel @AssistedInject constructor(
 
             Timber.d("Speaker sessions loaded: ${speakerSessions.size} sessions")
         }
-    }
-
-    @AssistedFactory
-    interface SpeakerViewModelFactory {
-        fun create(speakerId: String): SpeakerViewModel
-    }
-
-    @Suppress("UNCHECKED_CAST")
-    companion object {
-        fun provideFactory(
-            assistedFactory: SpeakerViewModelFactory,
-            speakerId: String
-        ): ViewModelProvider.Factory =
-            object : ViewModelProvider.Factory {
-                override fun <T : ViewModel> create(modelClass: Class<T>): T {
-                    return assistedFactory.create(speakerId) as T
-                }
-            }
     }
 }

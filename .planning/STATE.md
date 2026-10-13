@@ -1,44 +1,44 @@
 ---
 gsd_state_version: "1.0"
-current_phase: 4
-current_phase_name: Hilt to Koin DI Migration
+current_phase: 5
+current_phase_name: Test Coverage Retrofit
 status: planning
-stopped_at: Phase 03 complete, ready to plan Phase 4
-last_updated: "2026-09-27T19:16:53.998Z"
-last_activity: 2026-09-27
-last_activity_desc: Phase 03 complete, transitioned to Phase 4
-state_head: 8e54925dd0ba620b0b094b659980e89cd5dc6886
+stopped_at: Phase 4 complete, ready to plan Phase 5
+last_updated: "2026-10-13T13:17:34.105Z"
+last_activity: 2026-10-13
+last_activity_desc: Phase 4 complete, transitioned to Phase 5
+state_head: 1d150e412b3a9b1f6f30c8a67fc43a395c2a4562
 progress:
   total_phases: 5
-  completed_phases: 3
-  total_plans: 19
-  completed_plans: 19
-  percent: 60
+  completed_phases: 4
+  total_plans: 26
+  completed_plans: 26
+  percent: 80
 ---
 
 # Project State
 
 ## Project Reference
 
-See: .planning/PROJECT.md (updated 2026-09-27)
+See: .planning/PROJECT.md (updated 2026-10-13)
 
 **Core value:** La CI/CD doit refonctionner et le projet doit redevenir maintenable (build moderne, architecture modulaire, DI décentralisée, couverture de tests solide) sans jamais régresser le comportement existant de l'application pour les utilisateurs.
-**Current focus:** Phase 4 — Hilt to Koin DI Migration
+**Current focus:** Phase 5 — Test Coverage Retrofit
 
 ## Current Position
 
-Phase: 4 — Hilt to Koin DI Migration
+Phase: 5 — Test Coverage Retrofit
 Plan: Not started
 Status: Ready to plan
-Last activity: 2026-09-27 — Phase 03 complete, transitioned to Phase 4
+Last activity: 2026-10-13 — Phase 4 complete, transitioned to Phase 5
 
-Progress: [██████░░░░] 60%
+Progress: [████████░░] 80%
 
 ## Performance Metrics
 
 **Velocity:**
 
-- Total plans completed: 19
+- Total plans completed: 26
 - Average duration: N/A
 - Total execution time: 0 hours
 
@@ -49,6 +49,7 @@ Progress: [██████░░░░] 60%
 | 01 | 3 | - | - |
 | 02 | 5 | - | - |
 | 03 | 11 | - | - |
+| 4 | 7 | - | - |
 
 **Recent Trend:**
 
@@ -79,6 +80,13 @@ Progress: [██████░░░░] 60%
 | Phase 03 P07 | 43min | 2 tasks | 36 files |
 | Phase 03 P08 | N/A (continuation) | 3 tasks | 46 files |
 | Phase 03 P09 | 90min | 2 tasks | 7 files |
+| Phase 04 P01 | ~1h (continuation) | 3 tasks | 36 files |
+| Phase 04 P02 | 17 min | 3 tasks | 26 files |
+| Phase 04 P03 | 1h 53m | 3 tasks | 17 files |
+| Phase 04 P04 | 1h 35m | 2 tasks | 18 files |
+| Phase 04 P05 | 23 min | 2 tasks | 18 files |
+| Phase 04 P06 | 60 min | 3 tasks | 19 files |
+| Phase 04 P07 | 23 min | 2 tasks | 22 files |
 
 ## Accumulated Context
 
@@ -115,6 +123,17 @@ Recent decisions affecting current work:
 - [Phase 03]: [Phase 03] 03-07: extracted :feature:settings (Settings+DataCollection+Legal, consumer-owned DataCollectionSettingsService) and :feature:speakers (list+detail, app-owned assisted factory) as devfest.android.feature leaves via the D-16 two-commit pattern; screen_settings/screen_data_collection/settings_legal/screen_speaker promoted to :core:ui as 2+ consumer resources (Screen.kt shares the same title strings); SpeakerDetailRoute takes the already-constructed SpeakerViewModel as a parameter so MainActivity's ViewModelFactoryProvider EntryPoint and assistedViewModel{} factory stay entirely in :androidApp; CI green on both workflows
 - [Phase 03]: [Phase 03] 03-08: extracted :feature:agenda (consumer-owned SessionFiltersService, D-03) and :feature:session-detail (OpenFeedbackConfig crossing via single AppModule @Provides, D-02) as the final two devfest.android.feature leaves via the D-16 two-commit pattern; :androidApp reduced to its 18-file D-03 thin shell; CI green on both workflows (run 36154645700 android, 36154645615 ios); Android smoke checkpoint 3 (D-18) approved by user 2026-09-26 — Completes all six ARCH-03 feature-module extractions; ARCH-02/ARCH-03 requirements stay blocked pending 03-09 (shared-ID gate #2388 — 03-09 also declares them and has no SUMMARY yet)
 - [Phase 03]: [Phase 03] 03-09: :shared thinned to a pure umbrella (D-10/D-11) exporting exactly core:model/core:data/core:analytics; :androidApp no longer depends on :shared; buildSrc deleted (D-13); Gradle daemon heap raised 2048M->4096M (user-approved) to fix a real Android CI D8 dex-merging OutOfMemoryError — CI-GREEN-BOTH confirmed on final HEAD (android.yml run 36328538946, ios.yml run 36328538965). Phase 03 fully complete: ARCH-01..04 marked complete.
+- [Phase 04]: Koin 4.2.2 composition root initKoin in :shared with allowOverride(false); IosDependencies plain object keeps Koin out of shared.h; D-02 iOS store single is a deliberate invisible change — Tracer approved; Hilt coexists until 04-07
+- [Phase 04]: 04-02: PerformanceMonitoring is an interface seam; Firebase SDK verify() extra types derived by reflection (obfuscated gms types) — Keeps ViewModel call sites unchanged and survives Firebase releases
+- [Phase 04]: 04-02: Koin SharedPreferences stays default prefs file; Hilt providers for Koin-owned types are KoinPlatform bridges — Persisted bookmarks/filters/consent survive; one instance per singleton (D-06)
+- [Phase 04]: 04-03: DI gate scans git-tracked files only; re-run after git add. Comments must not name the removed DI framework. — Gate matches substrings case-insensitively; untracked files are invisible locally but seen by CI
+- [Phase 04]: 04-04: SpeakerViewModel declared with explicit positional lambda and resolved via koinViewModel { parametersOf(speakerId) } as route default parameter — id can never bind to a wrong parameter by type; owner stays the back-stack entry
+- [Phase 04]: 04-04: Hilt AppModule became an object once its last @Binds turned into a KoinPlatform bridge — detekt UtilityClassWithPublicConstructor; Hilt supports @Module object
+- [Phase 04]: 04-05: FirebaseRemoteConfig is a Koin factory in sessionDetailModule (300 s interval per ViewModel creation); OpenFeedbackConfig built in the app-shell Koin appModule; BookmarksViewModel flipped with both call sites in one commit — Preserves Hilt unscoped-provider semantics and keeps BuildConfig secrets app-only
+- [Phase 04]: 04-06: Firebase strategy for KoinStartupTest is Robolectric 4.17 (testImplementation only) — Exercises the real production Firebase definitions unchanged under a real Application and gives Phase 5 a reusable Robolectric base; chosen over mockito, exclude and seam
+- [Phase 04]: 04-06: application initializers are an explicit single(named("applicationInitializers")) list; order asserted by KoinStartupTest — Consent must be applied before performance collection is forced on (DI-02, T-04-19)
+- [Phase 04]: 04-07: catalog activity pinned to 1.12.4 (resolved version on releaseRuntimeClasspath, unchanged by Hilt removal); KSP and firebase-auth-ktx substitution kept — Pin states what ships; KSP still needed by kmp-native-coroutines
+- [Phase 04]: 04-07: no Hilt artifact on classpath; com.google.dagger:dagger:2.57.2 remains as firebase-perf internal transitive — Cannot be removed without dropping Firebase Performance
 
 ### Pending Todos
 
@@ -130,7 +149,9 @@ None yet.
 - Follow-up (not blocking): the firebase-auth-ktx -> firebase-auth:24.2.0 dependency substitution in androidApp/build.gradle.kts is version-coupled to the pinned firebaseBom (34.19.0); re-verify the literal version if firebaseBom is bumped again in a future stage
 - **RESOLVED 2026-09-27:** Phase 03 Plan 09 (final phase plan) Android CI Instrumentation-tests OOM blocker. Root cause: D8's `DexMergingWorkAction` shares the Gradle daemon heap (`org.gradle.jvmargs`, was `-Xmx2048M`) while assembling `feature:settings`/`feature:session-detail`/`feature:speakers` androidTest APKs concurrently — 3 consecutive CI failures (run 36270314662 and reruns) with `java.lang.OutOfMemoryError: Java heap space`. Fix: raised the Gradle daemon heap to `-Xmx4096M` in `gradle.properties` (commit 5cb0389, user-approved deviation, Kotlin daemon heap left unchanged). CI-GREEN-BOTH is now satisfied on HEAD 5cb0389: android.yml run 36328538946 (all 4 jobs green, incl. Instrumentation tests (34)), ios.yml run 36328538965 (green). Task 1 (thin :shared umbrella + drop androidApp->:shared dep + delete buildSrc, commits 1bf81ae/2b03d4f) and Task 2 (all phase gates) are both complete; 03-09-SUMMARY.md written and ARCH-01..04 marked complete per the shared-ID gate.
 - Follow-up (not blocking, from 03-SECURITY.md note 2): `swift-names-gate.sh` and `resources-gate.sh` only run manually from `.planning`; wire them into CI (CICD-V2-01) so Swift identity-swap and resource-drift detection survive past Phase 3.
-- Follow-up (not blocking, from 03-REVIEW.md IN-01): `:core:testing` has no consumers yet — intended per D-19, to be used by Phase 5 test retrofit.
+- **Phase 3 follow-up — RESOLVED in Phase 4:** `:core:testing` now consumed (`testImplementation`) by `:core:ui` and `:androidApp` (fakes + `testDoublesModule`); Phase 5 extends it.
+- Note (not blocking, Phase 4): `com.google.dagger:dagger` remains on the release classpath only as a Firebase Performance internal transitive; the DI gate and `NO-HILT-ON-CLASSPATH` cover Hilt itself.
+- Note (not blocking, Phase 4 UAT): speaker images may fail to load on networks with SSL interception/blocking of raw.githubusercontent.com — environmental, observed on Android and iOS, not a code regression.
 
 ## Phase 02 DCL pilot outcome
 
@@ -195,6 +216,6 @@ Items acknowledged and deferred at milestone close, most recent first:
 
 ## Session Continuity
 
-Last session: 2026-09-27
-Stopped at: Phase 03 complete, ready to plan Phase 4
+Last session: 2026-10-13T13:30:00Z
+Stopped at: Phase 4 complete, ready to plan Phase 5
 Resume file: None

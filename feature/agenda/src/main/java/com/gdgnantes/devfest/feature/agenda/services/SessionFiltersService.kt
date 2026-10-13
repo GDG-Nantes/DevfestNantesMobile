@@ -8,7 +8,6 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.serialization.json.Json
 import timber.log.Timber
-import javax.inject.Inject
 
 interface SessionFiltersService {
     val filters: StateFlow<Set<SessionFilter>>
@@ -16,7 +15,7 @@ interface SessionFiltersService {
     fun setFilters(filters: Set<SessionFilter>)
 }
 
-class SessionFiltersServiceImpl @Inject constructor(
+class SessionFiltersServiceImpl(
     private val sharedPreferences: SharedPreferences
 ) : SessionFiltersService {
     companion object {

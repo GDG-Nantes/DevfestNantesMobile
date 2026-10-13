@@ -21,6 +21,7 @@ DISTANT_FUTURE
 DISTANT_PAST
 DevFestNantesStore
 DevFestNantesStoreBuilder
+IosDependencies
 KotlinAnnotation
 KotlinArray
 KotlinBase
@@ -359,8 +360,10 @@ speakerId
 speakerOpened
 speakerSocialLinkOpened
 speakers
+start()
 startDate
 startDateAsEpochMilliseconds
+store()
 subscribe(id:)
 support
 title

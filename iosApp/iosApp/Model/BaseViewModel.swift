@@ -14,8 +14,8 @@ class BaseViewModel: ObservableObject {
     let store: DevFestNantesStore
     
 
-    init() {
-        self.store = DevFestNantesStoreBuilder().setUseMockServer(useMockServer: false).build()
+    init(store: DevFestNantesStore = IosDependencies.shared.store()) {
+        self.store = store
     }
 
  

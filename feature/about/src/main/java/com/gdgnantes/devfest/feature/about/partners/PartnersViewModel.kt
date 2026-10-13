@@ -5,16 +5,13 @@ import androidx.lifecycle.viewModelScope
 import com.gdgnantes.devfest.core.data.DevFestNantesStore
 import com.gdgnantes.devfest.core.model.Partner
 import com.gdgnantes.devfest.core.model.PartnerCategory
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import javax.inject.Inject
 
-@HiltViewModel
-class PartnersViewModel @Inject constructor(
+class PartnersViewModel(
     store: DevFestNantesStore,
 ) : ViewModel() {
     private val _exclusivePartners = MutableStateFlow<List<Partner>>(emptyList())

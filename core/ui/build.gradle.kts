@@ -1,6 +1,6 @@
 plugins {
     id("devfest.android.library")
-    id("devfest.android.hilt")
+    id("devfest.android.koin")
 }
 
 dependencies {
@@ -10,6 +10,8 @@ dependencies {
 
     implementation(libs.androidx.compose.material.icons.extended)
     implementation(libs.coil.compose)
+
+    testImplementation(project(":core:testing"))
 
     androidTestImplementation(libs.androidx.test.ext.junit)
     androidTestImplementation(libs.androidx.test.runner)

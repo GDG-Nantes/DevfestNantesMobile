@@ -3,12 +3,9 @@ package com.gdgnantes.devfest.feature.settings.datacollection
 import androidx.lifecycle.ViewModel
 import com.gdgnantes.devfest.feature.settings.services.DataCollectionService
 import com.gdgnantes.devfest.feature.settings.services.DataCollectionSettingsService
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.Flow
-import javax.inject.Inject
 
-@HiltViewModel
-class DataCollectionViewModel @Inject constructor(
+class DataCollectionViewModel(
     private val dataCollectionSettingsService: DataCollectionSettingsService
 ) : ViewModel() {
     val dataCollectionServicesActivationStatus: Flow<Map<DataCollectionService, Boolean>>

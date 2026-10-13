@@ -7,14 +7,11 @@ import androidx.browser.customtabs.CustomTabsIntent
 import androidx.core.content.ContextCompat
 import com.gdgnantes.devfest.androidapp.R
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import dagger.hilt.android.scopes.ActivityScoped
 import timber.log.Timber
 import java.net.MalformedURLException
 import java.net.URL
-import javax.inject.Inject
 
-@ActivityScoped
-class ExternalContentService @Inject constructor(
+class ExternalContentService(
     private val activity: Activity
 ) {
     fun openUrl(url: String) {

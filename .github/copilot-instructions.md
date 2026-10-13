@@ -20,7 +20,7 @@ This project follows Clean Architecture with Kotlin Multiplatform Mobile (KMM):
 ### Module Structure
 - **`shared/`** - Core business logic, data models, GraphQL client, and store pattern implementation
 - **`shared-ui/`** - Shared UI components (experimental)
-- **`androidApp/`** - Android-specific UI using Jetpack Compose, Hilt DI, and MVVM pattern
+- **`androidApp/`** - Android-specific UI using Jetpack Compose, Koin DI (`koinViewModel()`), and MVVM pattern
 - **`iosApp/`** - iOS-specific UI using SwiftUI, native patterns, and KMP-NativeCoroutines
 
 ### Key Patterns

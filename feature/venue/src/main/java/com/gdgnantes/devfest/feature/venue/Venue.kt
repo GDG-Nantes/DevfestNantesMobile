@@ -4,15 +4,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
-import androidx.hilt.navigation.compose.hiltViewModel
 import com.gdgnantes.devfest.core.model.Venue
 import com.gdgnantes.devfest.core.ui.UiState
 import com.gdgnantes.devfest.core.ui.components.LoadingLayout
+import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
 fun Venue(
     modifier: Modifier = Modifier,
-    viewModel: VenueViewModel = hiltViewModel(),
+    viewModel: VenueViewModel = koinViewModel(),
     onNavigationClick: () -> Unit,
     onVenuePlanClick: (String) -> Unit,
 ) {

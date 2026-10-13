@@ -7,16 +7,13 @@ import com.gdgnantes.devfest.core.analytics.performance.traceDataLoading
 import com.gdgnantes.devfest.core.data.DevFestNantesStore
 import com.gdgnantes.devfest.core.model.Speaker
 import com.gdgnantes.devfest.core.ui.UiState
-import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 import timber.log.Timber
-import javax.inject.Inject
 
-@HiltViewModel
-class SpeakersViewModel @Inject constructor(
+class SpeakersViewModel(
     private val store: DevFestNantesStore,
     private val performanceMonitoring: PerformanceMonitoring
 ) : ViewModel() {

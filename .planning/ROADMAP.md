@@ -16,7 +16,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 1: CI Pipeline Fixed & Optimized** - iOS CI is fixed at the root cause (dynamic simulator resolution) and both Android/iOS jobs run cached and split in a matrix (completed 2026-09-17)
 - [x] **Phase 2: Dependency & Build Tooling Upgrade** - The project builds and runs on Kotlin 2.4.0, AGP 9.2.0, Gradle 9.7.1 and updated libraries, staged bump by bump with zero behavior change (completed 2026-09-19)
 - [x] **Phase 3: Multi-Module Architecture Extraction** - The codebase is split into a `core-*`/`feature-*` module graph with unidirectional dependencies, iOS still consuming one umbrella framework (completed 2026-09-27)
-- [ ] **Phase 4: Hilt to Koin DI Migration** - Dependency injection is fully decentralized via Koin, one module per Gradle module, with a CI-verified DI graph
+- [x] **Phase 4: Hilt to Koin DI Migration** - Dependency injection is fully decentralized via Koin, one module per Gradle module, with a CI-verified DI graph (completed 2026-10-13)
 - [ ] **Phase 5: Test Coverage Retrofit** - Business-logic test coverage (ViewModels, Store/repository, GraphQL mappers) is measurably improved on a hardened fixture foundation
 
 ## Phase Details
@@ -151,7 +151,37 @@ Plans (strictly sequential — every step edits `settings.gradle.dcl` and the ap
   4. ViewModels and Stores receive all dependencies through constructor injection — no `get()` calls appear outside the DI wiring layer
   5. A `core-testing` module centralizes shared test fakes/doubles (in the spirit of `DevFestNantesStoreMocked`) for use across feature modules, and a `checkModules()` Koin test runs in CI to verify the complete DI graph
 
-**Plans**: TBD
+**Plans:** 7/7 plans complete
+
+Plans (strictly sequential: one phase branch/PR, one commit per module, CI green per pushed plan, D-05):
+
+**Wave 1**
+
+- [x] 04-01-PLAN.md — Tracer: Koin catalog/convention, `initKoin()` in `:shared`, store + `:feature:venue` on Koin alongside Hilt, iOS via `IosDependencies`, graph tests (verify, full graph, JVM + iOS start-up), CI test steps (D-01..D-06, D-10, D-12)
+
+**Wave 2** *(blocked on Wave 1)*
+
+- [x] 04-02-PLAN.md — `:core:analytics` (PerformanceMonitoring interface seam) + `:core:data` platform modules (expect/actual) with Hilt bridges; `:core:testing` DI fakes + test-doubles module (D-06, D-07, D-08, D-14)
+
+**Wave 3** *(blocked on Wave 2)*
+
+- [x] 04-03-PLAN.md — D-13 DI gate in CI (shrinking Hilt allowlist), `:feature:about`, `:feature:settings` (consent service single + bridge) (D-06, D-07, D-13)
+
+**Wave 4** *(blocked on Wave 3)*
+
+- [x] 04-04-PLAN.md — `:feature:speakers` (Koin-parameter SpeakerViewModel, `SpeakerDetailRoute(speakerId)`), `:feature:agenda` (filters service single + bridge) (D-09, D-10)
+
+**Wave 5** *(blocked on Wave 4)*
+
+- [x] 04-05-PLAN.md — `:feature:session-detail` (Koin-parameter SessionViewModel, RemoteConfig factory, OpenFeedbackConfig from Koin `appModule`), then the 3-module `:core:ui` BookmarksViewModel flip (D-07..D-10)
+
+**Wave 6** *(blocked on Wave 5)*
+
+- [x] 04-06-PLAN.md — `:androidApp` shell on Koin (`by inject` entry points, ordered initializers, HomeViewModel); runtime start-up test after a Firebase-strategy decision checkpoint (D-11, D-12)
+
+**Wave 7** *(blocked on Wave 6)*
+
+- [x] 04-07-PLAN.md — Remove all Hilt code/build plumbing, strict DI gate, clean build, docs + licenses, release (R8) launch, final smoke (D-05 last step, D-13)
 
 ### Phase 5: Test Coverage Retrofit
 
@@ -177,5 +207,5 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 | 1. CI Pipeline Fixed & Optimized | 3/3 | Complete    | 2026-09-17 |
 | 2. Dependency & Build Tooling Upgrade | 5/5 | Complete    | 2026-09-19 |
 | 3. Multi-Module Architecture Extraction | 11/11 | Complete    | 2026-09-27 |
-| 4. Hilt to Koin DI Migration | 0/TBD | Not started | - |
+| 4. Hilt to Koin DI Migration | 7/7 | Complete    | 2026-10-13 |
 | 5. Test Coverage Retrofit | 0/TBD | Not started | - |

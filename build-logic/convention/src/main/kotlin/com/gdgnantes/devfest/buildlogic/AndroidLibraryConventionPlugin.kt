@@ -9,10 +9,9 @@ import org.gradle.kotlin.dsl.configure
  * `devfest.android.library` — the convention every plain Android library
  * module applies (Android library + Compose + shared Detekt/SDK/compose
  * config). Feature modules layer `devfest.android.feature` on top of this
- * (which also applies `devfest.android.hilt`); `:core:ui` applies this
- * convention plus `devfest.android.hilt` directly (it hosts a
- * `@HiltViewModel` but must not get the feature convention's `:core:ui`
- * self-dependency).
+ * (which also applies `devfest.android.koin`); `:core:ui` applies this
+ * convention plus `devfest.android.koin` directly (it must not get the
+ * feature convention's `:core:ui` self-dependency).
  */
 class AndroidLibraryConventionPlugin : Plugin<Project> {
     override fun apply(target: Project) {

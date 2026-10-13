@@ -18,6 +18,11 @@ kotlin {
             api(project(":core:model"))
             api(project(":core:data"))
             api(project(":core:analytics"))
+            implementation(project(":core:network"))
+            implementation(libs.koin.core)
+        }
+        jvmTest.dependencies {
+            implementation(libs.koin.test)
         }
     }
 }

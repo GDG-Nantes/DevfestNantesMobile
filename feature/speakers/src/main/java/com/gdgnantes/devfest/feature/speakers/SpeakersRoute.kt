@@ -7,6 +7,8 @@ import com.gdgnantes.devfest.core.model.SocialItem
 import com.gdgnantes.devfest.core.model.Speaker
 import com.gdgnantes.devfest.feature.speakers.details.SpeakerLayout
 import com.gdgnantes.devfest.feature.speakers.list.Speakers
+import org.koin.compose.viewmodel.koinViewModel
+import org.koin.core.parameter.parametersOf
 
 @Composable
 fun SpeakersRoute(
@@ -22,7 +24,8 @@ fun SpeakersRoute(
 @Composable
 fun SpeakerDetailRoute(
     modifier: Modifier = Modifier,
-    viewModel: SpeakerViewModel,
+    speakerId: String,
+    viewModel: SpeakerViewModel = koinViewModel { parametersOf(speakerId) },
     onBackClick: () -> Unit,
     onSessionClick: (Session) -> Unit,
     onSocialLinkClick: (SocialItem, Speaker) -> Unit

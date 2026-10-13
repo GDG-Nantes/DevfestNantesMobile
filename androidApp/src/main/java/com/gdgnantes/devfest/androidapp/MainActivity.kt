@@ -14,7 +14,6 @@ import com.gdgnantes.devfest.androidapp.BuildConfig
 import com.gdgnantes.devfest.androidapp.services.ExternalContentService
 import com.gdgnantes.devfest.androidapp.ui.screens.Home
 import com.gdgnantes.devfest.androidapp.ui.screens.Screen
-import com.gdgnantes.devfest.androidapp.utils.assistedViewModel
 import com.gdgnantes.devfest.core.analytics.AnalyticsPage
 import com.gdgnantes.devfest.core.analytics.AnalyticsService
 import com.gdgnantes.devfest.core.model.Session
@@ -22,34 +21,17 @@ import com.gdgnantes.devfest.core.model.SessionType
 import com.gdgnantes.devfest.core.model.WebLinks
 import com.gdgnantes.devfest.core.ui.theme.DevFestNantesTheme
 import com.gdgnantes.devfest.feature.sessiondetail.SessionDetailRoute
-import com.gdgnantes.devfest.feature.sessiondetail.SessionViewModel
 import com.gdgnantes.devfest.feature.settings.DataCollectionSettingsRoute
 import com.gdgnantes.devfest.feature.settings.LegalRoute
 import com.gdgnantes.devfest.feature.settings.SettingsRoute
 import com.gdgnantes.devfest.feature.settings.datacollection.DataCollectionAgreementDialog
 import com.gdgnantes.devfest.feature.speakers.SpeakerDetailRoute
-import com.gdgnantes.devfest.feature.speakers.SpeakerViewModel
-import dagger.hilt.EntryPoint
-import dagger.hilt.InstallIn
-import dagger.hilt.android.AndroidEntryPoint
-import dagger.hilt.android.components.ActivityComponent
-import javax.inject.Inject
+import org.koin.android.ext.android.inject
+import org.koin.core.parameter.parametersOf
 
-@AndroidEntryPoint
 class MainActivity : ComponentActivity(), NavController.OnDestinationChangedListener {
-    @EntryPoint
-    @InstallIn(ActivityComponent::class)
-    interface ViewModelFactoryProvider {
-        fun sessionViewModelFactory(): SessionViewModel.SessionViewModelFactory
-
-        fun speakerViewModelFactory(): SpeakerViewModel.SpeakerViewModelFactory
-    }
-
-    @Inject
-    lateinit var analyticsService: AnalyticsService
-
-    @Inject
-    lateinit var externalContentService: ExternalContentService
+    private val analyticsService: AnalyticsService by inject()
+    private val externalContentService: ExternalContentService by inject { parametersOf(this) }
 
     private lateinit var navController: NavController
 
@@ -88,13 +70,7 @@ class MainActivity : ComponentActivity(), NavController.OnDestinationChangedList
                     ) { backStackEntry ->
                         val sessionId = backStackEntry.arguments!!.getString("sessionId")!!
                         SessionDetailRoute(
-                            viewModel =
-                            assistedViewModel {
-                                SessionViewModel.provideFactory(
-                                    sessionViewModelFactory(),
-                                    sessionId
-                                )
-                            },
+                            sessionId = sessionId,
                             onBackClick = { mainNavController.popBackStack() },
                             onSocialLinkClick = { socialItem, speaker ->
                                 socialItem.link?.let { link ->
@@ -117,13 +93,7 @@ class MainActivity : ComponentActivity(), NavController.OnDestinationChangedList
                     ) { backStackEntry ->
                         val speakerId = backStackEntry.arguments!!.getString("speakerId")!!
                         SpeakerDetailRoute(
-                            viewModel =
-                            assistedViewModel {
-                                SpeakerViewModel.provideFactory(
-                                    speakerViewModelFactory(),
-                                    speakerId
-                                )
-                            },
+                            speakerId = speakerId,
                             onBackClick = { mainNavController.popBackStack() },
                             onSessionClick = this@MainActivity::onSessionClick,
                             onSocialLinkClick = { socialItem, speaker ->

@@ -1,6 +1,6 @@
 plugins {
     id("devfest.android.application")
-    id("devfest.android.hilt")
+    id("devfest.android.koin")
     alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.google.services)
     alias(libs.plugins.crashlytics)
@@ -52,6 +52,7 @@ android {
 }
 
 dependencies {
+    implementation(project(":shared"))
     implementation(project(":core:model"))
     implementation(project(":core:analytics"))
     implementation(project(":core:data"))
@@ -90,6 +91,12 @@ dependencies {
     implementation(libs.openfeedback.m3)
     implementation(libs.openfeedback.viewmodel)
     implementation(libs.timber)
+
+    testImplementation(project(":core:testing"))
+    testImplementation(libs.androidx.test.core)
+    testImplementation(libs.koin.test.junit4)
+    testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(libs.robolectric)
 
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)
     androidTestImplementation(libs.androidx.test.espresso) {
