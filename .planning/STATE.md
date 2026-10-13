@@ -1,44 +1,44 @@
 ---
 gsd_state_version: "1.0"
-current_phase: 04
-current_phase_name: Hilt to Koin DI Migration
-status: verifying
-stopped_at: Completed 04-07-PLAN.md
-last_updated: "2026-10-11T19:50:15.471Z"
-last_activity: 2026-10-05
-last_activity_desc: Phase 04 execution started
-state_head: 5c630597527a2ddb770424987634c7eb215d0fb2
+current_phase: 5
+current_phase_name: Test Coverage Retrofit
+status: planning
+stopped_at: Phase 4 complete, ready to plan Phase 5
+last_updated: "2026-10-13T13:17:34.105Z"
+last_activity: 2026-10-13
+last_activity_desc: Phase 4 complete, transitioned to Phase 5
+state_head: 1d150e412b3a9b1f6f30c8a67fc43a395c2a4562
 progress:
   total_phases: 5
-  completed_phases: 3
+  completed_phases: 4
   total_plans: 26
   completed_plans: 26
-  percent: 60
+  percent: 80
 ---
 
 # Project State
 
 ## Project Reference
 
-See: .planning/PROJECT.md (updated 2026-09-27)
+See: .planning/PROJECT.md (updated 2026-10-13)
 
 **Core value:** La CI/CD doit refonctionner et le projet doit redevenir maintenable (build moderne, architecture modulaire, DI décentralisée, couverture de tests solide) sans jamais régresser le comportement existant de l'application pour les utilisateurs.
-**Current focus:** Phase 04 — Hilt to Koin DI Migration
+**Current focus:** Phase 5 — Test Coverage Retrofit
 
 ## Current Position
 
-Phase: 04 (Hilt to Koin DI Migration) — EXECUTING
-Plan: 7 of 7
-Status: Phase complete — ready for verification
-Last activity: 2026-10-05 — Phase 04 execution started
+Phase: 5 — Test Coverage Retrofit
+Plan: Not started
+Status: Ready to plan
+Last activity: 2026-10-13 — Phase 4 complete, transitioned to Phase 5
 
-Progress: [██████░░░░] 60%
+Progress: [████████░░] 80%
 
 ## Performance Metrics
 
 **Velocity:**
 
-- Total plans completed: 19
+- Total plans completed: 26
 - Average duration: N/A
 - Total execution time: 0 hours
 
@@ -49,6 +49,7 @@ Progress: [██████░░░░] 60%
 | 01 | 3 | - | - |
 | 02 | 5 | - | - |
 | 03 | 11 | - | - |
+| 4 | 7 | - | - |
 
 **Recent Trend:**
 
@@ -148,7 +149,9 @@ None yet.
 - Follow-up (not blocking): the firebase-auth-ktx -> firebase-auth:24.2.0 dependency substitution in androidApp/build.gradle.kts is version-coupled to the pinned firebaseBom (34.19.0); re-verify the literal version if firebaseBom is bumped again in a future stage
 - **RESOLVED 2026-09-27:** Phase 03 Plan 09 (final phase plan) Android CI Instrumentation-tests OOM blocker. Root cause: D8's `DexMergingWorkAction` shares the Gradle daemon heap (`org.gradle.jvmargs`, was `-Xmx2048M`) while assembling `feature:settings`/`feature:session-detail`/`feature:speakers` androidTest APKs concurrently — 3 consecutive CI failures (run 36270314662 and reruns) with `java.lang.OutOfMemoryError: Java heap space`. Fix: raised the Gradle daemon heap to `-Xmx4096M` in `gradle.properties` (commit 5cb0389, user-approved deviation, Kotlin daemon heap left unchanged). CI-GREEN-BOTH is now satisfied on HEAD 5cb0389: android.yml run 36328538946 (all 4 jobs green, incl. Instrumentation tests (34)), ios.yml run 36328538965 (green). Task 1 (thin :shared umbrella + drop androidApp->:shared dep + delete buildSrc, commits 1bf81ae/2b03d4f) and Task 2 (all phase gates) are both complete; 03-09-SUMMARY.md written and ARCH-01..04 marked complete per the shared-ID gate.
 - Follow-up (not blocking, from 03-SECURITY.md note 2): `swift-names-gate.sh` and `resources-gate.sh` only run manually from `.planning`; wire them into CI (CICD-V2-01) so Swift identity-swap and resource-drift detection survive past Phase 3.
-- Follow-up (not blocking, from 03-REVIEW.md IN-01): `:core:testing` has no consumers yet — intended per D-19, to be used by Phase 5 test retrofit.
+- **Phase 3 follow-up — RESOLVED in Phase 4:** `:core:testing` now consumed (`testImplementation`) by `:core:ui` and `:androidApp` (fakes + `testDoublesModule`); Phase 5 extends it.
+- Note (not blocking, Phase 4): `com.google.dagger:dagger` remains on the release classpath only as a Firebase Performance internal transitive; the DI gate and `NO-HILT-ON-CLASSPATH` cover Hilt itself.
+- Note (not blocking, Phase 4 UAT): speaker images may fail to load on networks with SSL interception/blocking of raw.githubusercontent.com — environmental, observed on Android and iOS, not a code regression.
 
 ## Phase 02 DCL pilot outcome
 
@@ -213,6 +216,6 @@ Items acknowledged and deferred at milestone close, most recent first:
 
 ## Session Continuity
 
-Last session: 2026-10-11T19:50:15.443Z
-Stopped at: Completed 04-07-PLAN.md
+Last session: 2026-10-13T13:30:00Z
+Stopped at: Phase 4 complete, ready to plan Phase 5
 Resume file: None

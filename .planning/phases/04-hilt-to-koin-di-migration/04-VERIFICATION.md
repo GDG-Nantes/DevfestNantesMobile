@@ -1,9 +1,10 @@
 ---
 phase: 04-hilt-to-koin-di-migration
 verified: 2026-10-11T20:10:00Z
-status: human_needed
+status: passed
 score: 5/5 must-haves verified
 covered_files:
+
   - .github/workflows/android.yml
   - .planning/REQUIREMENTS.md
   - .planning/phases/04-hilt-to-koin-di-migration/04-01-PLAN.md
@@ -24,10 +25,12 @@ covered_files:
   - androidApp/src/main/java/com/gdgnantes/devfest/androidapp/di/AppModule.kt
   - scripts/di-gate.sh
   - shared/src/commonMain/kotlin/com/gdgnantes/devfest/shared/di/InitKoin.kt
+
 covered_digest: "v1:sha256:d96a709093ec910d61fed6a56972719aed27ab2e375447c2feb18b8db8c44bbe"
 behavior_unverified: 0
 overrides_applied: 0
 human_verification:
+
   - test: "Full Android app walkthrough on a device/emulator (debug and release APK): all tabs, agenda filters, bookmarks, session detail, speaker detail, settings consent toggle, fresh-install data-collection agreement dialog"
     expected: "Every screen renders real data, ViewModels resolve, consent toggle persists, fresh install shows the agreement dialog, no crash at launch"
     why_human: "KoinStartupTest runs with a plain Application and fakes the store, bookmarks, analytics, performance and consent bindings, so the real production start-up (DevFestNantesApplication + initKoin with allowOverride(false) + real Firebase/GraphQL/SharedPreferences definitions) is never executed by any automated test"

@@ -27,10 +27,10 @@ La CI/CD doit refonctionner et le projet doit redevenir maintenable (build moder
 - ✓ Build & dépendances : mise à jour complète des dépendances (Kotlin 2.4.20, AGP 9.4.0, Gradle 9.7.1, Compose BOM 2026.09.00, Apollo 5.2.0, Firebase BOM 34.19.0…) — Phase 2
 - ✓ Build & dépendances : Gradle Declarative DSL en migration partielle documentée (`settings.gradle.dcl` ; modules restés en `.kts` faute de support AGP/KMP) — Phase 2
 - ✓ Architecture : découpage multi-modules façon Now in Android adapté KMP — `build-logic` (6 convention plugins, `buildSrc` supprimé), `:core:{model,network,analytics,data,testing,ui}`, `:feature:{venue,about,settings,speakers,agenda,session-detail}` (entrées `*Route` par callbacks), `:shared` réduit à un framework iOS parapluie unique (bookmarks sans écran, dans `core:data`/`core:ui`) — Phase 3
+- ✓ DI : migration complète de Hilt vers Koin 4.2.2 — un module Koin par module Gradle, composé par `initKoin()` dans `:shared` (`allowOverride(false)`), `IosDependencies` côté iOS sans nom Koin dans `shared.h`, graphe vérifié en CI (`verify()` + tests de démarrage JVM/iOS/Robolectric), `scripts/di-gate.sh` strict contre Hilt et les appels service-locator — Phase 4
 
 ### Active
 
-- [ ] DI : migration complète de Hilt vers Koin (fonctionne nativement en KMP, Android et iOS), avec un module Koin déclaré par module Gradle (DI décentralisée)
 - [ ] Qualité : amélioration significative de la couverture de tests unitaires et UI, priorité sur la logique métier (ViewModels, Store/repository, mappers GraphQL→model) — pas d'objectif % strict imposé
 
 ### Out of Scope
@@ -64,7 +64,7 @@ La CI/CD doit refonctionner et le projet doit redevenir maintenable (build moder
 | Ordre des chantiers : CI iOS d'abord, puis deps/Gradle DSL, puis multi-module, puis DI, puis tests | Le CI cassé est bloquant et un quick win ; les fondations de build doivent être stables avant de refactorer l'architecture | ✓ Phase 1 shipped — CI iOS réparé + cache Gradle read-only en PR sur les deux workflows |
 | Cache Gradle : expression `cache-read-only` dupliquée à chaque site d'appel plutôt que déplacée dans l'input par défaut de l'action composite `android-setup` | Les métadonnées d'une composite action sont parsées statiquement ; une expression dans l'input default serait transmise à `setup-gradle` en texte brut non interpolé et coercée en chaîne toujours vraie | Phase 1 |
 | `cancel-in-progress: true` conservé tel quel sur `ios.yml`/`android.yml` (pas de `cancel-in-progress` conditionnel par event, pas de `queue`) | Comportement de coût voulu (D-07), auto-cicatrisant au push suivant ; `queue` + `cancel-in-progress` est une erreur de validation GitHub bloquante | Phase 1 — accepté comme risque documenté (T-01-05) |
-| DI : migration complète Hilt → Koin | Hilt ne fonctionne pas dans le module `shared` KMP ; Koin est natif KMP et permet une vraie DI décentralisée par module | — Pending |
+| DI : migration complète Hilt → Koin | Hilt ne fonctionne pas dans le module `shared` KMP ; Koin est natif KMP et permet une vraie DI décentralisée par module | ✓ Phase 4 shipped — aucun artefact Hilt sur le classpath, DI-01..06 complets, UAT Android (debug + release R8) et iOS approuvée, 27/27 menaces sécurité closes |
 | Découpage multi-module : feature + core (façon Now in Android complet) | Vision NIA complète demandée explicitement par l'utilisateur, adaptée au contexte KMP (Android + iOS) | ✓ Phase 3 shipped — 12 modules + `build-logic`, graphe strictement core ← feature ← app, CI verte, 5 smoke tests iOS/Android approuvés, 34/34 menaces sécurité closes |
 | Phase 3 : `:shared` conserve un unique fichier interne `SharedFrameworkPlaceholder.kt` (amendement D-10) | Kotlin/Native saute compile+link (NO-SOURCE) sur un source set vide → aucun `shared.framework` produit | Phase 3 — approuvé par l'utilisateur au checkpoint 03-03 ; ne jamais supprimer |
 | Phase 3 : types Apollo renommés via `@targetName` (GraphQLVenue/Session/Speaker/Room/Partner), noms Swift des 5 types domaine changés une fois (amendement D-11) | Supprime définitivement la collision de noms Swift Kotlin/Native qui a stoppé 03-01 ; `swift-names-gate.sh` renforcé (member sets + collisions) | Phase 3 (03-10/03-11) |
@@ -73,6 +73,8 @@ La CI/CD doit refonctionner et le projet doit redevenir maintenable (build moder
 | Couverture de tests : pas d'objectif % strict, priorité à la logique métier | L'utilisateur préfère une couverture qualitative (ViewModels, Store, mappers) à un chiffre arbitraire | — Pending |
 | Aucune nouvelle fonctionnalité utilisateur pendant ce chantier | Chantier purement technique — réduire le risque de régression en isolant modernisation et évolution fonctionnelle | — Pending |
 | Pas de deadline stricte liée à la prochaine édition | Chantier de fond mené phase par phase sans pression de date | — Pending |
+| Phase 4 : ordre des `ApplicationInitializer` explicite (`single(named("applicationInitializers"))`), asserté par `KoinStartupTest` | Le consentement de collecte doit être appliqué avant que Performance Monitoring soit forcé (T-04-19) | Phase 4 |
+| Phase 4 : Robolectric 4.17 en `testImplementation` pour tester le démarrage réel du graphe Koin avec Firebase | Exerce les définitions Firebase de production sans les modifier ; base réutilisable pour la Phase 5 | Phase 4 — choisi par l'utilisateur |
 | Phase 2 : montée de version en groupes séquentiels (un commit par groupe), avec un CI vert entre chaque étape | Des montées majeures cumulées seraient impossibles à diagnostiquer en cas d'échec ; chaque groupe obtient son propre commit revertible et son propre signal vert avant d'attaquer le suivant | ✓ Phase 2 shipped — Kotlin 2.4.20, AGP 9.4.0 + plugin `com.android.kotlin.multiplatform.library`, Gradle 9.7.1, Compose BOM 2026.09.00, Apollo 5.2.0 (cache migré vers `com.apollographql.cache`), Firebase BOM 34.19.0/Coroutines 1.11.0/kotlinx-serialization 1.11.0/kotlinx-datetime 0.8.0 ; pilote Gradle Declarative DSL réussi sur `settings.gradle.dcl` (androidApp/shared restent en Kotlin DSL, support AGP/KMP DCL non mûr pour ces modules) — détail complet dans `.planning/STATE.md` § Phase 02 version deviations / DCL pilot outcome |
 
 ## Evolution
@@ -93,4 +95,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-09-27 after Phase 3*
+*Last updated: 2026-10-13 after Phase 4*

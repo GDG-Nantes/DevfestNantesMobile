@@ -16,7 +16,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 1: CI Pipeline Fixed & Optimized** - iOS CI is fixed at the root cause (dynamic simulator resolution) and both Android/iOS jobs run cached and split in a matrix (completed 2026-09-17)
 - [x] **Phase 2: Dependency & Build Tooling Upgrade** - The project builds and runs on Kotlin 2.4.0, AGP 9.2.0, Gradle 9.7.1 and updated libraries, staged bump by bump with zero behavior change (completed 2026-09-19)
 - [x] **Phase 3: Multi-Module Architecture Extraction** - The codebase is split into a `core-*`/`feature-*` module graph with unidirectional dependencies, iOS still consuming one umbrella framework (completed 2026-09-27)
-- [ ] **Phase 4: Hilt to Koin DI Migration** - Dependency injection is fully decentralized via Koin, one module per Gradle module, with a CI-verified DI graph
+- [x] **Phase 4: Hilt to Koin DI Migration** - Dependency injection is fully decentralized via Koin, one module per Gradle module, with a CI-verified DI graph (completed 2026-10-13)
 - [ ] **Phase 5: Test Coverage Retrofit** - Business-logic test coverage (ViewModels, Store/repository, GraphQL mappers) is measurably improved on a hardened fixture foundation
 
 ## Phase Details
@@ -151,7 +151,7 @@ Plans (strictly sequential — every step edits `settings.gradle.dcl` and the ap
   4. ViewModels and Stores receive all dependencies through constructor injection — no `get()` calls appear outside the DI wiring layer
   5. A `core-testing` module centralizes shared test fakes/doubles (in the spirit of `DevFestNantesStoreMocked`) for use across feature modules, and a `checkModules()` Koin test runs in CI to verify the complete DI graph
 
-**Plans:** 7/7 plans executed
+**Plans:** 7/7 plans complete
 
 Plans (strictly sequential: one phase branch/PR, one commit per module, CI green per pushed plan, D-05):
 
@@ -207,5 +207,5 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 | 1. CI Pipeline Fixed & Optimized | 3/3 | Complete    | 2026-09-17 |
 | 2. Dependency & Build Tooling Upgrade | 5/5 | Complete    | 2026-09-19 |
 | 3. Multi-Module Architecture Extraction | 11/11 | Complete    | 2026-09-27 |
-| 4. Hilt to Koin DI Migration | 7/7 | In Progress|  |
+| 4. Hilt to Koin DI Migration | 7/7 | Complete    | 2026-10-13 |
 | 5. Test Coverage Retrofit | 0/TBD | Not started | - |
