@@ -6,6 +6,7 @@ import android.content.Context
 import com.gdgnantes.devfest.core.analytics.FirebaseAnalyticsService
 import com.gdgnantes.devfest.core.analytics.di.analyticsModule
 import com.gdgnantes.devfest.feature.agenda.services.SessionFiltersService
+import com.gdgnantes.devfest.feature.sessiondetail.OpenFeedbackConfig
 import com.gdgnantes.devfest.feature.settings.services.DataCollectionSettingsService
 import com.gdgnantes.devfest.shared.di.sharedModules
 import com.google.firebase.analytics.FirebaseAnalytics
@@ -35,19 +36,23 @@ class AndroidGraphVerifyTest {
 
     // Firebase SDK handles are built by the SDK itself (Firebase.analytics, getInstance()), never by
     // Koin, so their SDK-internal constructor parameters have no definition. They are derived from the
-    // SDK classes instead of being named, because the internal types are obfuscated and change per release.
+    // SDK classes instead of being named, because some of the internal types are obfuscated (for example
+    // FirebaseAnalytics takes a `zz*` class) and cannot be pinned by name. Only the three handle classes
+    // contribute, so a BoM bump can change this set only through those constructors.
     private val firebaseSdkTypes =
         listOf(FirebaseAnalytics::class, FirebaseCrashlytics::class, FirebasePerformance::class)
             .flatMap { sdkType -> sdkType.java.declaredConstructors.flatMap { it.parameterTypes.toList() } }
             .map { it.kotlin }
             .distinct()
 
+    // appModule is verified on its own below with its own narrow whitelist, so String, Boolean, Activity
+    // and CoroutineDispatcher are not blanket-allowed here: a ViewModel or service that starts requiring
+    // one of them without a binding still fails this test. OpenFeedbackConfig is the one binding that
+    // appModule supplies to a feature module (:feature:session-detail).
     @Test
     fun full_android_graph_is_complete() {
-        module { includes(sharedModules + androidModules) }
-            .verify(
-                extraTypes = androidRuntimeTypes + firebaseSdkTypes + configValueTypes + appShellFrameworkTypes
-            )
+        module { includes(sharedModules + (androidModules - appModule)) }
+            .verify(extraTypes = androidRuntimeTypes + firebaseSdkTypes + OpenFeedbackConfig::class)
     }
 
     // appModule consumes bindings that other modules declare; they are listed as upstream types so the
