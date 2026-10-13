@@ -52,12 +52,16 @@ import kotlin.test.assertNotNull
 
 /**
  * D-12 layer 2: starts Koin through the production `initKoin` path under a real (Robolectric)
- * Application and resolves every ViewModel and entry-point dependency, so a missing binding, a wrong
- * parameter or a definition that fails at construction time fails here instead of on a device.
+ * Application and resolves every ViewModel and entry-point dependency, so a missing binding or a
+ * wrong parameter fails here instead of on a device.
  *
- * Firebase strategy (04-06 Task 2 decision: robolectric): the production Firebase definitions run
- * unchanged against a FirebaseApp initialised with dummy options. Only the consent service and the
- * Timber tree are replaced by test-local fakes, on top of the `:core:testing` doubles.
+ * Overriding is re-enabled and doubles are layered on top, so this test does NOT exercise the
+ * production definitions the doubles replace. The `:core:testing` doubles replace
+ * `DevFestNantesStore`, `BookmarksStore`, `AnalyticsService` and `PerformanceMonitoring`; test-local
+ * fakes replace `DataCollectionSettingsService` and `Timber.Tree`. Only `FirebaseRemoteConfig` (against
+ * a FirebaseApp initialised with dummy options) and `SessionFiltersServiceImpl` run unfaked here. The
+ * unmodified production graph, including those real definitions, is covered by
+ * [ProductionGraphStartupTest].
  */
 @OptIn(ExperimentalCoroutinesApi::class)
 @RunWith(RobolectricTestRunner::class)
