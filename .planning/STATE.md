@@ -3,17 +3,17 @@ gsd_state_version: "1.0"
 current_phase: 05
 current_phase_name: Test Coverage Retrofit
 status: executing
-stopped_at: Phase 5 context gathered
-last_updated: "2026-10-15T19:29:51.712Z"
+stopped_at: Completed 05-01-PLAN.md
+last_updated: "2026-10-15T19:49:55.143Z"
 last_activity: 2026-10-15
 last_activity_desc: Phase 05 execution started
-state_head: 7dfa30271d6cb91a38c98bf56167861da017ccff
+state_head: 8594ff056f39c762ebdb31742c2b27de21914206
 progress:
   total_phases: 5
   completed_phases: 4
   total_plans: 36
-  completed_plans: 26
-  percent: 72
+  completed_plans: 27
+  percent: 75
 ---
 
 # Project State
@@ -28,11 +28,11 @@ See: .planning/PROJECT.md (updated 2026-10-13)
 ## Current Position
 
 Phase: 05 (Test Coverage Retrofit) — EXECUTING
-Plan: 1 of 10
-Status: Executing Phase 05
+Plan: 2 of 10
+Status: Ready to execute
 Last activity: 2026-10-15 — Phase 05 execution started
 
-Progress: [███████░░░] 72%
+Progress: [████████░░] 75%
 
 ## Performance Metrics
 
@@ -87,6 +87,7 @@ Progress: [███████░░░] 72%
 | Phase 04 P05 | 23 min | 2 tasks | 18 files |
 | Phase 04 P06 | 60 min | 3 tasks | 19 files |
 | Phase 04 P07 | 23 min | 2 tasks | 22 files |
+| Phase 05 P01 | 20 min | 3 tasks | 11 files |
 
 ## Accumulated Context
 
@@ -134,6 +135,7 @@ Recent decisions affecting current work:
 - [Phase 04]: 04-06: application initializers are an explicit single(named("applicationInitializers")) list; order asserted by KoinStartupTest — Consent must be applied before performance collection is forced on (DI-02, T-04-19)
 - [Phase 04]: 04-07: catalog activity pinned to 1.12.4 (resolved version on releaseRuntimeClasspath, unchanged by Hilt removal); KSP and firebase-auth-ktx substitution kept — Pin states what ships; KSP still needed by kmp-native-coroutines
 - [Phase 04]: 04-07: no Hilt artifact on classpath; com.google.dagger:dagger:2.57.2 remains as firebase-perf internal transitive — Cannot be removed without dropping Firebase Performance
+- [Phase 05]: 05-01: Kover 0.9.11 report-only via build-logic conventions; live GraphQL test is a manual-only canary (-PliveNetworkTests); baseline 15.96% line coverage measured with the canary excluded — Network-fed run showed 20.64%; the offline baseline is deterministic so the 05-10 compare is meaningful
 
 ### Pending Todos
 
@@ -216,6 +218,6 @@ Items acknowledged and deferred at milestone close, most recent first:
 
 ## Session Continuity
 
-Last session: 2026-10-13T21:03:18.125Z
-Stopped at: Phase 5 context gathered
-Resume file: .planning/phases/05-test-coverage-retrofit/05-CONTEXT.md
+Last session: 2026-10-15T19:49:55.106Z
+Stopped at: Completed 05-01-PLAN.md
+Resume file: None
