@@ -24,12 +24,12 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.core.os.ConfigurationCompat
 import com.gdgnantes.devfest.core.model.Session
+import com.gdgnantes.devfest.core.model.utils.toInstantOrNull
 import com.gdgnantes.devfest.core.ui.utils.getDateFromIso8601
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.withContext
 import java.text.DateFormat
-import java.util.Date
 import java.util.TimeZone
+import kotlin.time.Clock
+import kotlin.time.Instant
 
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
@@ -43,8 +43,9 @@ fun AgendaColumn(
 
     LaunchedEffect(key1 = sessionsPerStartTime) {
         if (!hasAutoScrolled.value) {
-            val index = getCurrentStartTimeIndex(sessionsGroupedByStartTime)
-            listState.scrollToItem(index)
+            listState.scrollToItem(
+                currentStartTimeIndex(sessionsGroupedByStartTime, Clock.System.now())
+            )
             hasAutoScrolled.value = true
         }
     }
@@ -126,21 +127,25 @@ private fun groupSessionsByStartTime(sessions: List<Session>): Map<String, List<
         }
 }
 
-private suspend fun getCurrentStartTimeIndex(sessionsGroupedByStartTime: Map<String, List<Session>>): Int {
+/**
+ * Index of the first item (header or session row) of the first group that has not ended at [now].
+ * Each ended group adds its session count plus one for its header. Groups whose end date cannot be
+ * parsed are skipped.
+ */
+internal fun currentStartTimeIndex(
+    sessionsGroupedByStartTime: Map<String, List<Session>>,
+    now: Instant
+): Int {
     var index = 0
-    return withContext(Dispatchers.IO) {
-        val now = Date()
-        sessionsGroupedByStartTime.forEach { entry ->
-            entry.value.firstOrNull()?.scheduleSlot?.endDate?.let {
-                getDateFromIso8601(it)?.let { sessionEndDate ->
-                    if (now > sessionEndDate) {
-                        index += entry.value.size + 1 // Adds count of sessions per time + 1 for the header.
-                    } else {
-                        return@withContext index
-                    }
-                }
+    sessionsGroupedByStartTime.forEach { entry ->
+        val end = entry.value.firstOrNull()?.scheduleSlot?.endDate?.toInstantOrNull()
+        if (end != null) {
+            if (now > end) {
+                index += entry.value.size + 1 // Adds count of sessions per time + 1 for the header.
+            } else {
+                return index
             }
         }
-        index
     }
+    return index
 }

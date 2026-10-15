@@ -3,6 +3,7 @@ package com.gdgnantes.devfest.core.data.graphql
 import com.apollographql.apollo.ApolloClient
 import com.apollographql.apollo.api.http.HttpHeader
 import com.gdgnantes.devfest.core.model.ContentLanguage
+import com.gdgnantes.devfest.core.model.utils.toInstantOrNull
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import kotlin.test.BeforeTest
@@ -97,16 +98,12 @@ class GraphQLStoreLiveNetworkTest {
     }
 
     @Test
-    fun scheduleSlot_dates_are_parseable_by_android_java() = runTest {
+    fun scheduleSlot_dates_are_parseable_by_the_shared_parser() = runTest {
         val sessions = store.sessions.first()
-        val format = java.text.SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssXXX")
         for (session in sessions) {
-            try {
-                format.parse(session.scheduleSlot.startDate)
-                format.parse(session.scheduleSlot.endDate)
-            } catch (e: Exception) {
-                throw AssertionError("Unparseable date: ${'$'}{session.scheduleSlot.startDate} or ${'$'}{session.scheduleSlot.endDate}", e)
-            }
+            val slot = session.scheduleSlot
+            assertNotNull(slot.startDate.toInstantOrNull(), "Unparseable start date: ${slot.startDate}")
+            assertNotNull(slot.endDate.toInstantOrNull(), "Unparseable end date: ${slot.endDate}")
         }
     }
 }
