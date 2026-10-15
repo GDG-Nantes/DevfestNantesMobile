@@ -42,7 +42,7 @@ fun FallbackFeedbackForm(
     }
 }
 
-private fun getFallbackUrlForSession(session: Session): String? {
+internal fun getFallbackUrlForSession(session: Session): String? {
     val openFeedbackFormId = session.openFeedbackFormId ?: return null
     return getDateFromIso8601(session.scheduleSlot.startDate)?.run {
         val pattern = "yyyy-MM-dd"

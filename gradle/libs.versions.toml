@@ -117,7 +117,7 @@ accompanist = ["accompanist-pager", "accompanist-pager-indicators", "accompanist
 android-test = ["androidx-compose-ui-test-junit4", "androidx-test-espresso", "androidx-test-espresso-contrib", "androidx-test-espresso-intents", "androidx-test-ext-junit", "androidx-test-rules", "androidx-test-truth"]
 appollo = ["appollo-runtime", "appollo-normalized-cache", "appollo-normalized-cache-sqlite"]
 debug = ["androidx-compose-ui-tooling", "androidx-compose-ui-test-manifest"]
-test = ["junit", "androidx-compose-ui-test-junit4", "kotlinx-coroutines-test"]
+test = ["junit", "androidx-compose-ui-test-junit4", "kotlinx-coroutines-test", "robolectric", "androidx-test-core"]
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
