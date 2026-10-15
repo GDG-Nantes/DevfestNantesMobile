@@ -12,8 +12,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.gdgnantes.devfest.core.model.Session
 import com.gdgnantes.devfest.core.model.WebLinks
-import com.gdgnantes.devfest.core.ui.utils.getDateFromIso8601
-import java.text.SimpleDateFormat
+import com.gdgnantes.devfest.core.model.utils.toInstantOrNull
+import com.gdgnantes.devfest.core.model.utils.toLocalDate
 
 @Composable
 fun FallbackFeedbackForm(
@@ -44,9 +44,6 @@ fun FallbackFeedbackForm(
 
 internal fun getFallbackUrlForSession(session: Session): String? {
     val openFeedbackFormId = session.openFeedbackFormId ?: return null
-    return getDateFromIso8601(session.scheduleSlot.startDate)?.run {
-        val pattern = "yyyy-MM-dd"
-        val simpleDateFormat = SimpleDateFormat(pattern)
-        simpleDateFormat.format(this)
-    }?.run { "${WebLinks.OPENFEEDBACK_BASE_URL.url}/$this/$openFeedbackFormId" }
+    return session.scheduleSlot.startDate.toInstantOrNull()?.toLocalDate()
+        ?.let { "${WebLinks.OPENFEEDBACK_BASE_URL.url}/$it/$openFeedbackFormId" }
 }

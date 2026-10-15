@@ -12,6 +12,7 @@ import java.util.Locale
 import java.util.TimeZone
 import kotlin.test.assertEquals
 import kotlin.test.assertNull
+import kotlin.test.assertTrue
 
 /**
  * D-07 characterization tests for [getFallbackUrlForSession].
@@ -90,6 +91,18 @@ class FallbackFeedbackUrlTest {
             "https://openfeedback.io/devfestnantes2025//2025-10-16/form-1",
             getFallbackUrlForSession(lateUtc)
         )
+    }
+
+    /** D-05: the one deliberate behavior change. The date part is always ASCII `yyyy-MM-dd`. */
+    @Test
+    @Config(qualifiers = "ar-rEG")
+    fun fallback_url_is_ascii_in_a_non_latin_digit_locale() {
+        Locale.setDefault(Locale.forLanguageTag("ar-EG"))
+
+        val url = getFallbackUrlForSession(morning)
+
+        assertEquals("https://openfeedback.io/devfestnantes2025//2025-10-16/form-1", url)
+        assertTrue(url!!.all { it.code < 128 }, "URL must be ASCII but was: $url")
     }
 
     @Test
