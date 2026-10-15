@@ -17,6 +17,7 @@ class AndroidApplicationConventionPlugin : Plugin<Project> {
             pluginManager.apply("com.android.application")
             pluginManager.apply("org.jetbrains.kotlin.plugin.compose")
             pluginManager.apply("devfest.detekt")
+            pluginManager.apply("org.jetbrains.kotlinx.kover")
 
             configureAndroidDetektJvmTarget()
 

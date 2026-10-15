@@ -30,6 +30,7 @@ class KmpLibraryConventionPlugin : Plugin<Project> {
             pluginManager.apply("com.android.kotlin.multiplatform.library")
             pluginManager.apply("org.jetbrains.kotlin.plugin.serialization")
             pluginManager.apply("devfest.detekt")
+            pluginManager.apply("org.jetbrains.kotlinx.kover")
 
             configureKmpDetektSources()
 
