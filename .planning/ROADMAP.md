@@ -195,7 +195,49 @@ Plans (strictly sequential: one phase branch/PR, one commit per module, CI green
   3. ViewModel test coverage is extended across feature modules, made practical by constructor injection via Koin
   4. Compose smoke tests on critical Android screens are maintained or extended per feature module (`androidTest`), built on the shared `core-testing` fakes
 
-**Plans**: TBD
+**Plans:** 10 plans
+
+Plans (strictly sequential: one phase branch/draft PR, both workflows use `cancel-in-progress` per ref, CI green per pushed plan):
+
+**Wave 1**
+
+- [ ] 05-01-PLAN.md — Tracer: Kover through the conventions + root report; live canary manual-only; baseline captured on pre-phase code; iOS CI runs core commonTest; draft PR (D-15, D-18, D-22)
+
+**Wave 2** *(blocked on Wave 1)*
+
+- [ ] 05-02-PLAN.md — Date fragility: characterization first, shared `toInstantOrNull` parser in `:core:model`, no production `SimpleDateFormat`, locale-proof OpenFeedback URL, pure agenda scroll index (D-05..D-07, D-09)
+
+**Wave 3** *(blocked on Wave 2)*
+
+- [ ] 05-03-PLAN.md — Fixed fixture dataset (`SessionFixtures`/`SpeakerFixtures`/`PartnerFixtures`) replaces random stubs; mock store serves it (D-01..D-04)
+
+**Wave 4** *(blocked on Wave 3)*
+
+- [ ] 05-04-PLAN.md — Tracer: GraphQLStore on Apollo MockServer (JVM + Android host + iOS), recorded responses, mapper tests with data builders, CacheAndNetwork pins (D-13, D-14)
+
+**Wave 5** *(blocked on Wave 4)*
+
+- [ ] 05-05-PLAN.md — Two-implementation store contract; Robolectric persistence tests for bookmarks, filters, consent (D-16, D-17)
+
+**Wave 6** *(blocked on Wave 5)*
+
+- [ ] 05-06-PLAN.md — Tracer: ViewModel harness (Turbine, `MainDispatcherRule`, `FakeDevFestNantesStore`), test doubles adopt it, AgendaViewModel dispatcher injected via Koin (D-08, D-09, D-11)
+
+**Wave 7** *(blocked on Wave 6)*
+
+- [ ] 05-07-PLAN.md — Agenda filter matrix as specifications, Home and Bookmarks ViewModel tests (D-10, D-12)
+
+**Wave 8** *(blocked on Wave 7)*
+
+- [ ] 05-08-PLAN.md — Session, Speaker, Partners, DataCollection (JVM) and Venue, FeedbackForm (Robolectric) ViewModel tests: all 10 covered (D-10, D-12)
+
+**Wave 9** *(blocked on Wave 8)*
+
+- [ ] 05-09-PLAN.md — Tracer: feature androidTest wiring + Speakers smoke test; Venue, About, Settings smoke tests (D-19..D-21)
+
+**Wave 10** *(blocked on Wave 9)*
+
+- [ ] 05-10-PLAN.md — Agenda and Session detail smoke tests; final Kover report vs baseline; full suite and CI green (D-18..D-21)
 
 ## Progress
 
@@ -208,4 +250,4 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 | 2. Dependency & Build Tooling Upgrade | 5/5 | Complete    | 2026-09-19 |
 | 3. Multi-Module Architecture Extraction | 11/11 | Complete    | 2026-09-27 |
 | 4. Hilt to Koin DI Migration | 7/7 | Complete    | 2026-10-13 |
-| 5. Test Coverage Retrofit | 0/TBD | Not started | - |
+| 5. Test Coverage Retrofit | 0/10 | Not started | - |
