@@ -21,3 +21,13 @@ kotlin {
         }
     }
 }
+
+// D-15: the live-network canary (GraphQLStoreLiveNetworkTest) only runs on demand with
+// -PliveNetworkTests, so the default jvmTest run is offline and deterministic.
+tasks.named<Test>("jvmTest") {
+    if (!providers.gradleProperty("liveNetworkTests").isPresent) {
+        filter {
+            excludeTestsMatching("*LiveNetwork*")
+        }
+    }
+}
