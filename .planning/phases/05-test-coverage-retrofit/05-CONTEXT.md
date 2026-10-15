@@ -51,6 +51,16 @@ Technical work only: the user-visible behavior must not change. The one delibera
 ### iOS
 - **D-22:** **No Swift/XCTest work.** iOS coverage comes from `commonTest` running on `iosSimulatorArm64`. **Required CI adjustment:** iOS CI currently runs only `:shared:iosSimulatorArm64Test` (`.github/workflows/ios.yml:131`), so the new `commonTest` suites in `:core:model`/`:core:data` (and `:core:testing`) must be added to the iOS CI test step, or the step widened, so they actually run on iOS.
 
+### Decisions added during planning
+- **D-23:** **`FeedbackFormViewModel` gets a small adapter seam over `FirebaseRemoteConfig`.** The user confirmed this on 2026-10-15, in answer to RESEARCH Open Question 1.
+  - A tiny production interface in `:feature:session-detail` wraps `FirebaseRemoteConfig`. It covers reading a boolean flag by key and fetch-and-activate with a completion callback.
+  - A Firebase-backed implementation is bound to it in `sessionDetailModule` (Koin), and `FeedbackFormViewModel` depends on the interface instead of `FirebaseRemoteConfig`.
+  - `FeedbackFormViewModelTest` builds the ViewModel directly with a fake (D-12): no real `FirebaseRemoteConfig`, no `FirebaseApp`, no Robolectric for that test.
+  - Production behavior must not change. The same remote keys, the same fetch-and-activate flow and callback thread, and the same per-ViewModel remote-config factory with its settings side effect all stay. This follows Phase 4's `PerformanceMonitoring` / `FirebasePerformanceMonitoring` precedent.
+  - The Koin `verify()` tests and the Robolectric startup tests must stay green.
+  - The planner names it `FeedbackFlags` / `FirebaseFeedbackFlags` (RESEARCH Pitfall 7).
+  - This is the only production refactor added beyond D-05 and D-09.
+
 ### Claude's Discretion
 - Exact fixture content (names, counts) within D-03's coverage goals; the naming of fixture constants.
 - Turbine, Kover, Apollo MockServer and kotlinx-datetime versions (re-verify the newest stable at plan time, per the Phase 2 newest-verified policy) and their placement in the catalog and convention plugins.

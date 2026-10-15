@@ -229,7 +229,7 @@ Plans (strictly sequential: one phase branch/draft PR, both workflows use `cance
 
 **Wave 8** *(blocked on Wave 7)*
 
-- [ ] 05-08-PLAN.md — Session, Speaker, Partners, DataCollection (JVM) and Venue, FeedbackForm (Robolectric) ViewModel tests: all 10 covered (D-10, D-12)
+- [ ] 05-08-PLAN.md — Session, Speaker, Partners, DataCollection (JVM); user-confirmed `FeedbackFlags` seam with a FeedbackForm test on a fake (JVM); Venue (Robolectric) ViewModel tests: all 10 covered (D-10, D-12, D-23)
 
 **Wave 9** *(blocked on Wave 8)*
 
