@@ -8,9 +8,6 @@ import com.gdgnantes.devfest.core.model.Session
 import com.gdgnantes.devfest.core.model.Speaker
 import com.gdgnantes.devfest.core.model.Venue
 
-const val MAX_PARTNERS = 10
-const val MAX_SESSIONS = 100
-
 /**
  * Deterministic entry points for Compose previews. The data lives in [SessionFixtures],
  * [SpeakerFixtures] and [PartnerFixtures].
