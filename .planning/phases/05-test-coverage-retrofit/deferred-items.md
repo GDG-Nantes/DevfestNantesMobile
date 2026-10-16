@@ -9,3 +9,9 @@ Production behavior the Phase 5 tests expose. Each entry is characterized by a t
 3. **`RoomSortIndex` does not know the live room ids `Tour Bretagne` and `Unconf`.** It lists `Tour de Bretagne`, so both rooms get `Int.MAX_VALUE` and sort last in the rooms list. Pinned by `GraphQLStoreMockServerTest.rooms_flow_maps_and_sorts_recorded_rooms` and `MapperTest.recorded_rooms_get_their_sort_index`.
 4. **`SocialItem.Builder` produces double-slash links for bare handles** (`https://github.com//alice-moreau`, found in 05-03): `baseUrl` already ends with `/` and the builder adds another. Recorded socials carry full URLs, so the recorded tests do not hit it.
 5. **A social whose `name` is unknown and whose `url` is empty (recorded `bluesky` with `url: ""`) becomes a `WEBSITE` item with an empty link**, so the UI may render an empty link. Pinned by `MapperTest.recorded_unknown_social_name_and_empty_url_map_to_a_website_item`.
+
+## From 05-05 (store contract and persistence tests)
+
+6. **`BookmarksStoreImpl.save` and `DataCollectionSettingsServiceImpl.save` call `apply()` inside `edit { }`**, which already applies on exit, so every save applies twice. Harmless today; the persisted result is pinned by `BookmarksStoreImplTest` and `DataCollectionSettingsServiceImplTest`.
+7. **`SessionFilter` is a plain class (no `equals`)**, so `SessionFiltersService.filters` compares by identity and `setFilters(sameContent)` always looks like a change to a `StateFlow`. `SessionFiltersServiceImplTest` compares `(type, value)` pairs instead.
+8. **`MockServer(handler)` is deprecated in apollo-mockserver 0.3.1** (DEPRECATION_ERROR under Kotlin 2.4); tests use `MockServer.Builder().handler(...).build()`.
