@@ -1,18 +1,14 @@
 ---
-status: testing
+status: complete
 phase: 05-test-coverage-retrofit
 source: [05-VERIFICATION.md]
 started: 2026-10-16T11:51:07Z
-updated: 2026-10-16T15:01:41.128Z
+updated: 2026-10-16T19:30:10.433Z
 ---
 
 ## Current Test
 
-number: 3
-name: Feedback area on session detail with real Remote Config (re-check after G-05-3 fix, 05-11)
-expected: |
-  With openfeedback_enabled on, the feedback area renders the OpenFeedback form with its existing comments and their dates; posting shows the new comment; the app never crashes and NoClassDefFoundError never appears in logcat. With the flag off, the feedback area is hidden exactly as before the FeedbackFlags seam (05-08).
-awaiting: user response
+[testing complete]
 
 ## Tests
 
@@ -27,7 +23,7 @@ note: "Shifting the device date/time breaks SSL validation, so data may not load
 
 ### 3. Feedback area on session detail with real Remote Config
 expected: After answering the data-sharing consent dialog, open a session detail page. The feedback area shows or hides exactly as before the FeedbackFlags seam, driven by the real Remote Config values (05-08).
-result: [pending]
+result: pass
 re-check: "05-11 fixed G-05-3 in code (kotlinx-datetime 0.8.0-0.6.x-compat, OpenFeedbackDatetimeLinkageTest, R8 suppressions removed; CI green on 62a8857). Re-run on a device: install the dev debug build with `android run`; set Remote Config openfeedback_enabled=true (restart if needed, 300 s fetch interval); answer the consent dialog; open a session detail with comments and scroll to the feedback area; post a short comment on a session where a test comment is acceptable; open two or three more sessions; set the flag back to false, restart, reopen a session detail."
 previous_result: issue
 previous_report: "crashed. I changed the flag on Firebase Remote Config and got the error FATAL EXCEPTION: main Process: com.gdgnantes.devfest.mobile.androidapp.dev, PID: 26012 java.lang.NoClassDefFoundError: Failed resolution of: Lkotlinx/datetime/Instant;"
@@ -36,9 +32,9 @@ previous_severity: blocker
 ## Summary
 
 total: 3
-passed: 2
+passed: 3
 issues: 0
-pending: 1
+pending: 0
 skipped: 0
 blocked: 0
 
@@ -46,7 +42,9 @@ blocked: 0
 
 - gap_id: G-05-3
   truth: "After the consent dialog, the session detail feedback area shows or hides exactly as before the FeedbackFlags seam, driven by real Remote Config values"
-  status: fix_applied_awaiting_recheck
+  status: resolved
+  resolved_by: 05-11-PLAN.md
+  resolved_at: 2026-10-16
   fixed_by: 05-11 (commits 7ad6a62, 2a8c617, a13a383, f2b81b5, 62a8857)
   reason: "User reported: crashed. I changed the flag on Firebase Remote Config and got the error FATAL EXCEPTION: main Process: com.gdgnantes.devfest.mobile.androidapp.dev, PID: 26012 java.lang.NoClassDefFoundError: Failed resolution of: Lkotlinx/datetime/Instant;"
   severity: blocker
