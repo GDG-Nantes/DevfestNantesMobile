@@ -1,261 +1,234 @@
-<!-- refreshed: 2026-09-11 -->
+---
+last_mapped_commit: f6a603391f893d8f6bd0964cfcca500620b6a072
+last_mapped_at: 2026-10-16
+---
+<!-- refreshed: 2026-10-16 -->
+
 # Architecture
 
-**Analysis Date:** 2026-09-11
+**Analysis Date:** 2026-10-16
 
 ## System Overview
 
 ```text
 ┌──────────────────────────────────────────────────────────────────────┐
-│                    Android UI (Jetpack Compose)                      │
-├──────────────────┬──────────────────┬──────────────────┬─────────────┤
-│  MainActivity    │  Home (Nested)   │  Session Detail  │  Speaker    │
-│  Navigation      │  Screens         │  Settings        │  Details    │
-│  (NavHost)       │  (Agenda, etc.)  │  Legal           │  Venue      │
-└────────┬─────────┴────────┬─────────┴────────┬────────┴───────┬──────┘
-         │                  │                   │                │
-         ▼                  ▼                   ▼                ▼
+│                     Android app shell (`:androidApp`)                 │
+│  `androidApp/.../MainActivity.kt` (NavHost, Screen routes, Koin)      │
+├───────────────┬──────────────┬──────────────┬────────────┬───────────┤
+│ `:feature:agenda` │ `:feature:speakers` │ `:feature:session-detail` │ `:feature:venue` │ `:feature:about` / `:feature:settings` │
+│  AgendaViewModel │ SpeakerViewModel │ SessionViewModel / FeedbackFormViewModel │ VenueViewModel │ (no ViewModel) │
+└───────┬───────┴──────┬───────┴──────┬───────┴─────┬──────┴─────┬─────┘
+        │              │              │             │            │
+        ▼              ▼              ▼             ▼            ▼
 ┌──────────────────────────────────────────────────────────────────────┐
-│              Presentation & Application Layer (androidApp)            │
-│                   ViewModels with Hilt DI                            │
-│  SessionViewModel, SpeakerViewModel, AgendaViewModel, etc.           │
-│  Services: AnalyticsService, BookmarksStore, SessionFiltersService  │
-│  Initializers: DataSharingInitializer, OpenFeedbackInitializer      │
-│  Core: CoroutinesDispatcherProvider, PerformanceMonitoring          │
-└─────────────────────────────────────────┬───────────────────────────┘
-                                          │
-                                          ▼
-┌──────────────────────────────────────────────────────────────────────┐
-│              Shared Module - Data & Domain Layer (KMP)                │
-│                 Package: com.gdgnantes.devfest                        │
-│  ┌─────────────────────────────────────────────────────────────────┐ │
-│  │ Store Layer                                                     │ │
-│  │ - DevFestNantesStore (interface)                               │ │
-│  │ - GraphQLStore (Apollo implementation)                         │ │
-│  │ - BookmarksStore (local bookmarks)                             │ │
-│  │ - DevFestNantesStoreMocked (for testing)                       │ │
-│  └─────────────────────────────────────────────────────────────────┘ │
-│                          │                                             │
-│                          ▼                                             │
-│  ┌─────────────────────────────────────────────────────────────────┐ │
-│  │ Domain & Model Layer                                            │ │
-│  │ - Session, Speaker, Room, Agenda, Partner, Venue models       │ │
-│  │ - Enums: SessionType, Category, Complexity, ContentLanguage   │ │
-│  │ - Extensions & Mappers (GraphQL → Model)                      │ │
-│  └─────────────────────────────────────────────────────────────────┘ │
-│                                                                         │
-│  ┌─────────────────────────────────────────────────────────────────┐ │
-│  │ Analytics Layer                                                 │ │
-│  │ - AnalyticsService (abstract interface)                        │ │
-│  │ - AnalyticsPage, AnalyticsEvent, AnalyticsParam enums         │ │
-│  └─────────────────────────────────────────────────────────────────┘ │
-└──────────────────────────────────────────┬───────────────────────────┘
-                                           │
-                                           ▼
-┌──────────────────────────────────────────────────────────────────────┐
-│         External Data Source - GraphQL API via Apollo Client         │
-│  Endpoint: https://confetti-app.dev/graphql                          │
-│  Queries: GetSessionsQuery, GetRoomsQuery, GetPartnersQuery, etc.   │
-│  Caching: Normalized cache with custom CacheKeyGenerator            │
+│  Shared UI + Android UI kit: `:core:ui` (theme, components, BookmarksViewModel) │
 └──────────────────────────────────────────────────────────────────────┘
-
+        │                                             │
+        ▼                                             ▼
+┌───────────────────────────────┐        ┌──────────────────────────────┐
+│ `:core:data` (DevFestNantesStore) │ ───▶  │ `:core:analytics` (AnalyticsService) │
+│  GraphQLStore / Mocked store   │        │  Android + iOS platform impls  │
+└───────────────┬───────────────┘        └──────────────────────────────┘
+                │
+                ▼
 ┌──────────────────────────────────────────────────────────────────────┐
-│         External Services                                             │
-│  - Firebase Analytics, Crashlytics, Performance, Remote Config      │
-│  - OpenFeedback integration (conditional)                           │
-│  - Browser for external links                                       │
+│ `:core:network` (Apollo GraphQL client, `apolloClient` global)        │
+│ `:core:model` (pure Kotlin domain models, KMP commonMain)             │
 └──────────────────────────────────────────────────────────────────────┘
 ```
 
-## Component Responsibilities
+Kotlin Multiplatform modules (`commonMain`) hold the data and domain layers and are shared with the iOS app via the `shared` framework. Compose UI modules are Android-only (`src/main/java`).
 
-| Component | Responsibility | File |
-|-----------|----------------|------|
-| MainActivity | App entry point, main navigation setup, screen routing, analytics page tracking | `androidApp/src/main/java/com/gdgnantes/devfest/androidapp/MainActivity.kt` |
-| DevFestNantesApplication | App initialization, Timber setup, ApplicationInitializer orchestration | `androidApp/src/main/java/com/gdgnantes/devfest/androidapp/DevFestNantesApplication.kt` |
-| Home Screen | Root Compose screen with nested navigation (Agenda, Speakers, Venue, About tabs) | `androidApp/src/main/java/com/gdgnantes/devfest/androidapp/ui/screens/Home.kt` |
-| SessionViewModel | Loads and exposes session details; uses assisted injection for sessionId parameter | `androidApp/src/main/java/com/gdgnantes/devfest/androidapp/ui/screens/session/SessionViewModel.kt` |
-| AgendaViewModel | Manages agenda state, session filtering, and workshop/talk categorization | `androidApp/src/main/java/com/gdgnantes/devfest/androidapp/ui/screens/agenda/AgendaViewModel.kt` |
-| DevFestNantesStore | Interface abstracting data access; provides Flows for sessions, speakers, rooms, partners | `shared/src/commonMain/kotlin/com/gdgnantes/devfest/store/DevFestNantesStore.kt` |
-| GraphQLStore | Store implementation using Apollo client; maps GraphQL responses to domain models | `shared/src/commonMain/kotlin/com/gdgnantes/devfest/store/graphql/GraphQLStore.kt` |
-| BookmarksStore | Local bookmarking state; tracks user favorites across sessions | `shared/src/commonMain/kotlin/com/gdgnantes/devfest/store/BookmarksStore.kt` |
-| FirebaseAnalyticsService | Analytics backend implementation using Firebase; events, page tracking | `androidApp/src/main/java/com/gdgnantes/devfest/androidapp/services/FirebaseAnalyticsService.kt` |
-| AppModule | Dagger Hilt dependency injection configuration at SingletonComponent | `androidApp/src/main/java/com/gdgnantes/devfest/androidapp/core/injection/AppModule.kt` |
+## Module Graph
+
+Declared in `settings.gradle.dcl` (`include(...)`):
+
+- `:androidApp` (Android application, Compose, Koin, Navigation Compose)
+- `:shared` (KMP framework for iOS; composition root `initKoin`)
+- `:core:model`, `:core:network`, `:core:analytics`, `:core:data`, `:core:testing`, `:core:ui`
+- `:feature:venue`, `:feature:about`, `:feature:settings`, `:feature:speakers`, `:feature:agenda`, `:feature:session-detail`
+- `build-logic/` (included build with convention plugins under `build-logic/convention/src/main/kotlin/com/gdgnantes/devfest/buildlogic`)
+
+Dependency direction is one-way: `androidApp` → `feature:*` → `core:ui` → `core:data` → `core:network` / `core:model`. `core:model` depends on nothing internal.
 
 ## Pattern Overview
 
-**Overall:** Clean Architecture with Kotlin Multiplatform (KMP) code sharing
+**Overall:** Modular, feature-sliced MVVM with a repository-style data facade ("Store") and Koin dependency injection. Single-activity Compose app with a Navigation Compose `NavHost` in the app shell.
 
 **Key Characteristics:**
-- **Layered separation**: Presentation (androidApp) → Domain/Data (shared) → External APIs
-- **Reactive data flow**: Flows from Store propagate through ViewModels to Compose state
-- **Dependency injection**: Dagger Hilt for constructor injection; assisted factories for parameterized ViewModels
-- **KMP multiplatform**: Shared business logic in `shared` module; platform-specific implementations in `androidApp` (Android) and `iosApp` (iOS)
-- **Compose-first UI**: Entire Android UI written with Jetpack Compose; no XML layouts
+- One `ComponentActivity` (`androidApp/src/main/java/com/gdgnantes/devfest/androidapp/MainActivity.kt`) hosts all screens; screens are composables registered in its `NavHost`.
+- Each feature module exposes a public `*Route` composable (entry point) and keeps its screen composables, ViewModel and Koin module `internal`/package-private by convention (e.g. `feature/agenda/.../AgendaRoute.kt`, `feature/session-detail/.../SessionDetailRoute.kt`).
+- Feature modules never depend on each other directly; cross-feature wiring happens in `androidApp` (e.g. `OpenFeedbackConfig` in `feature/session-detail` is constructed in `androidApp/.../di/AppModule.kt` so only a flag and project id cross modules).
+- Data access goes through the `DevFestNantesStore` interface (`core/data/src/commonMain/kotlin/com/gdgnantes/devfest/core/data/DevFestNantesStore.kt`), which exposes `Flow`s for lists and `suspend` functions for single lookups.
+- Analytics and performance monitoring are behind `AnalyticsService` (`core/analytics`) with platform `actual` implementations in `core/analytics/src/androidMain` and iOS.
 
 ## Layers
 
-**Presentation Layer:**
-- Purpose: Render UI and respond to user interactions
-- Location: `androidApp/src/main/java/com/gdgnantes/devfest/androidapp/ui/`
-- Contains: Compose screens, ViewModels, theme, components
-- Depends on: Shared module (models, store, analytics)
-- Used by: MainActivity and nested navigation
+**Composition root / app shell (`:androidApp`):**
+- Purpose: Hosts the activity, navigation graph, application initializers, and the top-level Koin setup.
+- Location: `androidApp/src/main/java/com/gdgnantes/devfest/androidapp/`
+- Contains: `MainActivity.kt`, `DevFestNantesApplication.kt`, `ui/screens/Screen.kt` (sealed route definitions), `ui/screens/Home.kt` + `ui/screens/home/HomeViewModel.kt`, `di/AppModule.kt`, `di/AndroidModules.kt`, `core/*Initializer.kt`, `services/ExternalContentService.kt`.
+- Depends on: all `feature:*` and `core:*` modules.
+- Used by: Android launcher only.
 
-**Application/Service Layer:**
-- Purpose: Coordinate features (analytics, bookmarks, settings); initialize subsystems
-- Location: `androidApp/src/main/java/com/gdgnantes/devfest/androidapp/services/` and `core/`
-- Contains: Service implementations, Initializers, performance monitoring, logging
-- Depends on: Shared module, Firebase, Hilt, Timber
-- Used by: UI screens, ViewModels, Application class
+**Feature layer (`:feature:*`):**
+- Purpose: Self-contained screens with their own ViewModel, state, and Koin module.
+- Location: `feature/<name>/src/main/java/com/gdgnantes/devfest/feature/<name>/`
+- Contains: `*Route.kt` (entry composable), screen composables, `*ViewModel.kt`, `di/<Name>Module.kt`, optional `services/` and `utils/`.
+- Depends on: `:core:ui`, `:core:data`, `:core:model`, `:core:analytics`.
+- Used by: `androidApp` navigation graph.
 
-**Data/Store Layer:**
-- Purpose: Abstract data access behind interfaces; provide reactive data streams
-- Location: `shared/src/commonMain/kotlin/com/gdgnantes/devfest/store/`
-- Contains: Store interfaces (DevFestNantesStore, BookmarksStore), GraphQL implementation
-- Depends on: Apollo client, domain models
-- Used by: ViewModels in presentation layer
+**Shared UI layer (`:core:ui`):**
+- Purpose: Material theme, reusable composables, app bars, and the cross-feature `BookmarksViewModel`.
+- Location: `core/ui/src/main/java/com/gdgnantes/devfest/core/ui/`
+- Contains: `theme/`, `components/`, `components/appbars/`, `utils/`, `di/CoreUiModule.kt` (defines `IO_DISPATCHER` qualifier).
+- Depends on: `:core:data`, `:core:model`.
+- Used by: all feature modules and `androidApp`.
 
-**Domain/Model Layer:**
-- Purpose: Define business objects and operations
-- Location: `shared/src/commonMain/kotlin/com/gdgnantes/devfest/model/` and `domain/`
-- Contains: Session, Speaker, Room, Agenda, Partner, Venue; extensions and utilities
-- Depends on: Kotlin standard library, kotlinx.serialization
-- Used by: All other layers
+**Data layer (`:core:data`, KMP commonMain):**
+- Purpose: Exposes domain data through `DevFestNantesStore`; maps GraphQL responses to domain models.
+- Location: `core/data/src/commonMain/kotlin/com/gdgnantes/devfest/core/data/`
+- Contains: `DevFestNantesStore.kt` (interface), `DevFestNantesStoreBuilder.kt` (selects GraphQL vs mocked store), `GraphQLStore.kt` and `graphql/Mappers.kt` (in `graphql/`), `DevFestNantesStoreMocked.kt`, `BookmarksStore.kt`, `domain/RoomSortIndex.kt`, `di/DataModule.kt`.
+- Depends on: `:core:network`, `:core:model`.
+- Used by: feature ViewModels (injected via Koin `get()`), iOS via `shared`.
 
-**Analytics Layer:**
-- Purpose: Abstract analytics backend; provide event/page tracking interface
-- Location: `shared/src/commonMain/kotlin/com/gdgnantes/devfest/analytics/`
-- Contains: AnalyticsService interface, event enums
-- Depends on: Model layer (for domain objects)
-- Used by: Screens, ViewModels; implemented by FirebaseAnalyticsService in androidApp
+**Network layer (`:core:network`, KMP commonMain):**
+- Purpose: Apollo GraphQL client and schema.
+- Location: `core/network/src/commonMain/kotlin/com/gdgnantes/devfest/core/network/`
+- Contains: process-global `apolloClient` (exported as a Koin `single<ApolloClient>` in `di/NetworkModule.kt`), GraphQL operations and schema under `core/network/src/commonMain/graphql/` (`schema.graphqls`, `operations.graphql`, `extra.graphqls`).
+- Depends on: nothing internal.
+- Used by: `:core:data`.
+
+**Domain model (`:core:model`, KMP commonMain):**
+- Purpose: Plain domain types shared across layers and platforms.
+- Location: `core/model/src/commonMain/kotlin/com/gdgnantes/devfest/core/model/`
+- Contains: `Session`, `Speaker`, `Room`, `Venue`, `Partner`, `Agenda`, etc.; `stubs/` for test/preview data; `utils/` helpers.
+- Depends on: nothing internal.
+- Used by: every other module.
+
+**Analytics (`:core:analytics`, KMP):**
+- Purpose: Event and page tracking, performance hooks, consent-aware collection.
+- Location: `core/analytics/src/commonMain/kotlin/com/gdgnantes/devfest/core/analytics/`, with `androidMain/.../performance/` and `di/`.
+- Used by: `androidApp` (`MainActivity`) and feature ViewModels.
+
+**Shared KMP composition (`:shared`):**
+- Purpose: iOS-facing framework and single Koin entry point.
+- Location: `shared/src/commonMain/kotlin/com/gdgnantes/devfest/shared/di/InitKoin.kt`
+- Contains: `sharedModules = listOf(networkModule, dataModule, analyticsModule)` and `initKoin(platformModules, appDeclaration)`. Overriding is disabled (`allowOverride(false)`) so duplicate bindings fail fast.
+- Used by: iOS app (`iosApp/`) through `IosDependencies`; Android passes its platform modules and `androidContext`.
 
 ## Data Flow
 
-### Primary Request Path: Loading a Session Detail
+### Primary Request Path (Agenda screen)
 
-1. User taps a session in agenda list → `Home.onSessionClick()` called
-2. MainActivity receives callback, logs analytics event `eventSessionOpened()`
-3. MainActivity navigates to `"${Screen.Session.route}/{sessionId}"` route
-4. SessionLayout Composable is rendered; extracts sessionId from nav args
-5. SessionLayout creates SessionViewModel via assisted factory with sessionId
-6. SessionViewModel.init() calls `store.getSession(sessionId)` (suspend function)
-7. GraphQLStore executes `GetSessionQuery(sessionId)` via Apollo client
-8. Apollo caches response using normalized cache; mappers convert GraphQL response to `Session` model
-9. SessionViewModel emits session into `_session` StateFlow
-10. Compose recomposes SessionLayout with session data
-11. Analytics event logged via `analyticsService.pageEvent(AnalyticsPage.SESSION_DETAILS, route)` in MainActivity's OnDestinationChangedListener
+1. `Screen.Home` is registered in `MainActivity` NavHost; `Home` renders the agenda tab (`androidApp/src/main/java/com/gdgnantes/devfest/androidapp/MainActivity.kt`, `androidApp/.../ui/screens/Home.kt`).
+2. `AgendaRoute` (`feature/agenda/src/main/java/com/gdgnantes/devfest/feature/agenda/AgendaRoute.kt`) obtains `AgendaViewModel` through Koin (`feature/agenda/.../di/AgendaModule.kt`), which receives `DevFestNantesStore`, bookmarks store, performance monitoring, `SessionFiltersService`, and the named IO dispatcher.
+3. `AgendaViewModel` collects `store.agenda` / `store.sessions` Flows and combines them with bookmarks and filters into UI state.
+4. `GraphQLStore` (`core/data/.../graphql/GraphQLStore.kt`) runs Apollo queries on `apolloClient` and maps responses via `graphql/Mappers.kt` to `core/model` types.
+5. Composables (`Agenda.kt`, `AgendaPager.kt`, `AgendaColumn.kt`) render state; user toggles (bookmarks, filters) call back into the ViewModel.
+
+### Session Detail Flow
+
+1. Home or agenda row click invokes `onSessionClick`, which navigates to `"${Screen.Session.route}/{sessionId}"` (`MainActivity.kt`).
+2. `SessionDetailRoute(sessionId, onBackClick, onSocialLinkClick, ...)` (`feature/session-detail/.../SessionDetailRoute.kt`) builds `SessionViewModel` with the session id.
+3. Social link clicks are routed back to the app shell: `MainActivity` calls `externalContentService.openUrl(link)` and `analyticsService.eventSpeakerSocialLinkOpened(...)`. Feature modules do not open URLs themselves.
+
+### Feedback Flow (feature-flagged)
+
+1. `OpenFeedbackInitializer` (`androidApp/.../core/OpenFeedbackInitializer.kt`) and `OpenFeedbackConfig` (`feature/session-detail/.../OpenFeedbackConfig.kt`) supply the flag and project id.
+2. `FeedbackForm` / `FeedbackFormViewModel` render; `FallbackFeedbackForm.kt` is used when the feature is disabled.
+
+### Application Startup
+
+1. `DevFestNantesApplication` starts Koin via `initKoin(platformModules = androidModules, appDeclaration = { androidContext(...) })` (`shared/.../InitKoin.kt`, `androidApp/.../di/AndroidModules.kt`).
+2. `applicationInitializers` (named Koin list in `androidApp/.../di/AppModule.kt`) runs in a fixed order: `DataSharingInitializer`, `OpenFeedbackInitializer`, `PerformanceInitializer`. The order is a consent contract: stored data-collection consent must be applied before performance collection is enabled.
+3. `MainActivity` installs the splash screen, enables edge-to-edge, and sets the `DevFestNantesTheme` plus `NavHost`.
 
 **State Management:**
-- UI state is MutableStateFlow in ViewModels, collected as State in Compose
-- Store data is shared Flow; cached at Apollo client level
-- BookmarksStore maintains local Set<String> of bookmarked session IDs
-
-### Secondary Flow: Booking/Unbooking a Session
-
-1. User toggles bookmark icon in SessionLayout
-2. SessionLayout calls `bookmarksViewModel.setBookmarked(sessionId, true)`
-3. BookmarksViewModel:
-   - Calls `bookmarksStore.setBookmarked()` to update local state
-   - Logs analytics event via `analyticsService.eventBookmark()`
-4. BookmarksStore saves to SharedPreferences and updates internal StateFlow
-5. All subscribers (Compose) recompose with updated state
-
-### Navigation & Initialization Flow
-
-1. DevFestNantesApplication.onCreate() called at app startup
-2. Hilt instantiates AppModule dependencies
-3. Timber.Tree is planted
-4. ApplicationInitializer set is created (DataSharingInitializer, OpenFeedbackInitializer, PerformanceInitializer)
-5. Each initializer is invoked sequentially in coroutineScope
-6. MainActivity is launched after initialization
-7. MainNavController added as destination listener for top-level page tracking
+- ViewModels expose `StateFlow`-based UI state; one-off effects use event channels/flows inside each ViewModel (see `feature/agenda/.../AgendaViewModel.kt`).
+- Session filters are a single shared stateful service (`SessionFiltersServiceImpl`, registered as Koin `single`) so the agenda screen and `HomeViewModel` observe the same instance.
+- Bookmarks are persisted via `core/data/.../BookmarksStore.kt` and shared through `core/ui`'s `BookmarksViewModel`.
 
 ## Key Abstractions
 
-**DevFestNantesStore:**
-- Purpose: Provide reactive access to conference data
-- Examples: `shared/src/commonMain/kotlin/com/gdgnantes/devfest/store/DevFestNantesStore.kt`
-- Pattern: Abstract interface with Flow-based API; builder pattern allows mock vs. real implementation
+**`DevFestNantesStore`:**
+- Purpose: Single read-facade over conference data (agenda, sessions, speakers, rooms, partners, venue).
+- Examples: `core/data/src/commonMain/kotlin/com/gdgnantes/devfest/core/data/DevFestNantesStore.kt`, `GraphQLStore.kt`, `DevFestNantesStoreMocked.kt`
+- Pattern: Interface with `Flow` for observable collections and `suspend` lookups; implementations are chosen by `DevFestNantesStoreBuilder` (`setUseMockServer` switches to the mock).
 
-**AnalyticsService:**
-- Purpose: Provide platform-agnostic analytics API
-- Examples: `shared/src/commonMain/kotlin/com/gdgnantes/devfest/analytics/AnalyticsService.kt`, `androidApp/src/main/java/com/gdgnantes/devfest/androidapp/services/FirebaseAnalyticsService.kt`
-- Pattern: Interface in shared module; concrete Firebase implementation in androidApp
+**`AnalyticsService`:**
+- Purpose: Typed event methods (`eventSpeakerOpened`, `eventSpeakerSocialLinkOpened`, ...) and page tracking.
+- Examples: `core/analytics/src/commonMain/kotlin/com/gdgnantes/devfest/core/analytics/`
+- Pattern: Interface in commonMain, platform implementations in `androidMain` / iOS.
 
-**Initializer:**
-- Purpose: Allow subsystems to run setup code on app launch
-- Examples: `androidApp/src/main/java/com/gdgnantes/devfest/androidapp/core/DataSharingInitializer.kt`, `OpenFeedbackInitializer.kt`, `PerformanceInitializer.kt`
-- Pattern: Functional interface (suspend () -> Unit); collected into Set and orchestrated by Application
+**`Screen` (sealed class):**
+- Purpose: Typed navigation destinations for bottom-bar tabs and detail routes (route string, title resource, filled/outlined icons).
+- Examples: `androidApp/src/main/java/com/gdgnantes/devfest/androidapp/ui/screens/Screen.kt`
+- Pattern: `data object` subclasses; routes are plain strings joined with ids (`"${Screen.Speaker.route}/${speaker.id}"`).
 
-**ViewModelFactory:**
-- Purpose: Provide parameters to ViewModels (e.g., sessionId)
-- Examples: `SessionViewModelFactory`, `SpeakerViewModelFactory`
-- Pattern: Dagger assisted injection with @AssistedFactory; enables testable ViewModel creation
+**`ApplicationInitializer`:**
+- Purpose: Start-up hooks run in an explicit, ordered list.
+- Examples: `androidApp/src/main/java/com/gdgnantes/devfest/androidapp/core/ApplicationInitializer.kt` and its implementations in the same package.
+- Pattern: Named Koin `listOf(...)`, not an unordered multibinding.
+
+**`SuspendUseCase`:**
+- Purpose: Small use-case wrapper for suspend work in the app shell.
+- Examples: `androidApp/src/main/java/com/gdgnantes/devfest/androidapp/core/SuspendUseCase.kt`
+- Pattern: Invoked from ViewModels; `CoroutinesDispatcherProvider` (same package) supplies injectable dispatchers.
 
 ## Entry Points
 
-**MainActivity:**
-- Location: `androidApp/src/main/java/com/gdgnantes/devfest/androidapp/MainActivity.kt`
-- Triggers: App launch by Android system
-- Responsibilities: Set up root NavHost, create main navigation graph, track top-level page analytics
+**Android application:**
+- Location: `androidApp/src/main/java/com/gdgnantes/devfest/androidapp/MainActivity.kt` (launcher activity) and `DevFestNantesApplication.kt` (Koin + initializers).
+- Triggers: Android launcher intent.
+- Responsibilities: NavHost, theme, edge-to-edge, splash screen, cross-feature navigation callbacks.
 
-**DevFestNantesApplication:**
-- Location: `androidApp/src/main/java/com/gdgnantes/devfest/androidapp/DevFestNantesApplication.kt`
-- Triggers: Before MainActivity; app process creation
-- Responsibilities: Hilt DI setup, Timber initialization, ApplicationInitializer orchestration
+**iOS application:**
+- Location: `iosApp/iosApp/` (Swift); consumes the `shared` framework and calls `initKoin` through `IosDependencies`.
+- Triggers: iOS app launch.
+- Responsibilities: SwiftUI/UIKit presentation over shared data and analytics.
 
-**SessionViewModel (and other parameterized ViewModels):**
-- Location: `androidApp/src/main/java/com/gdgnantes/devfest/androidapp/ui/screens/session/SessionViewModel.kt`
-- Triggers: When screen is navigated to with parameters
-- Responsibilities: Load data for a specific session; expose data to UI via StateFlow
+**Mock data entry:**
+- Location: `core/data/src/commonMain/kotlin/com/gdgnantes/devfest/core/data/DevFestNantesStoreMocked.kt`, selected via `DevFestNantesStoreBuilder.setUseMockServer(true)`.
+- Triggers: Build or test configuration.
 
 ## Architectural Constraints
 
-- **Threading:** Single-threaded event loop for Compose UI; coroutines with Dispatchers.Main.immediate for UI updates. IO and computation on Dispatchers.IO and Dispatchers.Default respectively (managed by CoroutinesDispatcherProvider).
-- **Global state:** DevFestNantesStore (via DI), BookmarksStore (via DI), Firebase services (singleton). Application.coroutineScope is app-scoped for Initializers.
-- **Circular imports:** None detected. Shared module does not depend on androidApp; androidApp imports from shared but not vice versa.
-- **Platform-specific code:** GraphQL queries in `shared/src/commonMain/graphql/`; platform-specific initializers and services in androidApp or iosApp.
-- **Navigation:** Only NavigationCompose used; no Fragment-based navigation. Nested NavControllers in Home screen for tab structure.
+- **Threading:** Coroutines throughout. Production dispatchers are `Dispatchers.Default` / `Dispatchers.IO` / `Dispatchers.Main.immediate` via `CoroutinesDispatcherProvider` (`androidApp/.../core/CoroutinesDispatcherProvider.kt`). The IO dispatcher is injected under the named qualifier `IO_DISPATCHER` (`core/ui/.../di/CoreUiModule.kt`) so tests can substitute it.
+- **Global state:** `apolloClient` is a process-global in `core/network` (exported to Koin as a single, not created per graph). `Timber` trees are installed as a Koin `single<Timber.Tree>`.
+- **Koin overrides disabled:** `startKoin { allowOverride(false) }` in `shared/.../InitKoin.kt`; tests must re-enable overriding in `appDeclaration`. Adding a duplicate binding in two modules is a start-up failure by design.
+- **Hilt-to-Koin migration in progress:** Git history records a completed Hilt-to-Koin DI migration; a few comments still refer to "not-yet-migrated" components (for example the `HomeViewModel` bridge comment in `feature/agenda/.../di/AgendaModule.kt`).
+- **Circular imports:** None observed between Gradle modules; the dependency graph is acyclic as listed above.
 
 ## Anti-Patterns
 
-### Println for Error Logging
+### Feature modules reaching into the app shell
 
-**What happens:** GraphQL errors printed to stdout via `println()` in `GraphQLStore.kt`
-**Why it's wrong:** Println is invisible in Release builds; no stack traces; hard to debug in production
-**Do this instead:** Use Timber logging with proper log levels: `Timber.e(exception, "Apollo error: %s", exception.message)`
+**What happens:** Some behaviour that needs the Android `Activity` or Android services (URL opening, analytics on navigation) is wired in `MainActivity` callbacks instead of inside feature modules.
+**Why it's wrong:** Feature screens stay coupled to the app's navigation and cannot be previewed or reused without the shell.
+**Do this instead:** Keep the pattern used by `SessionDetailRoute(onSocialLinkClick = ...)` in `androidApp/.../MainActivity.kt`: pass lambdas into `*Route` composables and let the shell handle the side effect.
 
-### Direct Firebase References in ViewModels
+### Parallel mock and real store selection
 
-**What happens:** Some ViewModels directly reference Firebase objects instead of injected abstractions
-**Why it's wrong:** Couples code to Firebase implementation; hard to test; not KMP-compatible
-**Do this instead:** Inject `AnalyticsService` (interface from shared) which abstracts Firebase; implement in androidApp
-
-### State Management in ViewModel Init Block
-
-**What happens:** SessionViewModel loads data in `init {}` block without error handling
-**Why it's wrong:** No try-catch; if loading fails, UI shows null indefinitely with no error state
-**Do this instead:** Add sealed class `UiState` (Loading, Success, Error) and emit state to StateFlow
+**What happens:** `DevFestNantesStoreBuilder` picks between `GraphQLStore` and `DevFestNantesStoreMocked` with a boolean flag.
+**Why it's wrong:** Mock and real implementations of `DevFestNantesStore` must be kept in sync manually; drift is only caught when a feature is exercised against the mock.
+**Do this instead:** Add any new store method to the `DevFestNantesStore` interface and implement it in both `GraphQLStore.kt` and `DevFestNantesStoreMocked.kt` in the same change.
 
 ## Error Handling
 
-**Strategy:** Permissive with fallbacks; no user-visible error dialogs
+**Strategy:** Errors are surfaced through ViewModel UI state and logged with Timber; data-layer functions return nullable results (`getSession`, `getRoom`, `getSpeaker` return `T?`) for not-found cases.
 
 **Patterns:**
-- Store methods return `null` or empty collections on Apollo errors (see `GraphQLStore.getSession()`)
-- Flows catch exceptions and emit empty collections or emptyMap()
-- ViewModels don't expose error states; rely on null-safety in Compose
-- Firebase operations don't throw; use Firebase's built-in error handling
+- Nullable returns for missing entities in `DevFestNantesStore`.
+- `Timber` logging through the trees in `androidApp/.../core/logging/`.
 
 ## Cross-Cutting Concerns
 
-**Logging:** Timber configured in Application.onCreate(). Debug builds use TimberTreeDebug; release uses TimberTreeRelease. See `androidApp/src/main/java/com/gdgnantes/devfest/androidapp/core/logging/`.
-
-**Validation:** Session filtering logic in `SessionFiltersService`. Date/time conversions in `DateUtils`. No input validation layer; assumes GraphQL backend enforces constraints.
-
-**Authentication:** None required; public GraphQL API. OpenFeedback uses credentials stored in BuildConfig (see `OpenFeedbackInitializer`).
+**Logging:** Timber; `TimberTreeDebug` / `TimberTreeRelease` chosen in `di/AppModule.kt` by `BuildConfig.DEBUG`.
+**Validation:** Not centralized; mapping is performed in `core/data/.../graphql/Mappers.kt`.
+**Authentication:** Not detected (no user accounts in the app).
+**Analytics and consent:** `DataSharingInitializer` applies stored data-collection consent from `feature/settings/.../datacollection/` before `PerformanceInitializer` enables performance collection.
 
 ---
 
-*Architecture analysis: 2026-09-11*
+*Architecture analysis: 2026-10-16*

@@ -1,182 +1,146 @@
+---
+last_mapped_commit: f6a603391f893d8f6bd0964cfcca500620b6a072
+last_mapped_at: 2026-10-16
+---
 # Coding Conventions
 
-**Analysis Date:** 2026-09-11
+**Analysis Date:** 2026-10-16
 
 ## Naming Patterns
 
 **Files:**
-- PascalCase for Kotlin classes: `BookmarksViewModel.kt`, `ScheduleSlot.kt`
-- PascalCase for Composable screens: `Settings.kt`, `Home.kt`
-- Snake_case suffixes for test files: `MainActivityTest.kt`, `GraphQLStoreJvmTest.kt`
-- Utility files: `SessionExtensions.kt`, `DateUtils.kt`
+- One primary declaration per file, named after it: `feature/speakers/src/main/java/com/gdgnantes/devfest/feature/speakers/list/SpeakersViewModel.kt`, `.../list/Speakers.kt` (Composable screen).
+- Koin module files are `<Feature>Module.kt` and expose a top-level `val <feature>Module: Module`: `feature/speakers/src/main/java/com/gdgnantes/devfest/feature/speakers/di/SpeakersModule.kt` defines `speakersModule`.
+- Test files mirror the source class name with a `Test` suffix: `SpeakersViewModelTest.kt`, `FallbackFeedbackUrlTest.kt`, `DataCollectionSettingsServiceImplTest.kt`.
+- Instrumented tests use the `Smoke` suffix: `feature/settings/src/androidTest/java/com/gdgnantes/devfest/feature/settings/SettingsSmokeTest.kt`.
+- Service implementations use the `Impl` suffix behind an interface: `DataCollectionSettingsServiceImpl`, `SessionFiltersServiceImpl`, `BookmarksStoreImpl`.
+- Shared UI theme and composables live in `core/ui/src/main/java/com/gdgnantes/devfest/core/ui/` (`theme/`, `components/`, `components/appbars/`).
+
+**Packages:**
+- All code is under `com.gdgnantes.devfest.<layer>.<module>` (e.g. `com.gdgnantes.devfest.feature.agenda`, `com.gdgnantes.devfest.core.data`).
+- Package names are lowercase, no underscores. Validated by detekt `PackageNaming` in `linters/detekt-config.yml`.
 
 **Functions:**
-- camelCase for all functions and methods
-- Extension functions use camelCase: `getDurationInMinutes()`, `getLanguageEmojiString()`
-- @Composable functions use PascalCase: `Settings()`, `TopAppBar()`
-- Test methods use descriptive snake_case with pattern `verb_noun_result`: `agenda_flow_emits_agenda()`, `getRoom_returns_room_or_null()`
+- camelCase (`FunctionNaming` in `linters/detekt-config.yml`). Composables are the exception: PascalCase, annotated `@Composable`, and exempted from the naming rule (`ignoreAnnotated: ['Composable', 'Test']`).
+- Composable screens are PascalCase nouns or `<Name>Screen`: `Speakers(...)` in `feature/speakers/.../list/Speakers.kt`, `DataCollectionSettingsScreen(...)`, `LegalScreen(...)`.
+- Preview functions are prefixed `Preview`: `PreviewDataCollectionSettingsScreen()`, `PreviewLegalScreen()`.
+- Factory helpers for ViewModels/services use `viewModel()` or `buildXxx` in tests (`buildVenueStub`).
 
-**Variables:**
-- camelCase for all variables and parameters
-- Private properties prefixed with underscore: `_state`, `_event`
-- Public properties without underscore: `startDate`, `endDate`
-- Loop/iteration variables: standard camelCase `entry`, `session`
+**Variables and properties:**
+- Private mutable backing state uses an underscore prefix paired with a public read-only property:
+  ```kotlin
+  private val _uiState = MutableStateFlow(UiState.STARTING)
+  val uiState: StateFlow<UiState>
+      get() = _uiState
+  ```
+  (`feature/speakers/src/main/java/com/gdgnantes/devfest/feature/speakers/list/SpeakersViewModel.kt`). Newer code uses `.asStateFlow()` instead of an explicit getter: `val speakers = _speakers.asStateFlow()`.
+- Constructor-injected dependencies are `private val` on the class.
+- Constants inside companion objects use UPPER_SNAKE_CASE (e.g. `PerformanceMonitoring.TRACE_SPEAKERS_LOAD`).
 
 **Types:**
-- PascalCase for classes, data classes, and interfaces: `ScheduleSlot`, `DevFestNantesStore`
-- CONSTANT_CASE for module-level constants: `MILLISECONDS_IN_MINUTE`
-- Generic type parameters: single uppercase letters when possible: `T`, `K`, `V`
+- Classes/interfaces PascalCase. Domain models are in `core/model/src/commonMain/kotlin/com/gdgnantes/devfest/core/model/` (`Session`, `Speaker`, `Agenda`, `Room`).
+- Store/service contracts are interfaces with the implementation suffixed `Impl` or, for the KMP graphql store, the implementation carries no suffix (`internal class GraphQLStore(...) : DevFestNantesStore` in `core/data/src/commonMain/kotlin/com/gdgnantes/devfest/core/data/graphql/GraphQLStore.kt`).
+- Enum constants are UPPER_SNAKE_CASE (`UiState.STARTING`, `UiState.SUCCESS`, `SessionType.CONFERENCE`).
+- Generated GraphQL types come from Apollo under `com.gdgnantes.devfest.core.network.graphql` and are named `<Operation>Query` (`GetSessionsQuery`).
 
 ## Code Style
 
 **Formatting:**
-- Tool: Detekt with auto-correct enabled
-- Max line length: 120 characters
-- Indentation: 4 spaces
-- No trailing spaces, no semicolons, no wildcard imports
-- Final newline required in all files
+- Indentation: 4 spaces (`CONTRIBUTING.md`, "Kotlin (Shared Module)").
+- Kotlin formatting follows ktlint rules via the detekt ktlint wrapper configured in `linters/detekt-config.yml` (`ktlint: active: true`, `android: false`, `autoCorrect: true`).
+- Max line length 120 for argument wrapping (`ArgumentListWrapping.maxLineLength: 120`); `MaxLineLength` is enabled but excluded for test sources.
+- Multi-line expression bodies use the ktlint-style wrapped form: a line break after `=` and the body indented one level:
+  ```kotlin
+  override val agenda: Flow<Agenda>
+      get() =
+          sessions.map { sessions -> ... }
+  ```
+- Trailing commas are not required; closing parentheses of multi-line calls sit on their own line.
+- Prefer explicit imports.
 
 **Linting:**
-- Tool: Detekt 1.23.8 (active formatting and style rules)
-- Config: `linters/detekt-config.yml`
-- Auto-correct enabled: `true`
-- Key rules enabled:
-  - `MaximumLineLength: 120` (ignores @Test annotated code)
-  - `FunctionNaming: [a-zA-Z][a-zA-Z0-9]*` (ignores @Composable, @Test)
-  - `PackageNaming: [a-z]+(\.[a-z][A-Za-z_0-9]*)*`
-  - `NoUnitReturn`, `NoSemicolons`, `NoWildcardImports`, `NoTrailingSpaces`
-  - `StringTemplate` (prefer string interpolation)
-  - `LongParameterList: functionThreshold=16, constructorThreshold=7`
-  - `LongMethod: threshold=160`
+- Detekt 2.0.x (`dev.detekt` Gradle plugin, `detekt = "2.0.0-alpha.6"` in `gradle/libs.versions.toml`), applied by the `devfest.detekt` convention plugin (`build-logic/convention/src/main/kotlin/com/gdgnantes/devfest/buildlogic/DetektConventionPlugin.kt`). Also applied through `AndroidApplicationConventionPlugin.kt` and `KmpLibraryConventionPlugin.kt`.
+- Config: `linters/detekt-config.yml`. Key rules:
+  - `LongParameterList`: max 16 function parameters, 7 constructor parameters, default parameters ignored, data classes ignored.
+  - `LongMethod`: max 160 lines.
+  - `MagicNumber`: property declarations and companion-object properties are ignored.
+- Detekt baselines are generated through the `DetektCreateBaselineTask` provided by the convention plugin.
+- Coverage: Kover (`org.jetbrains.kotlinx.kover`, version 0.9.11) is applied to Android and KMP library modules.
 
 ## Import Organization
 
-**Order:**
-1. `java.*` and `javax.*` imports
-2. `kotlin.*` imports
-3. `androidx.*` imports
-4. `com.google.*` imports
-5. `com.gdgnantes.*` (project-specific)
-6. All other imports
-7. Single underscore `^` for static imports (rarely used)
+**Order (observed):**
+1. Third-party and AndroidX (`androidx.*`, `app.cash.turbine.*`, `kotlinx.*`, `org.koin.*`).
+2. Project packages (`com.gdgnantes.devfest.*`).
+3. Standard Kotlin/Java (`kotlin.test.*`, `timber.log.*`) interleaved at the bottom of test files.
+
+Imports are lexicographically sorted within each block. 
 
 **Path Aliases:**
-- No path aliases configured (full imports used)
-
-**Pattern from actual code:**
-```kotlin
-import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import com.gdgnantes.devfest.analytics.AnalyticsPage
-import com.gdgnantes.devfest.store.BookmarksStore
-import dagger.hilt.android.lifecycle.HiltViewModel
-import kotlinx.coroutines.flow.Flow
-import javax.inject.Inject
-```
+- None. Modules are referenced by Gradle project path (`:core:model`, `:feature:agenda`) and imported by package.
 
 ## Error Handling
 
 **Patterns:**
-- No global try-catch blocks observed
-- Errors propagated as exceptions (let caller handle via coroutine error handling)
-- Assertion errors with descriptive messages in tests: `throw AssertionError("Unparseable date: ...", e)`
-- Null-coalescing with default values in model: `val endDate: String = ""`
-
-**Example from codebase:**
-```kotlin
-try {
-    format.parse(session.scheduleSlot.startDate)
-} catch (e: Exception) {
-    throw AssertionError("Unparseable date: ${session.scheduleSlot.startDate}", e)
-}
-```
+- ViewModels expose state through `UiState` (`core/ui`, values include `STARTING`, `SUCCESS`, `ERROR`) and rely on the store `Flow` for data. Expected failures should map to `UiState.ERROR`. Note: `SpeakersViewModel` does not currently catch store failures (see `feature/speakers/src/test/java/com/gdgnantes/devfest/feature/speakers/list/SpeakersViewModelTest.kt`, which characterizes the gap).
+- Flows from the data layer use the `Flow.catch { }` operator to absorb errors and emit a fallback value (`core/data/src/commonMain/kotlin/com/gdgnantes/devfest/core/data/graphql/GraphQLStore.kt`, `partners` property emits `emptyMap()` on `response.exception` via `mapNotNull`).
+- Apollo responses are checked for `response.exception` before reading `response.data`.
+- Use `requireNotNull` / `checkNotNull` for invariants in tests and fixtures (`requireNotNull(SessionFixtures.composeDeepDive.room)`).
+- `runCatching` is not a dominant pattern in the data layer.
 
 ## Logging
 
-**Framework:** Timber (5.0.1)
+**Framework:** Timber (`com.jakewharton.timber:timber:5.0.1`) in ViewModels and Android code; `println` in the KMP data layer.
 
 **Patterns:**
-- Debug logs for informational messages: `Timber.d("Speakers loaded: ${speakersList.size} speakers")`
-- Warning logs for recoverable issues: `Timber.w("Venue's image loading failed")`
-- Timber is imported and used throughout ViewModels and Composables
-- No log level filtering observed; Timber handles level-based output
-
-**Example usage:**
-```kotlin
-import timber.log.Timber
-
-Timber.d("Agenda loaded with ${days.values.sumOf { it.sessions.size }} sessions")
-Timber.d("Session filters updated: ${filters.size} active filters")
-Timber.w(state.result.throwable, "Venue's image loading failed")
-```
+- ViewModels log loaded state at debug level: `Timber.d("Speakers loaded: ${speakersList.size} speakers")`.
+- Release trees are provided by `androidApp/src/main/java/com/gdgnantes/devfest/androidapp/core/logging/TimberTreeRelease.kt`. Prefer Timber over `println` in new code.
+- The KMP `GraphQLStore` currently uses `println("Apollo error: ...")`; treat this as legacy, not a pattern to copy.
+- Performance tracing goes through `PerformanceMonitoring` (`core/analytics/src/commonMain/...`), not logging. Wrap data loads with `performanceMonitoring.traceDataLoading(operation = PerformanceMonitoring.TRACE_..., dataSource = "...") { ... }`.
 
 ## Comments
 
 **When to Comment:**
-- Inline comments for non-obvious logic: `// else don't care about letters that don't exist`
-- Commented-out code blocks (rare): lines 49-51 in `Speakers.kt`
-- TODO/FIXME comments: not observed; use Detekt rules to prevent
+- Explain non-obvious decisions and reference deferred work by ID (e.g. "deferred, D-10" in `SpeakersViewModelTest.kt`).
+- KDoc on test doubles and public test helpers describing the contract they fake (`core/testing/src/commonMain/kotlin/com/gdgnantes/devfest/core/testing/FakeBookmarksStore.kt`).
+- Inline comments are used to explain Koin wiring choices (e.g. "Explicit positional definition" in `SpeakersModule.kt`).
+- There are roughly one `TODO`/`FIXME` across Kotlin sources; avoid leaving new ones without a tracking reference.
 
-**JSDoc/TSDoc:**
-- No KDoc comments observed in codebase
-- Not enforced (Kdoc rule is disabled in detekt: `Kdoc: active: false`)
-- Focus on code clarity over documentation comments
-
-**Example inline comment:**
-```kotlin
-// Add spacing before the button
-Spacer(modifier = Modifier.height(8.dp))
-
-// Add the clear filters button
-ClearFiltersButton(...)
-```
+**JSDoc/TSDoc (KDoc):**
+- Use KDoc `/** ... */` on public classes and non-obvious functions. Single-sentence summaries are the norm.
+- Backticks reference symbols: `` `SessionFixtures` ``.
 
 ## Function Design
 
-**Size:**
-- Max method length: 160 lines (enforced by Detekt `LongMethod`)
-- Functions kept concise and focused on single responsibility
-- Example: `BookmarksViewModel.setBookmarked()` is 2 lines, pure delegation
+**Size:** Keep functions well under the 160-line detekt `LongMethod` limit; ViewModel `init` blocks are typically under 20 lines.
 
 **Parameters:**
-- Max 16 parameters for functions (Detekt rule: `functionThreshold: 16`)
-- Max 7 parameters for constructors (Detekt rule: `constructorThreshold: 7`)
-- Ignore default parameters in count
-- @Composable functions exempt from parameter count limits
-- Use data classes for grouped parameters when needed
+- Constructor injection for dependencies. ViewModels take interfaces (`DevFestNantesStore`, `BookmarksStore`, `PerformanceMonitoring`) so tests can pass fakes.
+- Default parameter values are common for optional UI parameters; detekt ignores them for `LongParameterList`.
+- Composables take state plus lambdas (`onClick: () -> Unit`) and hoist state; screens are stateless where possible.
 
 **Return Values:**
-- Single return value preferred
-- No implicit returns observed; explicit `return` used
-- Nullable returns use `?` syntax: `fun getRoom(id: String): Room?`
-- Flow-based returns for reactive data: `fun subscribe(id: String): Flow<Boolean>`
+- Expose `Flow<T>` / `StateFlow<T>` from stores and ViewModels; never expose `MutableStateFlow`.
+- Use `Map`, `List`, `Set` for collections; `Set` semantics are promised for bookmarks (`BookmarksStore.bookmarkedSessionIds: Flow<Set<String>>`).
 
 ## Module Design
 
 **Exports:**
-- No barrel files observed in project
-- Each file contains single primary type
-- Internal visibility not explicitly used; rely on package structure
+- Core/data implementations are `internal` (e.g. `internal class GraphQLStore`); interfaces are public and consumed by features.
+- Each feature exposes a Koin module (`<feature>Module`) and a `viewModelOf(::XxxViewModel)` registration.
 
-**Dependency Injection:**
-- Hilt annotations used: `@HiltViewModel`, `@Inject constructor`
-- Dependencies injected into constructors, not properties
-- Singleton pattern via `@Singleton` annotation (standard Android practice)
+**Dependency injection:**
+- Koin (`io.insert-koin`), not Hilt. Migration from Hilt is complete (commit `de6c891`, "Phase 4: Hilt to Koin DI Migration").
+- Module definitions use `module { viewModelOf(::SpeakersViewModel) }`. Use `factoryOf`/`singleOf` for simple constructor wiring; use explicit `viewModel { ... }` / `factory { ... }` only when a parameter needs positional binding.
+- Test-only bindings live in `core/testing/src/commonMain/kotlin/com/gdgnantes/devfest/core/testing/di/TestDoublesModule.kt`.
 
-**Example DI pattern:**
-```kotlin
-@HiltViewModel
-class BookmarksViewModel @Inject constructor(
-    private val analyticsService: AnalyticsService,
-    private val bookmarksStore: BookmarksStore,
-) : ViewModel()
-```
+**Barrel Files:**
+- Not used. Import specific declarations.
 
-**Architectural Patterns:**
-- MVVM for Android (ViewModel + State/Flow)
-- Clean Architecture layers: Store (data), ViewModel (presentation logic), UI (Composables)
-- Store pattern for shared business logic (KMP, used by both Android and shared modules)
+**Multiplatform:**
+- Shared logic goes into `commonMain` sourcesets of `core/*` and `shared` modules. Android-only implementations go in `androidMain` (e.g. `core/analytics/src/androidMain/.../FirebasePerformanceMonitoring.kt`).
+- Convention plugins (`build-logic/convention`) configure module type: `KmpLibraryConventionPlugin`, `AndroidApplicationConventionPlugin`, plus the shared `DetektConventionPlugin`.
 
 ---
 
-*Convention analysis: 2026-09-11*
+*Convention analysis: 2026-10-16*
