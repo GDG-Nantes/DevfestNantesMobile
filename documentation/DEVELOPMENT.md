@@ -1,383 +1,223 @@
-# Development Setup Guide
+# Development Guide
 
-This guide provides step-by-step instructions for setting up the DevFest Nantes development environment on your local machine.
+How to set up, build, test and run the DevFest Nantes app locally.
 
 ## Table of Contents
 
 - [Prerequisites](#prerequisites)
-- [Environment Setup](#environment-setup)
 - [Project Setup](#project-setup)
-- [Platform-Specific Setup](#platform-specific-setup)
-- [IDE Configuration](#ide-configuration)
-- [Verification](#verification)
+- [Android](#android)
+- [iOS](#ios)
+- [Testing](#testing)
+- [Code Quality](#code-quality)
+- [Build Configuration](#build-configuration)
+- [Updating the GraphQL Schema](#updating-the-graphql-schema)
 - [Common Issues](#common-issues)
 
 ## Prerequisites
 
-### System Requirements
+| Tool | Version |
+|---|---|
+| JDK | 17 |
+| Android Studio | Latest stable, with the Android SDK platform for compileSdk 37 |
+| Gradle | Wrapper (`./gradlew`, Gradle 9.7.1), nothing to install |
+| Xcode (iOS only, macOS) | Latest stable; the app targets iOS 17.0 |
+| SwiftGen (iOS only) | `brew install swiftgen` |
 
-#### For Android Development
-- **Operating System:** Windows 10+, macOS 10.14+, or Linux (Ubuntu 18.04+)
-- **RAM:** 8 GB minimum, 16 GB recommended
-- **Storage:** 4 GB available space minimum
-- **Java:** JDK 17
-
-#### For iOS Development (macOS only)
-- **Operating System:** macOS 14.0 (Sonoma) or later
-- **Xcode:** 16.0 or later
-- **iOS Deployment Target:** 15.0+ (for broad device compatibility)
-- **RAM:** 8 GB minimum, 16 GB recommended
-
-### Required Tools
-
-#### 1. Android Studio
-Download and install the latest stable version of [Android Studio](https://developer.android.com/studio).
-
-**Installation:**
-1. Download Android Studio from the official website
-2. Follow the installation wizard
-3. Install Android SDK (API 36 minimum for latest features, API 23+ for device support)
-4. Install Android SDK Build-Tools
-5. Configure Android Virtual Device (AVD) for testing
-
-#### 2. Xcode (macOS only)
-Install Xcode from the Mac App Store or [Apple Developer Portal](https://developer.apple.com/xcode/).
-
-**Installation:**
-1. Install Xcode from the Mac App Store
-2. Launch Xcode and accept the license agreements
-3. Install additional components when prompted
-4. Install Command Line Tools: `xcode-select --install`
-
-#### 3. Git
-Install Git from [git-scm.com](https://git-scm.com/) or use your system's package manager.
+Key versions live in `gradle/libs.versions.toml` (Kotlin 2.4.20, AGP 9.4.0, Compose BOM,
+Koin 4.2.2, Apollo 5.2.0, ...). Android `minSdk` is 26; SDK levels are set in
+`build-logic/convention/src/main/kotlin/com/gdgnantes/devfest/buildlogic/AndroidSdk.kt`.
 
 ## Project Setup
-
-### 1. Clone the Repository
 
 ```bash
 git clone https://github.com/GDG-Nantes/DevfestNantesMobile.git
 cd DevfestNantesMobile
-```
-
-### 2. Verify Gradle Setup
-
-Check that Gradle can resolve dependencies:
-
-```bash
-# Check Gradle version
 ./gradlew --version
-
-# Download dependencies
-./gradlew build --refresh-dependencies
 ```
 
-### 3. Project Structure Verification
-
-Ensure your project structure matches:
+Repository layout:
 
 ```
 DevfestNantesMobile/
-├── androidApp/
-├── iosApp/
-├── shared/
-├── shared-ui/
-├── gradle/
-├── build.gradle.kts
-├── settings.gradle.kts
-└── gradle.properties
+├── androidApp/        # Android app shell (MainActivity, NavHost, app Koin modules)
+├── shared/            # KMP framework for iOS, Koin entry point initKoin()
+├── core/              # model, network, data, analytics, testing (KMP) and ui (Android)
+├── feature/           # agenda, speakers, session-detail, venue, about, settings (Android)
+├── iosApp/            # SwiftUI app (Xcode project)
+├── build-logic/       # Included build with convention plugins
+├── gradle/            # Wrapper and version catalog (libs.versions.toml)
+├── linters/           # Detekt configuration
+├── scripts/           # DI gate and iOS build scripts (see scripts/README.md)
+├── documentation/     # This documentation
+├── build.gradle.kts   # Root build (plugins, Kover aggregation)
+└── settings.gradle.dcl
 ```
 
-## Platform-Specific Setup
+See [ARCHITECTURE.md](ARCHITECTURE.md) for what each module does.
 
-### Android Setup
+## Android
 
-#### 1. Open Project in Android Studio
-
-1. Launch Android Studio
-2. Select "Open an Existing Project"
-3. Navigate to the `DevfestNantesMobile` directory
-4. Wait for Gradle sync to complete
-
-#### 2. Configure Build Variants
-
-1. Open `Build Variants` panel (View > Tool Windows > Build Variants)
-2. Select `debug` build variant for development
-
-#### 3. Create Virtual Device
-
-1. Open AVD Manager (Tools > AVD Manager)
-2. Create a new virtual device:
-   - Device: Pixel 7 Pro (recommended)
-   - System Image: Android 14 (API 34) or Android 16 Preview (API 36)
-   - Configuration: Default settings
-
-#### 4. Build and Run Android App
+Open the root directory in Android Studio and let Gradle sync, or use the command line:
 
 ```bash
-# Command line build
-./gradlew :androidApp:assembleDebug
-
-# Install on connected device
-./gradlew :androidApp:installDebug
-
-# Run tests
-./gradlew :androidApp:testDebugUnitTest
+./gradlew :androidApp:assembleDebug     # Build the debug APK
+./gradlew :androidApp:installDebug      # Install on a connected device/emulator
 ```
 
-### iOS Setup (macOS only)
+The debug build uses the application id suffix `.dev` and the version name suffix `-DEBUG`, so it
+can be installed next to the Play Store version.
 
-#### 1. Generate Kotlin Framework
+If you use the [`android` CLI](https://developer.android.com/), `android run` builds, installs and
+launches the app (see `AGENTS.md`).
 
-Before opening the iOS project, generate the necessary Kotlin framework:
+## iOS
 
-```bash
-# Generate dummy framework (required for initial setup)
-./gradlew :shared:generateDummyFramework
-
-# Or build the full framework
-./gradlew :shared:syncFramework
-```
-
-#### 2. Open iOS Project
+The Xcode project builds the Kotlin framework itself: a build phase runs
+`./gradlew :shared:embedAndSignAppleFrameworkForXcode`.
 
 ```bash
-# Open in Xcode
 open iosApp/iosApp.xcodeproj
 ```
 
-#### 3. Configure iOS Project
-
-1. Select the `iosApp` scheme in Xcode
-2. Choose a simulator or connected device
-3. Verify the minimum deployment target is set to iOS 15.0
-
-#### 4. Recommended Simulator Setup
-
-For consistent testing, use the iPhone 16 Pro simulator with iOS 18.3.1:
+Select the `iosApp` scheme and a simulator, then build and run. From the command line:
 
 ```bash
-# Create simulator from command line
-xcrun simctl create "iPhone 16 Pro Test" com.apple.CoreSimulator.SimDeviceType.iPhone-16-Pro com.apple.CoreSimulator.SimRuntime.iOS-18-3
+xcodebuild -project iosApp/iosApp.xcodeproj -scheme iosApp -configuration Debug \
+  -destination 'platform=iOS Simulator,name=<simulator name>' build
 ```
 
-#### 5. Build and Run iOS App
-
-From Xcode:
-1. Select Product > Build
-2. Select Product > Run
-
-From command line:
-```bash
-# Build for simulator
-xcodebuild -project iosApp/iosApp.xcodeproj -scheme iosApp -configuration Debug -destination 'platform=iOS Simulator,name=iPhone 16 Pro,OS=18.3.1' build
-
-# Run tests
-xcodebuild test -project iosApp/iosApp.xcodeproj -scheme iosApp -destination 'platform=iOS Simulator,name=iPhone 16 Pro,OS=18.3.1'
-
-# Build for App Store (with proper dSYM generation)
-./scripts/build-ios-release.sh
-```
-
-## IDE Configuration
-
-### Android Studio Configuration
-
-#### 1. Install Useful Plugins
-
-Go to `Settings > Plugins` and install:
-- **Kotlin Multiplatform Mobile** (if not already installed)
-- **Detekt** (for code quality)
-- **GitToolBox** (for Git integration enhancements)
-
-#### 2. Code Style Configuration
-
-1. Go to `Settings > Editor > Code Style > Kotlin`
-2. Import the project's code style (if available) or configure:
-   - Indentation: 4 spaces
-   - Continuation indent: 8 spaces
-   - Tab size: 4
-
-#### 3. Build Configuration
-
-Ensure these settings in `Settings > Build, Execution, Deployment > Build Tools > Gradle`:
-- Use Gradle from: 'gradle-wrapper.properties' file
-- Gradle JVM: Project SDK (Java 11+)
-
-### Xcode Configuration
-
-#### 1. Code Formatting
-
-Set up consistent Swift formatting:
-1. Xcode > Preferences > Text Editing
-2. Enable "Automatic indent"
-3. Configure indentation to use 4 spaces
-
-#### 2. Simulator Configuration
-
-For optimal development experience:
-1. Simulator > Device > Manage Devices
-2. Create devices for different screen sizes:
-   - iPhone 16 Pro (main testing device)
-   - iPhone SE (small screen testing)
-   - iPad Pro (tablet testing)
-
-## Verification
-
-### 1. Verify Android Setup
-
-Run these commands to ensure everything works:
+To only check that the Kotlin code compiles for iOS:
 
 ```bash
-# Check Android setup
-./gradlew :androidApp:assembleDebug
-
-# Verify shared module builds
-./gradlew :shared:build
-
-# Run shared module tests
-./gradlew :shared:test
+./gradlew :shared:linkDebugFrameworkIosSimulatorArm64
 ```
 
-Expected output: Build successful with no errors.
+Firebase on iOS needs `iosApp/iosApp/GoogleService-Info.plist`, which is not committed: ask a
+maintainer for it (CI generates a mock one, see `.github/workflows/ios.yml`). Release builds and App Store uploads
+are covered in [iOS_BUILD_DSYM.md](iOS_BUILD_DSYM.md) and `scripts/README.md`.
 
-### 2. Verify iOS Setup
+## Testing
+
+Tests use JUnit 4, `kotlin.test` assertions, kotlinx-coroutines-test, Turbine and Robolectric. There
+is no mocking library: use the hand-written fakes in `core/testing` (`FakeDevFestNantesStore`,
+`FakeBookmarksStore`, `FakeAnalyticsService`, `NoOpPerformanceMonitoring`, `MainDispatcherRule`) and
+the fixtures in `core/model/.../stubs/` (`SessionFixtures`, `SpeakerFixtures`).
 
 ```bash
-# Verify framework generation
-./gradlew :shared:syncFramework
+# What CI runs: Android unit tests, KMP JVM tests and KMP Android host tests
+./gradlew testDebugUnitTest jvmTest testAndroidHostTest
 
-# Build iOS project
-xcodebuild -project iosApp/iosApp.xcodeproj -scheme iosApp -configuration Debug build
+# A single module
+./gradlew :feature:agenda:testDebugUnitTest
+./gradlew :core:data:jvmTest
+
+# KMP tests on the iOS simulator (macOS)
+./gradlew :shared:iosSimulatorArm64Test :core:data:iosSimulatorArm64Test
+
+# Instrumented smoke tests (device or emulator required)
+./gradlew connectedDebugAndroidTest
+
+# Merged coverage report (Kover, report-only, no threshold)
+./gradlew koverHtmlReport
 ```
 
-Expected output: Build successful with no errors.
+Where tests live:
 
-### 3. Test App Functionality
+| Kind | Location | Example |
+|---|---|---|
+| ViewModel / service unit tests | `feature/<name>/src/test/` | `AgendaViewModelTest`, `SessionFiltersServiceImplTest` |
+| Koin module wiring | `*/src/test/.../di/`, `shared/src/jvmTest/` | `SettingsModuleTest`, `KoinGraphTest` |
+| App start-up graph | `androidApp/src/test/.../di/` | `KoinStartupTest`, `ProductionGraphStartupTest` |
+| Store contract (fake and real) | `core/data/src/commonTest/` | `DevFestNantesStoreContractTest`, `GraphQLStoreMockServerTest` |
+| Live API (manual) | `core/data/src/jvmTest/` | `GraphQLStoreLiveNetworkTest` |
+| Instrumented smoke tests | `feature/<name>/src/androidTest/` | `SettingsSmokeTest` |
 
-#### Android Test Checklist
-- [ ] App launches successfully
-- [ ] Agenda screen loads data
-- [ ] Speaker list displays
-- [ ] Navigation between screens works
-- [ ] Pull-to-refresh functionality
+Conventions: test names are snake_case sentences (`french_filter_keeps_the_four_french_sessions`),
+expected values reference fixtures rather than retyped literals, and `*CharacterizationTest` classes
+pin current behavior, including known defects.
 
-#### iOS Test Checklist
-- [ ] App launches successfully
-- [ ] Agenda screen loads data
-- [ ] Speaker list displays
-- [ ] Navigation between screens works
-- [ ] Pull-to-refresh functionality
+## Code Quality
 
-## Common Issues
-
-### Android Issues
-
-#### Issue: Gradle sync fails
-**Solution:**
 ```bash
-# Clean and rebuild
-./gradlew clean build --refresh-dependencies
-
-# Clear Gradle cache
-rm -rf ~/.gradle/caches/
-./gradlew build
+./gradlew detekt               # Detekt + ktlint rules (config: linters/detekt-config.yml)
+./gradlew lint                 # Android lint
+bash scripts/di-gate.sh        # DI gate: no Hilt/Dagger, no service locator outside DI wiring
 ```
 
-#### Issue: Android SDK not found
-**Solution:**
-1. Verify `ANDROID_HOME` environment variable
-2. Check Android Studio SDK location in Preferences
-3. Ensure Android SDK is properly installed
+All three run in CI (`.github/workflows/android.yml`) together with unit tests, instrumented tests
+on API 34 and a debug build. `.github/workflows/ios.yml` builds the shared framework, runs the KMP
+iOS tests and builds the iOS app.
 
-#### Issue: Build tools version mismatch
-**Solution:**
-Update `build.gradle.kts` files to use consistent versions defined in `gradle/libs.versions.toml`.
+## Build Configuration
 
-### iOS Issues
+- **Convention plugins** (`build-logic/convention`): `devfest.android.application`,
+  `devfest.android.feature`, `devfest.android.library`, `devfest.android.koin`,
+  `devfest.kmp.library`, `devfest.detekt`. New modules should apply one of these instead of
+  configuring Android/Kotlin by hand.
+- **Build types:** `release` is minified and resource-shrunk with R8 (`proguard-rules.pro`);
+  `debug` adds the `.dev` suffix.
+- **OpenFeedback:** the `OPEN_FEEDBACK_*` `buildConfigField`s in `androidApp/build.gradle.kts` are
+  placeholders, and `OPEN_FEEDBACK_ENABLED` defaults to `false`. With the flag off, the session
+  screen falls back to a link to the web form. Real values are not committed.
+- **Firebase:** `androidApp/google-services.json` (committed) and
+  `iosApp/iosApp/GoogleService-Info.plist` (not committed).
+- **Secrets:** the Gradle Secrets plugin is applied to `:androidApp`; keep local values in
+  `local.properties`, which is not committed.
 
-#### Issue: "Kotlin framework doesn't exist"
-**Solution:**
+### Adding a feature module
+
+1. Create `feature/<name>/build.gradle.kts` applying `id("devfest.android.feature")`.
+2. Add `include(":feature:<name>")` to `settings.gradle.dcl`.
+3. Add `<Name>Route.kt`, `<Name>ViewModel.kt` and `di/<Name>Module.kt` under
+   `com.gdgnantes.devfest.feature.<name>`.
+4. Add the Koin module to `androidModules` (`androidApp/.../di/AndroidModules.kt`), and the route to
+   `Screen.kt` and the `NavHost` in `MainActivity`.
+5. Add a `<Name>ModuleTest` and, if relevant, a ViewModel test and a smoke test.
+
+## Updating the GraphQL Schema
+
+The schema lives in `core/network/src/commonMain/graphql/schema.graphqls`. To refresh it from the
+server with the Apollo Gradle plugin:
+
 ```bash
-# Generate the framework first
-./gradlew :shared:generateDummyFramework
-
-# Then open Xcode project
-open iosApp/iosApp.xcodeproj
-```
-
-#### Issue: Swift Package Manager build failures
-**Solution:**
-1. Clean build folder: Product > Clean Build Folder
-2. Reset package caches: File > Packages > Reset Package Caches
-3. Update to latest package versions: File > Packages > Update to Latest Package Versions
-
-#### Issue: KSP compatibility issues
-**Solution:**
-Verify Kotlin and KSP versions are compatible in `gradle/libs.versions.toml`:
-```toml
-kotlin = "2.2.0"
-ksp = "2.2.0-2.0.2"  # Should match Kotlin version
-```
-
-### Cross-Platform Issues
-
-#### Issue: Version catalog sync issues
-**Solution:**
-1. Check `gradle/libs.versions.toml` for syntax errors
-2. Ensure all versions are properly defined
-3. Run `./gradlew build --refresh-dependencies`
-
-#### Issue: KMP-NativeCoroutines integration
-**Solution:**
-Ensure proper dependency versions:
-```toml
-kmpNativeCoroutines = "1.0.0-ALPHA-45"
-```
-
-## Next Steps
-
-After successful setup:
-
-1. **Read the [Architecture Guide](ARCHITECTURE.md)** to understand the codebase structure
-2. **Review [Contributing Guidelines](../CONTRIBUTING.md)** for development workflow
-3. **Check [API Documentation](API.md)** for GraphQL integration details
-4. **Run the test suites** to ensure everything works correctly
-5. **Start with small changes** to familiarize yourself with the codebase
-
-## Getting Help
-
-If you encounter issues not covered in this guide:
-
-1. Check the [Troubleshooting Guide](TROUBLESHOOTING.md)
-2. Search existing [GitHub Issues](https://github.com/GDG-Nantes/DevfestNantesMobile/issues)
-3. Create a new issue with detailed error information
-4. Ask for help in the project's discussion forum
-
----
-
-**Estimated Setup Time:**
-- Android only: 30-45 minutes
-- Android + iOS: 60-90 minutes
-
-Happy coding! 🚀
-
-### 4. Updating GraphQL Schema
-
-To update your local `schema.graphqls` file from the Apollo GraphQL server, use the Apollo Gradle
-plugin:
-
-```
-./gradlew downloadApolloSchema \
+./gradlew :core:network:downloadApolloSchema \
   --endpoint="https://confetti-app.dev/graphql" \
-  --schema="shared/src/commonMain/graphql/schema.graphqls" \
+  --schema="core/network/src/commonMain/graphql/schema.graphqls" \
   --header="conference:devfestnantes2025"
 ```
 
-- The `--endpoint` flag should match the URL in your Apollo client configuration.
-- The `--header` flag allows you to specify custom HTTP headers (e.g.,
-  `conference:devfestnantes2025`) as defined in `Apollo.kt`.
-- You can add multiple `--header` flags if needed.
+The endpoint and the `conference` header must match `core/network/.../Apollo.kt`. Queries go in
+`operations.graphql`; client-side schema extensions in `extra.graphqls`.
 
-This ensures your local schema matches the server and respects authentication/context requirements.
+## Common Issues
+
+**Gradle sync fails after a dependency bump**
+Run `./gradlew clean build --refresh-dependencies`. Check that the KSP version matches the Kotlin
+version in `gradle/libs.versions.toml`.
+
+**kotlinx-datetime cannot be bumped**
+This is intentional. OpenFeedback depends on kotlinx-datetime 0.6.x at runtime, so the catalog pins
+a `0.6.x-compat` release and `OpenFeedbackDatetimeLinkageTest` fails on a plain bump. First-party
+code uses `kotlin.time.Instant` / `kotlin.time.Clock`.
+
+**Koin fails at start-up with a duplicate definition**
+Overriding is disabled on purpose. Remove the second binding instead of enabling overrides; tests
+that need overrides enable them in their own `appDeclaration`.
+
+**Instrumented tests fail with `NoSuchMethodError: registerDefaultInstance`**
+A protobuf-lite version from Espresso clashes with Firebase Performance. Exclude
+`com.google.protobuf:protobuf-lite` from the Espresso dependencies.
+
+**iOS build cannot find the `shared` module**
+Build once from Xcode so the Gradle build phase produces the framework, or run
+`./gradlew :shared:embedAndSignAppleFrameworkForXcode` with the Xcode environment set (see the
+"Build shared framework" step in `.github/workflows/ios.yml`).
+
+**Swift Package Manager failures**
+Product > Clean Build Folder, then File > Packages > Reset Package Caches.
+
+## Getting Help
+
+Search the [GitHub issues](https://github.com/GDG-Nantes/DevfestNantesMobile/issues) or open a new
+one with the error output.

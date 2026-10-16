@@ -1,200 +1,155 @@
 # DevFest Nantes Mobile App
 
-A Kotlin Multiplatform Mobile (KMM) application for the [DevFest Nantes](https://devfest.gdgnantes.com/) conference, providing attendees with schedules, speaker information, venue details, and more.
+The official app of the [DevFest Nantes](https://devfest.gdgnantes.com/) conference, for Android and
+iOS: schedule, speakers, venue, bookmarks and session feedback.
 
 ## 📱 Download
-
-Get the app from the official app stores:
 
 * **Android:** [Play Store](https://play.google.com/store/apps/details?id=com.gdgnantes.devfest.mobile.androidapp)
 * **iOS:** [App Store](https://apps.apple.com/fr/app/devfest-nantes/id6443489706)
 
-## 🏗️ Project Architecture
+## ✨ Features
 
-This project uses **Kotlin Multiplatform Mobile (KMM)** to share business logic between Android and iOS while maintaining platform-specific UI implementations.
+- **📅 Agenda:** sessions by day, with filters (language, complexity, room, session type, bookmarks)
+- **🎤 Speakers:** profiles, their sessions and social links
+- **📍 Venue:** venue information and floor plan
+- **⭐ Bookmarks:** save sessions you want to attend
+- **💬 Feedback:** rate sessions with [OpenFeedback](https://openfeedback.io/)
+- **🔄 Offline:** data already loaded stays available through a persistent GraphQL cache
+- **🌐 French and English**
+- **🔒 Consent:** analytics, crash reporting and performance monitoring can be turned on or off in
+  the Android app
 
-### Module Structure
+## 🏗️ Architecture
+
+The project is **Kotlin Multiplatform**. Data, network, domain and analytics code is shared between
+Android and iOS; each platform has its own native UI (Jetpack Compose on Android, SwiftUI on iOS).
 
 ```
-DevFestNantes/
-├── shared/                 # Shared business logic, models, and API clients
-├── shared-ui/             # Shared UI components and resources (experimental)
-├── androidApp/            # Android-specific UI and platform implementations
-├── iosApp/               # iOS-specific UI and platform implementations
-├── gradle/               # Gradle version catalog and wrapper
-└── buildSrc/             # Build configuration and plugins
+DevfestNantesMobile/
+├── androidApp/          # Android app shell: MainActivity, NavHost, app-level Koin setup
+├── feature/             # One Android module per screen area
+│   ├── agenda/  speakers/  session-detail/  venue/  about/  settings/
+├── core/
+│   ├── model/           # Domain types and test fixtures (KMP)
+│   ├── network/         # Apollo GraphQL client, schema, cache (KMP)
+│   ├── data/            # DevFestNantesStore facade, bookmarks (KMP)
+│   ├── analytics/       # Analytics and performance monitoring (KMP)
+│   ├── testing/         # Shared fakes and test helpers (KMP)
+│   └── ui/              # Compose theme and shared components (Android)
+├── shared/              # KMP framework consumed by iOS, Koin entry point
+├── iosApp/              # SwiftUI app (Xcode project)
+├── build-logic/         # Gradle convention plugins
+└── gradle/              # Wrapper and version catalog (libs.versions.toml)
 ```
+
+Dependencies flow one way: `androidApp → feature:* → core:ui → core:data → core:network /
+core:model`. Feature modules never depend on each other. See
+[documentation/ARCHITECTURE.md](documentation/ARCHITECTURE.md) for details.
 
 ### Technology Stack
 
-#### Shared (Kotlin Multiplatform)
-- **Kotlin Multiplatform** for shared business logic
-- **Apollo GraphQL** for API communication
-- **Kotlinx Coroutines** for asynchronous programming
-- **Kotlinx Serialization** for JSON handling
-- **KMP-NativeCoroutines** for iOS coroutines integration
+**Shared (Kotlin Multiplatform)**
+- Kotlin 2.4, Coroutines, Serialization
+- [Apollo Kotlin](https://www.apollographql.com/docs/kotlin) 5 with a memory + SQLite normalized cache
+- [Koin](https://insert-koin.io/) for dependency injection, started once by `initKoin()` in `:shared`
+- [KMP-NativeCoroutines](https://github.com/rickclephas/KMP-NativeCoroutines) to expose Flows to Swift
 
-#### Android
-- **Jetpack Compose** for modern UI
-- **Koin** for dependency injection (one module per Gradle module, composed by `initKoin()` in `:shared`; ViewModels resolved with `koinViewModel()`)
-- **Navigation Component** for app navigation
-- **Material 3** design system
-- **Firebase** for analytics, crash reporting, and performance monitoring (with user consent)
+**Android**
+- Jetpack Compose with Material 3, Navigation Compose
+- Koin (`koinViewModel()` in each feature's `*Route` composable)
+- Coil for images, Timber for logging
+- Firebase Analytics, Crashlytics, Performance and Remote Config
+- minSdk 26, compileSdk 37
 
-#### iOS
-- **SwiftUI** for native iOS UI
-- **Swift Package Manager** for dependencies
-- **iOS 15.0+** minimum deployment target
+**iOS**
+- SwiftUI, iOS 17.0+
+- Firebase iOS SDK via Swift Package Manager
+- SwiftGen for typed resources
+
+**Backend**
+- GraphQL API from [Confetti](https://github.com/joreilly/Confetti)
+- Session feedback from [OpenFeedback](https://openfeedback.io/)
 
 ## 🚀 Quick Start
 
 ### Prerequisites
 
-1. **Android Development:**
-   - [Android Studio](https://developer.android.com/studio) (latest stable)
-   - JDK 17
-   - Android SDK 36
+- JDK 17
+- [Android Studio](https://developer.android.com/studio) (latest stable)
+- For iOS: macOS with the latest stable [Xcode](https://developer.apple.com/xcode/) and
+  `brew install swiftgen`
 
-2. **iOS Development:**
-   - [Xcode](https://developer.apple.com/xcode/) 15.0+
-   - macOS 13.0+ (for iOS development)
-   - iOS 15.0+ deployment target
+### Build and run
 
-### Setup Instructions
-
-1. **Clone the repository:**
-   ```bash
-   git clone https://github.com/GDG-Nantes/DevfestNantesMobile.git
-   cd DevfestNantesMobile
-   ```
-
-2. **Android Setup:**
-   ```bash
-   # Open in Android Studio
-   # The project should sync automatically
-   
-   # Or build from command line
-   ./gradlew :androidApp:assembleDebug
-   ```
-
-3. **iOS Setup:**
-   ```bash
-   # Generate the Kotlin framework for iOS
-   ./gradlew :shared:linkDebugFrameworkIosSimulatorArm64
-   
-   # Open iOS project in Xcode
-   open iosApp/iosApp.xcodeproj
-   
-   # Build and run in Xcode or from command line
-   xcodebuild -project iosApp/iosApp.xcodeproj -scheme iosApp -configuration Debug build
-   ```
-
-### Development Workflow
-
-1. **Shared Module Development:** Make changes to business logic in the `shared/` module
-2. **Android UI:** Implement Android-specific UI in `androidApp/` using Jetpack Compose
-3. **iOS UI:** Implement iOS-specific UI in `iosApp/` using SwiftUI
-4. **Testing:** Run platform-specific tests and shared module tests
-
-For detailed setup instructions, see [documentation/DEVELOPMENT.md](documentation/DEVELOPMENT.md).
-
-## 🏛️ Architecture Overview
-
-The app follows a clean architecture pattern with clear separation of concerns:
-
-- **Data Layer** (`shared/`): GraphQL client, repositories, and data models
-- **Domain Layer** (`shared/`): Business logic and use cases
-- **Presentation Layer** (platform-specific): ViewModels and UI components
-
-### Key Features
-
-- **📅 Event Schedule:** Browse conference sessions by day, track, and time
-- **🎤 Speaker Profiles:** Detailed speaker information and social links
-- **📍 Venue Information:** Interactive venue maps and navigation
-- **⭐ Bookmarks:** Save favorite sessions for easy access
-- **🔄 Offline Support:** Cached data for offline viewing
-- **🌐 Multi-language:** Support for French and English
-- **🔒 Privacy-First:** User consent system for analytics and performance monitoring
-
-## 🔧 Dependencies & Tooling
-
-### Core Dependencies
-- **GraphQL Server:** Powered by [Confetti](https://github.com/joreilly/Confetti)
-- **Feedback System:** [OpenFeedback.io](https://openfeedback.io/) integration
-- **Analytics:** Firebase Analytics, Crashlytics, and Performance Monitoring (respects user consent)
-- **Version Management:** Gradle version catalog (`gradle/libs.versions.toml`)
-
-### Versioning Strategy
-The project uses **Calendar Versioning (CalVer)** with the `YYYY.0M.MICRO` format:
-- **YYYY**: Full year (e.g., 2025)
-- **0M**: Zero-padded month (e.g., 07 for July)
-- **MICRO**: Patch version (e.g., 00)
-
-This approach aligns releases with the DevFest Nantes conference schedule and provides clear timeline visibility. Version management is handled by project maintainers through GitHub releases.
-
-### Development Tools
-- **Code Quality:** Detekt for static analysis
-- **Build System:** Gradle with Kotlin DSL
-- **Testing:** JUnit, KMM test framework
-- **CI/CD:** GitHub Actions (configuration in `.github/`)
-
-## 🔄 Updating GraphQL Schema
-
-See [documentation/DEVELOPMENT.md](documentation/DEVELOPMENT.md#4-updating-graphql-schema) for
-instructions on updating your local `schema.graphqls` file using the Apollo Gradle plugin and custom
-headers.
-
-## 🧪 Testing
-
-The project includes comprehensive testing at multiple levels:
-
-- **Unit Tests:** Business logic testing in the shared module
-- **Platform Tests:** Android and iOS specific testing
-- **Integration Tests:** End-to-end feature testing
-
-Run tests with:
 ```bash
-# All tests
-./gradlew test
+git clone https://github.com/GDG-Nantes/DevfestNantesMobile.git
+cd DevfestNantesMobile
 
-# Android tests
-./gradlew :androidApp:testDebugUnitTest
+# Android
+./gradlew :androidApp:assembleDebug
+./gradlew :androidApp:installDebug
 
-# Shared module tests
-./gradlew :shared:test
+# iOS: Xcode builds the Kotlin framework itself through a Gradle build phase
+open iosApp/iosApp.xcodeproj
 ```
+
+The iOS app needs a `GoogleService-Info.plist` that is not committed; ask a maintainer. Full setup
+instructions are in [documentation/DEVELOPMENT.md](documentation/DEVELOPMENT.md).
+
+## 🧪 Testing and Code Quality
+
+```bash
+# Unit tests, as run in CI
+./gradlew testDebugUnitTest jvmTest testAndroidHostTest
+
+# Instrumented smoke tests (device or emulator)
+./gradlew connectedDebugAndroidTest
+
+# Static analysis and DI gate
+./gradlew detekt lint
+bash scripts/di-gate.sh
+
+# Coverage report (Kover)
+./gradlew koverHtmlReport
+```
+
+Tests use JUnit 4, Turbine, Robolectric and hand-written fakes from `core/testing`. CI runs on GitHub
+Actions (`.github/workflows/android.yml` and `ios.yml`). See
+[documentation/DEVELOPMENT.md](documentation/DEVELOPMENT.md#testing) for test layout and
+conventions.
+
+## 🔢 Versioning
+
+The app uses calendar versioning, `YYYY.0M.MICRO` (for example `2025.10.00`). Version numbers are
+managed by maintainers only; do not change them in pull requests. See
+[documentation/VERSIONING.md](documentation/VERSIONING.md).
 
 ## 🤝 Contributing
 
-We welcome contributions! Please see our [contribution guidelines](CONTRIBUTING.md) for details on:
+Contributions are welcome. Read [CONTRIBUTING.md](CONTRIBUTING.md) first. In short:
 
-- Setting up your development environment
-- Code style and conventions
-- Submitting pull requests
-- Reporting issues
-
-### Quick Contribution Checklist
-- [ ] Follow the established coding standards (see `.github/copilot-instructions.md`)
-- [ ] Add tests for new features
-- [ ] Update documentation as needed
-- [ ] Use conventional commit messages
+- Follow the coding conventions (Detekt must pass)
+- Add tests for new behavior
+- Update the documentation when you change something it describes
+- Use conventional commit messages
 
 ## 📚 Documentation
 
-- **[Architecture Guide](documentation/ARCHITECTURE.md)** - Detailed architecture overview
-- **[Development Setup](documentation/DEVELOPMENT.md)** - Complete setup instructions
-- **[Performance Monitoring](documentation/PERFORMANCE_MONITORING.md)** - Firebase Performance implementation and usage
-- **[Versioning Strategy](documentation/VERSIONING.md)** - Calendar versioning implementation and guidelines
-- **[API Documentation](documentation/API.md)** - GraphQL API integration details
-- **[Testing Guide](documentation/TESTING.md)** - Testing strategies and best practices
-- **[Troubleshooting](documentation/TROUBLESHOOTING.md)** - Common issues and solutions
-- **[Build System](documentation/BUILD.md)** - Gradle and build configuration details
+- **[Architecture](documentation/ARCHITECTURE.md)** - Modules, data flow, dependency injection,
+  navigation
+- **[Development](documentation/DEVELOPMENT.md)** - Setup, build, testing, GraphQL schema updates,
+  common issues
+- **[Performance Monitoring](documentation/PERFORMANCE_MONITORING.md)** - Firebase Performance and user
+  consent
+- **[Versioning](documentation/VERSIONING.md)** - Calendar versioning
+- **[iOS Release Builds](documentation/iOS_BUILD_DSYM.md)** - App Store builds and dSYMs
 
 ## 👩‍⚖️ License
 
 [![License](https://img.shields.io/badge/License-Apache_2.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
- 
-This project is licensed under the Apache license 2.0 - see the [LICENSE](LICENSE) file for details.
+
+This project is licensed under the Apache License 2.0. See the [LICENSE](LICENSE) file for details.
 
 ## 🙏 Acknowledgments
 

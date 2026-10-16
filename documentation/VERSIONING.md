@@ -43,8 +43,8 @@ Android and iOS app versions may differ due to:
 ```kotlin
 android {
     defaultConfig {
-        versionCode = 28          // Incremental integer
-        versionName = "2025.07.00" // CalVer format
+        versionCode = 37           // Incremental integer
+        versionName = "2025.10.00" // CalVer format
     }
 }
 ```
@@ -52,8 +52,11 @@ android {
 ### iOS (`iosApp.xcodeproj/project.pbxproj`)
 
 ```
-MARKETING_VERSION = 2025.07.00
+MARKETING_VERSION = 2025.10.00
 ```
+
+The iOS build number (`CURRENT_PROJECT_VERSION`) is bumped automatically by
+`scripts/build-ios-release.sh` (see [iOS_BUILD_DSYM.md](iOS_BUILD_DSYM.md)).
 
 ## Migration History
 
@@ -150,13 +153,10 @@ When reporting bugs or issues:
 
 All dependencies are managed through `gradle/libs.versions.toml` to maintain consistency. Version numbers for the application itself are managed separately by maintainers.
 
-### CI/CD Integration
+### CI/CD
 
-The CalVer format integrates seamlessly with GitHub Actions and release automation:
-- Automatic changelog generation
-- Release tagging using CalVer
-- App store deployment with proper versioning
-- All managed by project maintainers during release cycles
+GitHub Actions only builds and tests the apps; it does not bump versions or publish releases.
+Tagging, changelog updates and store uploads are done manually by maintainers.
 
 ## Migration Guidelines
 
@@ -176,7 +176,7 @@ The CalVer format integrates seamlessly with GitHub Actions and release automati
 
 ## Related Documentation
 
-- [README.md](../README.md) - Project overview with current version
+- [README.md](../README.md) - Project overview
 - [CHANGELOG.md](../CHANGELOG.md) - Version history and changes
 - [CONTRIBUTING.md](../CONTRIBUTING.md) - Development guidelines and practices
 
