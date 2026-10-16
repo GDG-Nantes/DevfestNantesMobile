@@ -173,6 +173,7 @@ None yet.
 - **Phase 3 follow-up — RESOLVED in Phase 4:** `:core:testing` now consumed (`testImplementation`) by `:core:ui` and `:androidApp` (fakes + `testDoublesModule`); Phase 5 extends it.
 - Note (not blocking, Phase 4): `com.google.dagger:dagger` remains on the release classpath only as a Firebase Performance internal transitive; the DI gate and `NO-HILT-ON-CLASSPATH` cover Hilt itself.
 - Note (not blocking, Phase 4 UAT): speaker images may fail to load on networks with SSL interception/blocking of raw.githubusercontent.com — environmental, observed on Android and iOS, not a code regression.
+- Follow-up (not blocking, G-05-3): kotlinx-datetime resolves to `0.8.0-0.6.x-compat` because OpenFeedback 1.0.0-alpha.3 (and every release up to alpha.6) links against the 0.6.x `Instant`/`Clock` classes, which plain 0.8.0 no longer ships. Compat releases end with 0.8.x, so any move to 0.9+ first needs an OpenFeedback release built on `kotlin.time.Instant` (upstream main was still on the deprecated type as of 2026-10-15). `OpenFeedbackDatetimeLinkageTest` fails CI on any bump that drops the compat classes. The Phase 02 R8 suppression premise was false: the secrets plugin sets OPEN_FEEDBACK_ENABLED from local.properties, so the feedback code was reachable on developer and release builds. The suppressions were removed in 05-11.
 
 ## Phase 02 DCL pilot outcome
 
@@ -215,6 +216,8 @@ No re-pilot of DCL's software-type surface was attempted; nothing found this ses
 | BUILD-07 | Build files migrated to `.gradle.dcl` where AGP/KMP support allows; unsupported modules documented on `.kts` with the reason | `settings.gradle.dcl` converted; `androidApp`/`shared` stay on `.kts` | Matched — satisfied via the explicit partial-migration branch (D-08), not the full-migration branch | N/A — see `## Phase 02 DCL pilot outcome` above for the full outcome record and the specific reason `androidApp`/`shared` are undocumented-for-DCL-support |
 
 **kotlinx-datetime `Instant`/`Clock` migration surface (assumption A2, closes an open research question so Phase 3 does not re-investigate):** `kotlinx.datetime.Instant`'s typealias to `kotlin.time.Instant` survived (deprecated, not removed) into kotlinx-datetime 0.8.0 — `ScheduleSlot.kt`/`Agenda.kt` (shared/model) needed zero code changes. However `kotlinx.datetime.Clock`'s typealias does **not** carry `.System` through to `kotlin.time.Clock` the same way — any call site using `Clock.System` directly (not just `Instant`) needs its import swapped to `kotlin.time.Clock`. One such call site existed outside the shared/model scope: `androidApp/.../ui/screens/agenda/Agenda.kt`, fixed with a one-line import swap. Grep for `kotlinx.datetime.Clock` before assuming a future kotlinx-datetime bump is a no-op.
+
+**G-05-3 amendment (Phase 05):** the shipped kotlinx-datetime artifact is now `0.8.0-0.6.x-compat` (0.8.0 plus the deprecated `Instant`/`Clock` classes that OpenFeedback's prebuilt bytecode links against), and first-party imports moved to `kotlin.time.Instant` in 05-11. This amends the BUILD-06 row above from "0.8.0" to its compat twin; the compat classes are a runtime-only bridge for OpenFeedback.
 
 **Apollo cache import paths actually used (authoritative, for Phase 3 reuse):**
 
