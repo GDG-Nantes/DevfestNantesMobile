@@ -5,59 +5,51 @@ titles: json
 findings:
   - id: WR-01
     severity: warning
-    disposition: fixed
-    title: "`KoinStartupTest` performs a real Firebase Remote Config fetch"
+    disposition: open
+    title: "`Agenda.Builder` puts sessions that start up to 24h before a conference day into that day"
   - id: WR-02
     severity: warning
-    disposition: fixed
-    title: "Firebase singletons are shared across Robolectric tests and are never reset"
+    disposition: open
+    title: "`ScheduleSlot` throws on construction for default or malformed dates, and `compareTo` can overflow"
   - id: WR-03
     severity: warning
-    disposition: fixed
-    title: "Two pinned production defects are not recorded in `deferred-items.md`"
+    disposition: open
+    title: "Agenda sorts by raw date string, while bucketing parses instants"
   - id: IN-01
     severity: info
     disposition: open
-    title: "Stale and redundant text in the characterization tests"
+    title: "Linkage test name claims sorting, and two statements assert nothing"
   - id: IN-02
     severity: info
     disposition: open
-    title: "Characterization tests are blind to a non-Paris device time zone"
+    title: "Reflection helpers fail opaquely on an OpenFeedback bump"
   - id: IN-03
     severity: info
     disposition: open
-    title: "Live-network canary tests assert nothing"
+    title: "Display-format assertion is very weak and locale-fixed"
   - id: IN-04
     severity: info
     disposition: open
-    title: "Mock server tests depend on the exact number of requests the store makes"
-  - id: IN-05
-    severity: info
-    disposition: open
-    title: "`VenueViewModelTest` builds the ViewModel before the dispatcher rule starts"
-  - id: IN-06
-    severity: info
-    disposition: open
-    title: "Test-only code ships in production source sets"
-open: 6
-total: 9
-recorded: 2026-10-16T12:04:52.878Z
+    title: "Version pin depends on Gradle's ordering of an unconventional qualifier"
+open: 7
+total: 7
+recorded: 2026-10-16T14:55:40.000Z
 ---
 
 # Phase 05: Code Review Disposition
 
 | Finding | Severity | Disposition | Source |
 |---------|----------|-------------|--------|
-| WR-01 | warning | fixed | 05-REVIEW-FIX.md |
-| WR-02 | warning | fixed | 05-REVIEW-FIX.md |
-| WR-03 | warning | fixed | 05-REVIEW-FIX.md |
+| WR-01 | warning | open | pre-existing code (05-11 changed only the import line) |
+| WR-02 | warning | open | pre-existing code (05-11 changed only the import line) |
+| WR-03 | warning | open | pre-existing code (05-11 changed only the import line) |
 | IN-01 | info | open | - |
 | IN-02 | info | open | - |
 | IN-03 | info | open | - |
 | IN-04 | info | open | - |
-| IN-05 | info | open | - |
-| IN-06 | info | open | - |
 
 Dispositions: `open` (recorded, not yet triaged), `fixed`, `skipped`, `deferred`.
 Set `deferred` by hand and put the reason in the Source cell; both are preserved. A `|` in the reason is kept as prose and escaped on the next run.
 Re-running the gate keeps every row it can. A row the current review no longer reports is kept and its Source cell flagged, so a finding does not leave this record silently. ONE exception: when a finding id is REUSED by a different finding, the earlier decision cannot keep a row — the id is taken — and it is dropped. A RECORDED decision (anything but `open`) is named on the console when that happens; a row still at `open` is replaced silently, because `open` records no decision to lose.
+
+**Id reuse on this run (2026-10-16):** the incremental 05-11 review reused WR-01..03 and IN-01..04. The previous review's recorded decisions — WR-01, WR-02, WR-03 `fixed` (05-REVIEW-FIX.md, commits 399059c, c17825e, f5ed59f) and IN-01..06 `open` — were superseded by id and are preserved in git history (05-REVIEW-DISPOSITION.md at 9fe8760).
