@@ -4,6 +4,10 @@ trigger: "UAT G-05-3 (Phase 05 test 3): crashed. I changed the flag on Firebase 
 created: 2026-10-16T13:30:00Z
 updated: 2026-10-16T14:15:00Z
 goal: find_root_cause_only
+audit_acknowledged:
+  milestone: v1.0
+  at: 2026-10-16
+  status: diagnosed
 ---
 
 ## Current Focus
