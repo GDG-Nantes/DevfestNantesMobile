@@ -28,3 +28,9 @@ Production behavior the Phase 5 tests expose. Each entry is characterized by a t
 ## From 05-07 (CI)
 
 12. **`./gradlew connectedDebugAndroidTest` / `assembleDebugAndroidTest` intermittently fails with `java.lang.OutOfMemoryError: Java heap space` in D8** (`mergeExtDexDebugAndroidTest`, then `packageDebugAndroidTest` of `:feature:session-detail`) with `org.gradle.jvmargs=-Xmx4096M`. Not caused by Phase 5 code: it reproduced locally on the 05-06 commit `7182cc9` (first run failed, second passed) and on 05-07 HEAD, and the instrumentation job passed after a rerun (android.yml run 38873089664, attempts 1 and 2 red, attempt 3 green). A larger Gradle heap in `gradle.properties` or a lower worker count in the instrumentation job would likely stop it; left alone because it is build configuration outside this plan.
+
+## From 05-08 (session, speaker, partners, data-collection, feedback and venue ViewModels)
+
+13. **`SessionViewModel` does not handle a failing `store.getSession`.** The load in `init` has no `catch`, so a store error escapes `viewModelScope` uncaught (the app would crash) and `session` stays `null`. Same defect as items 9 and 10. Pinned by `SessionViewModelTest.store_failure_is_characterized`.
+14. **`SpeakerViewModel` reports `UiState.SUCCESS` for an unknown speaker id** (null speaker, empty sessions), and has no error state; it also has no `catch` around `getSpeaker` / `getSpeakerSessions`. Pinned by `SpeakerViewModelTest.unknown_speaker_still_reports_success_with_null_speaker`.
+15. **`PartnersViewModel` never exposes the `PARTNERS` category** (no flow for it), so partners filed under it are not shown by the screen. Pinned by `PartnersViewModelTest.partners_category_is_not_exposed`.
