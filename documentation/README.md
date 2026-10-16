@@ -22,8 +22,8 @@ Documentation for the DevFest Nantes mobile app.
 
 - [../CONTRIBUTING.md](../CONTRIBUTING.md) - Contribution guidelines
 - [../CHANGELOG.md](../CHANGELOG.md) - Version history
-- [../AGENTS.md](../AGENTS.md) - Instructions for AI coding agents
-- [../.github/copilot-instructions.md](../.github/copilot-instructions.md) - GitHub Copilot instructions
+- [../AGENTS.md](../AGENTS.md) - Instructions for AI coding agents (single source; `CLAUDE.md` and
+  `.github/copilot-instructions.md` point to it)
 - [../scripts/README.md](../scripts/README.md) - iOS build scripts
 - [../gradle/libs.versions.toml](../gradle/libs.versions.toml) - Dependency versions
 - [../settings.gradle.dcl](../settings.gradle.dcl) - Module list

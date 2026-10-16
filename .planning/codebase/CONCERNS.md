@@ -10,21 +10,21 @@ last_mapped_at: 2026-10-16
 
 ## Tech Debt
 
-**Unfinished event filtering in analytics:**
-- Issue: Event filter is a placeholder that only logs via Timber; no real filtering is applied.
-- Files: `core/analytics/src/androidMain/kotlin/com/gdgnantes/devfest/core/analytics/FirebaseAnalyticsService.kt` (line 26)
-- Impact: All analytics events pass through unfiltered; the data-collection settings screen may imply control that is not enforced at this layer.
-- Fix approach: Implement the filter (or remove the stub) and verify it is applied before events reach Firebase, consistent with the consent flow in `feature/settings/src/main/java/com/gdgnantes/devfest/feature/settings/datacollection/DataCollectionSettingsScreen.kt`.
-
-**Documentation improvement backlog:**
-- Issue: A standalone doc-improvement list lives at the repository root and has not been folded into the project docs.
-- Files: `DOC_IMPROVEMENTS.md`
-- Impact: Known documentation gaps remain tracked outside the planning system.
-- Fix approach: Triage the list into GSD phases or close the items.
+**Unimplemented "filter" analytics event:**
+- Issue: `AnalyticsService.eventFilter()` is meant to log that the user applied an agenda filter. The Android implementation is a stub (`Timber.d("TODO: eventFilter")`) and nothing on Android calls it. It is not a privacy filter: analytics consent is applied separately through `setAnalyticsCollectionEnabled` in `DataCollectionSettingsServiceImpl`.
+- Files: `core/analytics/src/commonMain/kotlin/com/gdgnantes/devfest/core/analytics/AnalyticsService.kt` (line 9), `core/analytics/src/androidMain/kotlin/com/gdgnantes/devfest/core/analytics/FirebaseAnalyticsService.kt` (lines 25-27); iOS counterpart in `iosApp/iosApp/Analytics/FirebaseAnalyticsService.swift`
+- Impact: Agenda filter usage is not measured on Android.
+- Fix approach: Log a Firebase event (with the filter type as a parameter) and call it from the agenda filters, or remove the method from the interface, the fakes and the iOS service.
 
 ## Known Bugs
 
-Not detected from static exploration. No open bug tracker was inspected; the analysis did not run the app or the test suite.
+**`PerformanceInitializer` overrides the user's performance-monitoring consent:**
+- Symptoms: Firebase Performance collection is enabled at every app start, even when the user turned "Firebase Performance" off (or never consented) in the data-collection settings.
+- Files: `androidApp/src/main/java/com/gdgnantes/devfest/androidapp/core/performance/PerformanceInitializer.kt` (line 42), `androidApp/src/main/java/com/gdgnantes/devfest/androidapp/di/AppModule.kt` (lines 45-50), `feature/settings/src/main/java/com/gdgnantes/devfest/feature/settings/services/DataCollectionSettingsService.kt` (lines 108-110)
+- Trigger: `applicationInitializers` run in order `DataSharingInitializer`, `OpenFeedbackInitializer`, `PerformanceInitializer`. `DataSharingInitializer` applies the stored consent (`isPerformanceCollectionEnabled = <consent>`), then `PerformanceInitializer.invoke()` unconditionally sets `FirebasePerformance.getInstance().isPerformanceCollectionEnabled = true`. The Firebase setting is persisted by the SDK, so it stays on until the user toggles the setting again in the same session.
+- Impact: Privacy/GDPR: performance data is collected without consent, contradicting the consent dialog and settings screen. The documented intent ("stored consent must be applied before performance collection is enabled") is defeated rather than enforced.
+- Fix approach: Remove the `isPerformanceCollectionEnabled = true` line from `PerformanceInitializer` (it should only stop the `app_startup` trace), leaving `DataCollectionSettingsService` as the single writer of that flag. Add a test in `androidApp/src/test/.../di/` that runs the initializers with performance consent off and asserts collection stays disabled.
+- Test coverage: None. `KoinStartupTest` and `ProductionGraphStartupTest` check the initializer order, not the resulting Firebase flag.
 
 ## Security Considerations
 
@@ -40,10 +40,10 @@ Not detected from static exploration. No open bug tracker was inspected; the ana
 - Recommendations: If deep links are added later, validate incoming intent data before use.
 
 **Working-tree artifacts at repository root:**
-- Risk: Build and log output (`ios.log`, `xcodebuild.log`, `logo-long.afdesign`) and a `local.properties` file sit at the repository root. They are not tracked in git, but their presence increases the chance of accidental commits of local paths or logs.
-- Files: `ios.log`, `xcodebuild.log`, `local.properties`
-- Current mitigation: Not verified against `.gitignore` in this analysis.
-- Recommendations: Confirm these are ignored by `.gitignore` and delete stale logs.
+- Risk (low): Build and log output (`ios.log`, `xcodebuild.log`), a design file (`logo-long.afdesign`) and `local.properties` sit at the repository root. They are not tracked in git.
+- Files: `ios.log`, `xcodebuild.log`, `logo-long.afdesign`, `local.properties`
+- Current mitigation: All four are ignored by `.gitignore` (`*.log`, `local.properties`, `*.afdesign`; verified with `git check-ignore`).
+- Recommendations: Delete the stale logs; no further action needed.
 
 ## Performance Bottlenecks
 
@@ -68,7 +68,7 @@ Not applicable. This is a single-event conference app with a bounded dataset ser
 
 ## Dependencies at Risk
 
-Not assessed in detail. Versions are managed in the Gradle version catalog (`gradle/libs.versions.toml` if present); a full outdated-dependency audit was not performed.
+Not assessed in detail. Versions are managed in the Gradle version catalog (`gradle/libs.versions.toml`); a full outdated-dependency audit was not performed. Known pin: kotlinx-datetime stays on a `0.6.x-compat` release because OpenFeedback `1.0.0-alpha.3` needs 0.6.x at runtime (guarded by `OpenFeedbackDatetimeLinkageTest`).
 
 ## Missing Critical Features
 
@@ -82,10 +82,10 @@ Not detected from static exploration.
 - Risk: Layout and navigation regressions go unnoticed until manual QA.
 - Priority: Medium
 
-**Analytics filtering:**
-- What's not tested: The placeholder event filter in `FirebaseAnalyticsService.kt` has no coverage.
-- Files: `core/analytics/src/androidMain/kotlin/com/gdgnantes/devfest/core/analytics/FirebaseAnalyticsService.kt`
-- Risk: Privacy-relevant behavior changes silently.
+**Consent applied at start-up:**
+- What's not tested: The effective Firebase collection flags after `applicationInitializers` run. Only the initializer order is asserted.
+- Files: `androidApp/src/test/java/com/gdgnantes/devfest/androidapp/di/KoinStartupTest.kt`, `androidApp/src/main/java/com/gdgnantes/devfest/androidapp/core/performance/PerformanceInitializer.kt`
+- Risk: Consent regressions such as the `PerformanceInitializer` bug above go unnoticed.
 - Priority: High
 
 ---
