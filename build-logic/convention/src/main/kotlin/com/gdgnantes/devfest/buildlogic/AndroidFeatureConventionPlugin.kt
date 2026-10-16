@@ -23,6 +23,11 @@ class AndroidFeatureConventionPlugin : Plugin<Project> {
                 add("implementation", project(":core:model"))
                 add("implementation", project(":core:analytics"))
                 add("testImplementation", project(":core:testing"))
+                add("androidTestImplementation", project(":core:testing"))
+                add("androidTestImplementation", libs.findLibrary("androidx-compose-ui-test-junit4").get())
+                add("androidTestImplementation", libs.findLibrary("androidx-test-ext-junit").get())
+                add("androidTestImplementation", libs.findLibrary("androidx-test-runner").get())
+                add("androidTestImplementation", libs.findLibrary("koin-test-junit4").get())
             }
         }
     }
