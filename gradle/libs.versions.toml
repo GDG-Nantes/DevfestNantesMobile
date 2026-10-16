@@ -24,7 +24,15 @@ kmpNativeCoroutines = "1.0.6"
 kotlin = "2.4.20"
 ksp = "2.3.12"
 kotlinxCoroutines = "1.11.0"
-kotlinxDatetime = "0.8.0"
+# kotlinx-datetime 0.8.0 plus the deprecated Instant/Clock classes that io.openfeedback
+# 1.0.0-alpha.3 (built on kotlinx-datetime 0.6.x) links against at runtime. Plain 0.8.0 crashes the
+# session detail feedback area with NoClassDefFoundError (G-05-3).
+# First-party code must use kotlin.time.Instant / kotlin.time.Clock.
+# Compat releases end with 0.8.x: moving past 0.8.x needs an OpenFeedback release built on
+# kotlin.time.Instant first.
+# A plain kotlinx-datetime bump (for example a Dependabot PR) is rejected by
+# OpenFeedbackDatetimeLinkageTest.
+kotlinxDatetime = "0.8.0-0.6.x-compat"
 kotlinxSerialization = "1.11.0"
 koin = "4.2.2"
 kover = "0.9.11"

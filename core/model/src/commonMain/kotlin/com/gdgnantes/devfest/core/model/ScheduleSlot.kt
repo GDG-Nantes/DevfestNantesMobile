@@ -1,6 +1,6 @@
 package com.gdgnantes.devfest.core.model
 
-import kotlinx.datetime.Instant
+import kotlin.time.Instant
 
 data class ScheduleSlot(
     val endDate: String = "",
