@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--
+  Test-only. FirebaseApp.initializeApp initializes Crashlytics eagerly for the default app, and
+  Crashlytics refuses to start without a build id. The Crashlytics Gradle plugin injects that id
+  into :androidApp only, so this module's Robolectric tests declare the same value the plugin
+  writes for debug builds. src/test/res goes into the unit-test resource APK and never ships.
+-->
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <string name="com.google.firebase.crashlytics.mapping_file_id" tools:ignore="UnusedResources,TypographyDashes" translatable="false">00000000000000000000000000000000</string>
+</resources>
