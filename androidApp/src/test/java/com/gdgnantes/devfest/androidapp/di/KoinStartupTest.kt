@@ -62,7 +62,8 @@ import kotlin.test.assertNotNull
  * production definitions the doubles replace. The `:core:testing` doubles replace
  * `DevFestNantesStore`, `BookmarksStore`, `AnalyticsService` and `PerformanceMonitoring`; test-local
  * fakes replace `DataCollectionSettingsService` and `Timber.Tree`. Only `FirebaseRemoteConfig` (against
- * a FirebaseApp initialised with dummy options) and `SessionFiltersServiceImpl` run unfaked here. The
+ * a FirebaseApp initialised with dummy options) and `SessionFiltersServiceImpl` run unfaked here;
+ * `FeedbackFormViewModel` is resolved against an offline `FeedbackFlags` so no fetch starts. The
  * unmodified production graph, including those real definitions, is covered by
  * [ProductionGraphStartupTest].
  */
@@ -121,13 +122,23 @@ class KoinStartupTest {
         assertNotNull(koin.get<SessionViewModel> { parametersOf("session-1") })
     }
 
-    // FeedbackFormViewModel depends on the FeedbackFlags seam (D-23) and fetches in its init block;
-    // the production FirebaseFeedbackFlags wraps the real remote config, exercised here against the
-    // dummy FirebaseApp.
+    // The production FeedbackFlags binding wraps the real remote config. Resolving it builds the
+    // FirebaseRemoteConfig handle against the dummy FirebaseApp but does not fetch: the fetch only
+    // starts in FeedbackFormViewModel's init block, which this test deliberately does not run.
     @Test
-    fun feedback_form_view_model_resolves_with_real_remote_config() {
-        assertNotNull(koin.get<FeedbackFormViewModel>())
+    fun feedback_flags_resolve_to_the_real_remote_config_binding() {
         assertIs<FirebaseFeedbackFlags>(koin.get<FeedbackFlags>())
+    }
+
+    // FeedbackFormViewModel fetches in its init block (D-23), so it is resolved against a no-op
+    // FeedbackFlags: the CI unit-test job stays offline and deterministic.
+    @Test
+    fun feedback_form_view_model_resolves_with_offline_flags() {
+        koin.loadModules(
+            listOf(module { factory<FeedbackFlags> { OfflineFeedbackFlags } })
+        )
+
+        assertNotNull(koin.get<FeedbackFormViewModel>())
     }
 
     @Test
@@ -162,6 +173,13 @@ class KoinStartupTest {
                 single<Timber.Tree> { Timber.DebugTree() }
             }
         )
+
+    private object OfflineFeedbackFlags : FeedbackFlags {
+        override fun getBoolean(key: String): Boolean = false
+
+        override fun fetchAndActivate(onComplete: (successful: Boolean, activated: Boolean) -> Unit) =
+            Unit
+    }
 
     private class FakeDataCollectionSettingsService : DataCollectionSettingsService {
         override val isDataCollectionAgreementSet: Boolean = false
