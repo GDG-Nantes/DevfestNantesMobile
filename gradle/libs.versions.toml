@@ -7,6 +7,7 @@ androidXTestRunnerVersion = "1.6.2"
 androidXJUnitVersion = "1.2.1"
 appollo = "5.2.0"
 appolloCache = "1.0.8"
+apolloMockserver = "0.3.1"
 browser = "1.8.0"
 coreKtx = "1.16.0"
 coil = "2.7.0"
@@ -69,6 +70,7 @@ androidx-test-truth = { group = "androidx.test.ext", name = "truth", version.ref
 
 android-gradlePlugin = { group = "com.android.tools.build", name = "gradle", version.ref = "agp" }
 
+apollo-mockserver = { group = "com.apollographql.mockserver", name = "apollo-mockserver", version.ref = "apolloMockserver" }
 appollo-runtime = { group = "com.apollographql.apollo", name = "apollo-runtime", version.ref = "appollo" }
 appollo-normalized-cache = { group = "com.apollographql.cache", name = "normalized-cache", version.ref = "appolloCache" }
 appollo-normalized-cache-sqlite = { group = "com.apollographql.cache", name = "normalized-cache-sqlite", version.ref = "appolloCache" }
