@@ -5,13 +5,13 @@ import com.gdgnantes.devfest.core.data.BookmarksStore
 import com.gdgnantes.devfest.core.data.DevFestNantesStore
 import com.gdgnantes.devfest.core.testing.FakeAnalyticsService
 import com.gdgnantes.devfest.core.testing.FakeBookmarksStore
+import com.gdgnantes.devfest.core.testing.FakeDevFestNantesStore
 import org.koin.core.error.DefinitionOverrideException
 import org.koin.dsl.koinApplication
 import org.koin.dsl.module
 import kotlin.test.Test
 import kotlin.test.assertFailsWith
 import kotlin.test.assertIs
-import kotlin.test.assertNotNull
 
 class TestDoublesModuleTest {
     // Stands in for a production binding; any BookmarksStore that is not the fake will do.
@@ -27,7 +27,7 @@ class TestDoublesModuleTest {
 
         assertIs<FakeBookmarksStore>(koin.get<BookmarksStore>())
         assertIs<FakeAnalyticsService>(koin.get<AnalyticsService>())
-        assertNotNull(koin.get<DevFestNantesStore>())
+        assertIs<FakeDevFestNantesStore>(koin.get<DevFestNantesStore>())
     }
 
     @Test

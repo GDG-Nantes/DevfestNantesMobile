@@ -5,12 +5,14 @@ import com.gdgnantes.devfest.core.data.BookmarksStore
 import com.gdgnantes.devfest.core.data.DevFestNantesStore
 import com.gdgnantes.devfest.core.testing.FakeAnalyticsService
 import com.gdgnantes.devfest.core.testing.FakeBookmarksStore
-import com.gdgnantes.devfest.core.testing.fakeDevFestNantesStore
+import com.gdgnantes.devfest.core.testing.FakeDevFestNantesStore
 import org.koin.core.module.Module
 import org.koin.dsl.module
 
 /**
- * Replaces the production store, bookmarks and analytics bindings with in-memory fakes.
+ * Replaces the production store, bookmarks and analytics bindings with in-memory fakes. The store is
+ * a [FakeDevFestNantesStore], seeded with the shared fixtures. Tests that need to push data or make
+ * it fail resolve it from Koin and cast it to that type.
  *
  * List it AFTER the production modules and enable overriding, for example
  * `koinApplication { allowOverride(true); modules(sharedModules + testDoublesModule) }`.
@@ -19,7 +21,7 @@ import org.koin.dsl.module
  */
 val testDoublesModule: Module =
     module {
-        single<DevFestNantesStore> { fakeDevFestNantesStore() }
+        single<DevFestNantesStore> { FakeDevFestNantesStore() }
         single<BookmarksStore> { FakeBookmarksStore() }
         single<AnalyticsService> { FakeAnalyticsService() }
     }
