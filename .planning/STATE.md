@@ -3,16 +3,16 @@ gsd_state_version: "1.0"
 current_phase: 05
 current_phase_name: Test Coverage Retrofit
 status: executing
-stopped_at: Completed 05-04-PLAN.md
-last_updated: "2026-10-16T07:24:24.940Z"
+stopped_at: Completed 05-05-PLAN.md
+last_updated: "2026-10-16T07:53:06.072Z"
 last_activity: 2026-10-15
 last_activity_desc: Phase 05 execution started
-state_head: fbd36f8719b2062a50d6470bfe2cd13585bad2e9
+state_head: bcdfebe1ba4ac89fea6f33c1f752a729ab9d9346
 progress:
   total_phases: 5
   completed_phases: 4
   total_plans: 36
-  completed_plans: 30
+  completed_plans: 31
   percent: 80
 ---
 
@@ -28,7 +28,7 @@ See: .planning/PROJECT.md (updated 2026-10-13)
 ## Current Position
 
 Phase: 05 (Test Coverage Retrofit) — EXECUTING
-Plan: 5 of 10
+Plan: 6 of 10
 Status: Ready to execute
 Last activity: 2026-10-15 — Phase 05 execution started
 
@@ -91,6 +91,7 @@ Progress: [████████░░] 80%
 | Phase 05 P02 | 35 min | 3 tasks | 13 files |
 | Phase 05 P03 | 40 min | 2 tasks | 8 files |
 | Phase 05 P04 | 50 min | 3 tasks | 10 files |
+| Phase 05 P05 | 25 min | 2 tasks | 8 files |
 
 ## Accumulated Context
 
@@ -142,6 +143,7 @@ Recent decisions affecting current work:
 - [Phase 05]: 05-02: date parsing is shared kotlin.time.Instant in :core:model; localized display stays on Android APIs; OpenFeedback fallback URL date is LocalDate.toString() (ASCII, user-approved D-05)
 - [Phase 05]: 05-03: fixed hand-written fixtures (SessionFixtures/SpeakerFixtures/PartnerFixtures) in :core:model replace all random stubs; buildXStub() are deterministic wrappers; Mocked store implements getSpeakerSessions — Single deterministic source for previews, mocked store and later tests; buildVenueStub left byte-identical as the production offline fallback
 - [Phase 05]: 05-04: GraphQLStore and mappers tested offline via Apollo MockServer 0.3.1 with recorded responses as Kotlin string constants; data builders generated into :core:network commonMain; cacheKeyGenerator/cacheResolver split into ApolloCacheKeys.kt; testAndroidHostTest enabled for :core:data and run in CI — iOS commonTest cannot load resources; one file's top-level vals share an initializer so the split keeps tests from building the production SQLite client; production defects found (100/110 speakers, RoomSortIndex ids, println logging) are logged in deferred-items.md and not fixed (D-10)
+- [Phase 05]: 05-05: store contract is abstract and runs against Mocked and GraphQLStore-on-MockServer on three runtimes; bookmarks, agenda filter and consent keys/formats pinned by Robolectric tests with literal keys; test-only Crashlytics id lives in feature/settings/src/test/res and is absent from packaged resources — MockServer.Builder() replaces the deprecated MockServer(handler); one contract keeps mock and real store honest, prefs tests protect saved user state across refactors
 
 ### Pending Todos
 
@@ -224,6 +226,6 @@ Items acknowledged and deferred at milestone close, most recent first:
 
 ## Session Continuity
 
-Last session: 2026-10-16T07:24:24.906Z
-Stopped at: Completed 05-04-PLAN.md
+Last session: 2026-10-16T07:53:06.038Z
+Stopped at: Completed 05-05-PLAN.md
 Resume file: None
