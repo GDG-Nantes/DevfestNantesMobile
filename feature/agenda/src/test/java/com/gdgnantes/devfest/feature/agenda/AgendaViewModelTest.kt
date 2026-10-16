@@ -162,7 +162,7 @@ class AgendaViewModelTest {
     fun french_and_advanced_returns_only_les_secrets_du_rendu_web() {
         filters.setFilters(setOf(french, advanced))
 
-        assertEquals(idsOf(SessionFixtures.webRendering), viewModel().allIds())
+        assertEquals(setOf(SessionFixtures.webRendering.id), viewModel().allIds())
     }
 
     @Test
