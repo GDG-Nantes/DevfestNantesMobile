@@ -18,7 +18,8 @@ import kotlin.test.assertTrue
  * D-07 characterization tests for [getFallbackUrlForSession].
  *
  * They pin today's URL, including the `//` that comes from `OPENFEEDBACK_BASE_URL` already ending
- * with a slash, and MUST pass unchanged after the swap to the shared parser. The single deliberate
+ * with a slash (tracked as deferred item 17 in `deferred-items.md`; fixing it means updating the
+ * expected URLs here), and MUST pass unchanged after the swap to the shared parser. The single deliberate
  * behavior change (D-05) is covered separately by `fallback_url_is_ascii_in_a_non_latin_digit_locale`.
  */
 @RunWith(RobolectricTestRunner::class)

@@ -317,6 +317,7 @@ class MapperTest {
         assertEquals("", buildSession { description = null }.abstract)
     }
 
+    // Pins a fixed +02:00 offset, wrong outside Paris summer time (deferred item 18 in deferred-items.md).
     @Test
     fun start_dates_get_the_paris_offset_appended() {
         val minutes = buildSession {
