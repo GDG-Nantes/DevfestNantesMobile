@@ -4,10 +4,28 @@ import com.gdgnantes.devfest.core.analytics.AnalyticsPage
 import com.gdgnantes.devfest.core.analytics.AnalyticsService
 import com.gdgnantes.devfest.core.model.SocialType
 
-/** [AnalyticsService] that ignores every event. DI-focused only; recording helpers belong to Phase 5. */
+/** One recorded call to [AnalyticsService.eventBookmark]. */
+data class BookmarkEvent(
+    val page: AnalyticsPage,
+    val sessionId: String,
+    val bookmarked: Boolean
+)
+
+/**
+ * [AnalyticsService] that ignores every event except bookmarks: it records bookmark events
+ * (Phase 5) in [bookmarkEvents]. Every other method is a no-op.
+ */
 @Suppress("TooManyFunctions")
 class FakeAnalyticsService : AnalyticsService {
-    override fun eventBookmark(page: AnalyticsPage, sessionId: String, bookmarked: Boolean) = Unit
+    private val recordedBookmarkEvents = mutableListOf<BookmarkEvent>()
+
+    /** Bookmark events in the order they were reported. */
+    val bookmarkEvents: List<BookmarkEvent>
+        get() = recordedBookmarkEvents.toList()
+
+    override fun eventBookmark(page: AnalyticsPage, sessionId: String, bookmarked: Boolean) {
+        recordedBookmarkEvents += BookmarkEvent(page, sessionId, bookmarked)
+    }
 
     override fun eventFilter() = Unit
 

@@ -1,44 +1,43 @@
 ---
 gsd_state_version: "1.0"
-current_phase: 5
-current_phase_name: Test Coverage Retrofit
-status: planning
-stopped_at: Phase 4 complete, ready to plan Phase 5
-last_updated: "2026-10-13T13:17:34.105Z"
-last_activity: 2026-10-13
-last_activity_desc: Phase 4 complete, transitioned to Phase 5
-state_head: 1d150e412b3a9b1f6f30c8a67fc43a395c2a4562
+current_phase: 05
+status: completed
+stopped_at: Phase 05 complete — all phases complete
+last_updated: "2026-10-16T19:49:24.381Z"
+last_activity: 2026-10-16
+last_activity_desc: Phase 05 complete
+state_head: f52785a2cb6285c4ce38e947e9a67eccd1cc339b
 progress:
   total_phases: 5
-  completed_phases: 4
-  total_plans: 26
-  completed_plans: 26
-  percent: 80
+  completed_phases: 5
+  total_plans: 37
+  completed_plans: 37
+  percent: 100
 ---
 
 # Project State
 
 ## Project Reference
 
-See: .planning/PROJECT.md (updated 2026-10-13)
+See: .planning/PROJECT.md (updated 2026-10-16)
 
 **Core value:** La CI/CD doit refonctionner et le projet doit redevenir maintenable (build moderne, architecture modulaire, DI décentralisée, couverture de tests solide) sans jamais régresser le comportement existant de l'application pour les utilisateurs.
-**Current focus:** Phase 5 — Test Coverage Retrofit
+**Current focus:** Milestone complete — ready to archive (/gsd-complete-milestone)
 
 ## Current Position
 
-Phase: 5 — Test Coverage Retrofit
+Phase: 05
 Plan: Not started
-Status: Ready to plan
-Last activity: 2026-10-13 — Phase 4 complete, transitioned to Phase 5
+Status: All phases complete
+Last activity: 2026-10-16 — Phase 05 complete
 
-Progress: [████████░░] 80%
+Progress: [██████████] 100%
 
 ## Performance Metrics
 
 **Velocity:**
 
-- Total plans completed: 26
+- Total plans completed: 37
 - Average duration: N/A
 - Total execution time: 0 hours
 
@@ -50,6 +49,7 @@ Progress: [████████░░] 80%
 | 02 | 5 | - | - |
 | 03 | 11 | - | - |
 | 4 | 7 | - | - |
+| 05 | 11 | - | - |
 
 **Recent Trend:**
 
@@ -87,6 +87,17 @@ Progress: [████████░░] 80%
 | Phase 04 P05 | 23 min | 2 tasks | 18 files |
 | Phase 04 P06 | 60 min | 3 tasks | 19 files |
 | Phase 04 P07 | 23 min | 2 tasks | 22 files |
+| Phase 05 P01 | 20 min | 3 tasks | 11 files |
+| Phase 05 P02 | 35 min | 3 tasks | 13 files |
+| Phase 05 P03 | 40 min | 2 tasks | 8 files |
+| Phase 05 P04 | 50 min | 3 tasks | 10 files |
+| Phase 05 P05 | 25 min | 2 tasks | 8 files |
+| Phase 05 P06 | 15 min | 3 tasks | 13 files |
+| Phase 05 P07 | 45min | 2 tasks | 6 files |
+| Phase 05 P08 | 15min | 3 tasks | 12 files |
+| Phase 05 P09 | 30 min | 2 tasks | 5 files |
+| Phase 05 P10 | 1h 30m | 3 tasks | 6 files |
+| Phase 05 P11 | 30 min | 3 tasks | 7 files |
 
 ## Accumulated Context
 
@@ -134,6 +145,18 @@ Recent decisions affecting current work:
 - [Phase 04]: 04-06: application initializers are an explicit single(named("applicationInitializers")) list; order asserted by KoinStartupTest — Consent must be applied before performance collection is forced on (DI-02, T-04-19)
 - [Phase 04]: 04-07: catalog activity pinned to 1.12.4 (resolved version on releaseRuntimeClasspath, unchanged by Hilt removal); KSP and firebase-auth-ktx substitution kept — Pin states what ships; KSP still needed by kmp-native-coroutines
 - [Phase 04]: 04-07: no Hilt artifact on classpath; com.google.dagger:dagger:2.57.2 remains as firebase-perf internal transitive — Cannot be removed without dropping Firebase Performance
+- [Phase 05]: 05-01: Kover 0.9.11 report-only via build-logic conventions; live GraphQL test is a manual-only canary (-PliveNetworkTests); baseline 15.96% line coverage measured with the canary excluded — Network-fed run showed 20.64%; the offline baseline is deterministic so the 05-10 compare is meaningful
+- [Phase 05]: 05-02: date parsing is shared kotlin.time.Instant in :core:model; localized display stays on Android APIs; OpenFeedback fallback URL date is LocalDate.toString() (ASCII, user-approved D-05)
+- [Phase 05]: 05-03: fixed hand-written fixtures (SessionFixtures/SpeakerFixtures/PartnerFixtures) in :core:model replace all random stubs; buildXStub() are deterministic wrappers; Mocked store implements getSpeakerSessions — Single deterministic source for previews, mocked store and later tests; buildVenueStub left byte-identical as the production offline fallback
+- [Phase 05]: 05-04: GraphQLStore and mappers tested offline via Apollo MockServer 0.3.1 with recorded responses as Kotlin string constants; data builders generated into :core:network commonMain; cacheKeyGenerator/cacheResolver split into ApolloCacheKeys.kt; testAndroidHostTest enabled for :core:data and run in CI — iOS commonTest cannot load resources; one file's top-level vals share an initializer so the split keeps tests from building the production SQLite client; production defects found (100/110 speakers, RoomSortIndex ids, println logging) are logged in deferred-items.md and not fixed (D-10)
+- [Phase 05]: 05-05: store contract is abstract and runs against Mocked and GraphQLStore-on-MockServer on three runtimes; bookmarks, agenda filter and consent keys/formats pinned by Robolectric tests with literal keys; test-only Crashlytics id lives in feature/settings/src/test/res and is absent from packaged resources — MockServer.Builder() replaces the deprecated MockServer(handler); one contract keeps mock and real store honest, prefs tests protect saved user state across refactors
+- [Phase 05]: 05-06: ViewModel harness = Turbine 1.2.1 + MainDispatcherRule + StateFlow-backed FakeDevFestNantesStore; AgendaViewModel gets its IO dispatcher from a named Koin binding in coreUiModule (explicit positional lambda in agendaModule) — Makes ViewModels deterministic under test without changing production behavior (Dispatchers.IO is still what the binding supplies); SpeakersViewModel store failure is characterized and queued for the deferred log via 05-07
+- [Phase 05]: 05-07: ties on start time are asserted as a set (HashSet before sortedBy); AgendaViewModel store failure pinned and deferred (items 10-12 in deferred-items.md)
+- [Phase 05]: 05-08: FeedbackFormViewModel depends on a FeedbackFlags seam (FirebaseFeedbackFlags factory binding) so all ten ViewModels are tested on fakes; Robolectric only for VenueViewModel — Behavior-neutral adapter keeps keys, AND logic, log lines, main-thread listener and the per-ViewModel remote-config factory; user-confirmed D-23 (follows PerformanceMonitoring)
+- [Phase 05]: 05-09: VenueSmokeTest serves images from memory via a Coil interceptor because the floor-plan control removes itself on image load failure; no production change
+- [Phase 05]: 05-09: no packaging excludes were needed for feature androidTest APKs; Settings smoke test overrides DataCollectionSettingsService with a private recording fake
+- [Phase 05]: 05-10: smoke tests assert reachable content (first day tab + scroll-to-node), never scroll position; session detail smoke test fakes the FeedbackFlags seam so no remote config is created
+- [Phase 05]: 05-11: kotlinx-datetime resolves to 0.8.0-0.6.x-compat (OpenFeedback 1.0.0-alpha.3 links the 0.6.x Instant/Clock classes); first-party code on kotlin.time.Instant, shared.h unchanged, R8 suppressions removed, OpenFeedbackDatetimeLinkageTest guards the bridge (G-05-3) — Keeps the newest library, restores the runtime classes, and a plain bump past 0.8.x now fails CI; UAT test 3 re-checked on device and passed 2026-10-16
 
 ### Pending Todos
 
@@ -152,6 +175,8 @@ None yet.
 - **Phase 3 follow-up — RESOLVED in Phase 4:** `:core:testing` now consumed (`testImplementation`) by `:core:ui` and `:androidApp` (fakes + `testDoublesModule`); Phase 5 extends it.
 - Note (not blocking, Phase 4): `com.google.dagger:dagger` remains on the release classpath only as a Firebase Performance internal transitive; the DI gate and `NO-HILT-ON-CLASSPATH` cover Hilt itself.
 - Note (not blocking, Phase 4 UAT): speaker images may fail to load on networks with SSL interception/blocking of raw.githubusercontent.com — environmental, observed on Android and iOS, not a code regression.
+- Follow-up (not blocking, Phase 5 UI review): ViewModels have no error state on store failure (pinned by characterization tests), the fallback OpenFeedback URL has a double slash, and the agenda bookmark contentDescription is an unlocalized literal — see `05-UI-REVIEW.md` and `deferred-items.md`.
+- Follow-up (not blocking, G-05-3): kotlinx-datetime resolves to `0.8.0-0.6.x-compat` because OpenFeedback 1.0.0-alpha.3 (and every release up to alpha.6) links against the 0.6.x `Instant`/`Clock` classes, which plain 0.8.0 no longer ships. Compat releases end with 0.8.x, so any move to 0.9+ first needs an OpenFeedback release built on `kotlin.time.Instant` (upstream main was still on the deprecated type as of 2026-10-15). `OpenFeedbackDatetimeLinkageTest` fails CI on any bump that drops the compat classes. The Phase 02 R8 suppression premise was false: the secrets plugin sets OPEN_FEEDBACK_ENABLED from local.properties, so the feedback code was reachable on developer and release builds. The suppressions were removed in 05-11.
 
 ## Phase 02 DCL pilot outcome
 
@@ -195,6 +220,8 @@ No re-pilot of DCL's software-type surface was attempted; nothing found this ses
 
 **kotlinx-datetime `Instant`/`Clock` migration surface (assumption A2, closes an open research question so Phase 3 does not re-investigate):** `kotlinx.datetime.Instant`'s typealias to `kotlin.time.Instant` survived (deprecated, not removed) into kotlinx-datetime 0.8.0 — `ScheduleSlot.kt`/`Agenda.kt` (shared/model) needed zero code changes. However `kotlinx.datetime.Clock`'s typealias does **not** carry `.System` through to `kotlin.time.Clock` the same way — any call site using `Clock.System` directly (not just `Instant`) needs its import swapped to `kotlin.time.Clock`. One such call site existed outside the shared/model scope: `androidApp/.../ui/screens/agenda/Agenda.kt`, fixed with a one-line import swap. Grep for `kotlinx.datetime.Clock` before assuming a future kotlinx-datetime bump is a no-op.
 
+**G-05-3 amendment (Phase 05):** the shipped kotlinx-datetime artifact is now `0.8.0-0.6.x-compat` (0.8.0 plus the deprecated `Instant`/`Clock` classes that OpenFeedback's prebuilt bytecode links against), and first-party imports moved to `kotlin.time.Instant` in 05-11. This amends the BUILD-06 row above from "0.8.0" to its compat twin; the compat classes are a runtime-only bridge for OpenFeedback.
+
 **Apollo cache import paths actually used (authoritative, for Phase 3 reuse):**
 
 - Cache-normalized wildcard: `com.apollographql.cache.normalized.*` (was `com.apollographql.apollo.cache.normalized.*`)
@@ -216,6 +243,6 @@ Items acknowledged and deferred at milestone close, most recent first:
 
 ## Session Continuity
 
-Last session: 2026-10-13T13:30:00Z
-Stopped at: Phase 4 complete, ready to plan Phase 5
+Last session: 2026-10-16T20:00:00Z
+Stopped at: Phase 05 complete (UAT 3/3, UI review 17/24) — milestone ready to close
 Resume file: None

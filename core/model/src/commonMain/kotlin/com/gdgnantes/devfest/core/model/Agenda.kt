@@ -1,6 +1,6 @@
 package com.gdgnantes.devfest.core.model
 
-import kotlinx.datetime.Instant
+import kotlin.time.Instant
 
 data class Agenda(val days: Map<Int, AgendaDay>) {
     class Builder {

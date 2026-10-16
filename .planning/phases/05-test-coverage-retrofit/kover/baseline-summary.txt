@@ -1,0 +1,17 @@
+TOTAL LINE 567/3552 15.96%
+TOTAL INSTRUCTION 3187/34293 9.29%
+TOTAL BRANCH 45/1727 2.61%
+MODULE :androidApp LINE 54/313 17.25%
+MODULE :core:analytics LINE 20/154 12.99%
+MODULE :core:data LINE 63/240 26.25%
+MODULE :core:model LINE 183/224 81.70%
+MODULE :core:network LINE 20/29 68.97%
+MODULE :core:ui LINE 10/325 3.08%
+MODULE :feature:about LINE 23/273 8.42%
+MODULE :feature:agenda LINE 67/688 9.74%
+MODULE :feature:session-detail LINE 43/359 11.98%
+MODULE :feature:settings LINE 26/379 6.86%
+MODULE :feature:speakers LINE 45/404 11.14%
+MODULE :feature:venue LINE 6/157 3.82%
+MODULE :shared LINE 7/7 100.00%
+KOVER-SUMMARY-OK

@@ -1,14 +1,13 @@
 package com.gdgnantes.devfest.feature.sessiondetail
 
 import androidx.lifecycle.ViewModel
-import com.google.firebase.remoteconfig.FirebaseRemoteConfig
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import timber.log.Timber
 
 class FeedbackFormViewModel(
-    private val remoteConfig: FirebaseRemoteConfig,
+    private val feedbackFlags: FeedbackFlags,
     private val openFeedbackConfig: OpenFeedbackConfig
 ) : ViewModel() {
     private val _isOpenFeedbackEnabled: MutableStateFlow<Boolean> = MutableStateFlow(false)
@@ -25,24 +24,22 @@ class FeedbackFormViewModel(
 
     init {
         updateConfig()
-        remoteConfig.fetchAndActivate()
-            .addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    updateConfig()
-                    val updated = task.result
-                    Timber.d("Config params updated: $updated")
-                } else {
-                    Timber.d("Config params could not be fetched")
-                }
+        feedbackFlags.fetchAndActivate { successful, activated ->
+            if (successful) {
+                updateConfig()
+                Timber.d("Config params updated: $activated")
+            } else {
+                Timber.d("Config params could not be fetched")
             }
+        }
     }
 
     private fun updateConfig() {
         _isOpenFeedbackEnabled.value =
             openFeedbackConfig.enabled &&
-                    remoteConfig.getBoolean("openfeedback_enabled")
+                    feedbackFlags.getBoolean("openfeedback_enabled")
         _isOpenfeedbackFallbackRequested.value =
             openFeedbackConfig.enabled &&
-                    remoteConfig.getBoolean("openfeedback_fallback_requested_android")
+                    feedbackFlags.getBoolean("openfeedback_fallback_requested_android")
     }
 }

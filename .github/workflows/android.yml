@@ -46,7 +46,7 @@ jobs:
           cache-read-only: ${{ github.event_name == 'pull_request' }}
 
       - name: Unit tests
-        run: ./gradlew testDebugUnitTest jvmTest
+        run: ./gradlew testDebugUnitTest jvmTest testAndroidHostTest
 
   instrumentation-tests:
     name: Instrumentation tests

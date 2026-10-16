@@ -15,7 +15,9 @@ import com.gdgnantes.devfest.core.testing.di.androidTestDoubles
 import com.gdgnantes.devfest.core.ui.BookmarksViewModel
 import com.gdgnantes.devfest.feature.about.partners.PartnersViewModel
 import com.gdgnantes.devfest.feature.agenda.AgendaViewModel
+import com.gdgnantes.devfest.feature.sessiondetail.FeedbackFlags
 import com.gdgnantes.devfest.feature.sessiondetail.FeedbackFormViewModel
+import com.gdgnantes.devfest.feature.sessiondetail.FirebaseFeedbackFlags
 import com.gdgnantes.devfest.feature.sessiondetail.SessionViewModel
 import com.gdgnantes.devfest.feature.settings.datacollection.DataCollectionViewModel
 import com.gdgnantes.devfest.feature.settings.services.DataCollectionService
@@ -48,6 +50,7 @@ import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 import timber.log.Timber
 import kotlin.test.assertEquals
+import kotlin.test.assertIs
 import kotlin.test.assertNotNull
 
 /**
@@ -59,7 +62,8 @@ import kotlin.test.assertNotNull
  * production definitions the doubles replace. The `:core:testing` doubles replace
  * `DevFestNantesStore`, `BookmarksStore`, `AnalyticsService` and `PerformanceMonitoring`; test-local
  * fakes replace `DataCollectionSettingsService` and `Timber.Tree`. Only `FirebaseRemoteConfig` (against
- * a FirebaseApp initialised with dummy options) and `SessionFiltersServiceImpl` run unfaked here. The
+ * a FirebaseApp initialised with dummy options) and `SessionFiltersServiceImpl` run unfaked here;
+ * `FeedbackFormViewModel` is resolved against an offline `FeedbackFlags` so no fetch starts. The
  * unmodified production graph, including those real definitions, is covered by
  * [ProductionGraphStartupTest].
  */
@@ -77,16 +81,17 @@ class KoinStartupTest {
         stopKoin()
 
         val application = ApplicationProvider.getApplicationContext<Application>()
-        if (FirebaseApp.getApps(application).isEmpty()) {
-            FirebaseApp.initializeApp(
-                application,
-                FirebaseOptions.Builder()
-                    .setApplicationId("1:1234567890:android:abcdef0123456789")
-                    .setApiKey("test-api-key")
-                    .setProjectId("test-project")
-                    .build()
-            )
-        }
+        // FirebaseApp is a process-wide static that Robolectric can carry from one test to the next;
+        // start from a clean slate and reset again in tearDown.
+        FirebaseApp.clearInstancesForTest()
+        FirebaseApp.initializeApp(
+            application,
+            FirebaseOptions.Builder()
+                .setApplicationId("1:1234567890:android:abcdef0123456789")
+                .setApiKey("test-api-key")
+                .setProjectId("test-project")
+                .build()
+        )
 
         koin =
             initKoin(platformModules = androidModules + androidTestDoubles + testOverrides) {
@@ -98,6 +103,7 @@ class KoinStartupTest {
     @After
     fun tearDown() {
         stopKoin()
+        FirebaseApp.clearInstancesForTest()
         Dispatchers.resetMain()
     }
 
@@ -118,10 +124,22 @@ class KoinStartupTest {
         assertNotNull(koin.get<SessionViewModel> { parametersOf("session-1") })
     }
 
-    // FeedbackFormViewModel takes the final FirebaseRemoteConfig and fetches in its init block; the
-    // real definition is exercised against the dummy FirebaseApp.
+    // The production FeedbackFlags binding wraps the real remote config. Resolving it builds the
+    // FirebaseRemoteConfig handle against the dummy FirebaseApp but does not fetch: the fetch only
+    // starts in FeedbackFormViewModel's init block, which this test deliberately does not run.
     @Test
-    fun feedback_form_view_model_resolves_with_real_remote_config() {
+    fun feedback_flags_resolve_to_the_real_remote_config_binding() {
+        assertIs<FirebaseFeedbackFlags>(koin.get<FeedbackFlags>())
+    }
+
+    // FeedbackFormViewModel fetches in its init block (D-23), so it is resolved against a no-op
+    // FeedbackFlags: the CI unit-test job stays offline and deterministic.
+    @Test
+    fun feedback_form_view_model_resolves_with_offline_flags() {
+        koin.loadModules(
+            listOf(module { factory<FeedbackFlags> { OfflineFeedbackFlags } })
+        )
+
         assertNotNull(koin.get<FeedbackFormViewModel>())
     }
 
@@ -157,6 +175,13 @@ class KoinStartupTest {
                 single<Timber.Tree> { Timber.DebugTree() }
             }
         )
+
+    private object OfflineFeedbackFlags : FeedbackFlags {
+        override fun getBoolean(key: String): Boolean = false
+
+        override fun fetchAndActivate(onComplete: (successful: Boolean, activated: Boolean) -> Unit) =
+            Unit
+    }
 
     private class FakeDataCollectionSettingsService : DataCollectionSettingsService {
         override val isDataCollectionAgreementSet: Boolean = false

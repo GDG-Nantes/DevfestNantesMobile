@@ -44,16 +44,17 @@ class ProductionGraphStartupTest {
         stopKoin()
 
         val application = ApplicationProvider.getApplicationContext<Application>()
-        if (FirebaseApp.getApps(application).isEmpty()) {
-            FirebaseApp.initializeApp(
-                application,
-                FirebaseOptions.Builder()
-                    .setApplicationId("1:1234567890:android:abcdef0123456789")
-                    .setApiKey("test-api-key")
-                    .setProjectId("test-project")
-                    .build()
-            )
-        }
+        // FirebaseApp is a process-wide static that Robolectric can carry from one test to the next;
+        // start from a clean slate and reset again in tearDown.
+        FirebaseApp.clearInstancesForTest()
+        FirebaseApp.initializeApp(
+            application,
+            FirebaseOptions.Builder()
+                .setApplicationId("1:1234567890:android:abcdef0123456789")
+                .setApiKey("test-api-key")
+                .setProjectId("test-project")
+                .build()
+        )
 
         // On a device the androidx.startup provider hands the Apollo SQL cache its Context before any
         // network resolution; Robolectric does not run content providers, so set it the same way.
@@ -68,6 +69,7 @@ class ProductionGraphStartupTest {
     @After
     fun tearDown() {
         stopKoin()
+        FirebaseApp.clearInstancesForTest()
     }
 
     @Test

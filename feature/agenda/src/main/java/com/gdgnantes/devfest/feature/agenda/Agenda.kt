@@ -18,13 +18,13 @@ import com.gdgnantes.devfest.core.model.Room
 import com.gdgnantes.devfest.core.model.Session
 import com.gdgnantes.devfest.core.ui.UiState
 import com.gdgnantes.devfest.feature.agenda.utils.SessionFilter
-import kotlinx.datetime.Instant
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
 import kotlinx.datetime.todayIn
 import org.koin.compose.viewmodel.koinViewModel
 import kotlin.time.Clock
+import kotlin.time.Instant
 
 @Composable
 fun Agenda(

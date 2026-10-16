@@ -1,74 +1,22 @@
 package com.gdgnantes.devfest.core.model.stubs
 
-import com.gdgnantes.devfest.core.model.Agenda.Companion.DAY_ONE
-import com.gdgnantes.devfest.core.model.Complexity
 import com.gdgnantes.devfest.core.model.ContentLanguage
 import com.gdgnantes.devfest.core.model.Partner
+import com.gdgnantes.devfest.core.model.PartnerCategory
 import com.gdgnantes.devfest.core.model.ScheduleSlot
 import com.gdgnantes.devfest.core.model.Session
-import com.gdgnantes.devfest.core.model.SessionLanguage
 import com.gdgnantes.devfest.core.model.Speaker
 import com.gdgnantes.devfest.core.model.Venue
-import kotlin.random.Random
-import kotlin.time.DurationUnit
-import kotlin.time.toDuration
 
-const val MAX_PARTNERS = 10
-const val MAX_ROOMS = 4
-const val MAX_SESSIONS = 100
-const val MAX_SPEAKERS = 100
-const val MAX_SPEAKER_PER_SESSION = 5
+/**
+ * Deterministic entry points for Compose previews. The data lives in [SessionFixtures],
+ * [SpeakerFixtures] and [PartnerFixtures].
+ */
+fun buildSessionStub(): Session = SessionFixtures.composeDeepDive
 
-fun buildSessionStub(): Session {
-    return Session(
-        id = Random.nextLong().toString(),
-        abstract = LOREM_IPSUM,
-        category = categoryStubs[Random.nextInt(categoryStubs.size)],
-        language = SessionLanguage.values()[SessionLanguage.values().size - 1],
-        complexity = Complexity.values()[Complexity.values().size - 1],
-        openFeedbackFormId = "", // TODO Replaces with UUID implementation
-        room = roomStubs[Random.nextInt(roomStubs.size)],
-        scheduleSlot = buildScheduleSlotStub(),
-        speakers =
-        MutableList(
-            Random.nextInt(1, MAX_SPEAKER_PER_SESSION)
-        ) {
-            buildSpeakerStub()
-        },
-        title = "Amazing talk"
-    )
-}
+fun buildScheduleSlotStub(): ScheduleSlot = SessionFixtures.composeDeepDive.scheduleSlot
 
-const val STUB_STARTING_HOUR = 9
-const val STUB_ENDING_HOUR = 30
-
-fun buildScheduleSlotStub(): ScheduleSlot {
-    val day = DAY_ONE
-    val start =
-        day.plus(
-            Random.nextInt(STUB_STARTING_HOUR, STUB_ENDING_HOUR)
-                .toDuration(DurationUnit.HOURS)
-        )
-    val end = start.plus(1.toDuration(DurationUnit.HOURS))
-
-    return ScheduleSlot(
-        endDate = end.toString(),
-        startDate = start.toString()
-    )
-}
-
-fun buildSpeakerStub(): Speaker {
-    return Speaker(
-        id = "", // TODO Replace with UUID implementation
-        bio = LOREM_IPSUM,
-        company = "Company Inc",
-        companyLogoUrl = null,
-        city = "Nantes, France",
-        name = "Foo Bar",
-        photoUrl = RANDOM_IMAGE_URL,
-        socials = SOCIAL_ITEMS_STUBS,
-    )
-}
+fun buildSpeakerStub(): Speaker = SpeakerFixtures.alice
 
 fun buildVenueStub(language: ContentLanguage): Venue {
     return Venue(
@@ -93,13 +41,7 @@ fun buildVenueStub(language: ContentLanguage): Venue {
     )
 }
 
-fun buildPartnerStub(): Partner {
-    return Partner(
-        name = "Partner ${Random.nextInt()}",
-        logoUrl = RANDOM_IMAGE_URL,
-        url = "https://kotlinlang.org/docs/multiplatform.html"
-    )
-}
+fun buildPartnerStub(): Partner = PartnerFixtures.byCategory.getValue(PartnerCategory.PLATINIUM).first()
 
 const val LOREM_IPSUM =
     "Lorem ipsum dolor sit amet, consectetur adipiscing elit," +

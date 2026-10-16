@@ -1,9 +1,9 @@
 package com.gdgnantes.devfest.core.model
 
-import kotlinx.datetime.Instant
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertTrue
+import kotlin.time.Instant
 
 /**
  * Value-level regression coverage for [ScheduleSlot]'s epoch-millisecond date parsing and

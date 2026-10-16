@@ -17,7 +17,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 2: Dependency & Build Tooling Upgrade** - The project builds and runs on Kotlin 2.4.0, AGP 9.2.0, Gradle 9.7.1 and updated libraries, staged bump by bump with zero behavior change (completed 2026-09-19)
 - [x] **Phase 3: Multi-Module Architecture Extraction** - The codebase is split into a `core-*`/`feature-*` module graph with unidirectional dependencies, iOS still consuming one umbrella framework (completed 2026-09-27)
 - [x] **Phase 4: Hilt to Koin DI Migration** - Dependency injection is fully decentralized via Koin, one module per Gradle module, with a CI-verified DI graph (completed 2026-10-13)
-- [ ] **Phase 5: Test Coverage Retrofit** - Business-logic test coverage (ViewModels, Store/repository, GraphQL mappers) is measurably improved on a hardened fixture foundation
+- [x] **Phase 5: Test Coverage Retrofit** - Business-logic test coverage (ViewModels, Store/repository, GraphQL mappers) is measurably improved on a hardened fixture foundation (completed 2026-10-16)
 
 ## Phase Details
 
@@ -195,7 +195,53 @@ Plans (strictly sequential: one phase branch/PR, one commit per module, CI green
   3. ViewModel test coverage is extended across feature modules, made practical by constructor injection via Koin
   4. Compose smoke tests on critical Android screens are maintained or extended per feature module (`androidTest`), built on the shared `core-testing` fakes
 
-**Plans**: TBD
+**Plans:** 11/11 plans complete
+
+Plans (strictly sequential: one phase branch/draft PR, both workflows use `cancel-in-progress` per ref, CI green per pushed plan):
+
+**Wave 1**
+
+- [x] 05-01-PLAN.md — Tracer: Kover through the conventions + root report; live canary manual-only; baseline captured on pre-phase code; iOS CI runs core commonTest; draft PR (D-15, D-18, D-22)
+
+**Wave 2** *(blocked on Wave 1)*
+
+- [x] 05-02-PLAN.md — Date fragility: characterization first, shared `toInstantOrNull` parser in `:core:model`, no production `SimpleDateFormat`, locale-proof OpenFeedback URL, pure agenda scroll index (D-05..D-07, D-09)
+
+**Wave 3** *(blocked on Wave 2)*
+
+- [x] 05-03-PLAN.md — Fixed fixture dataset (`SessionFixtures`/`SpeakerFixtures`/`PartnerFixtures`) replaces random stubs; mock store serves it (D-01..D-04)
+
+**Wave 4** *(blocked on Wave 3)*
+
+- [x] 05-04-PLAN.md — Tracer: GraphQLStore on Apollo MockServer (JVM + Android host + iOS), recorded responses, mapper tests with data builders, CacheAndNetwork pins (D-13, D-14)
+
+**Wave 5** *(blocked on Wave 4)*
+
+- [x] 05-05-PLAN.md — Two-implementation store contract; Robolectric persistence tests for bookmarks, filters, consent (D-16, D-17)
+
+**Wave 6** *(blocked on Wave 5)*
+
+- [x] 05-06-PLAN.md — Tracer: ViewModel harness (Turbine, `MainDispatcherRule`, `FakeDevFestNantesStore`), test doubles adopt it, AgendaViewModel dispatcher injected via Koin (D-08, D-09, D-11)
+
+**Wave 7** *(blocked on Wave 6)*
+
+- [x] 05-07-PLAN.md — Agenda filter matrix as specifications, Home and Bookmarks ViewModel tests (D-10, D-12)
+
+**Wave 8** *(blocked on Wave 7)*
+
+- [x] 05-08-PLAN.md — Session, Speaker, Partners, DataCollection (JVM); user-confirmed `FeedbackFlags` seam with a FeedbackForm test on a fake (JVM); Venue (Robolectric) ViewModel tests: all 10 covered (D-10, D-12, D-23)
+
+**Wave 9** *(blocked on Wave 8)*
+
+- [x] 05-09-PLAN.md — Tracer: feature androidTest wiring + Speakers smoke test; Venue, About, Settings smoke tests (D-19..D-21)
+
+**Wave 10** *(blocked on Wave 9)*
+
+- [x] 05-10-PLAN.md — Agenda and Session detail smoke tests; final Kover report vs baseline; full suite and CI green (D-18..D-21)
+
+**Wave 11** *(gap closure G-05-3, blocked on Wave 10)*
+
+- [x] 05-11-PLAN.md — OpenFeedback `NoClassDefFoundError` fix: kotlinx-datetime `0.8.0-0.6.x-compat` on the app classpath with a CI linkage guard, first-party imports on `kotlin.time.Instant` (iOS header unchanged), R8 suppressions removed, 0.8.x bridge documented; UAT test 3 device re-check
 
 ## Progress
 
@@ -208,4 +254,4 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 | 2. Dependency & Build Tooling Upgrade | 5/5 | Complete    | 2026-09-19 |
 | 3. Multi-Module Architecture Extraction | 11/11 | Complete    | 2026-09-27 |
 | 4. Hilt to Koin DI Migration | 7/7 | Complete    | 2026-10-13 |
-| 5. Test Coverage Retrofit | 0/TBD | Not started | - |
+| 5. Test Coverage Retrofit | 11/11 | Complete    | 2026-10-16 |

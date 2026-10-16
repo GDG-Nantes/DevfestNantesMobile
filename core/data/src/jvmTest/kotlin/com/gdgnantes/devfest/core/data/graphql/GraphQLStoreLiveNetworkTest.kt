@@ -3,13 +3,21 @@ package com.gdgnantes.devfest.core.data.graphql
 import com.apollographql.apollo.ApolloClient
 import com.apollographql.apollo.api.http.HttpHeader
 import com.gdgnantes.devfest.core.model.ContentLanguage
+import com.gdgnantes.devfest.core.model.utils.toInstantOrNull
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
 import kotlin.test.BeforeTest
 import kotlin.test.Test
 import kotlin.test.assertNotNull
 
-class GraphQLStoreJvmTest {
+/**
+ * Manual-only schema-drift canary: it talks to the live confetti-app.dev backend, so it is
+ * excluded from the default `:core:data:jvmTest` run (the CI unit run stays offline and
+ * deterministic). Run it explicitly with:
+ *
+ *     ./gradlew :core:data:jvmTest -PliveNetworkTests --tests '*LiveNetwork*'
+ */
+class GraphQLStoreLiveNetworkTest {
     private lateinit var apolloClient: ApolloClient
     private lateinit var store: GraphQLStore
 
@@ -17,7 +25,7 @@ class GraphQLStoreJvmTest {
     fun setUp() {
         apolloClient = ApolloClient.Builder()
             .serverUrl("https://confetti-app.dev/graphql")
-            .httpHeaders(listOf(HttpHeader("conference", "devfestnantes2024")))
+            .httpHeaders(listOf(HttpHeader("conference", "devfestnantes2025")))
             .build()
         store = GraphQLStore(apolloClient)
     }
@@ -90,16 +98,12 @@ class GraphQLStoreJvmTest {
     }
 
     @Test
-    fun scheduleSlot_dates_are_parseable_by_android_java() = runTest {
+    fun scheduleSlot_dates_are_parseable_by_the_shared_parser() = runTest {
         val sessions = store.sessions.first()
-        val format = java.text.SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssXXX")
         for (session in sessions) {
-            try {
-                format.parse(session.scheduleSlot.startDate)
-                format.parse(session.scheduleSlot.endDate)
-            } catch (e: Exception) {
-                throw AssertionError("Unparseable date: ${'$'}{session.scheduleSlot.startDate} or ${'$'}{session.scheduleSlot.endDate}", e)
-            }
+            val slot = session.scheduleSlot
+            assertNotNull(slot.startDate.toInstantOrNull(), "Unparseable start date: ${slot.startDate}")
+            assertNotNull(slot.endDate.toInstantOrNull(), "Unparseable end date: ${slot.endDate}")
         }
     }
 }
