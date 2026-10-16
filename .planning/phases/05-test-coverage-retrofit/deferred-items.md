@@ -15,3 +15,12 @@ Production behavior the Phase 5 tests expose. Each entry is characterized by a t
 6. **`BookmarksStoreImpl.save` and `DataCollectionSettingsServiceImpl.save` call `apply()` inside `edit { }`**, which already applies on exit, so every save applies twice. Harmless today; the persisted result is pinned by `BookmarksStoreImplTest` and `DataCollectionSettingsServiceImplTest`.
 7. **`SessionFilter` is a plain class (no `equals`)**, so `SessionFiltersService.filters` compares by identity and `setFilters(sameContent)` always looks like a change to a `StateFlow`. `SessionFiltersServiceImplTest` compares `(type, value)` pairs instead.
 8. **`MockServer(handler)` is deprecated in apollo-mockserver 0.3.1** (DEPRECATION_ERROR under Kotlin 2.4); tests use `MockServer.Builder().handler(...).build()`.
+
+## From 05-06 (ViewModel harness), logged by 05-07
+
+9. **`SpeakersViewModel` does not handle a failing `store.speakers` flow.** The collection in `init` has no `catch`, so the error escapes `viewModelScope` as an uncaught exception (the app would crash) and `uiState` never leaves `STARTING`; `UiState.ERROR` is never used. Pinned by `SpeakersViewModelTest.store_failure_is_characterized`: with `FakeDevFestNantesStore.failure` set, `uiState` stays `STARTING`, `speakers` stays empty, and the test run fails with the original `IllegalStateException("boom")` (asserted with `assertFailsWith` around `runTest`).
+
+## From 05-07 (agenda, home and bookmarks ViewModels)
+
+10. **`AgendaViewModel` does not handle a failing `store.agenda` flow.** `onRefresh` collects the flow inside `viewModelScope.launch` without a `catch`, so a store error escapes uncaught (the app would crash), `uiState` stays `STARTING` and `days` stays empty; `UiState.ERROR` is never used. Same defect as item 9. Pinned by `AgendaViewModelTest.store_failure_is_characterized`.
+11. **Sessions that share a start time come out of `AgendaViewModel` in an unspecified order.** The filter builds a `HashSet<Session>` and then `sortedBy { startDate }`, which is stable but starts from hash order, so ties (for example the three 10:00 sessions of day 1) can reorder between runs of the same data. Characterized by `AgendaViewModelTest.sessions_within_each_day_are_sorted_by_start_date`, which compares ties as a set instead of asserting an order.
