@@ -35,6 +35,7 @@ openfeedback = "1.0.0-alpha.3"
 secretsPlugin = "2.0.1"
 spalshscreen = "1.0.1"
 timber = "5.0.1"
+turbine = "1.2.1"
 
 [libraries]
 accompanist-pager = { group = "com.google.accompanist", name = "accompanist-pager", version.ref = "accompanist" }
@@ -114,12 +115,14 @@ openfeedback-viewmodel = { module = "io.openfeedback:openfeedback-viewmodel", ve
 
 timber = { module = "com.jakewharton.timber:timber", version.ref = "timber" }
 
+turbine = { group = "app.cash.turbine", name = "turbine", version.ref = "turbine" }
+
 [bundles]
 accompanist = ["accompanist-pager", "accompanist-pager-indicators", "accompanist-systemuicontroller"]
 android-test = ["androidx-compose-ui-test-junit4", "androidx-test-espresso", "androidx-test-espresso-contrib", "androidx-test-espresso-intents", "androidx-test-ext-junit", "androidx-test-rules", "androidx-test-truth"]
 appollo = ["appollo-runtime", "appollo-normalized-cache", "appollo-normalized-cache-sqlite"]
 debug = ["androidx-compose-ui-tooling", "androidx-compose-ui-test-manifest"]
-test = ["junit", "androidx-compose-ui-test-junit4", "kotlinx-coroutines-test", "robolectric", "androidx-test-core"]
+test = ["junit", "androidx-compose-ui-test-junit4", "kotlinx-coroutines-test", "robolectric", "androidx-test-core", "turbine"]
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
