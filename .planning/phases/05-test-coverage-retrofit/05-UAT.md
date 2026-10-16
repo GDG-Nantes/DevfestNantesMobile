@@ -1,5 +1,5 @@
 ---
-status: complete
+status: diagnosed
 phase: 05-test-coverage-retrofit
 source: [05-VERIFICATION.md]
 started: 2026-10-16T11:51:07Z
@@ -44,5 +44,21 @@ blocked: 0
   reason: "User reported: crashed. I changed the flag on Firebase Remote Config and got the error FATAL EXCEPTION: main Process: com.gdgnantes.devfest.mobile.androidapp.dev, PID: 26012 java.lang.NoClassDefFoundError: Failed resolution of: Lkotlinx/datetime/Instant;"
   severity: blocker
   test: 3
-  artifacts: []
-  missing: []
+  root_cause: "OpenFeedback 1.0.0-alpha.3 bytecode references kotlinx.datetime.Instant / Clock$System (compiled against kotlinx-datetime 0.6.x); the app resolves kotlinx-datetime 0.8.0 (bumped in Phase 02, commit 736c843) where those classes no longer exist, so the first Firestore comment mapping throws NoClassDefFoundError. Phase 02 masked it with -dontwarn rules on a false 'unreachable' assumption (local.properties secrets set OPEN_FEEDBACK_ENABLED=true; Remote Config is the only gate). Latest OpenFeedback (1.0.0-alpha.6) still pins 0.6.2, so upgrading does not help."
+  artifacts:
+    - path: "gradle/libs.versions.toml"
+      issue: "kotlinxDatetime = 0.8.0 incompatible with openfeedback 1.0.0-alpha.3 runtime references"
+    - path: "androidApp/proguard-rules.pro"
+      issue: "three -dontwarn kotlinx.datetime.* rules (lines 30-39) with false 'unreachable' comment hide the missing classes"
+    - path: "build-logic/convention/src/main/kotlin/com/gdgnantes/devfest/buildlogic/DependencyResolutionRules.kt"
+      issue: "natural place for a kotlinx-datetime compat pin/substitution"
+    - path: "core/model/.../ScheduleSlot.kt, core/model/.../Agenda.kt, feature/agenda/.../Agenda.kt, core/model/src/commonTest/.../ScheduleSlotDateParsingTest.kt"
+      issue: "still import kotlinx.datetime.Instant; become a distinct type from kotlin.time.Instant under the compat artifact"
+  missing:
+    - "Resolve kotlinx-datetime to 0.8.0-0.6.x-compat on runtime classpaths (verify with dependencyInsight)"
+    - "Migrate remaining kotlinx.datetime.Instant imports to kotlin.time.Instant"
+    - "Remove the -dontwarn kotlinx.datetime rules and the false comment"
+    - "Regression test exercising OpenFeedback's timestampToInstant / Clock.System path on the app runtime classpath"
+    - "Re-run UAT test 3 on device including posting a comment"
+    - "Document that compat releases end at 0.8.x; long-term fix is an OpenFeedback release on kotlin.time"
+  debug_session: .planning/debug/feedback-kotlinx-datetime-instant-crash.md
