@@ -3,17 +3,17 @@ gsd_state_version: "1.0"
 current_phase: 05
 current_phase_name: Test Coverage Retrofit
 status: executing
-stopped_at: Completed 05-02-PLAN.md
-last_updated: "2026-10-15T20:08:18.746Z"
+stopped_at: Completed 05-03-PLAN.md
+last_updated: "2026-10-16T07:00:27.245Z"
 last_activity: 2026-10-15
 last_activity_desc: Phase 05 execution started
-state_head: 707efbb14c513c84d278c81b53e3a2143ac6eae9
+state_head: 6f9b36cc9b65f58f7b8e193592fc0395f73385dc
 progress:
   total_phases: 5
   completed_phases: 4
   total_plans: 36
-  completed_plans: 28
-  percent: 78
+  completed_plans: 29
+  percent: 80
 ---
 
 # Project State
@@ -28,11 +28,11 @@ See: .planning/PROJECT.md (updated 2026-10-13)
 ## Current Position
 
 Phase: 05 (Test Coverage Retrofit) — EXECUTING
-Plan: 3 of 10
+Plan: 4 of 10
 Status: Ready to execute
 Last activity: 2026-10-15 — Phase 05 execution started
 
-Progress: [████████░░] 78%
+Progress: [████████░░] 80%
 
 ## Performance Metrics
 
@@ -89,6 +89,7 @@ Progress: [████████░░] 78%
 | Phase 04 P07 | 23 min | 2 tasks | 22 files |
 | Phase 05 P01 | 20 min | 3 tasks | 11 files |
 | Phase 05 P02 | 35 min | 3 tasks | 13 files |
+| Phase 05 P03 | 40 min | 2 tasks | 8 files |
 
 ## Accumulated Context
 
@@ -138,6 +139,7 @@ Recent decisions affecting current work:
 - [Phase 04]: 04-07: no Hilt artifact on classpath; com.google.dagger:dagger:2.57.2 remains as firebase-perf internal transitive — Cannot be removed without dropping Firebase Performance
 - [Phase 05]: 05-01: Kover 0.9.11 report-only via build-logic conventions; live GraphQL test is a manual-only canary (-PliveNetworkTests); baseline 15.96% line coverage measured with the canary excluded — Network-fed run showed 20.64%; the offline baseline is deterministic so the 05-10 compare is meaningful
 - [Phase 05]: 05-02: date parsing is shared kotlin.time.Instant in :core:model; localized display stays on Android APIs; OpenFeedback fallback URL date is LocalDate.toString() (ASCII, user-approved D-05)
+- [Phase 05]: 05-03: fixed hand-written fixtures (SessionFixtures/SpeakerFixtures/PartnerFixtures) in :core:model replace all random stubs; buildXStub() are deterministic wrappers; Mocked store implements getSpeakerSessions — Single deterministic source for previews, mocked store and later tests; buildVenueStub left byte-identical as the production offline fallback
 
 ### Pending Todos
 
@@ -220,6 +222,6 @@ Items acknowledged and deferred at milestone close, most recent first:
 
 ## Session Continuity
 
-Last session: 2026-10-15T20:08:18.708Z
-Stopped at: Completed 05-02-PLAN.md
+Last session: 2026-10-16T07:00:27.208Z
+Stopped at: Completed 05-03-PLAN.md
 Resume file: None
