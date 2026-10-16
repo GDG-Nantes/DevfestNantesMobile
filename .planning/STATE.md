@@ -1,18 +1,18 @@
 ---
 gsd_state_version: "1.0"
-current_phase: 05
-status: completed
+status: Awaiting next milestone
 stopped_at: Phase 05 complete — all phases complete
-last_updated: "2026-10-16T19:49:24.381Z"
+last_updated: "2026-10-16T20:22:24.722Z"
 last_activity: 2026-10-16
-last_activity_desc: Phase 05 complete
-state_head: f52785a2cb6285c4ce38e947e9a67eccd1cc339b
+last_activity_desc: Milestone v1.0 completed and archived
+state_head: b89dd5bc03ef64c936ec9f85808be27dd32b55ea
 progress:
   total_phases: 5
   completed_phases: 5
   total_plans: 37
   completed_plans: 37
   percent: 100
+current_phase: 05
 ---
 
 # Project State
@@ -22,16 +22,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-10-16)
 
 **Core value:** La CI/CD doit refonctionner et le projet doit redevenir maintenable (build moderne, architecture modulaire, DI décentralisée, couverture de tests solide) sans jamais régresser le comportement existant de l'application pour les utilisateurs.
-**Current focus:** Milestone complete — ready to archive (/gsd-complete-milestone)
+**Current focus:** Planning next milestone (v1.0 Modernization shipped 2026-10-16 — /gsd-new-milestone)
 
 ## Current Position
 
-Phase: 05
-Plan: Not started
-Status: All phases complete
-Last activity: 2026-10-16 — Phase 05 complete
-
-Progress: [██████████] 100%
+Phase: Milestone v1.0 complete
+Plan: —
+Status: Awaiting next milestone
+Last activity: 2026-10-16 — Milestone v1.0 completed and archived
 
 ## Performance Metrics
 
@@ -239,10 +237,15 @@ Items acknowledged and deferred at milestone close, most recent first:
 
 | Category | Item | Status | Deferred At | Milestone |
 |----------|------|--------|-------------|-----------|
-| *(none)* | | | | |
+| debug_sessions | feedback-kotlinx-datetime-instant-crash | diagnosed (fixed in code by 05-11; session status never closed) | 2026-10-16 | v1.0 |
+| deferred_items | 05/deferred-items.md: GraphQLStore and mappers (println logging, deprecated `speakers` field returns 100 of 110, RoomSortIndex misses `Tour Bretagne`/`Unconf`, SocialItem double slash, empty-url social link) | acknowledged | 2026-10-16 | v1.0 |
 
 ## Session Continuity
 
 Last session: 2026-10-16T20:00:00Z
 Stopped at: Phase 05 complete (UAT 3/3, UI review 17/24) — milestone ready to close
 Resume file: None
+
+## Operator Next Steps
+
+- Start the next milestone with /gsd-new-milestone
