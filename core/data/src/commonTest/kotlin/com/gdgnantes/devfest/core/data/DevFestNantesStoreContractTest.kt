@@ -1,90 +1,145 @@
 package com.gdgnantes.devfest.core.data
 
 import com.gdgnantes.devfest.core.model.ContentLanguage
-import com.gdgnantes.devfest.core.model.stubs.PartnerFixtures
-import com.gdgnantes.devfest.core.model.stubs.SessionFixtures
-import com.gdgnantes.devfest.core.model.stubs.SpeakerFixtures
-import com.gdgnantes.devfest.core.model.stubs.buildVenueStub
-import com.gdgnantes.devfest.core.model.stubs.roomStubs
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
+import kotlin.test.AfterTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertNull
 import kotlin.test.assertTrue
 
-class DevFestNantesStoreContractTest {
-    private val store: DevFestNantesStore = DevFestNantesStoreMocked()
+/**
+ * Structural invariants every [DevFestNantesStore] implementation honors (D-16). The mocked store
+ * and the GraphQL store (over a mock server serving recorded responses) both run this contract
+ * on JVM, Android host and iOS; value assertions live in the subclasses.
+ *
+ * Each test calls [createStore] on its own, so nothing is shared between tests.
+ */
+abstract class DevFestNantesStoreContractTest {
 
-    @Test
-    fun agenda_flow_emits_agenda() = runTest {
-        val agenda = store.agenda.first()
-        assertEquals(6, agenda.days.getValue(1).sessions.size)
-        assertEquals(4, agenda.days.getValue(2).sessions.size)
+    protected abstract suspend fun createStore(): DevFestNantesStore
+
+    /** Id of a session that exists in this implementation's data. */
+    protected abstract val knownSessionId: String
+
+    /** Id of a speaker that exists, and has at least one session, in this implementation's data. */
+    protected abstract val knownSpeakerId: String
+
+    /** Id of a room that exists in this implementation's data. */
+    protected abstract val knownRoomId: String
+
+    /** Closes whatever [createStore] opened. Called after every test. */
+    protected open fun releaseStore() {}
+
+    @AfterTest
+    fun tearDownStore() {
+        releaseStore()
     }
 
     @Test
-    fun partners_flow_emits_partners() = runTest {
-        assertEquals(PartnerFixtures.byCategory, store.partners.first())
+    fun agenda_contains_both_conference_days() = runTest {
+        val store = createStore()
+
+        assertEquals(setOf(1, 2), store.agenda.first().days.keys)
     }
 
     @Test
-    fun getRoom_returns_room_or_null() = runTest {
-        assertEquals("Titan", store.getRoom("titan")?.name)
-        assertNull(store.getRoom("unknown"))
+    fun agenda_sessions_are_all_in_the_sessions_flow() = runTest {
+        val store = createStore()
+
+        val sessions = store.sessions.first()
+        val agendaSessions = store.agenda.first().days.values.flatMap { it.sessions }
+
+        assertTrue(agendaSessions.isNotEmpty())
+        assertTrue(sessions.containsAll(agendaSessions))
     }
 
     @Test
-    fun rooms_flow_emits_rooms() = runTest {
-        assertEquals(roomStubs.toSet(), store.rooms.first())
+    fun session_and_speaker_ids_are_unique() = runTest {
+        val store = createStore()
+
+        val sessionIds = store.sessions.first().map { it.id }
+        val speakerIds = store.speakers.first().map { it.id }
+
+        assertEquals(sessionIds.size, sessionIds.toSet().size)
+        assertEquals(speakerIds.size, speakerIds.toSet().size)
     }
 
     @Test
-    fun getSession_returns_session_or_null() = runTest {
-        assertEquals(
-            SessionFixtures.webRendering,
-            store.getSession(SessionFixtures.webRendering.id)
-        )
-        assertNull(store.getSession("unknown"))
+    fun rooms_iterate_in_sortIndex_order() = runTest {
+        val store = createStore()
+
+        val sortIndexes = store.rooms.first().map { it.sortIndex }
+
+        assertTrue(sortIndexes.isNotEmpty())
+        assertEquals(sortIndexes.sorted(), sortIndexes)
     }
 
     @Test
-    fun sessions_flow_emits_sessions() = runTest {
-        assertEquals(SessionFixtures.all, store.sessions.first())
+    fun getSession_of_a_known_id_equals_the_flow_element() = runTest {
+        val store = createStore()
+
+        val fromFlow = store.sessions.first().single { it.id == knownSessionId }
+
+        assertEquals(fromFlow, store.getSession(knownSessionId))
     }
 
     @Test
-    fun getSpeaker_returns_speaker_or_null() = runTest {
-        assertEquals(SpeakerFixtures.alice, store.getSpeaker(SpeakerFixtures.alice.id))
-        assertNull(store.getSpeaker("unknown"))
+    fun getSession_of_an_unknown_id_is_null() = runTest {
+        val store = createStore()
+
+        assertNull(store.getSession("unknown-session-id"))
     }
 
     @Test
-    fun getSpeakerSessions_returns_the_speakers_sessions() = runTest {
-        assertEquals(
-            listOf(SessionFixtures.composeDeepDive, SessionFixtures.webRendering),
-            store.getSpeakerSessions(SpeakerFixtures.alice.id)
-        )
-        assertTrue(store.getSpeakerSessions("unknown").isEmpty())
+    fun getSpeaker_known_and_unknown() = runTest {
+        val store = createStore()
+
+        val fromFlow = store.speakers.first().single { it.id == knownSpeakerId }
+
+        assertEquals(fromFlow, store.getSpeaker(knownSpeakerId))
+        assertNull(store.getSpeaker("unknown-speaker-id"))
     }
 
     @Test
-    fun speakers_flow_emits_speakers() = runTest {
-        assertEquals(SpeakerFixtures.all, store.speakers.first())
+    fun getRoom_known_and_unknown() = runTest {
+        val store = createStore()
+
+        val fromFlow = store.rooms.first().single { it.id == knownRoomId }
+
+        assertEquals(fromFlow, store.getRoom(knownRoomId))
+        assertNull(store.getRoom("unknown-room-id"))
     }
 
     @Test
-    fun getVenue_returns_venue() = runTest {
-        assertEquals(
-            buildVenueStub(ContentLanguage.ENGLISH),
-            store.getVenue(ContentLanguage.ENGLISH)
-        )
+    fun getSpeakerSessions_of_a_known_speaker_equals_the_filtered_sessions() = runTest {
+        val store = createStore()
+
+        val expected = store.sessions.first().filter { session ->
+            session.speakers.any { it.id == knownSpeakerId }
+        }
+        val actual = store.getSpeakerSessions(knownSpeakerId)
+
+        assertTrue(expected.isNotEmpty())
+        assertEquals(expected, actual)
     }
 
     @Test
-    fun two_mocked_stores_return_equal_data() = runTest {
-        val other: DevFestNantesStore = DevFestNantesStoreMocked()
-        assertEquals(store.sessions.first(), other.sessions.first())
-        assertEquals(store.speakers.first(), other.speakers.first())
+    fun getSpeakerSessions_of_an_unknown_speaker_is_empty() = runTest {
+        val store = createStore()
+
+        assertTrue(store.getSpeakerSessions("unknown-speaker-id").isEmpty())
+    }
+
+    @Test
+    fun venue_is_non_blank_in_english_and_french() = runTest {
+        val store = createStore()
+
+        for (language in listOf(ContentLanguage.ENGLISH, ContentLanguage.FRENCH)) {
+            val venue = store.getVenue(language)
+            assertTrue(venue.name.isNotBlank(), "venue name is blank in $language")
+            assertTrue(venue.description.isNotBlank(), "venue description is blank in $language")
+        }
     }
 }
