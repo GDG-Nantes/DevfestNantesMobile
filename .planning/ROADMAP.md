@@ -195,7 +195,7 @@ Plans (strictly sequential: one phase branch/PR, one commit per module, CI green
   3. ViewModel test coverage is extended across feature modules, made practical by constructor injection via Koin
   4. Compose smoke tests on critical Android screens are maintained or extended per feature module (`androidTest`), built on the shared `core-testing` fakes
 
-**Plans:** 7/10 plans executed
+**Plans:** 8/10 plans executed
 
 Plans (strictly sequential: one phase branch/draft PR, both workflows use `cancel-in-progress` per ref, CI green per pushed plan):
 
@@ -229,7 +229,7 @@ Plans (strictly sequential: one phase branch/draft PR, both workflows use `cance
 
 **Wave 8** *(blocked on Wave 7)*
 
-- [ ] 05-08-PLAN.md — Session, Speaker, Partners, DataCollection (JVM); user-confirmed `FeedbackFlags` seam with a FeedbackForm test on a fake (JVM); Venue (Robolectric) ViewModel tests: all 10 covered (D-10, D-12, D-23)
+- [x] 05-08-PLAN.md — Session, Speaker, Partners, DataCollection (JVM); user-confirmed `FeedbackFlags` seam with a FeedbackForm test on a fake (JVM); Venue (Robolectric) ViewModel tests: all 10 covered (D-10, D-12, D-23)
 
 **Wave 9** *(blocked on Wave 8)*
 
@@ -250,4 +250,4 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 | 2. Dependency & Build Tooling Upgrade | 5/5 | Complete    | 2026-09-19 |
 | 3. Multi-Module Architecture Extraction | 11/11 | Complete    | 2026-09-27 |
 | 4. Hilt to Koin DI Migration | 7/7 | Complete    | 2026-10-13 |
-| 5. Test Coverage Retrofit | 7/10 | In Progress | - |
+| 5. Test Coverage Retrofit | 8/10 | In Progress | - |

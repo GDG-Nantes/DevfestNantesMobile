@@ -3,16 +3,16 @@ gsd_state_version: "1.0"
 current_phase: 05
 current_phase_name: Test Coverage Retrofit
 status: executing
-stopped_at: Completed 05-07-PLAN.md
-last_updated: "2026-10-16T08:53:42.851Z"
+stopped_at: Completed 05-08-PLAN.md
+last_updated: "2026-10-16T09:10:53.919Z"
 last_activity: 2026-10-15
 last_activity_desc: Phase 05 execution started
-state_head: b1e7c8de8a5e27d9c81a5cd1852a8e92f8888bb5
+state_head: 9a48d8b5f65e1d6375c9405339b43ee4f291d02b
 progress:
   total_phases: 5
   completed_phases: 4
   total_plans: 36
-  completed_plans: 33
+  completed_plans: 34
   percent: 80
 ---
 
@@ -28,7 +28,7 @@ See: .planning/PROJECT.md (updated 2026-10-13)
 ## Current Position
 
 Phase: 05 (Test Coverage Retrofit) — EXECUTING
-Plan: 8 of 10
+Plan: 9 of 10
 Status: Ready to execute
 Last activity: 2026-10-15 — Phase 05 execution started
 
@@ -94,6 +94,7 @@ Progress: [████████░░] 80%
 | Phase 05 P05 | 25 min | 2 tasks | 8 files |
 | Phase 05 P06 | 15 min | 3 tasks | 13 files |
 | Phase 05 P07 | 45min | 2 tasks | 6 files |
+| Phase 05 P08 | 15min | 3 tasks | 12 files |
 
 ## Accumulated Context
 
@@ -148,6 +149,7 @@ Recent decisions affecting current work:
 - [Phase 05]: 05-05: store contract is abstract and runs against Mocked and GraphQLStore-on-MockServer on three runtimes; bookmarks, agenda filter and consent keys/formats pinned by Robolectric tests with literal keys; test-only Crashlytics id lives in feature/settings/src/test/res and is absent from packaged resources — MockServer.Builder() replaces the deprecated MockServer(handler); one contract keeps mock and real store honest, prefs tests protect saved user state across refactors
 - [Phase 05]: 05-06: ViewModel harness = Turbine 1.2.1 + MainDispatcherRule + StateFlow-backed FakeDevFestNantesStore; AgendaViewModel gets its IO dispatcher from a named Koin binding in coreUiModule (explicit positional lambda in agendaModule) — Makes ViewModels deterministic under test without changing production behavior (Dispatchers.IO is still what the binding supplies); SpeakersViewModel store failure is characterized and queued for the deferred log via 05-07
 - [Phase 05]: 05-07: ties on start time are asserted as a set (HashSet before sortedBy); AgendaViewModel store failure pinned and deferred (items 10-12 in deferred-items.md)
+- [Phase 05]: 05-08: FeedbackFormViewModel depends on a FeedbackFlags seam (FirebaseFeedbackFlags factory binding) so all ten ViewModels are tested on fakes; Robolectric only for VenueViewModel — Behavior-neutral adapter keeps keys, AND logic, log lines, main-thread listener and the per-ViewModel remote-config factory; user-confirmed D-23 (follows PerformanceMonitoring)
 
 ### Pending Todos
 
@@ -230,6 +232,6 @@ Items acknowledged and deferred at milestone close, most recent first:
 
 ## Session Continuity
 
-Last session: 2026-10-16T08:53:42.816Z
-Stopped at: Completed 05-07-PLAN.md
+Last session: 2026-10-16T09:10:53.884Z
+Stopped at: Completed 05-08-PLAN.md
 Resume file: None
