@@ -47,7 +47,7 @@ Requirements pour ce chantier de modernisation. Chaque requirement mappe vers un
 - [x] **TEST-01**: Les fragilités connues bloquantes sont corrigées avant l'extension de la couverture (RNG non seedé dans `StoreStubs.kt`, thread-safety de `SimpleDateFormat` dans les chemins testés)
 - [x] **TEST-02**: La couverture `commonTest` de la logique métier (Store/repository, mappers GraphQL→model) est étendue en prolongeant le pattern `DevFestNantesStoreContractTest` existant vers les nouveaux modules `core-data`/feature
 - [x] **TEST-03**: La couverture de tests des ViewModels est étendue, rendue possible par l'injection par constructeur (Koin)
-- [ ] **TEST-04**: Les tests de fumée Compose sur les écrans Android critiques sont maintenus/étendus par module feature (`androidTest`), en s'appuyant sur `core-testing`
+- [x] **TEST-04**: Les tests de fumée Compose sur les écrans Android critiques sont maintenus/étendus par module feature (`androidTest`), en s'appuyant sur `core-testing`
 
 ### CICD (Optimisation CI/CD)
 
@@ -117,7 +117,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | TEST-01 | Phase 5 | Complete |
 | TEST-02 | Phase 5 | Complete |
 | TEST-03 | Phase 5 | Complete |
-| TEST-04 | Phase 5 | Pending |
+| TEST-04 | Phase 5 | Complete |
 | CICD-01 | Phase 1 | Complete |
 | CICD-02 | Phase 1 | Complete |
 | CICD-03 | Phase 1 | Complete |
