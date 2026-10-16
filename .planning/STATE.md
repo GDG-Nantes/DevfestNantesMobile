@@ -3,16 +3,16 @@ gsd_state_version: "1.0"
 current_phase: 05
 current_phase_name: Test Coverage Retrofit
 status: executing
-stopped_at: Completed 05-10-PLAN.md
-last_updated: "2026-10-16T14:12:39.650Z"
+stopped_at: Completed 05-11-PLAN.md
+last_updated: "2026-10-16T14:44:49.366Z"
 last_activity: 2026-10-16
 last_activity_desc: Phase 05 execution started
-state_head: b7a1a34e38a3aebdc5f8ed93fa6e5bfe22664384
+state_head: 2e02f61478c3ac04a1092b626ac6e485160a2386
 progress:
   total_phases: 5
   completed_phases: 4
   total_plans: 37
-  completed_plans: 36
+  completed_plans: 37
   percent: 80
 ---
 
@@ -28,7 +28,7 @@ See: .planning/PROJECT.md (updated 2026-10-13)
 ## Current Position
 
 Phase: 05 (Test Coverage Retrofit) — EXECUTING
-Plan: 1 of 11
+Plan: 11 of 11 (all plans executed; phase verification pending, UAT test 3 device re-check open)
 Status: Executing Phase 05
 Last activity: 2026-10-16 — Phase 05 execution started
 
@@ -97,6 +97,7 @@ Progress: [████████░░] 80%
 | Phase 05 P08 | 15min | 3 tasks | 12 files |
 | Phase 05 P09 | 30 min | 2 tasks | 5 files |
 | Phase 05 P10 | 1h 30m | 3 tasks | 6 files |
+| Phase 05 P11 | 30 min | 3 tasks | 7 files |
 
 ## Accumulated Context
 
@@ -155,6 +156,7 @@ Recent decisions affecting current work:
 - [Phase 05]: 05-09: VenueSmokeTest serves images from memory via a Coil interceptor because the floor-plan control removes itself on image load failure; no production change
 - [Phase 05]: 05-09: no packaging excludes were needed for feature androidTest APKs; Settings smoke test overrides DataCollectionSettingsService with a private recording fake
 - [Phase 05]: 05-10: smoke tests assert reachable content (first day tab + scroll-to-node), never scroll position; session detail smoke test fakes the FeedbackFlags seam so no remote config is created
+- [Phase 05]: 05-11: kotlinx-datetime resolves to 0.8.0-0.6.x-compat (OpenFeedback 1.0.0-alpha.3 links the 0.6.x Instant/Clock classes); first-party code on kotlin.time.Instant, shared.h unchanged, R8 suppressions removed, OpenFeedbackDatetimeLinkageTest guards the bridge (G-05-3) — Keeps the newest library, restores the runtime classes, and a plain bump past 0.8.x now fails CI; UAT test 3 device re-check still open
 
 ### Pending Todos
 
@@ -240,6 +242,6 @@ Items acknowledged and deferred at milestone close, most recent first:
 
 ## Session Continuity
 
-Last session: 2026-10-16T10:48:23.645Z
-Stopped at: Completed 05-10-PLAN.md
+Last session: 2026-10-16T14:44:49.323Z
+Stopped at: Completed 05-11-PLAN.md
 Resume file: None
