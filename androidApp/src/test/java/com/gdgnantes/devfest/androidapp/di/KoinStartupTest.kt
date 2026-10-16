@@ -15,7 +15,9 @@ import com.gdgnantes.devfest.core.testing.di.androidTestDoubles
 import com.gdgnantes.devfest.core.ui.BookmarksViewModel
 import com.gdgnantes.devfest.feature.about.partners.PartnersViewModel
 import com.gdgnantes.devfest.feature.agenda.AgendaViewModel
+import com.gdgnantes.devfest.feature.sessiondetail.FeedbackFlags
 import com.gdgnantes.devfest.feature.sessiondetail.FeedbackFormViewModel
+import com.gdgnantes.devfest.feature.sessiondetail.FirebaseFeedbackFlags
 import com.gdgnantes.devfest.feature.sessiondetail.SessionViewModel
 import com.gdgnantes.devfest.feature.settings.datacollection.DataCollectionViewModel
 import com.gdgnantes.devfest.feature.settings.services.DataCollectionService
@@ -48,6 +50,7 @@ import org.robolectric.RobolectricTestRunner
 import org.robolectric.annotation.Config
 import timber.log.Timber
 import kotlin.test.assertEquals
+import kotlin.test.assertIs
 import kotlin.test.assertNotNull
 
 /**
@@ -118,11 +121,13 @@ class KoinStartupTest {
         assertNotNull(koin.get<SessionViewModel> { parametersOf("session-1") })
     }
 
-    // FeedbackFormViewModel takes the final FirebaseRemoteConfig and fetches in its init block; the
-    // real definition is exercised against the dummy FirebaseApp.
+    // FeedbackFormViewModel depends on the FeedbackFlags seam (D-23) and fetches in its init block;
+    // the production FirebaseFeedbackFlags wraps the real remote config, exercised here against the
+    // dummy FirebaseApp.
     @Test
     fun feedback_form_view_model_resolves_with_real_remote_config() {
         assertNotNull(koin.get<FeedbackFormViewModel>())
+        assertIs<FirebaseFeedbackFlags>(koin.get<FeedbackFlags>())
     }
 
     @Test
