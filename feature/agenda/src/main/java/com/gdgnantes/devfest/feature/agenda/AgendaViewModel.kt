@@ -13,7 +13,7 @@ import com.gdgnantes.devfest.core.model.Session
 import com.gdgnantes.devfest.core.ui.UiState
 import com.gdgnantes.devfest.feature.agenda.services.SessionFiltersService
 import com.gdgnantes.devfest.feature.agenda.utils.SessionFilter
-import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
@@ -31,7 +31,8 @@ class AgendaViewModel(
     private val store: DevFestNantesStore,
     private val bookmarksStore: BookmarksStore,
     private val performanceMonitoring: PerformanceMonitoring,
-    private val sessionFiltersService: SessionFiltersService
+    private val sessionFiltersService: SessionFiltersService,
+    private val ioDispatcher: CoroutineDispatcher
 ) : ViewModel() {
     private var autoRefreshJob: Job? = null
 
@@ -90,7 +91,7 @@ class AgendaViewModel(
     }
 
     private suspend fun updateFilteredDays() =
-        withContext(Dispatchers.IO) {
+        withContext(ioDispatcher) {
             _days.value =
                 mutableMapOf<Int, AgendaDay>()
                     .apply {
