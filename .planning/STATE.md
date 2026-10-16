@@ -3,16 +3,16 @@ gsd_state_version: "1.0"
 current_phase: 05
 current_phase_name: Test Coverage Retrofit
 status: executing
-stopped_at: Completed 05-03-PLAN.md
-last_updated: "2026-10-16T07:00:27.245Z"
+stopped_at: Completed 05-04-PLAN.md
+last_updated: "2026-10-16T07:24:24.940Z"
 last_activity: 2026-10-15
 last_activity_desc: Phase 05 execution started
-state_head: 6f9b36cc9b65f58f7b8e193592fc0395f73385dc
+state_head: fbd36f8719b2062a50d6470bfe2cd13585bad2e9
 progress:
   total_phases: 5
   completed_phases: 4
   total_plans: 36
-  completed_plans: 29
+  completed_plans: 30
   percent: 80
 ---
 
@@ -28,7 +28,7 @@ See: .planning/PROJECT.md (updated 2026-10-13)
 ## Current Position
 
 Phase: 05 (Test Coverage Retrofit) — EXECUTING
-Plan: 4 of 10
+Plan: 5 of 10
 Status: Ready to execute
 Last activity: 2026-10-15 — Phase 05 execution started
 
@@ -90,6 +90,7 @@ Progress: [████████░░] 80%
 | Phase 05 P01 | 20 min | 3 tasks | 11 files |
 | Phase 05 P02 | 35 min | 3 tasks | 13 files |
 | Phase 05 P03 | 40 min | 2 tasks | 8 files |
+| Phase 05 P04 | 50 min | 3 tasks | 10 files |
 
 ## Accumulated Context
 
@@ -140,6 +141,7 @@ Recent decisions affecting current work:
 - [Phase 05]: 05-01: Kover 0.9.11 report-only via build-logic conventions; live GraphQL test is a manual-only canary (-PliveNetworkTests); baseline 15.96% line coverage measured with the canary excluded — Network-fed run showed 20.64%; the offline baseline is deterministic so the 05-10 compare is meaningful
 - [Phase 05]: 05-02: date parsing is shared kotlin.time.Instant in :core:model; localized display stays on Android APIs; OpenFeedback fallback URL date is LocalDate.toString() (ASCII, user-approved D-05)
 - [Phase 05]: 05-03: fixed hand-written fixtures (SessionFixtures/SpeakerFixtures/PartnerFixtures) in :core:model replace all random stubs; buildXStub() are deterministic wrappers; Mocked store implements getSpeakerSessions — Single deterministic source for previews, mocked store and later tests; buildVenueStub left byte-identical as the production offline fallback
+- [Phase 05]: 05-04: GraphQLStore and mappers tested offline via Apollo MockServer 0.3.1 with recorded responses as Kotlin string constants; data builders generated into :core:network commonMain; cacheKeyGenerator/cacheResolver split into ApolloCacheKeys.kt; testAndroidHostTest enabled for :core:data and run in CI — iOS commonTest cannot load resources; one file's top-level vals share an initializer so the split keeps tests from building the production SQLite client; production defects found (100/110 speakers, RoomSortIndex ids, println logging) are logged in deferred-items.md and not fixed (D-10)
 
 ### Pending Todos
 
@@ -222,6 +224,6 @@ Items acknowledged and deferred at milestone close, most recent first:
 
 ## Session Continuity
 
-Last session: 2026-10-16T07:00:27.208Z
-Stopped at: Completed 05-03-PLAN.md
+Last session: 2026-10-16T07:24:24.906Z
+Stopped at: Completed 05-04-PLAN.md
 Resume file: None
