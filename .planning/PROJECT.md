@@ -28,10 +28,11 @@ La CI/CD doit refonctionner et le projet doit redevenir maintenable (build moder
 - ✓ Build & dépendances : Gradle Declarative DSL en migration partielle documentée (`settings.gradle.dcl` ; modules restés en `.kts` faute de support AGP/KMP) — Phase 2
 - ✓ Architecture : découpage multi-modules façon Now in Android adapté KMP — `build-logic` (6 convention plugins, `buildSrc` supprimé), `:core:{model,network,analytics,data,testing,ui}`, `:feature:{venue,about,settings,speakers,agenda,session-detail}` (entrées `*Route` par callbacks), `:shared` réduit à un framework iOS parapluie unique (bookmarks sans écran, dans `core:data`/`core:ui`) — Phase 3
 - ✓ DI : migration complète de Hilt vers Koin 4.2.2 — un module Koin par module Gradle, composé par `initKoin()` dans `:shared` (`allowOverride(false)`), `IosDependencies` côté iOS sans nom Koin dans `shared.h`, graphe vérifié en CI (`verify()` + tests de démarrage JVM/iOS/Robolectric), `scripts/di-gate.sh` strict contre Hilt et les appels service-locator — Phase 4
+- ✓ Qualité : couverture de lignes Kover passée de 15,96 % à 30,57 % — tests GraphQLStore/mappers sur Apollo MockServer (JVM/Android/iOS), contrat de Store partagé, persistance SharedPreferences épinglée, tests unitaires des dix ViewModels sur un fake contrôlable, matrice de filtres de l'agenda, smoke tests Compose des six modules feature ; crash OpenFeedback/kotlinx-datetime (G-05-3) corrigé et vérifié sur device — Phase 5
 
 ### Active
 
-- [ ] Qualité : amélioration significative de la couverture de tests unitaires et UI, priorité sur la logique métier (ViewModels, Store/repository, mappers GraphQL→model) — pas d'objectif % strict imposé
+(aucune — toutes les exigences du milestone sont validées)
 
 ### Out of Scope
 
@@ -70,11 +71,14 @@ La CI/CD doit refonctionner et le projet doit redevenir maintenable (build moder
 | Phase 3 : types Apollo renommés via `@targetName` (GraphQLVenue/Session/Speaker/Room/Partner), noms Swift des 5 types domaine changés une fois (amendement D-11) | Supprime définitivement la collision de noms Swift Kotlin/Native qui a stoppé 03-01 ; `swift-names-gate.sh` renforcé (member sets + collisions) | Phase 3 (03-10/03-11) |
 | Phase 3 : heap du daemon Gradle porté à 4 Go | OOM de D8 (dex merging) dans le job CI Instrumentation tests avec 6 modules feature | Phase 3 — approuvé par l'utilisateur |
 | Gradle Declarative DSL : migration complète si possible, sinon partielle documentée | La techno est en incubation ; éviter de bloquer tout le projet sur un support incomplet côté AGP/KMP | — Pending |
-| Couverture de tests : pas d'objectif % strict, priorité à la logique métier | L'utilisateur préfère une couverture qualitative (ViewModels, Store, mappers) à un chiffre arbitraire | — Pending |
+| Couverture de tests : pas d'objectif % strict, priorité à la logique métier | L'utilisateur préfère une couverture qualitative (ViewModels, Store, mappers) à un chiffre arbitraire | ✓ Phase 5 shipped — Kover 0.9.11 en rapport seul, 15,96 % → 30,57 %, UAT 3/3, 0 menace ouverte |
 | Aucune nouvelle fonctionnalité utilisateur pendant ce chantier | Chantier purement technique — réduire le risque de régression en isolant modernisation et évolution fonctionnelle | — Pending |
 | Pas de deadline stricte liée à la prochaine édition | Chantier de fond mené phase par phase sans pression de date | — Pending |
 | Phase 4 : ordre des `ApplicationInitializer` explicite (`single(named("applicationInitializers"))`), asserté par `KoinStartupTest` | Le consentement de collecte doit être appliqué avant que Performance Monitoring soit forcé (T-04-19) | Phase 4 |
 | Phase 4 : Robolectric 4.17 en `testImplementation` pour tester le démarrage réel du graphe Koin avec Firebase | Exerce les définitions Firebase de production sans les modifier ; base réutilisable pour la Phase 5 | Phase 4 — choisi par l'utilisateur |
+| Phase 5 : kotlinx-datetime résolu en `0.8.0-0.6.x-compat` (pas de retour à 0.6.2), code first-party sur `kotlin.time.Instant`, suppressions R8 retirées | OpenFeedback 1.0.0-alpha.3 (et alpha.6) référence encore `kotlinx.datetime.Instant` ; la variante compat restaure ces classes tout en gardant la 0.8. Les releases compat s'arrêtent à 0.8.x : le correctif durable est une release OpenFeedback sur kotlin.time | Phase 5 (05-11) — gardé en CI par `OpenFeedbackDatetimeLinkageTest` |
+| Phase 5 : seam `FeedbackFlags` au-dessus de Firebase Remote Config, IO dispatcher d'`AgendaViewModel` injecté par binding Koin nommé | Rendre FeedbackForm et Agenda testables sur JVM pur sans changer le comportement | Phase 5 (05-06, 05-08) |
+| Phase 5 : les échecs de store non catchés dans les ViewModels sont épinglés par des tests de caractérisation, pas corrigés | Chantier sans changement de comportement ; correction (état ERROR) reportée — voir `deferred-items.md` et `05-UI-REVIEW.md` | Phase 5 — dette connue |
 | Phase 2 : montée de version en groupes séquentiels (un commit par groupe), avec un CI vert entre chaque étape | Des montées majeures cumulées seraient impossibles à diagnostiquer en cas d'échec ; chaque groupe obtient son propre commit revertible et son propre signal vert avant d'attaquer le suivant | ✓ Phase 2 shipped — Kotlin 2.4.20, AGP 9.4.0 + plugin `com.android.kotlin.multiplatform.library`, Gradle 9.7.1, Compose BOM 2026.09.00, Apollo 5.2.0 (cache migré vers `com.apollographql.cache`), Firebase BOM 34.19.0/Coroutines 1.11.0/kotlinx-serialization 1.11.0/kotlinx-datetime 0.8.0 ; pilote Gradle Declarative DSL réussi sur `settings.gradle.dcl` (androidApp/shared restent en Kotlin DSL, support AGP/KMP DCL non mûr pour ces modules) — détail complet dans `.planning/STATE.md` § Phase 02 version deviations / DCL pilot outcome |
 
 ## Evolution
@@ -95,4 +99,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-10-13 after Phase 4*
+*Last updated: 2026-10-16 after Phase 5*

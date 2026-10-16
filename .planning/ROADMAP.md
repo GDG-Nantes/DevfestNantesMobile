@@ -17,7 +17,7 @@ Decimal phases appear between their surrounding integers in numeric order.
 - [x] **Phase 2: Dependency & Build Tooling Upgrade** - The project builds and runs on Kotlin 2.4.0, AGP 9.2.0, Gradle 9.7.1 and updated libraries, staged bump by bump with zero behavior change (completed 2026-09-19)
 - [x] **Phase 3: Multi-Module Architecture Extraction** - The codebase is split into a `core-*`/`feature-*` module graph with unidirectional dependencies, iOS still consuming one umbrella framework (completed 2026-09-27)
 - [x] **Phase 4: Hilt to Koin DI Migration** - Dependency injection is fully decentralized via Koin, one module per Gradle module, with a CI-verified DI graph (completed 2026-10-13)
-- [ ] **Phase 5: Test Coverage Retrofit** - Business-logic test coverage (ViewModels, Store/repository, GraphQL mappers) is measurably improved on a hardened fixture foundation
+- [x] **Phase 5: Test Coverage Retrofit** - Business-logic test coverage (ViewModels, Store/repository, GraphQL mappers) is measurably improved on a hardened fixture foundation (completed 2026-10-16)
 
 ## Phase Details
 
@@ -195,7 +195,7 @@ Plans (strictly sequential: one phase branch/PR, one commit per module, CI green
   3. ViewModel test coverage is extended across feature modules, made practical by constructor injection via Koin
   4. Compose smoke tests on critical Android screens are maintained or extended per feature module (`androidTest`), built on the shared `core-testing` fakes
 
-**Plans:** 11/11 plans executed
+**Plans:** 11/11 plans complete
 
 Plans (strictly sequential: one phase branch/draft PR, both workflows use `cancel-in-progress` per ref, CI green per pushed plan):
 
@@ -254,4 +254,4 @@ Phases execute in numeric order: 1 → 2 → 3 → 4 → 5
 | 2. Dependency & Build Tooling Upgrade | 5/5 | Complete    | 2026-09-19 |
 | 3. Multi-Module Architecture Extraction | 11/11 | Complete    | 2026-09-27 |
 | 4. Hilt to Koin DI Migration | 7/7 | Complete    | 2026-10-13 |
-| 5. Test Coverage Retrofit | 11/11 | In Progress | - |
+| 5. Test Coverage Retrofit | 11/11 | Complete    | 2026-10-16 |

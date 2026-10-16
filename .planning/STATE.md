@@ -1,44 +1,43 @@
 ---
 gsd_state_version: "1.0"
 current_phase: 05
-current_phase_name: Test Coverage Retrofit
-status: executing
-stopped_at: Completed 05-11-PLAN.md
-last_updated: "2026-10-16T14:44:49.366Z"
+status: completed
+stopped_at: Phase 05 complete — all phases complete
+last_updated: "2026-10-16T19:49:24.381Z"
 last_activity: 2026-10-16
-last_activity_desc: Phase 05 execution started
-state_head: 2e02f61478c3ac04a1092b626ac6e485160a2386
+last_activity_desc: Phase 05 complete
+state_head: f52785a2cb6285c4ce38e947e9a67eccd1cc339b
 progress:
   total_phases: 5
-  completed_phases: 4
+  completed_phases: 5
   total_plans: 37
   completed_plans: 37
-  percent: 80
+  percent: 100
 ---
 
 # Project State
 
 ## Project Reference
 
-See: .planning/PROJECT.md (updated 2026-10-13)
+See: .planning/PROJECT.md (updated 2026-10-16)
 
 **Core value:** La CI/CD doit refonctionner et le projet doit redevenir maintenable (build moderne, architecture modulaire, DI décentralisée, couverture de tests solide) sans jamais régresser le comportement existant de l'application pour les utilisateurs.
-**Current focus:** Phase 05 — Test Coverage Retrofit
+**Current focus:** Milestone complete — ready to archive (/gsd-complete-milestone)
 
 ## Current Position
 
-Phase: 05 (Test Coverage Retrofit) — EXECUTING
-Plan: 11 of 11 (all plans executed; phase verification pending, UAT test 3 device re-check open)
-Status: Executing Phase 05
-Last activity: 2026-10-16 — Phase 05 execution started
+Phase: 05
+Plan: Not started
+Status: All phases complete
+Last activity: 2026-10-16 — Phase 05 complete
 
-Progress: [████████░░] 80%
+Progress: [██████████] 100%
 
 ## Performance Metrics
 
 **Velocity:**
 
-- Total plans completed: 26
+- Total plans completed: 37
 - Average duration: N/A
 - Total execution time: 0 hours
 
@@ -50,6 +49,7 @@ Progress: [████████░░] 80%
 | 02 | 5 | - | - |
 | 03 | 11 | - | - |
 | 4 | 7 | - | - |
+| 05 | 11 | - | - |
 
 **Recent Trend:**
 
@@ -156,7 +156,7 @@ Recent decisions affecting current work:
 - [Phase 05]: 05-09: VenueSmokeTest serves images from memory via a Coil interceptor because the floor-plan control removes itself on image load failure; no production change
 - [Phase 05]: 05-09: no packaging excludes were needed for feature androidTest APKs; Settings smoke test overrides DataCollectionSettingsService with a private recording fake
 - [Phase 05]: 05-10: smoke tests assert reachable content (first day tab + scroll-to-node), never scroll position; session detail smoke test fakes the FeedbackFlags seam so no remote config is created
-- [Phase 05]: 05-11: kotlinx-datetime resolves to 0.8.0-0.6.x-compat (OpenFeedback 1.0.0-alpha.3 links the 0.6.x Instant/Clock classes); first-party code on kotlin.time.Instant, shared.h unchanged, R8 suppressions removed, OpenFeedbackDatetimeLinkageTest guards the bridge (G-05-3) — Keeps the newest library, restores the runtime classes, and a plain bump past 0.8.x now fails CI; UAT test 3 device re-check still open
+- [Phase 05]: 05-11: kotlinx-datetime resolves to 0.8.0-0.6.x-compat (OpenFeedback 1.0.0-alpha.3 links the 0.6.x Instant/Clock classes); first-party code on kotlin.time.Instant, shared.h unchanged, R8 suppressions removed, OpenFeedbackDatetimeLinkageTest guards the bridge (G-05-3) — Keeps the newest library, restores the runtime classes, and a plain bump past 0.8.x now fails CI; UAT test 3 re-checked on device and passed 2026-10-16
 
 ### Pending Todos
 
@@ -175,6 +175,7 @@ None yet.
 - **Phase 3 follow-up — RESOLVED in Phase 4:** `:core:testing` now consumed (`testImplementation`) by `:core:ui` and `:androidApp` (fakes + `testDoublesModule`); Phase 5 extends it.
 - Note (not blocking, Phase 4): `com.google.dagger:dagger` remains on the release classpath only as a Firebase Performance internal transitive; the DI gate and `NO-HILT-ON-CLASSPATH` cover Hilt itself.
 - Note (not blocking, Phase 4 UAT): speaker images may fail to load on networks with SSL interception/blocking of raw.githubusercontent.com — environmental, observed on Android and iOS, not a code regression.
+- Follow-up (not blocking, Phase 5 UI review): ViewModels have no error state on store failure (pinned by characterization tests), the fallback OpenFeedback URL has a double slash, and the agenda bookmark contentDescription is an unlocalized literal — see `05-UI-REVIEW.md` and `deferred-items.md`.
 - Follow-up (not blocking, G-05-3): kotlinx-datetime resolves to `0.8.0-0.6.x-compat` because OpenFeedback 1.0.0-alpha.3 (and every release up to alpha.6) links against the 0.6.x `Instant`/`Clock` classes, which plain 0.8.0 no longer ships. Compat releases end with 0.8.x, so any move to 0.9+ first needs an OpenFeedback release built on `kotlin.time.Instant` (upstream main was still on the deprecated type as of 2026-10-15). `OpenFeedbackDatetimeLinkageTest` fails CI on any bump that drops the compat classes. The Phase 02 R8 suppression premise was false: the secrets plugin sets OPEN_FEEDBACK_ENABLED from local.properties, so the feedback code was reachable on developer and release builds. The suppressions were removed in 05-11.
 
 ## Phase 02 DCL pilot outcome
@@ -242,6 +243,6 @@ Items acknowledged and deferred at milestone close, most recent first:
 
 ## Session Continuity
 
-Last session: 2026-10-16T14:44:49.323Z
-Stopped at: Completed 05-11-PLAN.md
+Last session: 2026-10-16T20:00:00Z
+Stopped at: Phase 05 complete (UAT 3/3, UI review 17/24) — milestone ready to close
 Resume file: None
