@@ -70,6 +70,12 @@ Not applicable. This is a single-event conference app with a bounded dataset ser
 
 Not assessed in detail. Versions are managed in the Gradle version catalog (`gradle/libs.versions.toml`); a full outdated-dependency audit was not performed. Known pin: kotlinx-datetime stays on a `0.6.x-compat` release because OpenFeedback `1.0.0-alpha.3` needs 0.6.x at runtime (guarded by `OpenFeedbackDatetimeLinkageTest`).
 
+**OpenFeedback alpha upgrade pending (`1.0.0-alpha.3` → `1.0.0-alpha.6`):**
+- Issue: Dependabot PR #258 proposes the bump and is deliberately left open and not rebased. It is unknown whether `alpha.6` still requires kotlinx-datetime 0.6.x, or whether its API changed.
+- Files: `gradle/libs.versions.toml` (`openfeedback`, `kotlinxDatetime`), `OpenFeedbackDatetimeLinkageTest`
+- Impact: Staying on `alpha.3` keeps the `0.6.x-compat` datetime pin in place and blocks moving to a regular kotlinx-datetime release.
+- Fix approach: Rebase #258 (`@dependabot rebase`), check CI and `OpenFeedbackDatetimeLinkageTest`, then review the OpenFeedback release notes for API changes. If `alpha.6` supports a newer datetime, drop the `-0.6.x-compat` pin and update the pin note in `AGENTS.md`. Otherwise close the PR.
+
 ## Missing Critical Features
 
 Not detected from static exploration.
