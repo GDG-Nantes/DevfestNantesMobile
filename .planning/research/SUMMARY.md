@@ -1,167 +1,167 @@
 # Project Research Summary
 
-**Project:** DevFest Nantes app — KMP technical modernization
-**Domain:** Brownfield KMP mobile app modernization (Android + iOS, no new user-facing features)
-**Researched:** 2026-09-12
-**Confidence:** MEDIUM-HIGH
+**Project:** DevFest Nantes (KMP conference app), milestone v1.1 iOS Architecture
+**Researched:** 2026-10-23
+**Confidence:** MEDIUM-HIGH (HIGH on what to build and the Swift/KMP interop choices; MEDIUM on the SPM/XCFramework build order and CI release path until spiked)
 
 ## Executive Summary
 
-This is a purely technical modernization of an existing Kotlin Multiplatform conference app (Android/Compose + iOS/SwiftUI, sharing business logic via a `shared` KMP module). Experts build this kind of upgrade the way Now in Android does: a one-directional `app to feature-* to core-*` module graph, decentralized DI via Koin's per-module `module { }` DSL, `commonTest`-first business-logic testing with fakes over mocks, and CI split across cheap Android runners and expensive macOS/iOS runners with aggressive Gradle/Konan caching. This project's specific twist -- iOS UI is native SwiftUI, not Compose Multiplatform -- means only data/domain modules (`core-model`, `core-network`, `core-data`, `core-analytics`) can be true KMP `commonMain`; every Compose UI module (`core-ui`, `feature-*`) is Android-only, and `shared` must collapse into a thin Cocoapods umbrella framework rather than being modularized 1:1 into iOS frameworks.
+The iOS app re-implements agenda logic in Swift and keeps favorites/filter persistence in view models over `UserDefaults`. v1.1 moves the duplicated logic into a new `:core:domain` KMP module, rebuilds iOS on an iOS 17 floor with `@Observable` view models, replaces singletons with an explicit Swift composition root, splits the app into local SPM packages, flips to Swift 6 strict concurrency, and runs iOS tests in GitHub Actions. Behavior must stay identical and no favorite or filter may be lost on upgrade.
 
-The recommended approach is staged and strictly sequenced to avoid stacking independent sources of risk: (1) fix the iOS CI simulator-resolution root cause first (pin the runner image, not just Xcode/device name) so every subsequent phase has trustworthy CI signal; (2) upgrade dependencies (Kotlin 2.4.0, AGP 9.2.0 -- deciding the AGP-9 KMP-plugin path explicitly, Compose BOM 2026.08.00, Apollo Kotlin 5.0.1, Koin BOM 4.1.1, kotlinx libs) one logical group at a time with a green build after each, and treat the Gradle Declarative DSL as out of scope beyond one low-risk pilot module (it remains experimental); (3) extract the module skeleton bottom-up (`core-model` to `core-network`/`core-analytics` to `core-data` to `core-testing` to `core-ui` to features, least-coupled feature first, `feature-session-detail` last) while keeping Hilt working across modules and validating the iOS umbrella-framework export early via a spike; (4) migrate Hilt to Koin as its own separate pass once the module skeleton is stable, module by module, with `checkModules()`/`verify()` wired into CI to replace Hilt's lost compile-time safety net; (5) retrofit test coverage last, prioritizing ViewModels/Store/mappers over trivial code, after first hardening test fixtures (seed `StoreStubs.kt`'s randomness, replace `SimpleDateFormat`).
+Sequence the work so each step ships green: test lane and gates first; Kotlin domain layer next (Android consumes it first, since its tests are the parity oracle); iOS persistence on the same legacy keys; view models and DI one screen at a time; package split and Swift 6 flip last. Interop stays on KMP-NativeCoroutines 1.0.6 (not SKIE, not Swift Export). The Kotlin framework reaches SPM as a static XCFramework `binaryTarget`, verified in a local experiment.
 
-The dominant risk across this whole milestone is **conflating independent variables**: bumping five major dependencies in one commit, mixing module extraction with DI-framework swaps, or letting "no regression" erode via incidental cleanup during refactors (Apollo cache-key behavior, Firebase Remote Config timing, `!!` navigation-argument fixes). The single highest-leverage architectural risk specific to this project is the iOS "three-framework problem" -- exporting each new Kotlin module as its own iOS framework instead of maintaining one umbrella framework -- which must be designed and spike-validated before the module split, not discovered afterward. Mitigation throughout is the same principle: one change per commit, a green build/CI checkpoint after each stage, and explicit before/after verification (cache-behavior tests, `checkModules()`, `android run`/`layout`/`screen capture`) rather than trusting "it compiles."
+Main risks: favorites/filters lost on upgrade; Gradle framework not visible to SPM from a clean checkout; Swift 6 Sendable friction at the Kotlin boundary; silent drift in agenda grouping, room order and timezone. Mitigations: reuse legacy persistence keys and shapes; prove the XCFramework build order on CI before splitting features; confine Kotlin escape hatches to one bridge target with a lint gate; characterize current behavior before moving logic.
 
 ## Key Findings
 
 ### Recommended Stack
 
-Kotlin 2.4.0, Gradle 9.7.1, Compose BOM 2026.08.00, Apollo Kotlin 5.0.1, Koin BOM 4.1.1, Firebase BOM 34.18.0 (Android-only), Kotlin Coroutines 1.11.0, kotlinx-serialization 1.11.0, kotlinx-datetime 0.8.0 (note: 0.7.0 introduced breaking `Instant`/`Clock` changes -- budget real migration effort, not a drive-by bump). The single highest-leverage/highest-risk stack decision is **AGP 9 vs staying on AGP 8.13.0** -- AGP >=9.0 forbids applying `com.android.library` + `org.jetbrains.kotlin.multiplatform` in the same module, requiring the new `com.android.kotlin.multiplatform.library` plugin for every KMP module. Recommendation: adopt AGP 9.2.0 (Path A) as the first concrete build-system change, before the multi-module split, since the module graph is being rebuilt from scratch anyway. Gradle Declarative DSL (`.gradle.dcl`) remains explicitly experimental -- do not attempt a full migration; at most pilot it on one leaf, non-Android module. Use plain Koin `module { }` DSL (not Koin Annotations/KSP) for this migration to avoid stacking a third build-graph-churn axis on top of AGP 9 + Kotlin 2.4 + module restructuring.
+- Kotlin: no new libraries. Add `:core:domain` (`devfest.kmp.library`, KSP, nativecoroutines), export via `:shared`. Keep kotlinx-datetime `0.6.x-compat` pin; use `kotlin.time` Clock/Instant.
+- Swift: Swift 6 mode on all local packages (`swift-tools-version: 6.0`, `.iOS(.v17)`, `swiftLanguageModes: [.v6]`). KMP-NativeCoroutines exact 1.0.6 in the bridge only (pbxproj currently pins 1.0.0-ALPHA-45). Remove Combine product.
+- Static XCFramework (`isStatic = true`) via `binaryTarget(path:)`; slices iosArm64 + iosSimulatorArm64; link `sqlite3` and `c++` (undefined `_sqlite3_*` without it, verified).
+- Tests: Swift Testing from toolchain (no package), `UIHostingController` smoke tests, `.xctestplan`. No ViewInspector/snapshot libs.
+- DI: plain Swift composition root; Koin stays Kotlin-side behind `IosDependencies`. No Factory/swift-dependencies/Swinject.
+- Persistence: hand-written `NSUserDefaults` actual in `core:data` iosMain. No multiplatform-settings, no DataStore.
+- Firebase: keep resolved 11.15.0 (min 11.14) behind protocols; no 12.x/13.x bump in this milestone.
+- CI: `macos-26`, Xcode 26.6 / Swift 6.3.3. Replace `xcodebuild build` with build-for-testing + test-without-building; `-resultBundlePath`; XCFramework task before package resolution.
+- Do not add: SKIE, Swift Export, Combine, RxSwift, Swift DI libs, settings libs, ViewInspector, snapshot libs, swift-testing package, CocoaPods leftovers.
 
-**Core technologies:**
-- Kotlin 2.4.0 -- required baseline for AGP 9's built-in Kotlin support and current kotlinx library versions
-- AGP 9.2.0 (Path A, recommended) -- new `com.android.kotlin.multiplatform.library` plugin is the long-term-supported way to declare KMP+Android modules; do it once, timed before the module split
-- Koin BOM 4.1.1 -- native KMP DI with no annotation-processor requirement on Kotlin/Native, replacing Hilt which cannot run in `shared`
-- Apollo Kotlin 5.0.1 -- current GraphQL client major line; breaking changes (binary cache format, `ApolloStore`->`CacheManager` rename) are scoped and non-blocking since this project has no subscriptions
-- Compose BOM 2026.08.00 -- bumps `compileSdk` to 37; Android-only concern since iOS UI is native SwiftUI
+### Expected Features (architectural capabilities; zero user-visible change unless listed under Disagreements)
 
-### Expected Features
+**Table stakes:**
+- `:core:domain` policies for session filter matching (OR within type, AND across types, bookmark = membership), agenda grouping and in-slot sort, `isService`/`isNavigable`, speaker A-Z grouping, partner grouping, venue language selection. Golden oracle: v1.0 Android filter matrix.
+- Move `SessionFilter` to `core:model` as top-level `data class` (`SessionFilterType`, not nested).
+- iOS `BookmarksStore` and `SessionFiltersStore` actuals over legacy `"Favorites"` and `"AgendaSessionFilters"`. Android keeps `selected_sessions` and its JSON string-set.
+- iOS 17 everywhere (today 15.0/17.0 mixed). `@Observable @MainActor` VMs; `@State` ownership; remove `objectWillChange.send()` hacks and duplicate `AgendaViewModel()` instances (AgendaCellView, AgendaDetailView).
+- Constructor-injected VMs; remove `BaseViewModel` default `IosDependencies.shared.store()`, `RCValues.sharedInstance`, global `remoteConfig`, `PerformanceMonitoring.shared`, `FirebaseAnalyticsService.shared`.
+- Local SPM packages per feature plus core packages; features never depend on each other.
+- Swift 6 strict, zero warnings.
+- Test lane: working Swift Testing VM tests with fakes; one smoke test per feature; `xcodebuild test` in `ios.yml`; remove stale `DevFest NantesTests` (references non-existent `DevFestViewModel`); restore `swift-names-gate.sh` into CI.
+- Legacy-data tests: captured payloads for favorites and filters; upgrade-in-place UAT.
 
-This is an engineering-capability modernization, not a user feature set -- "features" here means the credibility bar for a modernized KMP codebase.
+**Differentiators (optional):** `ObserveAgendaUseCase` combined flow (highest risk); injectable Clock/TimeZone; `InitialDayUseCase` (removes 3 hardcoded 2025 date copies); `ViewState` struct; `@ObservationIgnored`; FeedbackFlags seam.
 
-**Must have (table stakes):**
-- One-directional module dependency graph (`app -> feature-* -> core-*`, enforced via convention plugins)
-- `core-*` modules for cross-cutting concerns (model, network, data, analytics, ui, testing) and `feature-*` per user journey (agenda, speakers, venue, bookmarks, session-detail, settings)
-- Single iOS umbrella Kotlin/Native framework aggregating all KMP modules
-- One Koin module per Gradle module, composed at a single `startKoin()` entry point; constructor injection everywhere (no scattered `get()`)
-- `commonTest`-first business logic tests extending the existing `DevFestNantesStoreContractTest`/`DevFestNantesStoreMocked` pattern
-- Root-cause fix for the broken iOS CI simulator resolution (pin runner image + explicit OS, not just device name)
-- Gradle build cache + Konan cache in CI; Android/iOS jobs split across `ubuntu-latest`/`macos-latest`
-
-**Should have (differentiators):**
-- Koin `checkModules()`/`verify()` graph verification test
-- `core-testing` module centralizing shared fakes
-- Dependency-graph lint enforcement in CI
-
-**Defer (v2+/future):**
-- `api`/`impl` submodule split per feature (only for highest-churn features, if ever)
-- Koin Annotations/compiler plugin adoption
-- Compose screenshot/visual regression testing (Paparazzi/Roborazzi)
-- Full NIA taxonomy (sync/benchmark/lint/test-app modules) -- explicit anti-feature, scope creep for this app's size
-- Compose Multiplatform for iOS UI -- explicit anti-feature, out of scope, would be a UI rewrite
+**Defer:** shared VMs/UI state; unifying scroll-to-current-slot (D6); per-entity store refactor; snapshot/XCUITest gates; coverage % gate; Tuist/Bazel; fixing latent bugs (room id vs name, device tz, first-emission-only, partner buckets, RoomSortIndex, Android PerformanceInitializer consent ordering); iOS 15/16 drop decision (open).
 
 ### Architecture Approach
 
-Adapt Now in Android's module graph to the fact that this app shares only business logic with iOS, not UI: `core-model`, `core-network`, `core-data`, `core-analytics`, `core-testing` are true KMP `commonMain` modules; `core-ui` and all `feature-*` modules are Android-only Compose libraries; `shared` collapses into a thin Cocoapods umbrella that explicitly `export()`s every KMP module iOS touches. Feature modules never depend on each other -- cross-feature navigation goes through callbacks owned by `app`'s `NavHost`, and cross-feature shared state (bookmarks) is pushed down into `core-data`'s `BookmarksStore`. Migration proceeds bottom-up: convention plugins -> `core-model` -> `core-network`/`core-analytics` -> `core-data` (checkpoint: full behavioral parity) -> `core-testing` -> `core-ui` -> features (venue -> settings -> speakers -> bookmarks -> agenda -> session-detail last), with the Hilt->Koin migration deliberately kept as a separate, later pass.
+- Kotlin graph: `androidApp -> feature:* -> core:ui -> core:domain -> core:data -> core:network / core:model`; `:shared` exports model, data, domain, analytics. `DevFestNantesStore` unchanged. Use cases are named-method classes; inject `CoroutineDispatcher` (default `Dispatchers.Default`). `domainModule` appended to `sharedModules`; remove old bindings in the same commit the new ones appear (`allowOverride(false)`). `IosDependencies.graph()` returns Koin-free `IosGraph`.
+- iOS: static XCFramework behind one bridge package. Feature packages depend on ports (protocols defined in feature targets). Only the bridge touches `asyncSequence(for:)`. VMs are `@MainActor @Observable`, consume via `AsyncThrowingStream` in `.task {}`. App target becomes shell; `AppDependencies.live()` built once in `init` after `FirebaseApp.configure()`.
 
 **Major components:**
-1. `core-model` -- pure domain data classes, zero dependencies, root of the graph
-2. `core-network` -- Apollo GraphQL client/codegen, depends only on `core-model`
-3. `core-data` -- Store abstraction (`DevFestNantesStore`, `GraphQLStore`, `BookmarksStore`, mappers), depends on `core-model` + `core-network`
-4. `core-analytics` -- `AnalyticsService` interface in `commonMain`, Firebase impl Android-only
-5. `core-ui` / `feature-*` -- Android-only Compose UI + ViewModels + per-feature Koin modules
-6. `shared` -- thin iOS umbrella framework re-exporting the KMP core modules
+1. `:core:domain`
+2. `SessionFilter`/`SessionFiltersStore`/`BookmarksStore` contracts
+3. Swift bridge package (sole importer of `shared`; binaryTarget + sqlite3 flag; nativecoroutines; the only `@unchecked Sendable` for immutable Kotlin models)
+4. CoreServices/FirebaseServices/DesignSystem (SwiftGen output, resources)
+5. CoreDI (composition root: `AppDependencies` Sendable struct of ports)
+6. Feature packages (AgendaFeature, SpeakersFeature, VenueFeature, AboutFeature), each with factory entry view building VM in `init`
+
+Dependency rules: features do not import Firebase or CoreDI; CoreDI does not hold UI; add `scripts/swift-di-gate.sh`; extend `di-gate.sh` to the domain module. Extraction order: About, Venue, Speakers, Agenda.
 
 ### Critical Pitfalls
 
-1. **Runner-image drift undoes the CI fix** -- pinning Xcode/device name without pinning the `macos-latest` runner image tag means the fix silently regresses on the next GitHub image bump. Pin the runner image explicitly and resolve simulator destination dynamically via `xcrun simctl list`.
-2. **Simultaneous major dependency bumps compound breaking changes** -- upgrading Kotlin/AGP/Compose/Apollo/Firebase together makes root-causing any failure impossible. Stage each dependency group as its own commit with a green build checkpoint.
-3. **iOS "three-framework problem"** -- exporting each new Kotlin module as its own iOS framework duplicates shared types and causes link/runtime conflicts. Always maintain a single umbrella framework; validate with a spike before the full module cut.
-4. **Koin trades compile-time safety for runtime resolution** -- a missing `module { }` registration for a newly extracted module compiles fine and only crashes at runtime. Wire `checkModules()`/`verify()` into CI as part of the DI migration itself, not as a follow-up.
-5. **"No regression" collides with incidental cleanup** -- Apollo bumps can silently change cache-key behavior; moving `FirebaseAnalyticsService` can shift event timing; tempting drive-by fixes (`println`->Timber, `!!` navigation asserts) expand scope invisibly. Snapshot/test behavior before changes and keep pure-move commits separate from behavior-changing ones.
+1. **Favorites/filters lost on upgrade.** Prevention: reuse legacy keys and shapes; if a migrator is used, read-before-write, union merge, three-state read (absent / valid / wrong-type), flag only after read-back, never delete legacy keys in the same release. UAT: install v1.0 release build, star sessions, set filters, install new build over it, force-quit, verify.
+2. **Framework invisible to SPM / clean-checkout resolution failure.** `embedAndSign` runs after packages compile. Prevention: XCFramework + `binaryTarget` at a fixed gitignored path; Gradle sync before resolution (scheme pre-action + CI step); one owner; static packages; host-less test targets; delete `embedAndSign` in the same change.
+3. **Swift 6 Sendable wall.** `@preconcurrency import` does not silence the `sending` error (verified). Confine bridging to one package; feature code never calls `asyncFunction`/`asyncSequence`; grep gate on `@unchecked Sendable`; remove `DispatchQueue.main.async`.
+4. **Behavior drift in grouping/sort/day/timezone.** Concrete: iOS `ISO8601DateFormatter` without fractional seconds and `Date()` fallback; device-tz day labels; iOS sorts rooms by name vs Android `sortIndex`; current-slot target differs; hardcoded 2025 dates. Prevention: golden-master tests per platform before extraction; inject tz/locale/clock; per-platform parity parameters; UAT comparing day tabs, section first/last sessions, room order.
+5. **Observation lifetime bugs.** `@ObservedObject var vm = VM()` and `@State var vm = VM()` re-run initializer on re-init; `observeRooms()` unstructured Task never cancelled. Prevention: `@State` via `State(initialValue:)` in init or factory view; side-effect-free init; collection in `.task(id:)`; treat CancellationError as non-error.
 
-## Implications for Roadmap
+Also: Koin `allowOverride(false)`; name collisions (`SessionFilter`, `FilterType`, `Section`, `Task`, `Duration`); SwiftGen `Bundle(for:)` breaking in packages; CI caches without Xcode version; zero-executed-test green runs.
 
-Based on research, suggested phase structure (matches PROJECT.md's own stated sequencing, validated by research):
+## Where the Four Files Disagree (resolve or accept before the affected phase)
 
-### Phase 1: Fix iOS CI (root cause)
-**Rationale:** Currently broken; every subsequent phase needs trustworthy CI signal to validate "no regression."
-**Delivers:** Deterministic iOS simulator resolution (pinned runner image + explicit OS/device via `xcrun simctl list`), plus Gradle/Konan CI caching and Android/iOS job matrix split.
-**Addresses:** Table-stakes CI features from FEATURES.md.
-**Avoids:** Pitfall 1 (runner-image drift), reduces macOS runner cost.
+1. **Persistence: legacy keys vs new keys plus Swift migrator.** STACK, FEATURES, PITFALLS: reuse legacy keys/shapes. ARCHITECTURE: new iOS keys, filters in Android uppercase JSON, Swift `LegacyDefaultsMigrator`. Recommendation: reuse legacy keys; iOS actual keeps its own lowercase codec for the filter value. Accept that Android and iOS filter JSON differ (contradicts ARCHITECTURE's "one serializer").
+2. **Package granularity.** ARCHITECTURE/FEATURES: one `DevFestKit` manifest with per-feature targets. STACK: separate `KotlinShared` and `CoreKotlinBridge` packages. Recommendation: one manifest; keep sqlite3/c++ linker settings on the binary target.
+3. **Phase order: @Observable vs SPM.** ARCHITECTURE/FEATURES: Observation and DI before SPM split. PITFALLS: @Observable after modularization. Recommendation: follow ARCHITECTURE, interleaving ports per VM with the Observation phase; SPM split after both.
+4. **Swift 6 mode timing.** STACK/ARCHITECTURE: new packages in v6 from creation. FEATURES: sequence last. PITFALLS: complete checking in Swift 5 first, flip per package, never in one commit. Recommendation: new packages start in v6; moved existing code flips via PITFALLS staging; ticketed exception if the bridge backlog is large.
+5. **Feature packages importing the bridge.** ARCHITECTURE lists SharedKit as a feature dependency. STACK, PITFALLS, FEATURES: features depend on ports and Swift values only. Recommendation: features never import the Kotlin framework.
+6. **Room order in a slot (visible change).** ARCHITECTURE: adopt Android `sortIndex`, record deviation. FEATURES/PITFALLS: strict parity. Recommendation: `RoomOrder` parameter preserving iOS name order until the user signs off. Surface to user.
+7. **Agenda collection on iOS.** ARCHITECTURE: continuous collection is "required". FEATURES/PITFALLS: keep first-emission unless accepted. Recommendation: one-shot for speakers/partners/venue; for agenda, user decides between continuous (documented change) and on-demand re-read. Surface to user.
+8. **Kotlin Sendable technique.** STACK: `extension Model: @retroactive @unchecked Sendable` (verified compiling). FEATURES/PITFALLS: blanket `@unchecked Sendable` is an anti-feature outside the bridge. Recommendation: STACK's technique, confined to the bridge, immutable types only, grep gate, review checkpoint for mutable exports.
+9. **Status of framework-visibility spike.** STACK: verified locally (Xcode 27.1 / Swift 6.4). ARCHITECTURE/PITFALLS: still MEDIUM, needs spike. Recommendation: mostly de-risked locally; still a gating spike on CI (Xcode 26.6 / Swift 6.3.3) from a clean checkout.
+10. **Where `AppDependencies` lives.** ARCHITECTURE: `CoreDI` package target. FEATURES: app target. Recommendation: `CoreDI`; app target only calls `live()`.
+11. **Domain module placement.** STACK/ARCHITECTURE: `:core:domain`. FEATURES: open question. Recommendation: `:core:domain`.
 
-### Phase 2: Dependency & build-tooling upgrade (staged)
-**Rationale:** Must happen before modularization so the new module graph isn't built on a build system also being rewritten; must be staged internally to isolate breaking changes.
-**Delivers:** Kotlin 2.4.0, AGP 9.2.0 (with the `com.android.kotlin.multiplatform.library` plugin decision made explicitly), Compose BOM 2026.08.00, Apollo 5.0.1, kotlinx-datetime 0.8.0, one documented pilot (or explicit non-adoption) of `.gradle.dcl`.
-**Uses:** STACK.md's full version matrix; each dependency group bumped and green-built separately.
-**Avoids:** Pitfall 2 (compounded bumps), Pitfall 3 (DCL all-or-nothing), Pitfall 7's Apollo cache-behavior regression risk (add a cache-behavior test before bumping).
+## Implications for Roadmap (local numbering; roadmapper to renumber from v1.0's 5)
 
-### Phase 3: Multi-module architecture (core-* + feature-*)
-**Rationale:** Requires the Phase 2 build tooling to be settled first; must precede full Koin migration since Hilt keeps working fine across multiple Android modules.
-**Delivers:** Convention plugins, bottom-up module extraction (`core-model` -> `core-network`/`core-analytics` -> `core-data` -> `core-testing` -> `core-ui` -> features, least-coupled first), iOS umbrella framework with explicit `export()` of every touched KMP module, resolved "where do About/Partners screens go" decision.
-**Implements:** ARCHITECTURE.md's full module graph and dependency-direction pattern.
-**Avoids:** Pitfall 4 (three-framework problem) -- validate with a spike before the full cut; Anti-Pattern 4 (don't bundle this with the Koin migration).
+### Phase 1: iOS CI, test harness, gates
+Remove stale test target; working Swift Testing target; `xcodebuild` test lane with xcresult minimum-count assertion; Xcode-aware cache key; KMP-NC pinned to 1.0.6 with version-gate script; restore and wire `swift-names-gate.sh`; simulator by UDID. Avoids pitfalls 9, 13, 14, 17. Standard pattern.
 
-### Phase 4: Hilt -> Koin migration
-**Rationale:** Orthogonal to modularization; doing it after the module skeleton is stable means each step changes exactly one thing, so regressions are attributable.
-**Delivers:** One Koin module per Gradle module, single `startKoin()` entry point, `expect`/`actual` platform modules, constructor injection everywhere, `checkModules()`/`verify()` wired into CI.
-**Uses:** STACK.md's Koin setup pattern; ARCHITECTURE.md Pattern 2.
-**Avoids:** Pitfall 5 (stale Hilt code / scope semantics gaps -- clean build after annotation removal, explicit scope-mapping table) and Pitfall 6 (runtime-only wiring failures -- `checkModules()` gate before Phase 5).
+### Phase 2: Shared domain (Kotlin only)
+`:core:domain`; `SessionFilter` to `core:model`; `SessionFiltersStore` with Android actual unchanged in key/format; `FakeSessionFiltersStore`; pure policies; `commonTest` on JVM and iOS sim; characterization tests (filter matrix, persistence format, grouping at two timezones); `domainModule` + `DomainModuleTest`/`verify()`; export. Android unaffected. Avoids 1, 7, 8, 16. Standard, with timezone/room-order characterization.
 
-### Phase 5: Test coverage retrofit
-**Rationale:** Writing tests against not-yet-testable, Hilt-injected code is wasted effort; must follow DI decentralization so fakes/constructor injection make tests trivial.
-**Delivers:** Seeded `StoreStubs.kt`, `SimpleDateFormat` replaced in tested paths, expanded `commonTest` coverage for ViewModels/Store/mappers extending `DevFestNantesStoreContractTest`, `core-testing` module of shared fakes.
-**Addresses:** FEATURES.md's explicit PROJECT.md priority (business-logic coverage, not a coverage-percentage target).
-**Avoids:** Pitfall 8 (flaky/low-value tests from unhardened fixtures) -- pull the seeding/date fixes forward as prerequisites, not mid-phase discoveries.
+### Phase 3: Android adopts domain
+AgendaViewModel, BookmarksViewModel, HomeViewModel use shared policies; remove `SessionFiltersService` and its binding in the same commit as the store binding. Gate: full AGENTS.md CI list plus agenda UAT. Standard.
+
+### Phase 4: iOS 17, `@Observable`, Combine removal, Swift Testing with fakes
+iOS 17 on all targets; `@Observable @MainActor` for Agenda, Speakers, SpeakerDetails, Venue, About; `@State` ownership; `.task`-driven collection; remove `DispatchQueue.main.async`, Combine and the Combine product; `@ObservationIgnored`; narrow ports per VM; one shared Agenda VM. Avoids 4, 6, 18. Standard patterns.
+
+### Phase 5: iOS adopts domain + legacy persistence
+`IosGraph`/`graph()`; iosMain stores over legacy keys with lowercase codec; delete Swift `SessionFilter`/`FilterType` in the same change as Kotlin export; move grouping/filter/initial-day to shared policies with parity parameters; captured-payload tests; upgrade-in-place UAT from v1.0 build. Highest data-loss risk; needs spike and UAT. Avoids 1, 7, 8.
+
+### Phase 6: Explicit DI, still in app target
+`AppDependencies` with `live()`/`preview`; CoreServices/FirebaseServices protocols; remove singletons and `BaseViewModel`; initialization-order test (Firebase configure, consent, performance, RC defaults before first read); `swift-di-gate.sh` in CI. Note: interleave ports with phase 4. Avoids 11, 12, 15, 19, 20.
+
+### Phase 7: SPM modularization (riskiest structural step)
+(a) XCFramework Gradle task + sync to fixed path + scheme pre-action + CI step + release script; remove `embedAndSign`; (b) package with bridge target and linker flags; (c) DesignSystem with SwiftGen output and resources (`Bundle.module`, `defaultLocalization`); (d) CoreServices, FirebaseServices, CoreDI; (e) extract About, Venue, Speakers, Agenda, one commit each. Gate: clean-checkout CI resolution, manual smoke per extraction, release archive with dSYMs and Crashlytics test crash. Avoids 2, 3, 10, 11, 19. Needs spike.
+
+### Phase 8: Swift 6 flip, smoke tests, docs
+App target to v6 with zero warnings; per-feature `UIHostingController` smoke test; lint gate for `@unchecked Sendable`; update README, documentation/ARCHITECTURE.md, DEVELOPMENT.md, AGENTS.md, iOS_BUILD_DSYM.md; CI cache keys include Package.swift, Package.resolved, XCFramework inputs; resolved-file change check. Avoids 5, 13, 21.
 
 ### Phase Ordering Rationale
 
-- CI must come first because every later phase depends on trustworthy build/test signal to prove "no regression."
-- Dependency upgrade precedes modularization so the module graph isn't built on a build system that's also being rewritten; AGP 9's new KMP plugin shape should be adopted before, not during, the module split (doing it twice is wasteful).
-- Modularization precedes the DI migration because Hilt already works fine across multiple Android modules -- decoupling "where code lives" from "how it's injected" makes each step's regressions attributable to one cause.
-- Test coverage comes last because constructor-injected, Koin-wired code is what makes fakes/tests cheap to write; testing Hilt-injected legacy code first would be discarded work.
-- Within Phase 3, the iOS umbrella-framework design must be validated via a spike before the full module cut -- it's a hard architectural blocker discovered too late otherwise.
+Tests/gates first; Kotlin domain before iOS adoption; Observation before package split; persistence separate from Observation (own UAT); DI before SPM; XCFramework switch late; Swift 6 last.
 
 ### Research Flags
 
-Phases likely needing deeper research during planning:
-- **Phase 2 (dependency upgrade):** AGP 9's Declarative-DSL-adjacent new DSL types and exact KGP/KSP2 patch-version pairings are fast-moving; use `android docs search` at implementation time rather than trusting this research's exact version numbers.
-- **Phase 3 (multi-module + iOS umbrella framework):** The `export()` mechanics for the Cocoapods umbrella framework are a known easy-to-miss gotcha with thin community documentation for this exact shape (KMP business logic + native SwiftUI, not CMP) -- validate directly against this project's Xcode/Podfile setup.
+Needs spike/deeper research:
+- Phase 7: clean-checkout XCFramework on CI, Xcode refresh behavior, Release/dSYM path, `binaryTarget` outside package root on CI; SwiftGen bundle support (verify 6.6.3 templates); Firebase concurrency at the package boundary.
+- Phase 5: real legacy JSON shape, `room.id == room.name`, agenda flow decision.
+- Phase 4/5 bridge and Phase 8: re-run the Swift 6 KMP-NC bridge on CI's 6.3.3, not just the 6.4 toy experiment.
 
-Phases with standard patterns (skip research-phase):
-- **Phase 1 (CI fix):** Well-documented GitHub Actions/`xcrun simctl` pattern, multiple corroborating sources.
-- **Phase 4 (Hilt->Koin):** Koin's official migration docs and Now in Android's own precedent give a clear, standard pattern.
-- **Phase 5 (test coverage):** Existing project patterns (`DevFestNantesStoreContractTest`/`Mocked`) already establish the template to extend.
+Standard: Phase 1, 2 (apart from characterization), 3, 4, 6 (apart from the init-order test).
 
 ## Confidence Assessment
 
 | Area | Confidence | Notes |
-|------|------------|-------|
-| Stack | MEDIUM-HIGH | Version numbers cross-checked against official release notes/blogs (HIGH); AGP 9/Declarative DSL guidance is MEDIUM due to fast-moving, recently-shipped tooling with thin real-world migration reports |
-| Features | MEDIUM | Cross-checked across official docs (Now in Android, kotlinlang.org, insert-koin.io) and multiple independent practitioner write-ups; no project-specific benchmarking possible since this is an internal-only technical modernization |
-| Architecture | MEDIUM | Module-boundary theory is HIGH-confidence (official NIA doc, official Kotlin migration docs); exact incremental step ordering and Koin wiring recommendations are a synthesis adapted to this codebase -- treat as a strong recommendation, validate each step with `android run`/`android layout` |
-| Pitfalls | MEDIUM | Web-sourced, cross-checked against official docs/repos; project-specific facts (CacheKeyGenerator, StoreStubs.kt, CONCERNS.md items) verified directly against this repo's code |
+|---|---|---|
+| Stack | HIGH | Versions from release pages; XCFramework, Swift 6 bridge and sqlite3 verified locally on Xcode 27.1 only |
+| Features | HIGH | Duplication and persistence formats read from source; Swift 6 interop MEDIUM |
+| Architecture | MEDIUM-HIGH | Kotlin graph and Koin HIGH; SPM/XCFramework MEDIUM (debug arm64 only, locally) |
+| Pitfalls | MEDIUM-HIGH | Repo-specific items verified; several Swift/SPM items from training, flagged for spikes |
 
-**Overall confidence:** MEDIUM-HIGH
+**Overall confidence:** MEDIUM-HIGH. Most findings agree; the disagreements above are decisions, not unknowns.
 
 ### Gaps to Address
 
-- Exact AGP 9.x / KGP / KSP2 patch-version compatibility should be re-verified via `android docs search` / Maven Central immediately before Phase 2 implementation -- these are fast-moving and this research's exact patch tags may drift.
-- The "About/Partners screens" home (fold into `feature-settings` vs. a new `feature-about`) is flagged as an explicit roadmap decision point, not resolved by research -- decide before Phase 3's feature-extraction step.
-- Gradle Declarative DSL's exact support surface (Version Catalogs, Secrets plugin, BuildConfig fields) should be re-checked at Phase 2 implementation time given its experimental, fast-moving status -- do not assume this research's snapshot is still current.
-- No project-specific validation exists yet for the iOS umbrella-framework `export()` approach against this project's actual Podfile/Xcode setup -- treat the Phase 3 spike as mandatory, not optional.
+- Clean-checkout XCFramework build order on CI: phase 7 gate spike.
+- CI toolchain (Swift 6.3.3) vs local 6.4 diagnostics: re-run bridge on CI.
+- Release XCFramework, dSYM, Crashlytics: check `documentation/iOS_BUILD_DSYM.md` and `scripts/build-ios-release.sh`.
+- iOS 17 runtime not testable on CI (only 26.x simulators): compile-time checks, or 17.x runtime download (decide in phase 1).
+- Real legacy data shape and `room.id == room.name`: capture from v1.0 install or Swift `Codable` fixture before phase 5.
+- Open product decisions: iOS 15/16 drop (assumed yes); room order; agenda continuous vs one-shot; partner category ordering; whether any visible change is accepted.
+- Hardcoded 2025 event dates: keep single-source constant; log as debt.
+- SwiftGen 6.6.3 `Bundle.module` support: verify or commit generated output.
+- Firebase 11.15 strict concurrency: decide per symbol; no bump.
+- Characterization needs a live API snapshot (110 speakers, room ids), not only `core/model` stubs.
 
 ## Sources
 
 ### Primary (HIGH confidence)
-- https://developer.android.com/build/releases/agp-9-0-0-release-notes and agp-9-2-0-release-notes -- official AGP release notes
-- https://kotlinlang.org/docs/multiplatform/multiplatform-project-agp-9-migration.html -- official Kotlin AGP-9 KMP migration guide
-- https://kotlinlang.org/docs/whatsnew24.html -- Kotlin 2.4.0 release
-- https://insert-koin.io/docs/reference/koin-core/kmp-setup/ and /docs/reference/koin-android/hilt-migration/ -- official Koin KMP setup and Hilt migration docs
-- https://github.com/android/nowinandroid/blob/main/docs/ModularizationLearningJourney.md -- official NIA modularization reference
-- https://www.apollographql.com/docs/kotlin/v5/migration/5.0 -- official Apollo Kotlin 5 migration guide
-- https://github.com/actions/runner-images (issues #13435, #12771, #12758) -- GitHub-official simulator/runner-image drift reports
+- Repo source and project docs: iosApp sources, project.pbxproj, DevFest NantesTests, shared/build.gradle.kts, IosDependencies.kt, core/data, core/model, feature/agenda, speakers, about, venue, build-logic, libs.versions.toml, scripts/di-gate.sh, .github/workflows/ios.yml, .planning/PROJECT.md, RETROSPECTIVE.md, STATE.md, codebase/CONCERNS.md, v1.0 swift-names-gate.sh.
+- Kotlin docs: SwiftPM export (XCFramework/binaryTarget), direct integration, Swift export status, Kotlin 2.4.20 notes.
+- KMP-NativeCoroutines releases and Package.swift: https://github.com/rickclephas/KMP-NativeCoroutines (versions; no Swift 6 guidance).
+- GitHub runner images: https://github.com/actions/runner-images
+- Local experiments 2026-10-23 on Xcode 27.1 / Swift 6.4 (STACK.md "Verified Experiments").
 
 ### Secondary (MEDIUM confidence)
-- https://blog.gradle.org/gradle-at-kotlinconf-2026 / declarative-gradle -- Gradle's own vendor blog on Declarative DSL's experimental status
-- https://blog.kotzilla.io/koin-4.1-is-here and migrate-from-hilt-to-koin -- Koin maintainer blog
-- https://medium.com/xorum-io/three-framework-problem-with-kotlin-multiplatform-mobile-16267c5afa53 -- community deep-dive on the iOS three-framework problem
-- https://ajailani.medium.com/modularization-in-a-kotlin-multiplatform-project-81e06d2170b6 -- community KMP modularization write-up
+- SKIE releases and issues #131, #179: https://github.com/touchlab/SKIE
+- Firebase iOS SDK versions: https://github.com/firebase/firebase-ios-sdk
+- Kotlin Slack threads on KMP with SPM (links cited in ARCHITECTURE.md and FEATURES.md).
 
 ### Tertiary (LOW confidence)
-- Various single-source Medium/blog posts cited in STACK.md/ARCHITECTURE.md/PITFALLS.md for Koin Annotations multi-module caveats and KMP CI patterns -- corroborated by official docs but treated as secondary confirmation only
+- DEV Community/MVP Factory Swift 6 article; MusicStreamSync PR #97; Medium KMM duplicate-symbol article.
 
 ---
-*Research completed: 2026-09-12*
+*Research completed: 2026-10-23*
 *Ready for roadmap: yes*
