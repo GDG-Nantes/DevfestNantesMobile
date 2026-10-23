@@ -3,10 +3,10 @@ gsd_state_version: "1.0"
 milestone: v1.1
 milestone_name: iOS Architecture
 status: planning
-last_updated: "2026-10-23T19:32:47.711Z"
+last_updated: "2026-10-23T20:09:40.000Z"
 last_activity: 2026-10-23
 progress:
-  total_phases: 0
+  total_phases: 7
   completed_phases: 0
   total_plans: 0
   completed_plans: 0
@@ -17,17 +17,19 @@ progress:
 
 ## Project Reference
 
-See: .planning/PROJECT.md (updated 2026-10-16)
+See: .planning/PROJECT.md (updated 2026-10-23)
 
 **Core value:** La CI/CD doit refonctionner et le projet doit redevenir maintenable (build moderne, architecture modulaire, DI décentralisée, couverture de tests solide) sans jamais régresser le comportement existant de l'application pour les utilisateurs.
-**Current focus:** Planning next milestone (v1.0 Modernization shipped 2026-10-16 — /gsd-new-milestone)
+**Current focus:** Milestone v1.1 iOS Architecture — Phase 6 : Socle de tests et gates CI iOS
 
 ## Current Position
 
-Phase: Not started (defining requirements)
-Plan: —
-Status: Defining requirements
-Last activity: 2026-10-23 — Milestone v1.1 started
+Phase: 6 of 12 (Socle de tests et gates CI iOS)
+Plan: Not started
+Status: Ready to plan
+Last activity: 2026-10-23 — Roadmap v1.1 créée (phases 6-12, 27/27 exigences mappées)
+
+Progress: [░░░░░░░░░░] 0%
 
 ## Performance Metrics
 
@@ -102,6 +104,10 @@ Last activity: 2026-10-23 — Milestone v1.1 started
 Decisions are logged in PROJECT.md Key Decisions table.
 Recent decisions affecting current work:
 
+- [v1.1 Roadmap]: 7 phases (6-12) dérivées de l'ordre de `research/SUMMARY.md` ; l'adoption Android (SHARED-06, exigence isolée) est fusionnée avec la couche domaine KMP en Phase 7 ; la Phase 8 (Observation) ne dépend techniquement que de la Phase 6
+- [v1.1 Roadmap]: décisions utilisateur appliquées : parité stricte sauf l'ordre des salles iOS par `RoomSortIndex` (SHARED-03, déviation documentée) ; agenda iOS en observation continue du flux combiné (IOSDATA-03) ; périmètre complet conservé (SPM, Swift 6, smoke tests)
+- [v1.1 Roadmap]: arbitrages de recherche retenus : clés `UserDefaults` legacy réutilisées sans migrateur, un seul manifeste SPM, features sans import du framework Kotlin, `AppDependencies` dans CoreDI (dans la target app en Phase 10, déplacé en Phase 11)
+- [v1.1 Roadmap]: SHARED-05 (y compris l'implémentation iOS sur `Favorites`/`AgendaSessionFilters`) livré et testé en Phase 7, câblé dans l'app en Phase 9 ; IOSTEST-03 en Phase 6, test plan étendu aux tests de packages en Phase 11 ; IOSTEST-01 clos en Phase 8 (la target obsolète est remplacée dès la Phase 6, prérequis de la lane)
 - Roadmap: Ordre strictement séquentiel CI iOS -> deps/build -> multi-module -> DI -> tests (aucune parallélisation entre phases, chaque phase dépend de la précédente)
 - Roadmap: CICD-01/02/03 (cache Gradle/Konan, matrice CI) regroupés dans la Phase 1 avec CI-01 plutôt qu'une phase CICD séparée — même surface CI, évite une phase à faible densité
 - Roadmap: Gradle Declarative DSL traité comme migration partielle documentée (BUILD-07), pas de blocage sur un support AGP/KMP incomplet
@@ -160,6 +166,8 @@ None yet.
 
 ### Blockers/Concerns
 
+- **v1.1 — spikes à planifier :** Phase 7 (snapshot réel de l'API, payloads legacy `Favorites`/`AgendaSessionFilters` capturés) ; Phase 9 (build release v1.0 installé pour l'UAT de mise à jour en place, vérifier `room.id == room.name`) ; Phase 11 (XCFramework depuis un checkout propre sur la CI Xcode 26.6, chemin Release/dSYM, `Bundle.module` avec SwiftGen 6.6.3) ; Phases 8 et 12 (pont KMP-NativeCoroutines rejoué sur Swift 6.3.3 en CI)
+- **v1.1 — granularité :** 7 phases pour une granularité `standard` (4-6 attendues) ; assumé vu le risque (27 exigences, chaque phase verte et livrable, ordre imposé par l'utilisateur)
 - **Phase 3 — RESOLVED:** About/Partners live in a dedicated `:feature:about` module (D-05, 03-06).
 - **Phase 3 — RESOLVED 2026-09-24 by 03-10 + 03-11:** (history, kept for context) moving `Venue`/`Session`/`Speaker`/`Room`/`Partner` from package `com.gdgnantes.devfest.model` into `com.gdgnantes.devfest.core.model` flipped which of two same-simple-named Kotlin classes (the domain model vs. the Apollo-generated `GetXQuery.X`/`fragment.XDetails.X` GraphQL response class already colliding on that name) keeps the unprefixed Swift name vs. gets suffixed `_`. Kotlin/Native's ObjC header generator resolves same-simple-name collisions across the whole compiled framework by an alphabetical-FQN tie-break (shortest proof: `com.gdgnantes.devfest.model.Venue` sorted AFTER `com.gdgnantes.devfest.graphql.GetVenueQuery.Venue` at baseline — domain model got `Venue_`; `com.gdgnantes.devfest.core.model.Venue` sorts BEFORE `...graphql...` post-rename — domain model now gets clean `Venue`, GraphQL type flips to `Venue_`). This broke ~10 pre-existing Swift files (`VenueContent.swift`, `AgendaContent.swift`, `AgendaViewModel.swift`, `AgendaView.swift`, `AgendaCellView.swift`, `AgendaDetailView.swift`, `SpeakerDetailsViewModel.swift`, `SpeakersViewModel.swift`, `SpeakerDetailsView.swift`, `SpeakerView.swift`, `AboutViewModel.swift`) that hardcode the `_`-suffixed name expecting it to be the domain model. iOS CI failed on Swift compilation (run 35847334261, PR #419) — the swift-names-gate.sh gate (missing-name + collision-COUNT checks) did not catch this because the collision COUNT stayed the same, only the per-name IDENTITY swapped. **Resolution:** see `.planning/phases/03-multi-module-architecture-extraction/03-01-SUMMARY.md` "Halt Resolution (03-10 + 03-11)" for the full diagnosis, the @targetName mechanism, the corrected collision attribution, and the D-11 amendment.
 - **Phase 3 — RESOLVED:** single iOS umbrella validated end to end — `:shared` exports exactly core:model/data/analytics (D-11), keeps `SharedFrameworkPlaceholder.kt` (D-10 amendment); iOS CI green and D-12 simulator checkpoints approved (03-VERIFICATION.md passed).
@@ -240,10 +248,10 @@ Items acknowledged and deferred at milestone close, most recent first:
 
 ## Session Continuity
 
-Last session: 2026-10-16T20:00:00Z
-Stopped at: Phase 05 complete (UAT 3/3, UI review 17/24) — milestone ready to close
+Last session: 2026-10-23T20:09:40Z
+Stopped at: Roadmap v1.1 créée (ROADMAP.md, traçabilité REQUIREMENTS.md) — Phase 6 prête à discuter/planifier
 Resume file: None
 
 ## Operator Next Steps
 
-- Start the next milestone with /gsd-new-milestone
+- Discuter la Phase 6 avec /gsd-discuss-phase 6, puis la planifier avec /gsd-plan-phase 6

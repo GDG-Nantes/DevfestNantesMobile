@@ -88,13 +88,45 @@ Which phases cover which requirements. Updated during roadmap creation.
 
 | Requirement | Phase | Status |
 |-------------|-------|--------|
-| (filled by roadmapper) | | |
+| SHARED-01 | Phase 7 | Pending |
+| SHARED-02 | Phase 7 | Pending |
+| SHARED-03 | Phase 7 | Pending |
+| SHARED-04 | Phase 7 | Pending |
+| SHARED-05 | Phase 7 | Pending |
+| SHARED-06 | Phase 7 | Pending |
+| SHARED-07 | Phase 7 | Pending |
+| IOSDATA-01 | Phase 9 | Pending |
+| IOSDATA-02 | Phase 9 | Pending |
+| IOSDATA-03 | Phase 9 | Pending |
+| IOSUI-01 | Phase 8 | Pending |
+| IOSUI-02 | Phase 8 | Pending |
+| IOSUI-03 | Phase 8 | Pending |
+| IOSDI-01 | Phase 10 | Pending |
+| IOSDI-02 | Phase 10 | Pending |
+| IOSDI-03 | Phase 10 | Pending |
+| IOSMOD-01 | Phase 11 | Pending |
+| IOSMOD-02 | Phase 11 | Pending |
+| IOSMOD-03 | Phase 11 | Pending |
+| CONC-01 | Phase 12 | Pending |
+| CONC-02 | Phase 12 | Pending |
+| CONC-03 | Phase 6 | Pending |
+| IOSTEST-01 | Phase 8 | Pending |
+| IOSTEST-02 | Phase 12 | Pending |
+| IOSTEST-03 | Phase 6 | Pending |
+| IOSTEST-04 | Phase 6 | Pending |
+| DOC-01 | Phase 12 | Pending |
 
 **Coverage:**
 - v1.1 requirements: 27 total
-- Mapped to phases: 0
-- Unmapped: 27 ⚠️
+- Mapped to phases: 27
+- Unmapped: 0 ✓
+
+**Notes de traçabilité :**
+- SHARED-05 est livré en Phase 7 (interfaces communes, implémentation Android inchangée, implémentation iOS sur les clés legacy testée sur simulateur) ; son câblage dans l'app iOS et l'UAT de mise à jour relèvent d'IOSDATA-01/02 (Phase 9).
+- IOSTEST-01 est clos en Phase 8 (tests de chaque ViewModel) ; la target obsolète `DevFest NantesTests` est remplacée dès la Phase 6, prérequis de la lane IOSTEST-03.
+- IOSTEST-03 est livré en Phase 6 ; la Phase 11 ajoute les tests des packages au test plan (critère de succès 4 de la Phase 11).
+- IOSUI-01 couvre les targets existantes en Phase 8 ; les packages créés en Phase 11 naissent en `.iOS(.v17)` (critère de succès 3 de la Phase 11).
 
 ---
 *Requirements defined: 2026-10-23*
-*Last updated: 2026-10-23 after initial definition*
+*Last updated: 2026-10-23 after roadmap creation (phases 6-12)*
