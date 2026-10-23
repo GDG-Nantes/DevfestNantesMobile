@@ -12,11 +12,18 @@ La CI/CD doit refonctionner et le projet doit redevenir maintenable (build moder
 
 **v1.0 Modernization livrée le 2026-10-16** (phases 1-5, 37 plans, PR #417 à #421). CI Android/iOS verte et mise en cache, toolchain à jour (Kotlin 2.4.20, AGP 9.4.0, Gradle 9.7.1), architecture `build-logic` + 6 `core-*` + 6 `feature-*` avec `:shared` en framework iOS parapluie, DI Koin 4.2.2 vérifiée en CI, couverture Kover 30,57 %. Aucun changement de comportement utilisateur. Audit : `milestones/v1.0-MILESTONE-AUDIT.md` (tech_debt, 25/25 exigences).
 
-## Next Milestone Goals
+## Current Milestone: v1.1 iOS Architecture
 
-À définir via `/gsd-new-milestone`. Candidats issus de la dette acceptée en v1.0 :
-- Corriger les trous de données GraphQLStore (champ `speakers` déprécié → 100/110 speakers, salles `Tour Bretagne`/`Unconf` mal triées, liens sociaux, logging `println`)
-- Reprendre le développement fonctionnel sur la base modernisée (gel des fonctionnalités levé)
+**Goal:** Moderniser l'app iOS au même niveau que l'app Android — logique métier partagée en KMP, app SwiftUI modulaire en Observation + Swift 6 strict, couverture de tests réelle — sans aucun changement de comportement utilisateur.
+
+**Target features:**
+- Couche domaine KMP partagée : regroupement/tri de l'agenda, filtrage des sessions, favoris, mapping speakers/venue/partenaires exposés comme use cases/repositories consommés par Android et iOS (ViewModels restant natifs sur chaque plateforme)
+- Suppression de la logique dupliquée côté iOS : favoris et filtres de l'agenda sortent d'`UserDefaults` dans `AgendaViewModel` vers la logique partagée, avec migration des données existantes (aucun favori perdu)
+- App iOS modulaire : packages SPM locaux par feature (Agenda, Speakers, Venue, About…) + packages core (DesignSystem, Core/DI), target app réduite à une coquille
+- DI iOS explicite : composition root injectant les dépendances dans les ViewModels au lieu des lookups `IosDependencies.shared` et des singletons globaux (`RCValues`, `PerformanceMonitoring`, global `remoteConfig`)
+- SwiftUI moderne : iOS 17 minimum sur toutes les targets, ViewModels `@Observable` à la place d'`ObservableObject`/`@Published`, Combine supprimé
+- Swift 6 strict : mode de langage Swift 6 avec vérification complète de la concurrence, ViewModels `@MainActor`, async/await sur les Flows Kotlin
+- Tests & CI : tests commonTest des use cases partagés (JVM + simulateur iOS), tests Swift Testing de chaque ViewModel iOS, smoke test SwiftUI par feature, tests iOS exécutés dans GitHub Actions
 
 ## Requirements
 
@@ -42,19 +49,21 @@ La CI/CD doit refonctionner et le projet doit redevenir maintenable (build moder
 
 ### Active
 
-(aucune pour l'instant — à définir au prochain milestone)
-
-Candidats (dette v1.0, voir `milestones/v1.0-MILESTONE-AUDIT.md`) :
-- [ ] GraphQLStore : passer à `speakersPage` (110 speakers au lieu de 100), logging Timber au lieu de `println`
-- [ ] `RoomSortIndex` aligné sur les ids de salles live (`Tour Bretagne`, `Unconf`)
-- [ ] `SocialItem` : pas de double slash pour les handles nus, pas de lien vide pour un social sans url
-- [ ] Événement analytics page-view de l'écran Speaker jamais émis
-- [ ] État ERROR dans les ViewModels pour les échecs de store (aujourd'hui épinglés par des tests de caractérisation)
-- [ ] Durcissement CI (01-REVIEW WR-02/WR-03) et validation Nyquist des phases 2-4
+Milestone v1.1 iOS Architecture (détail et REQ-IDs dans `REQUIREMENTS.md`) :
+- [ ] Logique domaine (agenda, filtres, favoris, mapping) partagée en KMP et consommée par Android et iOS
+- [ ] Plus aucune logique métier dupliquée côté iOS ; données `UserDefaults` existantes migrées sans perte
+- [ ] App iOS découpée en packages SPM locaux feature/core, target app en coquille
+- [ ] DI iOS explicite par composition root, sans service-locator ni singletons globaux dans les ViewModels
+- [ ] iOS 17 minimum, ViewModels `@Observable`, Combine supprimé
+- [ ] Swift 6 strict concurrency sans warning
+- [ ] Tests partagés + Swift Testing + smoke tests SwiftUI, exécutés en CI iOS
 
 ### Out of Scope
 
-- Nouvelles fonctionnalités utilisateur — hors périmètre de v1.0 (chantier purement technique) ; à réévaluer pour le prochain milestone
+- Nouvelles fonctionnalités utilisateur — v1.1 reste un chantier purement technique (comme v1.0)
+- Dette v1.0 (`speakersPage`, `RoomSortIndex`, `SocialItem`, page-view Speaker, état ERROR des ViewModels, durcissement CI WR-02/WR-03) — reportée ; les bugs découverts pendant v1.1 sont consignés en dette, pas corrigés (parité stricte)
+- ViewModels partagés en KMP (androidx.lifecycle KMP / SKIE) — choix de ne partager que la couche domaine ; chaque plateforme garde des ViewModels idiomatiques
+- UI partagée (Compose Multiplatform) — UI native conservée sur Android (Compose) et iOS (SwiftUI)
 - Changements UX/UI visibles — sauf effets de bord inévitables liés à la migration technique
 - Deadline calée sur la prochaine édition de DevFest Nantes — pas de contrainte de date stricte, avancement phase par phase
 
@@ -65,7 +74,8 @@ Candidats (dette v1.0, voir `milestones/v1.0-MILESTONE-AUDIT.md`) :
 - Taille : ~15,8k lignes Kotlin, ~3,8k lignes Swift ; v1.0 a touché 328 fichiers (+9 795 / −2 005).
 - Tests : Kover 30,57 % (rapport seul), tests JVM/Android host/iOS simulator + smoke tests Compose par module feature, `verify()` Koin et `scripts/di-gate.sh` en CI.
 - Dette connue : voir Active ci-dessus et STATE.md § Deferred Items. OpenFeedback dépend encore de `kotlinx.datetime.Instant` (pin compat limité à 0.8.x : correctif durable = release OpenFeedback sur kotlin.time).
-- Les documents `.planning/codebase/` décrivent l'état d'avant v1.0 (Hilt, monomodule) : à régénérer via `/gsd-map-codebase` avant de planifier le prochain milestone.
+- Les documents `.planning/codebase/` ont été régénérés après v1.0 (commit `99edc0a`).
+- État iOS au démarrage de v1.1 : ~45 fichiers Swift dans une seule target app (pas de package local), ViewModels `ObservableObject` + Combine dérivant de `BaseViewModel` qui résout `IosDependencies.shared.store()`, favoris (`"Favorites"`) et filtres (`"AgendaSessionFilters"`) persistés en `UserDefaults` par `AgendaViewModel`, singletons globaux (`RCValues`, `PerformanceMonitoring`, `remoteConfig`), deployment targets mixtes 15.0/17.0, `SWIFT_VERSION = 5.0`, SPM (Firebase, KMP-NativeCoroutines), une seule classe de test (`DevFest NantesTests`) non exécutée en CI.
 
 ## Constraints
 
@@ -116,4 +126,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-10-16 after v1.0 milestone*
+*Last updated: 2026-10-23 after starting milestone v1.1 iOS Architecture*
