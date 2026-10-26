@@ -2,9 +2,14 @@
 gsd_state_version: "1.0"
 milestone: v1.1
 milestone_name: iOS Architecture
+current_phase: 6
+current_phase_name: Socle de tests et gates CI iOS
 status: planning
-last_updated: "2026-10-23T20:09:40.000Z"
+stopped_at: Phase 6 context gathered
+last_updated: "2026-10-26T13:52:09.462Z"
 last_activity: 2026-10-23
+last_activity_desc: Roadmap v1.1 créée (phases 6-12, 27/27 exigences mappées)
+state_head: "0b4d5f7555477e50471af7724cee9fd551b0a9b9"
 progress:
   total_phases: 7
   completed_phases: 0
@@ -248,9 +253,9 @@ Items acknowledged and deferred at milestone close, most recent first:
 
 ## Session Continuity
 
-Last session: 2026-10-23T20:09:40Z
-Stopped at: Roadmap v1.1 créée (ROADMAP.md, traçabilité REQUIREMENTS.md) — Phase 6 prête à discuter/planifier
-Resume file: None
+Last session: 2026-10-26T13:52:09.441Z
+Stopped at: Phase 6 context gathered
+Resume file: .planning/phases/06-socle-de-tests-et-gates-ci-ios/06-CONTEXT.md
 
 ## Operator Next Steps
 
