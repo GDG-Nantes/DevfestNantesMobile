@@ -59,13 +59,14 @@ Full details: [milestones/v1.0-ROADMAP.md](milestones/v1.0-ROADMAP.md). Requirem
   2. Le job iOS échoue quand le `.xcresult` compte zéro test exécuté, et la clé de cache iOS inclut la version de Xcode
   3. `scripts/swift-names-gate.sh` est restauré et tourne en CI : un changement qui modifie le nom Swift d'un type Kotlin exporté fait échouer le job
   4. KMP-NativeCoroutines est en 1.0.6 côté SPM (au lieu de 1.0.0-ALPHA-45) comme côté Gradle, un gate CI échoue si les deux versions divergent, et l'app iOS se comporte comme en v1.0
-**Plans**: 5 plans
+**Plans**: 6 plans
 Plans:
-- [ ] 06-01-PLAN.md — Target Swift Testing `DevFestNantesTests` hébergée par l'app, `.xctestplan`, garde XCTest dans `iOSApp`, tests `SessionFilter` et `parseDate` (tracer)
-- [ ] 06-02-PLAN.md — Lane CI iOS : build-for-testing / test-without-building, échec si 0 test (`xcresult-assert-tests.sh`), cache Xcode-aware, simulateur par UDID
-- [ ] 06-03-PLAN.md — `swift-names-gate.sh` restauré dans `scripts/` (baselines dans `scripts/swift-names/`), check + selftest en CI
-- [ ] 06-04-PLAN.md — KMP-NativeCoroutines SPM en 1.0.6 et `kmp-nc-version-gate.sh` dans le même commit, docs des gates
-- [ ] 06-05-PLAN.md — Smoke manuel de parité v1.0 sur simulateur après le bump (checkpoint humain bloquant)
+- [ ] 06-01-PLAN.md — Target Swift Testing `DevFestNantesTests` hébergée par l'app, `.xctestplan`, garde XCTest dans `iOSApp`, premier test `SessionFilter` (tracer), puis suppression de l'ancienne target (commit séparé)
+- [ ] 06-02-PLAN.md — Suite `SessionFilter` complète (format legacy), extraction `AgendaViewModel.parseDate` (commit dédié) et ses tests, doc des tests iOS
+- [ ] 06-03-PLAN.md — Lane CI iOS : build-for-testing / test-without-building, échec si 0 test (`xcresult-assert-tests.sh`), cache Xcode-aware, simulateur par UDID
+- [ ] 06-04-PLAN.md — `swift-names-gate.sh` restauré dans `scripts/` (baselines dans `scripts/swift-names/`), check + selftest en CI
+- [ ] 06-05-PLAN.md — KMP-NativeCoroutines SPM en 1.0.6 et `kmp-nc-version-gate.sh` dans le même commit, docs des gates, commandes CI Android d'AGENTS.md vertes
+- [ ] 06-06-PLAN.md — Smoke manuel de parité v1.0 sur simulateur après le bump (checkpoint humain bloquant)
 **Research flag**: pattern standard, pas de spike
 
 ### Phase 7: Couche domaine KMP et adoption Android

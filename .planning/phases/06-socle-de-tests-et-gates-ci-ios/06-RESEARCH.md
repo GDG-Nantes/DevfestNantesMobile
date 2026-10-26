@@ -594,14 +594,21 @@ Success criterion 3 mapping: renaming/removing an exported referenced type -> `S
 | A4 | Cold CI timing stays under the 30 min job timeout with the added `build-for-testing`+tests (local cold Gradle+Xcode build ~3 min, tests ~40 s on a warm simulator) | CI structure | D-04 allows a split only if measured; measure on first PR run `[ASSUMED]` |
 | A5 | In-place rewrite of the old target vs delete+recreate are equivalent for D-03 | Alternatives | If the user wants a fresh blueprint ID/history, use delete+create; no functional difference |
 
-## Open Questions
+## Open Questions (RESOLVED)
 
 1. **Include `getDate` in the first test set?**
    - Known: not testable without an `AgendaViewModel` instance, which self-starts Koin.
    - Unclear: whether the user accepts a small extraction (parity-neutral) for testability.
    - Recommendation: do the extraction as its own tiny commit (static helper + `getDate` delegating) and test it; otherwise ship `SessionFilter` tests only (D-01 explicitly allows).
+   - **RESOLVED (planning, 2026-10-26):** extraction adopted. Plan 06-02 Task 2 adds `static func parseDate(_ date: String) -> Date` on `AgendaViewModel` with the exact `getDate` body, makes `getDate(date:)` delegate to it, commits the extraction alone (AgendaViewModel.swift only), then adds `AgendaDateParsingTests` (five tests, static calls only, no ViewModel instance). D-01 lists `getDate` under "au minimum" when testable without `BaseViewModel`/`IosDependencies`, which the static member satisfies.
 2. **Code coverage in the plan.** The old scheme had `codeCoverageEnabled = "YES"`. The plan above sets `codeCoverage: false` (faster, nothing consumes coverage). Planner may keep it on; the scheme-level attribute is ignored once a plan is the default.
+   - **RESOLVED (planning, 2026-10-26):** coverage off. Plan 06-01 Task 1 writes `"defaultOptions" : { "codeCoverage" : false }` in `iosApp/iosApp.xctestplan` and removes the scheme-level `codeCoverageEnabled` attribute, so the test plan is the single source of truth.
 3. **`xcodebuild -resolvePackageDependencies` placement/caching.** Keep as today, or add a separate SPM cache via `-clonedSourcePackagesDirPath` (discretion item). Not required for the success criteria.
+   - **RESOLVED (planning, 2026-10-26):** no separate SPM cache. Plan 06-03 keeps the "Resolve Swift Package Dependencies" step unchanged (no `-derivedDataPath`, Pitfall 4; no `-clonedSourcePackagesDirPath`): no success criterion needs it, `Package.resolved` is untracked and Firebase floats within 11.x (Pitfall 10), and Phase 11 reworks SPM consumption.
+
+**Facts verified during plan revision (2026-10-26, Xcode 27.1 toolchain):**
+- `ISO8601DateFormatter()` with its default options parses `"2025-10-16T09:00:00+02:00"` and `"2025-10-16T07:00:00Z"` to `1760598000`, and returns nil for `"2025-10-16T09:00:00.000+02:00"` (fractional seconds), `""` and `"not a date"`, so the extracted `parseDate` falls back to `Date()` for those three inputs `[VERIFIED: local swift run]`. Plan 06-02 fixes these expectations before execution.
+- `xcrun xcresulttool get test-results tests --path <bundle> --compact` returns a `testNodes` tree whose leaves carry `nodeType: "Test Case"`, `nodeIdentifier: "<Suite>/<function>()"` and `result: "Passed"`; a zero-test bundle returns `"testNodes": []` `[VERIFIED: prototype bundles]`. Plans 06-01 and 06-02 use it to check named tests without a fixed test count (D-05).
 
 ## Environment Availability
 
