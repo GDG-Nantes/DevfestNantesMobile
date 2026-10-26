@@ -51,6 +51,7 @@ Full details: [milestones/v1.0-ROADMAP.md](milestones/v1.0-ROADMAP.md). Requirem
 ## Phase Details
 
 ### Phase 6: Socle de tests et gates CI iOS
+
 **Goal**: Chaque PR exécute réellement des tests Swift sur la CI iOS et les gates d'interop Kotlin/Swift sont actifs, pour que chaque refonte iOS suivante dispose d'un signal fiable
 **Depends on**: Phase 5 (v1.0 livrée)
 **Requirements**: IOSTEST-03, IOSTEST-04, CONC-03
@@ -59,17 +60,31 @@ Full details: [milestones/v1.0-ROADMAP.md](milestones/v1.0-ROADMAP.md). Requirem
   2. Le job iOS échoue quand le `.xcresult` compte zéro test exécuté, et la clé de cache iOS inclut la version de Xcode
   3. `scripts/swift-names-gate.sh` est restauré et tourne en CI : un changement qui modifie le nom Swift d'un type Kotlin exporté fait échouer le job
   4. KMP-NativeCoroutines est en 1.0.6 côté SPM (au lieu de 1.0.0-ALPHA-45) comme côté Gradle, un gate CI échoue si les deux versions divergent, et l'app iOS se comporte comme en v1.0
+
 **Plans**: 6 plans
 Plans:
+**Wave 1**
 - [ ] 06-01-PLAN.md — Target Swift Testing `DevFestNantesTests` hébergée par l'app, `.xctestplan`, garde XCTest dans `iOSApp`, premier test `SessionFilter` (tracer), puis suppression de l'ancienne target (commit séparé)
+
+**Wave 2** *(blocked on Wave 1 completion)*
 - [ ] 06-02-PLAN.md — Suite `SessionFilter` complète (format legacy), extraction `AgendaViewModel.parseDate` (commit dédié) et ses tests, doc des tests iOS
+
+**Wave 3** *(blocked on Wave 2 completion)*
 - [ ] 06-03-PLAN.md — Lane CI iOS : build-for-testing / test-without-building, échec si 0 test (`xcresult-assert-tests.sh`), cache Xcode-aware, simulateur par UDID
+
+**Wave 4** *(blocked on Wave 3 completion)*
 - [ ] 06-04-PLAN.md — `swift-names-gate.sh` restauré dans `scripts/` (baselines dans `scripts/swift-names/`), check + selftest en CI
+
+**Wave 5** *(blocked on Wave 4 completion)*
 - [ ] 06-05-PLAN.md — KMP-NativeCoroutines SPM en 1.0.6 et `kmp-nc-version-gate.sh` dans le même commit, docs des gates, commandes CI Android d'AGENTS.md vertes
+
+**Wave 6** *(blocked on Wave 5 completion)*
 - [ ] 06-06-PLAN.md — Smoke manuel de parité v1.0 sur simulateur après le bump (checkpoint humain bloquant)
+
 **Research flag**: pattern standard, pas de spike
 
 ### Phase 7: Couche domaine KMP et adoption Android
+
 **Goal**: La logique métier de l'agenda (filtrage, regroupement, classification, favoris et filtres) vit dans un module KMP `:core:domain` testé sur JVM et simulateur iOS, et Android l'utilise déjà sans aucune différence visible
 **Depends on**: Phase 6 (le gate `swift-names-gate.sh` en CI couvre les nouveaux exports)
 **Requirements**: SHARED-01, SHARED-02, SHARED-03, SHARED-04, SHARED-05, SHARED-06, SHARED-07
@@ -79,10 +94,12 @@ Plans:
   3. Les comportements divergents (créneau courant au scroll, catégories de partenaires, fuseau des jours) restent par plateforme ou passent par un paramètre explicite, et la déviation d'ordre des salles côté iOS est documentée
   4. `BookmarksStore` et `SessionFiltersStore` sont des interfaces communes : les tests Robolectric v1.0 qui épinglent `selected_sessions` et le format des filtres Android passent sans modification, et l'implémentation iOS lit et écrit `Favorites` et `AgendaSessionFilters` au format legacy (tests sur payloads capturés, sur simulateur)
   5. Sur Android, l'agenda, les filtres, les favoris, les speakers et le lieu se comportent exactement comme en v1.0 (tests v1.0 verts + UAT agenda) ; `SessionFiltersService` a disparu et son binding Koin a été remplacé dans le même commit
+
 **Plans**: TBD
 **Research flag**: caractérisation à préparer : snapshot réel de l'API (110 speakers, ids de salles, vérifier `room.id == room.name`) en plus des stubs `core/model`, et forme réelle des payloads `Favorites`/`AgendaSessionFilters` capturée depuis une install v1.0 ou une fixture `Codable` Swift
 
 ### Phase 8: SwiftUI moderne, iOS 17 et Observation
+
 **Goal**: Les ViewModels iOS passent au modèle Observation sur un socle iOS 17, sans Combine, avec une collecte liée au cycle de vie des vues et des tests unitaires sur fakes, sans changement visible
 **Depends on**: Phase 6 (aucune dépendance technique à la Phase 7, exécutée après elle par ordre numérique)
 **Requirements**: IOSUI-01, IOSUI-02, IOSUI-03, IOSTEST-01
@@ -92,11 +109,13 @@ Plans:
   3. Les sources iOS ne contiennent plus `import Combine`, `KMPNativeCoroutinesCombine`, `ObservableObject`, `@Published`, `objectWillChange.send()` ni `DispatchQueue.main.async`, et le produit SPM Combine est retiré du projet
   4. Chaque ViewModel iOS a des tests Swift Testing sur des fakes (ports étroits par ViewModel), exécutés dans la lane CI de la Phase 6
   5. UAT : agenda, filtres, favoris, détail de session, speakers, lieu et à propos se comportent comme en v1.0
+
 **Plans**: TBD
 **Research flag**: rejouer le pont async KMP-NativeCoroutines (`asyncSequence`/`asyncFunction`) sur la toolchain CI (Xcode 26.6 / Swift 6.3.3), pas seulement sur l'expérience locale en Swift 6.4
 **UI hint**: yes
 
 ### Phase 9: iOS sur la logique commune et persistance legacy
+
 **Goal**: L'app iOS délègue filtrage, regroupement et persistance des favoris et filtres à la couche domaine partagée, sans qu'aucun utilisateur ne perde ses favoris ou ses filtres à la mise à jour
 **Depends on**: Phase 7, Phase 8
 **Requirements**: IOSDATA-01, IOSDATA-02, IOSDATA-03
@@ -105,11 +124,13 @@ Plans:
   2. Les sources Swift ne filtrent, ne regroupent et ne persistent plus les favoris ni les filtres ; `SessionFilter`, `FilterType` et les autres types dupliqués sont supprimés au profit des types Kotlin exportés, et speakers, lieu et classification des sessions passent par les use cases partagés
   3. L'agenda iOS affiche les mêmes jours (libellés et fuseau), créneaux, sessions et résultats de filtres qu'en v1.0 (UAT comparatif), à la seule exception documentée de l'ordre des salles dans un créneau, qui suit désormais `RoomSortIndex`
   4. L'agenda observe en continu le flux combiné partagé (sessions + favoris + filtres) : ajouter ou retirer un favori ou un filtre depuis la liste, une cellule ou le détail met l'agenda à jour sans relance, via une seule instance d'`AgendaViewModel`
+
 **Plans**: TBD
 **Research flag**: spike + UAT, plus haut risque de perte de données du milestone : l'UAT de mise à jour en place exige un build release v1.0 installé (store, TestFlight ou tag v1.0) ; confirmer `room.id == room.name` pour le filtre de salles ; valider le flux combiné continu à travers le pont sur la toolchain CI
 **UI hint**: yes
 
 ### Phase 10: DI iOS explicite
+
 **Goal**: Les dépendances iOS sont composées une seule fois au lancement par une composition root explicite et injectées par constructeur, sans service-locator ni singleton global dans les ViewModels
 **Depends on**: Phase 9
 **Requirements**: IOSDI-01, IOSDI-02, IOSDI-03
@@ -118,10 +139,12 @@ Plans:
   2. Les ViewModels reçoivent leurs dépendances par constructeur via des protocoles ; `BaseViewModel`, `RCValues.sharedInstance`, le global `remoteConfig`, `PerformanceMonitoring.shared` et `FirebaseAnalyticsService.shared` n'existent plus
   3. `scripts/swift-di-gate.sh` tourne en CI et fait échouer le job dès qu'un fichier hors composition root accède à `IosDependencies` ou à un singleton
   4. Événements analytics, traces de performance, valeurs Remote Config et choix de consentement se comportent comme en v1.0 (UAT + tests sur fakes verts)
+
 **Plans**: TBD
 **Research flag**: pattern standard, sauf le test d'ordre d'initialisation
 
 ### Phase 11: Modularisation SPM
+
 **Goal**: L'app iOS est découpée en packages SPM locaux core et feature qui consomment `shared` en XCFramework statique, avec une target app réduite à une coquille, et se build depuis un checkout propre en local comme en CI
 **Depends on**: Phase 10
 **Requirements**: IOSMOD-01, IOSMOD-02, IOSMOD-03
@@ -131,11 +154,13 @@ Plans:
   3. Le manifeste unique contient les targets core, toutes en `.iOS(.v17)` : pont Kotlin (seul importeur de `shared`), CoreServices, FirebaseServices, DesignSystem (sortie SwiftGen et ressources via `Bundle.module`) et CoreDI, qui héberge `AppDependencies`
   4. Agenda (détail de session inclus), Speakers, Venue et About sont des targets feature sans dépendance entre elles ni import du framework Kotlin ; la target app se contente d'appeler `AppDependencies.live()` et d'assembler les features, et les tests des packages tournent dans le test plan CI
   5. Après chaque extraction (About, Venue, Speakers puis Agenda, un commit chacune), un smoke manuel confirme que l'app se comporte comme en v1.0
+
 **Plans**: TBD
 **Research flag**: spike bloquant avant les extractions : ordre de build XCFramework depuis un checkout propre sur la CI (Xcode 26.6), rafraîchissement dans Xcode, `binaryTarget` hors racine du package, chemin Release/dSYM (`scripts/build-ios-release.sh`, `documentation/iOS_BUILD_DSYM.md`), support de `Bundle.module` par les templates SwiftGen 6.6.3 (sinon commiter la sortie générée), concurrence Firebase 11.15 à la frontière des packages
 **UI hint**: yes
 
 ### Phase 12: Swift 6 strict, smoke tests et documentation
+
 **Goal**: Tout le code iOS compile en Swift 6 strict sans warning, l'interop Kotlin est confinée et contrôlée, chaque feature a un smoke test et la documentation décrit la nouvelle architecture
 **Depends on**: Phase 11
 **Requirements**: CONC-01, CONC-02, IOSTEST-02, DOC-01
@@ -144,6 +169,7 @@ Plans:
   2. `asyncFunction`/`asyncSequence` et les conformances `@unchecked Sendable` (limitées aux types Kotlin immuables) n'apparaissent que dans le pont Kotlin ; un gate CI échoue si on en ajoute ailleurs
   3. Chaque feature (Agenda, Speakers, Venue, About) a un smoke test SwiftUI rendu via `UIHostingController`, exécuté en CI
   4. `README.md`, `documentation/ARCHITECTURE.md`, `documentation/DEVELOPMENT.md`, `documentation/iOS_BUILD_DSYM.md` et `AGENTS.md` décrivent les packages, la composition root, l'XCFramework et les commandes iOS, et un checkout propre se build en suivant uniquement ces documents
+
 **Plans**: TBD
 **Research flag**: rejouer le pont KMP-NativeCoroutines en Swift 6 sur la toolchain CI (Swift 6.3.3) ; si les diagnostics du pont sont nombreux, basculer package par package, jamais en un seul commit
 **UI hint**: yes
