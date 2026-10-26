@@ -160,7 +160,7 @@ Les phases s'exécutent dans l'ordre numérique : 6 → 7 → 8 → 9 → 10 →
 | 3. Multi-Module Architecture Extraction | v1.0 | 11/11 | Complete | 2026-09-27 |
 | 4. Hilt to Koin DI Migration | v1.0 | 7/7 | Complete | 2026-10-13 |
 | 5. Test Coverage Retrofit | v1.0 | 11/11 | Complete | 2026-10-16 |
-| 6. Socle de tests et gates CI iOS | v1.1 | 0/5 | Planned | - |
+| 6. Socle de tests et gates CI iOS | v1.1 | 0/6 | Planned | - |
 | 7. Couche domaine KMP et adoption Android | v1.1 | 0/? | Not started | - |
 | 8. SwiftUI moderne, iOS 17 et Observation | v1.1 | 0/? | Not started | - |
 | 9. iOS sur la logique commune et persistance legacy | v1.1 | 0/? | Not started | - |

@@ -1,8 +1,8 @@
 # Phase 6: Socle de tests et gates CI iOS - Pattern Map
 
 **Mapped:** 2026-10-26
-**Files analyzed:** 16 (new/modified/deleted)
-**Analogs found:** 11 / 16 (the rest take their shape from verified RESEARCH.md prototypes)
+**Files analyzed:** 17 (new/modified/deleted)
+**Analogs found:** 12 / 17 (the rest take their shape from verified RESEARCH.md prototypes)
 
 All analog paths below were checked as git-tracked (`git ls-files`). The archived gate lives under
 `.planning/milestones/v1.0-phases/03-multi-module-architecture-extraction/` (tracked).
@@ -18,12 +18,13 @@ All analog paths below were checked as git-tracked (`git ls-files`). The archive
 | `.github/workflows/ios.yml` (modified) | CI config | request-response | itself (current steps) | exact |
 | `iosApp/iosApp/iOSApp.swift` (modified) | app entry / guard | event-driven | itself | exact |
 | `iosApp/DevFestNantesTests/SessionFilterTests.swift` (new) | test | transform | `iosApp/iosApp/Model/SessionFilter.swift` (subject); RESEARCH Ex. B | no in-repo test analog |
+| `iosApp/DevFestNantesTests/AgendaDateParsingTests.swift` (new, 06-02) | test | transform | `iosApp/DevFestNantesTests/SessionFilterTests.swift` (created in 06-01, same suite style); subject `AgendaViewModel.parseDate(_:)` | role-match (in-phase analog) |
 | `iosApp/DevFest NantesTests/*` (deleted, 2 files) | test | - | - | n/a (delete) |
 | `iosApp/iosApp.xctestplan` (new) | config | - | none in repo | no analog (RESEARCH Pattern 2) |
 | `iosApp/iosApp.xcodeproj/xcshareddata/xcschemes/iosApp.xcscheme` (modified) | config | - | itself | exact |
 | `iosApp/iosApp.xcodeproj/project.pbxproj` (modified) | config | - | itself (old target objects) | exact |
 | `gradle/libs.versions.toml` | config | - | read-only source of truth (`kmpNativeCoroutines = "1.0.6"` line 23) | n/a |
-| `iosApp/iosApp/Agenda/AgendaViewModel.swift` (optional `getDate` extraction) | viewmodel | transform | itself | exact |
+| `iosApp/iosApp/Agenda/AgendaViewModel.swift` (`getDate` extraction to static `parseDate`, mandatory in 06-02, own commit) | viewmodel | transform | itself | exact |
 | `scripts/README.md`, `documentation/DEVELOPMENT.md`, `README.md`, `AGENTS.md` | docs | - | `scripts/README.md` entries | role-match |
 
 ## Pattern Assignments
@@ -128,7 +129,14 @@ Add `static let isRunningTests = ProcessInfo.processInfo.environment["XCTestConf
 enum FilterType: String, Codable { case bookmark, complexity, language, room, type }
 struct SessionFilter: Codable, Hashable, Equatable { let type: FilterType; let value: String ... }
 ```
-No existing passing Swift test to copy (old `DevFest_NantesTests.swift` is broken and deleted). Copy RESEARCH Example B (Swift Testing, `@testable import DevFest_Nantes`, snake_case test names, decode fixed legacy payload plus Set round-trip, never byte-compare encoded Set). Optional `getDate` test requires extracting a static helper in `Agenda/AgendaViewModel.swift` (own commit; `getDate` delegates, `?? Date()` fallback unchanged).
+No existing passing Swift test to copy (old `DevFest_NantesTests.swift` is broken and deleted). Copy RESEARCH Example B (Swift Testing, `@testable import DevFest_Nantes`, snake_case test names, decode fixed legacy payload plus Set round-trip, never byte-compare encoded Set).
+
+---
+
+### `iosApp/DevFestNantesTests/AgendaDateParsingTests.swift` + `iosApp/iosApp/Agenda/AgendaViewModel.swift` (test + extraction, transform)
+
+**Analog:** `SessionFilterTests.swift` (06-01): `import Testing`, `@testable import DevFest_Nantes`, `@Suite struct`, snake_case test names, no ViewModel instance.
+**Extraction (mandatory, plan 06-02, own commit):** `static func parseDate(_ date: String) -> Date` on `AgendaViewModel` with the exact current `getDate` body (fresh default-option `ISO8601DateFormatter()`, `?? Date()` fallback); `getDate(date:)` keeps name, signature and call site and returns `AgendaViewModel.parseDate(date)`. Tests call the static member only, so Koin (`BaseViewModel`) never starts. The fractional-seconds fallback is a v1.0 gap: pinned with a "Pins v1.0 behavior" comment and logged in the phase `deferred-items.md`, not fixed.
 
 ---
 
