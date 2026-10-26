@@ -40,13 +40,18 @@ created: "2026-10-26"
 
 | Task ID | Plan | Wave | Requirement | Threat Ref | Secure Behavior | Test Type | Automated Command | File Exists | Status |
 |---------|------|------|-------------|------------|-----------------|-----------|-------------------|-------------|--------|
-| 6-TBD | TBD | 1 | IOSTEST-03 | — | N/A | integration (simulator) | full suite command | ❌ W0 | ⬜ pending |
-| 6-TBD | TBD | 1 | IOSTEST-03 | — | N/A | script check | `bash scripts/xcresult-assert-tests.sh <zero-test xcresult>` expects rc 1 | ❌ W0 | ⬜ pending |
-| 6-TBD | TBD | 1 | IOSTEST-03 | — | N/A | static | `grep -n "steps.xcode.outputs.version" .github/workflows/ios.yml` | ❌ W0 | ⬜ pending |
-| 6-TBD | TBD | 2 | IOSTEST-04 | — | N/A | gate selftest + check | `bash scripts/swift-names-gate.sh selftest` → `SWIFT-GATE-SELFTEST-OK` | ❌ W0 | ⬜ pending |
-| 6-TBD | TBD | 3 | CONC-03 | — | N/A | script | `bash scripts/kmp-nc-version-gate.sh` → `KMPNC-VERSION-OK 1.0.6` | ❌ W0 | ⬜ pending |
+| 06-01-T1 | 06-01 | 1 | IOSTEST-03 | T-06-01, T-06-03 | Under-test guard inert outside XCTest; version lines unchanged | integration (simulator) | `plutil -lint` + `xcodebuild -list` + LOCAL LANE (totalTestCount >= 1) | ❌ W0 | ⬜ pending |
+| 06-01-T2 | 06-01 | 1 | IOSTEST-03 | T-06-01 | N/A | integration (simulator) | LOCAL LANE (totalTestCount >= 11, failedTests 0) | ❌ W0 | ⬜ pending |
+| 06-02-T1 | 06-02 | 2 | IOSTEST-03 | T-06-08 | Zero / skipped / failed runs fail closed | script selftest + real bundles | `bash scripts/xcresult-assert-tests.sh selftest` → `XCRESULT-SELFTEST-OK`; zero-test bundle → rc 1 `XCRESULT-NO-TESTS-EXECUTED` | ❌ W0 | ⬜ pending |
+| 06-02-T2 | 06-02 | 2 | IOSTEST-03 | T-06-04, T-06-05, T-06-06, T-06-07 | Read-only token, no PR data in `run:`, Xcode-aware cache | static + CI | Ruby YAML parse + step-order awk + `grep -c 'steps.xcode.outputs.version'` >= 4; dispatched ios.yml green | ❌ W0 | ⬜ pending |
+| 06-03-T1 | 06-03 | 3 | IOSTEST-04 | T-06-10, T-06-11 | Empty / missing header fail | gate check + selftest + demos | `SWIFT_GATE_HEADER=… bash scripts/swift-names-gate.sh check` → `SWIFT-NAMES-OK`; selftest → `SWIFT-GATE-SELFTEST-OK`; renamed type → `SWIFT-NAME-MISSING` | ❌ W0 | ⬜ pending |
+| 06-03-T2 | 06-03 | 3 | IOSTEST-04 | T-06-09 | CI never regenerates the baseline | static + CI | Ruby YAML parse + step-order awk; dispatched ios.yml green with both gate tokens | ❌ W0 | ⬜ pending |
+| 06-04-T1 | 06-04 | 4 | CONC-03 | T-06-12, T-06-13, T-06-SC | exactVersion pin enforced | script + selftest + LOCAL LANE | `bash scripts/kmp-nc-version-gate.sh` → `KMPNC-VERSION-OK 1.0.6`; selftest → `KMPNC-SELFTEST-OK`; pre-phase pbxproj (6b211dd) → `KMPNC-VERSION-SKEW` | ❌ W0 | ⬜ pending |
+| 06-04-T2 | 06-04 | 4 | CONC-03 | T-06-14 | N/A | docs grep + CI | grep docs; dispatched ios.yml green with all gate tokens | ❌ W0 | ⬜ pending |
+| 06-05-T1 | 06-05 | 5 | CONC-03 | T-06-15 | N/A | build + install + screenshot | `file 06-smoke/00-launch.png` is PNG; app listed by `simctl listapps booted` | ❌ W0 | ⬜ pending |
+| 06-05-T2 | 06-05 | 5 | CONC-03 | T-06-15, T-06-16 | Parity confirmed by a human | manual (blocking-human) | D-11 smoke checklist, 8 screenshots | n/a | ⬜ pending |
 
-*Status: ⬜ pending · ✅ green · ❌ red · ⚠️ flaky* — Task IDs are filled in once plans exist.
+*Status: ⬜ pending · ✅ green · ❌ red · ⚠️ flaky* — LOCAL LANE is the xcodebuild build-for-testing + test-without-building + xcresulttool sequence written out in 06-01-PLAN.md Task 2 `<verify>`.
 
 ---
 

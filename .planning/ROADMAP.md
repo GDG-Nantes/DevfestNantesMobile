@@ -59,7 +59,13 @@ Full details: [milestones/v1.0-ROADMAP.md](milestones/v1.0-ROADMAP.md). Requirem
   2. Le job iOS échoue quand le `.xcresult` compte zéro test exécuté, et la clé de cache iOS inclut la version de Xcode
   3. `scripts/swift-names-gate.sh` est restauré et tourne en CI : un changement qui modifie le nom Swift d'un type Kotlin exporté fait échouer le job
   4. KMP-NativeCoroutines est en 1.0.6 côté SPM (au lieu de 1.0.0-ALPHA-45) comme côté Gradle, un gate CI échoue si les deux versions divergent, et l'app iOS se comporte comme en v1.0
-**Plans**: TBD
+**Plans**: 5 plans
+Plans:
+- [ ] 06-01-PLAN.md — Target Swift Testing `DevFestNantesTests` hébergée par l'app, `.xctestplan`, garde XCTest dans `iOSApp`, tests `SessionFilter` et `parseDate` (tracer)
+- [ ] 06-02-PLAN.md — Lane CI iOS : build-for-testing / test-without-building, échec si 0 test (`xcresult-assert-tests.sh`), cache Xcode-aware, simulateur par UDID
+- [ ] 06-03-PLAN.md — `swift-names-gate.sh` restauré dans `scripts/` (baselines dans `scripts/swift-names/`), check + selftest en CI
+- [ ] 06-04-PLAN.md — KMP-NativeCoroutines SPM en 1.0.6 et `kmp-nc-version-gate.sh` dans le même commit, docs des gates
+- [ ] 06-05-PLAN.md — Smoke manuel de parité v1.0 sur simulateur après le bump (checkpoint humain bloquant)
 **Research flag**: pattern standard, pas de spike
 
 ### Phase 7: Couche domaine KMP et adoption Android
@@ -153,7 +159,7 @@ Les phases s'exécutent dans l'ordre numérique : 6 → 7 → 8 → 9 → 10 →
 | 3. Multi-Module Architecture Extraction | v1.0 | 11/11 | Complete | 2026-09-27 |
 | 4. Hilt to Koin DI Migration | v1.0 | 7/7 | Complete | 2026-10-13 |
 | 5. Test Coverage Retrofit | v1.0 | 11/11 | Complete | 2026-10-16 |
-| 6. Socle de tests et gates CI iOS | v1.1 | 0/? | Not started | - |
+| 6. Socle de tests et gates CI iOS | v1.1 | 0/5 | Planned | - |
 | 7. Couche domaine KMP et adoption Android | v1.1 | 0/? | Not started | - |
 | 8. SwiftUI moderne, iOS 17 et Observation | v1.1 | 0/? | Not started | - |
 | 9. iOS sur la logique commune et persistance legacy | v1.1 | 0/? | Not started | - |
