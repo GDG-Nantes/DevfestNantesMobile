@@ -97,6 +97,27 @@ Firebase on iOS needs `iosApp/iosApp/GoogleService-Info.plist`, which is not com
 maintainer for it (CI generates a mock one, see `.github/workflows/ios.yml`). Release builds and App Store uploads
 are covered in [iOS_BUILD_DSYM.md](iOS_BUILD_DSYM.md) and `scripts/README.md`.
 
+### Swift tests
+
+The iOS unit tests use Swift Testing (shipped with the Xcode toolchain), live in
+`iosApp/DevFestNantesTests/` and run hosted in the app (`@testable import DevFest_Nantes`). The
+`iosApp` scheme runs them through the committed `iosApp/iosApp.xctestplan`. The app skips Firebase
+and Koin start-up when launched by XCTest, so tests must not create a ViewModel (its initializer
+starts Koin): test static or pure helpers instead. Pick a simulator with
+`xcrun simctl list devices available`, then:
+
+```bash
+xcodebuild -project iosApp/iosApp.xcodeproj -scheme iosApp -testPlan iosApp \
+  -destination 'platform=iOS Simulator,id=<udid>' -derivedDataPath build \
+  build-for-testing CODE_SIGNING_ALLOWED=NO
+xcodebuild -project iosApp/iosApp.xcodeproj -scheme iosApp -testPlan iosApp \
+  -destination 'platform=iOS Simulator,id=<udid>' -derivedDataPath build \
+  -parallel-testing-enabled NO test-without-building
+```
+
+For a quick local run, the single `xcodebuild ... -testPlan iosApp test` form works too. Test
+names are snake_case sentences, as on Android.
+
 ## Testing
 
 Tests use JUnit 4, `kotlin.test` assertions, kotlinx-coroutines-test, Turbine and Robolectric. There
@@ -132,6 +153,7 @@ Where tests live:
 | Store contract (fake and real) | `core/data/src/commonTest/` | `DevFestNantesStoreContractTest`, `GraphQLStoreMockServerTest` |
 | Live API (manual) | `core/data/src/jvmTest/` | `GraphQLStoreLiveNetworkTest` |
 | Instrumented smoke tests | `feature/<name>/src/androidTest/` | `SettingsSmokeTest` |
+| iOS Swift unit tests | `iosApp/DevFestNantesTests/` | `SessionFilterTests`, `AgendaDateParsingTests` |
 
 Conventions: test names are snake_case sentences (`french_filter_keeps_the_four_french_sessions`),
 expected values reference fixtures rather than retyped literals, and `*CharacterizationTest` classes
