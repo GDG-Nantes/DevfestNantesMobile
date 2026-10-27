@@ -55,6 +55,9 @@ Rules:
 - Prefer Swift Package Manager over CocoaPods for iOS dependencies.
 - When bumping Kotlin, bump KSP to a compatible version. Do not bump kotlinx-datetime past the
   `0.6.x-compat` pin (OpenFeedback needs it; `OpenFeedbackDatetimeLinkageTest` guards it).
+- When bumping `kmpNativeCoroutines`, set the KMP-NativeCoroutines SPM pin in
+  `iosApp/iosApp.xcodeproj/project.pbxproj` to the same exact version in the same commit (Dependabot
+  only bumps the Gradle side). `bash scripts/kmp-nc-version-gate.sh` enforces it in CI.
 - Never change `versionName`, `versionCode` or `MARKETING_VERSION`: maintainers handle releases
   (see `documentation/VERSIONING.md`).
 - Tests: JUnit 4 + `kotlin.test` + Turbine. Use the hand-written fakes in `core/testing` and the
@@ -72,6 +75,7 @@ Before considering a change done, run what CI runs:
 ```bash
 ./gradlew detekt lint
 bash scripts/di-gate.sh
+bash scripts/kmp-nc-version-gate.sh
 ./gradlew testDebugUnitTest jvmTest testAndroidHostTest
 ```
 
