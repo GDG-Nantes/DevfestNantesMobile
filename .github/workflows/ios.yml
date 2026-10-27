@@ -26,7 +26,14 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-      
+
+      # Pure text check, first on purpose: a Gradle/SPM version skew fails the job before any
+      # Gradle or Xcode work. Dependabot only bumps the Gradle side (see DEVELOPMENT.md).
+      - name: KMP-NativeCoroutines version gate
+        run: |
+          bash scripts/kmp-nc-version-gate.sh
+          bash scripts/kmp-nc-version-gate.sh selftest
+
       - uses: ./.github/actions/android-setup
         with:
           java-version: ${{ env.JAVA_VERSION }}

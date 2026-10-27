@@ -167,10 +167,13 @@ pin current behavior, including known defects.
 bash scripts/di-gate.sh        # DI gate: no Hilt/Dagger, no service locator outside DI wiring
 bash scripts/swift-names-gate.sh check   # macOS: Swift names of exported Kotlin types unchanged
                                # (links the shared framework unless SWIFT_GATE_HEADER is set)
+bash scripts/kmp-nc-version-gate.sh      # KMP-NativeCoroutines: Gradle and SPM versions identical
+                               # (pure text check, runs anywhere; first step of ios.yml)
 ```
 
-All three run in CI (`.github/workflows/android.yml`) together with unit tests, instrumented tests
-on API 34 and a debug build. `.github/workflows/ios.yml` builds the shared framework, runs the Swift
+The detekt, lint and DI checks run in CI (`.github/workflows/android.yml`) together with unit tests,
+instrumented tests on API 34 and a debug build. `.github/workflows/ios.yml` starts with the
+KMP-NativeCoroutines version gate (`check` then `selftest`), builds the shared framework, runs the Swift
 names gate (`check` then `selftest`, reusing the header just linked), runs the KMP
 iOS tests, then builds the app and its Swift tests once (`build-for-testing`) and runs them with
 `test-without-building` through `iosApp.xctestplan` on the newest iPhone simulator (selected and
@@ -179,6 +182,16 @@ zero executed tests, only skipped tests or any failure (`scripts/xcresult-assert
 has a `selftest` mode), because `xcodebuild` itself exits 0 on a zero-test run. The DerivedData
 cache is keyed on the selected Xcode version, the job summary lists the Xcode version, the
 simulator and the test counts, and the `.xcresult` is uploaded as an artifact when the job fails.
+
+### Bumping KMP-NativeCoroutines
+
+The version must be identical in `gradle/libs.versions.toml` (`kmpNativeCoroutines`) and in the
+KMP-NativeCoroutines Swift package of `iosApp/iosApp.xcodeproj` (requirement "Exact Version").
+Dependabot only bumps the Gradle side, so its pull request fails the iOS gate
+(`KMPNC-VERSION-SKEW`) until the pin is updated by hand: Xcode > Package Dependencies >
+KMP-NativeCoroutines > Exact Version, or the `version` line of its `XCRemoteSwiftPackageReference`
+in `project.pbxproj`. Then re-run `bash scripts/kmp-nc-version-gate.sh`. A range, branch or
+revision requirement is rejected too (`KMPNC-SPM-NOT-EXACT`).
 
 ## Build Configuration
 
