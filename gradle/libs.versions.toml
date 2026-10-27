@@ -33,7 +33,7 @@ kotlinxCoroutines = "1.11.0"
 # A plain kotlinx-datetime bump (for example a Dependabot PR) is rejected by
 # OpenFeedbackDatetimeLinkageTest.
 kotlinxDatetime = "0.8.0-0.6.x-compat"
-kotlinxSerialization = "1.11.0"
+kotlinxSerialization = "1.12.0"
 koin = "4.2.2"
 kover = "0.9.11"
 material = "1.13.0"
