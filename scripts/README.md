@@ -150,3 +150,34 @@ to silence a failing `check`; CI never runs it.
 - `1` = a name is missing or changed, the header is missing or empty, or `selftest` failed
 
 ---
+
+### `kmp-nc-version-gate.sh`
+**KMP-NativeCoroutines version-skew gate** - Fails when the Gradle plugin and the Swift package are not on the same version.
+
+```bash
+bash scripts/kmp-nc-version-gate.sh            # check (default)
+bash scripts/kmp-nc-version-gate.sh selftest   # prove each decision on fixture files
+```
+
+**What it does:**
+- Compares `kmpNativeCoroutines` in `gradle/libs.versions.toml` (source of truth) with the
+  KMP-NativeCoroutines Swift package requirement in `iosApp/iosApp.xcodeproj/project.pbxproj`
+  (the `XCRemoteSwiftPackageReference` whose `repositoryURL` contains `KMP-NativeCoroutines`; other
+  packages are never read), as exact strings: `v1.0.6` against `1.0.6` is a skew
+- Prints `KMPNC-VERSION-OK <version>` on success; otherwise one token per failure:
+  `KMPNC-VERSION-SKEW gradle=.. spm=..`, `KMPNC-SPM-NOT-EXACT kind=.. (expected exactVersion)` (a range,
+  branch or revision requirement), `KMPNC-GRADLE-VERSION-MISSING <path>`, `KMPNC-SPM-PIN-MISSING <path>`
+- `selftest` runs the check on fixture files under a temp dir and prints `KMPNC-SELFTEST-OK`
+  (or `KMPNC-SELFTEST-FAILED <case>`)
+- `KMP_NC_TOML` and `KMP_NC_PBXPROJ` override the two inputs; fixture-only, used by `selftest`
+  (CI sets neither)
+- Pure text check: runs anywhere, no Xcode or Gradle. It is the first step of `.github/workflows/ios.yml`
+- Dependabot only bumps the Gradle side: its pull request fails this gate until the SPM pin is edited by
+  hand in the same commit (see
+  [Bumping KMP-NativeCoroutines](../documentation/DEVELOPMENT.md#bumping-kmp-nativecoroutines))
+
+**Exit codes:**
+- `0` = versions equal and the SPM requirement is an exact version
+- `1` = skew, non-exact requirement, a source that cannot be read, or `selftest` failed
+
+---
