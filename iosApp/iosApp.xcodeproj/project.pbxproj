@@ -65,6 +65,7 @@
 		F58368862E70701E001A9B8A /* LiquidGlassButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = F58368852E70701E001A9B8A /* LiquidGlassButtonStyle.swift */; };
 		F5BA00E32E7014DA00A31383 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F5BA00E22E7014DA00A31383 /* GoogleService-Info.plist */; };
 		F58B5AB8B24860681567F470 /* SessionFilterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07FA17E61A9DDADF5C507A31 /* SessionFilterTests.swift */; };
+		9E41D7A05B6C82F3D1048B7A /* AgendaDateParsingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A91E7B2D04F6810A7C3E9 /* AgendaDateParsingTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -135,6 +136,7 @@
 		F5BA00E22E7014DA00A31383 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		938E1B2393F75FF8A7B71E9B /* DevFestNantesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DevFestNantesTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		07FA17E61A9DDADF5C507A31 /* SessionFilterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionFilterTests.swift; sourceTree = "<group>"; };
+		3C5A91E7B2D04F6810A7C3E9 /* AgendaDateParsingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgendaDateParsingTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -362,6 +364,7 @@
 		70708D92D3C406142E250997 /* DevFestNantesTests */ = {
 			isa = PBXGroup;
 			children = (
+				3C5A91E7B2D04F6810A7C3E9 /* AgendaDateParsingTests.swift */,
 				07FA17E61A9DDADF5C507A31 /* SessionFilterTests.swift */,
 			);
 			path = DevFestNantesTests;
@@ -590,6 +593,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				9E41D7A05B6C82F3D1048B7A /* AgendaDateParsingTests.swift in Sources */,
 				F58B5AB8B24860681567F470 /* SessionFilterTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
