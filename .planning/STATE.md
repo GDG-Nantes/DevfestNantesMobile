@@ -22,10 +22,10 @@ progress:
 
 ## Project Reference
 
-See: .planning/PROJECT.md (updated 2026-10-23)
+See: .planning/PROJECT.md (updated 2026-10-27)
 
 **Core value:** CI/CD must work again and the project must become maintainable again (modern build, modular architecture, decentralized DI, solid test coverage) without ever regressing the app's existing behavior for users.
-**Current focus:** Phase 06 — iOS Test Foundation and CI Gates
+**Current focus:** Phase 7 — KMP Domain Layer and Android Adoption
 
 ## Current Position
 
@@ -183,7 +183,9 @@ None yet.
 - Follow-up (not blocking): bump targetSdk 36->37 in a dedicated future stage after reviewing Android 17's behavior-change surface (kb://android/about/versions/17/behavior-changes-all / -17) — deliberately deferred from 02-03 per user direction to avoid folding a runtime-behavior-change decision into the Compose-BOM commit
 - Follow-up (not blocking): the firebase-auth-ktx -> firebase-auth:24.2.0 dependency substitution in androidApp/build.gradle.kts is version-coupled to the pinned firebaseBom (34.19.0); re-verify the literal version if firebaseBom is bumped again in a future stage
 - **RESOLVED 2026-09-27:** Phase 03 Plan 09 (final phase plan) Android CI Instrumentation-tests OOM blocker. Root cause: D8's `DexMergingWorkAction` shares the Gradle daemon heap (`org.gradle.jvmargs`, was `-Xmx2048M`) while assembling `feature:settings`/`feature:session-detail`/`feature:speakers` androidTest APKs concurrently — 3 consecutive CI failures (run 36270314662 and reruns) with `java.lang.OutOfMemoryError: Java heap space`. Fix: raised the Gradle daemon heap to `-Xmx4096M` in `gradle.properties` (commit 5cb0389, user-approved deviation, Kotlin daemon heap left unchanged). CI-GREEN-BOTH is now satisfied on HEAD 5cb0389: android.yml run 36328538946 (all 4 jobs green, incl. Instrumentation tests (34)), ios.yml run 36328538965 (green). Task 1 (thin :shared umbrella + drop androidApp->:shared dep + delete buildSrc, commits 1bf81ae/2b03d4f) and Task 2 (all phase gates) are both complete; 03-09-SUMMARY.md written and ARCH-01..04 marked complete per the shared-ID gate.
-- Follow-up (not blocking, from 03-SECURITY.md note 2): `swift-names-gate.sh` and `resources-gate.sh` only run manually from `.planning`; wire them into CI (CICD-V2-01) so Swift identity-swap and resource-drift detection survive past Phase 3.
+- Follow-up (not blocking, from 03-SECURITY.md note 2): `swift-names-gate.sh` — RESOLVED in Phase 6 (moved to `scripts/`, runs in iOS CI). `resources-gate.sh` still only runs manually from `.planning`; wire it into CI (CICD-V2-01).
+- Note (not blocking, Phase 6): Xcode launched from the Dock does not inherit the shell `JAVA_HOME`; the default `java_home` JDKs on the maintainer Mac are x86_64-only and Rosetta is absent, so the Gradle Run Script fails in the GUI ("Bad CPU type"). Workaround `launchctl setenv JAVA_HOME …` (lost on reboot); durable fix logged in Phase 6 `deferred-items.md`.
+- Note (not blocking, Phase 6): start dates with fractional seconds fall back to "now" in `AgendaViewModel.parseDate` (pinned by a test) — Phase 9 shared grouping must reproduce it or change it as a recorded deviation.
 - **Phase 3 follow-up — RESOLVED in Phase 4:** `:core:testing` now consumed (`testImplementation`) by `:core:ui` and `:androidApp` (fakes + `testDoublesModule`); Phase 5 extends it.
 - Note (not blocking, Phase 4): `com.google.dagger:dagger` remains on the release classpath only as a Firebase Performance internal transitive; the DI gate and `NO-HILT-ON-CLASSPATH` cover Hilt itself.
 - Note (not blocking, Phase 4 UAT): speaker images may fail to load on networks with SSL interception/blocking of raw.githubusercontent.com — environmental, observed on Android and iOS, not a code regression.
@@ -262,4 +264,5 @@ Resume file: None
 
 ## Operator Next Steps
 
-- Discuss Phase 6 with /gsd-discuss-phase 6, then plan it with /gsd-plan-phase 6
+- Discuss Phase 7 with /gsd-discuss-phase 7, then plan it with /gsd-plan-phase 7
+- Phase 6 follow-ups (advisory): triage 06-REVIEW-DISPOSITION.md (WR-01 `#if DEBUG` test-host guard, WR-02 xcresult env override, WR-03 floating Xcode vs pinned formatter test); first real `pull_request` run of ios.yml happens on the PR

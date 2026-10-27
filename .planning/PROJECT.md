@@ -47,6 +47,8 @@ CI/CD must work again and the project must become maintainable again (modern bui
 - ✓ DI: full migration from Hilt to Koin 4.2.2 — one Koin module per Gradle module, composed by `initKoin()` in `:shared` (`allowOverride(false)`), `IosDependencies` on iOS with no Koin name in `shared.h`, graph verified in CI (`verify()` + JVM/iOS/Robolectric startup tests), strict `scripts/di-gate.sh` against Hilt and service-locator calls — v1.0 (Phase 4)
 - ✓ Quality: Kover line coverage raised from 15.96% to 30.57% — GraphQLStore/mapper tests on Apollo MockServer (JVM/Android/iOS), shared Store contract, pinned SharedPreferences persistence, unit tests of the ten ViewModels on a controllable fake, agenda filter matrix, Compose smoke tests of the six feature modules; OpenFeedback/kotlinx-datetime crash (G-05-3) fixed and verified on device — v1.0 (Phase 5)
 
+- ✓ iOS tests: hosted Swift Testing target `DevFestNantesTests` (replaces the broken `DevFest NantesTests`) run through the committed `iosApp.xctestplan`; iOS CI runs build-for-testing + test-without-building on every PR, fails on zero executed tests (`scripts/xcresult-assert-tests.sh`), Xcode-keyed DerivedData cache; `swift-names-gate.sh` restored in `scripts/` and run in CI; KMP-NativeCoroutines aligned on 1.0.6 (SPM + Gradle) guarded by `scripts/kmp-nc-version-gate.sh`; v1.0 parity smoke approved — v1.1 (Phase 6, IOSTEST-03/04, CONC-03)
+
 ### Active
 
 Milestone v1.1 iOS Architecture (details and REQ-IDs in `REQUIREMENTS.md`):
@@ -107,6 +109,8 @@ Milestone v1.1 iOS Architecture (details and REQ-IDs in `REQUIREMENTS.md`):
 | Phase 5: `FeedbackFlags` seam on top of Firebase Remote Config, `AgendaViewModel` IO dispatcher injected through a named Koin binding | Make FeedbackForm and Agenda testable on pure JVM without changing behavior | Phase 5 (05-06, 05-08) |
 | Phase 5: uncaught store failures in ViewModels are pinned by characterization tests, not fixed | Effort with no behavior change; the fix (ERROR state) is deferred — see `deferred-items.md` and `05-UI-REVIEW.md` | Phase 5 — known debt |
 | Phase 2: version upgrade in sequential groups (one commit per group), with a green CI between each step | Cumulative major upgrades would be impossible to diagnose on failure; each group gets its own revertible commit and its own green signal before tackling the next one | ✓ Phase 2 shipped — Kotlin 2.4.20, AGP 9.4.0 + `com.android.kotlin.multiplatform.library` plugin, Gradle 9.7.1, Compose BOM 2026.09.00, Apollo 5.2.0 (cache migrated to `com.apollographql.cache`), Firebase BOM 34.19.0/Coroutines 1.11.0/kotlinx-serialization 1.11.0/kotlinx-datetime 0.8.0; Gradle Declarative DSL pilot succeeded on `settings.gradle.dcl` (androidApp/shared stay in Kotlin DSL, AGP/KMP DCL support not mature for these modules) — full details in `.planning/STATE.md` § Phase 02 version deviations / DCL pilot outcome |
+| Phase 6: plain `*-gate.sh` scripts with `check`/`selftest` modes and greppable OK/FAIL tokens for every iOS CI gate (xcresult, swift-names, kmp-nc) | A gate that cannot be shown to fail is not a gate; tokens make CI logs auditable and the selftests catch a weakened guard | ✓ Phase 6 — all three gates green on real CI runs (40477853950, 40488566873, 40501276582) |
+| Phase 6: KMP-NativeCoroutines bump (alpha → 1.0.6) kept only after a human parity smoke, revertible as one commit (D-12) | The AsyncSequence cancel-on-dealloc change touches the user-visible flows and no UI test exists before Phase 12 | ✓ Phase 6 — smoke approved on 8 flows, bump kept |
 
 ## Evolution
 
@@ -126,4 +130,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-10-23 after starting milestone v1.1 iOS Architecture*
+*Last updated: 2026-10-27 after Phase 6*
