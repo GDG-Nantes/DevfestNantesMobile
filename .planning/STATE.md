@@ -8,7 +8,7 @@ status: executing
 stopped_at: Phase 6 context gathered
 last_updated: "2026-10-26T20:45:05.700Z"
 last_activity: 2026-10-23
-last_activity_desc: Roadmap v1.1 créée (phases 6-12, 27/27 exigences mappées)
+last_activity_desc: Roadmap v1.1 created (phases 6-12, 27/27 requirements mapped)
 state_head: 88ea71edd23843daba8109d71c9364f6423a5299
 progress:
   total_phases: 7
@@ -24,15 +24,15 @@ progress:
 
 See: .planning/PROJECT.md (updated 2026-10-23)
 
-**Core value:** La CI/CD doit refonctionner et le projet doit redevenir maintenable (build moderne, architecture modulaire, DI décentralisée, couverture de tests solide) sans jamais régresser le comportement existant de l'application pour les utilisateurs.
-**Current focus:** Milestone v1.1 iOS Architecture — Phase 6 : iOS Test Foundation and CI Gates
+**Core value:** CI/CD must work again and the project must become maintainable again (modern build, modular architecture, decentralized DI, solid test coverage) without ever regressing the app's existing behavior for users.
+**Current focus:** Milestone v1.1 iOS Architecture — Phase 6: iOS Test Foundation and CI Gates
 
 ## Current Position
 
 Phase: 6 (iOS Test Foundation and CI Gates) — READY TO EXECUTE
 Plan: Not started
 Status: Ready to execute
-Last activity: 2026-10-23 — Roadmap v1.1 créée (phases 6-12, 27/27 exigences mappées)
+Last activity: 2026-10-23 — Roadmap v1.1 created (phases 6-12, 27/27 requirements mapped)
 
 Progress: [░░░░░░░░░░] 0%
 
@@ -109,13 +109,13 @@ Progress: [░░░░░░░░░░] 0%
 Decisions are logged in PROJECT.md Key Decisions table.
 Recent decisions affecting current work:
 
-- [v1.1 Roadmap]: 7 phases (6-12) dérivées de l'ordre de `research/SUMMARY.md` ; l'adoption Android (SHARED-06, exigence isolée) est fusionnée avec la couche domaine KMP en Phase 7 ; la Phase 8 (Observation) ne dépend techniquement que de la Phase 6
-- [v1.1 Roadmap]: décisions utilisateur appliquées : parité stricte sauf l'ordre des salles iOS par `RoomSortIndex` (SHARED-03, déviation documentée) ; agenda iOS en observation continue du flux combiné (IOSDATA-03) ; périmètre complet conservé (SPM, Swift 6, smoke tests)
-- [v1.1 Roadmap]: arbitrages de recherche retenus : clés `UserDefaults` legacy réutilisées sans migrateur, un seul manifeste SPM, features sans import du framework Kotlin, `AppDependencies` dans CoreDI (dans la target app en Phase 10, déplacé en Phase 11)
-- [v1.1 Roadmap]: SHARED-05 (y compris l'implémentation iOS sur `Favorites`/`AgendaSessionFilters`) livré et testé en Phase 7, câblé dans l'app en Phase 9 ; IOSTEST-03 en Phase 6, test plan étendu aux tests de packages en Phase 11 ; IOSTEST-01 clos en Phase 8 (la target obsolète est remplacée dès la Phase 6, prérequis de la lane)
-- Roadmap: Ordre strictement séquentiel CI iOS -> deps/build -> multi-module -> DI -> tests (aucune parallélisation entre phases, chaque phase dépend de la précédente)
-- Roadmap: CICD-01/02/03 (cache Gradle/Konan, matrice CI) regroupés dans la Phase 1 avec CI-01 plutôt qu'une phase CICD séparée — même surface CI, évite une phase à faible densité
-- Roadmap: Gradle Declarative DSL traité comme migration partielle documentée (BUILD-07), pas de blocage sur un support AGP/KMP incomplet
+- [v1.1 Roadmap]: 7 phases (6-12) derived from the order in `research/SUMMARY.md`; Android adoption (SHARED-06, an isolated requirement) is merged with the KMP domain layer in Phase 7; Phase 8 (Observation) technically depends only on Phase 6
+- [v1.1 Roadmap]: user decisions applied: strict parity except the iOS room order by `RoomSortIndex` (SHARED-03, documented deviation); iOS agenda continuously observes the combined flow (IOSDATA-03); full scope kept (SPM, Swift 6, smoke tests)
+- [v1.1 Roadmap]: research trade-offs adopted: legacy `UserDefaults` keys reused without a migrator, a single SPM manifest, features without import of the Kotlin framework, `AppDependencies` in CoreDI (in the app target in Phase 10, moved in Phase 11)
+- [v1.1 Roadmap]: SHARED-05 (including the iOS implementation on `Favorites`/`AgendaSessionFilters`) delivered and tested in Phase 7, wired into the app in Phase 9; IOSTEST-03 in Phase 6, test plan extended to package tests in Phase 11; IOSTEST-01 closed in Phase 8 (the obsolete target is replaced as early as Phase 6, a prerequisite of the lane)
+- Roadmap: Strictly sequential order iOS CI -> deps/build -> multi-module -> DI -> tests (no parallelization between phases, each phase depends on the previous one)
+- Roadmap: CICD-01/02/03 (Gradle/Konan cache, CI matrix) grouped into Phase 1 with CI-01 rather than a separate CICD phase — same CI surface, avoids a low-density phase
+- Roadmap: Gradle Declarative DSL treated as a documented partial migration (BUILD-07), no blocking on incomplete AGP/KMP support
 - [Phase 01]: iOS Xcode/simulator resolution kept shell+jq (no marketplace action); no fallback step for empty simulator resolution per D-01/D-02 — Avoids new unaudited third-party dependency; xcodebuild's own destination error is the accepted failure mode per locked CONTEXT.md decisions
 - [Phase 01]: Phase 01 (CI Pipeline Fixed & Optimized) complete: ios.yml routed through the shared android-setup composite action with branch-aware Gradle cache policy; Konan cache and macos-latest/ubuntu-latest job separation confirmed intact via live workflow_dispatch run 35228437188
 - [Phase 02]: Version-target policy: newest-verified (Kotlin 2.4.20, AGP 9.4.0, Compose BOM 2026.09.00, Apollo 5.2.0) for BUILD-01/02/04/05, not the REQUIREMENTS.md-pinned 2026-09-12 snapshot — Checkpoint resolved by developer in 02-01; keeps Phase 3 from immediately needing another toolchain bump
@@ -171,8 +171,8 @@ None yet.
 
 ### Blockers/Concerns
 
-- **v1.1 — spikes à planifier :** Phase 7 (snapshot réel de l'API, payloads legacy `Favorites`/`AgendaSessionFilters` capturés) ; Phase 9 (build release v1.0 installé pour l'UAT de mise à jour en place, vérifier `room.id == room.name`) ; Phase 11 (XCFramework depuis un checkout propre sur la CI Xcode 26.6, chemin Release/dSYM, `Bundle.module` avec SwiftGen 6.6.3) ; Phases 8 et 12 (pont KMP-NativeCoroutines rejoué sur Swift 6.3.3 en CI)
-- **v1.1 — granularité :** 7 phases pour une granularité `standard` (4-6 attendues) ; assumé vu le risque (27 exigences, chaque phase verte et livrable, ordre imposé par l'utilisateur)
+- **v1.1 — spikes to plan:** Phase 7 (real API snapshot, captured legacy `Favorites`/`AgendaSessionFilters` payloads); Phase 9 (installed v1.0 release build for the in-place update UAT, check `room.id == room.name`); Phase 11 (XCFramework from a clean checkout on Xcode 26.6 CI, Release/dSYM path, `Bundle.module` with SwiftGen 6.6.3); Phases 8 and 12 (KMP-NativeCoroutines bridge replayed on Swift 6.3.3 in CI)
+- **v1.1 — granularity:** 7 phases for a `standard` granularity (4-6 expected); accepted given the risk (27 requirements, every phase green and shippable, order imposed by the user)
 - **Phase 3 — RESOLVED:** About/Partners live in a dedicated `:feature:about` module (D-05, 03-06).
 - **Phase 3 — RESOLVED 2026-09-24 by 03-10 + 03-11:** (history, kept for context) moving `Venue`/`Session`/`Speaker`/`Room`/`Partner` from package `com.gdgnantes.devfest.model` into `com.gdgnantes.devfest.core.model` flipped which of two same-simple-named Kotlin classes (the domain model vs. the Apollo-generated `GetXQuery.X`/`fragment.XDetails.X` GraphQL response class already colliding on that name) keeps the unprefixed Swift name vs. gets suffixed `_`. Kotlin/Native's ObjC header generator resolves same-simple-name collisions across the whole compiled framework by an alphabetical-FQN tie-break (shortest proof: `com.gdgnantes.devfest.model.Venue` sorted AFTER `com.gdgnantes.devfest.graphql.GetVenueQuery.Venue` at baseline — domain model got `Venue_`; `com.gdgnantes.devfest.core.model.Venue` sorts BEFORE `...graphql...` post-rename — domain model now gets clean `Venue`, GraphQL type flips to `Venue_`). This broke ~10 pre-existing Swift files (`VenueContent.swift`, `AgendaContent.swift`, `AgendaViewModel.swift`, `AgendaView.swift`, `AgendaCellView.swift`, `AgendaDetailView.swift`, `SpeakerDetailsViewModel.swift`, `SpeakersViewModel.swift`, `SpeakerDetailsView.swift`, `SpeakerView.swift`, `AboutViewModel.swift`) that hardcode the `_`-suffixed name expecting it to be the domain model. iOS CI failed on Swift compilation (run 35847334261, PR #419) — the swift-names-gate.sh gate (missing-name + collision-COUNT checks) did not catch this because the collision COUNT stayed the same, only the per-name IDENTITY swapped. **Resolution:** see `.planning/phases/03-multi-module-architecture-extraction/03-01-SUMMARY.md` "Halt Resolution (03-10 + 03-11)" for the full diagnosis, the @targetName mechanism, the corrected collision attribution, and the D-11 amendment.
 - **Phase 3 — RESOLVED:** single iOS umbrella validated end to end — `:shared` exports exactly core:model/data/analytics (D-11), keeps `SharedFrameworkPlaceholder.kt` (D-10 amendment); iOS CI green and D-12 simulator checkpoints approved (03-VERIFICATION.md passed).
@@ -189,7 +189,7 @@ None yet.
 
 ## Phase 02 DCL pilot outcome
 
-**Requirement:** BUILD-07 — "Les fichiers de build sont migrés vers le Gradle Declarative DSL (`.gradle.dcl`) là où le support AGP/KMP le permet ; les modules non supportés restent documentés en Kotlin DSL (`.kts`) avec la raison du blocage." Satisfied via the partial-migration branch (D-08): one low-risk leaf target converted, the rest documented on `.kts` with the reason support is missing.
+**Requirement:** BUILD-07 — "Build files are migrated to the Gradle Declarative DSL (`.gradle.dcl`) where AGP/KMP support allows it; unsupported modules stay documented in Kotlin DSL (`.kts`) with the reason for the blocker." Satisfied via the partial-migration branch (D-08): one low-risk leaf target converted, the rest documented on `.kts` with the reason support is missing.
 
 **Live re-check performed before converting anything (per the plan's action):** fetched `docs.gradle.org/9.7.1/userguide/userguide.html` (no dedicated Declarative Gradle chapter), `blog.gradle.org` (latest Declarative Gradle post is still "Declarative Gradle EAP3 - April 2025 Update", no 2026 update found), and `github.com/gradle/declarative-gradle`'s `docs/getting-started/README.md` on its `main` branch, which states as of today (2026-09-19): *"Declarative Gradle is **not ready** for adoption by plugin authors, build engineers or software engineers."* Its `setup.md` confirms the full software-type samples (`javaApplication`, `androidApplication`, etc.) require *nightly* Gradle builds and experimental IDE flags, not stable Gradle. Even Gradle's own "bleeding edge" `unified-prototype` multi-module sample keeps its root **settings file in Kotlin DSL** (`settings.gradle.kts`, applying `org.gradle.experimental.*-ecosystem` plugins) and pins a Gradle *milestone* build (`9.6.0-milestone-1`), not a `.dcl` settings file on stable Gradle — corroborating 02-RESEARCH.md's MEDIUM-confidence April-2025 snapshot as still current; nothing has changed materially since.
 
@@ -259,4 +259,4 @@ Resume file: .planning/phases/06-ios-test-foundation-and-ci-gates/06-CONTEXT.md
 
 ## Operator Next Steps
 
-- Discuter la Phase 6 avec /gsd-discuss-phase 6, puis la planifier avec /gsd-plan-phase 6
+- Discuss Phase 6 with /gsd-discuss-phase 6, then plan it with /gsd-plan-phase 6

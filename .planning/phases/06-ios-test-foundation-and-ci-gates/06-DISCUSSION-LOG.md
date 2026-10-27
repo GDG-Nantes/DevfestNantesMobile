@@ -5,138 +5,138 @@
 
 **Date:** 2026-10-26
 **Phase:** 6-iOS Test Foundation and CI Gates
-**Areas discussed:** Premier test réel, Structure du job CI, Restauration des gates, Validation du bump KMP-NC
+**Areas discussed:** First real test, CI job structure, Gate restoration, KMP-NC bump validation
 
 ---
 
-## Premier test réel
+## First real test
 
-### Contenu des premiers tests
-
-| Option | Description | Selected |
-|--------|-------------|----------|
-| Logique Swift pure | Tests de types Swift sans réseau ni Koin (`SessionFilter` Codable, `getDate`) | ✓ |
-| Un seul test canari | Test trivial prouvant que la lane tourne | |
-| Caractérisation agenda | Figer le regroupement/filtrage Swift comme oracle de la Phase 9 | |
-
-### Hébergement de la target
+### Content of the first tests
 
 | Option | Description | Selected |
 |--------|-------------|----------|
-| Hébergée, init neutralisé | `TEST_HOST` conservé ; `iOSApp.init` saute Firebase, Koin et Remote Config sous XCTest | ✓ |
-| Hébergée, init inchangé | Chaque run démarre Firebase (plist factice), Koin, fetch Remote Config | |
-| Non hébergée | Bundle autonome compilant ses propres sources, pas de `@testable import` | |
+| Pure Swift logic | Tests of Swift types with no network and no Koin (`SessionFilter` Codable, `getDate`) | ✓ |
+| A single canary test | Trivial test proving the lane runs | |
+| Agenda characterization | Freeze the Swift grouping/filtering as the oracle for Phase 9 | |
 
-### Ancienne target `DevFest NantesTests`
+### Target hosting
 
 | Option | Description | Selected |
 |--------|-------------|----------|
-| Supprimer, nouvelle target | Supprimer target + 2 fichiers, créer une target au nom sans espace | ✓ |
-| Garder la target, vider | Garder la target et remplacer son contenu | |
+| Hosted, init neutralized | `TEST_HOST` kept; `iOSApp.init` skips Firebase, Koin and Remote Config under XCTest | ✓ |
+| Hosted, init unchanged | Every run starts Firebase (dummy plist), Koin, Remote Config fetch | |
+| Not hosted | Standalone bundle compiling its own sources, no `@testable import` | |
 
-**User's choice:** options recommandées sur les trois questions.
+### Old `DevFest NantesTests` target
+
+| Option | Description | Selected |
+|--------|-------------|----------|
+| Delete, new target | Delete target + 2 files, create a target with a name without spaces | ✓ |
+| Keep the target, empty it | Keep the target and replace its content | |
+
+**User's choice:** recommended options on all three questions.
 
 ---
 
-## Structure du job CI
+## CI job structure
 
-### Découpage
-
-| Option | Description | Selected |
-|--------|-------------|----------|
-| Un seul job | `build-for-testing` + `test-without-building` dans le job existant | ✓ |
-| Deux jobs | Gradle/framework puis Swift build/test via artefact | |
-| Trois jobs gates/build/test | Gates isolés en plus du découpage | |
-
-### Seuil `.xcresult`
+### Splitting
 
 | Option | Description | Selected |
 |--------|-------------|----------|
-| Échec si 0 test | Critère de la roadmap, rien à maintenir | ✓ |
-| Minimum configurable | `MIN_TESTS` relevé à chaque phase | |
+| A single job | `build-for-testing` + `test-without-building` in the existing job | ✓ |
+| Two jobs | Gradle/framework then Swift build/test via artifact | |
+| Three jobs gates/build/test | Isolated gates on top of the split | |
 
-### Robustesse (multi-sélection)
+### `.xcresult` threshold
 
 | Option | Description | Selected |
 |--------|-------------|----------|
-| Artefact `.xcresult` en échec | Téléversement pour diagnostic | ✓ |
-| Simulateur par UDID + boot | `simctl boot` + `bootstatus` | ✓ |
-| Parallélisme désactivé | `-parallel-testing-enabled NO`, aucun retry | ✓ |
-| Résumé du job | Xcode, simulateur, nombre de tests dans `$GITHUB_STEP_SUMMARY` | ✓ |
+| Fail if 0 tests | Roadmap criterion, nothing to maintain | ✓ |
+| Configurable minimum | `MIN_TESTS` raised at each phase | |
+
+### Robustness (multi-select)
+
+| Option | Description | Selected |
+|--------|-------------|----------|
+| `.xcresult` artifact on failure | Upload for diagnosis | ✓ |
+| Simulator by UDID + boot | `simctl boot` + `bootstatus` | ✓ |
+| Parallelism disabled | `-parallel-testing-enabled NO`, no retry | ✓ |
+| Job summary | Xcode, simulator, test count in `$GITHUB_STEP_SUMMARY` | ✓ |
 
 ---
 
-## Restauration des gates
+## Gate restoration
 
-### Emplacement
-
-| Option | Description | Selected |
-|--------|-------------|----------|
-| `scripts/` + `scripts/swift-names/` | Script à côté de `di-gate.sh`, baselines sans préfixe `03-` | ✓ |
-| Tout à plat dans `scripts/` | Script et 4 fichiers `.txt` dans `scripts/` | |
-| Baselines sous `iosApp/` | Baselines près du code Swift | |
-
-### Selftest en CI
+### Location
 
 | Option | Description | Selected |
 |--------|-------------|----------|
-| Check + selftest | Prouve que le gate détecte toujours swap et collision | ✓ |
-| Check seulement | Selftest manuel | |
+| `scripts/` + `scripts/swift-names/` | Script next to `di-gate.sh`, baselines without the `03-` prefix | ✓ |
+| Everything flat in `scripts/` | Script and 4 `.txt` files in `scripts/` | |
+| Baselines under `iosApp/` | Baselines close to the Swift code | |
 
-### Gate KMP-NC
+### Selftest in CI
 
 | Option | Description | Selected |
 |--------|-------------|----------|
-| Script dédié | `scripts/kmp-nc-version-gate.sh`, rapide, exécutable en local | ✓ |
-| Intégré à swift-names-gate | Un seul gate, deux responsabilités | |
-| Étape inline dans `ios.yml` | Pas exécutable en local | |
+| Check + selftest | Proves the gate still detects swap and collision | ✓ |
+| Check only | Manual selftest | |
+
+### KMP-NC gate
+
+| Option | Description | Selected |
+|--------|-------------|----------|
+| Dedicated script | `scripts/kmp-nc-version-gate.sh`, fast, runnable locally | ✓ |
+| Built into swift-names-gate | A single gate, two responsibilities | |
+| Inline step in `ios.yml` | Not runnable locally | |
 
 ### `resources-gate.sh`
 
-Premier choix : « Oui, dans cette phase ». Précision apportée ensuite : le script est une preuve de
-migration de ressources **Android** one-shot (comparaison avec `origin/main` de `androidApp/res`),
-sans objet tel quel.
+First choice: "Yes, in this phase". Clarification provided afterwards: the script is a one-shot proof of
+**Android** resource migration (comparison with `origin/main` of `androidApp/res`),
+irrelevant as is.
 
 | Option | Description | Selected |
 |--------|-------------|----------|
-| Reporter | Idée reportée ; gate ressources iOS plutôt en Phase 11 | ✓ |
-| Réécrire en invariant Android | Vérification permanente branchée dans `android.yml` | |
-| Gate de ressources iOS | Clés `en.lproj`/`fr.lproj` identiques dans `ios.yml` | |
+| Defer | Idea deferred; iOS resources gate rather in Phase 11 | ✓ |
+| Rewrite as an Android invariant | Permanent check wired into `android.yml` | |
+| iOS resources gate | Identical `en.lproj`/`fr.lproj` keys in `ios.yml` | |
 
-**User's choice:** Reporter.
+**User's choice:** Defer.
 
 ---
 
-## Validation du bump KMP-NC
+## KMP-NC bump validation
 
-### Preuve de parité
-
-| Option | Description | Selected |
-|--------|-------------|----------|
-| Smoke manuel guidé | Checkpoint humain sur simulateur, captures (pattern UAT v1.0) | ✓ |
-| Smoke manuel + vérif auto | Plus un test Swift de compilation de l'API KMP-NC | |
-| CI verte suffit | Aucune vérification runtime des flows | |
-
-### Ordre
+### Parity proof
 
 | Option | Description | Selected |
 |--------|-------------|----------|
-| Lane de tests d'abord | Target + lane, puis gates, puis bump ; gate KMP-NC dans le commit du bump | ✓ |
-| Bump d'abord | Aligner la version en premier | |
-| Au choix du planner | | |
+| Guided manual smoke | Human checkpoint on simulator, screenshots (v1.0 UAT pattern) | ✓ |
+| Manual smoke + auto check | Plus a Swift test compiling against the KMP-NC API | |
+| Green CI is enough | No runtime verification of the flows | |
+
+### Order
+
+| Option | Description | Selected |
+|--------|-------------|----------|
+| Test lane first | Target + lane, then gates, then bump; KMP-NC gate in the bump commit | ✓ |
+| Bump first | Align the version first | |
+| Planner's choice | | |
 
 ---
 
 ## Claude's Discretion
 
-- Mécanisme de détection « sous XCTest » dans `iOSApp.init`
-- Deployment target et `SWIFT_VERSION` de la nouvelle target
-- Cache SPM séparé et composition des clés de cache au-delà de la version Xcode
-- Noms du `.xctestplan` / de la target, emplacement du parsing `xcresulttool`
-- Mises à jour de documentation associées
+- Mechanism for detecting "under XCTest" in `iOSApp.init`
+- Deployment target and `SWIFT_VERSION` of the new target
+- Separate SPM cache and composition of the cache keys beyond the Xcode version
+- Names of the `.xctestplan` / of the target, location of the `xcresulttool` parsing
+- Associated documentation updates
 
 ## Deferred Ideas
 
-- `resources-gate.sh` → gate ressources iOS en Phase 11 ou invariant Android dédié
-- Seuil minimum de tests configurable
-- Découpage du job iOS si le timeout de 30 min est dépassé
+- `resources-gate.sh` → iOS resources gate in Phase 11 or dedicated Android invariant
+- Configurable minimum test threshold
+- Splitting the iOS job if the 30 min timeout is exceeded

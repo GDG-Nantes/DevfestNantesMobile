@@ -1,86 +1,86 @@
 # Requirements: DevFest Nantes App Modernization — v1.1 iOS Architecture
 
 **Defined:** 2026-10-23
-**Core Value:** La CI/CD doit refonctionner et le projet doit redevenir maintenable (build moderne, architecture modulaire, DI décentralisée, couverture de tests solide) sans jamais régresser le comportement existant de l'application pour les utilisateurs.
+**Core Value:** CI/CD must work again and the project must become maintainable again (modern build, modular architecture, decentralized DI, solid test coverage) without ever regressing the app's existing behavior for users.
 
 ## v1.1 Requirements
 
-Moderniser l'app iOS au niveau de l'app Android : logique domaine partagée en KMP (UI natives conservées), app SwiftUI modulaire en Observation + Swift 6 strict, tests et CI iOS. Parité stricte de comportement, avec une seule déviation acceptée : l'ordre des salles dans un créneau sur iOS s'aligne sur Android (`RoomSortIndex`).
+Modernize the iOS app to the level of the Android app: domain logic shared in KMP (native UIs kept), modular SwiftUI app on Observation + strict Swift 6, iOS tests and CI. Strict behavior parity, with a single accepted deviation: the order of rooms within a time slot on iOS aligns with Android (`RoomSortIndex`).
 
-Contexte de recherche : `.planning/research/SUMMARY.md` (et STACK/FEATURES/ARCHITECTURE/PITFALLS).
+Research context: `.planning/research/SUMMARY.md` (and STACK/FEATURES/ARCHITECTURE/PITFALLS).
 
-### SHARED (Domaine KMP partagé)
+### SHARED (Shared KMP domain)
 
-- [ ] **SHARED-01**: Un module KMP `:core:domain` (convention plugin `devfest.*`, dépendant de `:core:model`/`:core:data`) est exporté par `:shared` ; son `domainModule` Koin est ajouté à `sharedModules` et vérifié par `verify()` sans doublon de binding
-- [ ] **SHARED-02**: `SessionFilter`/`SessionFilterType` vivent dans `:core:model` ; la règle de filtrage des sessions (OU au sein d'un type, ET entre types, favoris = appartenance) est un use case partagé couvert par la matrice de filtres en `commonTest` (JVM + simulateur iOS)
-- [ ] **SHARED-03**: Le regroupement de l'agenda par jour et par créneau, avec tri intra-créneau par `RoomSortIndex`, est un use case partagé ; la déviation d'ordre des salles côté iOS est documentée
-- [ ] **SHARED-04**: Classification des sessions (service/navigable), index alphabétique des speakers et choix de langue du lieu sont partagés là où la sémantique est déjà identique sur les deux plateformes ; les comportements divergents (créneau courant au scroll, catégories de partenaires, fuseau des jours) restent par plateforme ou passent par un paramètre explicite
-- [ ] **SHARED-05**: `BookmarksStore` et `SessionFiltersStore` sont des interfaces communes ; l'implémentation Android garde ses clés et son format SharedPreferences (`selected_sessions`, filtres), l'implémentation iOS s'appuie sur `NSUserDefaults` avec les clés existantes `Favorites` et `AgendaSessionFilters` lues et écrites au format legacy
-- [ ] **SHARED-06**: Les ViewModels Android concernés consomment les use cases partagés et `SessionFiltersService` est retiré (binding Koin remplacé dans le même commit), sans régression (tests v1.0 verts + UAT agenda)
-- [ ] **SHARED-07**: Des tests de caractérisation (payloads legacy capturés, regroupement sous au moins deux fuseaux, comportement actuel iOS et Android) existent avant chaque déplacement de logique
+- [ ] **SHARED-01**: A KMP module `:core:domain` (`devfest.*` convention plugin, depending on `:core:model`/`:core:data`) is exported by `:shared`; its Koin `domainModule` is added to `sharedModules` and verified by `verify()` with no duplicate binding
+- [ ] **SHARED-02**: `SessionFilter`/`SessionFilterType` live in `:core:model`; the session filtering rule (OR within a type, AND across types, favorites = membership) is a shared use case covered by the filter matrix in `commonTest` (JVM + iOS simulator)
+- [ ] **SHARED-03**: Grouping the agenda by day and by time slot, with intra-slot sorting by `RoomSortIndex`, is a shared use case; the room-order deviation on iOS is documented
+- [ ] **SHARED-04**: Session classification (service/navigable), the alphabetical speaker index and the venue language choice are shared where the semantics are already identical on both platforms; divergent behaviors (current time slot on scroll, partner categories, day time zone) stay per platform or go through an explicit parameter
+- [ ] **SHARED-05**: `BookmarksStore` and `SessionFiltersStore` are common interfaces; the Android implementation keeps its SharedPreferences keys and format (`selected_sessions`, filters), the iOS implementation relies on `NSUserDefaults` with the existing `Favorites` and `AgendaSessionFilters` keys read and written in the legacy format
+- [ ] **SHARED-06**: The affected Android ViewModels consume the shared use cases and `SessionFiltersService` is removed (Koin binding replaced in the same commit), with no regression (v1.0 tests green + agenda UAT)
+- [ ] **SHARED-07**: Characterization tests (captured legacy payloads, grouping under at least two time zones, current iOS and Android behavior) exist before each move of logic
 
-### IOSDATA (iOS sur la logique partagée)
+### IOSDATA (iOS on the shared logic)
 
-- [ ] **IOSDATA-01**: L'app iOS ne filtre, ne regroupe et ne persiste plus les favoris/filtres en Swift ; les types Swift dupliqués (`SessionFilter`, `FilterType`…) sont supprimés au profit des types Kotlin exportés
-- [ ] **IOSDATA-02**: Un utilisateur qui met à jour depuis la version v1.0 retrouve tous ses favoris et filtres (tests sur payloads legacy capturés + UAT de mise à jour en place depuis un build v1.0)
-- [ ] **IOSDATA-03**: L'agenda iOS observe en continu le flux combiné partagé (sessions + favoris + filtres) ; liste, cellules et détail partagent une seule instance d'`AgendaViewModel`
+- [ ] **IOSDATA-01**: The iOS app no longer filters, groups or persists favorites/filters in Swift; the duplicated Swift types (`SessionFilter`, `FilterType`…) are removed in favor of the exported Kotlin types
+- [ ] **IOSDATA-02**: A user who updates from the v1.0 version gets back all their favorites and filters (tests on captured legacy payloads + in-place update UAT from a v1.0 build)
+- [ ] **IOSDATA-03**: The iOS agenda continuously observes the shared combined stream (sessions + favorites + filters); the list, cells and detail share a single `AgendaViewModel` instance
 
-### IOSUI (SwiftUI moderne)
+### IOSUI (Modern SwiftUI)
 
-- [ ] **IOSUI-01**: Toutes les targets et tous les packages iOS ont un deployment target iOS 17.0
-- [ ] **IOSUI-02**: Tous les ViewModels iOS sont `@Observable @MainActor`, possédés via `@State` sans recréation au re-render, avec une collecte démarrée dans `.task` et annulée à la disparition de la vue (plus de `Task {}` non structuré)
-- [ ] **IOSUI-03**: Combine, `KMPNativeCoroutinesCombine`, `ObservableObject`/`@Published`, `objectWillChange.send()` et `DispatchQueue.main.async` ne sont plus utilisés
+- [ ] **IOSUI-01**: All iOS targets and packages have an iOS 17.0 deployment target
+- [ ] **IOSUI-02**: All iOS ViewModels are `@Observable @MainActor`, owned via `@State` without being recreated on re-render, with collection started in `.task` and cancelled when the view disappears (no more unstructured `Task {}`)
+- [ ] **IOSUI-03**: Combine, `KMPNativeCoroutinesCombine`, `ObservableObject`/`@Published`, `objectWillChange.send()` and `DispatchQueue.main.async` are no longer used
 
-### IOSDI (DI iOS explicite)
+### IOSDI (Explicit iOS DI)
 
-- [ ] **IOSDI-01**: Une composition root Swift (`AppDependencies.live()`) est construite une seule fois au lancement ; l'ordre d'initialisation actuel (Firebase, consentement, performance, valeurs par défaut Remote Config) est préservé et couvert par un test
-- [ ] **IOSDI-02**: Les ViewModels reçoivent leurs dépendances par constructeur via des protocoles ; `BaseViewModel`, `RCValues.sharedInstance`, le global `remoteConfig`, `PerformanceMonitoring.shared` et `FirebaseAnalyticsService.shared` sont supprimés
-- [ ] **IOSDI-03**: `scripts/swift-di-gate.sh`, exécuté en CI, interdit l'accès à `IosDependencies` et aux singletons hors de la composition root
+- [ ] **IOSDI-01**: A Swift composition root (`AppDependencies.live()`) is built once at launch; the current initialization order (Firebase, consent, performance, Remote Config defaults) is preserved and covered by a test
+- [ ] **IOSDI-02**: ViewModels receive their dependencies through the constructor via protocols; `BaseViewModel`, `RCValues.sharedInstance`, the global `remoteConfig`, `PerformanceMonitoring.shared` and `FirebaseAnalyticsService.shared` are removed
+- [ ] **IOSDI-03**: `scripts/swift-di-gate.sh`, run in CI, forbids access to `IosDependencies` and to singletons outside the composition root
 
-### IOSMOD (Modularisation SPM)
+### IOSMOD (SPM modularization)
 
-- [ ] **IOSMOD-01**: `shared` est produit par Gradle en XCFramework statique et consommé en `binaryTarget` SPM ; l'app se build depuis un checkout propre en local et en CI, la phase `embedAndSignAppleFrameworkForXcode` est supprimée et l'archive Release conserve dSYMs et Crashlytics
-- [ ] **IOSMOD-02**: Des packages/targets core locaux existent : pont Kotlin (seul importeur de `shared`), CoreServices (protocoles), FirebaseServices, DesignSystem (sortie SwiftGen et ressources via `Bundle.module`), CoreDI
-- [ ] **IOSMOD-03**: Des packages/targets feature Agenda (détail de session inclus), Speakers, Venue et About existent, sans dépendance entre features ni import direct du framework Kotlin ; la target app est réduite à une coquille
+- [ ] **IOSMOD-01**: `shared` is produced by Gradle as a static XCFramework and consumed as an SPM `binaryTarget`; the app builds from a clean checkout locally and in CI, the `embedAndSignAppleFrameworkForXcode` phase is removed and the Release archive keeps dSYMs and Crashlytics
+- [ ] **IOSMOD-02**: Local core packages/targets exist: Kotlin bridge (sole importer of `shared`), CoreServices (protocols), FirebaseServices, DesignSystem (SwiftGen output and resources via `Bundle.module`), CoreDI
+- [ ] **IOSMOD-03**: Feature packages/targets Agenda (session detail included), Speakers, Venue and About exist, with no dependency between features and no direct import of the Kotlin framework; the app target is reduced to a shell
 
-### CONC (Concurrence Swift 6)
+### CONC (Swift 6 concurrency)
 
-- [ ] **CONC-01**: Tous les packages et la target app compilent en mode de langage Swift 6 avec vérification complète de la concurrence et zéro warning
-- [ ] **CONC-02**: Les ponts Kotlin (`asyncFunction`/`asyncSequence`, conformances `@unchecked Sendable` limitées aux types Kotlin immuables) sont confinés au package pont, contrôlés par un gate CI
-- [ ] **CONC-03**: KMP-NativeCoroutines est à la même version (1.0.6) côté Swift (SPM) et Gradle, vérifié par un gate CI
+- [ ] **CONC-01**: All packages and the app target compile in Swift 6 language mode with complete concurrency checking and zero warnings
+- [ ] **CONC-02**: The Kotlin bridges (`asyncFunction`/`asyncSequence`, `@unchecked Sendable` conformances limited to immutable Kotlin types) are confined to the bridge package, enforced by a CI gate
+- [ ] **CONC-03**: KMP-NativeCoroutines is at the same version (1.0.6) on the Swift (SPM) and Gradle sides, verified by a CI gate
 
-### IOSTEST (Tests & CI iOS)
+### IOSTEST (iOS tests & CI)
 
-- [ ] **IOSTEST-01**: La target de test obsolète (`DevFest NantesTests`) est remplacée ; chaque ViewModel iOS a des tests Swift Testing sur des fakes
-- [ ] **IOSTEST-02**: Chaque feature iOS a un smoke test SwiftUI (rendu via `UIHostingController`)
-- [ ] **IOSTEST-03**: La CI iOS exécute `xcodebuild test` via un test plan incluant les tests des packages, échoue si aucun test n'est exécuté, et sa clé de cache inclut la version de Xcode
-- [ ] **IOSTEST-04**: `swift-names-gate.sh` est restauré dans `scripts/` et exécuté en CI
+- [ ] **IOSTEST-01**: The obsolete test target (`DevFest NantesTests`) is replaced; each iOS ViewModel has Swift Testing tests on fakes
+- [ ] **IOSTEST-02**: Each iOS feature has a SwiftUI smoke test (rendered via `UIHostingController`)
+- [ ] **IOSTEST-03**: iOS CI runs `xcodebuild test` via a test plan including the package tests, fails if no test is run, and its cache key includes the Xcode version
+- [ ] **IOSTEST-04**: `swift-names-gate.sh` is restored in `scripts/` and run in CI
 
 ### DOC (Documentation)
 
-- [ ] **DOC-01**: `README.md`, `documentation/` (ARCHITECTURE, DEVELOPMENT, build dSYM iOS) et `AGENTS.md` décrivent la nouvelle architecture iOS et les commandes associées
+- [ ] **DOC-01**: `README.md`, `documentation/` (ARCHITECTURE, DEVELOPMENT, iOS dSYM build) and `AGENTS.md` describe the new iOS architecture and the associated commands
 
 ## Future Requirements
 
-Reportés, suivis mais hors roadmap v1.1.
+Deferred, tracked but outside the v1.1 roadmap.
 
-- **FUT-01**: Unifier entre plateformes le créneau courant au scroll, les catégories de partenaires et la règle de fuseau des jours (changement visible)
-- **FUT-02**: Dette v1.0 : `speakersPage` (110 speakers), `RoomSortIndex` pour `Tour Bretagne`/`Unconf`, `SocialItem`, page-view Speaker, état ERROR des ViewModels, durcissement CI WR-02/WR-03
-- **FUT-03**: Montée Firebase iOS 12.x/13.x
-- **FUT-04**: Exécution des tests sur un runtime iOS 17 en CI
-- **FUT-05**: Tests snapshot / XCUITest
-- **FUT-06**: Dates d'événement 2025 codées en dur remplacées par une source de données
+- **FUT-01**: Unify across platforms the current time slot on scroll, partner categories and the day time zone rule (visible change)
+- **FUT-02**: v1.0 debt: `speakersPage` (110 speakers), `RoomSortIndex` for `Tour Bretagne`/`Unconf`, `SocialItem`, Speaker page-view, ViewModels ERROR state, CI hardening WR-02/WR-03
+- **FUT-03**: iOS Firebase upgrade to 12.x/13.x
+- **FUT-04**: Running the tests on an iOS 17 runtime in CI
+- **FUT-05**: Snapshot / XCUITest tests
+- **FUT-06**: Hardcoded 2025 event dates replaced by a data source
 
 ## Out of Scope
 
 | Feature | Reason |
 |---------|--------|
-| ViewModels partagés en KMP | Choix explicite : seule la couche domaine est partagée, ViewModels idiomatiques par plateforme |
-| UI partagée (Compose Multiplatform) | UI native conservée sur Android (Compose) et iOS (SwiftUI) |
-| SKIE / Swift Export | KMP-NativeCoroutines déjà en place et compatible ; Swift Export en Alpha et incompatible avec SPM ; SKIE en conflit avec `shared`/`.shared` |
-| Bibliothèque DI Swift (Factory, swift-dependencies, Swinject) | Composition root manuelle suffisante, sans locator global |
-| Nouvelles fonctionnalités utilisateur | Chantier purement technique, parité stricte |
-| Correction des bugs découverts en cours de route | Parité stricte : consignés en dette, pas corrigés |
+| ViewModels shared in KMP | Explicit choice: only the domain layer is shared, idiomatic ViewModels per platform |
+| Shared UI (Compose Multiplatform) | Native UI kept on Android (Compose) and iOS (SwiftUI) |
+| SKIE / Swift Export | KMP-NativeCoroutines already in place and compatible; Swift Export in Alpha and incompatible with SPM; SKIE conflicts with `shared`/`.shared` |
+| Swift DI library (Factory, swift-dependencies, Swinject) | Manual composition root is sufficient, with no global locator |
+| New user features | Purely technical effort, strict parity |
+| Fixing bugs found along the way | Strict parity: logged as debt, not fixed |
 
 ## Traceability
 
@@ -121,11 +121,11 @@ Which phases cover which requirements. Updated during roadmap creation.
 - Mapped to phases: 27
 - Unmapped: 0 ✓
 
-**Notes de traçabilité :**
-- SHARED-05 est livré en Phase 7 (interfaces communes, implémentation Android inchangée, implémentation iOS sur les clés legacy testée sur simulateur) ; son câblage dans l'app iOS et l'UAT de mise à jour relèvent d'IOSDATA-01/02 (Phase 9).
-- IOSTEST-01 est clos en Phase 8 (tests de chaque ViewModel) ; la target obsolète `DevFest NantesTests` est remplacée dès la Phase 6, prérequis de la lane IOSTEST-03.
-- IOSTEST-03 est livré en Phase 6 ; la Phase 11 ajoute les tests des packages au test plan (critère de succès 4 de la Phase 11).
-- IOSUI-01 couvre les targets existantes en Phase 8 ; les packages créés en Phase 11 naissent en `.iOS(.v17)` (critère de succès 3 de la Phase 11).
+**Traceability notes:**
+- SHARED-05 ships in Phase 7 (common interfaces, Android implementation unchanged, iOS implementation on the legacy keys tested on simulator); its wiring into the iOS app and the update UAT belong to IOSDATA-01/02 (Phase 9).
+- IOSTEST-01 is closed in Phase 8 (tests of each ViewModel); the obsolete `DevFest NantesTests` target is replaced as early as Phase 6, as a prerequisite of the IOSTEST-03 test lane.
+- IOSTEST-03 ships in Phase 6; Phase 11 adds the package tests to the test plan (Phase 11 success criterion 4).
+- IOSUI-01 covers the existing targets in Phase 8; the packages created in Phase 11 are born with `.iOS(.v17)` (Phase 11 success criterion 3).
 
 ---
 *Requirements defined: 2026-10-23*

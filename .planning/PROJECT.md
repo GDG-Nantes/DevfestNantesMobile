@@ -2,111 +2,111 @@
 
 ## What This Is
 
-L'application mobile DevFest Nantes (Kotlin Multiplatform : Android/Jetpack Compose + iOS/SwiftUI) permet aux participants de consulter l'agenda, les speakers, le lieu et de gérer leurs favoris pour l'événement DevFest Nantes. Le projet n'a pas évolué depuis un an et ce chantier vise une modernisation purement technique de sa base de code, sans changement de comportement utilisateur, pour repartir sur des bases saines avant de reprendre le développement de fonctionnalités.
+The DevFest Nantes mobile app (Kotlin Multiplatform: Android/Jetpack Compose + iOS/SwiftUI) lets attendees browse the agenda, the speakers and the venue, and manage their favorites for the DevFest Nantes event. The project has not evolved for a year, and this effort aims at a purely technical modernization of its codebase, with no change to user behavior, to get back onto a sound foundation before resuming feature development.
 
 ## Core Value
 
-La CI/CD doit refonctionner et le projet doit redevenir maintenable (build moderne, architecture modulaire, DI décentralisée, couverture de tests solide) sans jamais régresser le comportement existant de l'application pour les utilisateurs.
+CI/CD must work again and the project must become maintainable again (modern build, modular architecture, decentralized DI, solid test coverage) without ever regressing the app's existing behavior for users.
 
 ## Current State
 
-**v1.0 Modernization livrée le 2026-10-16** (phases 1-5, 37 plans, PR #417 à #421). CI Android/iOS verte et mise en cache, toolchain à jour (Kotlin 2.4.20, AGP 9.4.0, Gradle 9.7.1), architecture `build-logic` + 6 `core-*` + 6 `feature-*` avec `:shared` en framework iOS parapluie, DI Koin 4.2.2 vérifiée en CI, couverture Kover 30,57 %. Aucun changement de comportement utilisateur. Audit : `milestones/v1.0-MILESTONE-AUDIT.md` (tech_debt, 25/25 exigences).
+**v1.0 Modernization shipped on 2026-10-16** (phases 1-5, 37 plans, PR #417 to #421). Android/iOS CI green and cached, toolchain up to date (Kotlin 2.4.20, AGP 9.4.0, Gradle 9.7.1), `build-logic` + 6 `core-*` + 6 `feature-*` architecture with `:shared` as an umbrella iOS framework, Koin 4.2.2 DI verified in CI, Kover coverage 30.57%. No user behavior change. Audit: `milestones/v1.0-MILESTONE-AUDIT.md` (tech_debt, 25/25 requirements).
 
 ## Current Milestone: v1.1 iOS Architecture
 
-**Goal:** Moderniser l'app iOS au même niveau que l'app Android — logique métier partagée en KMP, app SwiftUI modulaire en Observation + Swift 6 strict, couverture de tests réelle — sans aucun changement de comportement utilisateur.
+**Goal:** Modernize the iOS app to the same level as the Android app — business logic shared in KMP, modular SwiftUI app on Observation + strict Swift 6, real test coverage — with no user behavior change whatsoever.
 
 **Target features:**
-- Couche domaine KMP partagée : regroupement/tri de l'agenda, filtrage des sessions, favoris, mapping speakers/venue/partenaires exposés comme use cases/repositories consommés par Android et iOS (ViewModels restant natifs sur chaque plateforme)
-- Suppression de la logique dupliquée côté iOS : favoris et filtres de l'agenda sortent d'`UserDefaults` dans `AgendaViewModel` vers la logique partagée, avec migration des données existantes (aucun favori perdu)
-- App iOS modulaire : packages SPM locaux par feature (Agenda, Speakers, Venue, About…) + packages core (DesignSystem, Core/DI), target app réduite à une coquille
-- DI iOS explicite : composition root injectant les dépendances dans les ViewModels au lieu des lookups `IosDependencies.shared` et des singletons globaux (`RCValues`, `PerformanceMonitoring`, global `remoteConfig`)
-- SwiftUI moderne : iOS 17 minimum sur toutes les targets, ViewModels `@Observable` à la place d'`ObservableObject`/`@Published`, Combine supprimé
-- Swift 6 strict : mode de langage Swift 6 avec vérification complète de la concurrence, ViewModels `@MainActor`, async/await sur les Flows Kotlin
-- Tests & CI : tests commonTest des use cases partagés (JVM + simulateur iOS), tests Swift Testing de chaque ViewModel iOS, smoke test SwiftUI par feature, tests iOS exécutés dans GitHub Actions
+- Shared KMP domain layer: agenda grouping/sorting, session filtering, favorites, speakers/venue/partners mapping exposed as use cases/repositories consumed by Android and iOS (ViewModels remaining native on each platform)
+- Removal of duplicated logic on iOS: agenda favorites and filters move out of `UserDefaults` in `AgendaViewModel` into the shared logic, with migration of existing data (no favorite lost)
+- Modular iOS app: local SPM packages per feature (Agenda, Speakers, Venue, About…) + core packages (DesignSystem, Core/DI), app target reduced to a shell
+- Explicit iOS DI: composition root injecting dependencies into ViewModels instead of `IosDependencies.shared` lookups and global singletons (`RCValues`, `PerformanceMonitoring`, global `remoteConfig`)
+- Modern SwiftUI: iOS 17 minimum on all targets, `@Observable` ViewModels instead of `ObservableObject`/`@Published`, Combine removed
+- Strict Swift 6: Swift 6 language mode with complete concurrency checking, `@MainActor` ViewModels, async/await over Kotlin Flows
+- Tests & CI: commonTest tests of the shared use cases (JVM + iOS simulator), Swift Testing tests of each iOS ViewModel, SwiftUI smoke test per feature, iOS tests run in GitHub Actions
 
 ## Requirements
 
 ### Validated
 
-- ✓ Consultation de l'agenda des sessions (Agenda tab) — existing
-- ✓ Détail d'une session (SessionLayout/SessionViewModel) — existing
-- ✓ Consultation des speakers (Speaker screens) — existing
-- ✓ Consultation du lieu/venue (Venue screen) — existing
-- ✓ Gestion des favoris/bookmarks (BookmarksStore, persistés en SharedPreferences) — existing
-- ✓ Filtrage des sessions (SessionFiltersService) — existing
-- ✓ Récupération des données via GraphQL (Apollo Client, endpoint confetti-app.dev) — existing
+- ✓ Browsing the session agenda (Agenda tab) — existing
+- ✓ Session detail (SessionLayout/SessionViewModel) — existing
+- ✓ Browsing the speakers (Speaker screens) — existing
+- ✓ Browsing the venue (Venue screen) — existing
+- ✓ Favorites/bookmarks management (BookmarksStore, persisted in SharedPreferences) — existing
+- ✓ Session filtering (SessionFiltersService) — existing
+- ✓ Data fetching via GraphQL (Apollo Client, confetti-app.dev endpoint) — existing
 - ✓ Analytics (Firebase Analytics/Crashlytics/Performance) — existing
-- ✓ Intégration OpenFeedback conditionnelle — existing
-- ✓ Cible Android (API 23-36, Jetpack Compose) et iOS (SwiftUI, via Cocoapods) — existing
-- ✓ CI iOS : pipeline GitHub Actions réparé (résolution dynamique du simulateur "latest plain iPhone" + Xcode le plus récent installé, au lieu du nom "iPhone 16" en dur) — v1.0 (Phase 1)
-- ✓ DevOps : CI/CD GitHub Actions optimisée (cache Gradle en lecture seule sur les runs `pull_request` pour les deux workflows, action composite `android-setup` partagée par Android et iOS, preuve de run réel en `pull_request` sur les quatre jobs Android) — v1.0 (Phase 1)
-- ✓ Build & dépendances : mise à jour complète des dépendances (Kotlin 2.4.20, AGP 9.4.0, Gradle 9.7.1, Compose BOM 2026.09.00, Apollo 5.2.0, Firebase BOM 34.19.0…) — v1.0 (Phase 2)
-- ✓ Build & dépendances : Gradle Declarative DSL en migration partielle documentée (`settings.gradle.dcl` ; modules restés en `.kts` faute de support AGP/KMP) — v1.0 (Phase 2)
-- ✓ Architecture : découpage multi-modules façon Now in Android adapté KMP — `build-logic` (6 convention plugins, `buildSrc` supprimé), `:core:{model,network,analytics,data,testing,ui}`, `:feature:{venue,about,settings,speakers,agenda,session-detail}` (entrées `*Route` par callbacks), `:shared` réduit à un framework iOS parapluie unique (bookmarks sans écran, dans `core:data`/`core:ui`) — v1.0 (Phase 3)
-- ✓ DI : migration complète de Hilt vers Koin 4.2.2 — un module Koin par module Gradle, composé par `initKoin()` dans `:shared` (`allowOverride(false)`), `IosDependencies` côté iOS sans nom Koin dans `shared.h`, graphe vérifié en CI (`verify()` + tests de démarrage JVM/iOS/Robolectric), `scripts/di-gate.sh` strict contre Hilt et les appels service-locator — v1.0 (Phase 4)
-- ✓ Qualité : couverture de lignes Kover passée de 15,96 % à 30,57 % — tests GraphQLStore/mappers sur Apollo MockServer (JVM/Android/iOS), contrat de Store partagé, persistance SharedPreferences épinglée, tests unitaires des dix ViewModels sur un fake contrôlable, matrice de filtres de l'agenda, smoke tests Compose des six modules feature ; crash OpenFeedback/kotlinx-datetime (G-05-3) corrigé et vérifié sur device — v1.0 (Phase 5)
+- ✓ Conditional OpenFeedback integration — existing
+- ✓ Android target (API 23-36, Jetpack Compose) and iOS target (SwiftUI, via Cocoapods) — existing
+- ✓ iOS CI: GitHub Actions pipeline repaired (dynamic resolution of the "latest plain iPhone" simulator + the most recent installed Xcode, instead of the hardcoded "iPhone 16" name) — v1.0 (Phase 1)
+- ✓ DevOps: optimized GitHub Actions CI/CD (read-only Gradle cache on `pull_request` runs for both workflows, `android-setup` composite action shared by Android and iOS, proof of a real `pull_request` run on all four Android jobs) — v1.0 (Phase 1)
+- ✓ Build & dependencies: full dependency update (Kotlin 2.4.20, AGP 9.4.0, Gradle 9.7.1, Compose BOM 2026.09.00, Apollo 5.2.0, Firebase BOM 34.19.0…) — v1.0 (Phase 2)
+- ✓ Build & dependencies: Gradle Declarative DSL as a documented partial migration (`settings.gradle.dcl`; modules left in `.kts` for lack of AGP/KMP support) — v1.0 (Phase 2)
+- ✓ Architecture: Now in Android-style multi-module split adapted to KMP — `build-logic` (6 convention plugins, `buildSrc` removed), `:core:{model,network,analytics,data,testing,ui}`, `:feature:{venue,about,settings,speakers,agenda,session-detail}` (`*Route` entry points via callbacks), `:shared` reduced to a single umbrella iOS framework (bookmarks with no screen, in `core:data`/`core:ui`) — v1.0 (Phase 3)
+- ✓ DI: full migration from Hilt to Koin 4.2.2 — one Koin module per Gradle module, composed by `initKoin()` in `:shared` (`allowOverride(false)`), `IosDependencies` on iOS with no Koin name in `shared.h`, graph verified in CI (`verify()` + JVM/iOS/Robolectric startup tests), strict `scripts/di-gate.sh` against Hilt and service-locator calls — v1.0 (Phase 4)
+- ✓ Quality: Kover line coverage raised from 15.96% to 30.57% — GraphQLStore/mapper tests on Apollo MockServer (JVM/Android/iOS), shared Store contract, pinned SharedPreferences persistence, unit tests of the ten ViewModels on a controllable fake, agenda filter matrix, Compose smoke tests of the six feature modules; OpenFeedback/kotlinx-datetime crash (G-05-3) fixed and verified on device — v1.0 (Phase 5)
 
 ### Active
 
-Milestone v1.1 iOS Architecture (détail et REQ-IDs dans `REQUIREMENTS.md`) :
-- [ ] Logique domaine (agenda, filtres, favoris, mapping) partagée en KMP et consommée par Android et iOS
-- [ ] Plus aucune logique métier dupliquée côté iOS ; données `UserDefaults` existantes migrées sans perte
-- [ ] App iOS découpée en packages SPM locaux feature/core, target app en coquille
-- [ ] DI iOS explicite par composition root, sans service-locator ni singletons globaux dans les ViewModels
-- [ ] iOS 17 minimum, ViewModels `@Observable`, Combine supprimé
-- [ ] Swift 6 strict concurrency sans warning
-- [ ] Tests partagés + Swift Testing + smoke tests SwiftUI, exécutés en CI iOS
+Milestone v1.1 iOS Architecture (details and REQ-IDs in `REQUIREMENTS.md`):
+- [ ] Domain logic (agenda, filters, favorites, mapping) shared in KMP and consumed by Android and iOS
+- [ ] No more duplicated business logic on iOS; existing `UserDefaults` data migrated without loss
+- [ ] iOS app split into local feature/core SPM packages, app target as a shell
+- [ ] Explicit iOS DI through a composition root, with no service-locator or global singletons in ViewModels
+- [ ] iOS 17 minimum, `@Observable` ViewModels, Combine removed
+- [ ] Swift 6 strict concurrency with no warning
+- [ ] Shared tests + Swift Testing + SwiftUI smoke tests, run in iOS CI
 
 ### Out of Scope
 
-- Nouvelles fonctionnalités utilisateur — v1.1 reste un chantier purement technique (comme v1.0)
-- Dette v1.0 (`speakersPage`, `RoomSortIndex`, `SocialItem`, page-view Speaker, état ERROR des ViewModels, durcissement CI WR-02/WR-03) — reportée ; les bugs découverts pendant v1.1 sont consignés en dette, pas corrigés (parité stricte)
-- ViewModels partagés en KMP (androidx.lifecycle KMP / SKIE) — choix de ne partager que la couche domaine ; chaque plateforme garde des ViewModels idiomatiques
-- UI partagée (Compose Multiplatform) — UI native conservée sur Android (Compose) et iOS (SwiftUI)
-- Changements UX/UI visibles — sauf effets de bord inévitables liés à la migration technique
-- Deadline calée sur la prochaine édition de DevFest Nantes — pas de contrainte de date stricte, avancement phase par phase
+- New user features — v1.1 remains a purely technical effort (like v1.0)
+- v1.0 debt (`speakersPage`, `RoomSortIndex`, `SocialItem`, Speaker page-view, ViewModels ERROR state, CI hardening WR-02/WR-03) — deferred; bugs found during v1.1 are logged as debt, not fixed (strict parity)
+- ViewModels shared in KMP (androidx.lifecycle KMP / SKIE) — choice to share only the domain layer; each platform keeps idiomatic ViewModels
+- Shared UI (Compose Multiplatform) — native UI kept on Android (Compose) and iOS (SwiftUI)
+- Visible UX/UI changes — except unavoidable side effects of the technical migration
+- Deadline tied to the next DevFest Nantes edition — no strict date constraint, progress phase by phase
 
 ## Context
 
-- État après v1.0 : monorepo KMP `build-logic` (convention plugins `devfest.*`) + `:core:{model,network,analytics,data,testing,ui}` + `:feature:{agenda,speakers,venue,session-detail,about,settings}` + `:androidApp` + `:shared` (framework iOS parapluie exportant core:model/data/analytics) + `iosApp` (SwiftUI).
-- Stack : Kotlin 2.4.20, AGP 9.4.0, Gradle 9.7.1 (`settings.gradle.dcl`, modules en `.kts`), Compose BOM 2026.09.00, Apollo 5.2.0, Koin 4.2.2, Firebase BOM 34.19.0, Coroutines 1.11.0, kotlinx-datetime `0.8.0-0.6.x-compat`, minSdk 26 / compileSdk 37.
-- Taille : ~15,8k lignes Kotlin, ~3,8k lignes Swift ; v1.0 a touché 328 fichiers (+9 795 / −2 005).
-- Tests : Kover 30,57 % (rapport seul), tests JVM/Android host/iOS simulator + smoke tests Compose par module feature, `verify()` Koin et `scripts/di-gate.sh` en CI.
-- Dette connue : voir Active ci-dessus et STATE.md § Deferred Items. OpenFeedback dépend encore de `kotlinx.datetime.Instant` (pin compat limité à 0.8.x : correctif durable = release OpenFeedback sur kotlin.time).
-- Les documents `.planning/codebase/` ont été régénérés après v1.0 (commit `99edc0a`).
-- État iOS au démarrage de v1.1 : ~45 fichiers Swift dans une seule target app (pas de package local), ViewModels `ObservableObject` + Combine dérivant de `BaseViewModel` qui résout `IosDependencies.shared.store()`, favoris (`"Favorites"`) et filtres (`"AgendaSessionFilters"`) persistés en `UserDefaults` par `AgendaViewModel`, singletons globaux (`RCValues`, `PerformanceMonitoring`, `remoteConfig`), deployment targets mixtes 15.0/17.0, `SWIFT_VERSION = 5.0`, SPM (Firebase, KMP-NativeCoroutines), une seule classe de test (`DevFest NantesTests`) non exécutée en CI.
+- State after v1.0: KMP monorepo `build-logic` (convention plugins `devfest.*`) + `:core:{model,network,analytics,data,testing,ui}` + `:feature:{agenda,speakers,venue,session-detail,about,settings}` + `:androidApp` + `:shared` (umbrella iOS framework exporting core:model/data/analytics) + `iosApp` (SwiftUI).
+- Stack: Kotlin 2.4.20, AGP 9.4.0, Gradle 9.7.1 (`settings.gradle.dcl`, modules in `.kts`), Compose BOM 2026.09.00, Apollo 5.2.0, Koin 4.2.2, Firebase BOM 34.19.0, Coroutines 1.11.0, kotlinx-datetime `0.8.0-0.6.x-compat`, minSdk 26 / compileSdk 37.
+- Size: ~15.8k lines of Kotlin, ~3.8k lines of Swift; v1.0 touched 328 files (+9,795 / −2,005).
+- Tests: Kover 30.57% (report only), JVM/Android host/iOS simulator tests + Compose smoke tests per feature module, Koin `verify()` and `scripts/di-gate.sh` in CI.
+- Known debt: see Active above and STATE.md § Deferred Items. OpenFeedback still depends on `kotlinx.datetime.Instant` (compat pin limited to 0.8.x: durable fix = an OpenFeedback release on kotlin.time).
+- The `.planning/codebase/` documents were regenerated after v1.0 (commit `99edc0a`).
+- iOS state at the start of v1.1: ~45 Swift files in a single app target (no local package), `ObservableObject` + Combine ViewModels deriving from `BaseViewModel` which resolves `IosDependencies.shared.store()`, favorites (`"Favorites"`) and filters (`"AgendaSessionFilters"`) persisted in `UserDefaults` by `AgendaViewModel`, global singletons (`RCValues`, `PerformanceMonitoring`, `remoteConfig`), mixed 15.0/17.0 deployment targets, `SWIFT_VERSION = 5.0`, SPM (Firebase, KMP-NativeCoroutines), a single test class (`DevFest NantesTests`) not run in CI.
 
 ## Constraints
 
-- **Outillage** : L'agent DOIT utiliser le CLI `android` pour toute tâche Android — en particulier `android docs search` pour vérifier la syntaxe exacte du Gradle Declarative DSL et d'autres APIs récentes, et les commandes de lint/validation avant de considérer une modification terminée.
-- **Compatibilité fonctionnelle** : Aucune régression de comportement utilisateur n'est acceptable — chaque étape de la modernisation doit préserver le comportement existant de l'app (Android et iOS).
-- **KMP** : Toute solution technique (DI, modularisation) doit fonctionner à la fois sur Android et iOS via le module `shared`.
-- **Gradle Declarative DSL** : Technologie en preview/incubation — le support AGP/KMP peut être partiel selon les versions. Accepter une migration partielle documentée plutôt que de bloquer sur une conversion à 100%.
-- **CI/CD** : GitHub Actions reste la plateforme CI/CD cible (pas de changement d'outil CI).
+- **Tooling**: The agent MUST use the `android` CLI for any Android task — in particular `android docs search` to check the exact syntax of the Gradle Declarative DSL and other recent APIs, and the lint/validation commands before considering a change done.
+- **Functional compatibility**: No regression in user behavior is acceptable — every step of the modernization must preserve the app's existing behavior (Android and iOS).
+- **KMP**: Every technical solution (DI, modularization) must work on both Android and iOS via the `shared` module.
+- **Gradle Declarative DSL**: Preview/incubating technology — AGP/KMP support may be partial depending on versions. Accept a documented partial migration rather than blocking on a 100% conversion.
+- **CI/CD**: GitHub Actions remains the target CI/CD platform (no change of CI tool).
 
 ## Key Decisions
 
 | Decision | Rationale | Outcome |
 |----------|-----------|---------|
-| Ordre des chantiers : CI iOS d'abord, puis deps/Gradle DSL, puis multi-module, puis DI, puis tests | Le CI cassé est bloquant et un quick win ; les fondations de build doivent être stables avant de refactorer l'architecture | ✓ Phase 1 shipped — CI iOS réparé + cache Gradle read-only en PR sur les deux workflows |
-| Cache Gradle : expression `cache-read-only` dupliquée à chaque site d'appel plutôt que déplacée dans l'input par défaut de l'action composite `android-setup` | Les métadonnées d'une composite action sont parsées statiquement ; une expression dans l'input default serait transmise à `setup-gradle` en texte brut non interpolé et coercée en chaîne toujours vraie | Phase 1 |
-| `cancel-in-progress: true` conservé tel quel sur `ios.yml`/`android.yml` (pas de `cancel-in-progress` conditionnel par event, pas de `queue`) | Comportement de coût voulu (D-07), auto-cicatrisant au push suivant ; `queue` + `cancel-in-progress` est une erreur de validation GitHub bloquante | Phase 1 — accepté comme risque documenté (T-01-05) |
-| DI : migration complète Hilt → Koin | Hilt ne fonctionne pas dans le module `shared` KMP ; Koin est natif KMP et permet une vraie DI décentralisée par module | ✓ Phase 4 shipped — aucun artefact Hilt sur le classpath, DI-01..06 complets, UAT Android (debug + release R8) et iOS approuvée, 27/27 menaces sécurité closes |
-| Découpage multi-module : feature + core (façon Now in Android complet) | Vision NIA complète demandée explicitement par l'utilisateur, adaptée au contexte KMP (Android + iOS) | ✓ Phase 3 shipped — 12 modules + `build-logic`, graphe strictement core ← feature ← app, CI verte, 5 smoke tests iOS/Android approuvés, 34/34 menaces sécurité closes |
-| Phase 3 : `:shared` conserve un unique fichier interne `SharedFrameworkPlaceholder.kt` (amendement D-10) | Kotlin/Native saute compile+link (NO-SOURCE) sur un source set vide → aucun `shared.framework` produit | Phase 3 — approuvé par l'utilisateur au checkpoint 03-03 ; ne jamais supprimer |
-| Phase 3 : types Apollo renommés via `@targetName` (GraphQLVenue/Session/Speaker/Room/Partner), noms Swift des 5 types domaine changés une fois (amendement D-11) | Supprime définitivement la collision de noms Swift Kotlin/Native qui a stoppé 03-01 ; `swift-names-gate.sh` renforcé (member sets + collisions) | Phase 3 (03-10/03-11) |
-| Phase 3 : heap du daemon Gradle porté à 4 Go | OOM de D8 (dex merging) dans le job CI Instrumentation tests avec 6 modules feature | Phase 3 — approuvé par l'utilisateur |
-| Gradle Declarative DSL : migration complète si possible, sinon partielle documentée | La techno est en incubation ; éviter de bloquer tout le projet sur un support incomplet côté AGP/KMP | ✓ v1.0 — partielle documentée (`settings.gradle.dcl` seulement) |
-| Couverture de tests : pas d'objectif % strict, priorité à la logique métier | L'utilisateur préfère une couverture qualitative (ViewModels, Store, mappers) à un chiffre arbitraire | ✓ Phase 5 shipped — Kover 0.9.11 en rapport seul, 15,96 % → 30,57 %, UAT 3/3, 0 menace ouverte |
-| Aucune nouvelle fonctionnalité utilisateur pendant ce chantier | Chantier purement technique — réduire le risque de régression en isolant modernisation et évolution fonctionnelle | ✓ v1.0 — tenu, UAT sans régression sur les 5 phases |
-| Pas de deadline stricte liée à la prochaine édition | Chantier de fond mené phase par phase sans pression de date | ✓ v1.0 — livré en ~30 jours |
-| Phase 4 : ordre des `ApplicationInitializer` explicite (`single(named("applicationInitializers"))`), asserté par `KoinStartupTest` | Le consentement de collecte doit être appliqué avant que Performance Monitoring soit forcé (T-04-19) | Phase 4 |
-| Phase 4 : Robolectric 4.17 en `testImplementation` pour tester le démarrage réel du graphe Koin avec Firebase | Exerce les définitions Firebase de production sans les modifier ; base réutilisable pour la Phase 5 | Phase 4 — choisi par l'utilisateur |
-| Phase 5 : kotlinx-datetime résolu en `0.8.0-0.6.x-compat` (pas de retour à 0.6.2), code first-party sur `kotlin.time.Instant`, suppressions R8 retirées | OpenFeedback 1.0.0-alpha.3 (et alpha.6) référence encore `kotlinx.datetime.Instant` ; la variante compat restaure ces classes tout en gardant la 0.8. Les releases compat s'arrêtent à 0.8.x : le correctif durable est une release OpenFeedback sur kotlin.time | Phase 5 (05-11) — gardé en CI par `OpenFeedbackDatetimeLinkageTest` |
-| Phase 5 : seam `FeedbackFlags` au-dessus de Firebase Remote Config, IO dispatcher d'`AgendaViewModel` injecté par binding Koin nommé | Rendre FeedbackForm et Agenda testables sur JVM pur sans changer le comportement | Phase 5 (05-06, 05-08) |
-| Phase 5 : les échecs de store non catchés dans les ViewModels sont épinglés par des tests de caractérisation, pas corrigés | Chantier sans changement de comportement ; correction (état ERROR) reportée — voir `deferred-items.md` et `05-UI-REVIEW.md` | Phase 5 — dette connue |
-| Phase 2 : montée de version en groupes séquentiels (un commit par groupe), avec un CI vert entre chaque étape | Des montées majeures cumulées seraient impossibles à diagnostiquer en cas d'échec ; chaque groupe obtient son propre commit revertible et son propre signal vert avant d'attaquer le suivant | ✓ Phase 2 shipped — Kotlin 2.4.20, AGP 9.4.0 + plugin `com.android.kotlin.multiplatform.library`, Gradle 9.7.1, Compose BOM 2026.09.00, Apollo 5.2.0 (cache migré vers `com.apollographql.cache`), Firebase BOM 34.19.0/Coroutines 1.11.0/kotlinx-serialization 1.11.0/kotlinx-datetime 0.8.0 ; pilote Gradle Declarative DSL réussi sur `settings.gradle.dcl` (androidApp/shared restent en Kotlin DSL, support AGP/KMP DCL non mûr pour ces modules) — détail complet dans `.planning/STATE.md` § Phase 02 version deviations / DCL pilot outcome |
+| Order of work: iOS CI first, then deps/Gradle DSL, then multi-module, then DI, then tests | The broken CI is blocking and a quick win; the build foundations must be stable before refactoring the architecture | ✓ Phase 1 shipped — iOS CI repaired + read-only Gradle cache on PRs for both workflows |
+| Gradle cache: `cache-read-only` expression duplicated at each call site rather than moved into the default input of the `android-setup` composite action | A composite action's metadata is parsed statically; an expression in the input default would be passed to `setup-gradle` as raw uninterpolated text and coerced into an always-true string | Phase 1 |
+| `cancel-in-progress: true` kept as is on `ios.yml`/`android.yml` (no per-event conditional `cancel-in-progress`, no `queue`) | Intended cost behavior (D-07), self-healing on the next push; `queue` + `cancel-in-progress` is a blocking GitHub validation error | Phase 1 — accepted as a documented risk (T-01-05) |
+| DI: full Hilt → Koin migration | Hilt does not work in the KMP `shared` module; Koin is KMP-native and enables real decentralized DI per module | ✓ Phase 4 shipped — no Hilt artifact on the classpath, DI-01..06 complete, Android (debug + release R8) and iOS UAT approved, 27/27 security threats closed |
+| Multi-module split: feature + core (full Now in Android style) | Full NIA vision explicitly requested by the user, adapted to the KMP context (Android + iOS) | ✓ Phase 3 shipped — 12 modules + `build-logic`, strictly core ← feature ← app graph, green CI, 5 iOS/Android smoke tests approved, 34/34 security threats closed |
+| Phase 3: `:shared` keeps a single internal file `SharedFrameworkPlaceholder.kt` (amendment D-10) | Kotlin/Native skips compile+link (NO-SOURCE) on an empty source set → no `shared.framework` produced | Phase 3 — approved by the user at checkpoint 03-03; never delete |
+| Phase 3: Apollo types renamed via `@targetName` (GraphQLVenue/Session/Speaker/Room/Partner), Swift names of the 5 domain types changed once (amendment D-11) | Permanently removes the Kotlin/Native Swift name collision that halted 03-01; `swift-names-gate.sh` strengthened (member sets + collisions) | Phase 3 (03-10/03-11) |
+| Phase 3: Gradle daemon heap raised to 4 GB | D8 OOM (dex merging) in the Instrumentation tests CI job with 6 feature modules | Phase 3 — approved by the user |
+| Gradle Declarative DSL: full migration if possible, otherwise documented partial | The technology is incubating; avoid blocking the whole project on incomplete AGP/KMP support | ✓ v1.0 — documented partial (`settings.gradle.dcl` only) |
+| Test coverage: no strict % target, priority on business logic | The user prefers qualitative coverage (ViewModels, Store, mappers) over an arbitrary number | ✓ Phase 5 shipped — Kover 0.9.11 report only, 15.96% → 30.57%, UAT 3/3, 0 open threats |
+| No new user feature during this effort | Purely technical effort — reduce regression risk by isolating modernization from functional evolution | ✓ v1.0 — held, UAT with no regression across the 5 phases |
+| No strict deadline tied to the next edition | In-depth effort carried out phase by phase without date pressure | ✓ v1.0 — shipped in ~30 days |
+| Phase 4: explicit `ApplicationInitializer` order (`single(named("applicationInitializers"))`), asserted by `KoinStartupTest` | Collection consent must be applied before Performance Monitoring is forced (T-04-19) | Phase 4 |
+| Phase 4: Robolectric 4.17 as `testImplementation` to test the real startup of the Koin graph with Firebase | Exercises the production Firebase definitions without modifying them; reusable foundation for Phase 5 | Phase 4 — chosen by the user |
+| Phase 5: kotlinx-datetime resolved to `0.8.0-0.6.x-compat` (no return to 0.6.2), first-party code on `kotlin.time.Instant`, R8 suppressions removed | OpenFeedback 1.0.0-alpha.3 (and alpha.6) still references `kotlinx.datetime.Instant`; the compat variant restores these classes while keeping 0.8. Compat releases stop at 0.8.x: the durable fix is an OpenFeedback release on kotlin.time | Phase 5 (05-11) — guarded in CI by `OpenFeedbackDatetimeLinkageTest` |
+| Phase 5: `FeedbackFlags` seam on top of Firebase Remote Config, `AgendaViewModel` IO dispatcher injected through a named Koin binding | Make FeedbackForm and Agenda testable on pure JVM without changing behavior | Phase 5 (05-06, 05-08) |
+| Phase 5: uncaught store failures in ViewModels are pinned by characterization tests, not fixed | Effort with no behavior change; the fix (ERROR state) is deferred — see `deferred-items.md` and `05-UI-REVIEW.md` | Phase 5 — known debt |
+| Phase 2: version upgrade in sequential groups (one commit per group), with a green CI between each step | Cumulative major upgrades would be impossible to diagnose on failure; each group gets its own revertible commit and its own green signal before tackling the next one | ✓ Phase 2 shipped — Kotlin 2.4.20, AGP 9.4.0 + `com.android.kotlin.multiplatform.library` plugin, Gradle 9.7.1, Compose BOM 2026.09.00, Apollo 5.2.0 (cache migrated to `com.apollographql.cache`), Firebase BOM 34.19.0/Coroutines 1.11.0/kotlinx-serialization 1.11.0/kotlinx-datetime 0.8.0; Gradle Declarative DSL pilot succeeded on `settings.gradle.dcl` (androidApp/shared stay in Kotlin DSL, AGP/KMP DCL support not mature for these modules) — full details in `.planning/STATE.md` § Phase 02 version deviations / DCL pilot outcome |
 
 ## Evolution
 

@@ -6,84 +6,84 @@
 <domain>
 ## Phase Boundary
 
-Chaque PR exécute réellement des tests Swift sur la CI iOS (`ios.yml`) et les gates d'interop
-Kotlin/Swift sont actifs : nouvelle target Swift Testing qui remplace `DevFest NantesTests`, lane
-`build-for-testing` / `test-without-building` pilotée par un `.xctestplan`, échec si 0 test,
-cache Xcode-aware, `swift-names-gate.sh` restauré et branché en CI, KMP-NativeCoroutines aligné
-en 1.0.6 côté SPM avec un gate de version. Exigences : IOSTEST-03, IOSTEST-04, CONC-03.
-Hors périmètre : tests de ViewModels sur fakes (Phase 8, IOSTEST-01), smoke tests SwiftUI
-(Phase 12), iOS 17 partout (Phase 8), tests des packages SPM (Phase 11).
+Every PR actually runs Swift tests on the iOS CI (`ios.yml`) and the Kotlin/Swift interop gates
+are active: a new Swift Testing target that replaces `DevFest NantesTests`, a
+`build-for-testing` / `test-without-building` lane driven by a `.xctestplan`, failure on 0 tests,
+Xcode-aware cache, `swift-names-gate.sh` restored and wired into CI, KMP-NativeCoroutines aligned
+to 1.0.6 on the SPM side with a version gate. Requirements: IOSTEST-03, IOSTEST-04, CONC-03.
+Out of scope: ViewModel tests on fakes (Phase 8, IOSTEST-01), SwiftUI smoke tests
+(Phase 12), iOS 17 everywhere (Phase 8), SPM package tests (Phase 11).
 
 </domain>
 
 <decisions>
 ## Implementation Decisions
 
-### Premier test réel
-- **D-01:** La nouvelle target contient quelques tests Swift Testing de **logique Swift pure**,
-  sans réseau ni Koin : au minimum l'encodage/décodage `Codable` de `SessionFilter`
-  (`iosApp/iosApp/Model/SessionFilter.swift`, format des clés `UserDefaults` legacy que la
-  Phase 9 doit relire) et `AgendaViewModel.getDate(date:)` si testable sans déclencher
-  `BaseViewModel`/`IosDependencies`. Pas de test canari trivial, pas de caractérisation de
-  l'agenda (construction de `Session` Kotlin depuis Swift trop lourde ici).
-- **D-02:** Target **hébergée par l'app** (`TEST_HOST`/`BUNDLE_LOADER` conservés, pour
-  `@testable import` du code app tant qu'il n'est pas en packages). `iOSApp.init` est
-  **neutralisé sous XCTest** : `FirebaseApp.configure()`, `IosDependencies.shared.start()`,
-  traces `PerformanceMonitoring` et `RCValues.sharedInstance` ne s'exécutent pas quand le
-  process tourne sous test. Le comportement en production reste strictement identique (parité).
-  — **Reversibility:** reversible — garde locale à `iOSApp.swift`, retirée quand la Phase 10/11
-  sort la logique de l'app host.
-- **D-03:** **Supprimer** la target `DevFest NantesTests` et ses deux fichiers
-  (`DevFest_NantesTests.swift` cassé, `MockDevFestNantesStore.swift` entièrement commenté) ;
-  créer une target neuve au nom sans espace (ex. `DevFestNantesTests`), référencée par le
-  scheme partagé `iosApp` via un `.xctestplan` commité.
+### First real test
+- **D-01:** The new target contains a few Swift Testing tests of **pure Swift logic**,
+  with no network and no Koin: at minimum the `Codable` encoding/decoding of `SessionFilter`
+  (`iosApp/iosApp/Model/SessionFilter.swift`, format of the legacy `UserDefaults` keys that
+  Phase 9 must read back) and `AgendaViewModel.getDate(date:)` if testable without triggering
+  `BaseViewModel`/`IosDependencies`. No trivial canary test, no characterization of the
+  agenda (building Kotlin `Session` objects from Swift is too heavy here).
+- **D-02:** **App-hosted** target (`TEST_HOST`/`BUNDLE_LOADER` kept, for
+  `@testable import` of app code as long as it is not in packages). `iOSApp.init` is
+  **neutralized under XCTest**: `FirebaseApp.configure()`, `IosDependencies.shared.start()`,
+  `PerformanceMonitoring` traces and `RCValues.sharedInstance` do not run when the
+  process is running under test. Production behavior stays strictly identical (parity).
+  — **Reversibility:** reversible — guard local to `iOSApp.swift`, removed when Phase 10/11
+  moves the logic out of the app host.
+- **D-03:** **Delete** the `DevFest NantesTests` target and its two files
+  (`DevFest_NantesTests.swift` broken, `MockDevFestNantesStore.swift` entirely commented out);
+  create a new target with a name without spaces (e.g. `DevFestNantesTests`), referenced by the
+  shared `iosApp` scheme through a committed `.xctestplan`.
 
-### Structure du job CI
-- **D-04:** **Un seul job** dans `ios.yml` : l'étape `xcodebuild build` est remplacée par
-  `build-for-testing` puis `test-without-building` (une seule compilation de l'app). On ne
-  découpe en plusieurs jobs que si un dépassement du `timeout-minutes: 30` est mesuré.
-- **D-05:** Assertion `.xcresult` : le job **échoue si 0 test** exécuté (comptage via
-  `xcresulttool`). Pas de seuil minimum à maintenir.
-- **D-06:** Robustesse retenue (toutes) : artefact `.xcresult` téléversé en cas d'échec ;
-  simulateur résolu **par UDID** (toujours le dernier iPhone dispo, sélection dynamique v1.0
-  conservée) puis `xcrun simctl boot` + `bootstatus -b` ; `-parallel-testing-enabled NO` et
-  aucun retry ; version Xcode, simulateur et nombre de tests écrits dans `$GITHUB_STEP_SUMMARY`.
-- **D-07:** La clé de cache DerivedData inclut la version de Xcode (`xcodebuild -version`),
-  exigé par le critère de succès 2.
+### CI job structure
+- **D-04:** **A single job** in `ios.yml`: the `xcodebuild build` step is replaced by
+  `build-for-testing` then `test-without-building` (a single compilation of the app). The job is
+  split into several jobs only if exceeding `timeout-minutes: 30` is measured.
+- **D-05:** `.xcresult` assertion: the job **fails if 0 tests** ran (counted via
+  `xcresulttool`). No minimum threshold to maintain.
+- **D-06:** Robustness measures chosen (all of them): `.xcresult` artifact uploaded on failure;
+  simulator resolved **by UDID** (always the latest available iPhone, v1.0 dynamic selection
+  kept) then `xcrun simctl boot` + `bootstatus -b`; `-parallel-testing-enabled NO` and
+  no retry; Xcode version, simulator and test count written to `$GITHUB_STEP_SUMMARY`.
+- **D-07:** The DerivedData cache key includes the Xcode version (`xcodebuild -version`),
+  required by success criterion 2.
 
-### Restauration des gates
-- **D-08:** `swift-names-gate.sh` restauré dans `scripts/` ; ses fichiers de baseline dans
-  `scripts/swift-names/`, **sans le préfixe `03-`** (exclusions, noms référencés, membres,
-  en-tête). Baseline **regénérée sur l'en-tête `shared.h` actuel** avant branchement. Les
-  chemins internes du script sont mis à jour en conséquence.
-- **D-09:** La CI lance `check` **et** `selftest` (le selftest réutilise l'en-tête déjà lié ;
-  il prouve que le gate détecte toujours un échange d'identité et une collision).
-- **D-10:** Gate KMP-NC : **script dédié** `scripts/kmp-nc-version-gate.sh`, qui compare
-  `kmpNativeCoroutines` dans `gradle/libs.versions.toml` au pin du `project.pbxproj`
-  (doit être `kind = exactVersion`), échoue s'ils divergent ou si le pin n'est pas exact.
-  Conçu pour accepter plus tard un `Package.swift` (Phase 11). Tourne tôt dans le job (avant
-  Gradle) et en local.
+### Gate restoration
+- **D-08:** `swift-names-gate.sh` restored in `scripts/`; its baseline files in
+  `scripts/swift-names/`, **without the `03-` prefix** (exclusions, referenced names, members,
+  header). Baseline **regenerated against the current `shared.h` header** before wiring. The
+  script's internal paths are updated accordingly.
+- **D-09:** CI runs `check` **and** `selftest` (the selftest reuses the already linked header;
+  it proves the gate still detects an identity swap and a collision).
+- **D-10:** KMP-NC gate: **dedicated script** `scripts/kmp-nc-version-gate.sh`, which compares
+  `kmpNativeCoroutines` in `gradle/libs.versions.toml` with the pin in `project.pbxproj`
+  (must be `kind = exactVersion`), fails if they diverge or if the pin is not exact.
+  Designed to later accept a `Package.swift` (Phase 11). Runs early in the job (before
+  Gradle) and locally.
 
-### Validation du bump KMP-NC
-- **D-11:** Preuve de parité après `1.0.0-ALPHA-45` → `1.0.6` : **smoke manuel guidé**
-  (checkpoint humain) sur simulateur : Agenda (sessions, filtres, ajout/retrait favori,
-  relance de l'app), détail de session, Speakers, Venue, About ; captures à l'appui.
-- **D-12:** Ordre : nouvelle target + lane CI d'abord, puis gates, puis bump KMP-NC sous
-  le filet. Commits séparés et réversibles ; le gate KMP-NC est introduit **dans le même
-  commit** que le bump (sinon il échouerait sur `main`).
+### KMP-NC bump validation
+- **D-11:** Parity proof after `1.0.0-ALPHA-45` → `1.0.6`: **guided manual smoke**
+  (human checkpoint) on simulator: Agenda (sessions, filters, add/remove favorite,
+  app relaunch), session detail, Speakers, Venue, About; with screenshots as evidence.
+- **D-12:** Order: new target + CI lane first, then gates, then KMP-NC bump under
+  the safety net. Separate, reversible commits; the KMP-NC gate is introduced **in the same
+  commit** as the bump (otherwise it would fail on `main`).
 
 ### Claude's Discretion
-- Mécanisme exact de détection « sous XCTest » dans `iOSApp.init` (env
-  `XCTestConfigurationFilePath`, `NSClassFromString("XCTestCase")`…), tant que la prod est
-  inchangée.
-- Deployment target et `SWIFT_VERSION` de la nouvelle target (aligner sur l'app ; iOS 17
-  partout est en Phase 8, Swift 6 en Phase 12).
-- Cache SPM séparé (`-clonedSourcePackagesDirPath`), composition exacte des clés de cache
-  au-delà de la version Xcode.
-- Nom exact du `.xctestplan` et de la target, emplacement du parsing `xcresulttool`
-  (inline ou script).
-- Mise à jour de `README.md`, `documentation/DEVELOPMENT.md`, `scripts/README.md` et
-  `AGENTS.md` (commandes de test iOS, gates) dans les mêmes commits (règle AGENTS.md).
+- Exact mechanism for detecting "under XCTest" in `iOSApp.init` (env
+  `XCTestConfigurationFilePath`, `NSClassFromString("XCTestCase")`…), as long as prod is
+  unchanged.
+- Deployment target and `SWIFT_VERSION` of the new target (align with the app; iOS 17
+  everywhere is in Phase 8, Swift 6 in Phase 12).
+- Separate SPM cache (`-clonedSourcePackagesDirPath`), exact composition of the cache keys
+  beyond the Xcode version.
+- Exact name of the `.xctestplan` and of the target, location of the `xcresulttool` parsing
+  (inline or script).
+- Updating `README.md`, `documentation/DEVELOPMENT.md`, `scripts/README.md` and
+  `AGENTS.md` (iOS test commands, gates) in the same commits (AGENTS.md rule).
 
 </decisions>
 
@@ -92,29 +92,29 @@ Hors périmètre : tests de ViewModels sur fakes (Phase 8, IOSTEST-01), smoke te
 
 **Downstream agents MUST read these before planning or implementing.**
 
-### Périmètre et exigences
-- `.planning/ROADMAP.md` §Phase 6 — goal, 4 critères de succès, règles transverses v1.1
-- `.planning/REQUIREMENTS.md` — IOSTEST-03, IOSTEST-04, CONC-03 (+ note : target obsolète
-  remplacée dès la Phase 6)
-- `.planning/PROJECT.md` — core value, parité stricte
+### Scope and requirements
+- `.planning/ROADMAP.md` §Phase 6 — goal, 4 success criteria, v1.1 cross-cutting rules
+- `.planning/REQUIREMENTS.md` — IOSTEST-03, IOSTEST-04, CONC-03 (+ note: obsolete target
+  replaced as early as Phase 6)
+- `.planning/PROJECT.md` — core value, strict parity
 
-### Recherche v1.1
-- `.planning/research/SUMMARY.md` — séquencement, ligne « Test lane » et phase « tests + gates »
-- `.planning/research/PITFALLS.md` — Pitfall 9 (noms Swift / gate), 13 (Swift Testing, bundle
-  hébergé), 14 (CI iOS : cache, 0 test, simulateur), 17 (skew KMP-NC), 18 (deployment targets)
+### v1.1 research
+- `.planning/research/SUMMARY.md` — sequencing, "Test lane" line and "tests + gates" phase
+- `.planning/research/PITFALLS.md` — Pitfall 9 (Swift names / gate), 13 (Swift Testing, hosted
+  bundle), 14 (iOS CI: cache, 0 tests, simulator), 17 (KMP-NC skew), 18 (deployment targets)
 - `.planning/research/STACK.md` — Swift Testing toolchain, KMP-NC 1.0.6
 
-### Gates archivés v1.0
+### Archived v1.0 gates
 - `.planning/milestones/v1.0-phases/03-multi-module-architecture-extraction/swift-names-gate.sh`
-  — script à restaurer (modes baseline/check/selftest, env `SWIFT_GATE_HEADER`)
+  — script to restore (baseline/check/selftest modes, `SWIFT_GATE_HEADER` env)
 - `.planning/milestones/v1.0-phases/03-multi-module-architecture-extraction/03-swift-names-exclude.txt`,
   `03-swift-referenced-names.txt`, `03-swift-members-baseline.txt`, `03-shared-h-baseline.txt`
-  — baselines à déplacer/regénérer
-- `scripts/di-gate.sh` — modèle de gate existant (style, sortie, usage CI)
+  — baselines to move/regenerate
+- `scripts/di-gate.sh` — existing gate model (style, output, CI usage)
 
 ### Codebase
 - `.planning/codebase/TESTING.md`, `.planning/codebase/CONCERNS.md`
-- `AGENTS.md` §iOS — commandes de build iOS, SwiftGen, plist non commité
+- `AGENTS.md` §iOS — iOS build commands, SwiftGen, uncommitted plist
 
 </canonical_refs>
 
@@ -122,50 +122,50 @@ Hors périmètre : tests de ViewModels sur fakes (Phase 8, IOSTEST-01), smoke te
 ## Existing Code Insights
 
 ### Reusable Assets
-- `.github/workflows/ios.yml` : étapes existantes à conserver (sélection dynamique Xcode,
-  résolution simulateur via `jq`, build du framework `embedAndSignAppleFrameworkForXcode`,
-  tests KMP `iosSimulatorArm64Test`, SwiftGen, plist factice, `-resolvePackageDependencies`).
-- `swift-names-gate.sh` archivé : lie le framework debug `iosSimulatorArm64` de `:shared` et
-  lit `Headers/shared.h` ; `SWIFT_GATE_HEADER` permet de rejouer un en-tête sans rebuild.
-- `iosApp/iosApp.xcodeproj/xcshareddata/xcschemes/iosApp.xcscheme` : scheme partagé avec un
-  `TestAction` à brancher sur le `.xctestplan`.
+- `.github/workflows/ios.yml`: existing steps to keep (dynamic Xcode selection,
+  simulator resolution via `jq`, `embedAndSignAppleFrameworkForXcode` framework build,
+  KMP `iosSimulatorArm64Test` tests, SwiftGen, dummy plist, `-resolvePackageDependencies`).
+- Archived `swift-names-gate.sh`: links the `iosSimulatorArm64` debug framework of `:shared` and
+  reads `Headers/shared.h`; `SWIFT_GATE_HEADER` allows replaying a header without a rebuild.
+- `iosApp/iosApp.xcodeproj/xcshareddata/xcschemes/iosApp.xcscheme`: shared scheme with a
+  `TestAction` to wire to the `.xctestplan`.
 
 ### Established Patterns
-- Gates en bash dans `scripts/` exécutés par la CI (`di-gate.sh`), sortie à lignes
-  préfixées et `*-OK` en succès.
-- Sélection dynamique de Xcode et du simulateur (décision v1.0) : ne pas épingler de version.
-- Tests : noms en phrases, pas de lib de mock ; Swift Testing de la toolchain uniquement.
+- Bash gates in `scripts/` run by CI (`di-gate.sh`), output with prefixed lines
+  and `*-OK` on success.
+- Dynamic selection of Xcode and the simulator (v1.0 decision): do not pin a version.
+- Tests: sentence names, no mocking library; toolchain Swift Testing only.
 
 ### Integration Points
-- `iosApp/iosApp/iOSApp.swift` : `init()` à neutraliser sous test (Firebase, Koin, perf, RC).
-- `iosApp/iosApp.xcodeproj/project.pbxproj` : suppression de l'ancienne target, ajout de la
-  nouvelle, pin `XCRemoteSwiftPackageReference "KMP-NativeCoroutines"`
-  (`exactVersion 1.0.0-ALPHA-45` → `1.0.6`) ; `Package.resolved` à mettre à jour.
-- `gradle/libs.versions.toml` : `kmpNativeCoroutines = "1.0.6"` (source de vérité du gate).
-- Deployment targets mixtes (15.0 ×4, 17.0 ×2) et `SWIFT_VERSION = 5.0` dans le pbxproj.
+- `iosApp/iosApp/iOSApp.swift`: `init()` to neutralize under test (Firebase, Koin, perf, RC).
+- `iosApp/iosApp.xcodeproj/project.pbxproj`: removal of the old target, addition of the
+  new one, pin `XCRemoteSwiftPackageReference "KMP-NativeCoroutines"`
+  (`exactVersion 1.0.0-ALPHA-45` → `1.0.6`); `Package.resolved` to update.
+- `gradle/libs.versions.toml`: `kmpNativeCoroutines = "1.0.6"` (the gate's source of truth).
+- Mixed deployment targets (15.0 ×4, 17.0 ×2) and `SWIFT_VERSION = 5.0` in the pbxproj.
 
 </code_context>
 
 <specifics>
 ## Specific Ideas
 
-- Les tests de `SessionFilter` servent de garde-fou au format persisté que la Phase 9 doit
-  relire sans migrateur.
-- Smoke KMP-NC calqué sur les UAT simulateur de v1.0 (captures).
+- The `SessionFilter` tests serve as a safeguard for the persisted format that Phase 9 must
+  read back without a migrator.
+- KMP-NC smoke modeled on the v1.0 simulator UATs (screenshots).
 
 </specifics>
 
 <deferred>
 ## Deferred Ideas
 
-- `resources-gate.sh` (v1.0 Phase 3) : preuve de migration de ressources **Android** one-shot,
-  inutilisable telle quelle. À reconsidérer sous forme de gate iOS (`en.lproj`/`fr.lproj`
-  `Localizable.strings` aux clés identiques) en Phase 11 avec les ressources SwiftGen en
-  packages, ou en invariant Android permanent dans une phase dédiée.
-- Seuil minimum de tests configurable (au-delà de « 0 test = échec ») : à revoir quand les
-  Phases 8/12 auront ajouté des tests.
-- Découpage du job iOS en plusieurs jobs : seulement si le timeout de 30 min est dépassé
-  (naturellement reconsidéré en Phase 11 avec l'XCFramework).
+- `resources-gate.sh` (v1.0 Phase 3): one-shot proof of **Android** resource migration,
+  unusable as is. To reconsider as an iOS gate (`en.lproj`/`fr.lproj`
+  `Localizable.strings` with identical keys) in Phase 11 with the SwiftGen resources in
+  packages, or as a permanent Android invariant in a dedicated phase.
+- Configurable minimum test threshold (beyond "0 tests = failure"): to revisit once
+  Phases 8/12 have added tests.
+- Splitting the iOS job into several jobs: only if the 30 min timeout is exceeded
+  (naturally reconsidered in Phase 11 with the XCFramework).
 
 </deferred>
 
