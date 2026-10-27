@@ -61,13 +61,13 @@ Full details: [milestones/v1.0-ROADMAP.md](milestones/v1.0-ROADMAP.md). Requirem
   3. `scripts/swift-names-gate.sh` is restored and runs in CI: a change that modifies the Swift name of an exported Kotlin type fails the job
   4. KMP-NativeCoroutines is at 1.0.6 on the SPM side (instead of 1.0.0-ALPHA-45) as on the Gradle side, a CI gate fails if the two versions diverge, and the iOS app behaves as in v1.0
 
-**Plans**: 1/6 plans executed
+**Plans**: 2/6 plans executed
 Plans:
 **Wave 1**
 - [x] 06-01-PLAN.md — App-hosted Swift Testing target `DevFestNantesTests`, `.xctestplan`, XCTest guard in `iOSApp`, first `SessionFilter` test (tracer), then removal of the old target (separate commit)
 
 **Wave 2** *(blocked on Wave 1 completion)*
-- [ ] 06-02-PLAN.md — Full `SessionFilter` suite (legacy format), `AgendaViewModel.parseDate` extraction (dedicated commit) and its tests, iOS test docs
+- [x] 06-02-PLAN.md — Full `SessionFilter` suite (legacy format), `AgendaViewModel.parseDate` extraction (dedicated commit) and its tests, iOS test docs
 
 **Wave 3** *(blocked on Wave 2 completion)*
 - [ ] 06-03-PLAN.md — iOS CI lane: build-for-testing / test-without-building, failure on 0 tests (`xcresult-assert-tests.sh`), Xcode-aware cache, simulator by UDID
@@ -186,7 +186,7 @@ Phases execute in numeric order: 6 → 7 → 8 → 9 → 10 → 11 → 12
 | 3. Multi-Module Architecture Extraction | v1.0 | 11/11 | Complete | 2026-09-27 |
 | 4. Hilt to Koin DI Migration | v1.0 | 7/7 | Complete | 2026-10-13 |
 | 5. Test Coverage Retrofit | v1.0 | 11/11 | Complete | 2026-10-16 |
-| 6. iOS Test Foundation and CI Gates | v1.1 | 1/6 | In Progress | - |
+| 6. iOS Test Foundation and CI Gates | v1.1 | 2/6 | In Progress | - |
 | 7. KMP Domain Layer and Android Adoption | v1.1 | 0/? | Not started | - |
 | 8. Modern SwiftUI, iOS 17 and Observation | v1.1 | 0/? | Not started | - |
 | 9. iOS on Shared Logic and Legacy Persistence | v1.1 | 0/? | Not started | - |
