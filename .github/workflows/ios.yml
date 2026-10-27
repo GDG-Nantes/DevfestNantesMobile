@@ -11,6 +11,9 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
+permissions:
+  contents: read
+
 env:
   JAVA_VERSION: 17
 
@@ -23,7 +26,14 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-      
+
+      # Pure text check, first on purpose: a Gradle/SPM version skew fails the job before any
+      # Gradle or Xcode work. Dependabot only bumps the Gradle side (see DEVELOPMENT.md).
+      - name: KMP-NativeCoroutines version gate
+        run: |
+          bash scripts/kmp-nc-version-gate.sh
+          bash scripts/kmp-nc-version-gate.sh selftest
+
       - uses: ./.github/actions/android-setup
         with:
           java-version: ${{ env.JAVA_VERSION }}
@@ -67,18 +77,8 @@ jobs:
             echo "SwiftGen already installed"
           fi
       
-      - name: Cache Xcode DerivedData
-        uses: actions/cache@v4
-        with:
-          path: |
-            ~/Library/Developer/Xcode/DerivedData
-            build
-          key: ${{ runner.os }}-xcode-deriveddata-${{ hashFiles('iosApp/iosApp.xcodeproj/project.pbxproj') }}-${{ hashFiles('shared/**/*.kt', 'core/**/*.kt') }}
-          restore-keys: |
-            ${{ runner.os }}-xcode-deriveddata-${{ hashFiles('iosApp/iosApp.xcodeproj/project.pbxproj') }}-
-            ${{ runner.os }}-xcode-deriveddata-
-      
       - name: Select latest installed Xcode
+        id: xcode
         run: |
           LATEST_XCODE=$(ls -d /Applications/Xcode_*.app 2>/dev/null \
             | sed -E 's#.*/Xcode_([0-9.]+)\.app#\1#' \
@@ -86,30 +86,51 @@ jobs:
             | tail -1)
           echo "Selected Xcode: ${LATEST_XCODE}"
           sudo xcode-select -s "/Applications/Xcode_${LATEST_XCODE}.app/Contents/Developer"
+          # Version-build, e.g. 26.6-17A123: the DerivedData cache is keyed on it
+          echo "version=$(xcodebuild -version | awk 'NR==1{v=$2} NR==2{b=$3} END{print v "-" b}')" >> "$GITHUB_OUTPUT"
 
       - name: Show Xcode version
         run: xcodebuild -version
 
+      # After Xcode selection on purpose: the key carries the selected Xcode version, so
+      # DerivedData built by another Xcode is never restored.
+      - name: Cache Xcode DerivedData
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/Library/Developer/Xcode/DerivedData
+            build
+          key: ${{ runner.os }}-xcode-${{ steps.xcode.outputs.version }}-deriveddata-${{ hashFiles('iosApp/iosApp.xcodeproj/project.pbxproj') }}-${{ hashFiles('shared/**/*.kt', 'core/**/*.kt') }}
+          restore-keys: |
+            ${{ runner.os }}-xcode-${{ steps.xcode.outputs.version }}-deriveddata-${{ hashFiles('iosApp/iosApp.xcodeproj/project.pbxproj') }}-
+            ${{ runner.os }}-xcode-${{ steps.xcode.outputs.version }}-deriveddata-
+
       - name: Show available simulators
         run: xcrun simctl list devices available
 
-      - name: Resolve latest plain iPhone simulator
+      - name: Resolve and boot latest iPhone simulator
         id: sim
         run: |
-          DEVICE_NAME=$(xcrun simctl list devices available --json \
-            | jq -r '
-                .devices
-                | to_entries[]
-                | select(.key | test("com.apple.CoreSimulator.SimRuntime.iOS"))
-                | .value[]
-                | select(.isAvailable == true)
-                | select(.name | test("^iPhone [0-9]+$"))
-                | .name
-              ' \
-            | sort -t' ' -k2 -n -u \
-            | tail -1)
-          echo "Resolved simulator: ${DEVICE_NAME}"
-          echo "device_name=$DEVICE_NAME" >> "$GITHUB_OUTPUT"
+          # Latest iOS runtime, then highest plain "iPhone N"; selected by UDID because a
+          # device name can exist in several runtimes.
+          read -r UDID NAME < <(xcrun simctl list devices available --json | jq -r '
+            [ .devices | to_entries[]
+              | select(.key | test("SimRuntime\\.iOS-"))
+              | (.key | capture("iOS-(?<v>[0-9-]+)$").v | split("-") | map(tonumber)) as $rt
+              | .value[]
+              | select(.isAvailable == true and (.name | test("^iPhone [0-9]+$")))
+              | {udid, name, rt: $rt, n: (.name | capture("^iPhone (?<n>[0-9]+)$").n | tonumber)} ]
+            | sort_by([.rt, .n]) | last | "\(.udid) \(.name)"')
+          if [ -z "${UDID:-}" ] || [ "$UDID" = "null" ]; then
+            echo "::error::No available plain iPhone simulator found"
+            exit 1
+          fi
+          echo "Resolved simulator: ${NAME} (${UDID})"
+          echo "udid=$UDID" >> "$GITHUB_OUTPUT"
+          echo "name=$NAME" >> "$GITHUB_OUTPUT"
+          # Booting an already-booted device is an error, hence the tolerance
+          xcrun simctl boot "$UDID" || true
+          xcrun simctl bootstatus "$UDID" -b
 
       - name: Build shared framework
         run: |
@@ -126,7 +147,17 @@ jobs:
           
           # Run the Gradle task with Xcode environment
           ./gradlew :shared:embedAndSignAppleFrameworkForXcode
-      
+
+      # Reuses the header of the framework just linked. Only check and selftest run here:
+      # the baseline mode is never run in CI (re-baselining belongs in the commit that
+      # updates the Swift call sites, see scripts/README.md).
+      - name: Swift names gate
+        env:
+          SWIFT_GATE_HEADER: ${{ github.workspace }}/shared/build/bin/iosSimulatorArm64/debugFramework/shared.framework/Headers/shared.h
+        run: |
+          bash scripts/swift-names-gate.sh check
+          bash scripts/swift-names-gate.sh selftest
+
       - name: Run shared and core iOS tests
         run: ./gradlew :shared:iosSimulatorArm64Test :core:model:iosSimulatorArm64Test :core:data:iosSimulatorArm64Test :core:testing:iosSimulatorArm64Test
 
@@ -203,17 +234,70 @@ jobs:
             -resolvePackageDependencies
           echo "Package dependencies resolved."
 
-      - name: Build iOS App for Simulator
+      # One build of the app and its test bundle; the tests run from these products below.
+      - name: Build app and tests for testing
+        env:
+          SIM_UDID: ${{ steps.sim.outputs.udid }}
         run: |
-          echo "Starting iOS build..."
+          echo "Starting iOS build for testing..."
           xcodebuild \
             -project iosApp/iosApp.xcodeproj \
             -scheme "iosApp" \
+            -testPlan iosApp \
             -configuration Debug \
-            -destination "platform=iOS Simulator,name=${{ steps.sim.outputs.device_name }}" \
+            -destination "platform=iOS Simulator,id=$SIM_UDID" \
             -derivedDataPath build \
-            build \
+            build-for-testing \
             CODE_SIGNING_ALLOWED=NO \
             CODE_SIGNING_REQUIRED=NO \
             CODE_SIGN_IDENTITY="" \
             PROVISIONING_PROFILE=""
+
+      # No retry, no iteration and no failure tolerance on purpose: a flaky test must fail
+      # the job. The result bundle lives outside the cached build/ directory and must not
+      # pre-exist. xcodebuild exits 0 on a zero-test run, which the next step catches.
+      - name: Run Swift tests
+        env:
+          SIM_UDID: ${{ steps.sim.outputs.udid }}
+        run: |
+          rm -rf "$RUNNER_TEMP/ios-tests.xcresult"
+          xcodebuild \
+            -project iosApp/iosApp.xcodeproj \
+            -scheme "iosApp" \
+            -testPlan iosApp \
+            -configuration Debug \
+            -destination "platform=iOS Simulator,id=$SIM_UDID" \
+            -derivedDataPath build \
+            -resultBundlePath "$RUNNER_TEMP/ios-tests.xcresult" \
+            -parallel-testing-enabled NO \
+            test-without-building
+
+      - name: Assert tests executed
+        shell: bash
+        run: |
+          bash scripts/xcresult-assert-tests.sh selftest
+          bash scripts/xcresult-assert-tests.sh "$RUNNER_TEMP/ios-tests.xcresult" | tee -a "$GITHUB_STEP_SUMMARY"
+
+      - name: Job summary
+        if: always()
+        env:
+          XCODE_VERSION: ${{ steps.xcode.outputs.version }}
+          SIM_NAME: ${{ steps.sim.outputs.name }}
+          SIM_UDID: ${{ steps.sim.outputs.udid }}
+        run: |
+          {
+            echo "### iOS tests"
+            echo ""
+            echo "- Xcode: ${XCODE_VERSION}"
+            echo "- Simulator: ${SIM_NAME} (${SIM_UDID})"
+          } >> "$GITHUB_STEP_SUMMARY"
+
+      # Test logs only (built with the mock GoogleService-Info.plist, no secrets)
+      - name: Upload test results
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: ios-xcresult
+          path: ${{ runner.temp }}/ios-tests.xcresult
+          if-no-files-found: ignore
+          retention-days: 7

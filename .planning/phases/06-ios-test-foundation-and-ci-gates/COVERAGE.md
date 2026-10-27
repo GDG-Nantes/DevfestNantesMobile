@@ -1,0 +1,1 @@
+No external API integration: Phase 6 only adds an iOS test target, test plan, CI test lane and bash gates, and bumps the version of an already-integrated library (KMP-NativeCoroutines SPM pin to 1.0.6, Swift API unchanged); no service, endpoint or SDK surface is newly integrated.

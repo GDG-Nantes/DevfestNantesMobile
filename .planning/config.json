@@ -1,5 +1,6 @@
 {
   "model_profile": "adaptive",
+  "response_language": "English",
   "commit_docs": true,
   "parallelization": true,
   "search_gitignored": false,

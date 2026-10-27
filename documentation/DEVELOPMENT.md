@@ -97,6 +97,29 @@ Firebase on iOS needs `iosApp/iosApp/GoogleService-Info.plist`, which is not com
 maintainer for it (CI generates a mock one, see `.github/workflows/ios.yml`). Release builds and App Store uploads
 are covered in [iOS_BUILD_DSYM.md](iOS_BUILD_DSYM.md) and `scripts/README.md`.
 
+### Swift tests
+
+The iOS unit tests use Swift Testing (shipped with the Xcode toolchain), live in
+`iosApp/DevFestNantesTests/` and run hosted in the app (`@testable import DevFest_Nantes`). The
+`iosApp` scheme runs them through the committed `iosApp/iosApp.xctestplan`. In Debug builds the app skips Firebase
+and Koin start-up when launched by XCTest (`XCTestConfigurationFilePath` is set; the switch is
+compiled out of Release), so tests must not create a ViewModel (its initializer starts Koin): test
+static or pure helpers instead. A future UI-test target must not rely on this switch, since it would
+render an empty window. Pick a simulator with
+`xcrun simctl list devices available`, then:
+
+```bash
+xcodebuild -project iosApp/iosApp.xcodeproj -scheme iosApp -testPlan iosApp \
+  -destination 'platform=iOS Simulator,id=<udid>' -derivedDataPath build \
+  build-for-testing CODE_SIGNING_ALLOWED=NO
+xcodebuild -project iosApp/iosApp.xcodeproj -scheme iosApp -testPlan iosApp \
+  -destination 'platform=iOS Simulator,id=<udid>' -derivedDataPath build \
+  -parallel-testing-enabled NO test-without-building
+```
+
+For a quick local run, the single `xcodebuild ... -testPlan iosApp test` form works too. Test
+names are snake_case sentences, as on Android.
+
 ## Testing
 
 Tests use JUnit 4, `kotlin.test` assertions, kotlinx-coroutines-test, Turbine and Robolectric. There
@@ -132,6 +155,7 @@ Where tests live:
 | Store contract (fake and real) | `core/data/src/commonTest/` | `DevFestNantesStoreContractTest`, `GraphQLStoreMockServerTest` |
 | Live API (manual) | `core/data/src/jvmTest/` | `GraphQLStoreLiveNetworkTest` |
 | Instrumented smoke tests | `feature/<name>/src/androidTest/` | `SettingsSmokeTest` |
+| iOS Swift unit tests | `iosApp/DevFestNantesTests/` | `SessionFilterTests`, `AgendaDateParsingTests` |
 
 Conventions: test names are snake_case sentences (`french_filter_keeps_the_four_french_sessions`),
 expected values reference fixtures rather than retyped literals, and `*CharacterizationTest` classes
@@ -143,11 +167,33 @@ pin current behavior, including known defects.
 ./gradlew detekt               # Detekt + ktlint rules (config: linters/detekt-config.yml)
 ./gradlew lint                 # Android lint
 bash scripts/di-gate.sh        # DI gate: no Hilt/Dagger, no service locator outside DI wiring
+bash scripts/swift-names-gate.sh check   # macOS: Swift names of exported Kotlin types unchanged
+                               # (links the shared framework unless SWIFT_GATE_HEADER is set)
+bash scripts/kmp-nc-version-gate.sh      # KMP-NativeCoroutines: Gradle and SPM versions identical
+                               # (pure text check, runs anywhere; first step of ios.yml)
 ```
 
-All three run in CI (`.github/workflows/android.yml`) together with unit tests, instrumented tests
-on API 34 and a debug build. `.github/workflows/ios.yml` builds the shared framework, runs the KMP
-iOS tests and builds the iOS app.
+The detekt, lint and DI checks run in CI (`.github/workflows/android.yml`) together with unit tests,
+instrumented tests on API 34 and a debug build. `.github/workflows/ios.yml` starts with the
+KMP-NativeCoroutines version gate (`check` then `selftest`), builds the shared framework, runs the Swift
+names gate (`check` then `selftest`, reusing the header just linked), runs the KMP
+iOS tests, then builds the app and its Swift tests once (`build-for-testing`) and runs them with
+`test-without-building` through `iosApp.xctestplan` on the newest iPhone simulator (selected and
+booted by UDID, tests not parallelised, no retries). The job fails when the result bundle reports
+zero executed tests, only skipped tests or any failure (`scripts/xcresult-assert-tests.sh`, which
+has a `selftest` mode), because `xcodebuild` itself exits 0 on a zero-test run. The DerivedData
+cache is keyed on the selected Xcode version, the job summary lists the Xcode version, the
+simulator and the test counts, and the `.xcresult` is uploaded as an artifact when the job fails.
+
+### Bumping KMP-NativeCoroutines
+
+The version must be identical in `gradle/libs.versions.toml` (`kmpNativeCoroutines`) and in the
+KMP-NativeCoroutines Swift package of `iosApp/iosApp.xcodeproj` (requirement "Exact Version").
+Dependabot only bumps the Gradle side, so its pull request fails the iOS gate
+(`KMPNC-VERSION-SKEW`) until the pin is updated by hand: Xcode > Package Dependencies >
+KMP-NativeCoroutines > Exact Version, or the `version` line of its `XCRemoteSwiftPackageReference`
+in `project.pbxproj`. Then re-run `bash scripts/kmp-nc-version-gate.sh`. A range, branch or
+revision requirement is rejected too (`KMPNC-SPM-NOT-EXACT`).
 
 ## Build Configuration
 

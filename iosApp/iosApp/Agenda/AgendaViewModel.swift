@@ -153,6 +153,11 @@ class AgendaViewModel: BaseViewModel {
     
     ///Method to convert a date in string format to ISO 8601 format
     func getDate(date: String) -> Date {
+        return AgendaViewModel.parseDate(date)
+    }
+
+    ///Static so tests can call it without creating a ViewModel (its initializer starts Koin)
+    static func parseDate(_ date: String) -> Date {
         let newFormatter = ISO8601DateFormatter()
         return newFormatter.date(from: date) ?? Date() // replace Date String
     }

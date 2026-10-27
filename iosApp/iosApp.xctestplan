@@ -1,0 +1,22 @@
+{
+  "configurations" : [
+    {
+      "id" : "A3C33CDE-AB13-4A0A-98BA-03E993475140",
+      "name" : "Default",
+      "options" : {}
+    }
+  ],
+  "defaultOptions" : {
+    "codeCoverage" : false
+  },
+  "testTargets" : [
+    {
+      "target" : {
+        "containerPath" : "container:iosApp.xcodeproj",
+        "identifier" : "48271312CBCC986AA4EA1DCC",
+        "name" : "DevFestNantesTests"
+      }
+    }
+  ],
+  "version" : 1
+}

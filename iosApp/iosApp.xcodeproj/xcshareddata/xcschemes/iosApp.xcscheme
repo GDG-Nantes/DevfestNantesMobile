@@ -27,21 +27,13 @@
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       shouldUseLaunchSchemeArgsEnv = "YES"
-      disableMainThreadChecker = "YES"
-      codeCoverageEnabled = "YES">
-      <Testables>
-         <TestableReference
-            skipped = "NO"
-            parallelizable = "YES">
-            <BuildableReference
-               BuildableIdentifier = "primary"
-               BlueprintIdentifier = "CB3979CC2919B78E00BDAE6F"
-               BuildableName = "DevFest NantesTests.xctest"
-               BlueprintName = "DevFest NantesTests"
-               ReferencedContainer = "container:iosApp.xcodeproj">
-            </BuildableReference>
-         </TestableReference>
-      </Testables>
+      disableMainThreadChecker = "YES">
+      <TestPlans>
+         <TestPlanReference
+            reference = "container:iosApp.xctestplan"
+            default = "YES">
+         </TestPlanReference>
+      </TestPlans>
    </TestAction>
    <LaunchAction
       buildConfiguration = "Debug"
