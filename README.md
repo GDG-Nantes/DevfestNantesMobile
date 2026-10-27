@@ -106,6 +106,10 @@ instructions are in [documentation/DEVELOPMENT.md](documentation/DEVELOPMENT.md)
 # Instrumented smoke tests (device or emulator)
 ./gradlew connectedDebugAndroidTest
 
+# iOS Swift tests (macOS, Xcode)
+xcodebuild -project iosApp/iosApp.xcodeproj -scheme iosApp -testPlan iosApp \
+  -destination 'platform=iOS Simulator,name=<simulator name>' test
+
 # Static analysis and DI gate
 ./gradlew detekt lint
 bash scripts/di-gate.sh
@@ -114,7 +118,8 @@ bash scripts/di-gate.sh
 ./gradlew koverHtmlReport
 ```
 
-Tests use JUnit 4, Turbine, Robolectric and hand-written fakes from `core/testing`. CI runs on GitHub
+Android and shared tests use JUnit 4, Turbine, Robolectric and hand-written fakes from
+`core/testing`; iOS tests use Swift Testing. CI runs on GitHub
 Actions (`.github/workflows/android.yml` and `ios.yml`). See
 [documentation/DEVELOPMENT.md](documentation/DEVELOPMENT.md#testing) for test layout and
 conventions.

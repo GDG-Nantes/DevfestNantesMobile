@@ -88,3 +88,28 @@ This directory contains build and utility scripts for the DevFest Nantes iOS app
 - Typically not needed (handled automatically by build scripts)
 
 ---
+
+### `xcresult-assert-tests.sh`
+**iOS test-result assertion** - Fails when an `.xcresult` bundle executed no test.
+
+```bash
+bash scripts/xcresult-assert-tests.sh <path-to.xcresult>
+bash scripts/xcresult-assert-tests.sh selftest
+```
+
+**What it does:**
+- Reads the test counts of an `.xcresult` bundle (`xcrun xcresulttool get test-results summary`)
+- Fails when zero tests executed, when every test was skipped, or when any test failed
+  (`xcodebuild test-without-building` exits 0 on a zero-test run, so its exit code is not enough)
+- Prints `XCRESULT-TESTS total=.. passed=.. failed=.. skipped=..`, then `XCRESULT-OK` or a failure token
+- `selftest` mode proves the decision logic on fixture summaries and prints `XCRESULT-SELFTEST-OK`
+- Used by `.github/workflows/ios.yml`; asserts no fixed test count
+
+**Requirements:**
+- Xcode command-line tools (`xcrun xcresulttool`) and `jq`
+
+**Exit codes:**
+- `0` = at least one test ran and every executed test passed
+- `1` = no test executed, a test failed, or the bundle is missing or unreadable
+
+---
