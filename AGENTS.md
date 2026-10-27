@@ -60,6 +60,10 @@ Rules:
 - Tests: JUnit 4 + `kotlin.test` + Turbine. Use the hand-written fakes in `core/testing` and the
   fixtures in `core/model/.../stubs/`; there is no mocking library. Test names are snake_case
   sentences.
+- Write all GSD planning artifacts (`.planning/**`: PROJECT, REQUIREMENTS, ROADMAP, STATE, phase
+  CONTEXT/RESEARCH/PLAN/SUMMARY, discussion logs, phase titles and slugs) in English, even when the
+  conversation is in another language. `.planning/config.json` sets `response_language` to
+  `English` for the same reason.
 - When you change something the docs describe (a module, a command, a version), update
   `README.md` / `documentation/` in the same change.
 
