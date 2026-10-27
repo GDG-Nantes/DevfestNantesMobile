@@ -4,12 +4,11 @@ milestone: v1.1
 milestone_name: iOS Architecture
 current_phase: 7
 current_phase_name: KMP Domain Layer and Android Adoption
-status: planning
+status: "Phase 06 shipped — PR #430"
 stopped_at: Phase 06 complete, ready to plan Phase 7
-last_updated: "2026-10-27T13:48:47.508Z"
+last_updated: "2026-10-27T17:26:56.786Z"
 last_activity: 2026-10-27
-last_activity_desc: Phase 06 complete, transitioned to Phase 7
-state_head: b899805eb9a241055ff864b5ebf5e7cea35855ec
+state_head: 5bf18da9b60c88a098b098a5a3a50dfca2c6d08d
 progress:
   total_phases: 7
   completed_phases: 6
@@ -31,8 +30,8 @@ See: .planning/PROJECT.md (updated 2026-10-27)
 
 Phase: 7 — KMP Domain Layer and Android Adoption
 Plan: Not started
-Status: Ready to plan
-Last activity: 2026-10-27 — Phase 06 complete, transitioned to Phase 7
+Status: Phase 06 shipped — PR #430
+Last activity: 2026-10-27
 
 Progress: [█████░░░░░] 50%
 
