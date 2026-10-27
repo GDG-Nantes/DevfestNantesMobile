@@ -5,17 +5,17 @@ milestone_name: iOS Architecture
 current_phase: 06
 current_phase_name: iOS Test Foundation and CI Gates
 status: executing
-stopped_at: Phase 6 context gathered
-last_updated: "2026-10-27T08:05:55.989Z"
+stopped_at: Completed 06-06-PLAN.md
+last_updated: "2026-10-27T13:21:52.933Z"
 last_activity: 2026-10-27
 last_activity_desc: Phase 06 execution started
-state_head: b827b531eb03331e2ca0ba8014e7d7016c7a057b
+state_head: 642a559ecd488ba812a45cba277c0e58c3885f2e
 progress:
   total_phases: 7
   completed_phases: 5
   total_plans: 6
-  completed_plans: 0
-  percent: 0
+  completed_plans: 6
+  percent: 71
 ---
 
 # Project State
@@ -30,11 +30,11 @@ See: .planning/PROJECT.md (updated 2026-10-23)
 ## Current Position
 
 Phase: 06 (iOS Test Foundation and CI Gates) — EXECUTING
-Plan: 1 of 6
-Status: Executing Phase 06
-Last activity: 2026-10-27 — Phase 06 execution started
+Plan: 6 of 6 (all plans have SUMMARY)
+Status: Phase 06 execution complete, ready for verification
+Last activity: 2026-10-27 — Completed 06-06 (parity smoke approved)
 
-Progress: [░░░░░░░░░░] 0%
+Progress: [███████░░░] 71%
 
 ## Performance Metrics
 
@@ -101,6 +101,7 @@ Progress: [░░░░░░░░░░] 0%
 | Phase 05 P09 | 30 min | 2 tasks | 5 files |
 | Phase 05 P10 | 1h 30m | 3 tasks | 6 files |
 | Phase 05 P11 | 30 min | 3 tasks | 7 files |
+| Phase 06 P06 | 95min | 2 tasks | 11 files |
 
 ## Accumulated Context
 
@@ -164,6 +165,7 @@ Recent decisions affecting current work:
 - [Phase 05]: 05-09: no packaging excludes were needed for feature androidTest APKs; Settings smoke test overrides DataCollectionSettingsService with a private recording fake
 - [Phase 05]: 05-10: smoke tests assert reachable content (first day tab + scroll-to-node), never scroll position; session detail smoke test fakes the FeedbackFlags seam so no remote config is created
 - [Phase 05]: 05-11: kotlinx-datetime resolves to 0.8.0-0.6.x-compat (OpenFeedback 1.0.0-alpha.3 links the 0.6.x Instant/Clock classes); first-party code on kotlin.time.Instant, shared.h unchanged, R8 suppressions removed, OpenFeedbackDatetimeLinkageTest guards the bridge (G-05-3) — Keeps the newest library, restores the runtime classes, and a plain bump past 0.8.x now fails CI; UAT test 3 re-checked on device and passed 2026-10-16
+- [Phase 06]: 06-06: KMP-NativeCoroutines 1.0.6 bump (21b58bc) kept after human-approved v1.0 parity smoke; Xcode GUI build x86_64 JDK issue logged as dev-environment debt
 
 ### Pending Todos
 
@@ -253,9 +255,9 @@ Items acknowledged and deferred at milestone close, most recent first:
 
 ## Session Continuity
 
-Last session: 2026-10-26T13:52:09.441Z
-Stopped at: Phase 6 context gathered
-Resume file: .planning/phases/06-ios-test-foundation-and-ci-gates/06-CONTEXT.md
+Last session: 2026-10-27T13:21:52.914Z
+Stopped at: Completed 06-06-PLAN.md
+Resume file: None
 
 ## Operator Next Steps
 

@@ -47,7 +47,7 @@ Research context: `.planning/research/SUMMARY.md` (and STACK/FEATURES/ARCHITECTU
 
 - [ ] **CONC-01**: All packages and the app target compile in Swift 6 language mode with complete concurrency checking and zero warnings
 - [ ] **CONC-02**: The Kotlin bridges (`asyncFunction`/`asyncSequence`, `@unchecked Sendable` conformances limited to immutable Kotlin types) are confined to the bridge package, enforced by a CI gate
-- [ ] **CONC-03**: KMP-NativeCoroutines is at the same version (1.0.6) on the Swift (SPM) and Gradle sides, verified by a CI gate
+- [x] **CONC-03**: KMP-NativeCoroutines is at the same version (1.0.6) on the Swift (SPM) and Gradle sides, verified by a CI gate
 
 ### IOSTEST (iOS tests & CI)
 
@@ -109,7 +109,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | IOSMOD-03 | Phase 11 | Pending |
 | CONC-01 | Phase 12 | Pending |
 | CONC-02 | Phase 12 | Pending |
-| CONC-03 | Phase 6 | Pending |
+| CONC-03 | Phase 6 | Complete |
 | IOSTEST-01 | Phase 8 | Pending |
 | IOSTEST-02 | Phase 12 | Pending |
 | IOSTEST-03 | Phase 6 | Pending |
