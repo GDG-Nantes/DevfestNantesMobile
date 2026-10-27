@@ -101,9 +101,11 @@ are covered in [iOS_BUILD_DSYM.md](iOS_BUILD_DSYM.md) and `scripts/README.md`.
 
 The iOS unit tests use Swift Testing (shipped with the Xcode toolchain), live in
 `iosApp/DevFestNantesTests/` and run hosted in the app (`@testable import DevFest_Nantes`). The
-`iosApp` scheme runs them through the committed `iosApp/iosApp.xctestplan`. The app skips Firebase
-and Koin start-up when launched by XCTest, so tests must not create a ViewModel (its initializer
-starts Koin): test static or pure helpers instead. Pick a simulator with
+`iosApp` scheme runs them through the committed `iosApp/iosApp.xctestplan`. In Debug builds the app skips Firebase
+and Koin start-up when launched by XCTest (`XCTestConfigurationFilePath` is set; the switch is
+compiled out of Release), so tests must not create a ViewModel (its initializer starts Koin): test
+static or pure helpers instead. A future UI-test target must not rely on this switch, since it would
+render an empty window. Pick a simulator with
 `xcrun simctl list devices available`, then:
 
 ```bash
