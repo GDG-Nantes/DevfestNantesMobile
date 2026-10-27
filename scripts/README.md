@@ -113,3 +113,40 @@ bash scripts/xcresult-assert-tests.sh selftest
 - `1` = no test executed, a test failed, or the bundle is missing or unreadable
 
 ---
+
+### `swift-names-gate.sh`
+**Swift-visible-name gate** - Guards the Swift names of the Kotlin types exported by `shared.framework`.
+
+```bash
+bash scripts/swift-names-gate.sh check      # compare the current shared.h with the baselines
+bash scripts/swift-names-gate.sh selftest   # prove check catches an identity swap and a new collision
+bash scripts/swift-names-gate.sh baseline   # regenerate the baselines (see the rule below)
+```
+
+**What it does:**
+- Derives the Swift names (`swift_name(...)`) from the `shared.framework` header (`shared.h`)
+- `check` fails with `SWIFT-NAME-MISSING <name>` when a name referenced from `iosApp` Swift sources is
+  gone or renamed, `SWIFT-MEMBERS-CHANGED <Type>` when a referenced type's member set differs
+  (identity swap behind an unchanged name), `SWIFT-TYPE-COLLISION <name>` for a new `_`-suffixed
+  collision, and `SWIFT-NAME-COLLISION baseline=.. current=..` when the collision count changes;
+  prints `SWIFT-NAMES-OK` on success
+- `selftest` builds doctored header copies and prints `SWIFT-GATE-SELFTEST-OK` when both are caught
+- A missing or empty header fails (never `SWIFT-NAMES-OK`); names are compared byte-wise (`LC_ALL=C`)
+- Baselines live in `scripts/swift-names/` (`shared-h-baseline.txt`, `referenced-names.txt`,
+  `members-baseline.txt`, `names-exclude.txt`)
+- `SWIFT_GATE_HEADER=<path to shared.h>` reuses an existing header; without it the script links
+  `:shared:linkDebugFrameworkIosSimulatorArm64` itself
+- CI (`.github/workflows/ios.yml`) runs `check` then `selftest` right after the shared framework build
+
+**Re-baseline rule:** run `baseline` only in the same commit that updates the Swift call sites of a
+renamed or newly referenced Kotlin export, and give the reason in the commit message. Never run it
+to silence a failing `check`; CI never runs it.
+
+**Requirements:**
+- macOS (`selftest` uses BSD `sed -i ''`), `git`, and a built `shared.framework` header or Gradle
+
+**Exit codes:**
+- `0` = `check` / `selftest` passed (or `baseline` written)
+- `1` = a name is missing or changed, the header is missing or empty, or `selftest` failed
+
+---
