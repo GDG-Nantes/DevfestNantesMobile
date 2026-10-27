@@ -14,10 +14,15 @@ var remoteConfig = RemoteConfig.remoteConfig()
 @main
 struct iOSApp: App {
 
-    /// True only when this process hosts an XCTest / Swift Testing run.
+    /// True only when this process hosts an XCTest / Swift Testing run (the runner sets
+    /// `XCTestConfigurationFilePath`). Compiled out of Release builds so the shipped app can
+    /// never take the "render nothing" path, whatever is injected into its process.
+    #if DEBUG
     static let isRunningTests: Bool =
         ProcessInfo.processInfo.environment["XCTestConfigurationFilePath"] != nil
-        || NSClassFromString("XCTestCase") != nil
+    #else
+    static let isRunningTests = false
+    #endif
 
     init() {
         // The test bundle is hosted by the app: skip the real start-up so tests stay hermetic.
