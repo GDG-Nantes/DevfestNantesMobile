@@ -12,15 +12,21 @@
 # test) and the keys totalTestCount, passedTests, failedTests, skippedTests. A key that
 # is missing or not a number reads as 0, so a schema change fails closed. When the summary
 # also carries an overall `result`, it must be "Passed": a run that died partway (some
-# tests passed, none failed) reports another result and is rejected.
+# tests passed, none failed) reports another result and is rejected. Every other value is
+# rejected too, including ones Xcode may use for runs that are arguably fine (for example
+# a test marked with `withKnownIssue` / `XCTExpectFailure`). Unknown values fail closed on
+# purpose: if a legitimate run trips XCRESULT-RESULT-NOT-PASSED, add the exact value the
+# token prints to ACCEPTED_RESULTS below, with a selftest case.
 #
 # Output tokens (stdout, one per line; the first line is always XCRESULT-TESTS unless
 # the bundle is missing or unreadable):
 #   XCRESULT-TESTS total=<n> passed=<n> failed=<n> skipped=<n>
 #   XCRESULT-OK                    every executed test passed, at least one ran (exit 0)
 #   XCRESULT-NO-TESTS-EXECUTED     total < 1, or no test passed (all skipped) (exit 1)
-#   XCRESULT-TESTS-FAILED          at least one test failed, or the bundle's own overall
-#                                  result is not "Passed" (exit 1)
+#   XCRESULT-TESTS-FAILED          at least one test failed (exit 1)
+#   XCRESULT-RESULT-NOT-PASSED result=<value>
+#                                  counts look clean but the bundle's own overall result
+#                                  is not an accepted value (exit 1)
 #   XCRESULT-MISSING <path>        the bundle directory does not exist (exit 1)
 #   XCRESULT-SUMMARY-UNREADABLE    xcresulttool failed or its output is not JSON (exit 1)
 #   XCRESULT-SELFTEST-OK / XCRESULT-SELFTEST-FAILED <case>   selftest mode
@@ -50,6 +56,10 @@ SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 REPO_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd)"
 SELF="${SCRIPT_DIR}/$(basename "${BASH_SOURCE[0]}")"
 
+# Overall `result` values that count as a passing run. Extend only with a value observed
+# in a real bundle (copy it from the XCRESULT-RESULT-NOT-PASSED line).
+ACCEPTED_RESULTS=("Passed")
+
 if [ "$#" -ne 1 ] || [ -z "${1:-}" ]; then
   echo "Usage: $0 <path-to.xcresult>|selftest" >&2
   exit 1
@@ -59,6 +69,15 @@ ARG="$1"
 # count <summary-json> <key>: the key as a non-negative integer, 0 when absent or not a number.
 count() {
   printf '%s' "$1" | jq -r --arg k "$2" '(.[$k] // 0) | if type == "number" then floor else 0 end'
+}
+
+# result_accepted <value>: whether an overall result is in ACCEPTED_RESULTS.
+result_accepted() {
+  local accepted
+  for accepted in "${ACCEPTED_RESULTS[@]}"; do
+    [ "$1" = "$accepted" ] && return 0
+  done
+  return 1
 }
 
 # assert_summary <summary-json>: print the token lines and exit with the verdict.
@@ -84,8 +103,8 @@ assert_summary() {
   # Overall verdict of the run itself, checked last: the zero-test fixture legitimately
   # reports "unknown", which the checks above already turn into NO-TESTS-EXECUTED.
   result="$(printf '%s' "$summary" | jq -r '.result // empty | if type == "string" then . else "" end')"
-  if [ -n "$result" ] && [ "$result" != "Passed" ]; then
-    echo "XCRESULT-TESTS-FAILED"
+  if [ -n "$result" ] && ! result_accepted "$result"; then
+    echo "XCRESULT-RESULT-NOT-PASSED result=$result"
     exit 1
   fi
   echo "XCRESULT-OK"
@@ -149,7 +168,9 @@ mode_selftest() {
   selftest_case "schema-drift-non-numeric-counts" \
     '{"totalTestCount":"3","passedTests":"3"}' 1 "XCRESULT-NO-TESTS-EXECUTED"
   selftest_case "run-died-partway-result-not-passed" \
-    '{"totalTestCount":3,"passedTests":2,"failedTests":0,"skippedTests":0,"result":"Failed"}' 1 "XCRESULT-TESTS-FAILED"
+    '{"totalTestCount":3,"passedTests":2,"failedTests":0,"skippedTests":0,"result":"Failed"}' 1 "XCRESULT-RESULT-NOT-PASSED"
+  selftest_case "unrecognised-result-fails-closed" \
+    '{"totalTestCount":3,"passedTests":3,"failedTests":0,"skippedTests":0,"result":"Expected Failure"}' 1 "XCRESULT-RESULT-NOT-PASSED"
   selftest_case "result-non-string-ignored" \
     '{"totalTestCount":3,"passedTests":3,"failedTests":0,"skippedTests":0,"result":42}' 0 "XCRESULT-OK"
   selftest_case "unreadable-summary" \

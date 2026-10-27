@@ -103,6 +103,10 @@ bash scripts/xcresult-assert-tests.sh selftest
   bundle's overall result is present and not `Passed` (a run that died partway)
   (`xcodebuild test-without-building` exits 0 on a zero-test run, so its exit code is not enough)
 - Prints `XCRESULT-TESTS total=.. passed=.. failed=.. skipped=..`, then `XCRESULT-OK` or a failure token
+- A non-`Passed` overall result has its own token, `XCRESULT-RESULT-NOT-PASSED result=<value>`.
+  Unknown values fail closed on purpose: if a legitimate run trips it (for example once a test
+  uses `withKnownIssue`), add the printed value to `ACCEPTED_RESULTS` in the script, with a
+  selftest case
 - `selftest` mode proves the decision logic on fixture summaries and prints `XCRESULT-SELFTEST-OK`
 - Used by `.github/workflows/ios.yml`; asserts no fixed test count. It reads only the bundle: no
   environment variable can substitute the summary
