@@ -34,7 +34,7 @@ Full details: [milestones/v1.0-ROADMAP.md](milestones/v1.0-ROADMAP.md). Requirem
 
 **Milestone Goal:** Modernize the iOS app to the level of the Android app (business logic shared in KMP, modular SwiftUI app on Observation + strict Swift 6, real test coverage) without any change in user-visible behavior.
 
-- [ ] **Phase 6: iOS Test Foundation and CI Gates** - iOS CI runs real Swift tests on every PR and the Kotlin/Swift interop gates are active
+- [x] **Phase 6: iOS Test Foundation and CI Gates** - iOS CI runs real Swift tests on every PR and the Kotlin/Swift interop gates are active (completed 2026-10-27)
 - [ ] **Phase 7: KMP Domain Layer and Android Adoption** - The agenda/filters/bookmarks logic lives in `:core:domain`, tested on JVM and iOS simulator, and Android uses it with no visible difference
 - [ ] **Phase 8: Modern SwiftUI, iOS 17 and Observation** - iOS 17 everywhere, `@Observable @MainActor` ViewModels tested on fakes, Combine removed
 - [ ] **Phase 9: iOS on Shared Logic and Legacy Persistence** - iOS delegates filtering, grouping and bookmarks/filters to the shared domain without losing v1.0 data
@@ -61,7 +61,7 @@ Full details: [milestones/v1.0-ROADMAP.md](milestones/v1.0-ROADMAP.md). Requirem
   3. `scripts/swift-names-gate.sh` is restored and runs in CI: a change that modifies the Swift name of an exported Kotlin type fails the job
   4. KMP-NativeCoroutines is at 1.0.6 on the SPM side (instead of 1.0.0-ALPHA-45) as on the Gradle side, a CI gate fails if the two versions diverge, and the iOS app behaves as in v1.0
 
-**Plans**: 6/6 plans executed
+**Plans**: 6/6 plans complete
 Plans:
 **Wave 1**
 - [x] 06-01-PLAN.md — App-hosted Swift Testing target `DevFestNantesTests`, `.xctestplan`, XCTest guard in `iOSApp`, first `SessionFilter` test (tracer), then removal of the old target (separate commit)
@@ -186,7 +186,7 @@ Phases execute in numeric order: 6 → 7 → 8 → 9 → 10 → 11 → 12
 | 3. Multi-Module Architecture Extraction | v1.0 | 11/11 | Complete | 2026-09-27 |
 | 4. Hilt to Koin DI Migration | v1.0 | 7/7 | Complete | 2026-10-13 |
 | 5. Test Coverage Retrofit | v1.0 | 11/11 | Complete | 2026-10-16 |
-| 6. iOS Test Foundation and CI Gates | v1.1 | 6/6 | In Progress | - |
+| 6. iOS Test Foundation and CI Gates | v1.1 | 6/6 | Complete    | 2026-10-27 |
 | 7. KMP Domain Layer and Android Adoption | v1.1 | 0/? | Not started | - |
 | 8. Modern SwiftUI, iOS 17 and Observation | v1.1 | 0/? | Not started | - |
 | 9. iOS on Shared Logic and Legacy Persistence | v1.1 | 0/? | Not started | - |

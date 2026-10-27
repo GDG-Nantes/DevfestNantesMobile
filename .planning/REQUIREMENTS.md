@@ -53,8 +53,8 @@ Research context: `.planning/research/SUMMARY.md` (and STACK/FEATURES/ARCHITECTU
 
 - [ ] **IOSTEST-01**: The obsolete test target (`DevFest NantesTests`) is replaced; each iOS ViewModel has Swift Testing tests on fakes
 - [ ] **IOSTEST-02**: Each iOS feature has a SwiftUI smoke test (rendered via `UIHostingController`)
-- [ ] **IOSTEST-03**: iOS CI runs `xcodebuild test` via a test plan including the package tests, fails if no test is run, and its cache key includes the Xcode version
-- [ ] **IOSTEST-04**: `swift-names-gate.sh` is restored in `scripts/` and run in CI
+- [x] **IOSTEST-03**: iOS CI runs `xcodebuild test` via a test plan including the package tests, fails if no test is run, and its cache key includes the Xcode version
+- [x] **IOSTEST-04**: `swift-names-gate.sh` is restored in `scripts/` and run in CI
 
 ### DOC (Documentation)
 
@@ -112,8 +112,8 @@ Which phases cover which requirements. Updated during roadmap creation.
 | CONC-03 | Phase 6 | Complete |
 | IOSTEST-01 | Phase 8 | Pending |
 | IOSTEST-02 | Phase 12 | Pending |
-| IOSTEST-03 | Phase 6 | Pending |
-| IOSTEST-04 | Phase 6 | Pending |
+| IOSTEST-03 | Phase 6 | Complete |
+| IOSTEST-04 | Phase 6 | Complete |
 | DOC-01 | Phase 12 | Pending |
 
 **Coverage:**
