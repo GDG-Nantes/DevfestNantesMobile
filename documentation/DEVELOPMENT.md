@@ -169,7 +169,13 @@ bash scripts/di-gate.sh        # DI gate: no Hilt/Dagger, no service locator out
 
 All three run in CI (`.github/workflows/android.yml`) together with unit tests, instrumented tests
 on API 34 and a debug build. `.github/workflows/ios.yml` builds the shared framework, runs the KMP
-iOS tests and builds the iOS app.
+iOS tests, then builds the app and its Swift tests once (`build-for-testing`) and runs them with
+`test-without-building` through `iosApp.xctestplan` on the newest iPhone simulator (selected and
+booted by UDID, tests not parallelised, no retries). The job fails when the result bundle reports
+zero executed tests, only skipped tests or any failure (`scripts/xcresult-assert-tests.sh`, which
+has a `selftest` mode), because `xcodebuild` itself exits 0 on a zero-test run. The DerivedData
+cache is keyed on the selected Xcode version, the job summary lists the Xcode version, the
+simulator and the test counts, and the `.xcresult` is uploaded as an artifact when the job fails.
 
 ## Build Configuration
 

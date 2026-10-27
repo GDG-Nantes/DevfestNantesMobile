@@ -59,7 +59,7 @@ Rules:
   (see `documentation/VERSIONING.md`).
 - Tests: JUnit 4 + `kotlin.test` + Turbine. Use the hand-written fakes in `core/testing` and the
   fixtures in `core/model/.../stubs/`; there is no mocking library. Test names are snake_case
-  sentences.
+  sentences. iOS: Swift Testing from the Xcode toolchain, no mocking library.
 - Write all GSD planning artifacts (`.planning/**`: PROJECT, REQUIREMENTS, ROADMAP, STATE, phase
   CONTEXT/RESEARCH/PLAN/SUMMARY, discussion logs, phase titles and slugs) in English, even when the
   conversation is in another language. `.planning/config.json` sets `response_language` to
@@ -106,6 +106,9 @@ follow the detailed guidance in the `android-cli` skill's `references/interact.m
   To only check that Kotlin compiles for iOS: `./gradlew :shared:linkDebugFrameworkIosSimulatorArm64`.
 - Build check (pick an available iPhone simulator with `xcrun simctl list devices available`):
   `xcodebuild -project iosApp/iosApp.xcodeproj -scheme iosApp -configuration Debug -destination 'platform=iOS Simulator,name=<simulator name>' build`
+- Swift tests: `xcodebuild -project iosApp/iosApp.xcodeproj -scheme iosApp -testPlan iosApp -destination 'platform=iOS Simulator,name=<simulator name>' test`.
+  They live in the `DevFestNantesTests` target (Swift Testing, hosted by the app, run through
+  `iosApp/iosApp.xctestplan`). iOS CI fails when zero tests run (`scripts/xcresult-assert-tests.sh`).
 - The iOS app needs SwiftGen (`brew install swiftgen`) and a `GoogleService-Info.plist` that is not
   committed. Test SwiftGen configuration changes manually before relying on the build phase.
 - Logging: use `DevFestLogger` (`iosApp/iosApp/Analytics/DevFestLogger.swift`), which wraps the
