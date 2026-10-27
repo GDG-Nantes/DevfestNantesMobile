@@ -99,11 +99,13 @@ bash scripts/xcresult-assert-tests.sh selftest
 
 **What it does:**
 - Reads the test counts of an `.xcresult` bundle (`xcrun xcresulttool get test-results summary`)
-- Fails when zero tests executed, when every test was skipped, or when any test failed
+- Fails when zero tests executed, when every test was skipped, when any test failed, or when the
+  bundle's overall result is present and not `Passed` (a run that died partway)
   (`xcodebuild test-without-building` exits 0 on a zero-test run, so its exit code is not enough)
 - Prints `XCRESULT-TESTS total=.. passed=.. failed=.. skipped=..`, then `XCRESULT-OK` or a failure token
 - `selftest` mode proves the decision logic on fixture summaries and prints `XCRESULT-SELFTEST-OK`
-- Used by `.github/workflows/ios.yml`; asserts no fixed test count
+- Used by `.github/workflows/ios.yml`; asserts no fixed test count. It reads only the bundle: no
+  environment variable can substitute the summary
 
 **Requirements:**
 - Xcode command-line tools (`xcrun xcresulttool`) and `jq`
