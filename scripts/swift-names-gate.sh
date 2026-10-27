@@ -4,12 +4,16 @@
 # Modes:
 #   baseline  - regenerate the current shared.h derived sets (ALL_NAMES,
 #               TYPE_NAMES, MEMBERS), write ALL_NAMES to
-#               03-shared-h-baseline.txt, intersect it with the capitalized
-#               identifiers actually referenced from iosApp's Swift sources
-#               (whole-line comments dropped, exclusions from
-#               03-swift-names-exclude.txt subtracted) and write that to
-#               03-swift-referenced-names.txt, then write the per-type member
-#               sets for every referenced type to 03-swift-members-baseline.txt.
+#               swift-names/shared-h-baseline.txt, intersect it with the
+#               capitalized identifiers actually referenced from iosApp's
+#               Swift sources (whole-line comments dropped, exclusions from
+#               swift-names/names-exclude.txt subtracted) and write that to
+#               swift-names/referenced-names.txt, then write the per-type
+#               member sets for every referenced type to
+#               swift-names/members-baseline.txt.
+#               Run it only in the commit that also updates the Swift call
+#               sites of a renamed or newly referenced Kotlin export; CI runs
+#               only check and selftest.
 #   check     - regenerate the current shared.h derived sets and fail if:
 #                 * SWIFT-NAME-MISSING <name>    - a referenced name is gone
 #                 * SWIFT-TYPE-COLLISION <name>  - a type-level Swift name has
@@ -38,7 +42,7 @@
 # its Headers/shared.h. Used by selftest's doctored copies and by replaying a
 # previously captured header (e.g. a pre-fix snapshot) without rebuilding.
 #
-# Usage: bash swift-names-gate.sh <baseline|check|selftest>
+# Usage: bash scripts/swift-names-gate.sh <baseline|check|selftest>
 
 set -euo pipefail
 
@@ -49,11 +53,11 @@ set -euo pipefail
 export LC_ALL=C
 
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-REPO_ROOT="$(cd "${SCRIPT_DIR}/../../.." && pwd)"
-BASELINE_FILE="${SCRIPT_DIR}/03-shared-h-baseline.txt"
-REFERENCED_FILE="${SCRIPT_DIR}/03-swift-referenced-names.txt"
-MEMBERS_FILE="${SCRIPT_DIR}/03-swift-members-baseline.txt"
-EXCLUDE_FILE="${SCRIPT_DIR}/03-swift-names-exclude.txt"
+REPO_ROOT="$(cd "${SCRIPT_DIR}/.." && pwd)"
+BASELINE_FILE="${SCRIPT_DIR}/swift-names/shared-h-baseline.txt"
+REFERENCED_FILE="${SCRIPT_DIR}/swift-names/referenced-names.txt"
+MEMBERS_FILE="${SCRIPT_DIR}/swift-names/members-baseline.txt"
+EXCLUDE_FILE="${SCRIPT_DIR}/swift-names/names-exclude.txt"
 DEFAULT_SHARED_H="${REPO_ROOT}/shared/build/bin/iosSimulatorArm64/debugFramework/shared.framework/Headers/shared.h"
 
 MODE="${1:-}"

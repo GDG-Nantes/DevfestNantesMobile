@@ -165,10 +165,13 @@ pin current behavior, including known defects.
 ./gradlew detekt               # Detekt + ktlint rules (config: linters/detekt-config.yml)
 ./gradlew lint                 # Android lint
 bash scripts/di-gate.sh        # DI gate: no Hilt/Dagger, no service locator outside DI wiring
+bash scripts/swift-names-gate.sh check   # macOS: Swift names of exported Kotlin types unchanged
+                               # (links the shared framework unless SWIFT_GATE_HEADER is set)
 ```
 
 All three run in CI (`.github/workflows/android.yml`) together with unit tests, instrumented tests
-on API 34 and a debug build. `.github/workflows/ios.yml` builds the shared framework, runs the KMP
+on API 34 and a debug build. `.github/workflows/ios.yml` builds the shared framework, runs the Swift
+names gate (`check` then `selftest`, reusing the header just linked), runs the KMP
 iOS tests, then builds the app and its Swift tests once (`build-for-testing`) and runs them with
 `test-without-building` through `iosApp.xctestplan` on the newest iPhone simulator (selected and
 booted by UDID, tests not parallelised, no retries). The job fails when the result bundle reports

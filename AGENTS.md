@@ -109,6 +109,10 @@ follow the detailed guidance in the `android-cli` skill's `references/interact.m
 - Swift tests: `xcodebuild -project iosApp/iosApp.xcodeproj -scheme iosApp -testPlan iosApp -destination 'platform=iOS Simulator,name=<simulator name>' test`.
   They live in the `DevFestNantesTests` target (Swift Testing, hosted by the app, run through
   `iosApp/iosApp.xctestplan`). iOS CI fails when zero tests run (`scripts/xcresult-assert-tests.sh`).
+- After changing any Kotlin type exported to Swift (`core:model`, `core:data`, `core:analytics`, and
+  `core:domain` from Phase 7), run `bash scripts/swift-names-gate.sh check` (iOS CI runs it too).
+  Regenerate the baselines in `scripts/swift-names/` only in the same commit as the matching Swift
+  call-site update, never to silence a failing check.
 - The iOS app needs SwiftGen (`brew install swiftgen`) and a `GoogleService-Info.plist` that is not
   committed. Test SwiftGen configuration changes manually before relying on the build phase.
 - Logging: use `DevFestLogger` (`iosApp/iosApp/Analytics/DevFestLogger.swift`), which wraps the

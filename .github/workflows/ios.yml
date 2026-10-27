@@ -140,7 +140,17 @@ jobs:
           
           # Run the Gradle task with Xcode environment
           ./gradlew :shared:embedAndSignAppleFrameworkForXcode
-      
+
+      # Reuses the header of the framework just linked. Only check and selftest run here:
+      # the baseline mode is never run in CI (re-baselining belongs in the commit that
+      # updates the Swift call sites, see scripts/README.md).
+      - name: Swift names gate
+        env:
+          SWIFT_GATE_HEADER: ${{ github.workspace }}/shared/build/bin/iosSimulatorArm64/debugFramework/shared.framework/Headers/shared.h
+        run: |
+          bash scripts/swift-names-gate.sh check
+          bash scripts/swift-names-gate.sh selftest
+
       - name: Run shared and core iOS tests
         run: ./gradlew :shared:iosSimulatorArm64Test :core:model:iosSimulatorArm64Test :core:data:iosSimulatorArm64Test :core:testing:iosSimulatorArm64Test
 
