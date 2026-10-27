@@ -1,10 +1,10 @@
-# Phase 6: Socle de tests et gates CI iOS - Discussion Log
+# Phase 6: iOS Test Foundation and CI Gates - Discussion Log
 
 > **Audit trail only.** Do not use as input to planning, research, or execution agents.
 > Decisions are captured in CONTEXT.md — this log preserves the alternatives considered.
 
 **Date:** 2026-10-26
-**Phase:** 6-Socle de tests et gates CI iOS
+**Phase:** 6-iOS Test Foundation and CI Gates
 **Areas discussed:** Premier test réel, Structure du job CI, Restauration des gates, Validation du bump KMP-NC
 
 ---

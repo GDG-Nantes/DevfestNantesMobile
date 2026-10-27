@@ -34,7 +34,7 @@ Full details: [milestones/v1.0-ROADMAP.md](milestones/v1.0-ROADMAP.md). Requirem
 
 **Milestone Goal:** Moderniser l'app iOS au niveau de l'app Android (logique métier partagée en KMP, app SwiftUI modulaire en Observation + Swift 6 strict, couverture de tests réelle) sans aucun changement de comportement utilisateur.
 
-- [ ] **Phase 6: Socle de tests et gates CI iOS** - La CI iOS exécute de vrais tests Swift à chaque PR et les gates d'interop Kotlin/Swift sont actifs
+- [ ] **Phase 6: iOS Test Foundation and CI Gates** - La CI iOS exécute de vrais tests Swift à chaque PR et les gates d'interop Kotlin/Swift sont actifs
 - [ ] **Phase 7: Couche domaine KMP et adoption Android** - La logique agenda/filtres/favoris vit dans `:core:domain`, testée sur JVM et simulateur iOS, et Android l'utilise sans différence visible
 - [ ] **Phase 8: SwiftUI moderne, iOS 17 et Observation** - iOS 17 partout, ViewModels `@Observable @MainActor` testés sur fakes, Combine supprimé
 - [ ] **Phase 9: iOS sur la logique commune et persistance legacy** - iOS délègue filtrage, regroupement et favoris/filtres au domaine partagé sans perdre les données v1.0
@@ -50,7 +50,7 @@ Full details: [milestones/v1.0-ROADMAP.md](milestones/v1.0-ROADMAP.md). Requirem
 
 ## Phase Details
 
-### Phase 6: Socle de tests et gates CI iOS
+### Phase 6: iOS Test Foundation and CI Gates
 
 **Goal**: Chaque PR exécute réellement des tests Swift sur la CI iOS et les gates d'interop Kotlin/Swift sont actifs, pour que chaque refonte iOS suivante dispose d'un signal fiable
 **Depends on**: Phase 5 (v1.0 livrée)
@@ -186,7 +186,7 @@ Les phases s'exécutent dans l'ordre numérique : 6 → 7 → 8 → 9 → 10 →
 | 3. Multi-Module Architecture Extraction | v1.0 | 11/11 | Complete | 2026-09-27 |
 | 4. Hilt to Koin DI Migration | v1.0 | 7/7 | Complete | 2026-10-13 |
 | 5. Test Coverage Retrofit | v1.0 | 11/11 | Complete | 2026-10-16 |
-| 6. Socle de tests et gates CI iOS | v1.1 | 0/6 | Planned | - |
+| 6. iOS Test Foundation and CI Gates | v1.1 | 0/6 | Planned | - |
 | 7. Couche domaine KMP et adoption Android | v1.1 | 0/? | Not started | - |
 | 8. SwiftUI moderne, iOS 17 et Observation | v1.1 | 0/? | Not started | - |
 | 9. iOS sur la logique commune et persistance legacy | v1.1 | 0/? | Not started | - |

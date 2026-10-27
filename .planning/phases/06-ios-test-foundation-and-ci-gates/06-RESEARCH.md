@@ -1,4 +1,4 @@
-# Phase 6: Socle de tests et gates CI iOS - Research
+# Phase 6: iOS Test Foundation and CI Gates - Research
 
 **Researched:** 2026-10-26
 **Domain:** iOS test lane (xcodebuild + `.xctestplan` + Swift Testing, hosted bundle), GitHub Actions macOS CI, bash interop gates, KMP-NativeCoroutines version alignment

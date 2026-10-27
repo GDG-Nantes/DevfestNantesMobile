@@ -1,4 +1,4 @@
-# Phase 6: Socle de tests et gates CI iOS - Pattern Map
+# Phase 6: iOS Test Foundation and CI Gates - Pattern Map
 
 **Mapped:** 2026-10-26
 **Files analyzed:** 17 (new/modified/deleted)

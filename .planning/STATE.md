@@ -3,7 +3,7 @@ gsd_state_version: "1.0"
 milestone: v1.1
 milestone_name: iOS Architecture
 current_phase: 6
-current_phase_name: Socle de tests et gates CI iOS
+current_phase_name: iOS Test Foundation and CI Gates
 status: executing
 stopped_at: Phase 6 context gathered
 last_updated: "2026-10-26T20:45:05.700Z"
@@ -25,11 +25,11 @@ progress:
 See: .planning/PROJECT.md (updated 2026-10-23)
 
 **Core value:** La CI/CD doit refonctionner et le projet doit redevenir maintenable (build moderne, architecture modulaire, DI décentralisée, couverture de tests solide) sans jamais régresser le comportement existant de l'application pour les utilisateurs.
-**Current focus:** Milestone v1.1 iOS Architecture — Phase 6 : Socle de tests et gates CI iOS
+**Current focus:** Milestone v1.1 iOS Architecture — Phase 6 : iOS Test Foundation and CI Gates
 
 ## Current Position
 
-Phase: 6 (Socle de tests et gates CI iOS) — READY TO EXECUTE
+Phase: 6 (iOS Test Foundation and CI Gates) — READY TO EXECUTE
 Plan: Not started
 Status: Ready to execute
 Last activity: 2026-10-23 — Roadmap v1.1 créée (phases 6-12, 27/27 exigences mappées)
@@ -255,7 +255,7 @@ Items acknowledged and deferred at milestone close, most recent first:
 
 Last session: 2026-10-26T13:52:09.441Z
 Stopped at: Phase 6 context gathered
-Resume file: .planning/phases/06-socle-de-tests-et-gates-ci-ios/06-CONTEXT.md
+Resume file: .planning/phases/06-ios-test-foundation-and-ci-gates/06-CONTEXT.md
 
 ## Operator Next Steps
 

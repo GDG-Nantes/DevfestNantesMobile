@@ -1,4 +1,4 @@
-# Phase 6: Socle de tests et gates CI iOS - Context
+# Phase 6: iOS Test Foundation and CI Gates - Context
 
 **Gathered:** 2026-10-26
 **Status:** Ready for planning
@@ -171,5 +171,5 @@ Hors périmètre : tests de ViewModels sur fakes (Phase 8, IOSTEST-01), smoke te
 
 ---
 
-*Phase: 06-socle-de-tests-et-gates-ci-ios*
+*Phase: 06-ios-test-foundation-and-ci-gates*
 *Context gathered: 2026-10-26*
