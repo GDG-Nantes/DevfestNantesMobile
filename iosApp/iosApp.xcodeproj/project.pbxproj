@@ -20,7 +20,6 @@
 		003EC8DD2DF8D7E1000E5689 /* FirebasePerformance in Frameworks */ = {isa = PBXBuildFile; productRef = 003EC8DC2DF8D7E1000E5689 /* FirebasePerformance */; };
 		007DF0992E71D0D4007B2627 /* DevFestLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 007DF0982E71D0D4007B2627 /* DevFestLogger.swift */; };
 		00D442852E6638F100199668 /* SessionFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00D442842E6638F100199668 /* SessionFilter.swift */; };
-		00D442862E6638F100199668 /* SessionFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00D442842E6638F100199668 /* SessionFilter.swift */; };
 		00D442892E6707A600199668 /* AgendaNavigationBarItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00D442872E6707A600199668 /* AgendaNavigationBarItems.swift */; };
 		00D442902E67096900199668 /* ComplexityFilterMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00D4428B2E67096900199668 /* ComplexityFilterMenu.swift */; };
 		00D442912E67096900199668 /* ClearFiltersButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00D4428A2E67096900199668 /* ClearFiltersButton.swift */; };
@@ -39,8 +38,6 @@
 		CB179BEB28D4B48100BB9934 /* Localizable.strings in Resources */ = {isa = PBXBuildFile; fileRef = CB179BE928D4B48100BB9934 /* Localizable.strings */; };
 		CB179BF428D4C33A00BB9934 /* swiftgen.yml in Resources */ = {isa = PBXBuildFile; fileRef = CB179BF328D4C33A00BB9934 /* swiftgen.yml */; };
 		CB179BF628D4C36A00BB9934 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB179BF528D4C36A00BB9934 /* Strings.swift */; };
-		CB3979D02919B78E00BDAE6F /* DevFest_NantesTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB3979CF2919B78E00BDAE6F /* DevFest_NantesTests.swift */; };
-		CB4041DB291A764A000C3CCC /* MockDevFestNantesStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB4041DA291A764A000C3CCC /* MockDevFestNantesStore.swift */; };
 		CB46914329196228004C6120 /* Complexity-extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB46914229196228004C6120 /* Complexity-extension.swift */; };
 		CB46914529196271004C6120 /* SpeakerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB46914429196271004C6120 /* SpeakerView.swift */; };
 		CB4691472919661A004C6120 /* Bundle-extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = CB4691462919661A004C6120 /* Bundle-extension.swift */; };
@@ -71,13 +68,6 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		CB3979D12919B78E00BDAE6F /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 7555FF73242A565900829871 /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 7555FF7A242A565900829871;
-			remoteInfo = "DevFest Nantes";
-		};
 		8A3CD57A23596B509E50B546 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 7555FF73242A565900829871 /* Project object */;
@@ -117,9 +107,6 @@
 		CB179BEC28D4B48E00BB9934 /* fr */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = fr; path = fr.lproj/Localizable.strings; sourceTree = "<group>"; };
 		CB179BF328D4C33A00BB9934 /* swiftgen.yml */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.yaml; path = swiftgen.yml; sourceTree = "<group>"; };
 		CB179BF528D4C36A00BB9934 /* Strings.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
-		CB3979CD2919B78E00BDAE6F /* DevFest NantesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = "DevFest NantesTests.xctest"; sourceTree = BUILT_PRODUCTS_DIR; };
-		CB3979CF2919B78E00BDAE6F /* DevFest_NantesTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevFest_NantesTests.swift; sourceTree = "<group>"; };
-		CB4041DA291A764A000C3CCC /* MockDevFestNantesStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MockDevFestNantesStore.swift; sourceTree = "<group>"; };
 		CB46914229196228004C6120 /* Complexity-extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Complexity-extension.swift"; sourceTree = "<group>"; };
 		CB46914429196271004C6120 /* SpeakerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeakerView.swift; sourceTree = "<group>"; };
 		CB4691462919661A004C6120 /* Bundle-extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Bundle-extension.swift"; sourceTree = "<group>"; };
@@ -161,13 +148,6 @@
 				003EC8DD2DF8D7E1000E5689 /* FirebasePerformance in Frameworks */,
 				003EC8D22DF8D7E1000E5689 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */,
 				003EC8D42DF8D7E1000E5689 /* FirebaseCrashlytics in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		CB3979CA2919B78E00BDAE6F /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -220,7 +200,6 @@
 			children = (
 				7555FF7D242A565900829871 /* iosApp */,
 				70708D92D3C406142E250997 /* DevFestNantesTests */,
-				CB3979CE2919B78E00BDAE6F /* DevFest NantesTests */,
 				7555FF7C242A565900829871 /* Products */,
 				D55A5A220E17EC8ED6D399D0 /* Frameworks */,
 			);
@@ -230,7 +209,6 @@
 			isa = PBXGroup;
 			children = (
 				7555FF7B242A565900829871 /* DevFest Nantes.app */,
-				CB3979CD2919B78E00BDAE6F /* DevFest NantesTests.xctest */,
 				938E1B2393F75FF8A7B71E9B /* DevFestNantesTests.xctest */,
 			);
 			name = Products;
@@ -326,15 +304,6 @@
 			path = Model;
 			sourceTree = "<group>";
 		};
-		CB3979CE2919B78E00BDAE6F /* DevFest NantesTests */ = {
-			isa = PBXGroup;
-			children = (
-				CB3979CF2919B78E00BDAE6F /* DevFest_NantesTests.swift */,
-				CB4041DA291A764A000C3CCC /* MockDevFestNantesStore.swift */,
-			);
-			path = "DevFest NantesTests";
-			sourceTree = "<group>";
-		};
 		CB46914029157375004C6120 /* Common */ = {
 			isa = PBXGroup;
 			children = (
@@ -421,25 +390,6 @@
 			productReference = 7555FF7B242A565900829871 /* DevFest Nantes.app */;
 			productType = "com.apple.product-type.application";
 		};
-		CB3979CC2919B78E00BDAE6F /* DevFest NantesTests */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = CB3979D52919B78F00BDAE6F /* Build configuration list for PBXNativeTarget "DevFest NantesTests" */;
-			buildPhases = (
-				454FFC6B2083FF400649C68F /* [CP] Check Pods Manifest.lock */,
-				CB3979C92919B78E00BDAE6F /* Sources */,
-				CB3979CA2919B78E00BDAE6F /* Frameworks */,
-				CB3979CB2919B78E00BDAE6F /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-				CB3979D22919B78E00BDAE6F /* PBXTargetDependency */,
-			);
-			name = "DevFest NantesTests";
-			productName = "DevFest NantesTests";
-			productReference = CB3979CD2919B78E00BDAE6F /* DevFest NantesTests.xctest */;
-			productType = "com.apple.product-type.bundle.unit-test";
-		};
 		48271312CBCC986AA4EA1DCC /* DevFestNantesTests */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 1605B83340ACD264C072DFF5 /* Build configuration list for PBXNativeTarget "DevFestNantesTests" */;
@@ -472,10 +422,6 @@
 					7555FF7A242A565900829871 = {
 						CreatedOnToolsVersion = 11.3.1;
 					};
-					CB3979CC2919B78E00BDAE6F = {
-						CreatedOnToolsVersion = 14.1;
-						TestTargetID = 7555FF7A242A565900829871;
-					};
 					48271312CBCC986AA4EA1DCC = {
 						CreatedOnToolsVersion = 27.1;
 						TestTargetID = 7555FF7A242A565900829871;
@@ -501,7 +447,6 @@
 			projectRoot = "";
 			targets = (
 				7555FF7A242A565900829871 /* DevFest Nantes */,
-				CB3979CC2919B78E00BDAE6F /* DevFest NantesTests */,
 				48271312CBCC986AA4EA1DCC /* DevFestNantesTests */,
 			);
 		};
@@ -517,13 +462,6 @@
 				058557BB273AAA24004C7B11 /* Assets.xcassets in Resources */,
 				CB179BF428D4C33A00BB9934 /* swiftgen.yml in Resources */,
 				F5BA00E32E7014DA00A31383 /* GoogleService-Info.plist in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		CB3979CB2919B78E00BDAE6F /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -553,28 +491,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "cd \"$SRCROOT/..\"\n./gradlew :shared:embedAndSignAppleFrameworkForXcode\n";
-		};
-		454FFC6B2083FF400649C68F /* [CP] Check Pods Manifest.lock */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
-			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-DevFest NantesTests-checkManifestLockResult.txt",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
-			showEnvVarsInLog = 0;
 		};
 		CB179BED28D4BD7600BB9934 /* SwiftGen */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -670,16 +586,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		CB3979C92919B78E00BDAE6F /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				00D442862E6638F100199668 /* SessionFilter.swift in Sources */,
-				CB4041DB291A764A000C3CCC /* MockDevFestNantesStore.swift in Sources */,
-				CB3979D02919B78E00BDAE6F /* DevFest_NantesTests.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		521F86961B5FB3C2DD590C59 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -691,11 +597,6 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
-		CB3979D22919B78E00BDAE6F /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 7555FF7A242A565900829871 /* DevFest Nantes */;
-			targetProxy = CB3979D12919B78E00BDAE6F /* PBXContainerItemProxy */;
-		};
 		1D6208DEFA79D3A28947338B /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 7555FF7A242A565900829871 /* DevFest Nantes */;
@@ -898,55 +799,6 @@
 			};
 			name = Release;
 		};
-		CB3979D32919B78F00BDAE6F /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 37;
-				DEVELOPMENT_TEAM = ULPJX5LPF7;
-				GENERATE_INFOPLIST_FILE = YES;
-				HEADER_SEARCH_PATHS = "\"${SRCROOT}/Pods/Firebase/CoreOnly/Sources\"";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.DevFest-NantesTests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
-				SUPPORTS_MACCATALYST = NO;
-				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 1;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DevFest Nantes.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/DevFest Nantes";
-			};
-			name = Debug;
-		};
-		CB3979D42919B78F00BDAE6F /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				BUNDLE_LOADER = "$(TEST_HOST)";
-				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 37;
-				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = ULPJX5LPF7;
-				GENERATE_INFOPLIST_FILE = YES;
-				HEADER_SEARCH_PATHS = "\"${SRCROOT}/Pods/Firebase/CoreOnly/Sources\"";
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = "com.DevFest-NantesTests";
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
-				SUPPORTS_MACCATALYST = NO;
-				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
-				SWIFT_EMIT_LOC_STRINGS = NO;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = 1;
-				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DevFest Nantes.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/DevFest Nantes";
-			};
-			name = Release;
-		};
 		99B57C5AA801FB7E89E3A614 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -1011,15 +863,6 @@
 			buildConfigurations = (
 				7555FFA6242A565B00829871 /* Debug */,
 				7555FFA7242A565B00829871 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		CB3979D52919B78F00BDAE6F /* Build configuration list for PBXNativeTarget "DevFest NantesTests" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				CB3979D32919B78F00BDAE6F /* Debug */,
-				CB3979D42919B78F00BDAE6F /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
