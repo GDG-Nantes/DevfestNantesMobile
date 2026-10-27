@@ -164,3 +164,9 @@ None. T-06-04 to T-06-08 mitigations are in place in `ios.yml` (env-only outputs
 
 - `scripts/xcresult-assert-tests.sh` present, executable, mode 100755 in the index; `.github/workflows/ios.yml` parses.
 - Commits 62e72b3 and 0282712 are ancestors of HEAD; `git rev-list --count` from the dispatch base is 2 (before this SUMMARY commit).
+
+## CI Confirmation (orchestrator, after merge)
+
+The pending real run was done after the user authorized pushing the feature branch:
+`ios.yml` workflow_dispatch run 40477853950 on `feature/reno_phase_6` @ b63c696 — **success**, job wall-clock ~18 min (09:03:04 → 09:21:06 UTC), within the 30-minute timeout (A4).
+Log tokens: `Xcode 26.6`, `XCRESULT-SELFTEST-OK`, `XCRESULT-TESTS total=11 passed=11 failed=0 skipped=0`, `XCRESULT-OK` (A1 xcresulttool on 26.6 confirmed; A2 host-app guard confirmed under XCTest on 26.6; A3 no upload-artifact@v4 deprecation warning).
