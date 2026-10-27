@@ -67,10 +67,18 @@
 		F5010D532E730D470048CCCE /* GlassRowContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5010D522E730D470048CCCE /* GlassRowContainer.swift */; };
 		F58368862E70701E001A9B8A /* LiquidGlassButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = F58368852E70701E001A9B8A /* LiquidGlassButtonStyle.swift */; };
 		F5BA00E32E7014DA00A31383 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F5BA00E22E7014DA00A31383 /* GoogleService-Info.plist */; };
+		F58B5AB8B24860681567F470 /* SessionFilterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07FA17E61A9DDADF5C507A31 /* SessionFilterTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
 		CB3979D12919B78E00BDAE6F /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 7555FF73242A565900829871 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 7555FF7A242A565900829871;
+			remoteInfo = "DevFest Nantes";
+		};
+		8A3CD57A23596B509E50B546 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 7555FF73242A565900829871 /* Project object */;
 			proxyType = 1;
@@ -138,6 +146,8 @@
 		F5010D522E730D470048CCCE /* GlassRowContainer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GlassRowContainer.swift; sourceTree = "<group>"; };
 		F58368852E70701E001A9B8A /* LiquidGlassButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiquidGlassButtonStyle.swift; sourceTree = "<group>"; };
 		F5BA00E22E7014DA00A31383 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
+		938E1B2393F75FF8A7B71E9B /* DevFestNantesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DevFestNantesTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		07FA17E61A9DDADF5C507A31 /* SessionFilterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionFilterTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -155,6 +165,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		CB3979CA2919B78E00BDAE6F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		185CC6E187060D1DE09812DF /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -202,6 +219,7 @@
 			isa = PBXGroup;
 			children = (
 				7555FF7D242A565900829871 /* iosApp */,
+				70708D92D3C406142E250997 /* DevFestNantesTests */,
 				CB3979CE2919B78E00BDAE6F /* DevFest NantesTests */,
 				7555FF7C242A565900829871 /* Products */,
 				D55A5A220E17EC8ED6D399D0 /* Frameworks */,
@@ -213,6 +231,7 @@
 			children = (
 				7555FF7B242A565900829871 /* DevFest Nantes.app */,
 				CB3979CD2919B78E00BDAE6F /* DevFest NantesTests.xctest */,
+				938E1B2393F75FF8A7B71E9B /* DevFestNantesTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -371,6 +390,14 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		70708D92D3C406142E250997 /* DevFestNantesTests */ = {
+			isa = PBXGroup;
+			children = (
+				07FA17E61A9DDADF5C507A31 /* SessionFilterTests.swift */,
+			);
+			path = DevFestNantesTests;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -413,6 +440,24 @@
 			productReference = CB3979CD2919B78E00BDAE6F /* DevFest NantesTests.xctest */;
 			productType = "com.apple.product-type.bundle.unit-test";
 		};
+		48271312CBCC986AA4EA1DCC /* DevFestNantesTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1605B83340ACD264C072DFF5 /* Build configuration list for PBXNativeTarget "DevFestNantesTests" */;
+			buildPhases = (
+				521F86961B5FB3C2DD590C59 /* Sources */,
+				185CC6E187060D1DE09812DF /* Frameworks */,
+				D908EDF759F7C0BD7CBBE818 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				1D6208DEFA79D3A28947338B /* PBXTargetDependency */,
+			);
+			name = DevFestNantesTests;
+			productName = DevFestNantesTests;
+			productReference = 938E1B2393F75FF8A7B71E9B /* DevFestNantesTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 /* End PBXNativeTarget section */
 
 /* Begin PBXProject section */
@@ -429,6 +474,10 @@
 					};
 					CB3979CC2919B78E00BDAE6F = {
 						CreatedOnToolsVersion = 14.1;
+						TestTargetID = 7555FF7A242A565900829871;
+					};
+					48271312CBCC986AA4EA1DCC = {
+						CreatedOnToolsVersion = 27.1;
 						TestTargetID = 7555FF7A242A565900829871;
 					};
 				};
@@ -453,6 +502,7 @@
 			targets = (
 				7555FF7A242A565900829871 /* DevFest Nantes */,
 				CB3979CC2919B78E00BDAE6F /* DevFest NantesTests */,
+				48271312CBCC986AA4EA1DCC /* DevFestNantesTests */,
 			);
 		};
 /* End PBXProject section */
@@ -471,6 +521,13 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		CB3979CB2919B78E00BDAE6F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D908EDF759F7C0BD7CBBE818 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -623,6 +680,14 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
+		521F86961B5FB3C2DD590C59 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				F58B5AB8B24860681567F470 /* SessionFilterTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
@@ -630,6 +695,11 @@
 			isa = PBXTargetDependency;
 			target = 7555FF7A242A565900829871 /* DevFest Nantes */;
 			targetProxy = CB3979D12919B78E00BDAE6F /* PBXContainerItemProxy */;
+		};
+		1D6208DEFA79D3A28947338B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 7555FF7A242A565900829871 /* DevFest Nantes */;
+			targetProxy = 8A3CD57A23596B509E50B546 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -877,6 +947,53 @@
 			};
 			name = Release;
 		};
+		99B57C5AA801FB7E89E3A614 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 37;
+				DEVELOPMENT_TEAM = ULPJX5LPF7;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.gdgnantes.devfest.iosApp.DevFestNantesTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DevFest Nantes.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/DevFest Nantes";
+			};
+			name = Debug;
+		};
+		998E8DAB3D0EAE71FC951AA3 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++20";
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 37;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				DEVELOPMENT_TEAM = ULPJX5LPF7;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.gdgnantes.devfest.iosApp.DevFestNantesTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_MAC_DESIGNED_FOR_IPHONE_IPAD = NO;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/DevFest Nantes.app/$(BUNDLE_EXECUTABLE_FOLDER_PATH)/DevFest Nantes";
+			};
+			name = Release;
+		};
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
@@ -903,6 +1020,15 @@
 			buildConfigurations = (
 				CB3979D32919B78F00BDAE6F /* Debug */,
 				CB3979D42919B78F00BDAE6F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1605B83340ACD264C072DFF5 /* Build configuration list for PBXNativeTarget "DevFestNantesTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				99B57C5AA801FB7E89E3A614 /* Debug */,
+				998E8DAB3D0EAE71FC951AA3 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

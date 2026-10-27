@@ -13,8 +13,16 @@ var remoteConfig = RemoteConfig.remoteConfig()
 
 @main
 struct iOSApp: App {
-    
+
+    /// True only when this process hosts an XCTest / Swift Testing run.
+    static let isRunningTests: Bool =
+        ProcessInfo.processInfo.environment["XCTestConfigurationFilePath"] != nil
+        || NSClassFromString("XCTestCase") != nil
+
     init() {
+        // The test bundle is hosted by the app: skip the real start-up so tests stay hermetic.
+        if Self.isRunningTests { return }
+
         //Firebase initialization
         FirebaseApp.configure()
 
@@ -32,8 +40,12 @@ struct iOSApp: App {
     
     var body: some Scene {
         WindowGroup {
-            ContentView()
-                .preferredColorScheme(.dark)
+            if Self.isRunningTests {
+                Color.clear
+            } else {
+                ContentView()
+                    .preferredColorScheme(.dark)
+            }
         }
     }
 }
