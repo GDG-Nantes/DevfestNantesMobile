@@ -10,14 +10,17 @@
 # What it reads: `xcrun xcresulttool get test-results summary --path <bundle> --compact`
 # (covers XCTest and Swift Testing; a parameterised Swift Testing test counts as one
 # test) and the keys totalTestCount, passedTests, failedTests, skippedTests. A key that
-# is missing or not a number reads as 0, so a schema change fails closed.
+# is missing or not a number reads as 0, so a schema change fails closed. When the summary
+# also carries an overall `result`, it must be "Passed": a run that died partway (some
+# tests passed, none failed) reports another result and is rejected.
 #
 # Output tokens (stdout, one per line; the first line is always XCRESULT-TESTS unless
 # the bundle is missing or unreadable):
 #   XCRESULT-TESTS total=<n> passed=<n> failed=<n> skipped=<n>
 #   XCRESULT-OK                    every executed test passed, at least one ran (exit 0)
 #   XCRESULT-NO-TESTS-EXECUTED     total < 1, or no test passed (all skipped) (exit 1)
-#   XCRESULT-TESTS-FAILED          at least one test failed (exit 1)
+#   XCRESULT-TESTS-FAILED          at least one test failed, or the bundle's own overall
+#                                  result is not "Passed" (exit 1)
 #   XCRESULT-MISSING <path>        the bundle directory does not exist (exit 1)
 #   XCRESULT-SUMMARY-UNREADABLE    xcresulttool failed or its output is not JSON (exit 1)
 #   XCRESULT-SELFTEST-OK / XCRESULT-SELFTEST-FAILED <case>   selftest mode
@@ -31,10 +34,9 @@
 #                       skipped, a failure, schema drift, unreadable summary, a missing
 #                       bundle, a passing run). Prints XCRESULT-SELFTEST-OK on success.
 #
-# Environment:
-#   XCRESULT_SUMMARY_JSON  When set, the summary JSON is read from that file instead of
-#                          calling xcresulttool and the bundle directory is not checked.
-#                          Used by selftest. Never set it in CI.
+# Environment: none. The summary is always read from the bundle; there is no override
+# variable, so nothing in the CI environment can make the assertion pass against a fixture.
+# Selftest feeds fixtures to the decision functions directly, in-process.
 #
 # Usage: bash scripts/xcresult-assert-tests.sh <path-to.xcresult>
 #        bash scripts/xcresult-assert-tests.sh selftest
@@ -61,7 +63,7 @@ count() {
 
 # assert_summary <summary-json>: print the token lines and exit with the verdict.
 assert_summary() {
-  local summary="$1" total passed failed skipped
+  local summary="$1" total passed failed skipped result
   total="$(count "$summary" totalTestCount)"
   passed="$(count "$summary" passedTests)"
   failed="$(count "$summary" failedTests)"
@@ -79,37 +81,44 @@ assert_summary() {
     echo "XCRESULT-NO-TESTS-EXECUTED"
     exit 1
   fi
+  # Overall verdict of the run itself, checked last: the zero-test fixture legitimately
+  # reports "unknown", which the checks above already turn into NO-TESTS-EXECUTED.
+  result="$(printf '%s' "$summary" | jq -r '.result // empty | if type == "string" then . else "" end')"
+  if [ -n "$result" ] && [ "$result" != "Passed" ]; then
+    echo "XCRESULT-TESTS-FAILED"
+    exit 1
+  fi
   echo "XCRESULT-OK"
+}
+
+# check_summary <summary-json>: reject unreadable JSON, otherwise print the verdict and exit.
+check_summary() {
+  if ! printf '%s' "$1" | jq -e 'type == "object"' >/dev/null 2>&1; then
+    echo "XCRESULT-SUMMARY-UNREADABLE"
+    exit 1
+  fi
+  assert_summary "$1"
 }
 
 mode_assert() {
   local bundle="$1" summary
-  if [ -n "${XCRESULT_SUMMARY_JSON:-}" ]; then
-    summary="$(cat "$XCRESULT_SUMMARY_JSON" 2>/dev/null)" || summary=""
-  else
-    if [ ! -d "$bundle" ]; then
-      echo "XCRESULT-MISSING $bundle"
-      exit 1
-    fi
-    summary="$(xcrun xcresulttool get test-results summary --path "$bundle" --compact 2>/dev/null)" || summary=""
-  fi
-  if ! printf '%s' "$summary" | jq -e 'type == "object"' >/dev/null 2>&1; then
-    echo "XCRESULT-SUMMARY-UNREADABLE"
+  if [ ! -d "$bundle" ]; then
+    echo "XCRESULT-MISSING $bundle"
     exit 1
   fi
-  assert_summary "$summary"
+  summary="$(xcrun xcresulttool get test-results summary --path "$bundle" --compact 2>/dev/null)" || summary=""
+  check_summary "$summary"
 }
 
 # selftest_case <label> <summary-json-or-empty> <expected-exit> <expected-token>
-# Runs this script on a fixture through the XCRESULT_SUMMARY_JSON override. An empty
-# summary means "no override, nonexistent bundle path" (the missing-bundle case).
+# Runs the decision logic on a fixture in a subshell (the functions call exit). An empty
+# summary means "nonexistent bundle path" (the missing-bundle case).
 selftest_case() {
   local label="$1" json="$2" want_rc="$3" want_token="$4" out rc=0
   if [ -n "$json" ]; then
-    printf '%s\n' "$json" > "$WORK/summary.json"
-    out="$(XCRESULT_SUMMARY_JSON="$WORK/summary.json" bash "$SELF" "$WORK/fixture.xcresult" 2>&1)" || rc=$?
+    out="$(check_summary "$json" 2>&1)" || rc=$?
   else
-    out="$(env -u XCRESULT_SUMMARY_JSON bash "$SELF" "$WORK/does-not-exist.xcresult" 2>&1)" || rc=$?
+    out="$(mode_assert "$WORK/does-not-exist.xcresult" 2>&1)" || rc=$?
   fi
   if [ "$rc" -ne "$want_rc" ] || ! printf '%s\n' "$out" | grep -Eq -- "^${want_token}( |\$)"; then
     echo "XCRESULT-SELFTEST-FAILED $label" >&2
@@ -139,6 +148,10 @@ mode_selftest() {
     '{"result":"Passed","title":"Test Summary"}' 1 "XCRESULT-NO-TESTS-EXECUTED"
   selftest_case "schema-drift-non-numeric-counts" \
     '{"totalTestCount":"3","passedTests":"3"}' 1 "XCRESULT-NO-TESTS-EXECUTED"
+  selftest_case "run-died-partway-result-not-passed" \
+    '{"totalTestCount":3,"passedTests":2,"failedTests":0,"skippedTests":0,"result":"Failed"}' 1 "XCRESULT-TESTS-FAILED"
+  selftest_case "result-non-string-ignored" \
+    '{"totalTestCount":3,"passedTests":3,"failedTests":0,"skippedTests":0,"result":42}' 0 "XCRESULT-OK"
   selftest_case "unreadable-summary" \
     'not json at all' 1 "XCRESULT-SUMMARY-UNREADABLE"
   selftest_case "missing-bundle" \
