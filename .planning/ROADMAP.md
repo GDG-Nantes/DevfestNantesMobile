@@ -104,7 +104,7 @@ Plans:
 **Wave 2** *(blocked on Wave 1 completion)*
 - [ ] 07-02-PLAN.md — `:core:domain` wired into feature modules, Kover and iOS CI; docs describe the module and the new dependency direction
 - [ ] 07-04-PLAN.md — Offline replay facts, neutral snapshot with drift check, `AgendaSnapshot` decoder, shared filter cases and file formats
-- [ ] 07-07-PLAN.md — iOS behavior-preserving extraction (D-10) of grouping, filtering, navigable check, speaker alphabet and venue language into static functions
+- [ ] 07-07-PLAN.md — iOS pre-characterization change limited to the D-10 AgendaView filter extraction and an access-only seam on sessionsChanged
 
 **Wave 3** *(blocked on Wave 2 completion)*
 - [ ] 07-05-PLAN.md — Golden-file support in `:core:testing` and the v1.0 Android grouping characterization (two zones, two locales, D-06 proof)
@@ -135,7 +135,7 @@ Plans:
 
 **Wave 11** *(blocked on Wave 10 completion)*
 - [ ] 07-17-PLAN.md — Android bookmark star and session navigation on `ClassifySessionUseCase`; Android classification copy removed
-- [ ] 07-18-PLAN.md — Android speakers A-Z and venue language on the shared use cases; Android copies removed
+- [ ] 07-18-PLAN.md — Android speakers A-Z and venue language on the shared use cases; Android copies removed; empty speaker name skipped with a Crashlytics non-fatal (D-20)
 
 **Wave 12** *(blocked on Wave 11 completion)*
 - [ ] 07-19-PLAN.md — D-12 parity screenshots main vs branch, R8 release smoke, full gate, blocking human checkpoint
