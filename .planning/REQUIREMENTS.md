@@ -15,14 +15,14 @@ Research context: `.planning/research/SUMMARY.md` (and STACK/FEATURES/ARCHITECTU
 - [ ] **SHARED-02**: `SessionFilter`/`SessionFilterType` live in `:core:model`; the session filtering rule (OR within a type, AND across types, favorites = membership) is a shared use case covered by the filter matrix in `commonTest` (JVM + iOS simulator)
 - [ ] **SHARED-03**: Grouping the agenda by day and by time slot, with intra-slot sorting by `RoomSortIndex`, is a shared use case; the room-order deviation on iOS is documented
 - [ ] **SHARED-04**: Session classification (service/navigable), the alphabetical speaker index and the venue language choice are shared where the semantics are already identical on both platforms; divergent behaviors (current time slot on scroll, partner categories, day time zone) stay per platform or go through an explicit parameter
-- [ ] **SHARED-05**: `BookmarksStore` and `SessionFiltersStore` are common interfaces; the Android implementation keeps its SharedPreferences keys and format (`selected_sessions`, filters), the iOS implementation relies on `NSUserDefaults` with the existing `Favorites` and `AgendaSessionFilters` keys read and written in the legacy format
+- [ ] **SHARED-05**: `BookmarksStore` and `SessionFiltersStore` are common interfaces; the Android implementation keeps its SharedPreferences keys and format (`selected_sessions`, filters), the iOS implementation relies on `NSUserDefaults` under new keys with the shared (Android) filter codec; the legacy iOS `Favorites`/`AgendaSessionFilters` data is intentionally not migrated (2025 edition over, session ids change every edition; decision 07-CONTEXT D-15)
 - [ ] **SHARED-06**: The affected Android ViewModels consume the shared use cases and `SessionFiltersService` is removed (Koin binding replaced in the same commit), with no regression (v1.0 tests green + agenda UAT)
-- [ ] **SHARED-07**: Characterization tests (captured legacy payloads, grouping under at least two time zones, current iOS and Android behavior) exist before each move of logic
+- [ ] **SHARED-07**: Characterization tests (recorded real API snapshot, grouping under at least two time zones, current iOS and Android behavior) exist before each move of logic
 
 ### IOSDATA (iOS on the shared logic)
 
 - [ ] **IOSDATA-01**: The iOS app no longer filters, groups or persists favorites/filters in Swift; the duplicated Swift types (`SessionFilter`, `FilterType`…) are removed in favor of the exported Kotlin types
-- [ ] **IOSDATA-02**: A user who updates from the v1.0 version gets back all their favorites and filters (tests on captured legacy payloads + in-place update UAT from a v1.0 build)
+- [ ] **IOSDATA-02**: A user who updates from the v1.0 version starts with empty favorites and filters (legacy iOS data intentionally not migrated, 07-CONTEXT D-15) and the app works normally; favorites and filters set afterwards survive a relaunch (in-place update UAT from a v1.0 build)
 - [ ] **IOSDATA-03**: The iOS agenda continuously observes the shared combined stream (sessions + favorites + filters); the list, cells and detail share a single `AgendaViewModel` instance
 
 ### IOSUI (Modern SwiftUI)
@@ -122,7 +122,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 - Unmapped: 0 ✓
 
 **Traceability notes:**
-- SHARED-05 ships in Phase 7 (common interfaces, Android implementation unchanged, iOS implementation on the legacy keys tested on simulator); its wiring into the iOS app and the update UAT belong to IOSDATA-01/02 (Phase 9).
+- SHARED-05 ships in Phase 7 (common interfaces, Android implementation unchanged, iOS implementation on new keys with the shared codec tested on simulator); its wiring into the iOS app and the update UAT belong to IOSDATA-01/02 (Phase 9).
 - IOSTEST-01 is closed in Phase 8 (tests of each ViewModel); the obsolete `DevFest NantesTests` target is replaced as early as Phase 6, as a prerequisite of the IOSTEST-03 test lane.
 - IOSTEST-03 ships in Phase 6; Phase 11 adds the package tests to the test plan (Phase 11 success criterion 4).
 - IOSUI-01 covers the existing targets in Phase 8; the packages created in Phase 11 are born with `.iOS(.v17)` (Phase 11 success criterion 3).

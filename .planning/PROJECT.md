@@ -18,7 +18,7 @@ CI/CD must work again and the project must become maintainable again (modern bui
 
 **Target features:**
 - Shared KMP domain layer: agenda grouping/sorting, session filtering, favorites, speakers/venue/partners mapping exposed as use cases/repositories consumed by Android and iOS (ViewModels remaining native on each platform)
-- Removal of duplicated logic on iOS: agenda favorites and filters move out of `UserDefaults` in `AgendaViewModel` into the shared logic, with migration of existing data (no favorite lost)
+- Removal of duplicated logic on iOS: agenda favorites and filters move out of `UserDefaults` in `AgendaViewModel` into the shared logic, on new keys (legacy 2025 favorites/filters intentionally not migrated)
 - Modular iOS app: local SPM packages per feature (Agenda, Speakers, Venue, About…) + core packages (DesignSystem, Core/DI), app target reduced to a shell
 - Explicit iOS DI: composition root injecting dependencies into ViewModels instead of `IosDependencies.shared` lookups and global singletons (`RCValues`, `PerformanceMonitoring`, global `remoteConfig`)
 - Modern SwiftUI: iOS 17 minimum on all targets, `@Observable` ViewModels instead of `ObservableObject`/`@Published`, Combine removed
@@ -111,6 +111,7 @@ Milestone v1.1 iOS Architecture (details and REQ-IDs in `REQUIREMENTS.md`):
 | Phase 2: version upgrade in sequential groups (one commit per group), with a green CI between each step | Cumulative major upgrades would be impossible to diagnose on failure; each group gets its own revertible commit and its own green signal before tackling the next one | ✓ Phase 2 shipped — Kotlin 2.4.20, AGP 9.4.0 + `com.android.kotlin.multiplatform.library` plugin, Gradle 9.7.1, Compose BOM 2026.09.00, Apollo 5.2.0 (cache migrated to `com.apollographql.cache`), Firebase BOM 34.19.0/Coroutines 1.11.0/kotlinx-serialization 1.11.0/kotlinx-datetime 0.8.0; Gradle Declarative DSL pilot succeeded on `settings.gradle.dcl` (androidApp/shared stay in Kotlin DSL, AGP/KMP DCL support not mature for these modules) — full details in `.planning/STATE.md` § Phase 02 version deviations / DCL pilot outcome |
 | Phase 6: plain `*-gate.sh` scripts with `check`/`selftest` modes and greppable OK/FAIL tokens for every iOS CI gate (xcresult, swift-names, kmp-nc) | A gate that cannot be shown to fail is not a gate; tokens make CI logs auditable and the selftests catch a weakened guard | ✓ Phase 6 — all three gates green on real CI runs (40477853950, 40488566873, 40501276582) |
 | Phase 6: KMP-NativeCoroutines bump (alpha → 1.0.6) kept only after a human parity smoke, revertible as one commit (D-12) | The AsyncSequence cancel-on-dealloc change touches the user-visible flows and no UI test exists before Phase 12 | ✓ Phase 6 — smoke approved on 8 flows, bump kept |
+| Phase 7: legacy iOS favorites/filters (`Favorites`, `AgendaSessionFilters`) not migrated; iOS store uses new keys and the shared Android filter codec | The 2025 edition is over and session ids change every edition, so old data is worthless; a clean single codec beats a lowercase legacy codec + migrator | Phase 7 discussion (07-CONTEXT D-15), one-way once Phase 9 ships |
 
 ## Evolution
 
