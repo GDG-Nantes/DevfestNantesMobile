@@ -112,6 +112,14 @@ unifying the divergent behaviors listed in D-08.
   IOSDATA-02 (REQUIREMENTS.md), Phase 7 criteria 2/4 + research flag and Phase 9 criterion 1
   (ROADMAP.md), the target-features line and a Key Decision in PROJECT.md.
 
+### Decisions confirmed during planning (2026-10-28)
+- **D-17:** **Speaker characterization pins what the app loads today: 100 speakers** from the app's own
+  speakers query. The server's 110 total is recorded only as snapshot metadata; the 100/110 gap stays
+  debt (FUT-02). This refines D-09's "110 speakers" wording.
+- **D-18:** **"v1.0 tests pass unchanged" (D-11, criterion 4) means wiring-only edits**: imports, type
+  renames, constructor/Koin wiring and selector helpers may change; no expected value, assertion or
+  literal may change. Each plan checks this on the diff.
+
 ### Claude's Discretion
 - Exact type and class names in `:core:domain` (`AgendaDay`/`TimeSlot`/`DayAssignment`…), package
   layout and how many use-case classes. Avoid Swift-colliding names (`Section`, `Task`, `Duration`).
