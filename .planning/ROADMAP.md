@@ -95,11 +95,11 @@ Plans:
   4. `BookmarksStore` and `SessionFiltersStore` are common interfaces: the v1.0 Robolectric tests that pin `selected_sessions` and the Android filter format pass unchanged, and the iOS implementation reads and writes new `NSUserDefaults` keys with the shared filter codec, never reading the legacy `Favorites`/`AgendaSessionFilters` keys (tests on simulator)
   5. On Android, the agenda, filters, bookmarks, speakers and venue behave exactly as in v1.0 (v1.0 tests green + agenda UAT); `SessionFiltersService` is gone and its Koin binding was replaced in the same commit
 
-**Plans**: 19 plans
+**Plans**: 2/19 plans executed
 Plans:
 **Wave 1**
-- [ ] 07-01-PLAN.md — Tracer: `:core:domain` with `ClassifySessionUseCase`, `domainModule` in `sharedModules`, exported by `:shared`, proven on JVM/iOS/Xcode
-- [ ] 07-03-PLAN.md — Recorded real API snapshot: gated recorder, re-record script, raw GraphQL responses (the app's 100 speakers pinned, D-17)
+- [x] 07-01-PLAN.md — Tracer: `:core:domain` with `ClassifySessionUseCase`, `domainModule` in `sharedModules`, exported by `:shared`, proven on JVM/iOS/Xcode
+- [x] 07-03-PLAN.md — Recorded real API snapshot: gated recorder, re-record script, raw GraphQL responses (the app's 100 speakers pinned, D-17)
 
 **Wave 2** *(blocked on Wave 1 completion)*
 - [ ] 07-02-PLAN.md — `:core:domain` wired into feature modules, Kover and iOS CI; docs describe the module and the new dependency direction
@@ -139,6 +139,7 @@ Plans:
 
 **Wave 12** *(blocked on Wave 11 completion)*
 - [ ] 07-19-PLAN.md — D-12 parity screenshots main vs branch, R8 release smoke, full gate, blocking human checkpoint
+
 **Research flag**: characterization to prepare: a real API snapshot (110 speakers, room ids, check `room.id == room.name`) in addition to the `core/model` stubs (legacy iOS payload capture dropped: legacy data not migrated, 07-CONTEXT D-15)
 
 ### Phase 8: Modern SwiftUI, iOS 17 and Observation
@@ -230,7 +231,7 @@ Phases execute in numeric order: 6 → 7 → 8 → 9 → 10 → 11 → 12
 | 4. Hilt to Koin DI Migration | v1.0 | 7/7 | Complete | 2026-10-13 |
 | 5. Test Coverage Retrofit | v1.0 | 11/11 | Complete | 2026-10-16 |
 | 6. iOS Test Foundation and CI Gates | v1.1 | 6/6 | Complete    | 2026-10-27 |
-| 7. KMP Domain Layer and Android Adoption | v1.1 | 0/? | Not started | - |
+| 7. KMP Domain Layer and Android Adoption | v1.1 | 2/19 | In Progress | - |
 | 8. Modern SwiftUI, iOS 17 and Observation | v1.1 | 0/? | Not started | - |
 | 9. iOS on Shared Logic and Legacy Persistence | v1.1 | 0/? | Not started | - |
 | 10. Explicit iOS DI | v1.1 | 0/? | Not started | - |
