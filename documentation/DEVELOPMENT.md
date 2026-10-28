@@ -134,9 +134,10 @@ the fixtures in `core/model/.../stubs/` (`SessionFixtures`, `SpeakerFixtures`).
 # A single module
 ./gradlew :feature:agenda:testDebugUnitTest
 ./gradlew :core:data:jvmTest
+./gradlew :core:domain:jvmTest
 
 # KMP tests on the iOS simulator (macOS)
-./gradlew :shared:iosSimulatorArm64Test :core:data:iosSimulatorArm64Test
+./gradlew :shared:iosSimulatorArm64Test :core:data:iosSimulatorArm64Test :core:domain:iosSimulatorArm64Test
 
 # Instrumented smoke tests (device or emulator required)
 ./gradlew connectedDebugAndroidTest

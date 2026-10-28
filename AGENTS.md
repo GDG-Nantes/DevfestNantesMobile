@@ -28,6 +28,8 @@ Modules (declared in `settings.gradle.dcl`):
 - `feature/{agenda,speakers,session-detail,venue,about,settings}/` - one Android module per screen
   area: `<Name>Route.kt` entry composable, `<Name>ViewModel.kt`, `di/<Name>Module.kt`
 - `core/model`, `core/network`, `core/data`, `core/analytics`, `core/testing` - KMP modules
+- `core/domain/` - KMP module with the agenda business logic shared by Android and iOS: policies and
+  use cases, exported to Swift
 - `core/ui/` - Android Compose theme and shared components
 - `shared/` - KMP framework consumed by iOS; `initKoin()` is the single Koin composition root
 - `iosApp/` - SwiftUI app (Xcode project)
@@ -35,7 +37,7 @@ Modules (declared in `settings.gradle.dcl`):
 
 Rules:
 
-- Dependencies flow one way: `androidApp → feature:* → core:ui → core:data → core:network /
+- Dependencies flow one way: `androidApp → feature:* → core:ui → core:domain → core:data → core:network /
   core:model`. Feature modules never depend on each other; cross-feature side effects are passed
   to `*Route` composables as lambdas and handled in `androidApp`.
 - Data access goes through the `DevFestNantesStore` interface. A new store method must be added to

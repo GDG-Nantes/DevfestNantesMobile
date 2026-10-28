@@ -35,6 +35,10 @@ SwiftUI and consumes the shared framework.
 │ :core:ui  Compose theme, shared components, BookmarksViewModel (Android) │
 └───────────────────────────────┬──────────────────────────────────────────┘
                                 ▼
+┌──────────────────────────────────────────────────────────────────────────┐
+│ :core:domain  Shared agenda policies and use cases (KMP), domainModule   │
+└───────────────────────────────┬──────────────────────────────────────────┘
+                                ▼
 ┌──────────────────────────────────────┐   ┌─────────────────────────────┐
 │ :core:data  DevFestNantesStore (KMP) │   │ :core:analytics (KMP)       │
 │  GraphQLStore / mocked store,        │   │  AnalyticsService,          │
@@ -60,6 +64,7 @@ Modules are declared in `settings.gradle.dcl`:
 | `:shared` | KMP (exported to iOS) | `initKoin()` composition root, `IosDependencies` for Swift |
 | `:core:model` | KMP | Domain types (`Session`, `Speaker`, `Room`, `Agenda`, ...), `stubs/` fixtures, `WebLinks` |
 | `:core:network` | KMP | Apollo client, normalized cache, GraphQL schema and operations |
+| `:core:domain` | KMP | Shared agenda policies and use cases (`ClassifySessionUseCase`), `domainModule`; exported by `:shared` |
 | `:core:data` | KMP | `DevFestNantesStore` facade, `GraphQLStore`, mocked store, `BookmarksStore` |
 | `:core:analytics` | KMP | `AnalyticsService`; Android Firebase analytics and performance implementations |
 | `:core:testing` | KMP | Fakes, `MainDispatcherRule`, test doubles Koin modules |
@@ -76,7 +81,7 @@ Build configuration is shared through convention plugins in the included build `
 `devfest.android.koin`, `devfest.kmp.library`, `devfest.detekt`).
 
 Dependency direction is one-way and acyclic:
-`androidApp → feature:* → core:ui → core:data → core:network / core:model`.
+`androidApp → feature:* → core:ui → core:domain → core:data → core:network / core:model`.
 Feature modules never depend on each other.
 
 ## Layers
@@ -112,6 +117,21 @@ navigation) are passed in as lambdas, for example `SessionDetailRoute(onSocialLi
 Material 3 theme (`theme/`), reusable components (`components/`, `components/appbars/`), Compose
 helpers (`utils/`), the cross-feature `BookmarksViewModel`, and `di/CoreUiModule.kt`, which defines
 the `IO_DISPATCHER` qualifier.
+
+### Domain (`:core:domain`)
+
+`core/domain/src/commonMain/kotlin/com/gdgnantes/devfest/core/domain/`
+
+Business logic shared by Android and iOS, in packages `agenda`, `speakers`, `venue` and `di`. It
+depends on `:core:model` and `:core:data` and is exported to Swift through `:shared`.
+
+- Policies and use cases are plain classes with named methods (for example
+  `ClassifySessionUseCase.isService`, `isTalk`, `isNavigable`), not `operator invoke` objects.
+- They are bound as Koin `factory` definitions in `di/DomainModule.kt`. `domainModule` is
+  `@HiddenFromObjC` and is part of `sharedModules`; iOS resolves use cases through
+  `IosDependencies`.
+- Methods that return a `Flow` carry `@NativeCoroutines` so Swift sees `async`/`AsyncSequence`.
+- No public extension functions on exported model types: Swift cannot call them as members.
 
 ### Data (`:core:data`)
 
