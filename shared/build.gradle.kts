@@ -10,6 +10,7 @@ kotlin {
             export(project(":core:model"))
             export(project(":core:data"))
             export(project(":core:analytics"))
+            export(project(":core:domain"))
         }
     }
 
@@ -18,6 +19,7 @@ kotlin {
             api(project(":core:model"))
             api(project(":core:data"))
             api(project(":core:analytics"))
+            api(project(":core:domain"))
             implementation(project(":core:network"))
             implementation(libs.koin.core)
         }
