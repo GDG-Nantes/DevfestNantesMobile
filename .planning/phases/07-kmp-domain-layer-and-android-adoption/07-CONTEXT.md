@@ -119,6 +119,13 @@ unifying the divergent behaviors listed in D-08.
 - **D-18:** **"v1.0 tests pass unchanged" (D-11, criterion 4) means wiring-only edits**: imports, type
   renames, constructor/Koin wiring and selector helpers may change; no expected value, assertion or
   literal may change. Each plan checks this on the diff.
+- **D-19:** **D-05 stays literal.** The shared observe/group API takes a `TimeZone` on every platform
+  (Android passes `TimeZone.currentSystemDefault()`); the Android UTC-window day strategy ignores it by
+  design. Uniform API for Phase 9.
+- **D-20:** **Empty speaker name: no crash, but report it.** v1.0 Android throws
+  `NoSuchElementException`; the shared A-Z index skips the empty name instead, and Android records a
+  non-fatal exception to Crashlytics (through the app's existing Crashlytics/logging path) so the bad
+  data is visible. Accepted, documented behavior change (exception to the "no latent bug fixes" rule).
 
 ### Claude's Discretion
 - Exact type and class names in `:core:domain` (`AgendaDay`/`TimeSlot`/`DayAssignment`…), package
