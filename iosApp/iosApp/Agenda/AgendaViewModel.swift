@@ -118,7 +118,7 @@ class AgendaViewModel: BaseViewModel {
     }
     
     ///Allows you to classify sessions by time section
-    private func sessionsChanged(sessions: [Session]) {
+    func sessionsChanged(sessions: [Session]) {
         let groupedSessions = Dictionary(grouping: sessions) { getDate(date: $0.scheduleSlot.startDate) }
         let sortedKeys = groupedSessions.keys.sorted()
         var sections = [AgendaContent.Section]()

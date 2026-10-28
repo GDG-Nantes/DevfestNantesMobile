@@ -134,13 +134,52 @@ struct AgendaView: View {
     // MARK: - Filtering
     
     private func filteredSections(for day: String) -> [AgendaContent.Section] {
-        viewModel.agendaContent.sections.filter { $0.day.contains(day) }
+        Self.sections(viewModel.agendaContent.sections, forDay: day)
     }
-    
+
     private func filteredSessionsForSection(_ section: AgendaContent.Section) -> [AgendaContent.Session] {
-        let base = getFilteredSessions(sessions: section.sessions)
-        let isFavorites = viewModel.sessionFilters.contains { $0.type == .bookmark }
-        return isFavorites ? base.filter { viewModel.favorites.contains($0.id) } : base
+        Self.filteredSessions(section.sessions, filters: viewModel.sessionFilters, favorites: viewModel.favorites)
+    }
+
+    /// Static and pure so tests can call it without creating a view (D-10 extraction, bodies unchanged).
+    static func sections(_ sections: [AgendaContent.Section], forDay day: String) -> [AgendaContent.Section] {
+        sections.filter { $0.day.contains(day) }
+    }
+
+    /// Static and pure so tests can call it without creating a view (D-10 extraction, bodies unchanged).
+    static func filteredSessions(
+        _ sessions: [AgendaContent.Session],
+        filters: Set<SessionFilter>,
+        favorites: [String]
+    ) -> [AgendaContent.Session] {
+        var filtered = sessions
+        let selectedLanguages = filters.filter { $0.type == .language }.map { $0.value }
+        let selectedSessionTypes = filters.filter { $0.type == .type }.map { $0.value }
+        let selectedRooms = filters.filter { $0.type == .room }.map { $0.value }
+        let selectedComplexities = filters.filter { $0.type == .complexity }.map { $0.value }
+
+        if !selectedLanguages.isEmpty {
+            filtered = filtered.filter { s in
+                if let lang = s.language?.name { selectedLanguages.contains(lang) } else { false }
+            }
+        }
+        if !selectedSessionTypes.isEmpty {
+            filtered = filtered.filter { s in
+                selectedSessionTypes.contains(s.sessionType?.name ?? "")
+            }
+        }
+        if !selectedRooms.isEmpty {
+            filtered = filtered.filter { s in
+                selectedRooms.contains(s.room)
+            }
+        }
+        if !selectedComplexities.isEmpty {
+            filtered = filtered.filter { s in
+                if let comp = s.complexity?.name { selectedComplexities.contains(comp) } else { false }
+            }
+        }
+        let isFavorites = filters.contains { $0.type == .bookmark }
+        return isFavorites ? filtered.filter { favorites.contains($0.id) } : filtered
     }
     
     // MARK: - Initial scroll/day selection
@@ -191,37 +230,6 @@ struct AgendaView: View {
         } else {
             day = "2025-10-16"
         }
-    }
-    
-    // MARK: - Filtres
-    private func getFilteredSessions(sessions: [AgendaContent.Session]) -> [AgendaContent.Session] {
-        var filtered = sessions
-        let selectedLanguages = viewModel.sessionFilters.filter { $0.type == .language }.map { $0.value }
-        let selectedSessionTypes = viewModel.sessionFilters.filter { $0.type == .type }.map { $0.value }
-        let selectedRooms = viewModel.sessionFilters.filter { $0.type == .room }.map { $0.value }
-        let selectedComplexities = viewModel.sessionFilters.filter { $0.type == .complexity }.map { $0.value }
-
-        if !selectedLanguages.isEmpty {
-            filtered = filtered.filter { s in
-                if let lang = s.language?.name { selectedLanguages.contains(lang) } else { false }
-            }
-        }
-        if !selectedSessionTypes.isEmpty {
-            filtered = filtered.filter { s in
-                selectedSessionTypes.contains(s.sessionType?.name ?? "")
-            }
-        }
-        if !selectedRooms.isEmpty {
-            filtered = filtered.filter { s in
-                selectedRooms.contains(s.room)
-            }
-        }
-        if !selectedComplexities.isEmpty {
-            filtered = filtered.filter { s in
-                if let comp = s.complexity?.name { selectedComplexities.contains(comp) } else { false }
-            }
-        }
-        return filtered
     }
 }
 
