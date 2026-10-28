@@ -1,0 +1,106 @@
+{
+  "bookmarkedSessionIds": [
+    "day-1-lunch",
+    "airightinthebrowserwithchromesbuiltinaiapis",
+    "thefutureofroutingwiththenavigationapi"
+  ],
+  "cases": [
+    {
+      "name": "no_filter",
+      "filters": []
+    },
+    {
+      "name": "language_french",
+      "filters": [
+        { "type": "LANGUAGE", "value": "FRENCH" }
+      ]
+    },
+    {
+      "name": "language_french_english",
+      "filters": [
+        { "type": "LANGUAGE", "value": "FRENCH" },
+        { "type": "LANGUAGE", "value": "ENGLISH" }
+      ]
+    },
+    {
+      "name": "complexity_beginner",
+      "filters": [
+        { "type": "COMPLEXITY", "value": "BEGINNER" }
+      ]
+    },
+    {
+      "name": "complexity_beginner_advanced",
+      "filters": [
+        { "type": "COMPLEXITY", "value": "BEGINNER" },
+        { "type": "COMPLEXITY", "value": "ADVANCED" }
+      ]
+    },
+    {
+      "name": "type_conference",
+      "filters": [
+        { "type": "TYPE", "value": "CONFERENCE" }
+      ]
+    },
+    {
+      "name": "type_quickie_codelab",
+      "filters": [
+        { "type": "TYPE", "value": "QUICKIE" },
+        { "type": "TYPE", "value": "CODELAB" }
+      ]
+    },
+    {
+      "name": "room_titan",
+      "filters": [
+        { "type": "ROOM", "value": "Titan" }
+      ]
+    },
+    {
+      "name": "room_titan_belem",
+      "filters": [
+        { "type": "ROOM", "value": "Titan" },
+        { "type": "ROOM", "value": "Belem" }
+      ]
+    },
+    {
+      "name": "room_tour_bretagne",
+      "filters": [
+        { "type": "ROOM", "value": "Tour Bretagne" }
+      ]
+    },
+    {
+      "name": "bookmark",
+      "filters": [
+        { "type": "BOOKMARK", "value": "" }
+      ]
+    },
+    {
+      "name": "bookmark_language_english",
+      "filters": [
+        { "type": "BOOKMARK", "value": "" },
+        { "type": "LANGUAGE", "value": "ENGLISH" }
+      ]
+    },
+    {
+      "name": "language_french_complexity_advanced",
+      "filters": [
+        { "type": "LANGUAGE", "value": "FRENCH" },
+        { "type": "COMPLEXITY", "value": "ADVANCED" }
+      ]
+    },
+    {
+      "name": "type_codelab_language_french",
+      "filters": [
+        { "type": "TYPE", "value": "CODELAB" },
+        { "type": "LANGUAGE", "value": "FRENCH" }
+      ]
+    },
+    {
+      "name": "room_titan_type_conference_language_english",
+      "filters": [
+        { "type": "ROOM", "value": "Titan" },
+        { "type": "TYPE", "value": "CONFERENCE" },
+        { "type": "LANGUAGE", "value": "ENGLISH" }
+      ]
+    }
+  ]
+}
