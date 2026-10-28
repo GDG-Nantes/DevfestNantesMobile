@@ -1,0 +1,46 @@
+{
+  "data": {
+    "rooms": [
+      {
+        "__typename": "Room",
+        "id": "Belem",
+        "name": "Belem"
+      },
+      {
+        "__typename": "Room",
+        "id": "Hangar",
+        "name": "Hangar"
+      },
+      {
+        "__typename": "Room",
+        "id": "Jules Verne",
+        "name": "Jules Verne"
+      },
+      {
+        "__typename": "Room",
+        "id": "L'Atelier",
+        "name": "L'Atelier"
+      },
+      {
+        "__typename": "Room",
+        "id": "Les Machines",
+        "name": "Les Machines"
+      },
+      {
+        "__typename": "Room",
+        "id": "Titan",
+        "name": "Titan"
+      },
+      {
+        "__typename": "Room",
+        "id": "Tour Bretagne",
+        "name": "Tour Bretagne"
+      },
+      {
+        "__typename": "Room",
+        "id": "Unconf",
+        "name": "Unconf"
+      }
+    ]
+  }
+}
