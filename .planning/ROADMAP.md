@@ -95,34 +95,50 @@ Plans:
   4. `BookmarksStore` and `SessionFiltersStore` are common interfaces: the v1.0 Robolectric tests that pin `selected_sessions` and the Android filter format pass unchanged, and the iOS implementation reads and writes new `NSUserDefaults` keys with the shared filter codec, never reading the legacy `Favorites`/`AgendaSessionFilters` keys (tests on simulator)
   5. On Android, the agenda, filters, bookmarks, speakers and venue behave exactly as in v1.0 (v1.0 tests green + agenda UAT); `SessionFiltersService` is gone and its Koin binding was replaced in the same commit
 
-**Plans**: 11 plans
+**Plans**: 19 plans
 Plans:
 **Wave 1**
-- [ ] 07-01-PLAN.md — Tracer: `:core:domain` with `ClassifySessionUseCase`, `domainModule` in `sharedModules`, exported by `:shared`, proven on JVM/iOS/Xcode; feature, Kover and iOS CI wiring + docs
-- [ ] 07-02-PLAN.md — Recorded real API snapshot (gated recorder + script), offline replay facts, neutral snapshot with drift check, `AgendaSnapshot` decoder, shared filter cases and file formats
+- [ ] 07-01-PLAN.md — Tracer: `:core:domain` with `ClassifySessionUseCase`, `domainModule` in `sharedModules`, exported by `:shared`, proven on JVM/iOS/Xcode
+- [ ] 07-03-PLAN.md — Recorded real API snapshot: gated recorder, re-record script, raw GraphQL responses (the app's 100 speakers pinned, D-17)
 
 **Wave 2** *(blocked on Wave 1 completion)*
-- [ ] 07-03-PLAN.md — Android characterization on v1.0 code: grouping (two zones, two locales, D-06 proof), filtering, drawer + equality (D-14), classification, speaker index, venue language; Android goldens
-- [ ] 07-04-PLAN.md — iOS characterization (D-10): behavior-preserving static extraction, Swift Testing pins on the snapshot, iOS goldens in two zones, baselines with the Swift call sites
+- [ ] 07-02-PLAN.md — `:core:domain` wired into feature modules, Kover and iOS CI; docs describe the module and the new dependency direction
+- [ ] 07-04-PLAN.md — Offline replay facts, neutral snapshot with drift check, `AgendaSnapshot` decoder, shared filter cases and file formats
+- [ ] 07-07-PLAN.md — iOS behavior-preserving extraction (D-10) of grouping, filtering, navigable check, speaker alphabet and venue language into static functions
 
 **Wave 3** *(blocked on Wave 2 completion)*
-- [ ] 07-05-PLAN.md — `SessionFilter` data class + top-level `SessionFilterType` in `:core:model` (D-13/D-14, Swift exclusion + baselines), `SessionFiltersStore` interface, shared codec, fake
+- [ ] 07-05-PLAN.md — Golden-file support in `:core:testing` and the v1.0 Android grouping characterization (two zones, two locales, D-06 proof)
+- [ ] 07-08-PLAN.md — iOS characterization (D-10): Swift Testing pins on the snapshot, iOS goldens in two zones, baselines with the Swift call sites
 
 **Wave 4** *(blocked on Wave 3 completion)*
-- [ ] 07-06-PLAN.md — iOS `NSUserDefaults` bookmarks and filters stores on new keys with the shared codec (D-15), iOS bindings
-- [ ] 07-07-PLAN.md — Shared `FilterSessionsUseCase` and `GroupSessionsUseCase` + `DayAssignment` against the v1.0 matrix, Agenda.Builder and the Android/iOS goldens on JVM + iOS simulator
+- [ ] 07-06-PLAN.md — v1.0 Android characterization of filtering, drawer + equality (D-14), classification, speaker index and venue language
 
 **Wave 5** *(blocked on Wave 4 completion)*
-- [ ] 07-08-PLAN.md — Shared speaker index and venue language, combined `ObserveAgendaUseCase`, final `domainModule` + graph proofs, domain docs and deviations table
+- [ ] 07-09-PLAN.md — `SessionFilter` data class + top-level `SessionFilterType` in `:core:model` (D-13/D-14, Swift exclusion + baselines), `SessionFiltersStore` interface, shared codec, fake
 
 **Wave 6** *(blocked on Wave 5 completion)*
-- [ ] 07-09-PLAN.md — Atomic Android switch: `SharedPreferencesSessionFiltersStore` bound, `SessionFiltersService` removed, agenda/home ViewModels on the shared domain, `IO_DISPATCHER` removed
+- [ ] 07-10-PLAN.md — Android code and tests on the shared `SessionFilter` (wiring-only, D-18); feature copy removed; persisted JSON byte-identical
+- [ ] 07-11-PLAN.md — iOS `NSUserDefaults` bookmarks and filters stores on new keys with the shared codec (D-15), iOS bindings
+- [ ] 07-12-PLAN.md — Shared `FilterSessionsUseCase` and `GroupSessionsUseCase` + `DayAssignment` against the v1.0 matrix, Agenda.Builder and the Android/iOS goldens on JVM + iOS simulator
 
 **Wave 7** *(blocked on Wave 6 completion)*
-- [ ] 07-10-PLAN.md — Android star/navigation, speakers A-Z and venue language on the shared use cases; Android copies removed
+- [ ] 07-13-PLAN.md — Shared speaker index and venue language, combined `ObserveAgendaUseCase`, final `domainModule` + graph proofs, domain docs and deviations table
 
 **Wave 8** *(blocked on Wave 7 completion)*
-- [ ] 07-11-PLAN.md — D-12 parity screenshots main vs branch, R8 release smoke, full gate, blocking human checkpoint
+- [ ] 07-14-PLAN.md — Bridge: the single v1.0 filters service instance also serves `SessionFiltersStore`; agenda and home ViewModels on the interface
+
+**Wave 9** *(blocked on Wave 8 completion)*
+- [ ] 07-15-PLAN.md — `AgendaViewModel` on `ObserveAgendaUseCase`, agenda UI on `DaySchedule`/`TimeSlot`, `IO_DISPATCHER` removed
+
+**Wave 10** *(blocked on Wave 9 completion)*
+- [ ] 07-16-PLAN.md — Atomic SHARED-06 switch: `SessionFiltersService` removed and `SharedPreferencesSessionFiltersStore` bound in `:core:data` in one commit; docs; agenda smoke on an emulator
+
+**Wave 11** *(blocked on Wave 10 completion)*
+- [ ] 07-17-PLAN.md — Android bookmark star and session navigation on `ClassifySessionUseCase`; Android classification copy removed
+- [ ] 07-18-PLAN.md — Android speakers A-Z and venue language on the shared use cases; Android copies removed
+
+**Wave 12** *(blocked on Wave 11 completion)*
+- [ ] 07-19-PLAN.md — D-12 parity screenshots main vs branch, R8 release smoke, full gate, blocking human checkpoint
 **Research flag**: characterization to prepare: a real API snapshot (110 speakers, room ids, check `room.id == room.name`) in addition to the `core/model` stubs (legacy iOS payload capture dropped: legacy data not migrated, 07-CONTEXT D-15)
 
 ### Phase 8: Modern SwiftUI, iOS 17 and Observation

@@ -495,18 +495,23 @@ Implication for D-06: with whole-minute starts in one uniform offset, "formatted
 | A7 | Equal-content `SessionFilter` sets no longer re-emit through `StateFlow` after the data-class change, with no visible UI effect | Pitfall 4 | A visible difference must be recorded as a deviation (D-14); characterization decides |
 | A8 | iOS instrumentation of the speakers A-Z default (share iOS grouping, Android derives first-index map) is acceptable to the user | Verified current behavior | SHARED-04 allows per-platform if not; decide after the snapshot test |
 
-## Open Questions
+## Open Questions (RESOLVED)
 
 1. **What does "v1.0 tests pass unchanged" allow?**
    - What we know: the ViewModel, store and test constructors/imports must change (Pitfall 5).
    - What's unclear: whether the user reads "unchanged" as "no assertion edits" or "no file edits".
    - Recommendation: adopt "no assertion/expected-value/literal edits, mechanical wiring only" and state it in the plans.
+   - **RESOLVED (D-18, confirmed by the user 2026-10-28):** wiring-only edits. Imports, type renames, constructor/Koin wiring and selector helpers may change; no expected value, assertion or literal may change. Each plan that touches a v1.0 test or a characterization checks it on the diff.
 2. **Where do the shared golden/snapshot files live and who writes them?**
    - What we know: format and location are discretionary (CONTEXT); Kotlin reads through `SIMCTL_CHILD_`/env, Swift can read through `#filePath` (no pbxproj resource plumbing) [ASSUMED for `#filePath` on CI].
    - Recommendation: `core/domain/testdata/agenda/` for the neutral inputs and goldens; raw GraphQL under `core/data/testdata/`; a script `scripts/record-agenda-snapshot.sh` (curl + `OPERATION_DOCUMENT`) plus a JVM test that fails when the neutral snapshot drifts from the raw one.
+   - **RESOLVED (planning, CONTEXT discretion):** raw responses in `core/data/testdata/graphql/` recorded by a gated JVM recorder wrapped by `scripts/record-agenda-snapshot.sh` (07-03); neutral snapshot, filter cases and format README in `core/domain/testdata/agenda/` with a drift-check test (07-04); goldens in `core/domain/testdata/agenda/golden/`, written only by the tests when absent, never by hand (07-05, 07-06, 07-08). Speaker data is pinned per D-17 (the app's 100 speakers; the server's 110 is metadata).
 3. **Does the user accept the speaker A-Z default?** (A8) Needs the snapshot test result first.
+   - **RESOLVED (by rule, with a decision gate):** the index is shared only if it reproduces both platforms' goldens on the recorded data; plan 07-13 Task 1 stops with a `checkpoint:decision` (keep per platform vs explicit parameter, SHARED-04) if either golden cannot be matched.
 4. **Who removes `IO_DISPATCHER`?** Only if nothing else consumes it after Android adoption; otherwise leave it.
+   - **RESOLVED:** plan 07-15 removes it in the commit that moves `AgendaViewModel` off it (its last consumer), with its pin test; the agenda dispatcher is then pinned by `DomainModuleTest` (07-13).
 5. **R8 release smoke:** `@Serializable` class moved modules; v1.0 validated a release build on a device. Recommend one human release-build check (filters survive a relaunch) at the phase checkpoint.
+   - **RESOLVED:** plan 07-19 Task 1 runs a release (R8) build smoke (filter and bookmark survive a force-stop and relaunch, no `SerializationException`/`ClassNotFoundException` in logcat), reviewed at its blocking human checkpoint.
 
 ## Environment Availability
 
