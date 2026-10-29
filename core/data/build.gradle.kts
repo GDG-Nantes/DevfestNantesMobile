@@ -19,6 +19,7 @@ kotlin {
             api(project(":core:model"))
             implementation(project(":core:network"))
             implementation(libs.koin.core)
+            implementation(libs.kotlinx.serialization.json)
         }
         commonTest.dependencies {
             implementation(libs.apollo.mockserver)
