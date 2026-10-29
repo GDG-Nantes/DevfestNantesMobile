@@ -1,7 +1,9 @@
 package com.gdgnantes.devfest.shared.di
 
+import com.gdgnantes.devfest.core.data.BookmarksStore
 import com.gdgnantes.devfest.core.data.DevFestNantesStore
 import com.gdgnantes.devfest.core.data.DevFestNantesStoreBuilder
+import com.gdgnantes.devfest.core.data.SessionFiltersStore
 import com.gdgnantes.devfest.core.domain.agenda.ClassifySessionUseCase
 import com.gdgnantes.devfest.core.domain.di.domainModule
 import org.koin.core.annotation.KoinExperimentalAPI
@@ -25,7 +27,10 @@ class KoinGraphTest {
 
     @Test
     fun shared_modules_graph_is_complete() {
-        module { includes(sharedModules) }.verify()
+        // BookmarksStore and SessionFiltersStore are bound by the Android and iOS platform actuals of
+        // :core:data; the JVM actual is empty, so they are upstream types here.
+        module { includes(sharedModules) }
+            .verify(extraTypes = listOf(BookmarksStore::class, SessionFiltersStore::class))
     }
 
     @Test

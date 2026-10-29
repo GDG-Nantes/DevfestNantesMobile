@@ -176,7 +176,24 @@ Where tests live:
 | Store contract (fake and real) | `core/data/src/commonTest/` | `DevFestNantesStoreContractTest`, `GraphQLStoreMockServerTest` |
 | Live API (manual) | `core/data/src/jvmTest/` | `GraphQLStoreLiveNetworkTest` |
 | Instrumented smoke tests | `feature/<name>/src/androidTest/` | `SettingsSmokeTest` |
+| Shared domain use cases (JVM and iOS simulator) | `core/domain/src/commonTest/` | `GroupSessionsUseCaseTest`, `SpeakerIndexUseCaseTest`, `ObserveAgendaUseCaseTest` |
+| Domain and shared graph wiring | `core/domain/src/jvmTest/`, `shared/src/{jvmTest,iosTest}/` | `DomainModuleTest`, `KoinGraphTest`, `IosKoinTest` |
 | iOS Swift unit tests | `iosApp/DevFestNantesTests/` | `SessionFilterTests`, `AgendaDateParsingTests` |
+
+#### Domain test data and goldens
+
+The `:core:domain` tests (`core/domain/src/commonTest/`) run on the JVM and on the iOS simulator
+against the data in `core/domain/testdata/agenda/`: the recorded snapshot (`*.snapshot.json`),
+`filter-cases.json` and the goldens in `golden/` (`android-*.json` and `ios-*.json`, the v1.0
+outputs of each platform). `GoldenFiles`, `Goldens`, `FilterCases` and `AgendaSnapshot` in
+`:core:testing` read them.
+
+Golden rule: a default run never writes and fails with `golden missing: <path>` when a golden is
+absent. To record one, delete the file, run once with `-PrecordGoldens` (Gradle) or
+`TEST_RUNNER_DEVFEST_RECORD_GOLDENS=true` (Swift tests; the run writes it and fails with
+`golden recorded, re-run`), then run once without. An existing golden is never overwritten and goldens
+are never edited by hand. `bash scripts/record-agenda-snapshot.sh` re-records the snapshot from the
+live API (see the README next to the data).
 
 Conventions: test names are snake_case sentences (`french_filter_keeps_the_four_french_sessions`),
 expected values reference fixtures rather than retyped literals, and `*CharacterizationTest` classes

@@ -64,7 +64,7 @@ Modules are declared in `settings.gradle.dcl`:
 | `:shared` | KMP (exported to iOS) | `initKoin()` composition root, `IosDependencies` for Swift |
 | `:core:model` | KMP | Domain types (`Session`, `Speaker`, `Room`, `Agenda`, ...), `stubs/` fixtures, `WebLinks` |
 | `:core:network` | KMP | Apollo client, normalized cache, GraphQL schema and operations |
-| `:core:domain` | KMP | Shared agenda policies and use cases (`ClassifySessionUseCase`), `domainModule`; exported by `:shared` |
+| `:core:domain` | KMP | Shared agenda, speaker and venue use cases (classify, filter, group, observe, speaker index, venue language), `domainModule`; exported by `:shared` |
 | `:core:data` | KMP | `DevFestNantesStore` facade, `GraphQLStore`, mocked store, `BookmarksStore` |
 | `:core:analytics` | KMP | `AnalyticsService`; Android Firebase analytics and performance implementations |
 | `:core:testing` | KMP | Fakes, `MainDispatcherRule`, test doubles Koin modules |
@@ -125,11 +125,37 @@ the `IO_DISPATCHER` qualifier.
 Business logic shared by Android and iOS, in packages `agenda`, `speakers`, `venue` and `di`. It
 depends on `:core:model` and `:core:data` and is exported to Swift through `:shared`.
 
-- Policies and use cases are plain classes with named methods (for example
-  `ClassifySessionUseCase.isService`, `isTalk`, `isNavigable`), not `operator invoke` objects.
+Use cases:
+
+- `ClassifySessionUseCase`: `isService`, `isTalk`, `isNavigable` for a session.
+- `FilterSessionsUseCase.filter(sessions, filters, bookmarkedSessionIds)`: OR within a filter type,
+  AND across types, output in store order.
+- `GroupSessionsUseCase.group(sessions, dayAssignment, timeZone)`: days, then time slots keyed by the
+  start `Instant`, then sessions in room order (`room.sortIndex`, then name).
+- `ObserveAgendaUseCase.observe(dayAssignment, timeZone)`: combines `DevFestNantesStore.sessions`,
+  `SessionFiltersStore.filters` and `BookmarksStore.bookmarkedSessionIds` into a
+  `Flow<List<DaySchedule>>` (`@NativeCoroutines`).
+- `SpeakerIndexUseCase`: the A-Z speaker index (`letterGroups` for the iOS list, `firstIndexes` for
+  the Android scroller).
+- `VenueLanguageUseCase.languageFor(languageCode)`: French for `"fr"`, English otherwise.
+
+`DayAssignment` selects how a session is assigned to a conference day: `UtcDayWindows` (Android, fixed
+24 hour UTC windows from the configured day starts, exactly like `Agenda.Builder`) or `LocalDateDays`
+(iOS, the calendar date in the time zone passed to `group`).
+
+Rules:
+
+- Policies and use cases are plain classes with named methods, not `operator invoke` objects.
 - They are bound as Koin `factory` definitions in `di/DomainModule.kt`. `domainModule` is
   `@HiddenFromObjC` and is part of `sharedModules`; iOS resolves use cases through
-  `IosDependencies`.
+  `IosDependencies`. The module also binds the `CoroutineDispatcher` named `domainDispatcher`
+  (`Dispatchers.Default`) that `ObserveAgendaUseCase` runs its upstream work on.
+- The use cases return data only. Loading and error state, tracing, refresh and cancellation stay
+  in the ViewModels. `ObserveAgendaUseCase` builds its flow inside each `observe` call, so a new
+  collection restarts the cold store flow (refresh = cancel and collect again), and a store failure
+  reaches the collector unchanged, as in v1.0.
+- The time zone is an explicit parameter on every platform: callers pass
+  `TimeZone.currentSystemDefault()`.
 - Methods that return a `Flow` carry `@NativeCoroutines` so Swift sees `async`/`AsyncSequence`.
 - No public extension functions on exported model types: Swift cannot call them as members.
 
@@ -262,9 +288,20 @@ To add a screen, add a `Screen` subclass and a `composable(...)` entry in `MainA
 
 ### Behavior deviations (v1.1)
 
-- `SessionFilter` is a data class: equal-content filter sets no longer re-emit through `StateFlow`;
-  no visible effect (07-06 drawer and equality characterizations unchanged); Android adopts it in
-  07-10.
+| Behavior | Android v1.0 | iOS v1.0 | Shared (v1.1) | Why acceptable / where it stays per platform |
+|---|---|---|---|---|
+| `SessionFilter` equality | Not a data class: equal-content sets re-emitted through `StateFlow` | n/a | Data class: equal-content sets do not re-emit | No visible effect (drawer and equality characterizations unchanged); Android adopted it in 07-10 |
+| Order inside a time slot (`RoomSortIndex`) | Unspecified (`HashSet`, then room name and `sortIndex` sorts) | Room name only | `room.sortIndex`, then room name; a session without a room first; ties keep store order | One deterministic order covering both; the iOS order changes when it adopts the shared grouping (Phase 9) |
+| Room filter | Compares the filter value with `room.id` | Compares it with the room name | Compares with `room.id` | Equal on real data because `room.id == room.name` for every room |
+| Slot key | Localized short time in the device zone: starts within the same minute share a slot | Exact `Date` | Exact start `Instant` | Every real session starts on a whole minute; the shared key is the stricter of the two |
+| Filter output order | Unspecified (`HashSet`) | Store order | Store order | A deterministic subset of the old Android behavior |
+| Start with fractional seconds | Parsed | Falls back to "now" (pinned by `AgendaDateParsingTests`) | Parsed | Never occurs in real data; the shared parsing is the correct one |
+| Start up to 24 h before a day start | Belongs to that day (`(start - dayStart).inWholeDays == 0`) | n/a (local calendar date) | `UtcDayWindows` copies the `Agenda.Builder` rule, so the same quirk remains | Strict parity; real sessions are inside their day |
+| Speaker index: empty name | `first()` throws `NoSuchElementException` | Adds an empty letter | Empty letter `""`; Android skips it and reports a non-fatal exception to Crashlytics through Timber | Never present in the data; an input that crashed v1.0 Android no longer does (accepted behavior change, D-20, implemented in 07-18) |
+| Speaker index: initial outside the Basic Multilingual Plane | One UTF-16 unit | One grapheme | One UTF-16 unit | Absent from the data; the platforms could still differ for such a letter |
+| Day time zone | Fixed UTC windows (zone ignored); the device zone only formats labels | Local calendar date in the device zone | The API takes the zone on every platform (D-05, D-19); `UtcDayWindows` ignores it by design, `LocalDateDays` reads it | The day assignment strategy is the per-platform choice; the Android label formatter keeps using the device zone |
+| Scroll to the current time slot | `currentStartTimeIndex` in `AgendaColumn` | Own logic in SwiftUI | Not shared | Stays per platform (D-08): wall-clock behavior tied to each UI |
+| Partner categories | Five fixed groups, ignores `PARTNERS` | Every category sorted by ordinal | Not shared | Stays per platform (D-08): the semantics differ |
 
 ## iOS App
 
