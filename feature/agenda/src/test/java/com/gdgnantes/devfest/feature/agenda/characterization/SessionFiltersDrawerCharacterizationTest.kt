@@ -90,12 +90,20 @@ class SessionFiltersDrawerCharacterizationTest {
 
     @Test
     fun clicking_french_adds_language_french_and_clicking_again_removes_it() {
-        assertToggles(context.getString(R.string.language_french), SessionFilterType.LANGUAGE, SessionLanguage.FRENCH.name)
+        assertToggles(
+            context.getString(R.string.language_french),
+            SessionFilterType.LANGUAGE,
+            SessionLanguage.FRENCH.name
+        )
     }
 
     @Test
     fun clicking_english_adds_language_english_and_clicking_again_removes_it() {
-        assertToggles(context.getString(R.string.language_english), SessionFilterType.LANGUAGE, SessionLanguage.ENGLISH.name)
+        assertToggles(
+            context.getString(R.string.language_english),
+            SessionFilterType.LANGUAGE,
+            SessionLanguage.ENGLISH.name
+        )
     }
 
     @Test
