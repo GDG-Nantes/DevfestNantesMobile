@@ -60,10 +60,11 @@ import kotlin.test.assertNotNull
  *
  * Overriding is re-enabled and doubles are layered on top, so this test does NOT exercise the
  * production definitions the doubles replace. The `:core:testing` doubles replace
- * `DevFestNantesStore`, `BookmarksStore`, `AnalyticsService` and `PerformanceMonitoring`; test-local
- * fakes replace `DataCollectionSettingsService` and `Timber.Tree`. Only `FirebaseRemoteConfig` (against
- * a FirebaseApp initialised with dummy options) and `SessionFiltersServiceImpl` run unfaked here;
- * `FeedbackFormViewModel` is resolved against an offline `FeedbackFlags` so no fetch starts. The
+ * `DevFestNantesStore`, `BookmarksStore`, `SessionFiltersStore` (so the production
+ * `SharedPreferencesSessionFiltersStore` binding is replaced here), `AnalyticsService` and
+ * `PerformanceMonitoring`; test-local fakes replace `DataCollectionSettingsService` and `Timber.Tree`.
+ * Only `FirebaseRemoteConfig` (against a FirebaseApp initialised with dummy options) runs unfaked
+ * here; `FeedbackFormViewModel` is resolved against an offline `FeedbackFlags` so no fetch starts. The
  * unmodified production graph, including those real definitions, is covered by
  * [ProductionGraphStartupTest].
  */

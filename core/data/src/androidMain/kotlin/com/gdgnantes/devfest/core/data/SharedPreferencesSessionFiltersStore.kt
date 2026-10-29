@@ -1,25 +1,22 @@
-package com.gdgnantes.devfest.feature.agenda.services
+package com.gdgnantes.devfest.core.data
 
 import android.content.SharedPreferences
 import androidx.core.content.edit
-import com.gdgnantes.devfest.core.data.SessionFiltersStore
 import com.gdgnantes.devfest.core.model.SessionFilter
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.serialization.json.Json
+import kotlinx.serialization.SerializationException
 import timber.log.Timber
 
 /**
- * The v1.0 agenda filters holder, now also a [SessionFiltersStore].
+ * The Android [SessionFiltersStore]: the agenda filters persisted as one JSON string per filter in
+ * the `SHARED_PREFERENCES_KEY_AGENDA_FILTERS` string set, the same key and format as v1.0 (D-18).
  *
- * Bridge only: it keeps the member declarations inherited from the store until 07-16 removes this
- * service and binds the `:core:data` implementation instead (SHARED-06).
+ * Must stay a single instance so the agenda screen and `HomeViewModel` observe the same filters.
  */
-interface SessionFiltersService : SessionFiltersStore
-
-class SessionFiltersServiceImpl(
+class SharedPreferencesSessionFiltersStore(
     private val sharedPreferences: SharedPreferences
-) : SessionFiltersService {
+) : SessionFiltersStore {
     companion object {
         private const val SHARED_PREFERENCES_KEY_FILTERS = "SHARED_PREFERENCES_KEY_AGENDA_FILTERS"
     }
@@ -33,10 +30,7 @@ class SessionFiltersServiceImpl(
     }
 
     private fun saveFilters(filters: Set<SessionFilter>) {
-        val stringSet =
-            filters.map {
-                Json.encodeToString(SessionFilter.serializer(), it)
-            }.toSet()
+        val stringSet = filters.map { SessionFilterCodec.encode(it) }.toSet()
         sharedPreferences.edit {
             putStringSet(SHARED_PREFERENCES_KEY_FILTERS, stringSet)
         }
@@ -47,8 +41,8 @@ class SessionFiltersServiceImpl(
             sharedPreferences.getStringSet(SHARED_PREFERENCES_KEY_FILTERS, emptySet()) ?: emptySet()
         return stringSet.mapNotNull { filterString ->
             try {
-                Json.decodeFromString<SessionFilter>(filterString)
-            } catch (e: kotlinx.serialization.SerializationException) {
+                SessionFilterCodec.decode(filterString)
+            } catch (e: SerializationException) {
                 Timber.e(
                     e,
                     "SerializationException: Failed to deserialize SessionFilter: $filterString"
