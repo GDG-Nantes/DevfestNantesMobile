@@ -1,9 +1,10 @@
 package com.gdgnantes.devfest.androidapp.ui.screens.home
 
 import app.cash.turbine.test
+import com.gdgnantes.devfest.core.model.SessionFilter
+import com.gdgnantes.devfest.core.model.SessionFilterType
 import com.gdgnantes.devfest.core.testing.MainDispatcherRule
 import com.gdgnantes.devfest.feature.agenda.services.SessionFiltersService
-import com.gdgnantes.devfest.feature.agenda.utils.SessionFilter
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.test.runTest
@@ -26,7 +27,7 @@ class HomeViewModelTest {
     }
 
     private val filters = FakeFilters()
-    private val anyFilter = SessionFilter(SessionFilter.FilterType.BOOKMARK, "")
+    private val anyFilter = SessionFilter(SessionFilterType.BOOKMARK, "")
 
     private fun viewModel() = HomeViewModel(filters)
 

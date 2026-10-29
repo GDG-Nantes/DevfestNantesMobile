@@ -2,7 +2,7 @@ package com.gdgnantes.devfest.feature.agenda.services
 
 import android.content.SharedPreferences
 import androidx.core.content.edit
-import com.gdgnantes.devfest.feature.agenda.utils.SessionFilter
+import com.gdgnantes.devfest.core.model.SessionFilter
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow

@@ -1,5 +1,7 @@
 package com.gdgnantes.devfest.feature.agenda.characterization
 
+import com.gdgnantes.devfest.core.model.SessionFilter
+import com.gdgnantes.devfest.core.model.SessionFilterType
 import com.gdgnantes.devfest.core.model.SessionLanguage
 import com.gdgnantes.devfest.core.testing.FakeBookmarksStore
 import com.gdgnantes.devfest.core.testing.FakeDevFestNantesStore
@@ -7,8 +9,6 @@ import com.gdgnantes.devfest.core.testing.MainDispatcherRule
 import com.gdgnantes.devfest.core.testing.NoOpPerformanceMonitoring
 import com.gdgnantes.devfest.feature.agenda.AgendaViewModel
 import com.gdgnantes.devfest.feature.agenda.FakeSessionFiltersService
-import com.gdgnantes.devfest.feature.agenda.utils.SessionFilter
-import com.gdgnantes.devfest.feature.agenda.utils.SessionFilter.FilterType
 import org.junit.Rule
 import org.junit.Test
 import kotlin.test.assertEquals
@@ -43,10 +43,10 @@ class SessionFilterEqualityCharacterizationTest {
     private fun AgendaViewModel.allIds(): Set<String> =
         days.value.values.flatMap { day -> day.sessions.map { it.id } }.toSet()
 
-    private fun AgendaViewModel.filterPairs(): Set<Pair<FilterType, String>> =
+    private fun AgendaViewModel.filterPairs(): Set<Pair<SessionFilterType, String>> =
         sessionFilters.value.map { it.type to it.value }.toSet()
 
-    private fun french() = setOf(SessionFilter(FilterType.LANGUAGE, SessionLanguage.FRENCH.name))
+    private fun french() = setOf(SessionFilter(SessionFilterType.LANGUAGE, SessionLanguage.FRENCH.name))
 
     @Test
     fun reapplying_an_equal_content_filter_set_leaves_the_agenda_and_the_filters_unchanged() {
@@ -61,7 +61,7 @@ class SessionFilterEqualityCharacterizationTest {
         assertTrue(idsAfterFirst.size < unfilteredIds.size, "the french filter must narrow the agenda")
         assertEquals(idsAfterFirst, viewModel.allIds())
         assertEquals(pairsAfterFirst, viewModel.filterPairs())
-        assertEquals(setOf(FilterType.LANGUAGE to SessionLanguage.FRENCH.name), viewModel.filterPairs())
+        assertEquals(setOf(SessionFilterType.LANGUAGE to SessionLanguage.FRENCH.name), viewModel.filterPairs())
     }
 
     @Test

@@ -4,6 +4,8 @@ import app.cash.turbine.test
 import com.gdgnantes.devfest.core.model.AgendaDay
 import com.gdgnantes.devfest.core.model.Complexity
 import com.gdgnantes.devfest.core.model.Session
+import com.gdgnantes.devfest.core.model.SessionFilter
+import com.gdgnantes.devfest.core.model.SessionFilterType
 import com.gdgnantes.devfest.core.model.SessionLanguage
 import com.gdgnantes.devfest.core.model.SessionType
 import com.gdgnantes.devfest.core.model.stubs.SessionFixtures
@@ -13,8 +15,6 @@ import com.gdgnantes.devfest.core.testing.FakeDevFestNantesStore
 import com.gdgnantes.devfest.core.testing.MainDispatcherRule
 import com.gdgnantes.devfest.core.testing.NoOpPerformanceMonitoring
 import com.gdgnantes.devfest.core.ui.UiState
-import com.gdgnantes.devfest.feature.agenda.utils.SessionFilter
-import com.gdgnantes.devfest.feature.agenda.utils.SessionFilter.FilterType
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.runTest
 import org.junit.Rule
@@ -52,15 +52,15 @@ class AgendaViewModelTest {
     private fun idsOf(vararg sessions: Session): Set<String> =
         sessions.map { it.id }.toSet()
 
-    private val french = SessionFilter(FilterType.LANGUAGE, SessionLanguage.FRENCH.name)
-    private val english = SessionFilter(FilterType.LANGUAGE, SessionLanguage.ENGLISH.name)
-    private val advanced = SessionFilter(FilterType.COMPLEXITY, Complexity.ADVANCED.name)
-    private val beginner = SessionFilter(FilterType.COMPLEXITY, Complexity.BEGINNER.name)
-    private val conference = SessionFilter(FilterType.TYPE, SessionType.CONFERENCE.name)
-    private val codelab = SessionFilter(FilterType.TYPE, SessionType.CODELAB.name)
-    private val bookmarkedOnly = SessionFilter(FilterType.BOOKMARK, "")
-    private val titan = SessionFilter(FilterType.ROOM, requireNotNull(SessionFixtures.composeDeepDive.room).id)
-    private val belem = SessionFilter(FilterType.ROOM, requireNotNull(SessionFixtures.webRendering.room).id)
+    private val french = SessionFilter(SessionFilterType.LANGUAGE, SessionLanguage.FRENCH.name)
+    private val english = SessionFilter(SessionFilterType.LANGUAGE, SessionLanguage.ENGLISH.name)
+    private val advanced = SessionFilter(SessionFilterType.COMPLEXITY, Complexity.ADVANCED.name)
+    private val beginner = SessionFilter(SessionFilterType.COMPLEXITY, Complexity.BEGINNER.name)
+    private val conference = SessionFilter(SessionFilterType.TYPE, SessionType.CONFERENCE.name)
+    private val codelab = SessionFilter(SessionFilterType.TYPE, SessionType.CODELAB.name)
+    private val bookmarkedOnly = SessionFilter(SessionFilterType.BOOKMARK, "")
+    private val titan = SessionFilter(SessionFilterType.ROOM, requireNotNull(SessionFixtures.composeDeepDive.room).id)
+    private val belem = SessionFilter(SessionFilterType.ROOM, requireNotNull(SessionFixtures.webRendering.room).id)
 
     @Test
     fun loads_the_fixture_agenda_into_two_days_and_reports_success() {

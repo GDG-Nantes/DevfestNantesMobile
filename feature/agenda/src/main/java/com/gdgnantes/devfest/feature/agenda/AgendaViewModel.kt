@@ -10,9 +10,10 @@ import com.gdgnantes.devfest.core.model.Agenda.Companion.DAY_ONE_ISO
 import com.gdgnantes.devfest.core.model.Agenda.Companion.DAY_TWO_ISO
 import com.gdgnantes.devfest.core.model.AgendaDay
 import com.gdgnantes.devfest.core.model.Session
+import com.gdgnantes.devfest.core.model.SessionFilter
+import com.gdgnantes.devfest.core.model.SessionFilterType
 import com.gdgnantes.devfest.core.ui.UiState
 import com.gdgnantes.devfest.feature.agenda.services.SessionFiltersService
-import com.gdgnantes.devfest.feature.agenda.utils.SessionFilter
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -119,7 +120,7 @@ class AgendaViewModel(
             return filteredSessions.toList()
         }
         val sessionsByFilterType =
-            mutableMapOf<SessionFilter.FilterType, MutableSet<Session>>()
+            mutableMapOf<SessionFilterType, MutableSet<Session>>()
         for (filter in filterList) {
             if (!sessionsByFilterType.containsKey(filter.type)) {
                 sessionsByFilterType[filter.type] = mutableSetOf()
@@ -128,31 +129,31 @@ class AgendaViewModel(
         for (session in this) {
             for (filter in filterList) {
                 when (filter.type) {
-                    SessionFilter.FilterType.BOOKMARK -> {
+                    SessionFilterType.BOOKMARK -> {
                         if (bookmarksStore.isBookmarked(session.id)) {
                             sessionsByFilterType[filter.type]?.add(session)
                         }
                     }
 
-                    SessionFilter.FilterType.LANGUAGE -> {
+                    SessionFilterType.LANGUAGE -> {
                         if (filter.value == session.language?.name) {
                             sessionsByFilterType[filter.type]?.add(session)
                         }
                     }
 
-                    SessionFilter.FilterType.COMPLEXITY -> {
+                    SessionFilterType.COMPLEXITY -> {
                         if (filter.value == session.complexity?.name) {
                             sessionsByFilterType[filter.type]?.add(session)
                         }
                     }
 
-                    SessionFilter.FilterType.ROOM -> {
+                    SessionFilterType.ROOM -> {
                         if (filter.value == session.room?.id) {
                             sessionsByFilterType[filter.type]?.add(session)
                         }
                     }
 
-                    SessionFilter.FilterType.TYPE -> {
+                    SessionFilterType.TYPE -> {
                         if (filter.value == session.type?.name) {
                             sessionsByFilterType[filter.type]?.add(session)
                         }

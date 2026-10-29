@@ -3,7 +3,8 @@ package com.gdgnantes.devfest.feature.agenda.services
 import android.content.Context
 import android.content.SharedPreferences
 import androidx.test.core.app.ApplicationProvider
-import com.gdgnantes.devfest.feature.agenda.utils.SessionFilter
+import com.gdgnantes.devfest.core.model.SessionFilter
+import com.gdgnantes.devfest.core.model.SessionFilterType
 import org.junit.Before
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -29,7 +30,7 @@ class SessionFiltersServiceImplTest {
         prefs.edit().clear().commit()
     }
 
-    // SessionFilter is a plain class with identity equality (characterized, not changed).
+    // SessionFilter is a data class since Phase 7 (D-14); pairs() keeps the comparison equality-agnostic.
     private fun Set<SessionFilter>.pairs() = map { it.type to it.value }.toSet()
 
     @Test
@@ -38,8 +39,8 @@ class SessionFiltersServiceImplTest {
 
         service.setFilters(
             setOf(
-                SessionFilter(SessionFilter.FilterType.LANGUAGE, "FRENCH"),
-                SessionFilter(SessionFilter.FilterType.ROOM, "titan")
+                SessionFilter(SessionFilterType.LANGUAGE, "FRENCH"),
+                SessionFilter(SessionFilterType.ROOM, "titan")
             )
         )
 
@@ -69,8 +70,8 @@ class SessionFiltersServiceImplTest {
 
         assertEquals(
             setOf(
-                SessionFilter.FilterType.LANGUAGE to "FRENCH",
-                SessionFilter.FilterType.ROOM to "titan"
+                SessionFilterType.LANGUAGE to "FRENCH",
+                SessionFilterType.ROOM to "titan"
             ),
             service.filters.value.pairs()
         )
@@ -79,7 +80,7 @@ class SessionFiltersServiceImplTest {
     @Test
     fun setFilters_with_an_empty_set_stores_an_empty_set() {
         val service = SessionFiltersServiceImpl(prefs)
-        service.setFilters(setOf(SessionFilter(SessionFilter.FilterType.BOOKMARK, "true")))
+        service.setFilters(setOf(SessionFilter(SessionFilterType.BOOKMARK, "true")))
 
         service.setFilters(emptySet())
 

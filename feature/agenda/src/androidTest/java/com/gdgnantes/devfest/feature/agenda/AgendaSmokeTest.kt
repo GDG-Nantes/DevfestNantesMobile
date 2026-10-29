@@ -18,13 +18,13 @@ import androidx.compose.ui.test.performScrollToNode
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import com.gdgnantes.devfest.core.model.Session
+import com.gdgnantes.devfest.core.model.SessionFilterType
 import com.gdgnantes.devfest.core.model.SessionLanguage
 import com.gdgnantes.devfest.core.model.stubs.SessionFixtures
 import com.gdgnantes.devfest.core.testing.di.androidTestDoubles
 import com.gdgnantes.devfest.core.ui.di.coreUiModule
 import com.gdgnantes.devfest.feature.agenda.di.agendaModule
 import com.gdgnantes.devfest.feature.agenda.services.SessionFiltersService
-import com.gdgnantes.devfest.feature.agenda.utils.SessionFilter
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Rule
@@ -104,7 +104,7 @@ class AgendaSmokeTest {
         val filters = koinRule.koin.get<SessionFiltersService>().filters
         composeRule.waitUntil(TIMEOUT_MILLIS) { filters.value.isNotEmpty() }
         assertEquals(
-            listOf(SessionFilter.FilterType.LANGUAGE to SessionLanguage.ENGLISH.name),
+            listOf(SessionFilterType.LANGUAGE to SessionLanguage.ENGLISH.name),
             filters.value.map { it.type to it.value }
         )
 
