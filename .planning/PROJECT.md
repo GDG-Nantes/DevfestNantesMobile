@@ -48,12 +48,13 @@ CI/CD must work again and the project must become maintainable again (modern bui
 - ✓ Quality: Kover line coverage raised from 15.96% to 30.57% — GraphQLStore/mapper tests on Apollo MockServer (JVM/Android/iOS), shared Store contract, pinned SharedPreferences persistence, unit tests of the ten ViewModels on a controllable fake, agenda filter matrix, Compose smoke tests of the six feature modules; OpenFeedback/kotlinx-datetime crash (G-05-3) fixed and verified on device — v1.0 (Phase 5)
 
 - ✓ iOS tests: hosted Swift Testing target `DevFestNantesTests` (replaces the broken `DevFest NantesTests`) run through the committed `iosApp.xctestplan`; iOS CI runs build-for-testing + test-without-building on every PR, fails on zero executed tests (`scripts/xcresult-assert-tests.sh`), Xcode-keyed DerivedData cache; `swift-names-gate.sh` restored in `scripts/` and run in CI; KMP-NativeCoroutines aligned on 1.0.6 (SPM + Gradle) guarded by `scripts/kmp-nc-version-gate.sh`; v1.0 parity smoke approved — v1.1 (Phase 6, IOSTEST-03/04, CONC-03)
+- ✓ Shared KMP domain layer: `:core:domain` (filter, day/time-slot grouping, session classification, speaker A-Z index, venue language, combined `ObserveAgendaUseCase`) exported by `:shared`, `SessionFilter` moved to `:core:model`, common `BookmarksStore`/`SessionFiltersStore` with the Android codec (iOS NSUserDefaults implementation on new keys, tested on simulator); characterization goldens from a recorded API snapshot on both v1.0 platforms; Android consumes it with `SessionFiltersService` removed and human-approved visual parity — v1.1 (Phase 7, SHARED-01..07)
 
 ### Active
 
 Milestone v1.1 iOS Architecture (details and REQ-IDs in `REQUIREMENTS.md`):
-- [ ] Domain logic (agenda, filters, favorites, mapping) shared in KMP and consumed by Android and iOS
-- [ ] No more duplicated business logic on iOS; existing `UserDefaults` data migrated without loss
+- [ ] Domain logic (agenda, filters, favorites, mapping) shared in KMP and consumed by Android and iOS — shared layer and Android adoption done in Phase 7; iOS consumption pending (Phase 9)
+- [ ] No more duplicated business logic on iOS; legacy 2025 `UserDefaults` favorites/filters intentionally not migrated (07-CONTEXT D-15)
 - [ ] iOS app split into local feature/core SPM packages, app target as a shell
 - [ ] Explicit iOS DI through a composition root, with no service-locator or global singletons in ViewModels
 - [ ] iOS 17 minimum, `@Observable` ViewModels, Combine removed
@@ -112,6 +113,9 @@ Milestone v1.1 iOS Architecture (details and REQ-IDs in `REQUIREMENTS.md`):
 | Phase 6: plain `*-gate.sh` scripts with `check`/`selftest` modes and greppable OK/FAIL tokens for every iOS CI gate (xcresult, swift-names, kmp-nc) | A gate that cannot be shown to fail is not a gate; tokens make CI logs auditable and the selftests catch a weakened guard | ✓ Phase 6 — all three gates green on real CI runs (40477853950, 40488566873, 40501276582) |
 | Phase 6: KMP-NativeCoroutines bump (alpha → 1.0.6) kept only after a human parity smoke, revertible as one commit (D-12) | The AsyncSequence cancel-on-dealloc change touches the user-visible flows and no UI test exists before Phase 12 | ✓ Phase 6 — smoke approved on 8 flows, bump kept |
 | Phase 7: legacy iOS favorites/filters (`Favorites`, `AgendaSessionFilters`) not migrated; iOS store uses new keys and the shared Android filter codec | The 2025 edition is over and session ids change every edition, so old data is worthless; a clean single codec beats a lowercase legacy codec + migrator | Phase 7 discussion (07-CONTEXT D-15), one-way once Phase 9 ships |
+| Phase 7: characterize before moving — goldens recorded on unmodified v1.0 Android and iOS code from a committed real API snapshot, never overwritten (`GoldenFiles` writes only when absent in record mode) | Every move of logic is proven against both platforms' actual behavior, including two time zones for grouping | ✓ Phase 7 — 7 goldens, shared use cases reproduce them on JVM and iOS simulator |
+| Phase 7: iOS room order deviation (`RoomSortIndex`) kept as a documented, test-asserted difference; divergent behaviors (day time zone) go through explicit parameters (`UtcDayWindows`, `TimeZone`) | Strict parity except where the roadmap allowed a documented deviation (SHARED-03/04) | ✓ Phase 7 — documented in `documentation/ARCHITECTURE.md` |
+| Phase 7: Android switch done in small wiring-only commits, `SessionFiltersService` replaced by `SharedPreferencesSessionFiltersStore` in `:core:data` in a single commit (one holder over the filters key at all times) | Avoid two writers on the same SharedPreferences key; keep persisted bytes identical | ✓ Phase 7 — R8 release smoke + 15 paired screenshots approved 2026-10-29 |
 
 ## Evolution
 
@@ -131,4 +135,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-10-27 after Phase 6*
+*Last updated: 2026-10-29 after Phase 7*
