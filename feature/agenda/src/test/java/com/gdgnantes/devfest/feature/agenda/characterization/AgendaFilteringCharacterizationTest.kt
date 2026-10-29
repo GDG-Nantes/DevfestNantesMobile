@@ -1,5 +1,7 @@
 package com.gdgnantes.devfest.feature.agenda.characterization
 
+import com.gdgnantes.devfest.core.model.SessionFilter
+import com.gdgnantes.devfest.core.model.SessionFilterType
 import com.gdgnantes.devfest.core.testing.FakeBookmarksStore
 import com.gdgnantes.devfest.core.testing.FakeDevFestNantesStore
 import com.gdgnantes.devfest.core.testing.MainDispatcherRule
@@ -13,7 +15,6 @@ import com.gdgnantes.devfest.core.testing.snapshot.GoldenFiles
 import com.gdgnantes.devfest.core.testing.snapshot.Goldens
 import com.gdgnantes.devfest.feature.agenda.AgendaViewModel
 import com.gdgnantes.devfest.feature.agenda.FakeSessionFiltersService
-import com.gdgnantes.devfest.feature.agenda.utils.SessionFilter
 import org.junit.Rule
 import org.junit.Test
 import kotlin.test.assertEquals
@@ -42,7 +43,7 @@ class AgendaFilteringCharacterizationTest {
         val bookmarks = FakeBookmarksStore()
         cases.bookmarkedSessionIds.forEach { bookmarks.setBookmarked(it, true) }
         val filters =
-            case.filters.map { SessionFilter(SessionFilter.FilterType.valueOf(it.type), it.value) }.toSet()
+            case.filters.map { SessionFilter(SessionFilterType.valueOf(it.type), it.value) }.toSet()
 
         return AgendaViewModel(
             FakeDevFestNantesStore(sessions = sessions),
@@ -107,7 +108,7 @@ class AgendaFilteringCharacterizationTest {
                 NoOpPerformanceMonitoring(),
                 FakeSessionFiltersService(
                     setOf(
-                        SessionFilter(SessionFilter.FilterType.ROOM, "no such room"),
+                        SessionFilter(SessionFilterType.ROOM, "no such room"),
                     ),
                 ),
                 mainDispatcherRule.dispatcher,

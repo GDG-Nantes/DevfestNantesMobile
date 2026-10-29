@@ -10,13 +10,13 @@ import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performScrollTo
 import androidx.test.core.app.ApplicationProvider
 import com.gdgnantes.devfest.core.model.Complexity
+import com.gdgnantes.devfest.core.model.SessionFilter
+import com.gdgnantes.devfest.core.model.SessionFilterType
 import com.gdgnantes.devfest.core.model.SessionLanguage
 import com.gdgnantes.devfest.core.model.SessionType
 import com.gdgnantes.devfest.core.model.stubs.roomStubs
 import com.gdgnantes.devfest.feature.agenda.AgendaFilterDrawer
 import com.gdgnantes.devfest.feature.agenda.R
-import com.gdgnantes.devfest.feature.agenda.utils.SessionFilter
-import com.gdgnantes.devfest.feature.agenda.utils.SessionFilter.FilterType
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -68,12 +68,12 @@ class SessionFiltersDrawerCharacterizationTest {
         composeRule.waitForIdle()
     }
 
-    private fun Set<SessionFilter>.pairs(): Set<Pair<FilterType, String>> = map { it.type to it.value }.toSet()
+    private fun Set<SessionFilter>.pairs(): Set<Pair<SessionFilterType, String>> = map { it.type to it.value }.toSet()
 
-    private fun pair(type: FilterType, value: String) = setOf(type to value)
+    private fun pair(type: SessionFilterType, value: String) = setOf(type to value)
 
     /** Clicks [label] twice on the hosted drawer: the first click adds the filter, the second removes it. */
-    private fun assertToggleCycle(label: String, type: FilterType, value: String) {
+    private fun assertToggleCycle(label: String, type: SessionFilterType, value: String) {
         click(label)
         assertEquals(pair(type, value), filters.pairs(), "$label: first click adds the filter")
 
@@ -81,7 +81,7 @@ class SessionFiltersDrawerCharacterizationTest {
         assertEquals(emptySet(), filters.pairs(), "$label: second click removes it")
     }
 
-    private fun assertToggles(label: String, type: FilterType, value: String) {
+    private fun assertToggles(label: String, type: SessionFilterType, value: String) {
         host()
 
         assertToggleCycle(label, type, value)
@@ -90,24 +90,24 @@ class SessionFiltersDrawerCharacterizationTest {
 
     @Test
     fun clicking_french_adds_language_french_and_clicking_again_removes_it() {
-        assertToggles(context.getString(R.string.language_french), FilterType.LANGUAGE, SessionLanguage.FRENCH.name)
+        assertToggles(context.getString(R.string.language_french), SessionFilterType.LANGUAGE, SessionLanguage.FRENCH.name)
     }
 
     @Test
     fun clicking_english_adds_language_english_and_clicking_again_removes_it() {
-        assertToggles(context.getString(R.string.language_english), FilterType.LANGUAGE, SessionLanguage.ENGLISH.name)
+        assertToggles(context.getString(R.string.language_english), SessionFilterType.LANGUAGE, SessionLanguage.ENGLISH.name)
     }
 
     @Test
     fun the_bookmark_toggle_uses_an_empty_value() {
-        assertToggles(context.getString(CoreUiR.string.bookmarked), FilterType.BOOKMARK, "")
+        assertToggles(context.getString(CoreUiR.string.bookmarked), SessionFilterType.BOOKMARK, "")
     }
 
     @Test
     fun every_room_toggle_uses_the_room_id_as_value() {
         host()
 
-        roomStubs.forEach { room -> assertToggleCycle(room.name, FilterType.ROOM, room.id) }
+        roomStubs.forEach { room -> assertToggleCycle(room.name, SessionFilterType.ROOM, room.id) }
     }
 
     @Test
@@ -119,7 +119,7 @@ class SessionFiltersDrawerCharacterizationTest {
             CoreUiR.string.complexity_intermediate to Complexity.INTERMEDIATE,
             CoreUiR.string.complexity_advanced to Complexity.ADVANCED,
         ).forEach { (label, complexity) ->
-            assertToggleCycle(context.getString(label), FilterType.COMPLEXITY, complexity.name)
+            assertToggleCycle(context.getString(label), SessionFilterType.COMPLEXITY, complexity.name)
         }
     }
 
@@ -132,7 +132,7 @@ class SessionFiltersDrawerCharacterizationTest {
             CoreUiR.string.session_type_quickie to SessionType.QUICKIE,
             CoreUiR.string.session_type_codelab to SessionType.CODELAB,
         ).forEach { (label, type) ->
-            assertToggleCycle(context.getString(label), FilterType.TYPE, type.name)
+            assertToggleCycle(context.getString(label), SessionFilterType.TYPE, type.name)
         }
     }
 
@@ -148,9 +148,9 @@ class SessionFiltersDrawerCharacterizationTest {
 
         assertEquals(
             setOf(
-                FilterType.COMPLEXITY to Complexity.ADVANCED.name,
-                FilterType.TYPE to SessionType.CODELAB.name,
-                FilterType.LANGUAGE to SessionLanguage.FRENCH.name,
+                SessionFilterType.COMPLEXITY to Complexity.ADVANCED.name,
+                SessionFilterType.TYPE to SessionType.CODELAB.name,
+                SessionFilterType.LANGUAGE to SessionLanguage.FRENCH.name,
             ),
             filters.pairs(),
         )
@@ -161,8 +161,8 @@ class SessionFiltersDrawerCharacterizationTest {
     fun the_clear_button_emits_an_empty_set() {
         host(
             setOf(
-                SessionFilter(FilterType.LANGUAGE, SessionLanguage.FRENCH.name),
-                SessionFilter(FilterType.BOOKMARK, ""),
+                SessionFilter(SessionFilterType.LANGUAGE, SessionLanguage.FRENCH.name),
+                SessionFilter(SessionFilterType.BOOKMARK, ""),
             ),
         )
 
@@ -177,16 +177,16 @@ class SessionFiltersDrawerCharacterizationTest {
         val french = SessionLanguage.FRENCH.name
         host(
             setOf(
-                SessionFilter(FilterType.LANGUAGE, french),
-                SessionFilter(FilterType.LANGUAGE, french),
-                SessionFilter(FilterType.COMPLEXITY, Complexity.ADVANCED.name),
+                SessionFilter(SessionFilterType.LANGUAGE, french),
+                SessionFilter(SessionFilterType.LANGUAGE, french),
+                SessionFilter(SessionFilterType.COMPLEXITY, Complexity.ADVANCED.name),
             ),
         )
 
         click(context.getString(R.string.language_french))
 
         assertEquals(1, emissions.size)
-        assertEquals(pair(FilterType.COMPLEXITY, Complexity.ADVANCED.name), emissions.single().pairs())
+        assertEquals(pair(SessionFilterType.COMPLEXITY, Complexity.ADVANCED.name), emissions.single().pairs())
         assertEquals(1, emissions.single().size, "both equal-content french filters are gone")
     }
 }

@@ -1,7 +1,7 @@
 package com.gdgnantes.devfest.feature.agenda
 
+import com.gdgnantes.devfest.core.model.SessionFilter
 import com.gdgnantes.devfest.feature.agenda.services.SessionFiltersService
-import com.gdgnantes.devfest.feature.agenda.utils.SessionFilter
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow

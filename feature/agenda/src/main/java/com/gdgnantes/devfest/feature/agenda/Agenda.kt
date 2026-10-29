@@ -16,8 +16,8 @@ import androidx.compose.ui.Modifier
 import com.gdgnantes.devfest.core.model.AgendaDay
 import com.gdgnantes.devfest.core.model.Room
 import com.gdgnantes.devfest.core.model.Session
+import com.gdgnantes.devfest.core.model.SessionFilter
 import com.gdgnantes.devfest.core.ui.UiState
-import com.gdgnantes.devfest.feature.agenda.utils.SessionFilter
 import kotlinx.datetime.LocalDate
 import kotlinx.datetime.TimeZone
 import kotlinx.datetime.toLocalDateTime
