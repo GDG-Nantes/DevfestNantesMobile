@@ -172,8 +172,10 @@ Rules:
   types. Apollo types never leave this module.
 - `BookmarksStore` and `SessionFiltersStore`: common interfaces for the persisted bookmarked session
   ids and the selected agenda filters. Android keeps its existing storage (`selected_sessions` for
-  bookmarks, `SHARED_PREFERENCES_KEY_AGENDA_FILTERS` for filters; the Android filters store lands in
-  plan 07-16). iOS implements both in `iosMain` on `NSUserDefaults` under new keys,
+  bookmarks through `BookmarksStoreImpl`, `SHARED_PREFERENCES_KEY_AGENDA_FILTERS` for filters
+  through `SharedPreferencesSessionFiltersStore`, both in `androidMain` and bound in the Android
+  platform Koin module of this module; keys and value format are unchanged since v1.0). iOS
+  implements both in `iosMain` on `NSUserDefaults` under new keys,
   `devfest.bookmarks.sessionIds` (array of session ids) and `devfest.agenda.filters` (array of JSON
   strings written with the shared filter codec, the same bytes as Android). The iOS stores never
   read or delete the legacy v1.0 keys (D-15: legacy data is intentionally not migrated), and the iOS
@@ -224,10 +226,11 @@ Example, the agenda:
    (`:core:domain`), `DevFestNantesStore` (rooms), the `SessionFiltersStore` and
    `PerformanceMonitoring`.
 3. The ViewModel collects `ObserveAgendaUseCase`, which combines sessions, filters and bookmarks into
-   the filtered, grouped `DaySchedule`/`TimeSlot` list exposed as UI state.
+   the filtered, grouped `DaySchedule`/`TimeSlot` list exposed as UI state. The use case runs its
+   upstream work on the domain's `domainDispatcher`.
 4. `GraphQLStore` runs the Apollo query and maps the response through `graphql/Mappers.kt`.
-5. `Agenda.kt`, `AgendaPager.kt`, `AgendaColumn.kt` render the day schedules (slot headers use the
-   device zone and locale).
+5. `Agenda.kt`, `AgendaPager.kt`, `AgendaColumn.kt` render the day schedules; labels and the
+   scroll-to-now index stay in `AgendaColumn` (slot headers use the device zone and locale).
 
 Session details: a click navigates to `"${Screen.Session.route}/{sessionId}"`;
 `SessionDetailRoute` builds `SessionViewModel` with that id. The OpenFeedback form is shown only when
@@ -282,8 +285,8 @@ To add a screen, add a `Screen` subclass and a `composable(...)` entry in `MainA
 
 - ViewModels expose `StateFlow`s; mutable state stays private (`_uiState` + `asStateFlow()`).
 - `UiState` (`STARTING`, `SUCCESS`, `ERROR`) lives in `:core:ui`.
-- `SessionFiltersServiceImpl` is a Koin `single`, so the agenda and `HomeViewModel` share the same
-  filters.
+- `SharedPreferencesSessionFiltersStore` is the single `SessionFiltersStore` of the Android graph: a
+  Koin `single` bound in `:core:data`, so the agenda and `HomeViewModel` share the same filters.
 - Bookmarks are persisted by `BookmarksStore` and shared through `BookmarksViewModel`.
 - Coroutine dispatchers are injected (`CoroutinesDispatcherProvider`, the `domainDispatcher` of
   `:core:domain`) so tests can replace them.
