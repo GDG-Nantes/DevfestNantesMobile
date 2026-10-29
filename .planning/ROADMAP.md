@@ -95,7 +95,7 @@ Plans:
   4. `BookmarksStore` and `SessionFiltersStore` are common interfaces: the v1.0 Robolectric tests that pin `selected_sessions` and the Android filter format pass unchanged, and the iOS implementation reads and writes new `NSUserDefaults` keys with the shared filter codec, never reading the legacy `Favorites`/`AgendaSessionFilters` keys (tests on simulator)
   5. On Android, the agenda, filters, bookmarks, speakers and venue behave exactly as in v1.0 (v1.0 tests green + agenda UAT); `SessionFiltersService` is gone and its Koin binding was replaced in the same commit
 
-**Plans**: 5/19 plans executed
+**Plans**: 7/19 plans executed
 Plans:
 **Wave 1**
 - [x] 07-01-PLAN.md — Tracer: `:core:domain` with `ClassifySessionUseCase`, `domainModule` in `sharedModules`, exported by `:shared`, proven on JVM/iOS/Xcode
@@ -107,8 +107,8 @@ Plans:
 - [x] 07-07-PLAN.md — iOS pre-characterization change limited to the D-10 AgendaView filter extraction and an access-only seam on sessionsChanged
 
 **Wave 3** *(blocked on Wave 2 completion)*
-- [ ] 07-05-PLAN.md — Golden-file support in `:core:testing` and the v1.0 Android grouping characterization (two zones, two locales, D-06 proof)
-- [ ] 07-08-PLAN.md — iOS characterization (D-10): Swift Testing pins on the snapshot, iOS goldens in two zones, baselines with the Swift call sites
+- [x] 07-05-PLAN.md — Golden-file support in `:core:testing` and the v1.0 Android grouping characterization (two zones, two locales, D-06 proof)
+- [x] 07-08-PLAN.md — iOS characterization (D-10): Swift Testing pins on the snapshot, iOS goldens in two zones, baselines with the Swift call sites
 
 **Wave 4** *(blocked on Wave 3 completion)*
 - [ ] 07-06-PLAN.md — v1.0 Android characterization of filtering, drawer + equality (D-14), classification, speaker index and venue language
@@ -231,7 +231,7 @@ Phases execute in numeric order: 6 → 7 → 8 → 9 → 10 → 11 → 12
 | 4. Hilt to Koin DI Migration | v1.0 | 7/7 | Complete | 2026-10-13 |
 | 5. Test Coverage Retrofit | v1.0 | 11/11 | Complete | 2026-10-16 |
 | 6. iOS Test Foundation and CI Gates | v1.1 | 6/6 | Complete    | 2026-10-27 |
-| 7. KMP Domain Layer and Android Adoption | v1.1 | 5/19 | In Progress | - |
+| 7. KMP Domain Layer and Android Adoption | v1.1 | 7/19 | In Progress | - |
 | 8. Modern SwiftUI, iOS 17 and Observation | v1.1 | 0/? | Not started | - |
 | 9. iOS on Shared Logic and Legacy Persistence | v1.1 | 0/? | Not started | - |
 | 10. Explicit iOS DI | v1.1 | 0/? | Not started | - |
