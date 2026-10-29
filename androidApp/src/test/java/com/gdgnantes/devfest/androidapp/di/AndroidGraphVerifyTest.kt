@@ -5,6 +5,7 @@ import android.app.Application
 import android.content.Context
 import com.gdgnantes.devfest.core.analytics.FirebaseAnalyticsService
 import com.gdgnantes.devfest.core.analytics.di.analyticsModule
+import com.gdgnantes.devfest.core.data.SessionFiltersStore
 import com.gdgnantes.devfest.feature.agenda.services.SessionFiltersService
 import com.gdgnantes.devfest.feature.sessiondetail.OpenFeedbackConfig
 import com.gdgnantes.devfest.feature.settings.services.DataCollectionSettingsService
@@ -49,10 +50,17 @@ class AndroidGraphVerifyTest {
     // and CoroutineDispatcher are not blanket-allowed here: a ViewModel or service that starts requiring
     // one of them without a binding still fails this test. OpenFeedbackConfig is the one binding that
     // appModule supplies to a feature module (:feature:session-detail).
+    //
+    // SessionFiltersStore is an extra type until it is bound on Android: bound on Android from 07-14
+    // (secondary type of the v1.0 service instance), which removes this extra type; :core:data binds it
+    // from 07-16.
     @Test
     fun full_android_graph_is_complete() {
         module { includes(sharedModules + (androidModules - appModule)) }
-            .verify(extraTypes = androidRuntimeTypes + firebaseSdkTypes + OpenFeedbackConfig::class)
+            .verify(
+                extraTypes =
+                    androidRuntimeTypes + firebaseSdkTypes + OpenFeedbackConfig::class + SessionFiltersStore::class
+            )
     }
 
     // appModule consumes bindings that other modules declare; they are listed as upstream types so the
