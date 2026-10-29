@@ -1,0 +1,277 @@
+{
+  "source": "android-v1.0",
+  "timeZone": "UTC",
+  "days": [
+    {
+      "dayIndex": 1,
+      "date": "2025-10-16T00:00:00Z",
+      "slots": [
+        {
+          "start": "2025-10-16T06:00:00Z",
+          "sessionIds": [
+            "day-1-open"
+          ]
+        },
+        {
+          "start": "2025-10-16T07:00:00Z",
+          "sessionIds": [
+            "keynotedouverture"
+          ]
+        },
+        {
+          "start": "2025-10-16T07:40:00Z",
+          "sessionIds": [
+            "day-1-pause-1"
+          ]
+        },
+        {
+          "start": "2025-10-16T08:00:00Z",
+          "sessionIds": [
+            "defrankensteinashakespeareressuscitervosconferencesenarticlesave",
+            "selectamazingfeaturesfromposgresql",
+            "openrewriterefactorascode",
+            "lalegendedeslecteursdecranuneodysseesensorielleaucurdenosapps",
+            "playwrighttestervosapplicationsdevientunjeudenfant",
+            "creersonproprejeuderoleenagenticaimcp",
+            "fromflatcardevelopmenttoproxmoxvedeploymentanexampleofopenandsus",
+            "unconferencegreenit"
+          ]
+        },
+        {
+          "start": "2025-10-16T08:50:00Z",
+          "sessionIds": [
+            "day-1-pause-2"
+          ]
+        },
+        {
+          "start": "2025-10-16T09:10:00Z",
+          "sessionIds": [
+            "revolutiontanstackqueryenfinunebonnegestiondetat",
+            "thedeveloperrenaissancethehumanspoweringtheageofai",
+            "detectivesdelaprodresoudrelenqueteavantlecrash",
+            "biomimetismeetcybersecuritesinspirerde3milliardsdanneesdevolutio"
+          ]
+        },
+        {
+          "start": "2025-10-16T10:00:00Z",
+          "sessionIds": [
+            "day-1-lunch"
+          ]
+        },
+        {
+          "start": "2025-10-16T12:00:00Z",
+          "sessionIds": [
+            "vosrequetessql10000xplusperformantesdurablement",
+            "lasciencefictionpeutellesimplementerpositivement",
+            "nelaissezplustrainervosdonneesdeprodanonymisezlesavecdbtoolsbund",
+            "charmerlesdragonspitchersonproduitcommeunheros",
+            "devenezunastronautedecouvrezleframeworkastro",
+            "ensorcelletonidedezeroademo",
+            "thefutureofroutingwiththenavigationapi",
+            "mobilesenperspectivequelsimpactssociauxetenvironnementauxontnoss"
+          ]
+        },
+        {
+          "start": "2025-10-16T12:50:00Z",
+          "sessionIds": [
+            "day-1-pause-3"
+          ]
+        },
+        {
+          "start": "2025-10-16T13:10:00Z",
+          "sessionIds": [
+            "fromragtoricheslessecretsdesllmaugmentesparladonnee",
+            "savingtimewithamazonqdeveloper",
+            "letsplayfactorio",
+            "becomeawizardandmakethebrowseryourown"
+          ]
+        },
+        {
+          "start": "2025-10-16T14:00:00Z",
+          "sessionIds": [
+            "day-1-pause-4"
+          ]
+        },
+        {
+          "start": "2025-10-16T14:20:00Z",
+          "sessionIds": [
+            "etatdeslieuxdelasouveraineteduclouddescloudspublicsauxcloudsconf",
+            "letsbuildkittwithjavascript",
+            "proprieteetintelligenceartificielleundroitsacrealepreuvedesmachi",
+            "immersiondanslessituationsdehandicapparticipezaunpanoramainterac",
+            "faireuneappfrontavecrustleptos",
+            "guildedesconteursunateliera2amcppourlessagasdusoir",
+            "etsionparlaitdemalwarecraftsmanship"
+          ]
+        },
+        {
+          "start": "2025-10-16T15:10:00Z",
+          "sessionIds": [
+            "day-1-pause-5"
+          ]
+        },
+        {
+          "start": "2025-10-16T15:20:00Z",
+          "sessionIds": [
+            "aliceauxpaysdugambling",
+            "airightinthebrowserwithchromesbuiltinaiapis",
+            "deopenidconnectaopenidauthzen",
+            "terramateloutilquifaitscalervotrecodeterraform"
+          ]
+        },
+        {
+          "start": "2025-10-16T15:40:00Z",
+          "sessionIds": [
+            "day-1-pause-6"
+          ]
+        },
+        {
+          "start": "2025-10-16T15:50:00Z",
+          "sessionIds": [
+            "cetaitdansquelepisodedejabrefjaiindexeuneserieculte",
+            "osintlartdetrouvercequinedevraitpasetretrouve",
+            "lanotificationenjeuxetpistesdesolutions",
+            "anintrotoebpfwithgothefoundationofmodernkubernetesnetworking"
+          ]
+        },
+        {
+          "start": "2025-10-16T16:30:00Z",
+          "sessionIds": [
+            "day-1-party"
+          ]
+        }
+      ]
+    },
+    {
+      "dayIndex": 2,
+      "date": "2025-10-17T00:00:00Z",
+      "slots": [
+        {
+          "start": "2025-10-17T06:30:00Z",
+          "sessionIds": [
+            "day-2-open"
+          ]
+        },
+        {
+          "start": "2025-10-17T07:00:00Z",
+          "sessionIds": [
+            "makinganemulatorinjavascript",
+            "karpenterkedaleduogagnantdufinops",
+            "buildingofflineaiagentsinyourmobileapp",
+            "angularsignalmondeasynchroneetatdependant",
+            "laguerredespromptsattaquesdefensesauroyaumedesllm",
+            "toiaussidonnesdustyleatesdonneesavecgrafana",
+            "designfirstopenapietasyncapienaction",
+            "maisquestcequonvadevenirlemetierdedevpasseaucribledesscenariosde"
+          ]
+        },
+        {
+          "start": "2025-10-17T07:50:00Z",
+          "sessionIds": [
+            "day-2-pause-1"
+          ]
+        },
+        {
+          "start": "2025-10-17T08:10:00Z",
+          "sessionIds": [
+            "commentnousavonstransformelesrestosducoeurencloudprovider",
+            "revolutionnezvotreprisedenotesdubulletjournalaobsidian",
+            "45minpourmettresonapplicationagenouxleguidecompletdutestdecharge",
+            "optimizingthirdpartiesinframeworkswithdx"
+          ]
+        },
+        {
+          "start": "2025-10-17T09:00:00Z",
+          "sessionIds": [
+            "day-2-pause-2"
+          ]
+        },
+        {
+          "start": "2025-10-17T09:20:00Z",
+          "sessionIds": [
+            "breakingailivecodingandhackingapplicationswithgenerativeai",
+            "iletaitunefoismodularmonolithlaquetedelarchitectureparfaite",
+            "limitsrequestsqospriorityclassesonbalaiecequevouspensiezsavoirsu",
+            "quantumcomputinginpracticewherewearewhatworksandwhatsnext"
+          ]
+        },
+        {
+          "start": "2025-10-17T10:10:00Z",
+          "sessionIds": [
+            "day-2-lunch"
+          ]
+        },
+        {
+          "start": "2025-10-17T12:00:00Z",
+          "sessionIds": [
+            "agentsintelligentslanouvellefrontieredesllms",
+            "thefutureofuiisopen",
+            "iletaitunefailleconstruirelaresiliencedansunmondechaotique",
+            "liotpour5ansetatelierdinitiationsurcartemicrobit",
+            "maitrisetypescriptparlapratique",
+            "2hchronopourtraquertoutcequibougedanstonbackendavecopentelemetry",
+            "succesdebloquerendresonjeuvideoaccessible",
+            "parolesdedevlaconferenceouvousavezlaparole"
+          ]
+        },
+        {
+          "start": "2025-10-17T12:50:00Z",
+          "sessionIds": [
+            "day-2-pause-3"
+          ]
+        },
+        {
+          "start": "2025-10-17T13:10:00Z",
+          "sessionIds": [
+            "protegermespoissonsavecgemini",
+            "optimiserdesuisweblegacydansunmoteurdejeuaaa",
+            "howaunicornmigratedfromaninhousesolutiontohelm",
+            "quandleterminaldevorelauituipourtoutlemonde"
+          ]
+        },
+        {
+          "start": "2025-10-17T14:00:00Z",
+          "sessionIds": [
+            "day-2-pause-4"
+          ]
+        },
+        {
+          "start": "2025-10-17T14:20:00Z",
+          "sessionIds": [
+            "laspirantchevalierlynxjspeutildetronermonseigneurreactnativeetle",
+            "conceptionduneiadejeuvideoaveclapprentissageparrenforcement",
+            "jbangunfichierjavapourlesgouvernertous",
+            "silencecatournedelecovolontariatalapromotiondemonsideprojectenau"
+          ]
+        },
+        {
+          "start": "2025-10-17T14:40:00Z",
+          "sessionIds": [
+            "day-2-pause-5"
+          ]
+        },
+        {
+          "start": "2025-10-17T14:50:00Z",
+          "sessionIds": [
+            "voyageguideaupaysdelinaccessibilite",
+            "enjavascriptilyaunpaquetpourtoutetsouventpourrien",
+            "embellirdesqrcodesaleredelagenai",
+            "demelervraisproduitsethallucinationsrexdunagenttelephoniquecherc"
+          ]
+        },
+        {
+          "start": "2025-10-17T15:10:00Z",
+          "sessionIds": [
+            "day-2-pause-6"
+          ]
+        },
+        {
+          "start": "2025-10-17T15:20:00Z",
+          "sessionIds": [
+            "day-2-keynote-close"
+          ]
+        }
+      ]
+    }
+  ]
+}
