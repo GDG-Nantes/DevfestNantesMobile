@@ -8,7 +8,7 @@ import org.koin.dsl.module
 val agendaModule: Module =
     module {
         // Explicit positional definition: observe agenda use case (:core:domain), store, session
-        // filters store, performance monitoring.
+        // filters store, performance monitoring, session classification use case (:core:domain).
         // The session filters store is bound by the :core:data platform module.
-        viewModel { AgendaViewModel(get(), get(), get(), get()) }
+        viewModel { AgendaViewModel(get(), get(), get(), get(), get()) }
     }

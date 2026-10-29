@@ -37,6 +37,7 @@ import kotlin.time.Instant
 fun AgendaColumn(
     slots: List<TimeSlot>,
     onSessionClick: (Session) -> Unit,
+    isTalk: (Session) -> Boolean,
 ) {
     val listState = rememberLazyListState()
     // A slot without a label (no system locale) is not rendered, as v1.0 dropped its sessions.
@@ -71,6 +72,7 @@ fun AgendaColumn(
             ) { session ->
                 AgendaRow(
                     session = session,
+                    isTalk = isTalk(session),
                     onSessionClick = onSessionClick
                 )
             }

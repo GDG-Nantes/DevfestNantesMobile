@@ -1,6 +1,7 @@
 package com.gdgnantes.devfest.feature.agenda
 
 import app.cash.turbine.test
+import com.gdgnantes.devfest.core.domain.agenda.ClassifySessionUseCase
 import com.gdgnantes.devfest.core.domain.agenda.DaySchedule
 import com.gdgnantes.devfest.core.domain.agenda.FilterSessionsUseCase
 import com.gdgnantes.devfest.core.domain.agenda.GroupSessionsUseCase
@@ -51,7 +52,8 @@ class AgendaViewModelTest {
             ),
             store,
             filters,
-            NoOpPerformanceMonitoring()
+            NoOpPerformanceMonitoring(),
+            ClassifySessionUseCase()
         )
 
     private fun AgendaViewModel.sessions(day: Int): List<Session> =
@@ -365,7 +367,8 @@ class AgendaViewModelStartupTest {
             ),
             store,
             filters,
-            NoOpPerformanceMonitoring()
+            NoOpPerformanceMonitoring(),
+            ClassifySessionUseCase()
         )
     }
 

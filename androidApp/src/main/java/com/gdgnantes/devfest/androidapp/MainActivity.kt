@@ -16,8 +16,8 @@ import com.gdgnantes.devfest.androidapp.ui.screens.Home
 import com.gdgnantes.devfest.androidapp.ui.screens.Screen
 import com.gdgnantes.devfest.core.analytics.AnalyticsPage
 import com.gdgnantes.devfest.core.analytics.AnalyticsService
+import com.gdgnantes.devfest.core.domain.agenda.ClassifySessionUseCase
 import com.gdgnantes.devfest.core.model.Session
-import com.gdgnantes.devfest.core.model.SessionType
 import com.gdgnantes.devfest.core.model.WebLinks
 import com.gdgnantes.devfest.core.ui.theme.DevFestNantesTheme
 import com.gdgnantes.devfest.feature.sessiondetail.SessionDetailRoute
@@ -31,6 +31,7 @@ import org.koin.core.parameter.parametersOf
 
 class MainActivity : ComponentActivity(), NavController.OnDestinationChangedListener {
     private val analyticsService: AnalyticsService by inject()
+    private val classifySession: ClassifySessionUseCase by inject()
     private val externalContentService: ExternalContentService by inject { parametersOf(this) }
 
     private lateinit var navController: NavController
@@ -149,14 +150,8 @@ class MainActivity : ComponentActivity(), NavController.OnDestinationChangedList
     }
 
     private fun onSessionClick(session: Session) {
-        when (session.type) {
-            SessionType.QUICKIE,
-            SessionType.CONFERENCE,
-            SessionType.CODELAB -> {
-                navController.navigate("${Screen.Session.route}/${session.id}")
-            }
-
-            else -> {}
+        if (classifySession.isNavigable(session)) {
+            navController.navigate("${Screen.Session.route}/${session.id}")
         }
         analyticsService.eventSessionOpened(session.id)
     }
