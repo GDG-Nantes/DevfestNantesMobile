@@ -11,6 +11,7 @@ CATEGORY_STUBS_JSON
 Category
 Category.Companion
 CategoryStubsKt
+ClassifySessionUseCase
 Complexity
 ContentLanguage
 DAY_ONE
@@ -286,7 +287,10 @@ isElementOptional(index:)
 isEqual(_:)
 isInline
 isInstance(value:)
+isNavigable(session:)
 isNullable
+isService(session:)
+isTalk(session:)
 iterator()
 keynote
 kind

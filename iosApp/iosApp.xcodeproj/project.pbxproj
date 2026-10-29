@@ -66,6 +66,9 @@
 		F5BA00E32E7014DA00A31383 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F5BA00E22E7014DA00A31383 /* GoogleService-Info.plist */; };
 		F58B5AB8B24860681567F470 /* SessionFilterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07FA17E61A9DDADF5C507A31 /* SessionFilterTests.swift */; };
 		9E41D7A05B6C82F3D1048B7A /* AgendaDateParsingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A91E7B2D04F6810A7C3E9 /* AgendaDateParsingTests.swift */; };
+		C8E3F5B21D6A4079B2F18E53 /* CharacterizationSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7D2E4A10C5F3968A1E07D42 /* CharacterizationSupport.swift */; };
+		EA05B7D43F8C629BD4B3A075 /* AgendaCharacterizationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9F4A6C32E7B518AC3A29F64 /* AgendaCharacterizationTests.swift */; };
+		1B6C8E0F5A7D4382C9E4B196 /* SpeakersVenueCharacterizationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F20C7A95D1E8436BA5D3C871 /* SpeakersVenueCharacterizationTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -137,6 +140,9 @@
 		938E1B2393F75FF8A7B71E9B /* DevFestNantesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DevFestNantesTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		07FA17E61A9DDADF5C507A31 /* SessionFilterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionFilterTests.swift; sourceTree = "<group>"; };
 		3C5A91E7B2D04F6810A7C3E9 /* AgendaDateParsingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgendaDateParsingTests.swift; sourceTree = "<group>"; };
+		B7D2E4A10C5F3968A1E07D42 /* CharacterizationSupport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterizationSupport.swift; sourceTree = "<group>"; };
+		D9F4A6C32E7B518AC3A29F64 /* AgendaCharacterizationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgendaCharacterizationTests.swift; sourceTree = "<group>"; };
+		F20C7A95D1E8436BA5D3C871 /* SpeakersVenueCharacterizationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeakersVenueCharacterizationTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -365,6 +371,9 @@
 			isa = PBXGroup;
 			children = (
 				3C5A91E7B2D04F6810A7C3E9 /* AgendaDateParsingTests.swift */,
+				B7D2E4A10C5F3968A1E07D42 /* CharacterizationSupport.swift */,
+				D9F4A6C32E7B518AC3A29F64 /* AgendaCharacterizationTests.swift */,
+				F20C7A95D1E8436BA5D3C871 /* SpeakersVenueCharacterizationTests.swift */,
 				07FA17E61A9DDADF5C507A31 /* SessionFilterTests.swift */,
 			);
 			path = DevFestNantesTests;
@@ -594,6 +603,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				9E41D7A05B6C82F3D1048B7A /* AgendaDateParsingTests.swift in Sources */,
+				C8E3F5B21D6A4079B2F18E53 /* CharacterizationSupport.swift in Sources */,
+				EA05B7D43F8C629BD4B3A075 /* AgendaCharacterizationTests.swift in Sources */,
+				1B6C8E0F5A7D4382C9E4B196 /* SpeakersVenueCharacterizationTests.swift in Sources */,
 				F58B5AB8B24860681567F470 /* SessionFilterTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

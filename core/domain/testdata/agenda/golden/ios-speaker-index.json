@@ -1,0 +1,200 @@
+{
+  "letters" : [
+    {
+      "letter" : "A",
+      "speakerIds" : [
+        "adrien_lebret",
+        "alain",
+        "alexandre_buisine",
+        "alexis_lina",
+        "angi___guyard",
+        "anonymous",
+        "arnaud_jean"
+      ]
+    },
+    {
+      "letter" : "B",
+      "speakerIds" : [
+        "bastien_tran",
+        "benjamin_bernard",
+        "benjamin_cavy",
+        "benoit_martin",
+        "brecht_de_ruyte",
+        "brian_vermeer"
+      ]
+    },
+    {
+      "letter" : "C",
+      "speakerIds" : [
+        "camille_pillot",
+        "clement_gregoire",
+        "cecilia_bossard",
+        "cedric_chariere_fiedler"
+      ]
+    },
+    {
+      "letter" : "D",
+      "speakerIds" : [
+        "damien_raude_morvan",
+        "dasha_ilina",
+        "denis_germain",
+        "donia_chaiehloudj"
+      ]
+    },
+    {
+      "letter" : "E",
+      "speakerIds" : [
+        "eduardo_san_martin_morote",
+        "emmanuelle_aboaf",
+        "esteban_s"
+      ]
+    },
+    {
+      "letter" : "F",
+      "speakerIds" : [
+        "faye_ellis",
+        "flora_brochier",
+        "florent_albert",
+        "florent_houbart",
+        "florent_legras",
+        "francois_eckert",
+        "francois_nollen"
+      ]
+    },
+    {
+      "letter" : "G",
+      "speakerIds" : [
+        "guillaume_laforge",
+        "guillaume_membre",
+        "guillaume_vernade"
+      ]
+    },
+    {
+      "letter" : "H",
+      "speakerIds" : [
+        "hoani_cross"
+      ]
+    },
+    {
+      "letter" : "J",
+      "speakerIds" : [
+        "jean_palies",
+        "johan_rouve",
+        "jonathan_baranzini",
+        "julien_briault",
+        "julien_crestin",
+        "julien_huang",
+        "julien_wittouck",
+        "jeremy_chauvin",
+        "jerome_tama"
+      ]
+    },
+    {
+      "letter" : "K",
+      "speakerIds" : [
+        "kate_smith",
+        "kevin_davin"
+      ]
+    },
+    {
+      "letter" : "L",
+      "speakerIds" : [
+        "laurent_mangin",
+        "lennart",
+        "loic_ortola",
+        "lucas_audart",
+        "ludovic_lefebvre"
+      ]
+    },
+    {
+      "letter" : "M",
+      "speakerIds" : [
+        "marie_terrier",
+        "marie_viley",
+        "marjorie_aubert",
+        "mathieu_herbert",
+        "mathieu_tortuyaux",
+        "mathilde_lorrain",
+        "mathilde_rigabert_lemee",
+        "matthieu_vincent",
+        "maxime_courant",
+        "mey_beisaron",
+        "mickael_alves",
+        "modeste_assiongbon",
+        "montaine_marteau"
+      ]
+    },
+    {
+      "letter" : "N",
+      "speakerIds" : [
+        "nailya_bogrova",
+        "nico_martin",
+        "nicolas_blanchon",
+        "nicolas_delsaux",
+        "nicolas_guillot",
+        "noelie_roux"
+      ]
+    },
+    {
+      "letter" : "O",
+      "speakerIds" : [
+        "oceane_gillard",
+        "oliver_dunk",
+        "olivier_leplus"
+      ]
+    },
+    {
+      "letter" : "P",
+      "speakerIds" : [
+        "patrice_de_saint_steban",
+        "philippe_bousquet",
+        "pierre",
+        "pierre_therrode"
+      ]
+    },
+    {
+      "letter" : "Q",
+      "speakerIds" : [
+        "quentin_joly"
+      ]
+    },
+    {
+      "letter" : "R",
+      "speakerIds" : [
+        "rachel_dubois",
+        "raphael_semeteys",
+        "robin_caroff"
+      ]
+    },
+    {
+      "letter" : "S",
+      "speakerIds" : [
+        "samuel_berthe",
+        "sara_vieira",
+        "sarah_tedjani",
+        "sasha_denisov",
+        "seifeddin_mansri",
+        "simon_bernardin",
+        "simon_mellerin",
+        "sonia_seddiki",
+        "stephane_philippart",
+        "sebastien_ferrer",
+        "sebastien_fourreau",
+        "sebastien_oddo"
+      ]
+    },
+    {
+      "letter" : "T",
+      "speakerIds" : [
+        "thanh_lan_doublier",
+        "thierry_chantier",
+        "thomas_boutin",
+        "thomas_cami",
+        "thomas_jouve",
+        "thomas_piscitelli",
+        "thomas_steiner"
+      ]
+    }
+  ],
+  "source" : "ios-v1.0"
+}
