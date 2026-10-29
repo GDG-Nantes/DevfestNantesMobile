@@ -128,6 +128,16 @@ Room	init(id:name:sortIndex:)
 Room	isEqual(_:)
 Room	name
 Room	sortIndex
+ScheduleSlot	compareTo(other:)
+ScheduleSlot	description()
+ScheduleSlot	doCopy(endDate:startDate:)
+ScheduleSlot	endDate
+ScheduleSlot	endDateAsEpochMilliseconds
+ScheduleSlot	hash()
+ScheduleSlot	init(endDate:startDate:)
+ScheduleSlot	isEqual(_:)
+ScheduleSlot	startDate
+ScheduleSlot	startDateAsEpochMilliseconds
 Session	abstract
 Session	category
 Session	complexity
