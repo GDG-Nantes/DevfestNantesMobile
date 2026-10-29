@@ -145,7 +145,14 @@ depends on `:core:model` and `:core:data` and is exported to Swift through `:sha
   (`setUseMockServer(true)`).
 - `graphql/GraphQLStore.kt` + `graphql/Mappers.kt`: run Apollo queries and map them to `core:model`
   types. Apollo types never leave this module.
-- `BookmarksStore`: persisted bookmarked session ids.
+- `BookmarksStore` and `SessionFiltersStore`: common interfaces for the persisted bookmarked session
+  ids and the selected agenda filters. Android keeps its existing storage (`selected_sessions` for
+  bookmarks, `SHARED_PREFERENCES_KEY_AGENDA_FILTERS` for filters; the Android filters store lands in
+  plan 07-16). iOS implements both in `iosMain` on `NSUserDefaults` under new keys,
+  `devfest.bookmarks.sessionIds` (array of session ids) and `devfest.agenda.filters` (array of JSON
+  strings written with the shared filter codec, the same bytes as Android). The iOS stores never
+  read or delete the legacy v1.0 keys (D-15: legacy data is intentionally not migrated), and the iOS
+  app starts using them in Phase 9.
 
 ### Network (`:core:network`)
 
