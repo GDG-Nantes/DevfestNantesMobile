@@ -35,7 +35,7 @@ Full details: [milestones/v1.0-ROADMAP.md](milestones/v1.0-ROADMAP.md). Requirem
 **Milestone Goal:** Modernize the iOS app to the level of the Android app (business logic shared in KMP, modular SwiftUI app on Observation + strict Swift 6, real test coverage) without any change in user-visible behavior.
 
 - [x] **Phase 6: iOS Test Foundation and CI Gates** - iOS CI runs real Swift tests on every PR and the Kotlin/Swift interop gates are active (completed 2026-10-27)
-- [ ] **Phase 7: KMP Domain Layer and Android Adoption** - The agenda/filters/bookmarks logic lives in `:core:domain`, tested on JVM and iOS simulator, and Android uses it with no visible difference
+- [x] **Phase 7: KMP Domain Layer and Android Adoption** - The agenda/filters/bookmarks logic lives in `:core:domain`, tested on JVM and iOS simulator, and Android uses it with no visible difference (completed 2026-10-29)
 - [ ] **Phase 8: Modern SwiftUI, iOS 17 and Observation** - iOS 17 everywhere, `@Observable @MainActor` ViewModels tested on fakes, Combine removed
 - [ ] **Phase 9: iOS on Shared Logic and Legacy Persistence** - iOS delegates filtering, grouping and bookmarks/filters to the shared domain without losing v1.0 data
 - [ ] **Phase 10: Explicit iOS DI** - `AppDependencies` composition root and constructor injection; singletons and service-locator removed
@@ -95,7 +95,7 @@ Plans:
   4. `BookmarksStore` and `SessionFiltersStore` are common interfaces: the v1.0 Robolectric tests that pin `selected_sessions` and the Android filter format pass unchanged, and the iOS implementation reads and writes new `NSUserDefaults` keys with the shared filter codec, never reading the legacy `Favorites`/`AgendaSessionFilters` keys (tests on simulator)
   5. On Android, the agenda, filters, bookmarks, speakers and venue behave exactly as in v1.0 (v1.0 tests green + agenda UAT); `SessionFiltersService` is gone and its Koin binding was replaced in the same commit
 
-**Plans**: 19/19 plans executed
+**Plans**: 19/19 plans complete
 Plans:
 **Wave 1**
 - [x] 07-01-PLAN.md — Tracer: `:core:domain` with `ClassifySessionUseCase`, `domainModule` in `sharedModules`, exported by `:shared`, proven on JVM/iOS/Xcode
@@ -231,7 +231,7 @@ Phases execute in numeric order: 6 → 7 → 8 → 9 → 10 → 11 → 12
 | 4. Hilt to Koin DI Migration | v1.0 | 7/7 | Complete | 2026-10-13 |
 | 5. Test Coverage Retrofit | v1.0 | 11/11 | Complete | 2026-10-16 |
 | 6. iOS Test Foundation and CI Gates | v1.1 | 6/6 | Complete    | 2026-10-27 |
-| 7. KMP Domain Layer and Android Adoption | v1.1 | 19/19 | In Progress | - |
+| 7. KMP Domain Layer and Android Adoption | v1.1 | 19/19 | Complete    | 2026-10-29 |
 | 8. Modern SwiftUI, iOS 17 and Observation | v1.1 | 0/? | Not started | - |
 | 9. iOS on Shared Logic and Legacy Persistence | v1.1 | 0/? | Not started | - |
 | 10. Explicit iOS DI | v1.1 | 0/? | Not started | - |
