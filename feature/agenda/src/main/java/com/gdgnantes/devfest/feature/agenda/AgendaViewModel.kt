@@ -4,54 +4,47 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.gdgnantes.devfest.core.analytics.performance.PerformanceMonitoring
 import com.gdgnantes.devfest.core.analytics.performance.traceDataLoading
-import com.gdgnantes.devfest.core.data.BookmarksStore
 import com.gdgnantes.devfest.core.data.DevFestNantesStore
 import com.gdgnantes.devfest.core.data.SessionFiltersStore
+import com.gdgnantes.devfest.core.domain.agenda.DaySchedule
+import com.gdgnantes.devfest.core.domain.agenda.ObserveAgendaUseCase
+import com.gdgnantes.devfest.core.domain.agenda.UtcDayWindows
 import com.gdgnantes.devfest.core.model.Agenda.Companion.DAY_ONE_ISO
 import com.gdgnantes.devfest.core.model.Agenda.Companion.DAY_TWO_ISO
-import com.gdgnantes.devfest.core.model.AgendaDay
-import com.gdgnantes.devfest.core.model.Session
 import com.gdgnantes.devfest.core.model.SessionFilter
-import com.gdgnantes.devfest.core.model.SessionFilterType
 import com.gdgnantes.devfest.core.ui.UiState
-import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.combine
-import kotlinx.coroutines.flow.map
-import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import kotlinx.datetime.TimeZone
 import timber.log.Timber
 
 class AgendaViewModel(
-    private val store: DevFestNantesStore,
-    private val bookmarksStore: BookmarksStore,
-    private val performanceMonitoring: PerformanceMonitoring,
+    private val observeAgenda: ObserveAgendaUseCase,
+    store: DevFestNantesStore,
     private val sessionFiltersStore: SessionFiltersStore,
-    private val ioDispatcher: CoroutineDispatcher
+    private val performanceMonitoring: PerformanceMonitoring
 ) : ViewModel() {
     private var autoRefreshJob: Job? = null
+
+    private val dayAssignment = UtcDayWindows(listOf(DAY_ONE_ISO, DAY_TWO_ISO))
 
     private val _uiState = MutableStateFlow(UiState.STARTING)
     val uiState: StateFlow<UiState>
         get() = _uiState
 
-    private val _unfilteredDays =
+    private val _days =
         MutableStateFlow(
-            mapOf(
-                1 to AgendaDay(1, DAY_ONE_ISO, emptyList()),
-                2 to AgendaDay(2, DAY_TWO_ISO, emptyList())
+            listOf(
+                DaySchedule(1, DAY_ONE_ISO, emptyList()),
+                DaySchedule(2, DAY_TWO_ISO, emptyList())
             )
         )
-    private val unfilteredDays = _unfilteredDays.asStateFlow()
-
-    private val _days = MutableStateFlow(unfilteredDays.value)
-    val days: StateFlow<Map<Int, AgendaDay>>
+    val days: StateFlow<List<DaySchedule>>
         get() = _days.asStateFlow()
 
     val rooms = store.rooms.stateIn(viewModelScope, SharingStarted.Lazily, emptySet())
@@ -70,16 +63,15 @@ class AgendaViewModel(
                     operation = PerformanceMonitoring.TRACE_AGENDA_LOAD,
                     dataSource = "graphql"
                 ) {
-                    store.agenda
-                        .map { agenda -> agenda.days }
-                        .onEach { days ->
-                            _unfilteredDays.value = days
-                            Timber.d("Agenda loaded with ${days.values.sumOf { it.sessions.size }} sessions")
-                        }
-                        .onEach { _uiState.emit(UiState.SUCCESS) }
-                        .combine(sessionFilters) { _, _ -> }
-                        .combine(bookmarksStore.bookmarkedSessionIds) { _, _ -> }
-                        .collect { updateFilteredDays() }
+                    // The zone is read at each refresh and passed explicitly (D-05, D-19); UtcDayWindows
+                    // ignores it by design.
+                    observeAgenda.observe(dayAssignment, TimeZone.currentSystemDefault()).collect { days ->
+                        _days.value = days
+                        Timber.d(
+                            "Agenda loaded with ${days.sumOf { day -> day.slots.sumOf { it.sessions.size } }} sessions"
+                        )
+                        _uiState.emit(UiState.SUCCESS)
+                    }
                 }
             }
     }
@@ -89,81 +81,5 @@ class AgendaViewModel(
             sessionFiltersStore.setFilters(filters)
             Timber.d("Session filters updated: ${filters.size} active filters")
         }
-    }
-
-    private suspend fun updateFilteredDays() =
-        withContext(ioDispatcher) {
-            _days.value =
-                mutableMapOf<Int, AgendaDay>()
-                    .apply {
-                        unfilteredDays.value.forEach { (key, value) ->
-                            val date = if (key == 1) DAY_ONE_ISO else DAY_TWO_ISO
-                            this[key] =
-                                AgendaDay(
-                                    value.dayIndex,
-                                    date,
-                                    value.sessions
-                                        .filterSessions(sessionFilters.value)
-                                        .sortedBy { session -> session.scheduleSlot.startDate }
-                                )
-                        }
-                    }.toMap()
-        }
-
-    @Suppress("NestedBlockDepth", "CyclomaticComplexMethod")
-    private fun List<Session>.filterSessions(
-        filterList: Set<SessionFilter>
-    ): List<Session> {
-        val filteredSessions = hashSetOf<Session>()
-        if (filterList.isEmpty()) {
-            filteredSessions.addAll(this)
-            return filteredSessions.toList()
-        }
-        val sessionsByFilterType =
-            mutableMapOf<SessionFilterType, MutableSet<Session>>()
-        for (filter in filterList) {
-            if (!sessionsByFilterType.containsKey(filter.type)) {
-                sessionsByFilterType[filter.type] = mutableSetOf()
-            }
-        }
-        for (session in this) {
-            for (filter in filterList) {
-                when (filter.type) {
-                    SessionFilterType.BOOKMARK -> {
-                        if (bookmarksStore.isBookmarked(session.id)) {
-                            sessionsByFilterType[filter.type]?.add(session)
-                        }
-                    }
-
-                    SessionFilterType.LANGUAGE -> {
-                        if (filter.value == session.language?.name) {
-                            sessionsByFilterType[filter.type]?.add(session)
-                        }
-                    }
-
-                    SessionFilterType.COMPLEXITY -> {
-                        if (filter.value == session.complexity?.name) {
-                            sessionsByFilterType[filter.type]?.add(session)
-                        }
-                    }
-
-                    SessionFilterType.ROOM -> {
-                        if (filter.value == session.room?.id) {
-                            sessionsByFilterType[filter.type]?.add(session)
-                        }
-                    }
-
-                    SessionFilterType.TYPE -> {
-                        if (filter.value == session.type?.name) {
-                            sessionsByFilterType[filter.type]?.add(session)
-                        }
-                    }
-                }
-            }
-        }
-        // get union join of all Sessions
-        val origin = sessionsByFilterType.values.flatten().toMutableSet()
-        sessionsByFilterType.values.forEach { origin.retainAll(it) }
-        return origin.toList()
     }
 }

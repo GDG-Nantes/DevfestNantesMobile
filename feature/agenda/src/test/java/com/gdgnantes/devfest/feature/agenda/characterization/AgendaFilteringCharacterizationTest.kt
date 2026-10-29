@@ -1,9 +1,13 @@
 package com.gdgnantes.devfest.feature.agenda.characterization
 
+import com.gdgnantes.devfest.core.domain.agenda.FilterSessionsUseCase
+import com.gdgnantes.devfest.core.domain.agenda.GroupSessionsUseCase
+import com.gdgnantes.devfest.core.domain.agenda.ObserveAgendaUseCase
 import com.gdgnantes.devfest.core.model.SessionFilter
 import com.gdgnantes.devfest.core.model.SessionFilterType
 import com.gdgnantes.devfest.core.testing.FakeBookmarksStore
 import com.gdgnantes.devfest.core.testing.FakeDevFestNantesStore
+import com.gdgnantes.devfest.core.testing.FakeSessionFiltersStore
 import com.gdgnantes.devfest.core.testing.MainDispatcherRule
 import com.gdgnantes.devfest.core.testing.NoOpPerformanceMonitoring
 import com.gdgnantes.devfest.core.testing.snapshot.AgendaSnapshot
@@ -14,7 +18,6 @@ import com.gdgnantes.devfest.core.testing.snapshot.GoldenCase
 import com.gdgnantes.devfest.core.testing.snapshot.GoldenFiles
 import com.gdgnantes.devfest.core.testing.snapshot.Goldens
 import com.gdgnantes.devfest.feature.agenda.AgendaViewModel
-import com.gdgnantes.devfest.feature.agenda.FakeSessionFiltersService
 import org.junit.Rule
 import org.junit.Test
 import kotlin.test.assertEquals
@@ -39,23 +42,39 @@ class AgendaFilteringCharacterizationTest {
     private val sessions =
         AgendaSnapshot.sessions(GoldenFiles.read("agenda/sessions.snapshot.json"))
 
+    private fun viewModelOf(
+        bookmarks: FakeBookmarksStore,
+        filters: Set<SessionFilter>
+    ): AgendaViewModel {
+        val store = FakeDevFestNantesStore(sessions = sessions)
+        val filtersStore = FakeSessionFiltersStore(filters)
+
+        return AgendaViewModel(
+            ObserveAgendaUseCase(
+                store,
+                filtersStore,
+                bookmarks,
+                FilterSessionsUseCase(),
+                GroupSessionsUseCase(),
+                mainDispatcherRule.dispatcher,
+            ),
+            store,
+            filtersStore,
+            NoOpPerformanceMonitoring(),
+        )
+    }
+
     private fun viewModelFor(case: FilterCase): AgendaViewModel {
         val bookmarks = FakeBookmarksStore()
         cases.bookmarkedSessionIds.forEach { bookmarks.setBookmarked(it, true) }
         val filters =
             case.filters.map { SessionFilter(SessionFilterType.valueOf(it.type), it.value) }.toSet()
 
-        return AgendaViewModel(
-            FakeDevFestNantesStore(sessions = sessions),
-            bookmarks,
-            NoOpPerformanceMonitoring(),
-            FakeSessionFiltersService(filters),
-            mainDispatcherRule.dispatcher,
-        )
+        return viewModelOf(bookmarks, filters)
     }
 
     private fun AgendaViewModel.allIds(): List<String> =
-        days.value.values.flatMap { day -> day.sessions.map { it.id } }.sorted()
+        days.value.flatMap { day -> day.slots.flatMap { slot -> slot.sessions.map { it.id } } }.sorted()
 
     @Test
     fun every_shared_filter_case_matches_the_golden_and_keeps_both_days() {
@@ -66,7 +85,7 @@ class AgendaFilteringCharacterizationTest {
                     cases.cases.map { case ->
                         val viewModel = viewModelFor(case)
 
-                        val dayKeys = viewModel.days.value.keys
+                        val dayKeys = viewModel.days.value.map { it.dayIndex }.toSet()
                         assertEquals(setOf(1, 2), dayKeys, "${case.name}: both days must stay present")
 
                         val ids = viewModel.allIds()
@@ -94,7 +113,9 @@ class AgendaFilteringCharacterizationTest {
 
         val viewModel = viewModelFor(titan)
         val rooms =
-            viewModel.days.value.values.flatMap { day -> day.sessions.map { it.room?.id } }.toSet()
+            viewModel.days.value
+                .flatMap { day -> day.slots.flatMap { slot -> slot.sessions.map { it.room?.id } } }
+                .toSet()
 
         assertEquals(setOf("Titan"), rooms)
     }
@@ -102,19 +123,14 @@ class AgendaFilteringCharacterizationTest {
     @Test
     fun a_case_without_any_matching_session_still_exposes_days_one_and_two_with_no_session() {
         val viewModel =
-            AgendaViewModel(
-                FakeDevFestNantesStore(sessions = sessions),
+            viewModelOf(
                 FakeBookmarksStore(),
-                NoOpPerformanceMonitoring(),
-                FakeSessionFiltersService(
-                    setOf(
-                        SessionFilter(SessionFilterType.ROOM, "no such room"),
-                    ),
+                setOf(
+                    SessionFilter(SessionFilterType.ROOM, "no such room"),
                 ),
-                mainDispatcherRule.dispatcher,
             )
 
-        assertEquals(setOf(1, 2), viewModel.days.value.keys)
-        assertTrue(viewModel.days.value.values.all { it.sessions.isEmpty() })
+        assertEquals(setOf(1, 2), viewModel.days.value.map { it.dayIndex }.toSet())
+        assertTrue(viewModel.days.value.all { it.slots.isEmpty() })
     }
 }

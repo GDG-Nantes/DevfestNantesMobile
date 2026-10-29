@@ -18,6 +18,7 @@ import androidx.compose.ui.test.performScrollToNode
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import com.gdgnantes.devfest.core.data.SessionFiltersStore
+import com.gdgnantes.devfest.core.domain.di.domainModule
 import com.gdgnantes.devfest.core.model.Session
 import com.gdgnantes.devfest.core.model.SessionFilterType
 import com.gdgnantes.devfest.core.model.SessionLanguage
@@ -53,7 +54,7 @@ class AgendaSmokeTest {
     @get:Rule(order = 0)
     val koinRule =
         KoinTestRule.create {
-            modules(agendaModule, coreUiModule)
+            modules(agendaModule, coreUiModule, domainModule)
             modules(androidTestDoubles)
             // Last module: androidTestDoubles binds a fake SessionFiltersStore that would otherwise win
             // over the real service, so the ViewModel and the assertions share the real instance.

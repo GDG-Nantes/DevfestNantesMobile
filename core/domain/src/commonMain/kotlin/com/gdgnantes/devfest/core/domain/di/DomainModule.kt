@@ -14,9 +14,9 @@ import org.koin.dsl.module
 import kotlin.native.HiddenFromObjC
 
 /**
- * Qualifier of the dispatcher the combined agenda flow runs its upstream work on (D-03). It is not
- * the Android `IO_DISPATCHER`: `:core:ui` sits above the domain and Koin forbids a second binding of
- * the same type and qualifier.
+ * Qualifier of the dispatcher the combined agenda flow runs its upstream work on (D-03). It lives in
+ * the domain module, shared by both platforms; Koin forbids a second binding of the same type and
+ * qualifier.
  */
 internal const val DOMAIN_DISPATCHER = "domainDispatcher"
 

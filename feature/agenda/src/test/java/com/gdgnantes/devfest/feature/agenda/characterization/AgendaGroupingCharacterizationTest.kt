@@ -1,11 +1,15 @@
 package com.gdgnantes.devfest.feature.agenda.characterization
 
+import com.gdgnantes.devfest.core.domain.agenda.FilterSessionsUseCase
+import com.gdgnantes.devfest.core.domain.agenda.GroupSessionsUseCase
+import com.gdgnantes.devfest.core.domain.agenda.ObserveAgendaUseCase
 import com.gdgnantes.devfest.core.model.Agenda
 import com.gdgnantes.devfest.core.model.Room
 import com.gdgnantes.devfest.core.model.ScheduleSlot
 import com.gdgnantes.devfest.core.model.Session
 import com.gdgnantes.devfest.core.testing.FakeBookmarksStore
 import com.gdgnantes.devfest.core.testing.FakeDevFestNantesStore
+import com.gdgnantes.devfest.core.testing.FakeSessionFiltersStore
 import com.gdgnantes.devfest.core.testing.MainDispatcherRule
 import com.gdgnantes.devfest.core.testing.NoOpPerformanceMonitoring
 import com.gdgnantes.devfest.core.testing.snapshot.AgendaGolden
@@ -15,8 +19,7 @@ import com.gdgnantes.devfest.core.testing.snapshot.GoldenFiles
 import com.gdgnantes.devfest.core.testing.snapshot.GoldenSlot
 import com.gdgnantes.devfest.core.testing.snapshot.Goldens
 import com.gdgnantes.devfest.feature.agenda.AgendaViewModel
-import com.gdgnantes.devfest.feature.agenda.FakeSessionFiltersService
-import com.gdgnantes.devfest.feature.agenda.groupSessionsByStartTime
+import com.gdgnantes.devfest.feature.agenda.formatSlotTime
 import org.junit.After
 import org.junit.Before
 import org.junit.Rule
@@ -33,8 +36,9 @@ import kotlin.time.Instant
 
 /**
  * D-11 characterization of the v1.0 Android agenda grouping, written against the unchanged code:
- * the real [AgendaViewModel] output goes through [groupSessionsByStartTime] and the LazyColumn
- * re-sort of `AgendaColumn`, on the recorded snapshot, under two time zones and two locales.
+ * the real [AgendaViewModel] output goes through the v1.0 grouping and the LazyColumn re-sort of
+ * `AgendaColumn`, on the recorded snapshot, under two time zones and two locales. Since 07-15 the
+ * grouping is the shared one: the selector rebuilds the label-keyed groups from the emitted slots.
  *
  * It proves D-06 (label keys give the same slots as start-instant keys on the snapshot) and writes
  * `golden/android-agenda.json`, the oracle the shared grouping must reproduce. The v1.0 order among
@@ -79,26 +83,38 @@ class AgendaGroupingCharacterizationTest {
         AgendaSnapshot.sessions(GoldenFiles.read("agenda/sessions.snapshot.json"))
 
     private fun displayedDays(sessions: List<Session>): List<DisplayedDay> {
+        val store = FakeDevFestNantesStore(sessions = sessions)
+        val filters = FakeSessionFiltersStore()
         val viewModel =
             AgendaViewModel(
-                FakeDevFestNantesStore(sessions = sessions),
-                FakeBookmarksStore(),
+                ObserveAgendaUseCase(
+                    store,
+                    filters,
+                    FakeBookmarksStore(),
+                    FilterSessionsUseCase(),
+                    GroupSessionsUseCase(),
+                    mainDispatcherRule.dispatcher,
+                ),
+                store,
+                filters,
                 NoOpPerformanceMonitoring(),
-                FakeSessionFiltersService(),
-                mainDispatcherRule.dispatcher,
             )
-        return viewModel.days.value.toSortedMap().map { (_, day) ->
+        return viewModel.days.value.sortedBy { it.dayIndex }.map { day ->
             DisplayedDay(
                 dayIndex = day.dayIndex,
                 date = day.date,
-                inputSize = day.sessions.size,
+                inputSize = day.slots.sumOf { it.sessions.size },
                 groups =
-                    groupSessionsByStartTime(day.sessions).map { (label, grouped) ->
-                        label to grouped.sortedBy { session -> session.room?.sortIndex }
+                    day.slots.map { slot ->
+                        formatSlotTime(slot.start) to slot.sessions.sortedBy { session -> session.room?.sortIndex }
                     },
             )
         }
     }
+
+    /** The label-keyed groups of v1.0, rebuilt from the slots the ViewModel emits for [sessions]. */
+    private fun labelGroups(sessions: List<Session>): Map<String, List<Session>> =
+        displayedDays(sessions).flatMap { day -> day.groups }.toMap()
 
     private fun Session.startInstant(): Instant = Instant.parse(scheduleSlot.startDate)
 
@@ -230,7 +246,7 @@ class AgendaGroupingCharacterizationTest {
             Session(id = id, title = id, scheduleSlot = ScheduleSlot(endDate = start, startDate = start))
 
         val grouped =
-            groupSessionsByStartTime(
+            labelGroups(
                 listOf(
                     session("a", "2025-10-16T10:00:00+02:00"),
                     session("b", "2025-10-16T10:00:00+02:00"),

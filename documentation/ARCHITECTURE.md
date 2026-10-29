@@ -115,8 +115,7 @@ navigation) are passed in as lambdas, for example `SessionDetailRoute(onSocialLi
 ### Shared UI (`:core:ui`)
 
 Material 3 theme (`theme/`), reusable components (`components/`, `components/appbars/`), Compose
-helpers (`utils/`), the cross-feature `BookmarksViewModel`, and `di/CoreUiModule.kt`, which defines
-the `IO_DISPATCHER` qualifier.
+helpers (`utils/`), the cross-feature `BookmarksViewModel`, and `di/CoreUiModule.kt`, its Koin module.
 
 ### Domain (`:core:domain`)
 
@@ -221,11 +220,14 @@ graph LR
 Example, the agenda:
 
 1. `MainActivity` registers `Screen.Home`; `Home` shows the agenda tab.
-2. `AgendaRoute` gets `AgendaViewModel` from Koin. It receives `DevFestNantesStore`, `BookmarksStore`,
-   `PerformanceMonitoring`, `SessionFiltersService` and the `IO_DISPATCHER`.
-3. The ViewModel combines `store.agenda`, bookmarks and filters into UI state.
+2. `AgendaRoute` gets `AgendaViewModel` from Koin. It receives `ObserveAgendaUseCase`
+   (`:core:domain`), `DevFestNantesStore` (rooms), the `SessionFiltersStore` and
+   `PerformanceMonitoring`.
+3. The ViewModel collects `ObserveAgendaUseCase`, which combines sessions, filters and bookmarks into
+   the filtered, grouped `DaySchedule`/`TimeSlot` list exposed as UI state.
 4. `GraphQLStore` runs the Apollo query and maps the response through `graphql/Mappers.kt`.
-5. `Agenda.kt`, `AgendaPager.kt`, `AgendaColumn.kt` render the state.
+5. `Agenda.kt`, `AgendaPager.kt`, `AgendaColumn.kt` render the day schedules (slot headers use the
+   device zone and locale).
 
 Session details: a click navigates to `"${Screen.Session.route}/{sessionId}"`;
 `SessionDetailRoute` builds `SessionViewModel` with that id. The OpenFeedback form is shown only when
@@ -283,8 +285,8 @@ To add a screen, add a `Screen` subclass and a `composable(...)` entry in `MainA
 - `SessionFiltersServiceImpl` is a Koin `single`, so the agenda and `HomeViewModel` share the same
   filters.
 - Bookmarks are persisted by `BookmarksStore` and shared through `BookmarksViewModel`.
-- Coroutine dispatchers are injected (`CoroutinesDispatcherProvider`, `IO_DISPATCHER`) so tests can
-  replace them.
+- Coroutine dispatchers are injected (`CoroutinesDispatcherProvider`, the `domainDispatcher` of
+  `:core:domain`) so tests can replace them.
 
 ### Behavior deviations (v1.1)
 

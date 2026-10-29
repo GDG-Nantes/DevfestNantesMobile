@@ -1,14 +1,17 @@
 package com.gdgnantes.devfest.feature.agenda.characterization
 
+import com.gdgnantes.devfest.core.domain.agenda.FilterSessionsUseCase
+import com.gdgnantes.devfest.core.domain.agenda.GroupSessionsUseCase
+import com.gdgnantes.devfest.core.domain.agenda.ObserveAgendaUseCase
 import com.gdgnantes.devfest.core.model.SessionFilter
 import com.gdgnantes.devfest.core.model.SessionFilterType
 import com.gdgnantes.devfest.core.model.SessionLanguage
 import com.gdgnantes.devfest.core.testing.FakeBookmarksStore
 import com.gdgnantes.devfest.core.testing.FakeDevFestNantesStore
+import com.gdgnantes.devfest.core.testing.FakeSessionFiltersStore
 import com.gdgnantes.devfest.core.testing.MainDispatcherRule
 import com.gdgnantes.devfest.core.testing.NoOpPerformanceMonitoring
 import com.gdgnantes.devfest.feature.agenda.AgendaViewModel
-import com.gdgnantes.devfest.feature.agenda.FakeSessionFiltersService
 import org.junit.Rule
 import org.junit.Test
 import kotlin.test.assertEquals
@@ -27,21 +30,29 @@ class SessionFilterEqualityCharacterizationTest {
     @get:Rule
     val mainDispatcherRule = MainDispatcherRule()
 
-    private val filtersService = FakeSessionFiltersService()
+    private val filtersService = FakeSessionFiltersStore()
 
     // Built per test: viewModelScope needs Dispatchers.Main, which the rule installs after construction.
     private val viewModel by lazy {
+        val store = FakeDevFestNantesStore()
+
         AgendaViewModel(
-            FakeDevFestNantesStore(),
-            FakeBookmarksStore(),
-            NoOpPerformanceMonitoring(),
+            ObserveAgendaUseCase(
+                store,
+                filtersService,
+                FakeBookmarksStore(),
+                FilterSessionsUseCase(),
+                GroupSessionsUseCase(),
+                mainDispatcherRule.dispatcher,
+            ),
+            store,
             filtersService,
-            mainDispatcherRule.dispatcher,
+            NoOpPerformanceMonitoring(),
         )
     }
 
     private fun AgendaViewModel.allIds(): Set<String> =
-        days.value.values.flatMap { day -> day.sessions.map { it.id } }.toSet()
+        days.value.flatMap { day -> day.slots.flatMap { slot -> slot.sessions.map { it.id } } }.toSet()
 
     private fun AgendaViewModel.filterPairs(): Set<Pair<SessionFilterType, String>> =
         sessionFilters.value.map { it.type to it.value }.toSet()

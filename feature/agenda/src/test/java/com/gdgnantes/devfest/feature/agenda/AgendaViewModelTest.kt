@@ -1,7 +1,10 @@
 package com.gdgnantes.devfest.feature.agenda
 
 import app.cash.turbine.test
-import com.gdgnantes.devfest.core.model.AgendaDay
+import com.gdgnantes.devfest.core.domain.agenda.DaySchedule
+import com.gdgnantes.devfest.core.domain.agenda.FilterSessionsUseCase
+import com.gdgnantes.devfest.core.domain.agenda.GroupSessionsUseCase
+import com.gdgnantes.devfest.core.domain.agenda.ObserveAgendaUseCase
 import com.gdgnantes.devfest.core.model.Complexity
 import com.gdgnantes.devfest.core.model.Session
 import com.gdgnantes.devfest.core.model.SessionFilter
@@ -12,6 +15,7 @@ import com.gdgnantes.devfest.core.model.stubs.SessionFixtures
 import com.gdgnantes.devfest.core.model.stubs.roomStubs
 import com.gdgnantes.devfest.core.testing.FakeBookmarksStore
 import com.gdgnantes.devfest.core.testing.FakeDevFestNantesStore
+import com.gdgnantes.devfest.core.testing.FakeSessionFiltersStore
 import com.gdgnantes.devfest.core.testing.MainDispatcherRule
 import com.gdgnantes.devfest.core.testing.NoOpPerformanceMonitoring
 import com.gdgnantes.devfest.core.ui.UiState
@@ -33,19 +37,28 @@ class AgendaViewModelTest {
 
     private val store = FakeDevFestNantesStore()
     private val bookmarks = FakeBookmarksStore()
-    private val filters = FakeSessionFiltersService()
+    private val filters = FakeSessionFiltersStore()
 
     private fun viewModel() =
         AgendaViewModel(
+            ObserveAgendaUseCase(
+                store,
+                filters,
+                bookmarks,
+                FilterSessionsUseCase(),
+                GroupSessionsUseCase(),
+                mainDispatcherRule.dispatcher
+            ),
             store,
-            bookmarks,
-            NoOpPerformanceMonitoring(),
             filters,
-            mainDispatcherRule.dispatcher
+            NoOpPerformanceMonitoring()
         )
 
+    private fun AgendaViewModel.sessions(day: Int): List<Session> =
+        days.value.first { it.dayIndex == day }.slots.flatMap { it.sessions }
+
     private fun AgendaViewModel.ids(day: Int): Set<String> =
-        days.value.getValue(day).sessions.map { it.id }.toSet()
+        sessions(day).map { it.id }.toSet()
 
     private fun AgendaViewModel.allIds(): Set<String> = ids(1) + ids(2)
 
@@ -171,7 +184,7 @@ class AgendaViewModelTest {
 
         val viewModel = viewModel()
 
-        assertEquals(setOf(1, 2), viewModel.days.value.keys)
+        assertEquals(setOf(1, 2), viewModel.days.value.map { it.dayIndex }.toSet())
         assertEquals(emptySet(), viewModel.ids(1))
         assertEquals(emptySet(), viewModel.ids(2))
     }
@@ -234,7 +247,7 @@ class AgendaViewModelTest {
         val viewModel = viewModel()
 
         for (day in listOf(1, 2)) {
-            val startDates = viewModel.days.value.getValue(day).sessions.map { it.scheduleSlot.startDate }
+            val startDates = viewModel.sessions(day).map { it.scheduleSlot.startDate }
             assertTrue(
                 startDates.zipWithNext().all { (a, b) -> a <= b },
                 "day $day is not sorted: $startDates"
@@ -243,7 +256,7 @@ class AgendaViewModelTest {
         // Sessions sharing a start time come out in an unspecified order (HashSet iteration),
         // so they are compared as a set.
         val tenOClock =
-            viewModel.days.value.getValue(1).sessions
+            viewModel.sessions(1)
                 .filter { it.scheduleSlot.startDate == SessionFixtures.webRendering.scheduleSlot.startDate }
         assertEquals(
             idsOf(SessionFixtures.composeDeepDive, SessionFixtures.webRendering, SessionFixtures.kubernetesLab),
@@ -327,7 +340,8 @@ class AgendaViewModelTest {
         assertEquals("boom", thrown.message)
     }
 
-    private fun Map<Int, AgendaDay>.ids(): Set<String> = values.flatMap { it.sessions }.map { it.id }.toSet()
+    private fun List<DaySchedule>.ids(): Set<String> =
+        flatMap { day -> day.slots.flatMap { it.sessions } }.map { it.id }.toSet()
 }
 
 /** Needs to observe the state before the init coroutines run, hence a standard dispatcher. */
@@ -337,14 +351,23 @@ class AgendaViewModelStartupTest {
 
     private val store = FakeDevFestNantesStore()
 
-    private fun viewModel() =
-        AgendaViewModel(
+    private fun viewModel(): AgendaViewModel {
+        val bookmarks = FakeBookmarksStore()
+        val filters = FakeSessionFiltersStore()
+        return AgendaViewModel(
+            ObserveAgendaUseCase(
+                store,
+                filters,
+                bookmarks,
+                FilterSessionsUseCase(),
+                GroupSessionsUseCase(),
+                mainDispatcherRule.dispatcher
+            ),
             store,
-            FakeBookmarksStore(),
-            NoOpPerformanceMonitoring(),
-            FakeSessionFiltersService(),
-            mainDispatcherRule.dispatcher
+            filters,
+            NoOpPerformanceMonitoring()
         )
+    }
 
     @Test
     fun ui_state_goes_from_starting_to_success() =
