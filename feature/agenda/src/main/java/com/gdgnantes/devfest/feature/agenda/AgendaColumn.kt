@@ -101,7 +101,7 @@ fun TimeSeparator(
     }
 }
 
-private fun groupSessionsByStartTime(sessions: List<Session>): Map<String, List<Session>> {
+internal fun groupSessionsByStartTime(sessions: List<Session>): Map<String, List<Session>> {
     return sessions.map { session ->
         val locale = ConfigurationCompat.getLocales(Resources.getSystem().configuration)[0]
         val time =
