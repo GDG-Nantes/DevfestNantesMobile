@@ -204,6 +204,7 @@ class AgendaGroupingCharacterizationTest {
         useEnvironment("Europe/Paris", Locale.forLanguageTag("fr-FR"), "fr-rFR")
         val start = "2025-10-16T10:00:00+02:00"
         val end = "2025-10-16T10:50:00+02:00"
+
         fun session(id: String, room: Room?) =
             Session(id = id, title = id, room = room, scheduleSlot = ScheduleSlot(endDate = end, startDate = start))
 
@@ -224,6 +225,7 @@ class AgendaGroupingCharacterizationTest {
     @Test
     fun equal_starts_merge_and_distinct_starts_never_share_a_label() {
         useEnvironment("Europe/Paris", Locale.forLanguageTag("fr-FR"), "fr-rFR")
+
         fun session(id: String, start: String) =
             Session(id = id, title = id, scheduleSlot = ScheduleSlot(endDate = start, startDate = start))
 
