@@ -1,5 +1,7 @@
 package com.gdgnantes.devfest.shared.di
 
+import com.gdgnantes.devfest.core.data.BookmarksStore
+import com.gdgnantes.devfest.core.data.SessionFiltersStore
 import com.gdgnantes.devfest.core.domain.agenda.ClassifySessionUseCase
 import com.gdgnantes.devfest.shared.IosDependencies
 import org.koin.core.context.stopKoin
@@ -32,5 +34,14 @@ class IosKoinTest {
         IosDependencies.start()
 
         assertNotNull(KoinPlatform.getKoin().get<ClassifySessionUseCase>())
+    }
+
+    @Test
+    fun platform_stores_resolve_as_singles_after_start() {
+        IosDependencies.start()
+        val koin = KoinPlatform.getKoin()
+
+        assertSame(koin.get<BookmarksStore>(), koin.get<BookmarksStore>())
+        assertSame(koin.get<SessionFiltersStore>(), koin.get<SessionFiltersStore>())
     }
 }
