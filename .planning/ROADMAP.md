@@ -95,7 +95,7 @@ Plans:
   4. `BookmarksStore` and `SessionFiltersStore` are common interfaces: the v1.0 Robolectric tests that pin `selected_sessions` and the Android filter format pass unchanged, and the iOS implementation reads and writes new `NSUserDefaults` keys with the shared filter codec, never reading the legacy `Favorites`/`AgendaSessionFilters` keys (tests on simulator)
   5. On Android, the agenda, filters, bookmarks, speakers and venue behave exactly as in v1.0 (v1.0 tests green + agenda UAT); `SessionFiltersService` is gone and its Koin binding was replaced in the same commit
 
-**Plans**: 15/19 plans executed
+**Plans**: 16/19 plans executed
 Plans:
 **Wave 1**
 - [x] 07-01-PLAN.md — Tracer: `:core:domain` with `ClassifySessionUseCase`, `domainModule` in `sharedModules`, exported by `:shared`, proven on JVM/iOS/Xcode
@@ -131,7 +131,7 @@ Plans:
 - [x] 07-15-PLAN.md — `AgendaViewModel` on `ObserveAgendaUseCase`, agenda UI on `DaySchedule`/`TimeSlot`, `IO_DISPATCHER` removed
 
 **Wave 10** *(blocked on Wave 9 completion)*
-- [ ] 07-16-PLAN.md — Atomic SHARED-06 switch: `SessionFiltersService` removed and `SharedPreferencesSessionFiltersStore` bound in `:core:data` in one commit; docs; agenda smoke on an emulator
+- [x] 07-16-PLAN.md — Atomic SHARED-06 switch: `SessionFiltersService` removed and `SharedPreferencesSessionFiltersStore` bound in `:core:data` in one commit; docs; agenda smoke on an emulator
 
 **Wave 11** *(blocked on Wave 10 completion)*
 - [ ] 07-17-PLAN.md — Android bookmark star and session navigation on `ClassifySessionUseCase`; Android classification copy removed
@@ -231,7 +231,7 @@ Phases execute in numeric order: 6 → 7 → 8 → 9 → 10 → 11 → 12
 | 4. Hilt to Koin DI Migration | v1.0 | 7/7 | Complete | 2026-10-13 |
 | 5. Test Coverage Retrofit | v1.0 | 11/11 | Complete | 2026-10-16 |
 | 6. iOS Test Foundation and CI Gates | v1.1 | 6/6 | Complete    | 2026-10-27 |
-| 7. KMP Domain Layer and Android Adoption | v1.1 | 15/19 | In Progress | - |
+| 7. KMP Domain Layer and Android Adoption | v1.1 | 16/19 | In Progress | - |
 | 8. Modern SwiftUI, iOS 17 and Observation | v1.1 | 0/? | Not started | - |
 | 9. iOS on Shared Logic and Legacy Persistence | v1.1 | 0/? | Not started | - |
 | 10. Explicit iOS DI | v1.1 | 0/? | Not started | - |
