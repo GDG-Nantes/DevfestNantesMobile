@@ -6,6 +6,7 @@ import com.gdgnantes.devfest.core.analytics.performance.PerformanceMonitoring
 import com.gdgnantes.devfest.core.analytics.performance.traceDataLoading
 import com.gdgnantes.devfest.core.data.BookmarksStore
 import com.gdgnantes.devfest.core.data.DevFestNantesStore
+import com.gdgnantes.devfest.core.data.SessionFiltersStore
 import com.gdgnantes.devfest.core.model.Agenda.Companion.DAY_ONE_ISO
 import com.gdgnantes.devfest.core.model.Agenda.Companion.DAY_TWO_ISO
 import com.gdgnantes.devfest.core.model.AgendaDay
@@ -13,7 +14,6 @@ import com.gdgnantes.devfest.core.model.Session
 import com.gdgnantes.devfest.core.model.SessionFilter
 import com.gdgnantes.devfest.core.model.SessionFilterType
 import com.gdgnantes.devfest.core.ui.UiState
-import com.gdgnantes.devfest.feature.agenda.services.SessionFiltersService
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -32,7 +32,7 @@ class AgendaViewModel(
     private val store: DevFestNantesStore,
     private val bookmarksStore: BookmarksStore,
     private val performanceMonitoring: PerformanceMonitoring,
-    private val sessionFiltersService: SessionFiltersService,
+    private val sessionFiltersStore: SessionFiltersStore,
     private val ioDispatcher: CoroutineDispatcher
 ) : ViewModel() {
     private var autoRefreshJob: Job? = null
@@ -56,7 +56,7 @@ class AgendaViewModel(
 
     val rooms = store.rooms.stateIn(viewModelScope, SharingStarted.Lazily, emptySet())
 
-    val sessionFilters = sessionFiltersService.filters
+    val sessionFilters = sessionFiltersStore.filters
 
     init {
         onRefresh()
@@ -86,7 +86,7 @@ class AgendaViewModel(
 
     fun onSessionFiltersChanged(filters: Set<SessionFilter>) {
         viewModelScope.launch {
-            sessionFiltersService.setFilters(filters)
+            sessionFiltersStore.setFilters(filters)
             Timber.d("Session filters updated: ${filters.size} active filters")
         }
     }

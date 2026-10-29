@@ -4,6 +4,7 @@ import android.content.SharedPreferences
 import com.gdgnantes.devfest.core.analytics.performance.PerformanceMonitoring
 import com.gdgnantes.devfest.core.data.BookmarksStore
 import com.gdgnantes.devfest.core.data.DevFestNantesStore
+import com.gdgnantes.devfest.core.data.SessionFiltersStore
 import com.gdgnantes.devfest.core.model.SessionFilter
 import com.gdgnantes.devfest.core.testing.FakeBookmarksStore
 import com.gdgnantes.devfest.core.testing.FakeDevFestNantesStore
@@ -12,7 +13,6 @@ import com.gdgnantes.devfest.core.testing.NoOpPerformanceMonitoring
 import com.gdgnantes.devfest.core.ui.di.IO_DISPATCHER
 import com.gdgnantes.devfest.core.ui.di.coreUiModule
 import com.gdgnantes.devfest.feature.agenda.AgendaViewModel
-import com.gdgnantes.devfest.feature.agenda.services.SessionFiltersService
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -59,7 +59,7 @@ class AgendaModuleTest {
     @Test
     fun agenda_view_model_resolves_with_the_named_io_dispatcher() {
         val filters =
-            object : SessionFiltersService {
+            object : SessionFiltersStore {
                 override val filters: StateFlow<Set<SessionFilter>> = MutableStateFlow(emptySet())
 
                 override fun setFilters(filters: Set<SessionFilter>) = Unit
@@ -73,7 +73,7 @@ class AgendaModuleTest {
                         single<DevFestNantesStore> { FakeDevFestNantesStore() }
                         single<BookmarksStore> { FakeBookmarksStore() }
                         single<PerformanceMonitoring> { NoOpPerformanceMonitoring() }
-                        single<SessionFiltersService> { filters }
+                        single<SessionFiltersStore> { filters }
                         single<CoroutineDispatcher>(named(IO_DISPATCHER)) { mainDispatcherRule.dispatcher }
                     }
                 )
