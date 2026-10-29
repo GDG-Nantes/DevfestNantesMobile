@@ -12,11 +12,11 @@ Research context: `.planning/research/SUMMARY.md` (and STACK/FEATURES/ARCHITECTU
 ### SHARED (Shared KMP domain)
 
 - [ ] **SHARED-01**: A KMP module `:core:domain` (`devfest.*` convention plugin, depending on `:core:model`/`:core:data`) is exported by `:shared`; its Koin `domainModule` is added to `sharedModules` and verified by `verify()` with no duplicate binding
-- [ ] **SHARED-02**: `SessionFilter`/`SessionFilterType` live in `:core:model`; the session filtering rule (OR within a type, AND across types, favorites = membership) is a shared use case covered by the filter matrix in `commonTest` (JVM + iOS simulator)
+- [x] **SHARED-02**: `SessionFilter`/`SessionFilterType` live in `:core:model`; the session filtering rule (OR within a type, AND across types, favorites = membership) is a shared use case covered by the filter matrix in `commonTest` (JVM + iOS simulator)
 - [ ] **SHARED-03**: Grouping the agenda by day and by time slot, with intra-slot sorting by `RoomSortIndex`, is a shared use case; the room-order deviation on iOS is documented
 - [ ] **SHARED-04**: Session classification (service/navigable), the alphabetical speaker index and the venue language choice are shared where the semantics are already identical on both platforms; divergent behaviors (current time slot on scroll, partner categories, day time zone) stay per platform or go through an explicit parameter
-- [ ] **SHARED-05**: `BookmarksStore` and `SessionFiltersStore` are common interfaces; the Android implementation keeps its SharedPreferences keys and format (`selected_sessions`, filters), the iOS implementation relies on `NSUserDefaults` under new keys with the shared (Android) filter codec; the legacy iOS `Favorites`/`AgendaSessionFilters` data is intentionally not migrated (2025 edition over, session ids change every edition; decision 07-CONTEXT D-15)
-- [ ] **SHARED-06**: The affected Android ViewModels consume the shared use cases and `SessionFiltersService` is removed (Koin binding replaced in the same commit), with no regression (v1.0 tests green + agenda UAT)
+- [x] **SHARED-05**: `BookmarksStore` and `SessionFiltersStore` are common interfaces; the Android implementation keeps its SharedPreferences keys and format (`selected_sessions`, filters), the iOS implementation relies on `NSUserDefaults` under new keys with the shared (Android) filter codec; the legacy iOS `Favorites`/`AgendaSessionFilters` data is intentionally not migrated (2025 edition over, session ids change every edition; decision 07-CONTEXT D-15)
+- [x] **SHARED-06**: The affected Android ViewModels consume the shared use cases and `SessionFiltersService` is removed (Koin binding replaced in the same commit), with no regression (v1.0 tests green + agenda UAT)
 - [ ] **SHARED-07**: Characterization tests (recorded real API snapshot, grouping under at least two time zones, current iOS and Android behavior) exist before each move of logic
 
 ### IOSDATA (iOS on the shared logic)
@@ -89,11 +89,11 @@ Which phases cover which requirements. Updated during roadmap creation.
 | Requirement | Phase | Status |
 |-------------|-------|--------|
 | SHARED-01 | Phase 7 | Pending |
-| SHARED-02 | Phase 7 | Pending |
+| SHARED-02 | Phase 7 | Complete |
 | SHARED-03 | Phase 7 | Pending |
 | SHARED-04 | Phase 7 | Pending |
-| SHARED-05 | Phase 7 | Pending |
-| SHARED-06 | Phase 7 | Pending |
+| SHARED-05 | Phase 7 | Complete |
+| SHARED-06 | Phase 7 | Complete |
 | SHARED-07 | Phase 7 | Pending |
 | IOSDATA-01 | Phase 9 | Pending |
 | IOSDATA-02 | Phase 9 | Pending |
