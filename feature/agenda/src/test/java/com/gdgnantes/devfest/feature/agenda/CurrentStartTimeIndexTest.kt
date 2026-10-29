@@ -1,5 +1,6 @@
 package com.gdgnantes.devfest.feature.agenda
 
+import com.gdgnantes.devfest.core.domain.agenda.TimeSlot
 import com.gdgnantes.devfest.core.model.ScheduleSlot
 import com.gdgnantes.devfest.core.model.Session
 import kotlin.test.Test
@@ -20,11 +21,11 @@ class CurrentStartTimeIndexTest {
     private fun group(prefix: String, size: Int, end: String) =
         List(size) { session("$prefix-$it", end) }
 
-    private val groups: Map<String, List<Session>> =
-        linkedMapOf(
-            "09:00" to group("a", 2, "2025-10-16T10:00:00+02:00"),
-            "10:00" to group("b", 1, "2025-10-16T11:00:00+02:00"),
-            "11:00" to group("c", 3, "2025-10-16T12:00:00+02:00")
+    private val groups: List<TimeSlot> =
+        listOf(
+            TimeSlot(Instant.parse("2025-10-16T09:00:00+02:00"), group("a", 2, "2025-10-16T10:00:00+02:00")),
+            TimeSlot(Instant.parse("2025-10-16T10:00:00+02:00"), group("b", 1, "2025-10-16T11:00:00+02:00")),
+            TimeSlot(Instant.parse("2025-10-16T11:00:00+02:00"), group("c", 3, "2025-10-16T12:00:00+02:00"))
         )
 
     @Test
@@ -49,6 +50,6 @@ class CurrentStartTimeIndexTest {
 
     @Test
     fun empty_groups_give_index_zero() {
-        assertEquals(0, currentStartTimeIndex(emptyMap(), Instant.parse("2025-10-16T13:00:00+02:00")))
+        assertEquals(0, currentStartTimeIndex(emptyList(), Instant.parse("2025-10-16T13:00:00+02:00")))
     }
 }

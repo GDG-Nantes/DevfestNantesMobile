@@ -13,7 +13,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.State
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
-import com.gdgnantes.devfest.core.model.AgendaDay
+import com.gdgnantes.devfest.core.domain.agenda.DaySchedule
 import com.gdgnantes.devfest.core.model.Room
 import com.gdgnantes.devfest.core.model.Session
 import com.gdgnantes.devfest.core.model.SessionFilter
@@ -51,7 +51,7 @@ fun AgendaLayout(
     modifier: Modifier = Modifier,
     agendaFilterDrawerState: DrawerState,
     uiState: State<UiState>,
-    days: State<Map<Int, AgendaDay>>,
+    days: State<List<DaySchedule>>,
     rooms: State<Set<Room>>,
     sessionFilters: State<Set<SessionFilter>>,
     onRefresh: () -> Unit,
@@ -88,10 +88,10 @@ fun AgendaLayout(
     )
 }
 
-private fun Map<Int, AgendaDay>.todayPageIndex(): Int {
+private fun List<DaySchedule>.todayPageIndex(): Int {
     val today: LocalDate = Clock.System.todayIn(TimeZone.currentSystemDefault())
     val todayPageIndex =
-        values.indexOfLast { day ->
+        indexOfLast { day ->
             val startOfDay = Instant.parse(day.date)
             val localDay: LocalDate =
                 startOfDay.toLocalDateTime(TimeZone.currentSystemDefault()).date

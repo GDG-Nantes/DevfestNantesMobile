@@ -23,10 +23,11 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
 import androidx.core.os.ConfigurationCompat
+import com.gdgnantes.devfest.core.domain.agenda.TimeSlot
 import com.gdgnantes.devfest.core.model.Session
 import com.gdgnantes.devfest.core.model.utils.toInstantOrNull
-import com.gdgnantes.devfest.core.ui.utils.getDateFromIso8601
 import java.text.DateFormat
+import java.util.Date
 import java.util.TimeZone
 import kotlin.time.Clock
 import kotlin.time.Instant
@@ -34,17 +35,22 @@ import kotlin.time.Instant
 @OptIn(ExperimentalFoundationApi::class)
 @Composable
 fun AgendaColumn(
-    sessionsPerStartTime: List<Session>,
+    slots: List<TimeSlot>,
     onSessionClick: (Session) -> Unit,
 ) {
     val listState = rememberLazyListState()
-    val sessionsGroupedByStartTime = groupSessionsByStartTime(sessionsPerStartTime)
+    // A slot without a label (no system locale) is not rendered, as v1.0 dropped its sessions.
+    val labelledSlots =
+        slots
+            .map { slot -> slot to formatSlotTime(slot.start) }
+            .filter { (_, label) -> label.isNotEmpty() }
+    val displayedSlots = labelledSlots.map { (slot, _) -> slot }
     val hasAutoScrolled = rememberSaveable { androidx.compose.runtime.mutableStateOf(false) }
 
-    LaunchedEffect(key1 = sessionsPerStartTime) {
+    LaunchedEffect(key1 = slots) {
         if (!hasAutoScrolled.value) {
             listState.scrollToItem(
-                currentStartTimeIndex(sessionsGroupedByStartTime, Clock.System.now())
+                currentStartTimeIndex(displayedSlots, Clock.System.now())
             )
             hasAutoScrolled.value = true
         }
@@ -54,13 +60,13 @@ fun AgendaColumn(
         state = listState,
         modifier = Modifier.fillMaxHeight()
     ) {
-        sessionsGroupedByStartTime.forEach { (timeKey, sessions) ->
-            stickyHeader(timeKey) {
-                TimeSeparator(prettyTime = timeKey)
+        labelledSlots.forEach { (slot, label) ->
+            stickyHeader(slot.start.toEpochMilliseconds()) {
+                TimeSeparator(prettyTime = label)
             }
 
             items(
-                items = sessions.sortedBy { session -> session.room?.sortIndex },
+                items = slot.sessions,
                 key = { session -> session.id }
             ) { session ->
                 AgendaRow(
@@ -101,47 +107,43 @@ fun TimeSeparator(
     }
 }
 
-internal fun groupSessionsByStartTime(sessions: List<Session>): Map<String, List<Session>> {
-    return sessions.map { session ->
-        val locale = ConfigurationCompat.getLocales(Resources.getSystem().configuration)[0]
-        val time =
-            if (locale != null) {
-                getDateFromIso8601(session.scheduleSlot.startDate)?.run {
-                    val formatter: DateFormat = DateFormat.getTimeInstance(DateFormat.SHORT, locale)
-                    formatter.timeZone = TimeZone.getDefault()
-                    formatter.format(this)
-                } ?: ""
-            } else {
-                ""
-            }
-        time to session
+/**
+ * The v1.0 slot header label: the short time of [start] in the device zone and the system locale
+ * (empty when the system has no locale, as v1.0 which then dropped every session).
+ */
+internal fun formatSlotTime(start: Instant): String {
+    val locale = ConfigurationCompat.getLocales(Resources.getSystem().configuration)[0]
+    return if (locale != null) {
+        val formatter: DateFormat = DateFormat.getTimeInstance(DateFormat.SHORT, locale)
+        formatter.timeZone = TimeZone.getDefault()
+        formatter.format(Date(start.toEpochMilliseconds()))
+    } else {
+        ""
     }
-        .filter { pair -> pair.first.isNotEmpty() }
-        .groupBy(
-            keySelector = { it.first }
-        ) {
-            it.second
-        }
-        .mapValues { (_, value) ->
-            value.sortedBy { session -> session.room?.name }
-        }
 }
 
 /**
- * Index of the first item (header or session row) of the first group that has not ended at [now].
- * Each ended group adds its session count plus one for its header. Groups whose end date cannot be
- * parsed are skipped.
+ * Index of the first item (header or session row) of the first slot that has not ended at [now].
+ * Each ended slot adds its session count plus one for its header. The end of a slot is the end date
+ * of its first session by room name (v1.0 took the first of the name-sorted group); slots whose end
+ * date cannot be parsed are skipped.
  */
 internal fun currentStartTimeIndex(
-    sessionsGroupedByStartTime: Map<String, List<Session>>,
+    slots: List<TimeSlot>,
     now: Instant
 ): Int {
     var index = 0
-    sessionsGroupedByStartTime.forEach { entry ->
-        val end = entry.value.firstOrNull()?.scheduleSlot?.endDate?.toInstantOrNull()
+    slots.forEach { slot ->
+        val end =
+            slot.sessions
+                .sortedBy { session -> session.room?.name }
+                .firstOrNull()
+                ?.scheduleSlot
+                ?.endDate
+                ?.toInstantOrNull()
         if (end != null) {
             if (now > end) {
-                index += entry.value.size + 1 // Adds count of sessions per time + 1 for the header.
+                index += slot.sessions.size + 1 // Adds count of sessions per slot + 1 for the header.
             } else {
                 return index
             }

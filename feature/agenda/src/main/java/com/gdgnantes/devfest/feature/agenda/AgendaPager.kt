@@ -23,7 +23,7 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
-import com.gdgnantes.devfest.core.model.AgendaDay
+import com.gdgnantes.devfest.core.domain.agenda.DaySchedule
 import com.gdgnantes.devfest.core.model.Session
 import com.gdgnantes.devfest.core.ui.UiState
 import com.gdgnantes.devfest.core.ui.components.LoadingLayout
@@ -34,7 +34,7 @@ import kotlinx.coroutines.launch
 fun AgendaPager(
     modifier: Modifier = Modifier,
     initialPageIndex: Int,
-    days: Map<Int, AgendaDay>,
+    days: List<DaySchedule>,
     uiState: UiState,
     onRefresh: () -> Unit,
     onSessionClick: (Session) -> Unit,
@@ -58,7 +58,7 @@ fun AgendaPager(
             }
         ) {
             val daysNames =
-                days.values.toList()
+                days
                     .map { getDayFromIso8601(it.date, context = LocalContext.current) ?: "" }
             repeat(daysNames.size) {
                 val coroutineScope = rememberCoroutineScope()
@@ -83,12 +83,12 @@ fun AgendaPager(
                 if (uiState == UiState.STARTING) {
                     LoadingLayout()
                 } else {
-                    val sessions = days[page + 1]?.sessions ?: emptyList()
-                    if (sessions.isEmpty()) {
+                    val slots = days.firstOrNull { it.dayIndex == page + 1 }?.slots ?: emptyList()
+                    if (slots.isEmpty()) {
                         EmptyLayout()
                     } else {
                         AgendaColumn(
-                            sessionsPerStartTime = sessions,
+                            slots = slots,
                             onSessionClick = onSessionClick
                         )
                     }
