@@ -160,7 +160,9 @@ depends on `:core:model` and `:core:data` and is exported to Swift through `:sha
 ### Model (`:core:model`)
 
 Plain Kotlin domain types with no internal dependency. `stubs/` holds the canonical fixtures
-(`SessionFixtures`, `SpeakerFixtures`, ...) used by previews and tests.
+(`SessionFixtures`, `SpeakerFixtures`, ...) used by previews and tests. `SessionFilter` (a
+`@Serializable` data class) and the top-level `SessionFilterType` describe the agenda filters that
+both platforms persist through the shared filter codec.
 
 ### Analytics (`:core:analytics`)
 
@@ -250,6 +252,12 @@ To add a screen, add a `Screen` subclass and a `composable(...)` entry in `MainA
 - Bookmarks are persisted by `BookmarksStore` and shared through `BookmarksViewModel`.
 - Coroutine dispatchers are injected (`CoroutinesDispatcherProvider`, `IO_DISPATCHER`) so tests can
   replace them.
+
+### Behavior deviations (v1.1)
+
+- `SessionFilter` is a data class: equal-content filter sets no longer re-emit through `StateFlow`;
+  no visible effect (07-06 drawer and equality characterizations unchanged); Android adopts it in
+  07-10.
 
 ## iOS App
 

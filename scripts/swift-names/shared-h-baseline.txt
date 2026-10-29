@@ -75,6 +75,9 @@ SOCIAL_ITEMS_STUBS
 ScheduleSlot
 Session
 SessionExtensionsKt
+SessionFilter
+SessionFilter.Companion
+SessionFilterType
 SessionFixtures
 SessionLanguage
 SessionType
@@ -104,6 +107,7 @@ beginCollection(descriptor:collectionSize:)
 beginStructure(descriptor:)
 beginner
 bio
+bookmark
 bookmarkedSessionIds
 break_
 bruno
@@ -181,6 +185,7 @@ doCopy(id:label:)
 doCopy(id:name:sortIndex:)
 doCopy(name:logoUrl:url:)
 doCopy(type:link:)
+doCopy(type:value:)
 dumpTo(collector:)
 elementsCount
 emma
@@ -281,6 +286,7 @@ init(id:name:sortIndex:)
 init(name:logoUrl:url:)
 init(name:ordinal:)
 init(size:init:)
+init(type:value:)
 intermediate
 isBookmarked(id:)
 isElementOptional(index:)
@@ -392,6 +398,7 @@ toEpochMilliseconds()
 twitter
 type
 url
+value
 values()
 veloPrint
 velotype
