@@ -10,6 +10,7 @@ import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performScrollToNode
 import androidx.compose.ui.test.hasScrollToNodeAction
 import androidx.test.ext.junit.runners.AndroidJUnit4
+import com.gdgnantes.devfest.core.domain.di.domainModule
 import com.gdgnantes.devfest.core.model.Session
 import com.gdgnantes.devfest.core.model.Speaker
 import com.gdgnantes.devfest.core.model.stubs.SessionFixtures
@@ -29,7 +30,7 @@ class SpeakersSmokeTest {
     @get:Rule(order = 0)
     val koinRule =
         KoinTestRule.create {
-            modules(speakersModule, coreUiModule)
+            modules(speakersModule, coreUiModule, domainModule)
             modules(androidTestDoubles)
         }
 

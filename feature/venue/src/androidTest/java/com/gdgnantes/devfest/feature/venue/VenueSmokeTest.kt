@@ -19,11 +19,12 @@ import coil.decode.DataSource
 import coil.intercept.Interceptor
 import coil.request.ImageResult
 import coil.request.SuccessResult
+import com.gdgnantes.devfest.core.domain.di.domainModule
+import com.gdgnantes.devfest.core.domain.venue.VenueLanguageUseCase
 import com.gdgnantes.devfest.core.model.stubs.buildVenueStub
 import com.gdgnantes.devfest.core.testing.di.androidTestDoubles
 import com.gdgnantes.devfest.core.ui.di.coreUiModule
 import com.gdgnantes.devfest.feature.venue.di.venueModule
-import com.gdgnantes.devfest.feature.venue.utils.toContentLanguage
 import org.junit.After
 import org.junit.Assert.assertEquals
 import org.junit.Before
@@ -38,7 +39,7 @@ class VenueSmokeTest {
     @get:Rule(order = 0)
     val koinRule =
         KoinTestRule.create {
-            modules(venueModule, coreUiModule)
+            modules(venueModule, coreUiModule, domainModule)
             modules(androidTestDoubles)
         }
 
@@ -69,7 +70,8 @@ class VenueSmokeTest {
     @Test
     fun venue_renders_the_fixture_venue_and_floor_plan_click_reports_its_url() {
         val language =
-            ConfigurationCompat.getLocales(Resources.getSystem().configuration)[0]!!.toContentLanguage()
+            VenueLanguageUseCase()
+                .languageFor(ConfigurationCompat.getLocales(Resources.getSystem().configuration)[0]!!.language)
         val venue = buildVenueStub(language)
         var clickedUrl: String? = null
 

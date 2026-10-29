@@ -1,5 +1,6 @@
 package com.gdgnantes.devfest.feature.venue
 
+import com.gdgnantes.devfest.core.domain.venue.VenueLanguageUseCase
 import com.gdgnantes.devfest.core.model.ContentLanguage
 import com.gdgnantes.devfest.core.model.stubs.buildVenueStub
 import com.gdgnantes.devfest.core.testing.FakeDevFestNantesStore
@@ -25,7 +26,7 @@ class VenueViewModelTest {
     @get:Rule
     val mainDispatcherRule = MainDispatcherRule()
 
-    private val viewModel = VenueViewModel(FakeDevFestNantesStore())
+    private val viewModel = VenueViewModel(FakeDevFestNantesStore(), VenueLanguageUseCase())
 
     @Test
     @Config(qualifiers = "fr-rFR")

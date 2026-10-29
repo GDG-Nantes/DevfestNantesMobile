@@ -1,6 +1,7 @@
 package com.gdgnantes.devfest.feature.speakers.list
 
 import app.cash.turbine.test
+import com.gdgnantes.devfest.core.domain.speakers.SpeakerIndexUseCase
 import com.gdgnantes.devfest.core.model.stubs.SpeakerFixtures
 import com.gdgnantes.devfest.core.testing.FakeDevFestNantesStore
 import com.gdgnantes.devfest.core.testing.MainDispatcherRule
@@ -20,7 +21,7 @@ class SpeakersViewModelTest {
 
     private val store = FakeDevFestNantesStore()
 
-    private fun viewModel() = SpeakersViewModel(store, NoOpPerformanceMonitoring())
+    private fun viewModel() = SpeakersViewModel(store, NoOpPerformanceMonitoring(), SpeakerIndexUseCase())
 
     @Test
     fun ui_state_goes_from_starting_to_success_with_the_fixture_speakers() =
