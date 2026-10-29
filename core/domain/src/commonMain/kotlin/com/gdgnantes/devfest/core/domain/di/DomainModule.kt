@@ -1,6 +1,7 @@
 package com.gdgnantes.devfest.core.domain.di
 
 import com.gdgnantes.devfest.core.domain.agenda.ClassifySessionUseCase
+import com.gdgnantes.devfest.core.domain.agenda.FilterSessionsUseCase
 import org.koin.core.module.Module
 import org.koin.dsl.module
 import kotlin.native.HiddenFromObjC
@@ -14,4 +15,5 @@ import kotlin.native.HiddenFromObjC
 val domainModule: Module =
     module {
         factory { ClassifySessionUseCase() }
+        factory { FilterSessionsUseCase() }
     }
