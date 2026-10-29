@@ -103,8 +103,9 @@ The iOS unit tests use Swift Testing (shipped with the Xcode toolchain), live in
 `iosApp/DevFestNantesTests/` and run hosted in the app (`@testable import DevFest_Nantes`). The
 `iosApp` scheme runs them through the committed `iosApp/iosApp.xctestplan`. In Debug builds the app skips Firebase
 and Koin start-up when launched by XCTest (`XCTestConfigurationFilePath` is set; the switch is
-compiled out of Release), so tests must not create a ViewModel (its initializer starts Koin): test
-static or pure helpers instead. A future UI-test target must not rely on this switch, since it would
+compiled out of Release), so a test that creates a ViewModel must call
+`IosDependencies.shared.start()` first (see the characterization suites below); prefer static or
+pure helpers otherwise. A future UI-test target must not rely on this switch, since it would
 render an empty window. Pick a simulator with
 `xcrun simctl list devices available`, then:
 
@@ -119,6 +120,25 @@ xcodebuild -project iosApp/iosApp.xcodeproj -scheme iosApp -testPlan iosApp \
 
 For a quick local run, the single `xcodebuild ... -testPlan iosApp test` form works too. Test
 names are snake_case sentences, as on Android.
+
+#### Characterization suites and goldens
+
+`AgendaCharacterizationTests` and `SpeakersVenueCharacterizationTests` pin the v1.0 iOS behavior
+(agenda grouping in `Europe/Paris` and `Pacific/Auckland`, filtering on the 15 shared cases,
+`isATalk`, the speaker alphabet, the venue language) on the recorded snapshot in
+`core/domain/testdata/agenda/`. They call the unchanged v1.0 ViewModel code, after
+`IosDependencies.shared.start()` (idempotent, `TestHost.start()` in `CharacterizationSupport.swift`; the
+Debug app skips Koin under XCTest, so the tests start it). They only use the initializers and pure
+methods: never `observe*`, `toggleFavorite`, `clearFilters` nor a `sessionFilters` assignment.
+Test files that import `shared` refer to the app filter type as `DevFest_Nantes.SessionFilter`, so
+the Kotlin `SessionFilter` export cannot make it ambiguous.
+
+The expected outputs are the goldens in `core/domain/testdata/agenda/golden/ios-*.json`; Kotlin
+`commonTest` reads the same files. Golden rule: a default run never writes and fails with
+`golden missing: <path>` when a golden is absent. To record one, delete the file, run once with
+`TEST_RUNNER_DEVFEST_RECORD_GOLDENS=true` in front of the `xcodebuild ... test-without-building`
+command (the run writes it and fails with `golden recorded, re-run`), then run once without. An
+existing golden is never overwritten and goldens are never edited by hand.
 
 ## Testing
 
