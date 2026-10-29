@@ -28,14 +28,16 @@ class AgendaModuleTest {
     @get:Rule
     val mainDispatcherRule = MainDispatcherRule()
 
-    // The store, performance monitoring, preferences and the observe agenda use case are bound by
-    // :core:data, :core:analytics, the platform and :core:domain, not by this module.
+    // The store, the session filters store, performance monitoring, preferences and the observe
+    // agenda use case are bound by :core:data, :core:analytics, the platform and :core:domain, not by
+    // this module.
     @Test
     fun agenda_module_graph_is_complete_given_upstream_bindings() {
         agendaModule.verify(
             extraTypes =
                 listOf(
                     DevFestNantesStore::class,
+                    SessionFiltersStore::class,
                     PerformanceMonitoring::class,
                     SharedPreferences::class,
                     ObserveAgendaUseCase::class,

@@ -170,7 +170,9 @@ Where tests live:
 
 | Kind | Location | Example |
 |---|---|---|
-| ViewModel / service unit tests | `feature/<name>/src/test/` | `AgendaViewModelTest`, `SessionFiltersServiceImplTest` |
+| ViewModel unit tests | `feature/<name>/src/test/` | `AgendaViewModelTest` |
+| Agenda characterization tests (v1.0 behavior) | `feature/agenda/src/test/.../characterization/` | `AgendaFilteringCharacterizationTest`, `AgendaGroupingCharacterizationTest`, `SessionFiltersDrawerCharacterizationTest` |
+| Android persistence (Robolectric host tests) | `core/data/src/androidHostTest/` | `SharedPreferencesSessionFiltersStoreTest`, `BookmarksStoreImplTest` |
 | Koin module wiring | `*/src/test/.../di/`, `shared/src/jvmTest/` | `SettingsModuleTest`, `KoinGraphTest` |
 | App start-up graph | `androidApp/src/test/.../di/` | `KoinStartupTest`, `ProductionGraphStartupTest` |
 | Store contract (fake and real) | `core/data/src/commonTest/` | `DevFestNantesStoreContractTest`, `GraphQLStoreMockServerTest` |

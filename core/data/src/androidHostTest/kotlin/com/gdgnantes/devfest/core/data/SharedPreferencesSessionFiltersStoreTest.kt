@@ -1,4 +1,4 @@
-package com.gdgnantes.devfest.feature.agenda.services
+package com.gdgnantes.devfest.core.data
 
 import android.content.Context
 import android.content.SharedPreferences
@@ -14,13 +14,13 @@ import kotlin.test.assertEquals
 import kotlin.test.assertTrue
 
 /**
- * Pins how [SessionFiltersServiceImpl] persists the agenda filters (D-17): the key
+ * Pins how [SharedPreferencesSessionFiltersStore] persists the agenda filters (D-17): the key
  * `SHARED_PREFERENCES_KEY_AGENDA_FILTERS` and one JSON string per filter. Key and JSON are written
  * out as literals so a renamed constant or a changed serializer fails a test and saved filters survive.
  */
 @RunWith(RobolectricTestRunner::class)
 @Config(sdk = [34])
-class SessionFiltersServiceImplTest {
+class SharedPreferencesSessionFiltersStoreTest {
     private lateinit var prefs: SharedPreferences
 
     @Before
@@ -35,7 +35,7 @@ class SessionFiltersServiceImplTest {
 
     @Test
     fun setFilters_stores_each_filter_as_its_json_string() {
-        val service = SessionFiltersServiceImpl(prefs)
+        val service = SharedPreferencesSessionFiltersStore(prefs)
 
         service.setFilters(
             setOf(
@@ -66,7 +66,7 @@ class SessionFiltersServiceImplTest {
             )
             .commit()
 
-        val service = SessionFiltersServiceImpl(prefs)
+        val service = SharedPreferencesSessionFiltersStore(prefs)
 
         assertEquals(
             setOf(
@@ -79,7 +79,7 @@ class SessionFiltersServiceImplTest {
 
     @Test
     fun setFilters_with_an_empty_set_stores_an_empty_set() {
-        val service = SessionFiltersServiceImpl(prefs)
+        val service = SharedPreferencesSessionFiltersStore(prefs)
         service.setFilters(setOf(SessionFilter(SessionFilterType.BOOKMARK, "true")))
 
         service.setFilters(emptySet())
@@ -91,6 +91,6 @@ class SessionFiltersServiceImplTest {
 
     @Test
     fun a_fresh_service_has_no_filters() {
-        assertTrue(SessionFiltersServiceImpl(prefs).filters.value.isEmpty())
+        assertTrue(SharedPreferencesSessionFiltersStore(prefs).filters.value.isEmpty())
     }
 }
