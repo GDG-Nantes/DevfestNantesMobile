@@ -135,8 +135,13 @@ Use cases:
   `SessionFiltersStore.filters` and `BookmarksStore.bookmarkedSessionIds` into a
   `Flow<List<DaySchedule>>` (`@NativeCoroutines`).
 - `SpeakerIndexUseCase`: the A-Z speaker index (`letterGroups` for the iOS list, `firstIndexes` for
-  the Android scroller).
+  the Android scroller). `SpeakersViewModel` takes it by constructor injection and exposes
+  `firstLetterIndexes(speakers)`, which the speakers list computes with `remember(speakers)`; a
+  speaker with an empty name is skipped and reported to Crashlytics as a non-fatal exception
+  through `Timber.w` (D-20, see the deviations table).
 - `VenueLanguageUseCase.languageFor(languageCode)`: French for `"fr"`, English otherwise.
+  `VenueViewModel` takes it by constructor injection and calls
+  `languageFor(locale.language)`; it still emits nothing when the system locale is null.
 
 `DayAssignment` selects how a session is assigned to a conference day: `UtcDayWindows` (Android, fixed
 24 hour UTC windows from the configured day starts, exactly like `Agenda.Builder`) or `LocalDateDays`
@@ -302,7 +307,7 @@ To add a screen, add a `Screen` subclass and a `composable(...)` entry in `MainA
 | Filter output order | Unspecified (`HashSet`) | Store order | Store order | A deterministic subset of the old Android behavior |
 | Start with fractional seconds | Parsed | Falls back to "now" (pinned by `AgendaDateParsingTests`) | Parsed | Never occurs in real data; the shared parsing is the correct one |
 | Start up to 24 h before a day start | Belongs to that day (`(start - dayStart).inWholeDays == 0`) | n/a (local calendar date) | `UtcDayWindows` copies the `Agenda.Builder` rule, so the same quirk remains | Strict parity; real sessions are inside their day |
-| Speaker index: empty name | `first()` throws `NoSuchElementException` | Adds an empty letter | Empty letter `""`; Android skips it and reports a non-fatal exception to Crashlytics through Timber | Never present in the data; an input that crashed v1.0 Android no longer does (accepted behavior change, D-20, implemented in 07-18) |
+| Speaker index: empty name | `first()` throws `NoSuchElementException` | Adds an empty letter | Empty letter `""`; Android skips it and reports a non-fatal exception to Crashlytics through Timber | Never present in the data; an input that crashed v1.0 Android no longer does (accepted behavior change, D-20, implemented in 07-18); `SpeakerIndexEmptyNameTest` pins the skip and the report |
 | Speaker index: initial outside the Basic Multilingual Plane | One UTF-16 unit | One grapheme | One UTF-16 unit | Absent from the data; the platforms could still differ for such a letter |
 | Day time zone | Fixed UTC windows (zone ignored); the device zone only formats labels | Local calendar date in the device zone | The API takes the zone on every platform (D-05, D-19); `UtcDayWindows` ignores it by design, `LocalDateDays` reads it | The day assignment strategy is the per-platform choice; the Android label formatter keeps using the device zone |
 | Scroll to the current time slot | `currentStartTimeIndex` in `AgendaColumn` | Own logic in SwiftUI | Not shared | Stays per platform (D-08): wall-clock behavior tied to each UI |
