@@ -3,6 +3,8 @@ package com.gdgnantes.devfest.core.domain.di
 import com.gdgnantes.devfest.core.domain.agenda.ClassifySessionUseCase
 import com.gdgnantes.devfest.core.domain.agenda.FilterSessionsUseCase
 import com.gdgnantes.devfest.core.domain.agenda.GroupSessionsUseCase
+import com.gdgnantes.devfest.core.domain.speakers.SpeakerIndexUseCase
+import com.gdgnantes.devfest.core.domain.venue.VenueLanguageUseCase
 import org.koin.core.module.Module
 import org.koin.dsl.module
 import kotlin.native.HiddenFromObjC
@@ -18,4 +20,6 @@ val domainModule: Module =
         factory { ClassifySessionUseCase() }
         factory { FilterSessionsUseCase() }
         factory { GroupSessionsUseCase() }
+        factory { SpeakerIndexUseCase() }
+        factory { VenueLanguageUseCase() }
     }
