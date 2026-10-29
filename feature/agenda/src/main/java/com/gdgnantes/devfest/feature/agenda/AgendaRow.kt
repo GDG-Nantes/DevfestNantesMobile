@@ -34,7 +34,6 @@ import com.gdgnantes.devfest.core.ui.BookmarksViewModel
 import com.gdgnantes.devfest.core.ui.components.SessionCategory
 import com.gdgnantes.devfest.core.ui.theme.DevFestNantesTheme
 import com.gdgnantes.devfest.core.ui.theme.bookmarked
-import com.gdgnantes.devfest.feature.agenda.utils.isService
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
@@ -42,12 +41,14 @@ fun AgendaRow(
     modifier: Modifier = Modifier,
     bookmarksViewModel: BookmarksViewModel = koinViewModel(),
     session: Session,
+    isTalk: Boolean,
     onSessionClick: ((Session) -> Unit)
 ) {
     AgendaRow(
         modifier = modifier,
         isBookmarked = bookmarksViewModel.subscribe(session.id).collectAsState(initial = false),
         session = session,
+        isTalk = isTalk,
         onSessionClick = onSessionClick,
         onSessionBookmarkClick = { isBookmarked ->
             bookmarksViewModel.setBookmarked(session.id, isBookmarked, AnalyticsPage.AGENDA)
@@ -60,6 +61,7 @@ fun AgendaRow(
     modifier: Modifier = Modifier,
     isBookmarked: State<Boolean>,
     session: Session,
+    isTalk: Boolean,
     onSessionClick: ((Session) -> Unit),
     onSessionBookmarkClick: ((Boolean) -> Unit)
 ) {
@@ -67,6 +69,7 @@ fun AgendaRow(
         modifier = modifier,
         isBookmarked = isBookmarked.value,
         session = session,
+        isTalk = isTalk,
         onSessionClick = onSessionClick,
         onSessionBookmarkClick = onSessionBookmarkClick
     )
@@ -78,6 +81,7 @@ fun AgendaRow(
     modifier: Modifier = Modifier,
     isBookmarked: Boolean,
     session: Session,
+    isTalk: Boolean,
     onSessionClick: ((Session) -> Unit),
     onSessionBookmarkClick: ((Boolean) -> Unit)
 ) {
@@ -146,7 +150,7 @@ fun AgendaRow(
                             )
                         }
                     }
-                    if (session.type?.isService() == false) {
+                    if (isTalk) {
                         Box {
                             val icon =
                                 if (isBookmarked) R.drawable.ic_bookmarked else R.drawable.ic_bookmark
@@ -196,6 +200,7 @@ fun AgendaRowPreview() {
         AgendaRow(
             isBookmarked = true,
             session = buildSessionStub(),
+            isTalk = true,
             onSessionClick = {},
             onSessionBookmarkClick = {}
         )

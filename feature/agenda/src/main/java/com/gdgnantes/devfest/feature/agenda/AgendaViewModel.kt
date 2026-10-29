@@ -6,11 +6,13 @@ import com.gdgnantes.devfest.core.analytics.performance.PerformanceMonitoring
 import com.gdgnantes.devfest.core.analytics.performance.traceDataLoading
 import com.gdgnantes.devfest.core.data.DevFestNantesStore
 import com.gdgnantes.devfest.core.data.SessionFiltersStore
+import com.gdgnantes.devfest.core.domain.agenda.ClassifySessionUseCase
 import com.gdgnantes.devfest.core.domain.agenda.DaySchedule
 import com.gdgnantes.devfest.core.domain.agenda.ObserveAgendaUseCase
 import com.gdgnantes.devfest.core.domain.agenda.UtcDayWindows
 import com.gdgnantes.devfest.core.model.Agenda.Companion.DAY_ONE_ISO
 import com.gdgnantes.devfest.core.model.Agenda.Companion.DAY_TWO_ISO
+import com.gdgnantes.devfest.core.model.Session
 import com.gdgnantes.devfest.core.model.SessionFilter
 import com.gdgnantes.devfest.core.ui.UiState
 import kotlinx.coroutines.Job
@@ -27,7 +29,8 @@ class AgendaViewModel(
     private val observeAgenda: ObserveAgendaUseCase,
     store: DevFestNantesStore,
     private val sessionFiltersStore: SessionFiltersStore,
-    private val performanceMonitoring: PerformanceMonitoring
+    private val performanceMonitoring: PerformanceMonitoring,
+    private val classifySession: ClassifySessionUseCase
 ) : ViewModel() {
     private var autoRefreshJob: Job? = null
 
@@ -75,6 +78,9 @@ class AgendaViewModel(
                 }
             }
     }
+
+    /** True when the row of [session] shows the bookmark star (a typed session that is not a service slot). */
+    fun isTalk(session: Session): Boolean = classifySession.isTalk(session)
 
     fun onSessionFiltersChanged(filters: Set<SessionFilter>) {
         viewModelScope.launch {

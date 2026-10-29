@@ -38,6 +38,7 @@ fun AgendaPager(
     uiState: UiState,
     onRefresh: () -> Unit,
     onSessionClick: (Session) -> Unit,
+    isTalk: (Session) -> Boolean,
 ) {
     Column(modifier = modifier.fillMaxWidth()) {
         val pagerState =
@@ -89,7 +90,8 @@ fun AgendaPager(
                     } else {
                         AgendaColumn(
                             slots = slots,
-                            onSessionClick = onSessionClick
+                            onSessionClick = onSessionClick,
+                            isTalk = isTalk
                         )
                     }
                 }

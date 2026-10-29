@@ -1,5 +1,6 @@
 package com.gdgnantes.devfest.feature.agenda.characterization
 
+import com.gdgnantes.devfest.core.domain.agenda.ClassifySessionUseCase
 import com.gdgnantes.devfest.core.domain.agenda.FilterSessionsUseCase
 import com.gdgnantes.devfest.core.domain.agenda.GroupSessionsUseCase
 import com.gdgnantes.devfest.core.domain.agenda.ObserveAgendaUseCase
@@ -98,6 +99,7 @@ class AgendaGroupingCharacterizationTest {
                 store,
                 filters,
                 NoOpPerformanceMonitoring(),
+                ClassifySessionUseCase(),
             )
         return viewModel.days.value.sortedBy { it.dayIndex }.map { day ->
             DisplayedDay(

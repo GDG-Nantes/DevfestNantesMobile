@@ -126,7 +126,9 @@ depends on `:core:model` and `:core:data` and is exported to Swift through `:sha
 
 Use cases:
 
-- `ClassifySessionUseCase`: `isService`, `isTalk`, `isNavigable` for a session.
+- `ClassifySessionUseCase`: `isService`, `isTalk`, `isNavigable` for a session. On Android,
+  `AgendaViewModel.isTalk` drives the bookmark star of an agenda row (passed down as a lambda) and
+  `MainActivity` gates the session detail navigation with `isNavigable`.
 - `FilterSessionsUseCase.filter(sessions, filters, bookmarkedSessionIds)`: OR within a filter type,
   AND across types, output in store order.
 - `GroupSessionsUseCase.group(sessions, dayAssignment, timeZone)`: days, then time slots keyed by the

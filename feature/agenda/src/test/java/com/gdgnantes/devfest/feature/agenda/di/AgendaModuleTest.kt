@@ -5,6 +5,7 @@ import com.gdgnantes.devfest.core.analytics.performance.PerformanceMonitoring
 import com.gdgnantes.devfest.core.data.BookmarksStore
 import com.gdgnantes.devfest.core.data.DevFestNantesStore
 import com.gdgnantes.devfest.core.data.SessionFiltersStore
+import com.gdgnantes.devfest.core.domain.agenda.ClassifySessionUseCase
 import com.gdgnantes.devfest.core.domain.agenda.ObserveAgendaUseCase
 import com.gdgnantes.devfest.core.domain.di.domainModule
 import com.gdgnantes.devfest.core.model.SessionFilter
@@ -41,6 +42,7 @@ class AgendaModuleTest {
                     PerformanceMonitoring::class,
                     SharedPreferences::class,
                     ObserveAgendaUseCase::class,
+                    ClassifySessionUseCase::class,
                 ),
         )
     }

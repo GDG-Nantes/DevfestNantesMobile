@@ -42,6 +42,7 @@ fun Agenda(
         sessionFilters = viewModel.sessionFilters.collectAsState(),
         onRefresh = viewModel::onRefresh,
         onSessionClick = onSessionClick,
+        isTalk = viewModel::isTalk,
         onSessionFiltersChanged = viewModel::onSessionFiltersChanged
     )
 }
@@ -56,6 +57,7 @@ fun AgendaLayout(
     sessionFilters: State<Set<SessionFilter>>,
     onRefresh: () -> Unit,
     onSessionClick: ((Session) -> Unit),
+    isTalk: (Session) -> Boolean,
     onSessionFiltersChanged: (Set<SessionFilter>) -> Unit
 ) {
     val agendaDays = days.value
@@ -82,7 +84,8 @@ fun AgendaLayout(
                 days = agendaDays,
                 uiState = uiState.value,
                 onRefresh = onRefresh,
-                onSessionClick = onSessionClick
+                onSessionClick = onSessionClick,
+                isTalk = isTalk
             )
         }
     )
