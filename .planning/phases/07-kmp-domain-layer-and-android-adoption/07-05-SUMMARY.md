@@ -47,9 +47,9 @@ completed: 2026-10-29
 actuals:
   tokens: 17000
   tasks: 1
-  commits: 1
+  commits: 3
 plan_head_before: 0196959d0844eb28ea2b65970652ee50eb786be4
-plan_head_after: 354cce68788237b5e1e9b5453d4bb8e1369fbb00
+plan_head_after: a6aa9bc9beb525b756a3ecb21db2b129b7c33417
 
 coverage:
   deliverables:
@@ -83,6 +83,8 @@ coverage:
 ## Task Commits
 
 1. **Task 1: golden support and Android grouping characterization** - `354cce6` (test)
+2. SUMMARY - `0026138` (docs)
+3. Detekt `BlankLineBeforeDeclaration` fix in the new test (two blank lines, no behavior change) - `a6aa9bc` (style)
 
 ## Deviations from Plan
 
@@ -93,7 +95,11 @@ None - plan executed as written. The `expect` functions of `TestDataFiles` are d
 - `./gradlew :core:testing:jvmTest :core:testing:iosSimulatorArm64Test`: green.
 - Record run (`-PrecordGoldens`): only the expected failure `golden recorded, re-run`; default runs afterwards (including `--rerun-tasks`) green, nothing written, `git status` clean for the golden.
 - `git diff HEAD -- feature/agenda/src/main` before commit: exactly the `groupSessionsByStartTime` visibility line.
-- CI list (`detekt lint`, `di-gate`, `kmp-nc-version-gate`, `testDebugUnitTest jvmTest testAndroidHostTest`): see Self-Check.
+- CI list: `./gradlew detekt lint` green (after the style fix), `di-gate.sh` DI-GATE-OK, `kmp-nc-version-gate.sh` KMPNC-VERSION-OK 1.0.6, `./gradlew testDebugUnitTest jvmTest testAndroidHostTest` exit 0 (a Robolectric temp-directory cleanup stack trace is printed but does not fail the build).
+
+## Self-Check: PASSED
+
+- All created files exist; commits `354cce6`, `0026138`, `a6aa9bc` are ancestors of HEAD.
 
 ## Known Stubs
 
