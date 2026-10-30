@@ -1,7 +1,7 @@
 ---
 phase: 07-kmp-domain-layer-and-android-adoption
-verified: 2026-10-29T23:00:00Z
-status: passed
+verified: 2026-10-30T19:00:00Z
+status: human_needed
 score: 5/5 must-haves verified
 covered_files:
   - ".planning/phases/07-kmp-domain-layer-and-android-adoption/07-01-PLAN.md"
@@ -43,30 +43,52 @@ covered_files:
   - ".planning/phases/07-kmp-domain-layer-and-android-adoption/07-19-PLAN.md"
   - ".planning/phases/07-kmp-domain-layer-and-android-adoption/07-19-SUMMARY.md"
   - "core/data/src/androidMain/kotlin/com/gdgnantes/devfest/core/data/di/DataPlatformModule.android.kt"
+  - "core/data/src/iosMain/kotlin/com/gdgnantes/devfest/core/data/UserDefaultsBookmarksStore.kt"
   - "core/data/src/iosMain/kotlin/com/gdgnantes/devfest/core/data/UserDefaultsSessionFiltersStore.kt"
+  - "core/data/src/iosTest/kotlin/com/gdgnantes/devfest/core/data/UserDefaultsBookmarksStoreTest.kt"
+  - "core/data/src/iosTest/kotlin/com/gdgnantes/devfest/core/data/UserDefaultsSessionFiltersStoreTest.kt"
   - "core/domain/src/commonMain/kotlin/com/gdgnantes/devfest/core/domain/di/DomainModule.kt"
   - "feature/agenda/src/main/java/com/gdgnantes/devfest/feature/agenda/AgendaViewModel.kt"
+  - "feature/speakers/src/main/java/com/gdgnantes/devfest/feature/speakers/list/Speakers.kt"
+  - "feature/speakers/src/main/java/com/gdgnantes/devfest/feature/speakers/list/SpeakersViewModel.kt"
+  - "feature/speakers/src/test/java/com/gdgnantes/devfest/feature/speakers/list/SpeakerIndexCaseFoldingTest.kt"
+  - "feature/speakers/src/test/java/com/gdgnantes/devfest/feature/speakers/list/SpeakerIndexEmptyNameTest.kt"
+  - "scripts/record-agenda-snapshot.sh"
   - "shared/src/commonMain/kotlin/com/gdgnantes/devfest/shared/di/InitKoin.kt"
-covered_digest: "v3:sha256:b31007554adcb1cc33902b7fd75030a186731e0998c9bec13a6f0fe7660d264f"
+covered_digest: "v3:sha256:e323ce42567a5c0108e16f79d6261573e96c6ff2bc4c287333c92e354c8a753d"
 behavior_unverified: 0
 overrides_applied: 0
+re_verification:
+  previous_status: passed
+  previous_score: 5/5
+  gaps_closed: []
+  gaps_remaining: []
+  regressions: []
 advisory:
-  - finding: "WR-01 (07-REVIEW): speaker A-Z index key (`letter.lowercase().first()` on an uppercased letter) and the row header check (`name.lowercase().firstOrNull()`) can diverge for characters whose uppercase form changes length or base letter (`ß`, `ﬁ`, `ı`). v1.0 used one lowercase pipeline on both sides. No such name exists in the recorded 100-speaker snapshot."
+  - finding: "IN-02 (07-REVIEW): WR-01 fix removes the ß divergence, but the shared SpeakerIndexUseCase still de-duplicates on the upper-cased letter, so dotless ı before i leaves the later i speaker without a row header and unreachable from the scroller (v1.0 showed both). Latent: all 100 recorded speaker names start with an ASCII letter."
     category: other
-    reason: "Edge-case parity deviation from v1.0, not reachable with the current data; recorded as open in 07-REVIEW-DISPOSITION.md. Triage before Phase 9 or the next edition."
-    evidence_status: "code review reading, no failing test"
-  - finding: "WR-02..WR-04 and IN-01..IN-04 (07-REVIEW): recorder script tolerance, iOS store last-writer-wins, composition-time non-fatal report, KEYNOTE star without detail screen (faithful to v1.0), stale comments, duplicate TestDataFiles, repeated day-label parse."
+    reason: "Edge-case deviation from v1.0 on data that does not exist today; fixing it changes the shared (iOS-visible) letter definition. Triage before Phase 9 or the next edition."
+    evidence_status: "code review reading and 07-UI-REVIEW Top Fix 3; no failing test (data set has no such letter)"
+  - finding: "IN-01, IN-03, IN-04 (07-REVIEW and earlier): unused destructured `letter` in SpeakersViewModel.firstLetterIndexes, duplicate TestDataFiles, repeated day-label parse."
     category: other
-    reason: "None blocks a Phase 7 success criterion; all recorded as open/advisory in 07-REVIEW-DISPOSITION.md."
+    reason: "Hygiene only; recorded open in 07-REVIEW-DISPOSITION.md; no success criterion touched."
     evidence_status: "code review reading"
+human_verification:
+  - test: "Re-capture 14-speakers-scroller on the current branch head (>= 575970ae) and compare with 07-parity/main/14-speakers-scroller.png: open Speakers, check row header letters, drag the A-Z scroller to several letters (including a letter with no speaker) and rotate the device once."
+    expected: "Headers appear on the first speaker of each letter exactly as on main, the scroller jumps to the same rows, no flicker or missing header after load or rotation."
+    why_human: "The 15 paired parity captures were taken on 4af25ed (2026-10-29), before WR-01 (b6ff4909) and WR-04 (575970ae) changed how the Speakers screen gets its letter map (now a separate letterIndexes StateFlow). Compose rendering is not covered by any automated test; only the logic is (golden speaker-index characterization test, 100 ASCII speakers, unchanged and green)."
 ---
 
 # Phase 7: KMP Domain Layer and Android Adoption Verification Report
 
 **Phase Goal:** The agenda business logic (filtering, grouping, classification, bookmarks and filters) lives in a KMP `:core:domain` module tested on JVM and iOS simulator, and Android already uses it without any visible difference
-**Verified:** 2026-10-29
-**Status:** passed
-**Re-verification:** No, initial verification
+**Verified:** 2026-10-30
+**Status:** human_needed
+**Re-verification:** Yes, after code-review fixes WR-01..WR-04 (b6ff4909, 89ccddd0, 87c9fe66, 575970ae), the Nyquist test (ec4b24c2) and a fresh incremental review (0 critical, 0 warning, 2 info)
+
+## Summary of the re-verification
+
+The previous report (passed 5/5, 2026-10-29) went stale because covered source changed. I re-checked the goal against the current tree instead of carrying the earlier verdict forward. No regression was found: all five roadmap success criteria still hold in code. The one thing the changes put out of reach of the earlier evidence is the visual parity claim for the Speakers screen, which is why the status moves from `passed` to `human_needed` (one quick manual check), not to `gaps_found`.
 
 ## Goal Achievement
 
@@ -74,27 +96,24 @@ advisory:
 
 | # | Truth | Status | Evidence |
 |---|-------|--------|----------|
-| 1 | `:core:domain` exported by `:shared`, `domainModule` in `sharedModules`, `verify()` passes with no duplicate binding, `swift-names-gate.sh` passes, iOS compiles and behaves as before | VERIFIED | `core/domain/build.gradle.kts` applies `devfest.kmp.library`. `shared/build.gradle.kts` has `api(project(":core:domain"))` and `export(project(":core:domain"))`. `InitKoin.kt`: `sharedModules = listOf(networkModule, dataModule, analyticsModule, domainModule)` with `allowOverride(false)`. `KoinGraphTest` covers `verify()`, domain-module membership, use-case resolution and `DefinitionOverrideException` on a duplicate. Re-ran `bash scripts/swift-names-gate.sh check`: SWIFT-NAMES-OK; `bash scripts/di-gate.sh`: DI-GATE-OK. Orchestrator evidence: Swift tests 19/19 on simulator, jvmTest/iosSimulatorArm64Test green. |
-| 2 | Characterization tests (filter matrix, grouping in two zones, recorded API snapshot, iOS and Android behaviors) committed before each logic move; shared use cases pass them in `commonTest` on JVM and iOS simulator | VERIFIED | Commit order from `git log`: snapshot 07-03 / 07-04, Android grouping 07-05 (`354cce68`), iOS 07-08 (`3c86433f`, `1b73bab9`), Android filtering/speaker/venue 07-06 (`47ecff97`, `21bacd2c`) all precede the shared filter (`dbc4d7e8`, 07-12), grouping (`6a5f5d74`), speaker/venue (`5b4bec44`) and the Android moves (07-15 to 07-18). Goldens exist in `core/domain/testdata/agenda/golden/` (android and ios agenda in `Europe_Paris` and `Pacific_Auckland`, filtering, speaker-index). `core/domain/src/commonTest` holds tests for Classify, Filter, Group, DayAssignment, ObserveAgenda, SpeakerIndex and VenueLanguage; `build.gradle.kts` wires testdata into jvmTest and the iOS simulator runner. Orchestrator evidence: 678 tests, 0 failures, iosSimulatorArm64Test included. |
-| 3 | Divergent behaviors stay per platform or go through an explicit parameter; the iOS room-order deviation is documented | VERIFIED | `AgendaViewModel` passes `dayAssignment` (`UtcDayWindows`) and `TimeZone.currentSystemDefault()` explicitly to `observeAgenda.observe(...)`. The domain module has no scroll/partner-category logic. `documentation/ARCHITECTURE.md:306` documents the in-slot `RoomSortIndex` order row and the single deviation; `GroupSessionsUseCase` KDoc cites it. |
-| 4 | `BookmarksStore` and `SessionFiltersStore` are common interfaces; v1.0 Robolectric tests pinning `selected_sessions` and the Android filter format pass; iOS stores use new `NSUserDefaults` keys with the shared codec and never read the legacy keys (simulator tests) | VERIFIED | Interfaces and `SessionFilterCodec` are in `core/data/commonMain`. `BookmarksStoreImplTest` is unchanged versus `main` (diff empty). The v1.0 `SessionFiltersServiceImplTest` (95 lines) was carried to `SharedPreferencesSessionFiltersStoreTest` (96 lines) with the same JSON-string and malformed-entry assertions (`{"type":"LANGUAGE","value":"FRENCH"}`). iOS: `UserDefaultsSessionFiltersStore` uses key `devfest.agenda.filters` and `SessionFilterCodec`; `iosTest` files write the legacy `Favorites` / `AgendaSessionFilters` keys and assert they are untouched. Orchestrator evidence: `testAndroidHostTest` and iOS simulator tests green. |
-| 5 | Android agenda, filters, bookmarks, speakers and venue behave as in v1.0; `SessionFiltersService` gone and Koin binding replaced in the same commit | VERIFIED | Zero occurrences of `SessionFiltersService` in tracked source (grep over `kt/swift/md/kts` outside `.planning`; `git ls-tree` count 0). Commit `a28bf160` removes the service and adds the `SharedPreferencesSessionFiltersStore` binding in `DataPlatformModule.android.kt` together with the `AgendaModule` change. Main code uses the shared use cases: `AgendaViewModel` (`ObserveAgendaUseCase`, `ClassifySessionUseCase`, `SessionFiltersStore`), `SpeakersViewModel` (`SpeakerIndexUseCase`), `VenueViewModel`, `MainActivity`. Parity: 15 paired main/branch screenshots plus an R8 release persistence smoke, human approval recorded 2026-10-29 in `07-19-SUMMARY.md`. Orchestrator evidence: `connectedDebugAndroidTest` agenda 2/2, speakers 2/2, venue 1/1. |
+| 1 | `:core:domain` exported by `:shared`, `domainModule` in `sharedModules`, `verify()` passes with no duplicate binding, `swift-names-gate.sh` passes, iOS compiles and behaves as before | VERIFIED | Unchanged since the first verification (`shared/build.gradle.kts` `api`/`export`, `InitKoin.sharedModules` with `domainModule`, `allowOverride(false)`, `KoinGraphTest`). Re-ran in this session: `bash scripts/swift-names-gate.sh check` prints `SWIFT-NAMES-OK` (it linked the iOS simulator framework), `bash scripts/di-gate.sh` prints `DI-GATE-OK`. Post-fix commits touched no exported Kotlin API (only `internal` iOS store classes and Android feature code). |
+| 2 | Characterization tests committed before each logic move; shared use cases pass them in `commonTest` on JVM and iOS simulator | VERIFIED | Commit ordering and goldens unchanged (characterization 07-03..07-08 and 07-05/07-06 precede the shared use cases 07-12/07-13 and the Android moves 07-15..07-18). `core/domain/testdata/agenda/golden/` untouched by the review fixes (`android-speaker-index.json` last changed in 21bacd2c; the speaker-index use case last changed in 5b4bec44). Full Gradle suite passed on ae3da148 (supplied evidence), including the five `iosSimulatorArm64Test` tasks. |
+| 3 | Divergent behaviors stay per platform or go through an explicit parameter; the iOS room-order deviation is documented | VERIFIED | No change in this area. `AgendaViewModel` still passes the day assignment and time zone explicitly; `documentation/ARCHITECTURE.md:306` documents the `RoomSortIndex` deviation. |
+| 4 | `BookmarksStore` and `SessionFiltersStore` are common interfaces; v1.0 Robolectric tests pinning `selected_sessions` and the filter format pass; iOS stores use new keys with the shared codec and never read legacy keys | VERIFIED | Re-read both iOS stores after WR-03: keys `devfest.bookmarks.sessionIds` and `devfest.agenda.filters`, `SessionFilterCodec` for filters, no reference to the legacy `Favorites`/`AgendaSessionFilters` keys in main code (legacy-key-untouched tests still present). WR-03 only wraps update and persist in one `NSLock` (`try/finally`); semantics and key/format are unchanged. I ran `:core:data:iosSimulatorArm64Test --tests '*UserDefaultsSessionFiltersStoreTest*'` against the current tree: 8 tests, 0 failures, including the new `concurrent_writers_persist_the_latest_state` (ec4b24c2, which post-dates the green full-gate commit ae3da148 and was the only code delta after it). Android side untouched by the fixes. |
+| 5 | Android agenda, filters, bookmarks, speakers and venue behave as in v1.0; `SessionFiltersService` gone and Koin binding replaced in the same commit | VERIFIED for logic; visual parity of Speakers needs a human re-check | Agenda, filters, bookmarks and venue: no source change since the 2026-10-29 parity approval. `SessionFiltersService` has zero occurrences outside `.planning`. Speakers logic after WR-01/WR-04: for ASCII names `speakerLetterKey` (`name.lowercase().firstOrNull()`) equals the v1.0 key (`name.lowercase().first()`), the first index per key still wins, and the header check in `SpeakersList` now uses the same function. `SpeakerIndexCharacterizationTest` (golden over the recorded data, unchanged) plus `SpeakerIndexCaseFoldingTest` and `SpeakerIndexEmptyNameTest` pass: I ran `:feature:speakers:testDebugUnitTest`, 6 suites, 20 tests, 0 failures. The recorded snapshot has 100 speakers, all with an ASCII initial, so the recorded data produces the same map as v1.0. What no automated check covers is the Compose rendering after the `letterIndexes` StateFlow change; the parity screenshots predate it (see Human Verification). |
 
-**Score:** 5/5 truths verified (0 present, behavior-unverified)
-
-Behavior-dependent invariants (filtering rule, grouping order, persistence format, store replacement) are each covered by a passing named test in the green full-gate run rather than by symbol presence alone.
+**Score:** 5/5 truths verified (0 present, behavior-unverified). The Speakers visual re-check is carried as a human verification item, not as a failed truth, because the logic is proven equal on the recorded data and the 15-capture parity approval still covers every other screen.
 
 ### Required Artifacts
 
 | Artifact | Expected | Status | Details |
 |----------|----------|--------|---------|
-| `core/domain/` module (7 use-case/model files, `DomainModule.kt`) | Shared agenda, speaker, venue logic | VERIFIED | Substantive, not stubs; wired from `InitKoin.kt`, `shared`, and Android features |
-| `core/domain/src/commonTest` + `testdata/agenda/golden` | Characterization and use-case tests | VERIFIED | 7 commonTest classes, `DomainModuleTest` on jvmTest, 7 golden files |
-| `core/model/.../SessionFilter.kt` | Shared filter type | VERIFIED | Present; baselines in `scripts/swift-names/` |
-| `core/data` `BookmarksStore`, `SessionFiltersStore`, `SessionFilterCodec` | Common interfaces and codec | VERIFIED | Android and iOS actuals bound in the platform modules |
-| iOS `UserDefaults*Store.kt` and `iosTest` | New-key stores | VERIFIED | Legacy keys asserted untouched |
-| `iosApp/DevFestNantesTests/*Characterization*` | iOS characterization | VERIFIED | 4 Swift test files present |
-| `07-parity/` screenshots, R8 evidence | Android parity (D-12) | VERIFIED | main, branch and release folders; human approval recorded |
+| `core/domain/` module (use cases, `DomainModule.kt`) | Shared agenda, speaker, venue logic | VERIFIED | Substantive, wired from `InitKoin.kt`, `shared`, Android features; unchanged by the fixes |
+| `core/domain/src/commonTest` and `testdata/agenda/golden` | Characterization and use-case tests | VERIFIED | Unchanged; no golden edited by WR-01..WR-04 (confirmed from git history and 07-REVIEW-FIX.md) |
+| `core/data` iOS stores (`UserDefaults*Store.kt`) | New-key stores, thread-safe writes | VERIFIED | `NSLock` guards update + persist in both stores; tests in `iosTest` |
+| `feature/speakers` `SpeakersViewModel.kt`, `Speakers.kt` | Shared index consumed, one key function | VERIFIED | `speakerLetterKey` used by map and header; `letterIndexes` published once per load; `Speakers` collects it |
+| `scripts/record-agenda-snapshot.sh` | Recorder fails on any Gradle error | VERIFIED | `set -euo pipefail`, no "No tests found" tolerance, step 2 runs the single named rewrite test |
+| `07-parity/` screenshots, R8 evidence | Android parity (D-12) | VERIFIED but stale for Speakers | `main`, `branch` (15 captures) and `release` present; Speakers capture predates WR-01/WR-04 |
 
 ### Key Link Verification
 
@@ -102,16 +121,17 @@ Behavior-dependent invariants (filtering rule, grouping order, persistence forma
 |------|----|-----|--------|
 | `shared` | `:core:domain` | `api` + framework `export` | WIRED |
 | `InitKoin.sharedModules` | `domainModule` | list membership, `KoinGraphTest` | WIRED |
-| `AgendaViewModel` | `ObserveAgendaUseCase` | `AgendaModule` DI, constructor | WIRED |
-| `SessionFiltersStore` | Android `SharedPreferencesSessionFiltersStore` | `DataPlatformModule.android.kt` single bind | WIRED |
-| `SessionFiltersStore` / `BookmarksStore` | iOS `UserDefaults*Store` | `DataPlatformModule.ios.kt` | WIRED (app-side wiring is Phase 9) |
+| `AgendaViewModel` | `ObserveAgendaUseCase` | `AgendaModule` DI | WIRED |
+| `SessionFiltersStore` | Android `SharedPreferencesSessionFiltersStore` | `DataPlatformModule.android.kt` | WIRED |
+| `SpeakersViewModel.letterIndexes` | `Speakers` composable -> `SpeakersListWithScroller` / `SpeakersList` | `collectAsState()`, `firstLetterIndexes` parameter | WIRED |
+| `speakerLetterKey` | index map and row header check | single internal function | WIRED |
 
 ### Data-Flow Trace (Level 4)
 
 | Artifact | Data | Source | Real data | Status |
 |----------|------|--------|-----------|--------|
-| `AgendaViewModel.days` | `DaySchedule` list | `ObserveAgendaUseCase` combining store sessions, filters and bookmarks | Yes | FLOWING |
-| `SpeakersViewModel` index | speaker letters | `SpeakerIndexUseCase` over `store` speakers | Yes | FLOWING |
+| `AgendaViewModel.days` | `DaySchedule` list | `ObserveAgendaUseCase` over store sessions, filters, bookmarks | Yes | FLOWING |
+| `SpeakersViewModel.letterIndexes` | letter -> index map | `store.speakers` collector -> `firstLetterIndexes` -> `SpeakerIndexUseCase` | Yes (`speakers` and `letterIndexes` are set back to back in the same collector) | FLOWING |
 
 ### Behavioral Spot-Checks
 
@@ -119,7 +139,9 @@ Behavior-dependent invariants (filtering rule, grouping order, persistence forma
 |----------|---------|--------|--------|
 | Swift names gate | `bash scripts/swift-names-gate.sh check` | SWIFT-NAMES-OK | PASS |
 | DI gate | `bash scripts/di-gate.sh` | DI-GATE-OK | PASS |
-| Full suites | Orchestrator run on HEAD (not re-run): `testDebugUnitTest jvmTest testAndroidHostTest` + iosSimulatorArm64Test, 678 tests, 0 failures; Swift 19/19; connectedDebugAndroidTest 5/5; detekt, lint, kmp-nc gate exit 0 | as reported | PASS (orchestrator evidence) |
+| iOS filter store incl. new concurrency test | `./gradlew :core:data:iosSimulatorArm64Test --tests '*UserDefaultsSessionFiltersStoreTest*'` | 8 tests, 0 failures (includes `concurrent_writers_persist_the_latest_state`) | PASS |
+| Speakers unit tests (WR-01/WR-04 + characterization) | `./gradlew :feature:speakers:testDebugUnitTest` | 6 suites, 20 tests, 0 failures | PASS |
+| Full suite on ae3da148 | detekt, lint, di-gate, kmp-nc gate, `testDebugUnitTest jvmTest testAndroidHostTest`, five `iosSimulatorArm64Test` tasks, swift-names gate | passed (supplied by the caller, not re-run in full here) | PASS (orchestrator evidence) |
 
 ### Probe Execution
 
@@ -127,39 +149,42 @@ SKIPPED: no probes declared by the plans (`scripts/*/tests/probe-*.sh` not prese
 
 ### Requirements Coverage
 
-All seven IDs are claimed by PLAN frontmatter and none is orphaned (ROADMAP and REQUIREMENTS map exactly SHARED-01..07 to Phase 7).
+All seven IDs are claimed by PLAN frontmatter; none orphaned. `.planning/REQUIREMENTS.md` now marks SHARED-01..07 as `[x]` and "Complete" in the traceability table, which closes the earlier bookkeeping note.
 
 | Requirement | Source Plans | Status | Evidence |
-|-------------|-------------|--------|----------|
+|-------------|--------------|--------|----------|
 | SHARED-01 | 07-01, 07-02, 07-13 | SATISFIED | Truth 1 |
-| SHARED-02 | 07-06, 07-09, 07-10, 07-12, 07-15, 07-19 | SATISFIED | Truths 2, 4; `FilterSessionsUseCase` + matrix |
-| SHARED-03 | 07-05, 07-08, 07-12, 07-13, 07-15 | SATISFIED | Truths 2, 3; `GroupSessionsUseCase`, `ARCHITECTURE.md:306` |
-| SHARED-04 | 07-01, 07-06, 07-08, 07-13, 07-17, 07-18 | SATISFIED | Classify, speaker index, venue language shared; divergences parameterized (Truth 3) |
+| SHARED-02 | 07-06, 07-09, 07-10, 07-12, 07-15, 07-19 | SATISFIED | Truths 2, 4 |
+| SHARED-03 | 07-05, 07-08, 07-12, 07-13, 07-15 | SATISFIED | Truths 2, 3 |
+| SHARED-04 | 07-01, 07-06, 07-08, 07-13, 07-17, 07-18 | SATISFIED | Truths 2, 3 (speaker index and venue language shared; Speakers parity re-check pending, see below) |
 | SHARED-05 | 07-09, 07-11, 07-14, 07-16, 07-19 | SATISFIED | Truth 4 |
 | SHARED-06 | 07-14 to 07-19 | SATISFIED | Truth 5 |
-| SHARED-07 | 07-03 to 07-08, 07-12, 07-13 | SATISFIED | Truth 2, commit ordering |
-
-**Bookkeeping gap (not a code gap):** `.planning/REQUIREMENTS.md` still shows SHARED-01, -03, -04 and -07 as unchecked `[ ]` and "Pending" in the traceability table (only -02, -05, -06 are marked Complete). The implementation satisfies them; the orchestrator should tick them during phase completion.
+| SHARED-07 | 07-03 to 07-08, 07-12, 07-13 | SATISFIED | Truth 2 |
 
 ### Anti-Patterns Found
 
 | File | Line | Pattern | Severity | Impact |
 |------|------|---------|----------|--------|
-| (phase-modified source) | - | `TBD` / `FIXME` / `XXX` without issue reference | none found | - |
-| `SpeakersViewModel.kt` | ~61 | WR-01 case-folding mismatch for `ß`, `ﬁ`, `ı` | Warning (advisory) | Edge-case deviation, no such speaker in current data |
-| `ClassifySessionUseCase.kt` | 22-29 | IN-01 KEYNOTE star without detail | Info | Faithful to v1.0 on both platforms |
+| (phase-modified source) | - | `TBD` / `FIXME` / `XXX` | none found | - |
+| `SpeakersViewModel.kt` | 68 | unused destructured `letter` (IN-01) | Info | Compiler warning only (detekt and lint passed) |
+| `SpeakersViewModel.kt` | 64-66 | comment overstates "cannot diverge"; `ı` before `i` case (IN-02) | Warning (advisory) | Latent; no such name in the 100 recorded speakers |
+| `ClassifySessionUseCase.kt` | 22-29 | KEYNOTE star without detail screen | Info | Faithful to v1.0 on both platforms |
 
-Remaining review items (WR-02 to WR-04, IN-02 to IN-04) are tooling, concurrency and hygiene notes recorded in `07-REVIEW-DISPOSITION.md`; none touches a success criterion.
+The remaining open items (IN-03, IN-04) are hygiene notes in `07-REVIEW-DISPOSITION.md`; none touches a success criterion. UI-review items that are v1.0 debt (no `UiState.ERROR` path, no Speakers empty state, scroller flush to the edge) are pre-existing and out of scope under the strict-parity rule ("bugs found along the way are logged as debt, not fixed").
 
 ### Human Verification Required
 
-None outstanding. The D-12 Android parity checkpoint was completed by the human on 2026-10-29 (07-19-SUMMARY.md).
+#### 1. Speakers screen visual parity on the current branch head
+
+**Test:** Install the current head (>= 575970ae), open Speakers, compare with `07-parity/main/14-speakers-scroller.png`: row header letters, A-Z drag to several letters (including one with no speaker, for example "i"), one rotation.
+**Expected:** Identical headers, identical scroll targets, no missing header or flicker after load or rotation.
+**Why human:** `07-parity/branch/14-speakers-scroller.png` was captured on 4af25ed, before WR-01 and WR-04 reworked how the screen gets its letter map. Compose rendering has no automated coverage here. Logic equality on the recorded data is proven by tests; the pixel-level claim "no visible difference" for this one screen is not, and `07-UI-REVIEW.md` requires the re-capture before accepting it.
 
 ### Gaps Summary
 
-No gaps. All five roadmap success criteria are backed by code in the repository, passing gates, characterization-before-move commit ordering, and recorded human parity approval. Advisory only: triage WR-01 (speaker index case folding) because it is the one open review finding that could differ from v1.0 behavior on unusual names, and tick SHARED-01/03/04/07 in REQUIREMENTS.md.
+No code gaps and no regressions. Every roadmap success criterion is backed by current code and passing gates. The status is `human_needed` solely because the "no visible difference" claim for the Speakers screen relies on screenshots that predate WR-01/WR-04. After that single re-capture is approved, the phase can be marked passed. Advisory only: triage IN-02 (`ı`/`i` header loss) before Phase 9, since fixing it means changing the shared `SpeakerIndexUseCase` letter definition that iOS also consumes.
 
 ---
 
-_Verified: 2026-10-29_
+_Verified: 2026-10-30_
 _Verifier: Claude (gsd-verifier)_
