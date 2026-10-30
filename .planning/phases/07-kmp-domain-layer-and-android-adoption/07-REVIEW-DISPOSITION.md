@@ -9,15 +9,15 @@ findings:
     title: "Speaker A-Z scroller index and row header use different case folding, so some letters break"
   - id: WR-02
     severity: warning
-    disposition: open
+    disposition: fixed
     title: "`record-agenda-snapshot.sh` swallows real failures and prints a success marker"
   - id: WR-03
     severity: warning
-    disposition: open
+    disposition: fixed
     title: "iOS stores persist `state.value` after the update, so concurrent writers can lose a write"
   - id: WR-04
     severity: warning
-    disposition: open
+    disposition: fixed
     title: "Non-fatal report fires from a composition-time call and repeats on every recomputation"
   - id: IN-01
     severity: info
@@ -35,9 +35,9 @@ findings:
     severity: info
     disposition: open
     title: "Every day-label parse repeats inside the per-session loop"
-open: 8
+open: 5
 total: 8
-recorded: 2026-10-29T22:24:23.305Z
+recorded: 2026-10-30T17:45:13.024Z
 ---
 
 # Phase 07: Code Review Disposition
@@ -45,9 +45,9 @@ recorded: 2026-10-29T22:24:23.305Z
 | Finding | Severity | Disposition | Source |
 |---------|----------|-------------|--------|
 | WR-01 | warning | open | - |
-| WR-02 | warning | open | - |
-| WR-03 | warning | open | - |
-| WR-04 | warning | open | - |
+| WR-02 | warning | fixed | 07-REVIEW-FIX.md |
+| WR-03 | warning | fixed | 07-REVIEW-FIX.md |
+| WR-04 | warning | fixed | 07-REVIEW-FIX.md |
 | IN-01 | info | open | - |
 | IN-02 | info | open | - |
 | IN-03 | info | open | - |
