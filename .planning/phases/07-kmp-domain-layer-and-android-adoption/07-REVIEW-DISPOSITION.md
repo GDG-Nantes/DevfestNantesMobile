@@ -3,6 +3,14 @@ phase: 07
 review: 07-REVIEW.md
 titles: json
 findings:
+  - id: IN-01
+    severity: info
+    disposition: open
+    title: "Unused destructured variable `letter`"
+  - id: IN-02
+    severity: info
+    disposition: open
+    title: "\"Cannot diverge\" comment overstates the guarantee for letters that share an upper-case form"
   - id: WR-01
     severity: warning
     disposition: fixed
@@ -19,14 +27,6 @@ findings:
     severity: warning
     disposition: fixed
     title: "Non-fatal report fires from a composition-time call and repeats on every recomputation"
-  - id: IN-01
-    severity: info
-    disposition: open
-    title: "Shared \"navigable\" table leaves KEYNOTE sessions with a bookmark star and no detail screen"
-  - id: IN-02
-    severity: info
-    disposition: open
-    title: "Stale phase-planning comments left in code and docs"
   - id: IN-03
     severity: info
     disposition: open
@@ -37,21 +37,21 @@ findings:
     title: "Every day-label parse repeats inside the per-session loop"
 open: 4
 total: 8
-recorded: 2026-10-30T17:45:25.519Z
+recorded: 2026-10-30T18:51:18.711Z
 ---
 
 # Phase 07: Code Review Disposition
 
 | Finding | Severity | Disposition | Source |
 |---------|----------|-------------|--------|
-| WR-01 | warning | fixed | 07-REVIEW-FIX.md |
-| WR-02 | warning | fixed | 07-REVIEW-FIX.md |
-| WR-03 | warning | fixed | 07-REVIEW-FIX.md |
-| WR-04 | warning | fixed | 07-REVIEW-FIX.md |
 | IN-01 | info | open | - |
 | IN-02 | info | open | - |
-| IN-03 | info | open | - |
-| IN-04 | info | open | - |
+| WR-01 | warning | fixed | 07-REVIEW-FIX.md (not in the current review) |
+| WR-02 | warning | fixed | 07-REVIEW-FIX.md (not in the current review) |
+| WR-03 | warning | fixed | 07-REVIEW-FIX.md (not in the current review) |
+| WR-04 | warning | fixed | 07-REVIEW-FIX.md (not in the current review) |
+| IN-03 | info | open | - (not in the current review) |
+| IN-04 | info | open | - (not in the current review) |
 
 Dispositions: `open` (recorded, not yet triaged), `fixed`, `skipped`, `deferred`.
 Set `deferred` by hand and put the reason in the Source cell; both are preserved. A `|` in the reason is kept as prose and escaped on the next run.
