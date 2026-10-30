@@ -5,7 +5,7 @@ titles: json
 findings:
   - id: WR-01
     severity: warning
-    disposition: open
+    disposition: fixed
     title: "Speaker A-Z scroller index and row header use different case folding, so some letters break"
   - id: WR-02
     severity: warning
@@ -35,16 +35,16 @@ findings:
     severity: info
     disposition: open
     title: "Every day-label parse repeats inside the per-session loop"
-open: 5
+open: 4
 total: 8
-recorded: 2026-10-30T17:45:13.024Z
+recorded: 2026-10-30T17:45:25.519Z
 ---
 
 # Phase 07: Code Review Disposition
 
 | Finding | Severity | Disposition | Source |
 |---------|----------|-------------|--------|
-| WR-01 | warning | open | - |
+| WR-01 | warning | fixed | 07-REVIEW-FIX.md |
 | WR-02 | warning | fixed | 07-REVIEW-FIX.md |
 | WR-03 | warning | fixed | 07-REVIEW-FIX.md |
 | WR-04 | warning | fixed | 07-REVIEW-FIX.md |
