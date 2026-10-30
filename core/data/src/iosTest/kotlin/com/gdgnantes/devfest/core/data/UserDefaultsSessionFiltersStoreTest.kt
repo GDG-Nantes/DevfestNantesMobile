@@ -3,12 +3,17 @@ package com.gdgnantes.devfest.core.data
 import app.cash.turbine.test
 import com.gdgnantes.devfest.core.model.SessionFilter
 import com.gdgnantes.devfest.core.model.SessionFilterType
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.test.runTest
+import kotlinx.coroutines.withContext
 import platform.Foundation.NSUUID
 import platform.Foundation.NSUserDefaults
 import kotlin.test.AfterTest
 import kotlin.test.Test
 import kotlin.test.assertEquals
+import kotlin.test.assertTrue
 
 /**
  * Pins how [UserDefaultsSessionFiltersStore] persists filters (D-15): the new key
@@ -99,5 +104,20 @@ class UserDefaultsSessionFiltersStoreTest {
             store.setFilters(setOf(french))
             expectNoEvents()
         }
+    }
+
+    @Test
+    fun concurrent_writers_persist_the_latest_state() = runTest {
+        val store = UserDefaultsSessionFiltersStore(defaults)
+        val writes = (1..200).map { setOf(SessionFilter(SessionFilterType.ROOM, "room$it")) }
+
+        withContext(Dispatchers.Default) {
+            writes.map { filters -> async { store.setFilters(filters) } }.awaitAll()
+        }
+
+        val latest = store.filters.value
+        assertTrue(latest in writes, "in-memory state must be one of the written sets")
+        assertEquals(latest.map(SessionFilterCodec::encode).toSet(), storedStrings())
+        assertEquals(latest, UserDefaultsSessionFiltersStore(defaults).filters.value)
     }
 }
