@@ -56,7 +56,7 @@ fun Speakers(
     onSpeakerClick: (Speaker) -> Unit
 ) {
     val speakers = viewModel.speakers.collectAsState()
-    val firstLetterIndexes = remember(speakers.value) { viewModel.firstLetterIndexes(speakers.value) }
+    val firstLetterIndexes by viewModel.letterIndexes.collectAsState()
     Speakers(
         modifier = modifier,
         speakers = speakers,

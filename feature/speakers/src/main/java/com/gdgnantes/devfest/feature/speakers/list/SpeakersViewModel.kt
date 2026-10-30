@@ -26,6 +26,14 @@ class SpeakersViewModel(
     private val _speakers = MutableStateFlow<List<Speaker>>(emptyList())
     val speakers = _speakers.asStateFlow()
 
+    private val _letterIndexes = MutableStateFlow<Map<Char, Int>>(emptyMap())
+
+    /**
+     * The A-Z scroller map for the loaded [speakers] (see [firstLetterIndexes]). Computed once per
+     * data load, so the empty-name report is not repeated by recompositions or configuration changes.
+     */
+    val letterIndexes: StateFlow<Map<Char, Int>> = _letterIndexes.asStateFlow()
+
     init {
         viewModelScope.launch {
             performanceMonitoring.traceDataLoading(
@@ -33,6 +41,8 @@ class SpeakersViewModel(
                 dataSource = "graphql"
             ) {
                 store.speakers.collect { speakersList ->
+                    reportEmptyNames(speakersList)
+                    _letterIndexes.value = firstLetterIndexes(speakersList)
                     _speakers.value = speakersList
                     _uiState.value = UiState.SUCCESS
 
@@ -46,28 +56,34 @@ class SpeakersViewModel(
     /**
      * The A-Z scroller map: lowercase first letter to the index of the first speaker with that
      * letter, in list order. The shared index yields an empty letter for a speaker with an empty
-     * name, which v1.0 crashed on (`NoSuchElementException`); it is skipped here and reported as a
-     * non-fatal exception (D-20). Only speaker ids (public conference data) are reported.
+     * name, which v1.0 crashed on (`NoSuchElementException`); it is skipped here. Pure: the
+     * non-fatal report for such a speaker is made by [reportEmptyNames] on each data load.
      */
     fun firstLetterIndexes(speakers: List<Speaker>): Map<Char, Int> {
         val indexes = speakerIndex.firstIndexes(speakers)
-        if (indexes.any { it.letter.isEmpty() }) {
-            val ids = speakers.filter { it.name.isEmpty() }.joinToString { it.id }
-            Timber.w(
-                IllegalStateException("Speaker A-Z index: speaker with an empty name skipped (ids: $ids)"),
-                "Speaker A-Z index: empty speaker name skipped"
-            )
-        }
         // The key comes from the speaker itself, through the same function the row header check
         // uses, so the two cannot diverge for letters whose upper-casing changes the length or
         // the base character (`ß` becomes `SS`). The first index of a key wins, as in v1.0.
         val keyed = LinkedHashMap<Char, Int>()
-        for ((letter, index) in indexes) {
-            if (letter.isEmpty()) continue
-            val key = speakerLetterKey(speakers[index].name) ?: continue
-            if (key !in keyed) keyed[key] = index
+        for ((letter, index) in indexes.filter { it.letter.isNotEmpty() }) {
+            val key = speakerLetterKey(speakers[index].name)
+            if (key != null && key !in keyed) keyed[key] = index
         }
         return keyed
+    }
+
+    /**
+     * Reports speakers with an empty name as a non-fatal exception (D-20). Only speaker ids (public
+     * conference data) are reported.
+     */
+    private fun reportEmptyNames(speakers: List<Speaker>) {
+        val unnamed = speakers.filter { it.name.isEmpty() }
+        if (unnamed.isEmpty()) return
+        val ids = unnamed.joinToString { it.id }
+        Timber.w(
+            IllegalStateException("Speaker A-Z index: speaker with an empty name skipped (ids: $ids)"),
+            "Speaker A-Z index: empty speaker name skipped"
+        )
     }
 }
 
