@@ -58,8 +58,22 @@ class SpeakersViewModel(
                 "Speaker A-Z index: empty speaker name skipped"
             )
         }
-        return indexes
-            .filter { it.letter.isNotEmpty() }
-            .associate { it.letter.lowercase().first() to it.index }
+        // The key comes from the speaker itself, through the same function the row header check
+        // uses, so the two cannot diverge for letters whose upper-casing changes the length or
+        // the base character (`ß` becomes `SS`). The first index of a key wins, as in v1.0.
+        val keyed = LinkedHashMap<Char, Int>()
+        for ((letter, index) in indexes) {
+            if (letter.isEmpty()) continue
+            val key = speakerLetterKey(speakers[index].name) ?: continue
+            if (key !in keyed) keyed[key] = index
+        }
+        return keyed
     }
 }
+
+/**
+ * The A-Z scroller key of a speaker name: its lowercased first character, or `null` for an empty
+ * name. Shared by the index map ([SpeakersViewModel.firstLetterIndexes]) and the row header check
+ * in `SpeakersList`, which must agree on the key for the header to show.
+ */
+internal fun speakerLetterKey(name: String): Char? = name.lowercase().firstOrNull()

@@ -250,7 +250,7 @@ fun SpeakersList(
                 modifier = Modifier.clickable { onSpeakerClick(speaker) },
                 speaker = speaker,
                 isAlphabeticallyFirstInCharGroup =
-                speaker.name.lowercase().firstOrNull()?.let { firstLetterIndexes[it] } == index,
+                speakerLetterKey(speaker.name)?.let { firstLetterIndexes[it] } == index,
             )
         }
     }
