@@ -201,13 +201,15 @@ bash scripts/record-agenda-snapshot.sh
   `https://confetti-app.dev/graphql` with the public header `conference: devfestnantes2025`
 - Writes the raw responses to `core/data/testdata/graphql/{GetSessions,GetSpeakers,GetRooms}.json`, plus
   `snapshot-meta.json` (recording date and the server `speakersPage` total, metadata only)
-- Then runs `AgendaSnapshotTest` in record mode to rewrite the neutral snapshot in
-  `core/domain/testdata/agenda/` from the raw files (two Gradle invocations, so the order is guaranteed;
-  until that test exists the second one finds no test, which is tolerated)
+- Then runs `AgendaSnapshotTest.neutral_snapshot_matches_the_raw_responses` in record mode to rewrite the
+  neutral snapshot in `core/domain/testdata/agenda/` from the raw files (two Gradle invocations, so the order
+  is guaranteed; any failure, including "No tests found", stops the script). The tests that pin the counts of
+  the previous recording do not run in this step, so they cannot block re-recording
 - Prints `AGENDA-SNAPSHOT-RECORDED` as the last line
 
 **When to re-record:** only when the API shape changes or a new edition is recorded. Review the diff of the
-committed files before committing; only public conference data may be recorded.
+committed files before committing, then update the counts pinned in `AgendaSnapshotTest`
+(`recorded_snapshot_has_the_expected_shape`) by hand; only public conference data may be recorded.
 
 **Tests stay offline:** the recorder is excluded from `jvmTest` unless `-PrecordAgendaSnapshot` is set
 (same gating as `-PliveNetworkTests`), so a normal test run makes no network call.
