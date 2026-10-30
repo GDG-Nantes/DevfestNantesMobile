@@ -4,7 +4,7 @@ slug: "kmp-domain-layer-and-android-adoption"
 # status lifecycle: draft (seeded by plan-phase) → validated (set by validate-phase §6)
 # audit-milestone §5.5 distinguishes NOT-VALIDATED (draft) from PARTIAL (validated + nyquist_compliant: true) (#2117)
 status: validated
-nyquist_compliant: false
+nyquist_compliant: true
 wave_0_complete: true
 created: "2026-10-28"
 ---
@@ -57,7 +57,7 @@ Filled from the 19 plans (07-01 ... 07-19). "Swift" = the Phase 06 build-for-tes
 | 07-10-T1 | 10 | 6 | SHARED-02 | T-07-11 | Persisted bytes unchanged | unit + Robolectric | `./gradlew :feature:agenda:testDebugUnitTest :androidApp:testDebugUnitTest :feature:agenda:compileDebugAndroidTestKotlin` | ✅ | ✅ green |
 | 07-10-T2 | 10 | 6 | SHARED-02 | T-07-11 | — | CI list | CI list | ✅ | ✅ green |
 | 07-11-T1 | 11 | 6 | SHARED-05 | T-07-14, T-07-16 | Legacy keys never read | Kotlin iOS sim | `./gradlew :core:data:iosSimulatorArm64Test --tests '*UserDefaultsBookmarksStoreTest*'` | ✅ | ✅ green |
-| 07-11-T2 | 11 | 6 | SHARED-05 | T-07-14, T-07-15, T-07-16 | Safe casts, no payload logs | Kotlin iOS sim + gate + Swift | `./gradlew :core:data:iosSimulatorArm64Test :shared:iosSimulatorArm64Test :core:data:jvmTest :shared:jvmTest` + Gate + Swift | ✅ | ✅ green |
+| 07-11-T2 | 11 | 6 | SHARED-05 | T-07-14, T-07-15, T-07-16 | Safe casts, no payload logs; writes serialized (WR-03: `concurrent_writers_persist_the_latest_state`) | Kotlin iOS sim + gate + Swift | `./gradlew :core:data:iosSimulatorArm64Test :shared:iosSimulatorArm64Test :core:data:jvmTest :shared:jvmTest` + Gate + Swift | ✅ | ✅ green |
 | 07-12-T1 | 12 | 6 | SHARED-02, SHARED-07 | T-07-18 | — | commonTest JVM + iOS sim vs goldens | `./gradlew :core:domain:jvmTest :core:domain:iosSimulatorArm64Test --tests '*FilterSessionsUseCaseTest*'` | ✅ | ✅ green |
 | 07-12-T2 | 12 | 6 | SHARED-03, SHARED-07 | T-07-17, T-07-18 | Non-throwing shared API; explicit TimeZone parameter, ignored by UtcDayWindows (D-19) | commonTest JVM + iOS sim vs goldens + gate + Swift | `./gradlew :core:domain:jvmTest :core:domain:iosSimulatorArm64Test :shared:jvmTest` + Gate + Swift | ✅ | ✅ green |
 | 07-13-T1 | 13 | 7 | SHARED-04 | T-07-21 | — | commonTest JVM + iOS sim vs goldens | `./gradlew :core:domain:jvmTest :core:domain:iosSimulatorArm64Test` | ✅ | ✅ green |
@@ -107,7 +107,7 @@ Filled from the 19 plans (07-01 ... 07-19). "Swift" = the Phase 06 build-for-tes
 - [x] Feedback latency < 600s
 - [x] `nyquist_compliant: true` set in frontmatter
 
-**Approval:** approved 2026-10-29 (validate-phase audit: 678 Gradle tests across JVM, Android host and iOS simulator, 19/19 Swift tests with XCRESULT-OK, 5/5 instrumentation smoke tests, detekt, lint, DI gate, KMP-NC gate and swift-names gate all green on d78d30b1; manual checks closed in 07-19)
+**Approval:** approved 2026-10-29 (validate-phase audit: 678 Gradle tests across JVM, Android host and iOS simulator, 19/19 Swift tests with XCRESULT-OK, 5/5 instrumentation smoke tests, detekt, lint, DI gate, KMP-NC gate and swift-names gate all green on d78d30b1; manual checks closed in 07-19). Re-audited 2026-10-30 after the code review fixes: full suite green on ae3da148, WR-03 filters-store concurrency test added in ec4b24c2 (timing-dependent; not proven to fail without the lock)
 
 ## Validation Audit 2026-10-29
 
@@ -115,4 +115,12 @@ Filled from the 19 plans (07-01 ... 07-19). "Swift" = the Phase 06 build-for-tes
 |---|---|
 | Gaps found | 0 |
 | Resolved | 0 |
+| Escalated | 0 |
+
+## Validation Audit 2026-10-30
+
+| Metric | Count |
+|---|---|
+| Gaps found | 1 |
+| Resolved | 1 |
 | Escalated | 0 |
