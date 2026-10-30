@@ -1,8 +1,12 @@
 package com.gdgnantes.devfest.core.data
 
 import app.cash.turbine.test
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.async
+import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.test.runTest
+import kotlinx.coroutines.withContext
 import platform.Foundation.NSUUID
 import platform.Foundation.NSUserDefaults
 import kotlin.test.AfterTest
@@ -104,5 +108,18 @@ class UserDefaultsBookmarksStoreTest {
             store.setBookmarked("s1", true)
             expectNoEvents()
         }
+    }
+
+    @Test
+    fun concurrent_writers_leave_every_bookmark_persisted() = runTest {
+        val store = UserDefaultsBookmarksStore(defaults)
+        val ids = (1..200).map { "s$it" }
+
+        withContext(Dispatchers.Default) {
+            ids.map { id -> async { store.setBookmarked(id, true) } }.awaitAll()
+        }
+
+        assertEquals(ids.toSet(), store.bookmarkedSessionIds.first())
+        assertEquals(ids.toSet(), storedIds()?.map { it as String }?.toSet())
     }
 }

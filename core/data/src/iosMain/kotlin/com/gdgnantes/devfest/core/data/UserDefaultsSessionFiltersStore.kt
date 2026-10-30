@@ -4,6 +4,7 @@ import com.gdgnantes.devfest.core.model.SessionFilter
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
+import platform.Foundation.NSLock
 import platform.Foundation.NSUserDefaults
 
 /**
@@ -20,12 +21,19 @@ import platform.Foundation.NSUserDefaults
  */
 internal class UserDefaultsSessionFiltersStore(private val defaults: NSUserDefaults) : SessionFiltersStore {
     private val state = MutableStateFlow(load())
+    private val writeLock = NSLock()
 
     override val filters: StateFlow<Set<SessionFilter>> = state.asStateFlow()
 
     override fun setFilters(filters: Set<SessionFilter>) {
-        state.value = filters
-        defaults.setObject(filters.map(SessionFilterCodec::encode), forKey = KEY_FILTERS)
+        // Update and persist under one lock, so concurrent callers cannot persist out of order.
+        writeLock.lock()
+        try {
+            state.value = filters
+            defaults.setObject(filters.map(SessionFilterCodec::encode), forKey = KEY_FILTERS)
+        } finally {
+            writeLock.unlock()
+        }
     }
 
     private fun load(): Set<SessionFilter> =
