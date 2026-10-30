@@ -24,7 +24,7 @@ No golden under `core/domain/testdata/agenda/golden/` and no characterization ex
 
 ## Fixed Issues
 
-### WR-01: Speaker A-Z scroller index and row header use different case folding
+### WR-01: Speaker A-Z scroller index and row header use different case folding, so some letters break
 
 **Files modified:** `feature/speakers/src/main/java/com/gdgnantes/devfest/feature/speakers/list/SpeakersViewModel.kt`, `feature/speakers/src/main/java/com/gdgnantes/devfest/feature/speakers/list/Speakers.kt`, `feature/speakers/src/test/java/com/gdgnantes/devfest/feature/speakers/list/SpeakerIndexCaseFoldingTest.kt` (new)
 **Commit:** b6ff4909
