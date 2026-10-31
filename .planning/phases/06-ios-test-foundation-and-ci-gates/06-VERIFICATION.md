@@ -1,6 +1,6 @@
 ---
 phase: 06-ios-test-foundation-and-ci-gates
-verified: 2026-10-27T18:30:00Z
+verified: 2026-10-31T19:20:00Z
 status: passed
 score: 4/4 must-haves verified
 covered_files:
@@ -25,7 +25,7 @@ covered_files:
   - scripts/kmp-nc-version-gate.sh
   - scripts/swift-names-gate.sh
   - scripts/xcresult-assert-tests.sh
-covered_digest: "v3:sha256:9c45c35b86b3cf395183a52ef144db2fe0846ab43272b226b7fdaa2b49862a88"
+covered_digest: "v3:sha256:9ec140401c783016f33668a30c50166025b427855705ffd26c6c6ec57d99a23c"
 behavior_unverified: 0
 overrides_applied: 0
 re_verification:
@@ -45,7 +45,9 @@ re_verification:
 
 ## Re-verification Scope
 
-The previous report (14:48/15:00) was written before the review fixes. The diff `aac1c81..HEAD` over `iosApp`, `.github`, `scripts`, `gradle`, `shared`, `core` touches exactly four files: the three named above plus `scripts/README.md`. `ios.yml`, the pbxproj, the test plan, the scheme and the other two gate scripts are unchanged since the last real CI run. Those three files were re-read in full and re-executed; the unchanged artifacts got a regression sanity check (existence, wiring, self-tests).
+**2026-10-31 (post-Phase 7):** Phase 7 (`5896f573`) touched two covered files, both additively: `ios.yml` adds `:core:domain:iosSimulatorArm64Test` to the KMP iOS test step, and the pbxproj registers three new test files (`CharacterizationSupport.swift`, `AgendaCharacterizationTests.swift`, `SpeakersVenueCharacterizationTests.swift`) in `DevFestNantesTests`. No Phase 6 step, gate or target was removed or changed. Re-ran on HEAD: `xcodebuild ... -testPlan iosApp test` (iPhone 18 Pro) -> `** TEST SUCCEEDED **`, `xcresult-assert-tests.sh` -> `XCRESULT-TESTS total=19 passed=19 failed=0`, `swift-names-gate.sh check` -> `SWIFT-NAMES-OK`, `selftest` -> `SWIFT-GATE-SELFTEST-OK`, `kmp-nc-version-gate.sh` -> `KMPNC-VERSION-OK 1.0.6`. The digest was regenerated with `verification.fingerprint`. All 4 truths still hold.
+
+**2026-10-27:** The previous report (14:48/15:00) was written before the review fixes. The diff `aac1c81..HEAD` over `iosApp`, `.github`, `scripts`, `gradle`, `shared`, `core` touches exactly four files: the three named above plus `scripts/README.md`. `ios.yml`, the pbxproj, the test plan, the scheme and the other two gate scripts are unchanged since the last real CI run. Those three files were re-read in full and re-executed; the unchanged artifacts got a regression sanity check (existence, wiring, self-tests).
 
 ## Goal Achievement
 
