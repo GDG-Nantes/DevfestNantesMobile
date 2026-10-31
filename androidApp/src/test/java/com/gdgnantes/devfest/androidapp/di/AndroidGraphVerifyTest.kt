@@ -5,7 +5,7 @@ import android.app.Application
 import android.content.Context
 import com.gdgnantes.devfest.core.analytics.FirebaseAnalyticsService
 import com.gdgnantes.devfest.core.analytics.di.analyticsModule
-import com.gdgnantes.devfest.feature.agenda.services.SessionFiltersService
+import com.gdgnantes.devfest.core.data.SessionFiltersStore
 import com.gdgnantes.devfest.feature.sessiondetail.OpenFeedbackConfig
 import com.gdgnantes.devfest.feature.settings.services.DataCollectionSettingsService
 import com.gdgnantes.devfest.shared.di.sharedModules
@@ -52,7 +52,9 @@ class AndroidGraphVerifyTest {
     @Test
     fun full_android_graph_is_complete() {
         module { includes(sharedModules + (androidModules - appModule)) }
-            .verify(extraTypes = androidRuntimeTypes + firebaseSdkTypes + OpenFeedbackConfig::class)
+            .verify(
+                extraTypes = androidRuntimeTypes + firebaseSdkTypes + OpenFeedbackConfig::class
+            )
     }
 
     // appModule consumes bindings that other modules declare; they are listed as upstream types so the
@@ -64,7 +66,7 @@ class AndroidGraphVerifyTest {
                 listOf(
                     DataCollectionSettingsService::class,
                     FirebaseCrashlytics::class,
-                    SessionFiltersService::class
+                    SessionFiltersStore::class
                 ) + androidRuntimeTypes + appShellFrameworkTypes + configValueTypes
         )
     }

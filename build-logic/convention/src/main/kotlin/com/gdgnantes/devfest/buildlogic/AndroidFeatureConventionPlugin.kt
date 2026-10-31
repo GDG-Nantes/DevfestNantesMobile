@@ -8,7 +8,8 @@ import org.gradle.kotlin.dsl.dependencies
  * `devfest.android.feature` — every feature module (Gradle path segment
  * `feature`) applies this and nothing else. Layers `devfest.android.library`
  * + `devfest.android.koin` (the only DI convention) and adds the standard
- * core-module dependency set every feature needs. Must NEVER add a dependency on another feature module
+ * core-module dependency set every feature needs (`:core:ui`, `:core:domain`, `:core:data`,
+ * `:core:model`, `:core:analytics`). Must NEVER add a dependency on another feature module
  * (ARCH-02 — features stay siblings, never depend on each other).
  */
 class AndroidFeatureConventionPlugin : Plugin<Project> {
@@ -19,6 +20,7 @@ class AndroidFeatureConventionPlugin : Plugin<Project> {
 
             dependencies {
                 add("implementation", project(":core:ui"))
+                add("implementation", project(":core:domain"))
                 add("implementation", project(":core:data"))
                 add("implementation", project(":core:model"))
                 add("implementation", project(":core:analytics"))

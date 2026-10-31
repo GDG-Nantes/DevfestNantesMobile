@@ -35,6 +35,10 @@ SwiftUI and consumes the shared framework.
 │ :core:ui  Compose theme, shared components, BookmarksViewModel (Android) │
 └───────────────────────────────┬──────────────────────────────────────────┘
                                 ▼
+┌──────────────────────────────────────────────────────────────────────────┐
+│ :core:domain  Shared agenda policies and use cases (KMP), domainModule   │
+└───────────────────────────────┬──────────────────────────────────────────┘
+                                ▼
 ┌──────────────────────────────────────┐   ┌─────────────────────────────┐
 │ :core:data  DevFestNantesStore (KMP) │   │ :core:analytics (KMP)       │
 │  GraphQLStore / mocked store,        │   │  AnalyticsService,          │
@@ -60,6 +64,7 @@ Modules are declared in `settings.gradle.dcl`:
 | `:shared` | KMP (exported to iOS) | `initKoin()` composition root, `IosDependencies` for Swift |
 | `:core:model` | KMP | Domain types (`Session`, `Speaker`, `Room`, `Agenda`, ...), `stubs/` fixtures, `WebLinks` |
 | `:core:network` | KMP | Apollo client, normalized cache, GraphQL schema and operations |
+| `:core:domain` | KMP | Shared agenda, speaker and venue use cases (classify, filter, group, observe, speaker index, venue language), `domainModule`; exported by `:shared` |
 | `:core:data` | KMP | `DevFestNantesStore` facade, `GraphQLStore`, mocked store, `BookmarksStore` |
 | `:core:analytics` | KMP | `AnalyticsService`; Android Firebase analytics and performance implementations |
 | `:core:testing` | KMP | Fakes, `MainDispatcherRule`, test doubles Koin modules |
@@ -76,7 +81,7 @@ Build configuration is shared through convention plugins in the included build `
 `devfest.android.koin`, `devfest.kmp.library`, `devfest.detekt`).
 
 Dependency direction is one-way and acyclic:
-`androidApp → feature:* → core:ui → core:data → core:network / core:model`.
+`androidApp → feature:* → core:ui → core:domain → core:data → core:network / core:model`.
 Feature modules never depend on each other.
 
 ## Layers
@@ -110,8 +115,55 @@ navigation) are passed in as lambdas, for example `SessionDetailRoute(onSocialLi
 ### Shared UI (`:core:ui`)
 
 Material 3 theme (`theme/`), reusable components (`components/`, `components/appbars/`), Compose
-helpers (`utils/`), the cross-feature `BookmarksViewModel`, and `di/CoreUiModule.kt`, which defines
-the `IO_DISPATCHER` qualifier.
+helpers (`utils/`), the cross-feature `BookmarksViewModel`, and `di/CoreUiModule.kt`, its Koin module.
+
+### Domain (`:core:domain`)
+
+`core/domain/src/commonMain/kotlin/com/gdgnantes/devfest/core/domain/`
+
+Business logic shared by Android and iOS, in packages `agenda`, `speakers`, `venue` and `di`. It
+depends on `:core:model` and `:core:data` and is exported to Swift through `:shared`.
+
+Use cases:
+
+- `ClassifySessionUseCase`: `isService`, `isTalk`, `isNavigable` for a session. On Android,
+  `AgendaViewModel.isTalk` drives the bookmark star of an agenda row (passed down as a lambda) and
+  `MainActivity` gates the session detail navigation with `isNavigable`.
+- `FilterSessionsUseCase.filter(sessions, filters, bookmarkedSessionIds)`: OR within a filter type,
+  AND across types, output in store order.
+- `GroupSessionsUseCase.group(sessions, dayAssignment, timeZone)`: days, then time slots keyed by the
+  start `Instant`, then sessions in room order (`room.sortIndex`, then name).
+- `ObserveAgendaUseCase.observe(dayAssignment, timeZone)`: combines `DevFestNantesStore.sessions`,
+  `SessionFiltersStore.filters` and `BookmarksStore.bookmarkedSessionIds` into a
+  `Flow<List<DaySchedule>>` (`@NativeCoroutines`).
+- `SpeakerIndexUseCase`: the A-Z speaker index (`letterGroups` for the iOS list, `firstIndexes` for
+  the Android scroller). `SpeakersViewModel` takes it by constructor injection and exposes
+  `firstLetterIndexes(speakers)`, which the speakers list computes with `remember(speakers)`; a
+  speaker with an empty name is skipped and reported to Crashlytics as a non-fatal exception
+  through `Timber.w` (D-20, see the deviations table).
+- `VenueLanguageUseCase.languageFor(languageCode)`: French for `"fr"`, English otherwise.
+  `VenueViewModel` takes it by constructor injection and calls
+  `languageFor(locale.language)`; it still emits nothing when the system locale is null.
+
+`DayAssignment` selects how a session is assigned to a conference day: `UtcDayWindows` (Android, fixed
+24 hour UTC windows from the configured day starts, exactly like `Agenda.Builder`) or `LocalDateDays`
+(iOS, the calendar date in the time zone passed to `group`).
+
+Rules:
+
+- Policies and use cases are plain classes with named methods, not `operator invoke` objects.
+- They are bound as Koin `factory` definitions in `di/DomainModule.kt`. `domainModule` is
+  `@HiddenFromObjC` and is part of `sharedModules`; iOS resolves use cases through
+  `IosDependencies`. The module also binds the `CoroutineDispatcher` named `domainDispatcher`
+  (`Dispatchers.Default`) that `ObserveAgendaUseCase` runs its upstream work on.
+- The use cases return data only. Loading and error state, tracing, refresh and cancellation stay
+  in the ViewModels. `ObserveAgendaUseCase` builds its flow inside each `observe` call, so a new
+  collection restarts the cold store flow (refresh = cancel and collect again), and a store failure
+  reaches the collector unchanged, as in v1.0.
+- The time zone is an explicit parameter on every platform: callers pass
+  `TimeZone.currentSystemDefault()`.
+- Methods that return a `Flow` carry `@NativeCoroutines` so Swift sees `async`/`AsyncSequence`.
+- No public extension functions on exported model types: Swift cannot call them as members.
 
 ### Data (`:core:data`)
 
@@ -125,7 +177,16 @@ the `IO_DISPATCHER` qualifier.
   (`setUseMockServer(true)`).
 - `graphql/GraphQLStore.kt` + `graphql/Mappers.kt`: run Apollo queries and map them to `core:model`
   types. Apollo types never leave this module.
-- `BookmarksStore`: persisted bookmarked session ids.
+- `BookmarksStore` and `SessionFiltersStore`: common interfaces for the persisted bookmarked session
+  ids and the selected agenda filters. Android keeps its existing storage (`selected_sessions` for
+  bookmarks through `BookmarksStoreImpl`, `SHARED_PREFERENCES_KEY_AGENDA_FILTERS` for filters
+  through `SharedPreferencesSessionFiltersStore`, both in `androidMain` and bound in the Android
+  platform Koin module of this module; keys and value format are unchanged since v1.0). iOS
+  implements both in `iosMain` on `NSUserDefaults` under new keys,
+  `devfest.bookmarks.sessionIds` (array of session ids) and `devfest.agenda.filters` (array of JSON
+  strings written with the shared filter codec, the same bytes as Android). The iOS stores never
+  read or delete the legacy v1.0 keys (D-15: legacy data is intentionally not migrated), and the iOS
+  app starts using them in Phase 9.
 
 ### Network (`:core:network`)
 
@@ -140,7 +201,9 @@ the `IO_DISPATCHER` qualifier.
 ### Model (`:core:model`)
 
 Plain Kotlin domain types with no internal dependency. `stubs/` holds the canonical fixtures
-(`SessionFixtures`, `SpeakerFixtures`, ...) used by previews and tests.
+(`SessionFixtures`, `SpeakerFixtures`, ...) used by previews and tests. `SessionFilter` (a
+`@Serializable` data class) and the top-level `SessionFilterType` describe the agenda filters that
+both platforms persist through the shared filter codec.
 
 ### Analytics (`:core:analytics`)
 
@@ -166,11 +229,15 @@ graph LR
 Example, the agenda:
 
 1. `MainActivity` registers `Screen.Home`; `Home` shows the agenda tab.
-2. `AgendaRoute` gets `AgendaViewModel` from Koin. It receives `DevFestNantesStore`, `BookmarksStore`,
-   `PerformanceMonitoring`, `SessionFiltersService` and the `IO_DISPATCHER`.
-3. The ViewModel combines `store.agenda`, bookmarks and filters into UI state.
+2. `AgendaRoute` gets `AgendaViewModel` from Koin. It receives `ObserveAgendaUseCase`
+   (`:core:domain`), `DevFestNantesStore` (rooms), the `SessionFiltersStore` and
+   `PerformanceMonitoring`.
+3. The ViewModel collects `ObserveAgendaUseCase`, which combines sessions, filters and bookmarks into
+   the filtered, grouped `DaySchedule`/`TimeSlot` list exposed as UI state. The use case runs its
+   upstream work on the domain's `domainDispatcher`.
 4. `GraphQLStore` runs the Apollo query and maps the response through `graphql/Mappers.kt`.
-5. `Agenda.kt`, `AgendaPager.kt`, `AgendaColumn.kt` render the state.
+5. `Agenda.kt`, `AgendaPager.kt`, `AgendaColumn.kt` render the day schedules; labels and the
+   scroll-to-now index stay in `AgendaColumn` (slot headers use the device zone and locale).
 
 Session details: a click navigates to `"${Screen.Session.route}/{sessionId}"`;
 `SessionDetailRoute` builds `SessionViewModel` with that id. The OpenFeedback form is shown only when
@@ -225,11 +292,28 @@ To add a screen, add a `Screen` subclass and a `composable(...)` entry in `MainA
 
 - ViewModels expose `StateFlow`s; mutable state stays private (`_uiState` + `asStateFlow()`).
 - `UiState` (`STARTING`, `SUCCESS`, `ERROR`) lives in `:core:ui`.
-- `SessionFiltersServiceImpl` is a Koin `single`, so the agenda and `HomeViewModel` share the same
-  filters.
+- `SharedPreferencesSessionFiltersStore` is the single `SessionFiltersStore` of the Android graph: a
+  Koin `single` bound in `:core:data`, so the agenda and `HomeViewModel` share the same filters.
 - Bookmarks are persisted by `BookmarksStore` and shared through `BookmarksViewModel`.
-- Coroutine dispatchers are injected (`CoroutinesDispatcherProvider`, `IO_DISPATCHER`) so tests can
-  replace them.
+- Coroutine dispatchers are injected (`CoroutinesDispatcherProvider`, the `domainDispatcher` of
+  `:core:domain`) so tests can replace them.
+
+### Behavior deviations (v1.1)
+
+| Behavior | Android v1.0 | iOS v1.0 | Shared (v1.1) | Why acceptable / where it stays per platform |
+|---|---|---|---|---|
+| `SessionFilter` equality | Not a data class: equal-content sets re-emitted through `StateFlow` | n/a | Data class: equal-content sets do not re-emit | No visible effect (drawer and equality characterizations unchanged); Android adopted it in 07-10 |
+| Order inside a time slot (`RoomSortIndex`) | Unspecified (`HashSet`, then room name and `sortIndex` sorts) | Room name only | `room.sortIndex`, then room name; a session without a room first; ties keep store order | One deterministic order covering both; the iOS order changes when it adopts the shared grouping (Phase 9) |
+| Room filter | Compares the filter value with `room.id` | Compares it with the room name | Compares with `room.id` | Equal on real data because `room.id == room.name` for every room |
+| Slot key | Localized short time in the device zone: starts within the same minute share a slot | Exact `Date` | Exact start `Instant` | Every real session starts on a whole minute; the shared key is the stricter of the two |
+| Filter output order | Unspecified (`HashSet`) | Store order | Store order | A deterministic subset of the old Android behavior |
+| Start with fractional seconds | Parsed | Falls back to "now" (pinned by `AgendaDateParsingTests`) | Parsed | Never occurs in real data; the shared parsing is the correct one |
+| Start up to 24 h before a day start | Belongs to that day (`(start - dayStart).inWholeDays == 0`) | n/a (local calendar date) | `UtcDayWindows` copies the `Agenda.Builder` rule, so the same quirk remains | Strict parity; real sessions are inside their day |
+| Speaker index: empty name | `first()` throws `NoSuchElementException` | Adds an empty letter | Empty letter `""`; Android skips it and reports a non-fatal exception to Crashlytics through Timber | Never present in the data; an input that crashed v1.0 Android no longer does (accepted behavior change, D-20, implemented in 07-18); `SpeakerIndexEmptyNameTest` pins the skip and the report |
+| Speaker index: initial outside the Basic Multilingual Plane | One UTF-16 unit | One grapheme | One UTF-16 unit | Absent from the data; the platforms could still differ for such a letter |
+| Day time zone | Fixed UTC windows (zone ignored); the device zone only formats labels | Local calendar date in the device zone | The API takes the zone on every platform (D-05, D-19); `UtcDayWindows` ignores it by design, `LocalDateDays` reads it | The day assignment strategy is the per-platform choice; the Android label formatter keeps using the device zone |
+| Scroll to the current time slot | `currentStartTimeIndex` in `AgendaColumn` | Own logic in SwiftUI | Not shared | Stays per platform (D-08): wall-clock behavior tied to each UI |
+| Partner categories | Five fixed groups, ignores `PARTNERS` | Every category sorted by ordinal | Not shared | Stays per platform (D-08): the semantics differ |
 
 ## iOS App
 

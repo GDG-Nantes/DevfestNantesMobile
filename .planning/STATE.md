@@ -2,44 +2,44 @@
 gsd_state_version: "1.0"
 milestone: v1.1
 milestone_name: iOS Architecture
-current_phase: 7
-current_phase_name: KMP Domain Layer and Android Adoption
-status: "Phase 06 shipped — PR #430"
-stopped_at: Phase 06 complete, ready to plan Phase 7
-last_updated: "2026-10-27T17:26:56.786Z"
-last_activity: 2026-10-27
-state_head: 5bf18da9b60c88a098b098a5a3a50dfca2c6d08d
+current_phase: 8
+current_phase_name: Modern SwiftUI, iOS 17 and Observation
+status: "Phase 07 shipped — PR #431"
+stopped_at: Phase 07 complete, ready to plan Phase 8
+last_updated: "2026-10-31T17:41:40.239Z"
+last_activity: 2026-10-31
+state_head: 8290214c32d541f9bd7a3cdb3b707a98f63972f9
 progress:
   total_phases: 7
-  completed_phases: 6
-  total_plans: 6
-  completed_plans: 6
-  percent: 50
+  completed_phases: 7
+  total_plans: 25
+  completed_plans: 25
+  percent: 58
 ---
 
 # Project State
 
 ## Project Reference
 
-See: .planning/PROJECT.md (updated 2026-10-27)
+See: .planning/PROJECT.md (updated 2026-10-29)
 
 **Core value:** CI/CD must work again and the project must become maintainable again (modern build, modular architecture, decentralized DI, solid test coverage) without ever regressing the app's existing behavior for users.
-**Current focus:** Phase 7 — KMP Domain Layer and Android Adoption
+**Current focus:** Phase 8 — Modern SwiftUI, iOS 17 and Observation
 
 ## Current Position
 
-Phase: 7 — KMP Domain Layer and Android Adoption
+Phase: 8 — Modern SwiftUI, iOS 17 and Observation
 Plan: Not started
-Status: Phase 06 shipped — PR #430
-Last activity: 2026-10-27
+Status: Phase 07 shipped — PR #431
+Last activity: 2026-10-31
 
-Progress: [█████░░░░░] 50%
+Progress: [██████░░░░] 58%
 
 ## Performance Metrics
 
 **Velocity:**
 
-- Total plans completed: 43
+- Total plans completed: 62
 - Average duration: N/A
 - Total execution time: 0 hours
 
@@ -53,6 +53,7 @@ Progress: [█████░░░░░] 50%
 | 4 | 7 | - | - |
 | 05 | 11 | - | - |
 | 06 | 6 | - | - |
+| 07 | 19 | - | - |
 
 **Recent Trend:**
 
@@ -102,6 +103,7 @@ Progress: [█████░░░░░] 50%
 | Phase 05 P10 | 1h 30m | 3 tasks | 6 files |
 | Phase 05 P11 | 30 min | 3 tasks | 7 files |
 | Phase 06 P06 | 95min | 2 tasks | 11 files |
+| Phase 07 P19 | n/a | 2 tasks | 34 files |
 
 ## Accumulated Context
 
@@ -166,6 +168,8 @@ Recent decisions affecting current work:
 - [Phase 05]: 05-10: smoke tests assert reachable content (first day tab + scroll-to-node), never scroll position; session detail smoke test fakes the FeedbackFlags seam so no remote config is created
 - [Phase 05]: 05-11: kotlinx-datetime resolves to 0.8.0-0.6.x-compat (OpenFeedback 1.0.0-alpha.3 links the 0.6.x Instant/Clock classes); first-party code on kotlin.time.Instant, shared.h unchanged, R8 suppressions removed, OpenFeedbackDatetimeLinkageTest guards the bridge (G-05-3) — Keeps the newest library, restores the runtime classes, and a plain bump past 0.8.x now fails CI; UAT test 3 re-checked on device and passed 2026-10-16
 - [Phase 06]: 06-06: KMP-NativeCoroutines 1.0.6 bump (21b58bc) kept after human-approved v1.0 parity smoke; Xcode GUI build x86_64 JDK issue logged as dev-environment debt
+- [Phase 07]: Phase 7 complete (2026-10-29): `:core:domain` shared use cases + common stores, Android adopted with zero visible change; verification passed 5/5, Nyquist-compliant, threats_open 0, UI review 18/24 (pre-existing v1.0 issues only), code review 0 critical / 4 warnings open (07-REVIEW-DISPOSITION.md)
+- [Phase 07]: 07-19: Android parity with v1.0 approved by the human (2026-10-29) from 15 paired main/branch screenshots and the R8 release smoke; no phase-caused difference
 
 ### Pending Todos
 
@@ -173,7 +177,7 @@ None yet.
 
 ### Blockers/Concerns
 
-- **v1.1 — spikes to plan:** Phase 7 (real API snapshot, captured legacy `Favorites`/`AgendaSessionFilters` payloads); Phase 9 (installed v1.0 release build for the in-place update UAT, check `room.id == room.name`); Phase 11 (XCFramework from a clean checkout on Xcode 26.6 CI, Release/dSYM path, `Bundle.module` with SwiftGen 6.6.3); Phases 8 and 12 (KMP-NativeCoroutines bridge replayed on Swift 6.3.3 in CI)
+- **v1.1 — spikes to plan:** Phase 9 (installed v1.0 release build for the in-place update UAT, check `room.id == room.name`); Phase 11 (XCFramework from a clean checkout on Xcode 26.6 CI, Release/dSYM path, `Bundle.module` with SwiftGen 6.6.3); Phases 8 and 12 (KMP-NativeCoroutines bridge replayed on Swift 6.3.3 in CI)
 - **v1.1 — granularity:** 7 phases for a `standard` granularity (4-6 expected); accepted given the risk (27 requirements, every phase green and shippable, order imposed by the user)
 - **Phase 3 — RESOLVED:** About/Partners live in a dedicated `:feature:about` module (D-05, 03-06).
 - **Phase 3 — RESOLVED 2026-09-24 by 03-10 + 03-11:** (history, kept for context) moving `Venue`/`Session`/`Speaker`/`Room`/`Partner` from package `com.gdgnantes.devfest.model` into `com.gdgnantes.devfest.core.model` flipped which of two same-simple-named Kotlin classes (the domain model vs. the Apollo-generated `GetXQuery.X`/`fragment.XDetails.X` GraphQL response class already colliding on that name) keeps the unprefixed Swift name vs. gets suffixed `_`. Kotlin/Native's ObjC header generator resolves same-simple-name collisions across the whole compiled framework by an alphabetical-FQN tie-break (shortest proof: `com.gdgnantes.devfest.model.Venue` sorted AFTER `com.gdgnantes.devfest.graphql.GetVenueQuery.Venue` at baseline — domain model got `Venue_`; `com.gdgnantes.devfest.core.model.Venue` sorts BEFORE `...graphql...` post-rename — domain model now gets clean `Venue`, GraphQL type flips to `Venue_`). This broke ~10 pre-existing Swift files (`VenueContent.swift`, `AgendaContent.swift`, `AgendaViewModel.swift`, `AgendaView.swift`, `AgendaCellView.swift`, `AgendaDetailView.swift`, `SpeakerDetailsViewModel.swift`, `SpeakersViewModel.swift`, `SpeakerDetailsView.swift`, `SpeakerView.swift`, `AboutViewModel.swift`) that hardcode the `_`-suffixed name expecting it to be the domain model. iOS CI failed on Swift compilation (run 35847334261, PR #419) — the swift-names-gate.sh gate (missing-name + collision-COUNT checks) did not catch this because the collision COUNT stayed the same, only the per-name IDENTITY swapped. **Resolution:** see `.planning/phases/03-multi-module-architecture-extraction/03-01-SUMMARY.md` "Halt Resolution (03-10 + 03-11)" for the full diagnosis, the @targetName mechanism, the corrected collision attribution, and the D-11 amendment.
@@ -190,6 +194,8 @@ None yet.
 - Note (not blocking, Phase 4 UAT): speaker images may fail to load on networks with SSL interception/blocking of raw.githubusercontent.com — environmental, observed on Android and iOS, not a code regression.
 - Follow-up (not blocking, Phase 5 UI review): ViewModels have no error state on store failure (pinned by characterization tests), the fallback OpenFeedback URL has a double slash, and the agenda bookmark contentDescription is an unlocalized literal — see `05-UI-REVIEW.md` and `deferred-items.md`.
 - Follow-up (not blocking, G-05-3): kotlinx-datetime resolves to `0.8.0-0.6.x-compat` because OpenFeedback 1.0.0-alpha.3 (and every release up to alpha.6) links against the 0.6.x `Instant`/`Clock` classes, which plain 0.8.0 no longer ships. Compat releases end with 0.8.x, so any move to 0.9+ first needs an OpenFeedback release built on `kotlin.time.Instant` (upstream main was still on the deprecated type as of 2026-10-15). `OpenFeedbackDatetimeLinkageTest` fails CI on any bump that drops the compat classes. The Phase 02 R8 suppression premise was false: the secrets plugin sets OPEN_FEEDBACK_ENABLED from local.properties, so the feedback code was reachable on developer and release builds. The suppressions were removed in 05-11.
+- Phase 7 code review: WR-01..04 fixed 2026-10-30 (b6ff4909, 89ccddd0, 87c9fe66, 575970ae; 07-REVIEW-FIX.md). Residual WR-01 limit: the shared `SpeakerIndexUseCase` de-duplicates by uppercase letter, so an `ı` speaker before an `i` speaker hides the `i` header (changing it alters the iOS contract; revisit in Phase 9). IN-01..04 remain open (advisory) in `07-REVIEW-DISPOSITION.md`
+- Follow-up (not blocking): the regression gate resolves to `true` in this repo (no `workflow.test_command`); set it to the Gradle suite so the gate is real
 
 ## Phase 02 DCL pilot outcome
 
@@ -257,8 +263,8 @@ Items acknowledged and deferred at milestone close, most recent first:
 
 ## Session Continuity
 
-Last session: 2026-10-27T13:21:52.914Z
-Stopped at: Phase 06 complete, ready to plan Phase 7
+Last session: 2026-10-29T22:29:07.077Z
+Stopped at: Phase 07 complete, ready to plan Phase 8
 Resume file: None
 
 ## Operator Next Steps

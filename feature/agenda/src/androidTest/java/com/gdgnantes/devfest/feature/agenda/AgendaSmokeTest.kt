@@ -17,14 +17,16 @@ import androidx.compose.ui.test.performClick
 import androidx.compose.ui.test.performScrollToNode
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
+import com.gdgnantes.devfest.core.data.SessionFiltersStore
+import com.gdgnantes.devfest.core.data.SharedPreferencesSessionFiltersStore
+import com.gdgnantes.devfest.core.domain.di.domainModule
 import com.gdgnantes.devfest.core.model.Session
+import com.gdgnantes.devfest.core.model.SessionFilterType
 import com.gdgnantes.devfest.core.model.SessionLanguage
 import com.gdgnantes.devfest.core.model.stubs.SessionFixtures
 import com.gdgnantes.devfest.core.testing.di.androidTestDoubles
 import com.gdgnantes.devfest.core.ui.di.coreUiModule
 import com.gdgnantes.devfest.feature.agenda.di.agendaModule
-import com.gdgnantes.devfest.feature.agenda.services.SessionFiltersService
-import com.gdgnantes.devfest.feature.agenda.utils.SessionFilter
 import org.junit.Assert.assertEquals
 import org.junit.Before
 import org.junit.Rule
@@ -34,7 +36,7 @@ import org.koin.dsl.module
 import org.koin.test.KoinTestRule
 
 /**
- * Smoke test of the agenda on the production module, the real session filters service and the
+ * Smoke test of the agenda on the production module, the real session filters store and the
  * shared test doubles.
  *
  * The agenda auto-scrolls by wall clock, so nothing here depends on the first row or on the initial
@@ -52,9 +54,16 @@ class AgendaSmokeTest {
     @get:Rule(order = 0)
     val koinRule =
         KoinTestRule.create {
-            modules(agendaModule, coreUiModule)
+            modules(agendaModule, coreUiModule, domainModule)
             modules(androidTestDoubles)
-            modules(module { single<SharedPreferences> { testPrefs } })
+            // Last module: androidTestDoubles binds a fake SessionFiltersStore that would otherwise win
+            // over the real store, so the ViewModel and the assertions share the real instance.
+            modules(
+                module {
+                    single<SharedPreferences> { testPrefs }
+                    single<SessionFiltersStore> { SharedPreferencesSessionFiltersStore(get()) }
+                }
+            )
         }
 
     @get:Rule(order = 1)
@@ -101,10 +110,10 @@ class AgendaSmokeTest {
 
         composeRule.onNodeWithText(targetContext.getString(R.string.language_english)).performClick()
 
-        val filters = koinRule.koin.get<SessionFiltersService>().filters
+        val filters = koinRule.koin.get<SessionFiltersStore>().filters
         composeRule.waitUntil(TIMEOUT_MILLIS) { filters.value.isNotEmpty() }
         assertEquals(
-            listOf(SessionFilter.FilterType.LANGUAGE to SessionLanguage.ENGLISH.name),
+            listOf(SessionFilterType.LANGUAGE to SessionLanguage.ENGLISH.name),
             filters.value.map { it.type to it.value }
         )
 

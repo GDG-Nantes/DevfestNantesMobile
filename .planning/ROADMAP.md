@@ -7,7 +7,7 @@
 
 ## Overview
 
-v1.1 brings the iOS app up to the level of the Android app without changing anything users see. The milestone starts with a real iOS test lane in CI and the Kotlin/Swift interop gates, so that every subsequent rework has a reliable signal. The duplicated business logic (filtering, agenda grouping, classification, bookmarks and filters) then moves into a KMP `:core:domain` module, adopted first by Android, whose v1.0 tests serve as the parity oracle. On iOS, the ViewModels move to Observation on an iOS 17 foundation, then the app switches to the shared logic while reusing the legacy `UserDefaults` keys (no bookmark or filter lost), before DI becomes an explicit composition root. The split into local SPM packages, the riskiest structural step, comes next. The milestone ends with the move to strict Swift 6, one smoke test per feature, and documentation. Every phase leaves CI green and the app shippable. A single visible deviation is accepted: on iOS, the order of rooms within a time slot follows `RoomSortIndex`, as on Android.
+v1.1 brings the iOS app up to the level of the Android app without changing anything users see. The milestone starts with a real iOS test lane in CI and the Kotlin/Swift interop gates, so that every subsequent rework has a reliable signal. The duplicated business logic (filtering, agenda grouping, classification, bookmarks and filters) then moves into a KMP `:core:domain` module, adopted first by Android, whose v1.0 tests serve as the parity oracle. On iOS, the ViewModels move to Observation on an iOS 17 foundation, then the app switches to the shared logic on new `UserDefaults` keys (legacy 2025 favorites and filters intentionally not migrated), before DI becomes an explicit composition root. The split into local SPM packages, the riskiest structural step, comes next. The milestone ends with the move to strict Swift 6, one smoke test per feature, and documentation. Every phase leaves CI green and the app shippable. A single visible deviation is accepted: on iOS, the order of rooms within a time slot follows `RoomSortIndex`, as on Android.
 
 ## Phases
 
@@ -35,7 +35,7 @@ Full details: [milestones/v1.0-ROADMAP.md](milestones/v1.0-ROADMAP.md). Requirem
 **Milestone Goal:** Modernize the iOS app to the level of the Android app (business logic shared in KMP, modular SwiftUI app on Observation + strict Swift 6, real test coverage) without any change in user-visible behavior.
 
 - [x] **Phase 6: iOS Test Foundation and CI Gates** - iOS CI runs real Swift tests on every PR and the Kotlin/Swift interop gates are active (completed 2026-10-27)
-- [ ] **Phase 7: KMP Domain Layer and Android Adoption** - The agenda/filters/bookmarks logic lives in `:core:domain`, tested on JVM and iOS simulator, and Android uses it with no visible difference
+- [x] **Phase 7: KMP Domain Layer and Android Adoption** - The agenda/filters/bookmarks logic lives in `:core:domain`, tested on JVM and iOS simulator, and Android uses it with no visible difference (completed 2026-10-29)
 - [ ] **Phase 8: Modern SwiftUI, iOS 17 and Observation** - iOS 17 everywhere, `@Observable @MainActor` ViewModels tested on fakes, Combine removed
 - [ ] **Phase 9: iOS on Shared Logic and Legacy Persistence** - iOS delegates filtering, grouping and bookmarks/filters to the shared domain without losing v1.0 data
 - [ ] **Phase 10: Explicit iOS DI** - `AppDependencies` composition root and constructor injection; singletons and service-locator removed
@@ -46,7 +46,7 @@ Full details: [milestones/v1.0-ROADMAP.md](milestones/v1.0-ROADMAP.md). Requirem
 - Every phase leaves Android and iOS CI green and the app shippable on both platforms.
 - Strict parity: bugs found along the way are logged as debt, not fixed. Only accepted visible deviation: on iOS, the order of rooms within a time slot follows `RoomSortIndex` (SHARED-03).
 - Any documentation invalidated by a phase is updated in the same change (`AGENTS.md` rule); Phase 12 checks all of it (DOC-01).
-- Research trade-offs adopted (`research/SUMMARY.md`): legacy `UserDefaults` keys reused without a migrator, a single SPM manifest, features never import the Kotlin framework, `AppDependencies` lives in CoreDI, new packages are born in Swift 6 and moved code switches over package by package.
+- Research trade-offs adopted (`research/SUMMARY.md`): legacy iOS `UserDefaults` data not migrated (new keys, shared codec; superseded in Phase 7 discussion, 07-CONTEXT D-15), a single SPM manifest, features never import the Kotlin framework, `AppDependencies` lives in CoreDI, new packages are born in Swift 6 and moved code switches over package by package.
 
 ## Phase Details
 
@@ -90,13 +90,57 @@ Plans:
 **Requirements**: SHARED-01, SHARED-02, SHARED-03, SHARED-04, SHARED-05, SHARED-06, SHARED-07
 **Success Criteria** (what must be TRUE):
   1. `:core:domain` (`devfest.*` convention plugin) is exported by `:shared`; its `domainModule` is part of `sharedModules`, `verify()` passes with no duplicate binding, `swift-names-gate.sh` passes on the new exports, and the iOS app compiles and behaves as before
-  2. Characterization tests (v1.0 filter matrix, grouping under at least two time zones, captured legacy payloads, current iOS and Android behaviors) are committed before each logic move; the shared use cases (OR filtering within a type / AND across types / bookmarks by membership, day/time-slot grouping with `RoomSortIndex` sorting, service/navigable classification, A-Z speaker index, venue language) pass them in `commonTest` on JVM and iOS simulator
+  2. Characterization tests (v1.0 filter matrix, grouping under at least two time zones, recorded real API snapshot, current iOS and Android behaviors) are committed before each logic move; the shared use cases (OR filtering within a type / AND across types / bookmarks by membership, day/time-slot grouping with `RoomSortIndex` sorting, service/navigable classification, A-Z speaker index, venue language) pass them in `commonTest` on JVM and iOS simulator
   3. Divergent behaviors (current time slot on scroll, partner categories, day time zone) stay per platform or go through an explicit parameter, and the iOS room-order deviation is documented
-  4. `BookmarksStore` and `SessionFiltersStore` are common interfaces: the v1.0 Robolectric tests that pin `selected_sessions` and the Android filter format pass unchanged, and the iOS implementation reads and writes `Favorites` and `AgendaSessionFilters` in the legacy format (tests on captured payloads, on simulator)
+  4. `BookmarksStore` and `SessionFiltersStore` are common interfaces: the v1.0 Robolectric tests that pin `selected_sessions` and the Android filter format pass unchanged, and the iOS implementation reads and writes new `NSUserDefaults` keys with the shared filter codec, never reading the legacy `Favorites`/`AgendaSessionFilters` keys (tests on simulator)
   5. On Android, the agenda, filters, bookmarks, speakers and venue behave exactly as in v1.0 (v1.0 tests green + agenda UAT); `SessionFiltersService` is gone and its Koin binding was replaced in the same commit
 
-**Plans**: TBD
-**Research flag**: characterization to prepare: a real API snapshot (110 speakers, room ids, check `room.id == room.name`) in addition to the `core/model` stubs, and the real shape of the `Favorites`/`AgendaSessionFilters` payloads captured from a v1.0 install or a Swift `Codable` fixture
+**Plans**: 19/19 plans complete
+Plans:
+**Wave 1**
+- [x] 07-01-PLAN.md — Tracer: `:core:domain` with `ClassifySessionUseCase`, `domainModule` in `sharedModules`, exported by `:shared`, proven on JVM/iOS/Xcode
+- [x] 07-03-PLAN.md — Recorded real API snapshot: gated recorder, re-record script, raw GraphQL responses (the app's 100 speakers pinned, D-17)
+
+**Wave 2** *(blocked on Wave 1 completion)*
+- [x] 07-02-PLAN.md — `:core:domain` wired into feature modules, Kover and iOS CI; docs describe the module and the new dependency direction
+- [x] 07-04-PLAN.md — Offline replay facts, neutral snapshot with drift check, `AgendaSnapshot` decoder, shared filter cases and file formats
+- [x] 07-07-PLAN.md — iOS pre-characterization change limited to the D-10 AgendaView filter extraction and an access-only seam on sessionsChanged
+
+**Wave 3** *(blocked on Wave 2 completion)*
+- [x] 07-05-PLAN.md — Golden-file support in `:core:testing` and the v1.0 Android grouping characterization (two zones, two locales, D-06 proof)
+- [x] 07-08-PLAN.md — iOS characterization (D-10): Swift Testing pins on the snapshot, iOS goldens in two zones, baselines with the Swift call sites
+
+**Wave 4** *(blocked on Wave 3 completion)*
+- [x] 07-06-PLAN.md — v1.0 Android characterization of filtering, drawer + equality (D-14), classification, speaker index and venue language
+
+**Wave 5** *(blocked on Wave 4 completion)*
+- [x] 07-09-PLAN.md — `SessionFilter` data class + top-level `SessionFilterType` in `:core:model` (D-13/D-14, Swift exclusion + baselines), `SessionFiltersStore` interface, shared codec, fake
+
+**Wave 6** *(blocked on Wave 5 completion)*
+- [x] 07-10-PLAN.md — Android code and tests on the shared `SessionFilter` (wiring-only, D-18); feature copy removed; persisted JSON byte-identical
+- [x] 07-11-PLAN.md — iOS `NSUserDefaults` bookmarks and filters stores on new keys with the shared codec (D-15), iOS bindings
+- [x] 07-12-PLAN.md — Shared `FilterSessionsUseCase` and `GroupSessionsUseCase` + `DayAssignment` against the v1.0 matrix, Agenda.Builder and the Android/iOS goldens on JVM + iOS simulator
+
+**Wave 7** *(blocked on Wave 6 completion)*
+- [x] 07-13-PLAN.md — Shared speaker index and venue language, combined `ObserveAgendaUseCase`, final `domainModule` + graph proofs, domain docs and deviations table
+
+**Wave 8** *(blocked on Wave 7 completion)*
+- [x] 07-14-PLAN.md — Bridge: the single v1.0 filters service instance also serves `SessionFiltersStore`; agenda and home ViewModels on the interface
+
+**Wave 9** *(blocked on Wave 8 completion)*
+- [x] 07-15-PLAN.md — `AgendaViewModel` on `ObserveAgendaUseCase`, agenda UI on `DaySchedule`/`TimeSlot`, `IO_DISPATCHER` removed
+
+**Wave 10** *(blocked on Wave 9 completion)*
+- [x] 07-16-PLAN.md — Atomic SHARED-06 switch: `SessionFiltersService` removed and `SharedPreferencesSessionFiltersStore` bound in `:core:data` in one commit; docs; agenda smoke on an emulator
+
+**Wave 11** *(blocked on Wave 10 completion)*
+- [x] 07-17-PLAN.md — Android bookmark star and session navigation on `ClassifySessionUseCase`; Android classification copy removed
+- [x] 07-18-PLAN.md — Android speakers A-Z and venue language on the shared use cases; Android copies removed; empty speaker name skipped with a Crashlytics non-fatal (D-20)
+
+**Wave 12** *(blocked on Wave 11 completion)*
+- [x] 07-19-PLAN.md — D-12 parity screenshots main vs branch, R8 release smoke, full gate, blocking human checkpoint
+
+**Research flag**: characterization to prepare: a real API snapshot (110 speakers, room ids, check `room.id == room.name`) in addition to the `core/model` stubs (legacy iOS payload capture dropped: legacy data not migrated, 07-CONTEXT D-15)
 
 ### Phase 8: Modern SwiftUI, iOS 17 and Observation
 
@@ -120,7 +164,7 @@ Plans:
 **Depends on**: Phase 7, Phase 8
 **Requirements**: IOSDATA-01, IOSDATA-02, IOSDATA-03
 **Success Criteria** (what must be TRUE):
-  1. A user who installs the new version over a v1.0 build (bookmarked sessions, active filters, app killed then relaunched) gets all their bookmarks and filters back; the in-place update UAT and the tests on captured legacy payloads confirm it
+  1. A user who installs the new version over a v1.0 build (bookmarked sessions, active filters, app killed then relaunched) starts with empty bookmarks and filters (intentional, 07-CONTEXT D-15) and the app works normally; bookmarks and filters set afterwards survive a kill and relaunch, confirmed by the in-place update UAT
   2. The Swift sources no longer filter, group or persist bookmarks or filters; `SessionFilter`, `FilterType` and the other duplicated types are removed in favor of the exported Kotlin types, and speakers, venue and session classification go through the shared use cases
   3. The iOS agenda shows the same days (labels and time zone), time slots, sessions and filter results as in v1.0 (comparative UAT), with the sole documented exception of the room order within a time slot, which now follows `RoomSortIndex`
   4. The agenda continuously observes the shared combined flow (sessions + bookmarks + filters): adding or removing a bookmark or a filter from the list, a cell or the detail updates the agenda without relaunch, through a single `AgendaViewModel` instance
@@ -187,7 +231,7 @@ Phases execute in numeric order: 6 → 7 → 8 → 9 → 10 → 11 → 12
 | 4. Hilt to Koin DI Migration | v1.0 | 7/7 | Complete | 2026-10-13 |
 | 5. Test Coverage Retrofit | v1.0 | 11/11 | Complete | 2026-10-16 |
 | 6. iOS Test Foundation and CI Gates | v1.1 | 6/6 | Complete    | 2026-10-27 |
-| 7. KMP Domain Layer and Android Adoption | v1.1 | 0/? | Not started | - |
+| 7. KMP Domain Layer and Android Adoption | v1.1 | 19/19 | Complete    | 2026-10-29 |
 | 8. Modern SwiftUI, iOS 17 and Observation | v1.1 | 0/? | Not started | - |
 | 9. iOS on Shared Logic and Legacy Persistence | v1.1 | 0/? | Not started | - |
 | 10. Explicit iOS DI | v1.1 | 0/? | Not started | - |

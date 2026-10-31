@@ -2,6 +2,7 @@ package com.gdgnantes.devfest.feature.speakers.di
 
 import com.gdgnantes.devfest.core.analytics.performance.PerformanceMonitoring
 import com.gdgnantes.devfest.core.data.DevFestNantesStore
+import com.gdgnantes.devfest.core.domain.speakers.SpeakerIndexUseCase
 import com.gdgnantes.devfest.core.testing.NoOpPerformanceMonitoring
 import com.gdgnantes.devfest.core.testing.fakeDevFestNantesStore
 import com.gdgnantes.devfest.feature.speakers.SpeakerViewModel
@@ -32,11 +33,13 @@ class SpeakersModuleTest {
         Dispatchers.resetMain()
     }
 
-    // The store and performance monitoring are bound by :core:data and :core:analytics.
+    // The store, performance monitoring and the speaker index use case are bound by :core:data,
+    // :core:analytics and :core:domain.
     @Test
     fun speakers_module_graph_is_complete_given_upstream_bindings() {
         speakersModule.verify(
-            extraTypes = listOf(DevFestNantesStore::class, PerformanceMonitoring::class),
+            extraTypes =
+                listOf(DevFestNantesStore::class, PerformanceMonitoring::class, SpeakerIndexUseCase::class),
         )
     }
 
@@ -49,6 +52,7 @@ class SpeakersModuleTest {
                     module {
                         single<DevFestNantesStore> { fakeDevFestNantesStore() }
                         single<PerformanceMonitoring> { NoOpPerformanceMonitoring() }
+                        single { SpeakerIndexUseCase() }
                     },
                 )
             }.koin

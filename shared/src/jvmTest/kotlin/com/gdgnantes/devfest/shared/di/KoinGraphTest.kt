@@ -1,7 +1,11 @@
 package com.gdgnantes.devfest.shared.di
 
+import com.gdgnantes.devfest.core.data.BookmarksStore
 import com.gdgnantes.devfest.core.data.DevFestNantesStore
 import com.gdgnantes.devfest.core.data.DevFestNantesStoreBuilder
+import com.gdgnantes.devfest.core.data.SessionFiltersStore
+import com.gdgnantes.devfest.core.domain.agenda.ClassifySessionUseCase
+import com.gdgnantes.devfest.core.domain.di.domainModule
 import org.koin.core.annotation.KoinExperimentalAPI
 import org.koin.core.context.stopKoin
 import org.koin.core.error.DefinitionOverrideException
@@ -12,6 +16,7 @@ import kotlin.test.Test
 import kotlin.test.assertFailsWith
 import kotlin.test.assertNotNull
 import kotlin.test.assertSame
+import kotlin.test.assertTrue
 
 @OptIn(KoinExperimentalAPI::class)
 class KoinGraphTest {
@@ -22,7 +27,20 @@ class KoinGraphTest {
 
     @Test
     fun shared_modules_graph_is_complete() {
-        module { includes(sharedModules) }.verify()
+        // BookmarksStore and SessionFiltersStore are bound by the Android and iOS platform actuals of
+        // :core:data; the JVM actual is empty, so they are upstream types here.
+        module { includes(sharedModules) }
+            .verify(extraTypes = listOf(BookmarksStore::class, SessionFiltersStore::class))
+    }
+
+    @Test
+    fun shared_modules_include_the_domain_module() {
+        assertTrue(domainModule in sharedModules)
+    }
+
+    @Test
+    fun init_koin_resolves_the_domain_use_cases() {
+        assertNotNull(initKoin().koin.get<ClassifySessionUseCase>())
     }
 
     @Test

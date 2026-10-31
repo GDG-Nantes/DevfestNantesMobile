@@ -103,8 +103,9 @@ The iOS unit tests use Swift Testing (shipped with the Xcode toolchain), live in
 `iosApp/DevFestNantesTests/` and run hosted in the app (`@testable import DevFest_Nantes`). The
 `iosApp` scheme runs them through the committed `iosApp/iosApp.xctestplan`. In Debug builds the app skips Firebase
 and Koin start-up when launched by XCTest (`XCTestConfigurationFilePath` is set; the switch is
-compiled out of Release), so tests must not create a ViewModel (its initializer starts Koin): test
-static or pure helpers instead. A future UI-test target must not rely on this switch, since it would
+compiled out of Release), so a test that creates a ViewModel must call
+`IosDependencies.shared.start()` first (see the characterization suites below); prefer static or
+pure helpers otherwise. A future UI-test target must not rely on this switch, since it would
 render an empty window. Pick a simulator with
 `xcrun simctl list devices available`, then:
 
@@ -120,6 +121,25 @@ xcodebuild -project iosApp/iosApp.xcodeproj -scheme iosApp -testPlan iosApp \
 For a quick local run, the single `xcodebuild ... -testPlan iosApp test` form works too. Test
 names are snake_case sentences, as on Android.
 
+#### Characterization suites and goldens
+
+`AgendaCharacterizationTests` and `SpeakersVenueCharacterizationTests` pin the v1.0 iOS behavior
+(agenda grouping in `Europe/Paris` and `Pacific/Auckland`, filtering on the 15 shared cases,
+`isATalk`, the speaker alphabet, the venue language) on the recorded snapshot in
+`core/domain/testdata/agenda/`. They call the unchanged v1.0 ViewModel code, after
+`IosDependencies.shared.start()` (idempotent, `TestHost.start()` in `CharacterizationSupport.swift`; the
+Debug app skips Koin under XCTest, so the tests start it). They only use the initializers and pure
+methods: never `observe*`, `toggleFavorite`, `clearFilters` nor a `sessionFilters` assignment.
+Test files that import `shared` refer to the app filter type as `DevFest_Nantes.SessionFilter`, so
+the Kotlin `SessionFilter` export cannot make it ambiguous.
+
+The expected outputs are the goldens in `core/domain/testdata/agenda/golden/ios-*.json`; Kotlin
+`commonTest` reads the same files. Golden rule: a default run never writes and fails with
+`golden missing: <path>` when a golden is absent. To record one, delete the file, run once with
+`TEST_RUNNER_DEVFEST_RECORD_GOLDENS=true` in front of the `xcodebuild ... test-without-building`
+command (the run writes it and fails with `golden recorded, re-run`), then run once without. An
+existing golden is never overwritten and goldens are never edited by hand.
+
 ## Testing
 
 Tests use JUnit 4, `kotlin.test` assertions, kotlinx-coroutines-test, Turbine and Robolectric. There
@@ -134,9 +154,10 @@ the fixtures in `core/model/.../stubs/` (`SessionFixtures`, `SpeakerFixtures`).
 # A single module
 ./gradlew :feature:agenda:testDebugUnitTest
 ./gradlew :core:data:jvmTest
+./gradlew :core:domain:jvmTest
 
 # KMP tests on the iOS simulator (macOS)
-./gradlew :shared:iosSimulatorArm64Test :core:data:iosSimulatorArm64Test
+./gradlew :shared:iosSimulatorArm64Test :core:data:iosSimulatorArm64Test :core:domain:iosSimulatorArm64Test
 
 # Instrumented smoke tests (device or emulator required)
 ./gradlew connectedDebugAndroidTest
@@ -149,13 +170,32 @@ Where tests live:
 
 | Kind | Location | Example |
 |---|---|---|
-| ViewModel / service unit tests | `feature/<name>/src/test/` | `AgendaViewModelTest`, `SessionFiltersServiceImplTest` |
+| ViewModel unit tests | `feature/<name>/src/test/` | `AgendaViewModelTest` |
+| Agenda characterization tests (v1.0 behavior) | `feature/agenda/src/test/.../characterization/` | `AgendaFilteringCharacterizationTest`, `AgendaGroupingCharacterizationTest`, `SessionFiltersDrawerCharacterizationTest` |
+| Android persistence (Robolectric host tests) | `core/data/src/androidHostTest/` | `SharedPreferencesSessionFiltersStoreTest`, `BookmarksStoreImplTest` |
 | Koin module wiring | `*/src/test/.../di/`, `shared/src/jvmTest/` | `SettingsModuleTest`, `KoinGraphTest` |
 | App start-up graph | `androidApp/src/test/.../di/` | `KoinStartupTest`, `ProductionGraphStartupTest` |
 | Store contract (fake and real) | `core/data/src/commonTest/` | `DevFestNantesStoreContractTest`, `GraphQLStoreMockServerTest` |
 | Live API (manual) | `core/data/src/jvmTest/` | `GraphQLStoreLiveNetworkTest` |
 | Instrumented smoke tests | `feature/<name>/src/androidTest/` | `SettingsSmokeTest` |
+| Shared domain use cases (JVM and iOS simulator) | `core/domain/src/commonTest/` | `GroupSessionsUseCaseTest`, `SpeakerIndexUseCaseTest`, `ObserveAgendaUseCaseTest` |
+| Domain and shared graph wiring | `core/domain/src/jvmTest/`, `shared/src/{jvmTest,iosTest}/` | `DomainModuleTest`, `KoinGraphTest`, `IosKoinTest` |
 | iOS Swift unit tests | `iosApp/DevFestNantesTests/` | `SessionFilterTests`, `AgendaDateParsingTests` |
+
+#### Domain test data and goldens
+
+The `:core:domain` tests (`core/domain/src/commonTest/`) run on the JVM and on the iOS simulator
+against the data in `core/domain/testdata/agenda/`: the recorded snapshot (`*.snapshot.json`),
+`filter-cases.json` and the goldens in `golden/` (`android-*.json` and `ios-*.json`, the v1.0
+outputs of each platform). `GoldenFiles`, `Goldens`, `FilterCases` and `AgendaSnapshot` in
+`:core:testing` read them.
+
+Golden rule: a default run never writes and fails with `golden missing: <path>` when a golden is
+absent. To record one, delete the file, run once with `-PrecordGoldens` (Gradle) or
+`TEST_RUNNER_DEVFEST_RECORD_GOLDENS=true` (Swift tests; the run writes it and fails with
+`golden recorded, re-run`), then run once without. An existing golden is never overwritten and goldens
+are never edited by hand. `bash scripts/record-agenda-snapshot.sh` re-records the snapshot from the
+live API (see the README next to the data).
 
 Conventions: test names are snake_case sentences (`french_filter_keeps_the_four_french_sessions`),
 expected values reference fixtures rather than retyped literals, and `*CharacterizationTest` classes

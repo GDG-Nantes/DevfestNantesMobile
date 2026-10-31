@@ -33,6 +33,7 @@ DevfestNantesMobile/
 ├── core/
 │   ├── model/           # Domain types and test fixtures (KMP)
 │   ├── network/         # Apollo GraphQL client, schema, cache (KMP)
+│   ├── domain/          # Shared agenda policies and use cases (KMP)
 │   ├── data/            # DevFestNantesStore facade, bookmarks (KMP)
 │   ├── analytics/       # Analytics and performance monitoring (KMP)
 │   ├── testing/         # Shared fakes and test helpers (KMP)
@@ -43,7 +44,7 @@ DevfestNantesMobile/
 └── gradle/              # Wrapper and version catalog (libs.versions.toml)
 ```
 
-Dependencies flow one way: `androidApp → feature:* → core:ui → core:data → core:network /
+Dependencies flow one way: `androidApp → feature:* → core:ui → core:domain → core:data → core:network /
 core:model`. Feature modules never depend on each other. See
 [documentation/ARCHITECTURE.md](documentation/ARCHITECTURE.md) for details.
 

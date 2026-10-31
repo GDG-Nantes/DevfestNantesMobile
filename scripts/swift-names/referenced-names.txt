@@ -11,6 +11,7 @@ IosDependencies
 Partner
 PartnerCategory
 Room
+ScheduleSlot
 Session
 SessionLanguage
 SessionType

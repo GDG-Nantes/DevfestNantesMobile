@@ -1,0 +1,2143 @@
+{
+  "data": {
+    "speakers": [
+      {
+        "__typename": "Speaker",
+        "id": "adrien_lebret",
+        "bio": "Solutions Architect chez Amazon Web Services (AWS) passionné par l’Intelligence Artificielle, le développement, le Media & Entertainment et le Sport. Après avoir intégré le programme Tech U d’AWS en 2022, il accompagne au quotidien les entreprises française du monde du média.",
+        "company": "AWS",
+        "companyLogoUrl": null,
+        "city": "Paris, France",
+        "name": "Adrien Lebret",
+        "photoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/src/images/speakers/adrien_lebret.jpeg",
+        "socials": [
+          {
+            "__typename": "Social",
+            "name": "linkedin",
+            "url": "https://www.linkedin.com/adrien-lebret",
+            "icon": null
+          }
+        ]
+      },
+      {
+        "__typename": "Speaker",
+        "id": "alain",
+        "bio": "DBA passionné, je m’intéresse à ce qui reste quand tout change : les données. Spécialiste de PostgreSQL, LA plate-forme libre référence dans la gestion des données. Grâce à un moteur fiable et un écosystème d’extensions extrêmement riche, elle est capable de couvrir tous les usages métier d''aujourd''hui.",
+        "company": "Dalibo",
+        "companyLogoUrl": null,
+        "city": "Clermont-Ferrand, France",
+        "name": "Alain Lesage",
+        "photoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/src/images/speakers/alain_lesage.jpeg",
+        "socials": [
+          {
+            "__typename": "Social",
+            "name": "linkedin",
+            "url": "https://www.linkedin.com/lesagealain",
+            "icon": null
+          }
+        ]
+      },
+      {
+        "__typename": "Speaker",
+        "id": "alexandre_buisine",
+        "bio": "Alexandre est associé dirigeant chez Enix. Avec 20 ans d'expérience dans la technique et le management, il reste un grand passionné du monde open-source et plus particulièrement tout ce qui touche aux conteneurs.\n\nIl a par le passé créé une entreprise de Réalité Virtuelle, basée sur une stack applicative tournant sur docker, et à solutionner les problèmes d'orchestration pour gérer l'encodage et la conversion optique des vidéos en VR.\n\nAuparavant, Alexandre a dirigé la société SmartJog, et a occupé diverses positions dans les domaines de l'audio-visuel, la transmission satellite, le développement logiciel, les réseaux IP, la distribution massive de contenus sur Internet.\n\nIl est diplômé d'EPITA et est titulaire d'un MBA de l'école HEC. A titre personnel, il aime grimper, et bricoler.",
+        "company": "Enix",
+        "companyLogoUrl": null,
+        "city": "Paris, France",
+        "name": "Alexandre Buisine",
+        "photoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/src/images/speakers/alexandre_buisine.jpg",
+        "socials": [
+          {
+            "__typename": "Social",
+            "name": "linkedin",
+            "url": "https://www.linkedin.com/alexandre-buisine",
+            "icon": null
+          }
+        ]
+      },
+      {
+        "__typename": "Speaker",
+        "id": "alexis_lina",
+        "bio": "J'ai toujours eu pour objectif d'améliorer le quotidien ainsi que la vie des gens. C'est pourquoi je mets mes compétences en développement informatique et ma connaissance des nouvelles technologies a profit afin de remplir cette mission qui me tient à cœur.",
+        "company": "Max Digital Services",
+        "companyLogoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/srcmax_digital_services.png",
+        "city": "Rennes, France",
+        "name": "Alexis Lina",
+        "photoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/src/images/speakers/alexis_lina.jpg",
+        "socials": [
+          {
+            "__typename": "Social",
+            "name": "linkedin",
+            "url": "https://www.linkedin.com/alexis-lina-0702b410a",
+            "icon": null
+          }
+        ]
+      },
+      {
+        "__typename": "Speaker",
+        "id": "angi___guyard",
+        "bio": "Après une reconversion réussie grâce à l’école 42, je suis aujourd’hui développeuse et militante pour un numérique plus inclusif et une société équitable. Passionnée par les enjeux d’accessibilité numérique, de neurodiversité, de diversité dans la tech et d’égalité, je m’engage à sensibiliser et partager des bonnes pratiques pour construire un monde où chaque personne a sa place, avec ses besoins et ses particularités.\nCe qui m’anime, c’est de rendre les choses accessibles à toustes, que ce soit à travers mon vécu, mes conférences ou mes actions concrètes. L’inclusion, ce n’est pas un concept abstrait : c’est une démarche à la portée de toustes, capable de transformer nos environnements et de rapprocher les individus. Mon ambition ? Poser les bases d’un monde plus juste, un projet collectif qui commence par des actes simples mais significatifs.\n\nRêve de participer à rendre le monde plus accessible avec équité.",
+        "company": "Shodo",
+        "companyLogoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/srcshodo.png",
+        "city": "Nantes, France",
+        "name": "Angi ❄️Guyard",
+        "photoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/src/images/speakers/angi___guyard.jpg",
+        "socials": [
+          {
+            "__typename": "Social",
+            "name": "twitter",
+            "url": "https://twitter.com/angig29",
+            "icon": null
+          },
+          {
+            "__typename": "Social",
+            "name": "linkedin",
+            "url": "https://www.linkedin.com/angi-guyard",
+            "icon": null
+          }
+        ]
+      },
+      {
+        "__typename": "Speaker",
+        "id": "anonymous",
+        "bio": null,
+        "company": null,
+        "companyLogoUrl": null,
+        "city": null,
+        "name": "Anonymous",
+        "photoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/src/images/speakers/undefined.png",
+        "socials": []
+      },
+      {
+        "__typename": "Speaker",
+        "id": "arnaud_jean",
+        "bio": "Arnaud JEAN (aka: **John Wick**), Developer Advocate with a particular set of skills!\n\nBy day, he's crafting killer demos and slaying documentation dragons. By night, he's a regular on the conference circuit, delivering and assisting to insightful talks. Before going rogue as a Developer Advocate, Arnaud was an AWS Solutions Architect – a past that comes in handy more often than you'd think!",
+        "company": "AWS",
+        "companyLogoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/src/images/partners/aws.png",
+        "city": "Paris, France",
+        "name": "Arnaud Jean",
+        "photoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/src/images/speakers/arnaud_jean.jpg",
+        "socials": [
+          {
+            "__typename": "Social",
+            "name": "github",
+            "url": "https://github.com/TheWitcherish",
+            "icon": null
+          },
+          {
+            "__typename": "Social",
+            "name": "twitter",
+            "url": "https://twitter.com/TheWitcherish",
+            "icon": null
+          },
+          {
+            "__typename": "Social",
+            "name": "linkedin",
+            "url": "https://www.linkedin.com/thewitcherish",
+            "icon": null
+          }
+        ]
+      },
+      {
+        "__typename": "Speaker",
+        "id": "bastien_tran",
+        "bio": "Après une longue errance dans la monde académique je suis devenu développeur à la faveur d'un bootcamp. Je suis donc un vieux jeune développeur.\n\nJ'ai grandement apprécié - après quelques expériences heureuses mais brouillonnes en R et en SQL dans ma vie passée - de pouvoir professionnaliser ma pratique du code. C'est un cheminement dans lequel je garde comme valeur cardinale la collaboration - séquelle de mes centres d'intérêt académiques - qu'elle concerne mes pairs ou mes collègues du métier mais aussi mon moi du passé et celui du futur.\n\nA présent j'oeuvre essentiellement sous TypeScript ce qui nourrit un autre de mes tropes qu'est la modélisation de domaines. Je tends à penser que quiconque à pris le pli de raisonner sur du systémique peut se risquer au code, et pour ma part je tire un peu de guidance de ma compréhension des systèmes biologiques.\n\nOn pourrait s'attendre à ce que, familier des taxonomies, je sois naturellement à l'aise avec des approches orientées objet. Et si ma formation allait elle aussi plutôt dans ce sens, j'ai maintenant la chance de pouvoir expérimenter des approches plus fonctionnelles qui participent à mon évolution tout en me ramenant à mes premiers pas.\n\nJ'ai aujourd'hui hâte de pouvoir partager ma modeste expérience de vieux junior avec la communauté !",
+        "company": "Comet",
+        "companyLogoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/srccomet.png",
+        "city": "Paris, France",
+        "name": "Bastien Tran",
+        "photoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/src/images/speakers/bastien_tran.jpg",
+        "socials": [
+          {
+            "__typename": "Social",
+            "name": "github",
+            "url": "https://github.com/basttran",
+            "icon": null
+          },
+          {
+            "__typename": "Social",
+            "name": "linkedin",
+            "url": "https://www.linkedin.com/basttran",
+            "icon": null
+          },
+          {
+            "__typename": "Social",
+            "name": "twitter",
+            "url": "https://twitter.com/hecatonchar",
+            "icon": null
+          }
+        ]
+      },
+      {
+        "__typename": "Speaker",
+        "id": "benjamin_bernard",
+        "bio": "Développeur fullstack j'accorde beaucoup d'importance aux développements sous licences libres et plus globalement en Open Source, baignant de ce milieu depuis de nombreuses années au niveau associatif et professionnel.",
+        "company": "Crédit Mutuel Arkéa",
+        "companyLogoUrl": null,
+        "city": "Brest, France",
+        "name": "Benjamin Bernard",
+        "photoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/src/images/speakers/benjamin_bernard.jpg",
+        "socials": [
+          {
+            "__typename": "Social",
+            "name": "linkedin",
+            "url": "https://www.linkedin.com/benvii",
+            "icon": null
+          }
+        ]
+      },
+      {
+        "__typename": "Speaker",
+        "id": "benjamin_cavy",
+        "bio": "Lead dev à la MAIF, je m'intéresse en ce moment particulièrement aux tests et à ce qu'ils peuvent apporter dans le processus de développement logiciel.",
+        "company": "MAIF",
+        "companyLogoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/srcmaif.png",
+        "city": "Niort, France",
+        "name": "Benjamin Cavy",
+        "photoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/src/images/speakers/benjamin_cavy.jpg",
+        "socials": [
+          {
+            "__typename": "Social",
+            "name": "github",
+            "url": "https://github.com/ptitFicus",
+            "icon": null
+          },
+          {
+            "__typename": "Social",
+            "name": "twitter",
+            "url": "https://twitter.com/benjamin_cavy",
+            "icon": null
+          },
+          {
+            "__typename": "Social",
+            "name": "linkedin",
+            "url": "https://www.linkedin.com/benjamin-cavy-aa67a2a6",
+            "icon": null
+          }
+        ]
+      },
+      {
+        "__typename": "Speaker",
+        "id": "benoit_martin",
+        "bio": "Fort de plus de 20 ans d'expérience en développement web, j'évolue aujourd'hui en tant que Lead Tech chez SFEIR.\n\nPassionné par mon métier, j'attache une importance particulière au craft, au clean code et aux bonnes pratiques pour contribuer à la qualité des projets et accompagner les équipes dans leur montée en compétences.",
+        "company": "SFEIR",
+        "companyLogoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/srcsfeir.png",
+        "city": "Nantes, France",
+        "name": "Benoit Martin",
+        "photoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/src/images/speakers/benoit_martin.jpg",
+        "socials": [
+          {
+            "__typename": "Social",
+            "name": "linkedin",
+            "url": "https://www.linkedin.com/benoît-martin-27b1582",
+            "icon": null
+          }
+        ]
+      },
+      {
+        "__typename": "Speaker",
+        "id": "brecht_de_ruyte",
+        "bio": "Brecht De Ruyte is a self-taught front-end developer located in Belgium with a passion for UX and Design. During the day you can find him working at iO, a full service agency. \n\nBesides that, he is also a Google Developer Expert, Smashing Magazine writer and blog owner of utilitybend.com. \n\nHe also participates in the W3C communities: Open UI and CSS-next",
+        "company": "iO",
+        "companyLogoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/srcio.png",
+        "city": "Ghent, Belgium",
+        "name": "Brecht De Ruyte",
+        "photoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/src/images/speakers/brecht_de_ruyte.jpg",
+        "socials": [
+          {
+            "__typename": "Social",
+            "name": "linkedin",
+            "url": "https://www.linkedin.com/utilitybend",
+            "icon": null
+          }
+        ]
+      },
+      {
+        "__typename": "Speaker",
+        "id": "brian_vermeer",
+        "bio": "Brian Vermeer\n\nStaff Developer Advocate for Snyk, Java Champion, and Software Engineer with over a decade of hands-on experience in creating and maintaining software. He is passionate about Java, (Pure) Functional Programming and Cybersecurity. Brian is a JUG leader for the Virtual JUG and the NLJUG. He also co-leads the DevSecCon community and is a community manager for Foojay. He is a regular international speaker on mostly Java-related conferences like JavaOne, Devnexus, Devoxx, Jfokus, JavaZone and many more. Besides all that, Brian is a military reserve for the Royal Netherlands Air Force and a Taekwondo Master / Teacher.",
+        "company": "Snyk",
+        "companyLogoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/srcsnyk.png",
+        "city": "Breda, Netherlands",
+        "name": "Brian Vermeer",
+        "photoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/src/images/speakers/brian_vermeer.jpg",
+        "socials": [
+          {
+            "__typename": "Social",
+            "name": "linkedin",
+            "url": "https://www.linkedin.com/brianvermeer",
+            "icon": null
+          }
+        ]
+      },
+      {
+        "__typename": "Speaker",
+        "id": "camille_pillot",
+        "bio": "Rien ne présageait que Camille ferait du web. Plutôt destinée à une carrière dans les systèmes embarqués, c'est finalement le dev, qui l'a embarquée il y 3 ans. Sur le chemin, elle découvre son talent de leadership et se dit qu'au final, elle pourrait aussi emmener du monde avec elle dans sa quête de connaissance et de veille ! Adepte de meetups comme certains, fan de TypeScript comme beaucoup, elle connaît le framework Angular jusqu'au bout des ongles et prend parfois son clavier pour partager ce qui l'anime au quotidien !",
+        "company": "Takima",
+        "companyLogoUrl": null,
+        "city": "Paris, France",
+        "name": "Camille Pillot",
+        "photoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/src/images/speakers/camille_pillot.jpg",
+        "socials": []
+      },
+      {
+        "__typename": "Speaker",
+        "id": "clement_gregoire",
+        "bio": "Clément works at siliceum, a company he co-founded, where he helps his clients to reach their performance goals. Previously working in the games and embedded industries, he acquired hands-on knowledge on optimizations while releasing titles such as Microsoft Flight Simulator. With more than 8 years of a love-hate relationship with C++ and no fear of legacy code-bases, he also likes reverse-engineering old games in his spare-time.",
+        "company": "siliceum",
+        "companyLogoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/srcsiliceum.png",
+        "city": "Clermont-Ferrand, France",
+        "name": "Clément Grégoire",
+        "photoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/src/images/speakers/clement_gregoire.webp",
+        "socials": [
+          {
+            "__typename": "Social",
+            "name": "github",
+            "url": "https://github.com/lectem",
+            "icon": null
+          },
+          {
+            "__typename": "Social",
+            "name": "linkedin",
+            "url": "https://www.linkedin.com/clementgregoire",
+            "icon": null
+          }
+        ]
+      },
+      {
+        "__typename": "Speaker",
+        "id": "cecilia_bossard",
+        "bio": "Développeuse depuis près de 20 ans, je m'intéresse à beaucoup de sujets et aime partager avec les différentes communautés. \n\nJe fais partie de la communauté des Duchess et je suis aussi organisatrice de meetups et de conférences (Software Crafters Nantes, Coding goûters, Devoxx4kids, Nantes Craft)\n\nEt si je ne suis pas derrière mon clavier, c'est probablement que je suis dehors en train de m'occuper de mes abeilles :)",
+        "company": "Shodo",
+        "companyLogoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/srcshodo.png",
+        "city": "Nantes, France",
+        "name": "Cécilia Bossard",
+        "photoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/src/images/speakers/cecilia_bossard.jpeg",
+        "socials": [
+          {
+            "__typename": "Social",
+            "name": "linkedin",
+            "url": "https://www.linkedin.com/cécilia-bossard-14a5776",
+            "icon": null
+          }
+        ]
+      },
+      {
+        "__typename": "Speaker",
+        "id": "cedric_chariere_fiedler",
+        "bio": "Je suis entré dans l’univers de l’informatique par la porte du graphisme et de la création de jeux vidéo. À 14 ans, j’assemblais mes premiers pixels pour mes premiers jeux vidéo. Photoshop et Illustrator furent mes premiers outils numériques. \n\nDepuis la découverte des arcanes du code et du web, je n’ai eu de cesse de multiplier les explorations multimédias et d’écumer les hackathons, startup weekends, Game Jam et autres week-ends créatifs.\n\nMon crédo ? \nHybrider les technologies pour proposer des usages innovants, du calcul scientifique aux interfaces web ultra-dynamiques, pour des expériences multimédias simples d'utilisations et riches.\n\nAujourd'hui, j'ai l'immense chance d'être accompagné d'associés formidables au sein de l'aventure siliceum : une entreprise du numérique dédiée à la création de solutions IT simples, rapides et opérationnelles.",
+        "company": "siliceum",
+        "companyLogoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/srcsiliceum.png",
+        "city": "Nantes, France",
+        "name": "Cédric Chariere Fiedler",
+        "photoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/src/images/speakers/cedric_chariere_fiedler.webp",
+        "socials": [
+          {
+            "__typename": "Social",
+            "name": "linkedin",
+            "url": "https://www.linkedin.com/cedriccf",
+            "icon": null
+          }
+        ]
+      },
+      {
+        "__typename": "Speaker",
+        "id": "damien_raude_morvan",
+        "bio": "Damien Raude-Morvan est _Senior Staff Software Engineer_ au sein de **Decathlon Digital**.\n\nIl est présent dans l'écosystème numérique depuis 20 ans avec des rôles d'architecte logiciel, de formateur, de responsable R&D ou encore de CTO.\n\nIl est également contributeur dans différentes communautés Open Source (Apache, Debian).",
+        "company": "Decathlon",
+        "companyLogoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/srcdecathlon.png",
+        "city": "Nantes, France",
+        "name": "Damien Raude-Morvan",
+        "photoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/src/images/speakers/damien_raude_morvan.png",
+        "socials": [
+          {
+            "__typename": "Social",
+            "name": "github",
+            "url": "https://github.com/drazzib",
+            "icon": null
+          },
+          {
+            "__typename": "Social",
+            "name": "linkedin",
+            "url": "https://www.linkedin.com/damienraudemorvan",
+            "icon": null
+          }
+        ]
+      },
+      {
+        "__typename": "Speaker",
+        "id": "dasha_ilina",
+        "bio": "Dasha Ilina is a Russian techno-critical artist based in Paris, France. Through the employment of low-tech and DIY approaches, her work questions the desire to incorporate modern technology into our daily lives by highlighting the implications of actually doing so.\n\nHer practice engages the public in order to facilitate a space for the development of critical thought regarding social imperatives for care of oneself and others, privacy in the digital age, and the reflexive contemporary urge to turn to technology for answers.\n\nShe is the founder of the Center for Technological Pain, a project that proposes DIY solutions to health problems caused by digital technologies for which she has received an Honorary Mention at Ars Electronica. Her project Technosommeil is in the collection of digital art works of the Département Val-de-Marne (Mallapixels). Ilina’s work has been exhibited at institutions such as Centre Pompidou (FR), MU Artspace (NL), Gaîté Lyrique (FR), Hartware Medienkunstverein Dortmund (DE), NeMe (CY), ISEA 2023 (FR) as well as various talks, workshops, and performances held internationally.\n\nShe is also the co-director of NØ SCHOOL, a summer school that focuses on critical research around the social and environmental impacts of information and communication technologies.",
+        "company": "Artist",
+        "companyLogoUrl": null,
+        "city": "Paris, France",
+        "name": "Dasha Ilina",
+        "photoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/src/images/speakers/dasha_ilina.jpg",
+        "socials": [
+          {
+            "__typename": "Social",
+            "name": "linkedin",
+            "url": "https://www.linkedin.com/dasha-ilina-633005132",
+            "icon": null
+          }
+        ]
+      },
+      {
+        "__typename": "Speaker",
+        "id": "denis_germain",
+        "bio": "Je suis\\_**Staff Platform Engineer**\\_chez\\_Lucca\\_(ex-Deezer, Lectra, E.Leclerc), spécialiste de\\_**Kubernetes**\\_depuis 2017. \n\nJ'ai accompagné les entreprises où j'ai travaillé dans la migration de workloads legacy vers des plateformes conteneurisées, tout en aidant les équipes de développement à adopter ce nouveau paradigme.\n\nBlogger tech sur\\_blog.zwindler.fr\\_et membre organisateur des conférences (**Kubernetes Community Days France**\\_2023,\\_**BDX I/O** 2024), je suis passionné par l'infrastructure, son automatisation et son observabilité. Je partage activement mes découvertes dans des conférences internationales (**FOSDEM,\\_DevoxxFR,\\_Voxxed Days**) et sur mon blog personnel.",
+        "company": "Lucca",
+        "companyLogoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/srclucca.png",
+        "city": "Bordeaux, France",
+        "name": "Denis Germain",
+        "photoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/src/images/speakers/denis_germain.jpg",
+        "socials": [
+          {
+            "__typename": "Social",
+            "name": "github",
+            "url": "https://github.com/zwindler",
+            "icon": null
+          }
+        ]
+      },
+      {
+        "__typename": "Speaker",
+        "id": "donia_chaiehloudj",
+        "bio": "Donia Chaiehloudj is a Senior Software Engineer at Isovalent, contributing to the Cilium project within the cloud-native ecosystem focusing on network policy. She co-authored \"Learn Go with Pocket-Sized Projects\" and organizes tech events as a Google Developer Group lead and Women Techmakers ambassador. AFK, Donia enjoys sewing, playing the clarinet, and exploring new hiking trails.",
+        "company": "Isovalent @Cisco",
+        "companyLogoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/srcisovalent__cisco.png",
+        "city": "Nice, France",
+        "name": "Donia Chaiehloudj",
+        "photoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/src/images/speakers/donia_chaiehloudj.jpg",
+        "socials": [
+          {
+            "__typename": "Social",
+            "name": "github",
+            "url": "https://github.com/doniacld",
+            "icon": null
+          },
+          {
+            "__typename": "Social",
+            "name": "linkedin",
+            "url": "https://www.linkedin.com/donia-chaiehloudj",
+            "icon": null
+          }
+        ]
+      },
+      {
+        "__typename": "Speaker",
+        "id": "eduardo_san_martin_morote",
+        "bio": "Eduardo est développeur frontend freelance, membre à temps partiel de l’équipe Core de Vue.js, et auteur de libs telles que Vue Router, Pinia, VueFire, entre autres. Il est très impliqué dans l’open source et passionné par la création d’architectures frontend maintenables et testées.",
+        "company": "Freelance",
+        "companyLogoUrl": null,
+        "city": "Paris, France",
+        "name": "Eduardo San Martin Morote",
+        "photoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/src/images/speakers/eduardo_san_martin_morote.jpg",
+        "socials": [
+          {
+            "__typename": "Social",
+            "name": "twitter",
+            "url": "https://twitter.com/posva",
+            "icon": null
+          },
+          {
+            "__typename": "Social",
+            "name": "linkedin",
+            "url": "https://www.linkedin.com/posva",
+            "icon": null
+          }
+        ]
+      },
+      {
+        "__typename": "Speaker",
+        "id": "emmanuelle_aboaf",
+        "bio": "Sourde de naissance, bionique (deux implants cochléaires) et surtout développeuse Fullstack Angular .NET chez Shodo, je lutte chaque jour pour l’accessibilité. Dans mon monde idéal, tout doit être accessible aussi bien dans la vraie vie que sur le Web.",
+        "company": "Shodo",
+        "companyLogoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/srcshodo.png",
+        "city": "Paris, France",
+        "name": "Emmanuelle Aboaf",
+        "photoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/src/images/speakers/emmanuelle_aboaf.jpg",
+        "socials": [
+          {
+            "__typename": "Social",
+            "name": "linkedin",
+            "url": "https://www.linkedin.com/emmanuelle-aboaf",
+            "icon": null
+          }
+        ]
+      },
+      {
+        "__typename": "Speaker",
+        "id": "esteban_s",
+        "bio": "Je suis développeur web avec plus de 7 ans d'expérience, et full-stack depuis quelques années. Ma priorité est d'optimiser l'expérience utilisateur à chaque étape du développement, et je m'efforce d'apprendre constamment, que ce soit du code, du design ou de l'administration système.\n\nCette approche m'a conduit à développer une passion pour l'open-source. Que ce soit pour étudier du code ou y contribuer activement, j'aspire à participer à la communauté de diverses manières : en rédigeant de la documentation, en améliorant le design, en corrigeant des bogues ou en proposant de nouvelles fonctionnalités. Je gravite principalement autour de UnJS, Vite, Vue.js, Nuxt, Adonis et Laravel !\n\nMa seconde grande passion est le partage des connaissances. À travers mon blog (https://soubiran.dev) et mes réseaux sociaux, je m'efforce de diffuser ce que j'apprends et découvre. Mon objectif est de transmettre des informations de manière claire et accessible, comme j'aurais souhaité les trouver lorsque j'ai débuté dans le développement web, à une époque où des milliers de questions m'envahissaient et où les réponses étaient parfois rares.",
+        "company": "MaiaSpace",
+        "companyLogoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/srcmaiaspace.png",
+        "city": "Paris, France",
+        "name": "Estéban Soubiran",
+        "photoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/src/images/speakers/esteban_s.jpg",
+        "socials": [
+          {
+            "__typename": "Social",
+            "name": "linkedin",
+            "url": "https://www.linkedin.com/https://linkedin.com/in/esteban25",
+            "icon": null
+          },
+          {
+            "__typename": "Social",
+            "name": "twitter",
+            "url": "https://twitter.com/soubiran_",
+            "icon": null
+          }
+        ]
+      },
+      {
+        "__typename": "Speaker",
+        "id": "faye_ellis",
+        "bio": "Faye Ellis is a Principal Training Architect at Pluralsight and AWS Community Hero. \n\nShe specializes in helping organizations and individuals to develop their AWS skills so that they can confidently and efficiently drive their cloud transformation initiatives.",
+        "company": "Pluralsight",
+        "companyLogoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/srcpluralsight.png",
+        "city": "London, United Kingdom",
+        "name": "Faye Ellis",
+        "photoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/src/images/speakers/faye_ellis.jpeg",
+        "socials": [
+          {
+            "__typename": "Social",
+            "name": "linkedin",
+            "url": "https://www.linkedin.com/fayeellis",
+            "icon": null
+          }
+        ]
+      },
+      {
+        "__typename": "Speaker",
+        "id": "flora_brochier",
+        "bio": "Flora est doctorante en design sur la modélisation et l'évaluation des dark patterns avec Designers Éthiques et le laboratoire Costech de l'université de Compiègne.\n\nAu sein de l'association Designers Éthiques elle est co-responsable du programme de recherche sur la persuasion et les dark patterns, elle a écrit le guide \"concevoir sans dark patterns\" (sorti en 2023) et est responsable du projet Alternative Patterns sur la conception de notifications plus respectueuses (sortie le 30 septembre 2025).\n\nElle est également designer UX indépendante et enseignante en design.",
+        "company": "Designers Éthiques",
+        "companyLogoUrl": null,
+        "city": "Nantes, France",
+        "name": "Flora Brochier",
+        "photoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/src/images/speakers/flora_brochier.jpg",
+        "socials": [
+          {
+            "__typename": "Social",
+            "name": "linkedin",
+            "url": "https://www.linkedin.com/florabrochier",
+            "icon": null
+          }
+        ]
+      },
+      {
+        "__typename": "Speaker",
+        "id": "florent_albert",
+        "bio": "Développeur Fullstack (depuis peu) et backend d'expérience, je m'intéresse au SSG/SSR, au monde du libre/OSS, à linux et à l'univers de la JVM.\nJe suis aussi la personne qui ramène des souris et claviers étranges dans l'open space.",
+        "company": "Shodo",
+        "companyLogoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/srcshodo_nantes.png",
+        "city": "Nantes, France",
+        "name": "Florent Albert",
+        "photoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/src/images/speakers/florent_albert.jpg",
+        "socials": [
+          {
+            "__typename": "Social",
+            "name": "github",
+            "url": "https://github.com/hex46",
+            "icon": null
+          },
+          {
+            "__typename": "Social",
+            "name": "twitter",
+            "url": "https://twitter.com/hex46_",
+            "icon": null
+          }
+        ]
+      },
+      {
+        "__typename": "Speaker",
+        "id": "florent_houbart",
+        "bio": "Solution Architect at SII, Florent is a tech Swiss-army knife with years of experience across development, infrastructure, and organizational strategy. GCP certified and battle-tested in countless IT adventures, he help teams cut through the noise and build solutions that actually work. When not consulting, you’ll find him geeking out over quantum physics or debating the mysteries of the universe.",
+        "company": "SII",
+        "companyLogoUrl": null,
+        "city": "Lille, France",
+        "name": "Florent Houbart",
+        "photoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/src/images/speakers/florent_houbart.png",
+        "socials": [
+          {
+            "__typename": "Social",
+            "name": "linkedin",
+            "url": "https://www.linkedin.com/fhoubart",
+            "icon": null
+          }
+        ]
+      },
+      {
+        "__typename": "Speaker",
+        "id": "florent_legras",
+        "bio": "CTO Data chez Sfeir. Je travail depuis 15 ans dans l'écosystème data de startup ou de grand comptes. \n\nDepuis 2015 j'explore les technologies Cloud de Google et j'aide des entreprise à les mettre en places.\n\nGoogle Developer Expert depuis 2022",
+        "company": "SFEIR",
+        "companyLogoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/srcsfeir.png",
+        "city": "Paris, France",
+        "name": "Florent Legras",
+        "photoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/src/images/speakers/florent_legras.jpg",
+        "socials": [
+          {
+            "__typename": "Social",
+            "name": "github",
+            "url": "https://github.com/flegras",
+            "icon": null
+          },
+          {
+            "__typename": "Social",
+            "name": "twitter",
+            "url": "https://twitter.com/florent_legras",
+            "icon": null
+          }
+        ]
+      },
+      {
+        "__typename": "Speaker",
+        "id": "francois_eckert",
+        "bio": "Experienced in application, technical, and data architecture, app modernization, performance optimization, and application security (IAM/IAG). Skilled at building a big-picture vision, spotting IT optimization opportunities, and aligning stakeholders.",
+        "company": "Big ACL",
+        "companyLogoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/srcbig_acl.png",
+        "city": "Nantes, France",
+        "name": "François Eckert",
+        "photoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/src/images/speakers/francois_eckert.jpg",
+        "socials": [
+          {
+            "__typename": "Social",
+            "name": "linkedin",
+            "url": "https://www.linkedin.com/francoiseckert",
+            "icon": null
+          }
+        ]
+      },
+      {
+        "__typename": "Speaker",
+        "id": "francois_nollen",
+        "bio": "Staff Engineer chez SNCF Connect & Tech.\nMembre association « TOSIT : The Open Source I Trust » (https://tosit.fr).\nCommitter « Tock: The Open Conversation Kit » (https://doc.tock.ai). \n\nTopics: Flutter ChatBots OpenSource DevOps Observability Git Maven KotlinJVM...",
+        "company": "SNCF Connect & Tech",
+        "companyLogoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/srcsncf_connect___tech.png",
+        "city": "Paris, France",
+        "name": "François Nollen",
+        "photoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/src/images/speakers/francois_nollen.jpg",
+        "socials": [
+          {
+            "__typename": "Social",
+            "name": "github",
+            "url": "https://github.com/francoisno",
+            "icon": null
+          },
+          {
+            "__typename": "Social",
+            "name": "twitter",
+            "url": "https://twitter.com/FrancoisN0",
+            "icon": null
+          },
+          {
+            "__typename": "Social",
+            "name": "linkedin",
+            "url": "https://www.linkedin.com/francois-nollen",
+            "icon": null
+          }
+        ]
+      },
+      {
+        "__typename": "Speaker",
+        "id": "guillaume_laforge",
+        "bio": "**Guillaume Laforge** est Developer Advocate chez **Google** Cloud. Depuis plus de deux ans déjà, il se focalise sur l'**intelligence artificielle générative**, et en particulier les large language models comme Gemini. Il couvre souvent d'autres thèmes comme les architectures orientées événement, l'orchestration de microservices, ou les technologies serverless. En dehors de Google, Guillaume est plus connu pour sa casquette de **Java Champion**, pour avoir co-fondé le langage de programmation **Groovy** et être committer sur le projet **LangChain4j**, et est aussi (plus ou moins) célèbre pour son humour au sein du podcast **\"Les Cast Codeurs\"**.",
+        "company": "Google",
+        "companyLogoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/srcgoogle.png",
+        "city": "Paris, France",
+        "name": "Guillaume Laforge",
+        "photoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/src/images/speakers/guillaume_laforge.jpg",
+        "socials": [
+          {
+            "__typename": "Social",
+            "name": "github",
+            "url": "https://github.com/glaforge",
+            "icon": null
+          },
+          {
+            "__typename": "Social",
+            "name": "twitter",
+            "url": "https://twitter.com/glaforge",
+            "icon": null
+          }
+        ]
+      },
+      {
+        "__typename": "Speaker",
+        "id": "guillaume_membre",
+        "bio": "Geek à toute heure, je travaille principalement sur des sujets de migration d’architecture sur le cloud d'AWS et également sur des problématiques d'intégration et de déploiement continu. Je partage mon expérience pour faciliter la mise en place de démarche devops chez différents acteurs. J'adore bidouiller des RaspberryPi ou Arduino pour créer des choses inutiles donc indispensables !\nLorsque le temps le permet, je décris mes aventures sur mon [site web](https://www.mydiy.dev/).\nVous pouvez me suivre sur mastodon : @gmembre@piaille.fr",
+        "company": "Zenika",
+        "companyLogoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/srczenika.png",
+        "city": "Nantes, France",
+        "name": "Guillaume Membré",
+        "photoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/src/images/speakers/guillaume_membre.jpg",
+        "socials": [
+          {
+            "__typename": "Social",
+            "name": "linkedin",
+            "url": "https://www.linkedin.com/gmembre",
+            "icon": null
+          }
+        ]
+      },
+      {
+        "__typename": "Speaker",
+        "id": "guillaume_vernade",
+        "bio": "Je suis Guillaume Vernade, un explorateur des royaumes technologiques. Mon périple m'a mené des anciens grimoires des réseaux de neurones au foyer enchanté de Nest, de Paris au Québec, avant de me ramener à la source même de l'IA.\n\nMon histoire a débuté dans la tour d'ivoire de l'université, mais l'appel de l'aventure m'a vite poussé vers la gestion de guildes technologiques. J'y ai découvert la philosophie Agile, une véritable boussole qui guide depuis toutes mes quêtes. Mon odyssée m'a ensuite conduit à servir dans de grands royaumes :\n* J'ai navigué sur les flots de Bouygues Telecom.\n* J'ai contribué à bâtir les forteresses numériques d'Axa.\n* J'ai exploré les mondes fantastiques d'Ubisoft pour forger des épopées comme Assassin's Creed Odyssey.\n\nEnfin, j'ai accompagné plus de 30 jeux vers le portail magique de Google Stadia (paix à son âme 🪦) et participé à la conjuration de Matter dans notre monde avec Nest.\n\nAujourd'hui, ma quête se poursuit chez Google, au cœur de la magie de l'IA Générative avec DeepMind. En tant que Barde pour Gemini (mon rôle en Developer Relations), ma mission est d'être votre porte-voix auprès des créateurs du modèle. Car au final, ma plus grande quête reste la même : enchanter l'expérience des utilisateurs.",
+        "company": "Google Deepmind",
+        "companyLogoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/srcgoogle_deepmind.png",
+        "city": "Rennes, France",
+        "name": "Guillaume Vernade",
+        "photoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/src/images/speakers/guillaume_vernade.jpg",
+        "socials": [
+          {
+            "__typename": "Social",
+            "name": "linkedin",
+            "url": "https://www.linkedin.com/guillaumevernade",
+            "icon": null
+          },
+          {
+            "__typename": "Social",
+            "name": "github",
+            "url": "https://github.com/Giom-V",
+            "icon": null
+          }
+        ]
+      },
+      {
+        "__typename": "Speaker",
+        "id": "hoani_cross",
+        "bio": "Ça fait 25 ans que je travaille dans l'IT et je sais que je veux faire ce métier depuis plus de 40 ans ! Je suis un peu tombé dans la marmite du développement 😉\n\nPolynésien d'origine tout en étant très attaché à la France Métropolitaine, j'y ai partagé mon expérience professionnelle. J'ai commencé ma carrière en tant que développeur jusqu'à devenir architecte et consultant en stratégie IT pour de grandes entreprises. J'ai eu également l'opportunité s'occuper le poste de DSI de l'aéroport de Tahiti pendant 6 ans, années durant lesquelles j'ai appris tellement de nouvelles choses (différentes du développement). Trop amoureux du dév, je reviens en France en 2020 et je rejoins rapidement SFEIR où je m'éclate en tant que Senior Lead Dev & Architect mais aussi en tant que manager.\n\nMon expérience en tant que DSI et ma séniorité dans de dev font de mon profil un cas assez rare, que je mets à profit pour les clients pour qui je travaille mais aussi pour SFEIR.",
+        "company": "SFEIR",
+        "companyLogoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/srcsfeir.png",
+        "city": "Nantes, France",
+        "name": "Hoani Cross",
+        "photoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/src/images/speakers/hoani_cross.jpg",
+        "socials": [
+          {
+            "__typename": "Social",
+            "name": "github",
+            "url": "https://github.com/hcross",
+            "icon": null
+          },
+          {
+            "__typename": "Social",
+            "name": "twitter",
+            "url": "https://twitter.com/hoani",
+            "icon": null
+          }
+        ]
+      },
+      {
+        "__typename": "Speaker",
+        "id": "jean_palies",
+        "bio": "I have been in the software development field for 20+ years, mainly trying to achieve simplicity and clear communication. I am interested in many topics, but my main focus is end user satisfaction.",
+        "company": "Freelance",
+        "companyLogoUrl": null,
+        "city": "Nantes, France",
+        "name": "Jean Paliès",
+        "photoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/src/images/speakers/jean_palies.jpg",
+        "socials": [
+          {
+            "__typename": "Social",
+            "name": "linkedin",
+            "url": "https://www.linkedin.com/jeanpalies",
+            "icon": null
+          }
+        ]
+      },
+      {
+        "__typename": "Speaker",
+        "id": "johan_rouve",
+        "bio": "Développeur curieux, j'ai travaillé sur différentes plate-formes, principalement web et mobile, aussi bien coté front que back, dans différents languages.\nJ’ai une forte appétence pour le design et l’ergonomie, et j’aime peaufiner les détails graphiques afin que les utilisateurs aient le meilleur ressenti possible.\nEt comme la vie ne se limite pas seulement à du code, je me passionne aussi pour le sport et la raclette.",
+        "company": "TrustCollect",
+        "companyLogoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/srccomet.png",
+        "city": "Paris, France",
+        "name": "Johan Rouve",
+        "photoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/src/images/speakers/johan_rouve.jpg",
+        "socials": [
+          {
+            "__typename": "Social",
+            "name": "github",
+            "url": "https://github.com/ooga",
+            "icon": null
+          },
+          {
+            "__typename": "Social",
+            "name": "linkedin",
+            "url": "https://www.linkedin.com/johan-rouve",
+            "icon": null
+          }
+        ]
+      },
+      {
+        "__typename": "Speaker",
+        "id": "jonathan_baranzini",
+        "bio": "Développeur depuis 20 ans, j'accompagne les développeuses et développeurs au sein de l'entité \"Digital Factory\" chez Talan.\nMon objectif est de les aider à monter en compétence et s'épanouir sur leurs projets.\nJe pratique régulièrement Java, Go, React, divers Cloud... chez des clients.\n\nPeu adepte des réseaux sociaux, j'ai toutefois un compte github : github.com/jotitan\n\nPlusieurs prises de parole\nOrganisation des journées mensuelles d'échanges / formations / prise de paroles chez Talan\nNombreuses présentations : formation Elasticsearch, Golang, gestion de la mémoire en Java, gestion de workflow en Java, programmation avec micro:bit, PWA,  gestion des logs sous Azure...\nOrganisation de katas hebdomadaires\nPrésentation au meetup Elasticsearch\nBBL chez les clients (Cassandra...)\nAtelier micro:bit à Devoxx 2025 (8 notes : 4.71 de moyenne)",
+        "company": "Talan",
+        "companyLogoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/srctalan.png",
+        "city": "Paris, France",
+        "name": "Jonathan Baranzini",
+        "photoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/src/images/speakers/jonathan_baranzini.jpg",
+        "socials": [
+          {
+            "__typename": "Social",
+            "name": "github",
+            "url": "https://github.com/jotitan",
+            "icon": null
+          },
+          {
+            "__typename": "Social",
+            "name": "linkedin",
+            "url": "https://www.linkedin.com/jonathan-baranzini",
+            "icon": null
+          }
+        ]
+      },
+      {
+        "__typename": "Speaker",
+        "id": "julien_briault",
+        "bio": "Ingénieur Réseau / SRE chez Deezer la journée, et manager d’infrastructure bénévole aux Restos du Cœur le soir, je suis un peu le Batman de l’IT : un clavier pour le boulot, un autre pour les Restos.\n\nPassionné par l’informatique, j’ai décidé d'ajouter un peu d’humanité sur un métier souvent déconnecté de la réalité … ! À côté de ça, je suis DJ et producteur de musique – donc si vous me croisez en festival, je ne déploie pas un serveur, je mixe.",
+        "company": "Deezer & Restos du Coeur",
+        "companyLogoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/srcdeezer___restos_du_coeur.png",
+        "city": "Chartres, France",
+        "name": "Julien Briault",
+        "photoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/src/images/speakers/julien_briault.jpg",
+        "socials": [
+          {
+            "__typename": "Social",
+            "name": "github",
+            "url": "https://github.com/juhnny5",
+            "icon": null
+          },
+          {
+            "__typename": "Social",
+            "name": "twitter",
+            "url": "https://twitter.com/ju_hnny5",
+            "icon": null
+          }
+        ]
+      },
+      {
+        "__typename": "Speaker",
+        "id": "julien_crestin",
+        "bio": "Julien Crestin est software engineer chez Datadog, une plateforme de monitoring et de sécurité pour les environnements cloud, où il travaille sur l'automatisation du cycle de vie des modèles d'isolation.\n\nEt quand il n'automatise pas des systèmes en production, il automatise sa maison.",
+        "company": "Datadog",
+        "companyLogoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/srcdatadog.png",
+        "city": "Nantes, France",
+        "name": "Julien Crestin",
+        "photoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/src/images/speakers/julien_crestin.jpeg",
+        "socials": [
+          {
+            "__typename": "Social",
+            "name": "linkedin",
+            "url": "https://www.linkedin.com/julien-crestin",
+            "icon": null
+          }
+        ]
+      },
+      {
+        "__typename": "Speaker",
+        "id": "julien_huang",
+        "bio": "J’ai commencé à coder en 2020. Aujourd’hui, je fais partie de l’équipe core de Nuxt et je travaille comme développeur frontend chez Leetchi, en France.\n\nJe me suis lancé dans l’open source il y a quatre ans, et c’est rapidement devenu à la fois ma passion et mon moyen préféré d’apprendre de nouvelles choses.\n\nQuand je ne suis pas devant VSCode, j’aime passer du temps sur des jeux vidéo, faire du powerlifting, cuisiner, ou encore jouer de la musique.",
+        "company": "Leetchi",
+        "companyLogoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/srcleetchi.png",
+        "city": "Paris, France",
+        "name": "Julien Huang",
+        "photoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/src/images/speakers/julien_huang.jpg",
+        "socials": [
+          {
+            "__typename": "Social",
+            "name": "github",
+            "url": "https://github.com/huang-julien",
+            "icon": null
+          },
+          {
+            "__typename": "Social",
+            "name": "twitter",
+            "url": "https://twitter.com/JulienHuang_dev",
+            "icon": null
+          }
+        ]
+      },
+      {
+        "__typename": "Speaker",
+        "id": "julien_wittouck",
+        "bio": "Je suis fan de Star Wars 💫, de Dragon Ball 🐉, et de rock seventies & nineties 🎸🤘.\n\nJe suis aussi Architecte Solution 🏗️  indépendant, associé chez Ekité et j'enseigne le développement Java / Spring à l'université de Lille 🎓 depuis plus de 10 ans.\nJe suis aussi l'auteur du livre [L’infrastructure as Code avec Terraform](https://www.editions-eni.fr/livre/l-infrastructure-as-code-avec-terraform-deployez-votre-infrastructure-sur-le-cloud-9782409046629) paru aux éditions ENI, et membre du comité d'organisation de la conférence ☁️ Cloud Nord\n\nMes sujets de prédilection:\n\n* ☕ : Java/Spring\n* ☁️ : Cloud/IaC/Terraform\n* 🐋 : Docker/Kubernetes\n* 🐧 : Linux 💙",
+        "company": "Freelance / Associé chez Ekité",
+        "companyLogoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/srcfreelance___associe_chez_ekite.png",
+        "city": "Lille, France",
+        "name": "Julien Wittouck",
+        "photoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/src/images/speakers/julien_wittouck.jpg",
+        "socials": [
+          {
+            "__typename": "Social",
+            "name": "github",
+            "url": "https://github.com/juwit",
+            "icon": null
+          },
+          {
+            "__typename": "Social",
+            "name": "twitter",
+            "url": "https://twitter.com/CodeKaio",
+            "icon": null
+          },
+          {
+            "__typename": "Social",
+            "name": "linkedin",
+            "url": "https://www.linkedin.com/julien-wittouck",
+            "icon": null
+          }
+        ]
+      },
+      {
+        "__typename": "Speaker",
+        "id": "jeremy_chauvin",
+        "bio": "Développeur un peu touche à tout, je possède une certaine appétence pour le front et les interfaces élégantes et intuitives, même si un bon backend fait toujours plaisir.\n\nVéritable technophile dans une esprit craftsman et agile, j'aime à ce que l'amélioration continue, la qualité et le partage ne soient pas que des mots.",
+        "company": "Shodo",
+        "companyLogoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/srcshodo_lyon.png",
+        "city": "Lyon, France",
+        "name": "Jérémy Chauvin",
+        "photoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/src/images/speakers/jeremy_chauvin.jpg",
+        "socials": []
+      },
+      {
+        "__typename": "Speaker",
+        "id": "jerome_tama",
+        "bio": "Senior developpeur, Techlead, Architecte applicatif, en fonction des jours, de l'heure de la journée.\n\nJe vois mon travail comme celui d'un compagnon du devoir: \n\n* choisir la bonne technologie pour servir le but\n* faire bien\n* faire aimer le travail bien fait\n* former les autres à mon tour.\n\nJe me passionne particulièrement pour le java, l'environnement des conteneurs, le monde de l'open-source pour lequel j'essaie de ne pas être qu'un consommateur.",
+        "company": "Onepoint",
+        "companyLogoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/srconepoint.png",
+        "city": "Bordeaux, France",
+        "name": "Jérôme Tama",
+        "photoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/src/images/speakers/jerome_tama.jpg",
+        "socials": [
+          {
+            "__typename": "Social",
+            "name": "github",
+            "url": "https://github.com/jtama",
+            "icon": null
+          },
+          {
+            "__typename": "Social",
+            "name": "twitter",
+            "url": "https://twitter.com/jtama_",
+            "icon": null
+          },
+          {
+            "__typename": "Social",
+            "name": "linkedin",
+            "url": "https://www.linkedin.com/jérôme-tama-591699",
+            "icon": null
+          }
+        ]
+      },
+      {
+        "__typename": "Speaker",
+        "id": "kate_smith",
+        "bio": "Kate Smith is a Product and Developer Marketing Manager for Community at Stack Overflow. She oversees the public platform that connects developers to find solutions to their questions and empowers the developer experience through networking and collaboration. Her work is motivated by her mission of advocating for women in tech and making open source materials accessible to aspiring developers.\n\nOutside of work, Kate volunteers her time mentoring young women in the Houston, TX area. A classically trained opera singer, Kate has performed in some of the world’s most prestigious opera houses and some of its dingiest karaoke bars. She is passionate about live music, weight lifting, and dreams of one day appearing on the Great British Baking Show. Kate holds a Bachelor’s degree from BYU-I, a Master’s degree from Rice University, and proudly is a certified Google Cloud Engineer and Product Marketing professional.",
+        "company": "Stack Overflow",
+        "companyLogoUrl": null,
+        "city": "Austin, United States",
+        "name": "Kate Smith",
+        "photoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/src/images/speakers/kate_smith.jpg",
+        "socials": [
+          {
+            "__typename": "Social",
+            "name": "linkedin",
+            "url": "https://www.linkedin.com/k8-smith",
+            "icon": null
+          }
+        ]
+      },
+      {
+        "__typename": "Speaker",
+        "id": "kevin_davin",
+        "bio": "Google Developer Expert on Google Cloud & Kotlin, Gitlab Hero, I am above all passionate about tech, languages, infrastructure, and automation. \nKotlin, Java, TypeScript are my day-to-day languages. I deploy all of those on the Google Kubernetes Engine with the GitLab's Continuous Integration 🚀. \n\nAddict of agility and DevOps, some of my missions were to help teams to follow those philosophies. \nFrom code quality analysis to unit or end-to-end tests setup all the way to continuous deployment and operation, I try to follow a project from birth to production. \n\nI'm currently Principal Software Engineer at Gradle and mainly attached to [Develocity](https://gradle.com/develocity/), the product improving the developer productivity by reducing build and test time.",
+        "company": "Gradle",
+        "companyLogoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/srcgradle.png",
+        "city": "Toulouse, France",
+        "name": "Kevin Davin",
+        "photoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/src/images/speakers/kevin_davin.jpeg",
+        "socials": [
+          {
+            "__typename": "Social",
+            "name": "github",
+            "url": "https://github.com/davinkevin",
+            "icon": null
+          },
+          {
+            "__typename": "Social",
+            "name": "twitter",
+            "url": "https://twitter.com/davinkevin",
+            "icon": null
+          },
+          {
+            "__typename": "Social",
+            "name": "linkedin",
+            "url": "https://www.linkedin.com/davinkevin",
+            "icon": null
+          }
+        ]
+      },
+      {
+        "__typename": "Speaker",
+        "id": "laurent_mangin",
+        "bio": "Ingénieur Automatisation de tests logiciels",
+        "company": "Younup",
+        "companyLogoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/srcyounup.png",
+        "city": "Nantes, France",
+        "name": "Laurent Mangin",
+        "photoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/src/images/speakers/laurent_mangin.jpg",
+        "socials": [
+          {
+            "__typename": "Social",
+            "name": "linkedin",
+            "url": "https://www.linkedin.com/laurent-mangin",
+            "icon": null
+          }
+        ]
+      },
+      {
+        "__typename": "Speaker",
+        "id": "lennart",
+        "bio": "Dr Lennart Gundelach:\nHead of Data & AI at SII Group Germany:\nThrough my current role, I develop the AI Strategy and Business for SII Group in Germany. Additionally, I explore the impact of other emerging technologies like quantum computing on our business and customer industries. As a theoretical physicist and quantum chemist, I had a strong research focus on Quantum Physics and Quantum Computing. \nBackground:\n- PhD in Computational Quantum Chemistry, University of Southampton \n- MSc in Theoretical Chemistry, University of Oxford\n- MSc in Theoretical Physics, University of Glasgow\n- MBA, Hochschule Hannover\nPublications:\n- https://pubs.rsc.org/en/content/articlelanding/2021/cp/d1cp00206f#!divCitation\n- https://pubs.rsc.org/en/content/articlelanding/2022/cp/d2cp03705j#!divCitation\n- https://eprints.soton.ac.uk/477999/1/PhD_Thesis_Corrected_final_PDFA.pdf",
+        "company": "SII",
+        "companyLogoUrl": null,
+        "city": "Hannover, Germany",
+        "name": "Lennart Gundelach",
+        "photoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/src/images/speakers/lennart.jpg",
+        "socials": [
+          {
+            "__typename": "Social",
+            "name": "linkedin",
+            "url": "https://www.linkedin.com/lennart-gundelach-b8b292125",
+            "icon": null
+          }
+        ]
+      },
+      {
+        "__typename": "Speaker",
+        "id": "loic_ortola",
+        "bio": "Quand Loïc n’est pas en train de militer pour qu’on ne copie-colle pas les réponses de StackOverflow sans regarder la doc, il intervient en architecture dans des contextes variés en tant que CTO de Takima. Il s’implique particulièrement à donner des visions d’ensemble concrètes pour que les développeurs puissent mieux dessiner leur système cible, et des retours d’expérience pour faire gagner du temps à ceux qui se lancent, parce que ça, on le trouve pas sur Stack Overflow.",
+        "company": "Takima",
+        "companyLogoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/srctakima.png",
+        "city": "Paris, France",
+        "name": "Loïc Ortola",
+        "photoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/src/images/speakers/loic_ortola.jpg",
+        "socials": [
+          {
+            "__typename": "Social",
+            "name": "linkedin",
+            "url": "https://www.linkedin.com/loicortola",
+            "icon": null
+          }
+        ]
+      },
+      {
+        "__typename": "Speaker",
+        "id": "lucas_audart",
+        "bio": "Je m'appelle Lucas Audart, je suis un développeur lyonnais, spécialisé dans le développement web et l'écosystème Javascript.\n\nJe suis passionné de technologie web, avec une affection particulière pour les technologies front-end. Actuellement développeur Front-end à Kolecto sur une stack React / NextJs que j'affectionne grandement.",
+        "company": "Kolecto",
+        "companyLogoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/srckolecto.png",
+        "city": "Lyon, France",
+        "name": "Lucas Audart",
+        "photoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/src/images/speakers/lucas_audart.jpg",
+        "socials": [
+          {
+            "__typename": "Social",
+            "name": "linkedin",
+            "url": "https://www.linkedin.com/lucas-audart",
+            "icon": null
+          }
+        ]
+      },
+      {
+        "__typename": "Speaker",
+        "id": "ludovic_lefebvre",
+        "bio": "En tant que passionné de la performance web depuis plus de 15 ans, j’ai acquis une solide expérience en tant que responsable de l’équipe «\\_coaching perf\\_» chez Peaksys, filiale Tech de Cdiscount.  Aujourd'hui, j'occupe le rôle de Platform Owner au sein d'une équipe IA, avec pour mission de structurer, piloter et faire évoluer une plateforme dédiée à l'industrialisation et à l'orchestration de solutions d'intelligence artificielle à grande échelle.\\n\\nEn dehors de mon activité professionnelle, je suis passionné par le mind mapping et la composition de musique électronique.\\n\\n - Platform Owner de la plateforme IA chez Cdiscount\\n - Expert en Web Performance et JavaScript\\n - Intervenant à l’université de Bordeaux / Talence\\n - Présent au Chrome Advisory Board chez Google pendant 4 ans",
+        "company": "Peaksys",
+        "companyLogoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/srcpeaksys.png",
+        "city": "Bordeaux, France",
+        "name": "Ludovic Lefebvre",
+        "photoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/src/images/speakers/ludovic_lefebvre.jpeg",
+        "socials": [
+          {
+            "__typename": "Social",
+            "name": "github",
+            "url": "https://github.com/Ludovic33Fr",
+            "icon": null
+          },
+          {
+            "__typename": "Social",
+            "name": "twitter",
+            "url": "https://twitter.com/Crafty33",
+            "icon": null
+          }
+        ]
+      },
+      {
+        "__typename": "Speaker",
+        "id": "marie_terrier",
+        "bio": "Après 7 ans en de développement web entre l'Inde et la France pour l'agence KRDS, Marie est maintenant CTO de Yelda, la plateforme d'agents vocaux pour les entreprises. Sur son temps libre, elle adore participer à des événements techniques pour encourager les débutants à prendre confiance en eux ou partir à l'aventure à la montagne !",
+        "company": "Yelda",
+        "companyLogoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/srcyelda.png",
+        "city": "Paris, France",
+        "name": "Marie Terrier",
+        "photoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/src/images/speakers/marrie_terrier.jpeg",
+        "socials": [
+          {
+            "__typename": "Social",
+            "name": "github",
+            "url": "https://github.com/meelie",
+            "icon": null
+          },
+          {
+            "__typename": "Social",
+            "name": "twitter",
+            "url": "https://twitter.com/materrier",
+            "icon": null
+          }
+        ]
+      },
+      {
+        "__typename": "Speaker",
+        "id": "marie_viley",
+        "bio": "Directrice d'agence chez Zenika Nantes, je suis passionnée par la détection des fake news et de la désinformation, l'OSINT et les chats.",
+        "company": "Zenika",
+        "companyLogoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/srczenika.png",
+        "city": "Nantes, France",
+        "name": "Marie Viley",
+        "photoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/src/images/speakers/marie_viley.jpg",
+        "socials": [
+          {
+            "__typename": "Social",
+            "name": "linkedin",
+            "url": "https://www.linkedin.com/marieviley",
+            "icon": null
+          }
+        ]
+      },
+      {
+        "__typename": "Speaker",
+        "id": "marjorie_aubert",
+        "bio": "Bonjour à toutes et à tous,\n\nJe m’appelle Marjorie, développeuse full-stack et lead produit chez Comet. Cela n’a pas toujours été mon métier. Après 6 années en tant que conseillère nationale en prévention des risques professionnels pour le monde agricole, je suis tombée dans le terminal avec joie il y a trois ans. Coder à plusieurs, mêler développement et produit au quotidien me passionne.  \n\nJe serai très heureuse de vous rencontrer, et d'échanger ensemble ☀️",
+        "company": "Comet",
+        "companyLogoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/srccomet.png",
+        "city": "Paris, France",
+        "name": "Marjorie Aubert",
+        "photoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/src/images/speakers/marjorie_aubert.jpg",
+        "socials": [
+          {
+            "__typename": "Social",
+            "name": "github",
+            "url": "https://github.com/Tagada26",
+            "icon": null
+          },
+          {
+            "__typename": "Social",
+            "name": "twitter",
+            "url": "https://twitter.com/Tagada2022",
+            "icon": null
+          }
+        ]
+      },
+      {
+        "__typename": "Speaker",
+        "id": "mathieu_herbert",
+        "bio": "Mathieu est Directeur SRE chez Dataiku. Il a développé des compétences autour de l’intégration des systèmes Cloud et de l’automatisation. Il intervient dans des équipes de développement pour assurer l’automatisation des infrastructures Cloud, l’architecture ainsi que sur l’intégration et le déploiement continue.",
+        "company": "Dataiku",
+        "companyLogoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/srcdataiku.png",
+        "city": "Nantes, France",
+        "name": "Mathieu Herbert",
+        "photoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/src/images/speakers/mathieu_herbert.jpg",
+        "socials": [
+          {
+            "__typename": "Social",
+            "name": "linkedin",
+            "url": "https://www.linkedin.com/mathieu-herbert-347b0b7a",
+            "icon": null
+          }
+        ]
+      },
+      {
+        "__typename": "Speaker",
+        "id": "mathieu_tortuyaux",
+        "bio": "Mathieu is working as a Linux OS software engineer at Microsoft mainly involved in the Flatcar development (a CNCF Container OS distribution). He's involved in the test automation, release cycle and features development. Outside of the work, he co-founded SRE France, an association that organizes DevOps/SRE Meetups in France and co-created the SRE SummerCamp: a 2 days event mixing outdoors activities and SRE/DevOps talks.",
+        "company": "Microsoft",
+        "companyLogoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/srcmicrosoft.png",
+        "city": "France",
+        "name": "Mathieu Tortuyaux",
+        "photoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/src/images/speakers/mathieu_tortuyaux.jpg",
+        "socials": [
+          {
+            "__typename": "Social",
+            "name": "github",
+            "url": "https://github.com/tormath1",
+            "icon": null
+          },
+          {
+            "__typename": "Social",
+            "name": "twitter",
+            "url": "https://twitter.com/tormath1",
+            "icon": null
+          }
+        ]
+      },
+      {
+        "__typename": "Speaker",
+        "id": "mathilde_lorrain",
+        "bio": "Mathilde a percé le secret de la fusion nucléaire et ne s’éteint jamais.\nQuand on lui a dit que son API pourrait être aussi réactive qu’elle, forcément, elle n’a pas pu s’empêcher…\nPassionnée de DevOps et de Backend, elle aime quand les choses sont directes et efficaces. Comme elle.\nD’ailleurs, elle utilise volontiers son surplus d’énergie pour transmettre ses secrets. Il paraît même qu’elle va revenir faire une conf…",
+        "company": "Takima",
+        "companyLogoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/srctakima.png",
+        "city": "Paris, France",
+        "name": "Mathilde Lorrain",
+        "photoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/src/images/speakers/mathilde_lorrain.jpg",
+        "socials": [
+          {
+            "__typename": "Social",
+            "name": "twitter",
+            "url": "https://twitter.com/mathildelorrain",
+            "icon": null
+          },
+          {
+            "__typename": "Social",
+            "name": "linkedin",
+            "url": "https://www.linkedin.com/mathilde-lorrain",
+            "icon": null
+          }
+        ]
+      },
+      {
+        "__typename": "Speaker",
+        "id": "mathilde_rigabert_lemee",
+        "bio": "Mathilde Rigabert est CTPO freelance. Fondatrice de plusieurs entreprises dans la tech, le jeu vidéo et les réseaux sociaux, elle a également cofondé Duchess France en 2010. Elle aide aujourd’hui les entreprises à construire une tech et un produit plus efficients, alignés avec leurs enjeux business et à structurer les équipes.",
+        "company": "Aetys",
+        "companyLogoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/srcaetys.png",
+        "city": "Paris, France",
+        "name": "Mathilde Rigabert Lemée",
+        "photoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/src/images/speakers/mathilde_rigabert_lemee.jpg",
+        "socials": [
+          {
+            "__typename": "Social",
+            "name": "twitter",
+            "url": "https://twitter.com/MathildeLemee",
+            "icon": null
+          },
+          {
+            "__typename": "Social",
+            "name": "linkedin",
+            "url": "https://www.linkedin.com/mathildelemee",
+            "icon": null
+          }
+        ]
+      },
+      {
+        "__typename": "Speaker",
+        "id": "matthieu_vincent",
+        "bio": "I'm working at Sopra Steria as TechAdvocate and Engineering Platform leader.\nIn my spare time, I'm the co-founder of Volcamp and of the meetup GreenTechAuvergne, also a GitLab Hero & a R2DevOps ambassador. I love coding and opensource, I'm the owner of 3 littles assets : svn2git, gitlab-emoji and heimdall (https://github.com/yodamad)\n\nAll my contributions are available at https://me.yodamad.fr, I'm speaking in conferences and rewriting blog articles since 2022.",
+        "company": "Sopra Steria",
+        "companyLogoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/srcsopra_steria.png",
+        "city": "Clermont-Ferrand, France",
+        "name": "Matthieu Vincent",
+        "photoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/src/images/speakers/matthieu_vincent.jpg",
+        "socials": [
+          {
+            "__typename": "Social",
+            "name": "github",
+            "url": "https://github.com/yodamad",
+            "icon": null
+          },
+          {
+            "__typename": "Social",
+            "name": "twitter",
+            "url": "https://twitter.com/yodamad03",
+            "icon": null
+          },
+          {
+            "__typename": "Social",
+            "name": "linkedin",
+            "url": "https://www.linkedin.com/matthieu-vincent-ab25064",
+            "icon": null
+          }
+        ]
+      },
+      {
+        "__typename": "Speaker",
+        "id": "maxime_courant",
+        "bio": "Après plusieurs années à construire des produits et des équipes dans un environnement startup > scale-up, je développe aujourd’hui des solutions web et IA qui font avancer concrètement les projets et les organisations.\\n\\nDepuis plus d’un an, je travaille avec l’IA au quotidien : Cursor, MCP, Browser, Github, Gmail… tout est connecté pour améliorer mes workflows et accélérer la création de features.\\n\\nJ’ai deux grands axes dans ma manière d’utiliser l’IA :\\n\\t•\\tAmélioration du workflow : meilleure façon de coder, workflows intelligents, livraison plus rapide.\\n\\t•\\tMise en production IA : agents multi-modèles, règles avancées pour booster les produits directement en prod.\\n\\nPendant 6 ans chez Skeepers, j’ai évolué de développeur à architecte technique, puis responsable Professional Services où j’ai monté et structuré ma propre équipe (intégrateurs techniques + chef de projet), avant de devenir Team Lead de l’équipe de production (~30 personnes).\\nJ’ai aussi participé à des projets d’envergure : création de workflows Jira pour mieux suivre les services internes, gestion de l’arrivée de gros comptes internationaux, refonte des process pour fluidifier la production entre équipes tech, produit, UX/UI et support.\\n\\nDepuis deux ans, je poursuis en freelance, en accompagnant entreprises et équipes sur la gestion de projets web et l’amélioration continue des processus de développement et de produit.",
+        "company": "Freelance",
+        "companyLogoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/srcaimcorp___freelance.png",
+        "city": "Nantes, France",
+        "name": "Maxime Courant",
+        "photoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/src/images/speakers/maxime_courant.jpeg",
+        "socials": [
+          {
+            "__typename": "Social",
+            "name": "linkedin",
+            "url": "https://www.linkedin.com/maxime-courant-181294114",
+            "icon": null
+          }
+        ]
+      },
+      {
+        "__typename": "Speaker",
+        "id": "mey_beisaron",
+        "bio": "Mey is a Senior Platform Engineer and a public speaker who brings Star Wars geekery to everything she does.\n\nAs a Backend Developer, Mey has developed in multiple programming languages, including Nodejs, Python, Groovy, and her favorite, Clojure.\n\nToday Mey is a Senior Platform Engineer at Forter, leading the complex migration of 400+ services to Kubernetes.\n\nWhen she is not spending her weekends developing games she’s playing Super Mario Bros on the Nintendo Switch.\n\nMay the force be with you.",
+        "company": "Forter",
+        "companyLogoUrl": null,
+        "city": "Tel Aviv, Israel",
+        "name": "Mey Beisaron",
+        "photoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/src/images/speakers/mey_beisaron.jpg",
+        "socials": [
+          {
+            "__typename": "Social",
+            "name": "github",
+            "url": "https://github.com/ladymeyy",
+            "icon": null
+          },
+          {
+            "__typename": "Social",
+            "name": "linkedin",
+            "url": "https://www.linkedin.com/ladymey",
+            "icon": null
+          }
+        ]
+      },
+      {
+        "__typename": "Speaker",
+        "id": "mickael_alves",
+        "bio": "👋🏼 Web Maker, application builder, and passionate speaker on web development, design, computing, and new technologies! 👨🏻‍💻\n\nCurrently a web consultant at @Zenika 🔴, DX Engineer at @BedrockStreaming 📺 , I also enjoy sharing my knowledge through teaching and speaking at conferences. I’m a co-founder of @DevFestLyon and a co-organizer of @LyonJS 🦁, an @Appwrite Hero 🦸🏼‍♂️, and a @Remotion Expert 🎬",
+        "company": "Zenika",
+        "companyLogoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/srczenika.png",
+        "city": "Lyon, France",
+        "name": "Mickael Alves",
+        "photoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/src/images/speakers/mickael_alves.jpg",
+        "socials": [
+          {
+            "__typename": "Social",
+            "name": "github",
+            "url": "https://github.com/CruuzAzul",
+            "icon": null
+          },
+          {
+            "__typename": "Social",
+            "name": "twitter",
+            "url": "https://twitter.com/CruuzAzul",
+            "icon": null
+          }
+        ]
+      },
+      {
+        "__typename": "Speaker",
+        "id": "modeste_assiongbon",
+        "bio": "Je suis Modeste ASSIONGBON, Développeur Frontend passionné par JavaScript et Angular. Je suis Google Developer Expert en Angular, Speaker et créateur de contenu vidéo sur YouTube, partageant ainsi mes connaissances avec le monde.",
+        "company": "Freelance",
+        "companyLogoUrl": null,
+        "city": "Paris, France",
+        "name": "Modeste Assiongbon",
+        "photoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/src/images/speakers/modeste_assiongbon.jpg",
+        "socials": [
+          {
+            "__typename": "Social",
+            "name": "twitter",
+            "url": "https://twitter.com/rblmdst",
+            "icon": null
+          },
+          {
+            "__typename": "Social",
+            "name": "linkedin",
+            "url": "https://www.linkedin.com/💣-modeste-assiongbon-41b90113a",
+            "icon": null
+          }
+        ]
+      },
+      {
+        "__typename": "Speaker",
+        "id": "montaine_marteau",
+        "bio": "20+ ans d'expérience produit dans la MedTech\nEx-CPTO et membre du comité exécutif de Medexprim\nCo-founder Bttrways - Fractional CPO/CTPO\nDocteure en traitement du signal et de l'image\nProfesseure en Product Management à l'université",
+        "company": "bttrways",
+        "companyLogoUrl": null,
+        "city": "Toulouse, France",
+        "name": "Montaine Marteau",
+        "photoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/src/images/speakers/montaine_marteau.jpg",
+        "socials": [
+          {
+            "__typename": "Social",
+            "name": "linkedin",
+            "url": "https://www.linkedin.com/montaine-marteau-5438692",
+            "icon": null
+          }
+        ]
+      },
+      {
+        "__typename": "Speaker",
+        "id": "nailya_bogrova",
+        "bio": "Ingénieure en informatique depuis 2011, je me spécialise dans le développement du back-end (C# .net Core 6, Java et Python) tout en m'intéressant de plus en plus à la cybersécurité. \n\nComputer engineer since 2011, I have been working as a back-end developer(C# .net Core 6, Java and Python), while becoming more and more interested in cybersecurity.",
+        "company": "SII",
+        "companyLogoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/srcsii_ouest.png",
+        "city": "Rennes, France",
+        "name": "Nailya BOGROVA",
+        "photoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/src/images/speakers/nailya_bogrova.jpeg",
+        "socials": [
+          {
+            "__typename": "Social",
+            "name": "github",
+            "url": "https://github.com/Nailja",
+            "icon": null
+          },
+          {
+            "__typename": "Social",
+            "name": "linkedin",
+            "url": "https://www.linkedin.com/nailyabogrova",
+            "icon": null
+          }
+        ]
+      },
+      {
+        "__typename": "Speaker",
+        "id": "nico_martin",
+        "bio": "Nico Martin is a Machine Learning Engineer with focus on WebML at 🤗 Hugging Face and Google Developer Expert in AI and Web Technologies from Switzerland.\nHe specializes in making AI accessible through web browsers, developing tools that simplify ML integration for developers. Nico actively shares his expertise through workshops, articles, and conference presentations, bridging the gap between web development and machine learning communities.",
+        "company": "Hugging Face",
+        "companyLogoUrl": null,
+        "city": "Bern, Switzerland",
+        "name": "Nico Martin",
+        "photoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/src/images/speakers/nico_martin.jpg",
+        "socials": [
+          {
+            "__typename": "Social",
+            "name": "github",
+            "url": "https://github.com/nico-martin",
+            "icon": null
+          },
+          {
+            "__typename": "Social",
+            "name": "twitter",
+            "url": "https://twitter.com/nic_o_martin",
+            "icon": null
+          }
+        ]
+      },
+      {
+        "__typename": "Speaker",
+        "id": "nicolas_blanchon",
+        "bio": "Nicolas est juriste de formation, spécialisé en droit des affaires et en droit du numérique. Co-auteur de l’ouvrage L’IA dans tous ses états et co-fondateur de La Fresque de l’IA.\n\nNicolas est juriste de formation, spécialisé en droit des affaires et en droit du numérique. Co-auteur de l’ouvrage L’IA dans tous ses états et co-fondateur de La Fresque de l’IA, il s’attache à rendre le droit accessible face aux bouleversements technologiques. À la croisée des enjeux éthiques, juridiques et économiques, il œuvre pour un usage encadré, responsable et souverain de l’intelligence artificielle dans nos sociétés.",
+        "company": "La Fresque de l'IA",
+        "companyLogoUrl": null,
+        "city": "Paris, France",
+        "name": "Nicolas Blanchon",
+        "photoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/src/images/speakers/nicolas_blanchon.jpg",
+        "socials": [
+          {
+            "__typename": "Social",
+            "name": "linkedin",
+            "url": "https://www.linkedin.com/nicolas-blanchon-6773b4a2",
+            "icon": null
+          }
+        ]
+      },
+      {
+        "__typename": "Speaker",
+        "id": "nicolas_delsaux",
+        "bio": "Développeur Java pendant 15 ans, je suis devenu depuis quelques années peut-être un peu plus qu'un vieux développeur : un architecte, un référent technique, peut-être un mentor.\nJ'ai fait du Java dans suffisamment d'environnements différents pour apprendre beaucoup à la fois sur la technique, mais aussi sur le coeur du développement : l'humain.",
+        "company": "Zenika",
+        "companyLogoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/srczenika.png",
+        "city": "Lille, France",
+        "name": "Nicolas Delsaux",
+        "photoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/src/images/speakers/nicolas_delsaux.jpg",
+        "socials": [
+          {
+            "__typename": "Social",
+            "name": "github",
+            "url": "https://github.com/riduidel",
+            "icon": null
+          }
+        ]
+      },
+      {
+        "__typename": "Speaker",
+        "id": "nicolas_guillot",
+        "bio": "Salut ! Je suis Nicolas, développeur depuis plus de 25 ans et aujourd'hui développeur d'applications mobiles freelance.\n\nMon parcours m'a mené de la programmation de jeux MS-DOS au développement de bancs de tests électroniques pour la recherche pétrolière, avant de basculer vers le mobile en 2017.\n\nTout a changé avec une mission d'éco-volontariat en Polynésie pour le suivi des tortues marines. Cette expérience a inspiré \"We Spot Turtles!\", mon side project devenu une de mes activités principales depuis que je suis freelance.\n\nEn 2022, une rencontre inattendue avec une australienne a propulsé ce projet sur la scène internationale, jusqu'à être mis en avant par Google dans une campagne mondiale.\n\nAujourd'hui, je développe cette solution en Flutter, co-organise le meetup Flutter Nantes, et cherche à étendre l'impact de cette application dédiée à la préservation des tortues marines à travers le monde.",
+        "company": "alt+1",
+        "companyLogoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/srcalt_1.png",
+        "city": "Nantes, France",
+        "name": "Nicolas Guillot",
+        "photoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/src/images/speakers/nicolas_guillot.jpg",
+        "socials": [
+          {
+            "__typename": "Social",
+            "name": "linkedin",
+            "url": "https://www.linkedin.com/guillotnico",
+            "icon": null
+          }
+        ]
+      },
+      {
+        "__typename": "Speaker",
+        "id": "noelie_roux",
+        "bio": "Noëlie est une experte en ingénierie et en accessibilité numérique, passionnée par la création d’expériences inclusives. Également intervenante, elle forme la nouvelle génération de développeurs et développeuses à intégrer l’accessibilité dès la conception de leurs projets.\n\nEn parallèle, Noëlie œuvre en tant que bénévole chez Game'Her, où elle promeut la diversité dans l'esport , le jeu vidéo et le streaming, tout en sensibilisant à l'accessibilité des jeux vidéo.\n\nAu travers de toutes ces actions, elle s’engage à rendre le numérique, qu’il s’agisse de jeux ou d’applications web, accessible à tous.",
+        "company": null,
+        "companyLogoUrl": null,
+        "city": "Paris, France",
+        "name": "Noëlie Roux",
+        "photoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/src/images/speakers/noelie_roux.jpg",
+        "socials": [
+          {
+            "__typename": "Social",
+            "name": "github",
+            "url": "https://github.com/Noelierx",
+            "icon": null
+          },
+          {
+            "__typename": "Social",
+            "name": "twitter",
+            "url": "https://twitter.com/noelie_roux",
+            "icon": null
+          },
+          {
+            "__typename": "Social",
+            "name": "linkedin",
+            "url": "https://www.linkedin.com/noelie-roux",
+            "icon": null
+          }
+        ]
+      },
+      {
+        "__typename": "Speaker",
+        "id": "oceane_gillard",
+        "bio": "Dev web fullstack et mobile, j'ai de multiples casquettes et aime garder une vision globale sur les projets.\nAyant découvert Flutter en 2020, j'ai tout de suite adoré ! J'ai d'ailleurs développé une application Flutter permettant de compter les points durant une partie de Barbu (un jeu de cartes, aussi connu sous le nom de Tafferan). L'application Score Barbu est disponible sur le PlayStore depuis 2023.\n\nJ'ai rejoint Zenika en 2023, ce qui m'a permis de participer à de nombreux projets et donner mes premières conférences.",
+        "company": "Zenika",
+        "companyLogoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/srczenika.png",
+        "city": "Nantes, France",
+        "name": "Océane Gillard",
+        "photoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/src/images/speakers/oceane_gillard.jpg",
+        "socials": [
+          {
+            "__typename": "Social",
+            "name": "linkedin",
+            "url": "https://www.linkedin.com/oceane-gillard",
+            "icon": null
+          },
+          {
+            "__typename": "Social",
+            "name": "github",
+            "url": "https://github.com/Zigotote",
+            "icon": null
+          }
+        ]
+      },
+      {
+        "__typename": "Speaker",
+        "id": "oliver_dunk",
+        "bio": "Oliver is a Developer Relations Engineer working on Chrome Extensions at Google. He is also an editor in the W3C WebExtensions Community Group. Outside of this, he enjoys bouldering, photography and travel.",
+        "company": "Google",
+        "companyLogoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/srcgoogle.png",
+        "city": "London, United Kingdom",
+        "name": "Oliver Dunk",
+        "photoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/src/images/speakers/oliver_dunk.jpg",
+        "socials": [
+          {
+            "__typename": "Social",
+            "name": "linkedin",
+            "url": "https://www.linkedin.com/oliverdunk",
+            "icon": null
+          }
+        ]
+      },
+      {
+        "__typename": "Speaker",
+        "id": "olivier_leplus",
+        "bio": "Developer Advocate at AWS and Google Developer Expert in Web Technologies. I love to share knowledge (and love) among developers and people in general.",
+        "company": "AWS",
+        "companyLogoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/src/images/partners/aws.png",
+        "city": "Paris, France",
+        "name": "Olivier Leplus",
+        "photoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/src/images/speakers/olivier_leplus.jpeg",
+        "socials": [
+          {
+            "__typename": "Social",
+            "name": "twitter",
+            "url": "https://twitter.com/olivierleplus",
+            "icon": null
+          },
+          {
+            "__typename": "Social",
+            "name": "github",
+            "url": "https://github.com/tagazok",
+            "icon": null
+          }
+        ]
+      },
+      {
+        "__typename": "Speaker",
+        "id": "patrice_de_saint_steban",
+        "bio": "Depuis plus de 15 ans, je me passionne pour le développement d'applications WEB et Mobile, en touchant à toutes les couches du Front au Back jusqu'à son déploiement sur le Cloud.\n\nJ'ai travaillé sur des technologies très différentes, du PHP au JAVA et JAVASCRIPT, du GWT à Angular et React, de Google App Engine à Node.js, mais également le mobile avec Flutter et l'accessibilité.\nJe suis organisateur du Meetup Flutter Nantes, créateur d'un plugin IntelliJ et de site WordPress pour des associations.",
+        "company": "Zenika",
+        "companyLogoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/srczenika.png",
+        "city": "Nantes, France",
+        "name": "Patrice De Saint Steban",
+        "photoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/src/images/speakers/patrice_de_saint_steban.jpg",
+        "socials": [
+          {
+            "__typename": "Social",
+            "name": "github",
+            "url": "https://github.com/patou",
+            "icon": null
+          },
+          {
+            "__typename": "Social",
+            "name": "bluesky",
+            "url": "",
+            "icon": null
+          },
+          {
+            "__typename": "Social",
+            "name": "linkedin",
+            "url": "https://www.linkedin.com/patrice-de-saint-steban",
+            "icon": null
+          }
+        ]
+      },
+      {
+        "__typename": "Speaker",
+        "id": "philippe_bousquet",
+        "bio": "Issue du monde Mainframe IBM, et fortement attiré par les évolutions technologiques, je me suis rapidement tourné vers les technologies Java et JEE au début des années 2000.\n\nMes domaines de prédilections :\n\n* L'architecture technique : Micro-services, Hexgonal, DDD, Event Driven\n* Les APIs : REST, Asynchrones, OpenAPI, AsyncAPI, Design First \n* Le Cloud : AWS, Azure, PaaS / IaaS, ...\n* Industrialisation : CI/CD, Automatisation des tests, ...\n* La conteneurisation : Docker & Kubernetes\n* Le everything as code : AsciiDoc, Infrastructure as Code, Terraform, ... \n\nChez **SQLI Bordeaux** depuis huit ans, j'occupe le poste d'Architecte et Directeur Technique où mes rôles principaux sont :\n\n* Piloter la Veille et l'inovation\n* Faire de l'accompagnement auprès des projets (Architecture et socle technique, accompagnement équipe, ...)\n* Effectuer des revues techniques (Architecture, DevOps, Code, ...)\n* Piloter l'animation technique (Workshops, Formations, Rayonnement, ...)",
+        "company": "SQLI",
+        "companyLogoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/srcsqli.png",
+        "city": "Bordeaux, France",
+        "name": "Philippe Bousquet",
+        "photoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/src/images/speakers/philippe_bousquet.jpg",
+        "socials": [
+          {
+            "__typename": "Social",
+            "name": "linkedin",
+            "url": "https://www.linkedin.com/philippe-bousquet-60845199",
+            "icon": null
+          }
+        ]
+      },
+      {
+        "__typename": "Speaker",
+        "id": "pierre",
+        "bio": null,
+        "company": "Makina Corpus",
+        "companyLogoUrl": null,
+        "city": "Nantes, France",
+        "name": "Pierre Rineau",
+        "photoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/src/images/speakers/pierre.jpg",
+        "socials": []
+      },
+      {
+        "__typename": "Speaker",
+        "id": "pierre_therrode",
+        "bio": "**Lead Developer** chez **SNCF Connect & Tech** sur la partie chatbot depuis près de 5 ans.\nGeek et curieux, j'aime comprendre le fonctionnement des choses qui nous entourent.\nContributeur à la plateforme open source [Tock - The Open Conversation Kit](https://doc.tock.ai/)",
+        "company": "SNCF Connect & Tech",
+        "companyLogoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/srcsncf_connect___tech.png",
+        "city": "Paris, France",
+        "name": "Pierre Therrode",
+        "photoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/src/images/speakers/pierre_therrode.jpg",
+        "socials": [
+          {
+            "__typename": "Social",
+            "name": "github",
+            "url": "https://github.com/pi-2r",
+            "icon": null
+          },
+          {
+            "__typename": "Social",
+            "name": "twitter",
+            "url": "https://twitter.com/pi2r3",
+            "icon": null
+          },
+          {
+            "__typename": "Social",
+            "name": "linkedin",
+            "url": "https://www.linkedin.com/ptherrode",
+            "icon": null
+          }
+        ]
+      },
+      {
+        "__typename": "Speaker",
+        "id": "quentin_joly",
+        "bio": "Bambin de la tech, je ne cesse d'apprendre chaque jour en portant la casquette de SRE chez Lucca. J'alimente cette passion au quotidien en partageant mes découvertes et mes inspirations sur mon petit blog \"une-tasse-de.cafe\". Je suis toujours disponible pour blablater autour d'un bon café !",
+        "company": "Lucca",
+        "companyLogoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/srclucca.png",
+        "city": "Lyon, France",
+        "name": "Quentin Joly",
+        "photoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/src/images/speakers/quentin_joly.jpg",
+        "socials": [
+          {
+            "__typename": "Social",
+            "name": "github",
+            "url": "https://github.com/qjoly",
+            "icon": null
+          },
+          {
+            "__typename": "Social",
+            "name": "twitter",
+            "url": "https://twitter.com/thebidouilleur",
+            "icon": null
+          }
+        ]
+      },
+      {
+        "__typename": "Speaker",
+        "id": "rachel_dubois",
+        "bio": "I believe that we can create products and services that make the world a better place. And that we can learn and grow in the process of doing so. Our challenge is that we waste time and money and human energy on untested ideas that, too often, turn out to be something that the customer does not want. Or, if we have an idea that is really good, we get in our own way by not executing it well, by not being able to communicate, inspire, and empower our collaborators and stakeholders as we must in order to do the impossible: launch and grow good ideas that the world needs, fostering sustainable and ethical growth.\n\nI work to solve that.\n---\n25 years + experience in Tech as Product Lead\nNamed TOP 50 Product Leader to follow in 2024 (worldwide)\nAgile @scale expert\nInternational speaker & keynoter since 2008\nWorked for : Spotify, Airbus, Orange, Natixis, Legrand, ...",
+        "company": "bttrways",
+        "companyLogoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/srcbttrways.png",
+        "city": "Toulouse, France",
+        "name": "Rachel Dubois",
+        "photoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/src/images/speakers/rachel_dubois.jpg",
+        "socials": [
+          {
+            "__typename": "Social",
+            "name": "linkedin",
+            "url": "https://www.linkedin.com/duboisrachel",
+            "icon": null
+          }
+        ]
+      },
+      {
+        "__typename": "Speaker",
+        "id": "raphael_semeteys",
+        "bio": "Raphaël Semeteys, architecte IT et responsable DevRel chez Worldline à Paris, possède plus de 25 ans d’expérience dans l’informatique. Spécialiste des logiciels libres et open source, il a animé un centre de compétences pendant neuf ans. Passionné de yoga depuis plus de 30 ans, il allie expertise technologique et bien-être holistique, offrant une vision enrichie de l’écosystème numérique.\nPour en [savoir plus](https://raphiki.github.io/).",
+        "company": "Worldline",
+        "companyLogoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/srcworldline.png",
+        "city": "Paris, France",
+        "name": "Raphael Semeteys",
+        "photoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/src/images/speakers/raphael_semeteys.jpg",
+        "socials": [
+          {
+            "__typename": "Social",
+            "name": "github",
+            "url": "https://github.com/raphiki",
+            "icon": null
+          },
+          {
+            "__typename": "Social",
+            "name": "twitter",
+            "url": "https://twitter.com/RaphaelSemeteys",
+            "icon": null
+          },
+          {
+            "__typename": "Social",
+            "name": "linkedin",
+            "url": "https://www.linkedin.com/raphaelsemeteys",
+            "icon": null
+          }
+        ]
+      },
+      {
+        "__typename": "Speaker",
+        "id": "robin_caroff",
+        "bio": "Technical Lead at U TECH (https://u-emploi.com/nos-metiers/les-metiers-de-l-informatique-dans-la-grande-distribution).\n\nMobile developer since 2011, I am also Co-Founder and Organizer of the GDG Nantes Android (https://www.meetup.com/fr-FR/gdg_nantes_android/).\n\nTechnology enthusiast, highly convinced that technology and mobile devices can improve productivity for small as well as for big companies.",
+        "company": "U TECH",
+        "companyLogoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/srcu_tech.png",
+        "city": "Nantes, France",
+        "name": "Robin Caroff",
+        "photoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/src/images/speakers/robin_caroff.jpg",
+        "socials": [
+          {
+            "__typename": "Social",
+            "name": "github",
+            "url": "https://github.com/RobinCaroff",
+            "icon": null
+          }
+        ]
+      },
+      {
+        "__typename": "Speaker",
+        "id": "samuel_berthe",
+        "bio": "Je suis un entrepreneur passionné par l'open-source et l'innovation. En tant qu'animateur du meetup GenAI Nantais, j'anime un rendez-vous mensuel autour de l'IA générative pour faire progresser l'écosystème. J'organise également le hackathon \"Shift\", un événement où l'on explore et expérimente l'innovation en IA.",
+        "company": "GenAI Community Leader",
+        "companyLogoUrl": null,
+        "city": "Nantes, France",
+        "name": "Samuel Berthe",
+        "photoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/src/images/speakers/samuel_berthe.jpg",
+        "socials": [
+          {
+            "__typename": "Social",
+            "name": "github",
+            "url": "https://github.com/samber",
+            "icon": null
+          },
+          {
+            "__typename": "Social",
+            "name": "twitter",
+            "url": "https://twitter.com/samuelberthe",
+            "icon": null
+          },
+          {
+            "__typename": "Social",
+            "name": "linkedin",
+            "url": "https://www.linkedin.com/samuelberthe",
+            "icon": null
+          }
+        ]
+      },
+      {
+        "__typename": "Speaker",
+        "id": "sara_vieira",
+        "bio": "Sara is a product engineer at epilot. Author of The Opinionated Guide to React. Open Source enthusiast. Conference Speaker. Talk to her about Retro Games or Airports.",
+        "company": "epilot",
+        "companyLogoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/srcepilot.png",
+        "city": "London, United Kingdom",
+        "name": "Sara Vieira",
+        "photoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/src/images/speakers/sara_vieira.jpg",
+        "socials": [
+          {
+            "__typename": "Social",
+            "name": "linkedin",
+            "url": "https://www.linkedin.com/saravieira1",
+            "icon": null
+          }
+        ]
+      },
+      {
+        "__typename": "Speaker",
+        "id": "sarah_tedjani",
+        "bio": null,
+        "company": "Jolimoi",
+        "companyLogoUrl": null,
+        "city": "France",
+        "name": "Sarah Tedjani",
+        "photoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/src/images/speakers/sarah_tedjani.jpeg",
+        "socials": [
+          {
+            "__typename": "Social",
+            "name": "linkedin",
+            "url": "https://www.linkedin.com/sarahtedjani",
+            "icon": null
+          }
+        ]
+      },
+      {
+        "__typename": "Speaker",
+        "id": "sasha_denisov",
+        "bio": "Sasha is a software developer with over 20 years in multiple technologies and domains. A tech lead, architect, and mobile solutions expert, he specializes in AI integrations for mobile apps, focusing on on-device AI. He excels in Flutter, Firebase, and generative AI for robust, scalable apps. Sasha is Chief Software Engineer and Head of Flutter Discipline at EPAM, GDE for AI, Firebase, Flutter, Dart, and co-organizes Flutter Berlin Community",
+        "company": "EPAM Systems",
+        "companyLogoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/srcepam_systems.png",
+        "city": "Berlin, Germany",
+        "name": "Sasha Denisov",
+        "photoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/src/images/speakers/sasha_denisov.jpg",
+        "socials": [
+          {
+            "__typename": "Social",
+            "name": "github",
+            "url": "https://github.com/denisovav",
+            "icon": null
+          },
+          {
+            "__typename": "Social",
+            "name": "twitter",
+            "url": "https://twitter.com/shuregdenisov",
+            "icon": null
+          }
+        ]
+      },
+      {
+        "__typename": "Speaker",
+        "id": "seifeddin_mansri",
+        "bio": "Seifeddin is a Cloud Chief Technology Officer at Sfeir, leading the Cloud infrastructure, DevOps and Security activities and managing several teams of Cloud experts. He has actually many Cloud technical Certifications (GCP, AWS, Kubernetes) and is also an experienced Google Cloud and Kubernetes Trainer. He has also been recognized, since January 2022, as a Google Developer Expert (GDE) on Google Cloud technologies.",
+        "company": "SFEIR",
+        "companyLogoUrl": null,
+        "city": "Paris, France",
+        "name": "Seifeddin Mansri",
+        "photoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/src/images/speakers/seifeddin_mansri.jpg",
+        "socials": [
+          {
+            "__typename": "Social",
+            "name": "linkedin",
+            "url": "https://www.linkedin.com/seifeddinmansri",
+            "icon": null
+          }
+        ]
+      },
+      {
+        "__typename": "Speaker",
+        "id": "simon_bernardin",
+        "bio": "Je suis Simon Bernardin, je travaille dans l’informatique depuis une vingtaine d'année. \nEn 2013, j’ai décidé d’orienter ma carrière vers les nouvelles technologies, et j’ai eu la chance d’intégrer une équipe en charge du développement d’un outil de génération d’applications mobiles. \nUne fois le projet terminé, j’ai pu rejoindre la mobile factory d’une grande entreprise sur Nantes où j’ai pu parfaire mes compétences dans le domaine. \nCeci m'a ouvert la voie pour travailler dans une startup nantaise dans laquelle j'ai pris de l'assurance. \nJe travaille aujourd'hui comme chef de projet mobiles dans une ESN nantaise.\nAujourd'hui j'organise à Nantes les meetups Flutter, Mobilis in Mobile, et je m'implique également dans la communauté.",
+        "company": "Mobiapps",
+        "companyLogoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/srcmobiapps.png",
+        "city": "Nantes, France",
+        "name": "Simon Bernardin",
+        "photoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/src/images/speakers/simon_bernardin.jpg",
+        "socials": [
+          {
+            "__typename": "Social",
+            "name": "github",
+            "url": "https://github.com/Malrok",
+            "icon": null
+          }
+        ]
+      },
+      {
+        "__typename": "Speaker",
+        "id": "simon_mellerin",
+        "bio": "* PHP/Symfony & Vue.js developper at [Makina Corpus](https://makina-corpus.com/), \n* Creator and co-maintainer of [DbToolsBundle](https://dbtoolsbundle.readthedocs.io/en/stable/)",
+        "company": "Makina Corpus",
+        "companyLogoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/srcmakina_corpus.png",
+        "city": "Nantes, France",
+        "name": "Simon Mellerin",
+        "photoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/src/images/speakers/simon_mellerin.jpeg",
+        "socials": [
+          {
+            "__typename": "Social",
+            "name": "github",
+            "url": "https://github.com/SimonMellerin",
+            "icon": null
+          },
+          {
+            "__typename": "Social",
+            "name": "linkedin",
+            "url": "https://www.linkedin.com/simonmellerin",
+            "icon": null
+          }
+        ]
+      },
+      {
+        "__typename": "Speaker",
+        "id": "sonia_seddiki",
+        "bio": "Ingénieure navigant depuis 5 ans entre backend, ops et cloud. Globe-trotteuse compulsive, avec une passion secrète pour la cybersécurité et une (encore plus secrète) pour les dépôts Git bien rangés.",
+        "company": "N/A",
+        "companyLogoUrl": null,
+        "city": "Paris, France",
+        "name": "Sonia Seddiki",
+        "photoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/src/images/speakers/sonia_seddiki.jpg",
+        "socials": [
+          {
+            "__typename": "Social",
+            "name": "twitter",
+            "url": "https://twitter.com/sonia_seddiki",
+            "icon": null
+          },
+          {
+            "__typename": "Social",
+            "name": "linkedin",
+            "url": "https://www.linkedin.com/soniaseddiki",
+            "icon": null
+          }
+        ]
+      },
+      {
+        "__typename": "Speaker",
+        "id": "stephane_philippart",
+        "bio": "Durant plus de 20 ans dans le métier \"d'informaticien\" j'ai pu me confronter à beaucoup de technologies différentes. Et c'est cette diversité qui me fait continuer à autant aimer notre métier.\n\nDepuis maintenant 3 ans j'ai la chance d'évoluer au sein d'OVHcloud en tant que developer advocate. Cette position me permet de découvrir de nouvelles technologies ou disciplines comme l’Intelligence Artificielle ou le \"cloud native\" par exemple.\n\nMais mon cœur de vieux développeur Java ne peut pas trop s'éloigner de cette technologie qui est le fil rouge de mes nombreuses années de développeur.\n\nC'est avec humilité que je partage cette expérience mais aussi les nouveautés de notre écosystème à travers mes conférences et le meetup TADx co-créé à Tours.",
+        "company": "OVHcloud",
+        "companyLogoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/srcovhcloud.png",
+        "city": "Tours, France",
+        "name": "Stéphane Philippart",
+        "photoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/src/images/speakers/stephane_philippart.jpg",
+        "socials": [
+          {
+            "__typename": "Social",
+            "name": "github",
+            "url": "https://github.com/philippart-s",
+            "icon": null
+          },
+          {
+            "__typename": "Social",
+            "name": "twitter",
+            "url": "https://twitter.com/wildagsx",
+            "icon": null
+          },
+          {
+            "__typename": "Social",
+            "name": "linkedin",
+            "url": "https://www.linkedin.com/philippartstephane",
+            "icon": null
+          }
+        ]
+      },
+      {
+        "__typename": "Speaker",
+        "id": "sebastien_ferrer",
+        "bio": "Sébastien est ingénieur logiciel chez OVHcloud à Nantes, dans l'équipe SIA (Service Integration & Automation).\nExerçant ce métier depuis maintenant plus de 12 ans, il a toujours aimé vulgariser et partager ses connaissances en public.\n\nIl anime actuellement des conférences autour de la cybersécurité, de la gestion d'incidents et divers autres sujets techniques.\nPortant un grand intérêt pour l'enseignement, il intervient également régulièrement dans certaines écoles et universités.\n\nIl est également passionné par le théâtre, ayant joué 10 ans dans une troupe en région parisienne.",
+        "company": "OVHcloud",
+        "companyLogoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/srcovhcloud.png",
+        "city": "Nantes, France",
+        "name": "Sébastien Ferrer",
+        "photoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/src/images/speakers/sebastien_ferrer.png",
+        "socials": [
+          {
+            "__typename": "Social",
+            "name": "github",
+            "url": "https://github.com/sebferrer",
+            "icon": null
+          }
+        ]
+      },
+      {
+        "__typename": "Speaker",
+        "id": "sebastien_fourreau",
+        "bio": "Lead SRE chez RCA, éditeur de logiciels pour les experts-comptables.\nMes domaines de prédilection: Kubernetes, la CI/CD, l'observabilité.\nMes passions: l'aérospatiale, le retrogaming, et beaucoup d'autres !",
+        "company": "RCA",
+        "companyLogoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/srcrca.png",
+        "city": "Nantes, France",
+        "name": "Sébastien Fourreau",
+        "photoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/src/images/speakers/sebastien_fourreau.png",
+        "socials": []
+      },
+      {
+        "__typename": "Speaker",
+        "id": "sebastien_oddo",
+        "bio": "- French speaker from Bordeaux\n- Technical Manager at IPPON Technologies\n- Full-stack tech lead engineer\n- Specialized in front-end technologies and Angular\n- Formula 1 fan!",
+        "company": "Ippon Technologies",
+        "companyLogoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/srcippon_technologies.png",
+        "city": "Vannes, France",
+        "name": "Sébastien Oddo",
+        "photoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/src/images/speakers/sebastien_oddo.jpg",
+        "socials": [
+          {
+            "__typename": "Social",
+            "name": "github",
+            "url": "https://github.com/Sebi11",
+            "icon": null
+          },
+          {
+            "__typename": "Social",
+            "name": "linkedin",
+            "url": "https://www.linkedin.com/s%C3%A9bastien-oddo",
+            "icon": null
+          }
+        ]
+      },
+      {
+        "__typename": "Speaker",
+        "id": "thanh_lan_doublier",
+        "bio": "AI engineer à roulettes\n\nAprès des études de droits, je suis tombée dans le développement web . Après quelques années en tant que développeuse  free-lance  RoR, mon état de sante s’est dégradée, ce qui m’a forcée à m’arrêter de coder pendant environ deux ans.\nLe code est un des éléments clef qui m’a aidé à accepter et avancer avec la maladie. C’est pour moi, un peu comme une baguette magique où tout peut devenir possible. Mais comme un grand pouvoir implique de grandes responsabilités,  il est parfois utile en tant que développeuse ou développeur de se questionner  sur nos pratiques et déconstruire nos biais.\n\nJe fais partie de l’organisation de Cloud Nord ( une conférence  orientée cloud à Lille ) , des Chtitedev ( un collectif de femmes de la tech) et je suis vice présidente de Compositech une association militante pour les droits des femmes et des personnes non binaires dans la tech",
+        "company": "Second brain",
+        "companyLogoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/srcsecond_brain.png",
+        "city": "Lille, France",
+        "name": "Thanh Lan Doublier",
+        "photoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/src/images/speakers/thanh_lan_doublier.jpeg",
+        "socials": [
+          {
+            "__typename": "Social",
+            "name": "linkedin",
+            "url": "https://www.linkedin.com/thanhlandoublier",
+            "icon": null
+          }
+        ]
+      },
+      {
+        "__typename": "Speaker",
+        "id": "thierry_chantier",
+        "bio": "Une passion née dans les lectures, le monde informatique et électronique m'a happé dès mon ZX Spectrum pour ne jamais me lâché.\nDéveloppeur de métier, du jeu vidéo au monde du master data management, j'ai aussi touché aux univers de la QA et de la mise en production.<br/>\nJe suis maintenant Developer Advocate, chez Dataiku, jonglant entre technique, communauté et transmission de savoirs.\n\nComme une passion mérite toujours qu'on la transmette, j'ai fondé Mixteen pour essayer d'aider les enfants à appréhender le monde numérique.<br/>\nCette envie de transmettre c'est aussi manifestée en m'amenant à prendre part à l'organisation de plusieurs MiXiT puis à cofonder le GDG Lyon.<br/>\nDe manière parallèle, j'essaie de partager également par le biais d'articles sur mon blog et de vidéos sur ma chaîne YouTube.<br/>\n\nEn résumé : <br/>\nhttps://noti.st/titimoby\n\nDans le détail : <br/>\nhttps://www.twitch.tv/titimoby<br/>\nhttps://mixteen.org/ <br/>\nhttps://tontoncodeur.fr/ <br/>\nhttps://www.youtube.com/thierrychantier\nhttps://gdg.community.dev/gdg-cloud-and-iot-lyon/ <br/>",
+        "company": "Dataiku",
+        "companyLogoUrl": null,
+        "city": "Lyon, France",
+        "name": "Thierry Chantier",
+        "photoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/src/images/speakers/thierry_chantier.png",
+        "socials": [
+          {
+            "__typename": "Social",
+            "name": "github",
+            "url": "https://github.com/titimoby",
+            "icon": null
+          }
+        ]
+      },
+      {
+        "__typename": "Speaker",
+        "id": "thomas_boutin",
+        "bio": "Tech enthusiast and passionate about Android development.\nGDG Nantes Android and Mobilis In Mobile Organizer.\nChocolate cake expert.",
+        "company": "Ippon Technologies",
+        "companyLogoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/srcippon_technologies.png",
+        "city": "Nantes, France",
+        "name": "Thomas Boutin",
+        "photoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/src/images/speakers/thomas_boutin.jpg",
+        "socials": [
+          {
+            "__typename": "Social",
+            "name": "github",
+            "url": "https://github.com/Thomas-Boutin",
+            "icon": null
+          },
+          {
+            "__typename": "Social",
+            "name": "twitter",
+            "url": "https://twitter.com/tbout1",
+            "icon": null
+          }
+        ]
+      },
+      {
+        "__typename": "Speaker",
+        "id": "thomas_cami",
+        "bio": "Développeur curieux et touche à tout, doublé d'un musicien qui a abandonné la scène pour bidouiller des synthétiseurs à coup de Rust et de fer à souder.",
+        "company": "Winamax",
+        "companyLogoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/srcwinamax.png",
+        "city": "Paris, France",
+        "name": "Thomas Cami",
+        "photoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/src/images/speakers/thomas_cami.jpg",
+        "socials": [
+          {
+            "__typename": "Social",
+            "name": "linkedin",
+            "url": "https://www.linkedin.com/thomas-cami-231a6313b",
+            "icon": null
+          }
+        ]
+      },
+      {
+        "__typename": "Speaker",
+        "id": "thomas_jouve",
+        "bio": "Développeur depuis ... longtemps, un peu touche à tout de l'infra à l'algorithmie. J'adore bricoler, démonter, réparer des trucs ce qui me prends beaucoup de temps mais qui me permet aussi de découvrir beaucoup de choses ;-)\n\nComme l'informatique est une passion pour moi, j'aime beaucoup partager  ce que j'ai appris.\n\nhttps://github.com/tJouve",
+        "company": "Sopra Steria",
+        "companyLogoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/srcsopra_steria.png",
+        "city": "Clermont-Ferrand, France",
+        "name": "Thomas Jouve",
+        "photoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/src/images/speakers/thomas_jouve.jpg",
+        "socials": [
+          {
+            "__typename": "Social",
+            "name": "github",
+            "url": "https://github.com/tJouve",
+            "icon": null
+          }
+        ]
+      },
+      {
+        "__typename": "Speaker",
+        "id": "thomas_piscitelli",
+        "bio": "Rennais de cœur et développeur passionné, j'ai  pu expérimenter le delivery dans un contexte d'ESN ou d'éditeur logiciel. J'aspire à mettre les équipes au centre des process afin de leur simplifier la vie et leur permettre de lever les différents freins qu'elles peuvent rencontrer. Je suis particulièrement intéressé par toutes les solutions permettant de favoriser la communication, la qualité de code, la sécurité applicative, la qualité des entrants, la gestion de la dette technique, le test...",
+        "company": "Liksi",
+        "companyLogoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/srcliksi.png",
+        "city": "Rennes, France",
+        "name": "Thomas Piscitelli",
+        "photoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/src/images/speakers/thomas_piscitelli.jpg",
+        "socials": [
+          {
+            "__typename": "Social",
+            "name": "linkedin",
+            "url": "https://www.linkedin.com/piscitellit",
+            "icon": null
+          }
+        ]
+      },
+      {
+        "__typename": "Speaker",
+        "id": "thomas_steiner",
+        "bio": "Thomas Steiner is a Developer Relations Engineer on the Chrome team at Google focused on Web AI and WebAssembly. He blogs on blog.tomayac.com and toots on @tomayac@toot.cafe.",
+        "company": "Google",
+        "companyLogoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/srcgoogle.png",
+        "city": "Barcelona, Spain",
+        "name": "Thomas Steiner",
+        "photoUrl": "https://raw.githubusercontent.com/GDG-Nantes/Devfest2025/main/src/images/speakers/thomas_steiner.jpg",
+        "socials": [
+          {
+            "__typename": "Social",
+            "name": "linkedin",
+            "url": "https://www.linkedin.com/thomassteinerlinkedin",
+            "icon": null
+          }
+        ]
+      }
+    ]
+  }
+}

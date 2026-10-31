@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.gdgnantes.devfest.core.analytics.performance.PerformanceMonitoring
 import com.gdgnantes.devfest.core.analytics.performance.traceDataLoading
 import com.gdgnantes.devfest.core.data.DevFestNantesStore
+import com.gdgnantes.devfest.core.domain.speakers.SpeakerIndexUseCase
 import com.gdgnantes.devfest.core.model.Speaker
 import com.gdgnantes.devfest.core.ui.UiState
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -15,7 +16,8 @@ import timber.log.Timber
 
 class SpeakersViewModel(
     private val store: DevFestNantesStore,
-    private val performanceMonitoring: PerformanceMonitoring
+    private val performanceMonitoring: PerformanceMonitoring,
+    private val speakerIndex: SpeakerIndexUseCase
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(UiState.STARTING)
     val uiState: StateFlow<UiState>
@@ -24,6 +26,14 @@ class SpeakersViewModel(
     private val _speakers = MutableStateFlow<List<Speaker>>(emptyList())
     val speakers = _speakers.asStateFlow()
 
+    private val _letterIndexes = MutableStateFlow<Map<Char, Int>>(emptyMap())
+
+    /**
+     * The A-Z scroller map for the loaded [speakers] (see [firstLetterIndexes]). Computed once per
+     * data load, so the empty-name report is not repeated by recompositions or configuration changes.
+     */
+    val letterIndexes: StateFlow<Map<Char, Int>> = _letterIndexes.asStateFlow()
+
     init {
         viewModelScope.launch {
             performanceMonitoring.traceDataLoading(
@@ -31,6 +41,8 @@ class SpeakersViewModel(
                 dataSource = "graphql"
             ) {
                 store.speakers.collect { speakersList ->
+                    reportEmptyNames(speakersList)
+                    _letterIndexes.value = firstLetterIndexes(speakersList)
                     _speakers.value = speakersList
                     _uiState.value = UiState.SUCCESS
 
@@ -40,4 +52,44 @@ class SpeakersViewModel(
             }
         }
     }
+
+    /**
+     * The A-Z scroller map: lowercase first letter to the index of the first speaker with that
+     * letter, in list order. The shared index yields an empty letter for a speaker with an empty
+     * name, which v1.0 crashed on (`NoSuchElementException`); it is skipped here. Pure: the
+     * non-fatal report for such a speaker is made by [reportEmptyNames] on each data load.
+     */
+    fun firstLetterIndexes(speakers: List<Speaker>): Map<Char, Int> {
+        val indexes = speakerIndex.firstIndexes(speakers)
+        // The key comes from the speaker itself, through the same function the row header check
+        // uses, so the two cannot diverge for letters whose upper-casing changes the length or
+        // the base character (`ß` becomes `SS`). The first index of a key wins, as in v1.0.
+        val keyed = LinkedHashMap<Char, Int>()
+        for ((letter, index) in indexes.filter { it.letter.isNotEmpty() }) {
+            val key = speakerLetterKey(speakers[index].name)
+            if (key != null && key !in keyed) keyed[key] = index
+        }
+        return keyed
+    }
+
+    /**
+     * Reports speakers with an empty name as a non-fatal exception (D-20). Only speaker ids (public
+     * conference data) are reported.
+     */
+    private fun reportEmptyNames(speakers: List<Speaker>) {
+        val unnamed = speakers.filter { it.name.isEmpty() }
+        if (unnamed.isEmpty()) return
+        val ids = unnamed.joinToString { it.id }
+        Timber.w(
+            IllegalStateException("Speaker A-Z index: speaker with an empty name skipped (ids: $ids)"),
+            "Speaker A-Z index: empty speaker name skipped"
+        )
+    }
 }
+
+/**
+ * The A-Z scroller key of a speaker name: its lowercased first character, or `null` for an empty
+ * name. Shared by the index map ([SpeakersViewModel.firstLetterIndexes]) and the row header check
+ * in `SpeakersList`, which must agree on the key for the header to show.
+ */
+internal fun speakerLetterKey(name: String): Char? = name.lowercase().firstOrNull()

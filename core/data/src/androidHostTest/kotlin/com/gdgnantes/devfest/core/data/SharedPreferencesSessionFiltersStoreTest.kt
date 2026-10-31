@@ -1,0 +1,96 @@
+package com.gdgnantes.devfest.core.data
+
+import android.content.Context
+import android.content.SharedPreferences
+import androidx.test.core.app.ApplicationProvider
+import com.gdgnantes.devfest.core.model.SessionFilter
+import com.gdgnantes.devfest.core.model.SessionFilterType
+import org.junit.Before
+import org.junit.Test
+import org.junit.runner.RunWith
+import org.robolectric.RobolectricTestRunner
+import org.robolectric.annotation.Config
+import kotlin.test.assertEquals
+import kotlin.test.assertTrue
+
+/**
+ * Pins how [SharedPreferencesSessionFiltersStore] persists the agenda filters (D-17): the key
+ * `SHARED_PREFERENCES_KEY_AGENDA_FILTERS` and one JSON string per filter. Key and JSON are written
+ * out as literals so a renamed constant or a changed serializer fails a test and saved filters survive.
+ */
+@RunWith(RobolectricTestRunner::class)
+@Config(sdk = [34])
+class SharedPreferencesSessionFiltersStoreTest {
+    private lateinit var prefs: SharedPreferences
+
+    @Before
+    fun setUp() {
+        val context = ApplicationProvider.getApplicationContext<Context>()
+        prefs = context.getSharedPreferences("test-prefs", Context.MODE_PRIVATE)
+        prefs.edit().clear().commit()
+    }
+
+    // SessionFilter is a data class since Phase 7 (D-14); pairs() keeps the comparison equality-agnostic.
+    private fun Set<SessionFilter>.pairs() = map { it.type to it.value }.toSet()
+
+    @Test
+    fun setFilters_stores_each_filter_as_its_json_string() {
+        val service = SharedPreferencesSessionFiltersStore(prefs)
+
+        service.setFilters(
+            setOf(
+                SessionFilter(SessionFilterType.LANGUAGE, "FRENCH"),
+                SessionFilter(SessionFilterType.ROOM, "titan")
+            )
+        )
+
+        assertEquals(
+            setOf(
+                """{"type":"LANGUAGE","value":"FRENCH"}""",
+                """{"type":"ROOM","value":"titan"}"""
+            ),
+            prefs.getStringSet("SHARED_PREFERENCES_KEY_AGENDA_FILTERS", null)
+        )
+    }
+
+    @Test
+    fun a_service_restores_the_saved_filters_and_skips_malformed_entries() {
+        prefs.edit()
+            .putStringSet(
+                "SHARED_PREFERENCES_KEY_AGENDA_FILTERS",
+                setOf(
+                    """{"type":"LANGUAGE","value":"FRENCH"}""",
+                    """{"type":"ROOM","value":"titan"}""",
+                    "not-json"
+                )
+            )
+            .commit()
+
+        val service = SharedPreferencesSessionFiltersStore(prefs)
+
+        assertEquals(
+            setOf(
+                SessionFilterType.LANGUAGE to "FRENCH",
+                SessionFilterType.ROOM to "titan"
+            ),
+            service.filters.value.pairs()
+        )
+    }
+
+    @Test
+    fun setFilters_with_an_empty_set_stores_an_empty_set() {
+        val service = SharedPreferencesSessionFiltersStore(prefs)
+        service.setFilters(setOf(SessionFilter(SessionFilterType.BOOKMARK, "true")))
+
+        service.setFilters(emptySet())
+
+        assertTrue(prefs.contains("SHARED_PREFERENCES_KEY_AGENDA_FILTERS"))
+        assertEquals(emptySet(), prefs.getStringSet("SHARED_PREFERENCES_KEY_AGENDA_FILTERS", null))
+        assertTrue(service.filters.value.isEmpty())
+    }
+
+    @Test
+    fun a_fresh_service_has_no_filters() {
+        assertTrue(SharedPreferencesSessionFiltersStore(prefs).filters.value.isEmpty())
+    }
+}

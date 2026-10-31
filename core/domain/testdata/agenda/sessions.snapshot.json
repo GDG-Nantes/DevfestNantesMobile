@@ -1,0 +1,1528 @@
+[
+  {
+    "id": "day-1-open",
+    "title": "Opening",
+    "type": "OPENING",
+    "language": "FRENCH",
+    "complexity": null,
+    "room": null,
+    "startDate": "2025-10-16T08:00:00+02:00",
+    "endDate": "2025-10-16T09:00:00+02:00",
+    "speakerIds": []
+  },
+  {
+    "id": "keynotedouverture",
+    "title": "Opening Keynote - Advice Well Taken",
+    "type": "CONFERENCE",
+    "language": "FRENCH",
+    "complexity": "BEGINNER",
+    "room": {
+      "id": "Jules Verne",
+      "name": "Jules Verne",
+      "sortIndex": 0
+    },
+    "startDate": "2025-10-16T09:00:00+02:00",
+    "endDate": "2025-10-16T09:50:00+02:00",
+    "speakerIds": [
+      "dasha_ilina"
+    ]
+  },
+  {
+    "id": "day-1-pause-1",
+    "title": "Break",
+    "type": "BREAK",
+    "language": "FRENCH",
+    "complexity": null,
+    "room": null,
+    "startDate": "2025-10-16T09:40:00+02:00",
+    "endDate": "2025-10-16T10:00:00+02:00",
+    "speakerIds": []
+  },
+  {
+    "id": "creersonproprejeuderoleenagenticaimcp",
+    "title": "Créer son propre Jeu de Rôle en Agentic AI & MCP avec Strands Agents",
+    "type": "CODELAB",
+    "language": "FRENCH",
+    "complexity": "INTERMEDIATE",
+    "room": {
+      "id": "L'Atelier",
+      "name": "L'Atelier",
+      "sortIndex": 6
+    },
+    "startDate": "2025-10-16T10:00:00+02:00",
+    "endDate": "2025-10-16T12:00:00+02:00",
+    "speakerIds": [
+      "arnaud_jean",
+      "olivier_leplus",
+      "tiffany_souterre"
+    ]
+  },
+  {
+    "id": "defrankensteinashakespeareressuscitervosconferencesenarticlesave",
+    "title": "Ressusciter vos présentations en articles de blog avec AWS Amplify Gen 2 et Amazon Bedrock",
+    "type": "CONFERENCE",
+    "language": "FRENCH",
+    "complexity": "INTERMEDIATE",
+    "room": {
+      "id": "Jules Verne",
+      "name": "Jules Verne",
+      "sortIndex": 0
+    },
+    "startDate": "2025-10-16T10:00:00+02:00",
+    "endDate": "2025-10-16T10:50:00+02:00",
+    "speakerIds": [
+      "adrien_lebret"
+    ]
+  },
+  {
+    "id": "fromflatcardevelopmenttoproxmoxvedeploymentanexampleofopenandsus",
+    "title": "From Flatcar development to ProxmoxVE deployment - an example of open and sustainable collaboration",
+    "type": "CONFERENCE",
+    "language": "FRENCH",
+    "complexity": "INTERMEDIATE",
+    "room": {
+      "id": "Tour Bretagne",
+      "name": "Tour Bretagne",
+      "sortIndex": 2147483647
+    },
+    "startDate": "2025-10-16T10:00:00+02:00",
+    "endDate": "2025-10-16T10:50:00+02:00",
+    "speakerIds": [
+      "alexandre_buisine",
+      "mathieu_tortuyaux"
+    ]
+  },
+  {
+    "id": "lalegendedeslecteursdecranuneodysseesensorielleaucurdenosapps",
+    "title": "La Légende des Lecteurs d'Écran : une odyssée sensorielle au cœur de nos Apps",
+    "type": "CODELAB",
+    "language": "FRENCH",
+    "complexity": "BEGINNER",
+    "room": {
+      "id": "Les Machines",
+      "name": "Les Machines",
+      "sortIndex": 4
+    },
+    "startDate": "2025-10-16T10:00:00+02:00",
+    "endDate": "2025-10-16T12:00:00+02:00",
+    "speakerIds": [
+      "oceane_gillard",
+      "patrice_de_saint_steban"
+    ]
+  },
+  {
+    "id": "openrewriterefactorascode",
+    "title": "OpenRewrite: Refactor as code",
+    "type": "CONFERENCE",
+    "language": "FRENCH",
+    "complexity": "BEGINNER",
+    "room": {
+      "id": "Belem",
+      "name": "Belem",
+      "sortIndex": 2
+    },
+    "startDate": "2025-10-16T10:00:00+02:00",
+    "endDate": "2025-10-16T10:50:00+02:00",
+    "speakerIds": [
+      "jerome_tama"
+    ]
+  },
+  {
+    "id": "playwrighttestervosapplicationsdevientunjeudenfant",
+    "title": "Playwright : tester vos applications devient un jeu d'enfant",
+    "type": "CODELAB",
+    "language": "FRENCH",
+    "complexity": "BEGINNER",
+    "room": {
+      "id": "Hangar",
+      "name": "Hangar",
+      "sortIndex": 5
+    },
+    "startDate": "2025-10-16T10:00:00+02:00",
+    "endDate": "2025-10-16T12:00:00+02:00",
+    "speakerIds": [
+      "benjamin_cavy"
+    ]
+  },
+  {
+    "id": "selectamazingfeaturesfromposgresql",
+    "title": "SELECT 'amazing_features' FROM \"postgresql\"",
+    "type": "CONFERENCE",
+    "language": "FRENCH",
+    "complexity": "INTERMEDIATE",
+    "room": {
+      "id": "Titan",
+      "name": "Titan",
+      "sortIndex": 1
+    },
+    "startDate": "2025-10-16T10:00:00+02:00",
+    "endDate": "2025-10-16T10:50:00+02:00",
+    "speakerIds": [
+      "kevin_davin"
+    ]
+  },
+  {
+    "id": "unconferencegreenit",
+    "title": "Unconference - Green IT 🌿",
+    "type": "CODELAB",
+    "language": "FRENCH",
+    "complexity": "BEGINNER",
+    "room": {
+      "id": "Unconf",
+      "name": "Unconf",
+      "sortIndex": 2147483647
+    },
+    "startDate": "2025-10-16T10:00:00+02:00",
+    "endDate": "2025-10-16T12:00:00+02:00",
+    "speakerIds": [
+      "mathilde_rigabert_lemee",
+      "sarah_tedjani"
+    ]
+  },
+  {
+    "id": "day-1-pause-2",
+    "title": "Break",
+    "type": "BREAK",
+    "language": "FRENCH",
+    "complexity": null,
+    "room": null,
+    "startDate": "2025-10-16T10:50:00+02:00",
+    "endDate": "2025-10-16T11:10:00+02:00",
+    "speakerIds": []
+  },
+  {
+    "id": "biomimetismeetcybersecuritesinspirerde3milliardsdanneesdevolutio",
+    "title": "Biomimétisme et cybersécurité : s'inspirer de 3 milliards d'années d'évolution pour mieux se protéger",
+    "type": "CONFERENCE",
+    "language": "FRENCH",
+    "complexity": "INTERMEDIATE",
+    "room": {
+      "id": "Tour Bretagne",
+      "name": "Tour Bretagne",
+      "sortIndex": 2147483647
+    },
+    "startDate": "2025-10-16T11:10:00+02:00",
+    "endDate": "2025-10-16T12:00:00+02:00",
+    "speakerIds": [
+      "ludovic_lefebvre"
+    ]
+  },
+  {
+    "id": "detectivesdelaprodresoudrelenqueteavantlecrash",
+    "title": "Détectives de la prod : résoudre l’enquête avant le crash",
+    "type": "CONFERENCE",
+    "language": "FRENCH",
+    "complexity": "BEGINNER",
+    "room": {
+      "id": "Belem",
+      "name": "Belem",
+      "sortIndex": 2
+    },
+    "startDate": "2025-10-16T11:10:00+02:00",
+    "endDate": "2025-10-16T12:00:00+02:00",
+    "speakerIds": [
+      "sebastien_ferrer"
+    ]
+  },
+  {
+    "id": "revolutiontanstackqueryenfinunebonnegestiondetat",
+    "title": "Révolution TanStack Query : Enfin une bonne gestion d’état 🗂️",
+    "type": "CONFERENCE",
+    "language": "FRENCH",
+    "complexity": "BEGINNER",
+    "room": {
+      "id": "Jules Verne",
+      "name": "Jules Verne",
+      "sortIndex": 0
+    },
+    "startDate": "2025-10-16T11:10:00+02:00",
+    "endDate": "2025-10-16T12:00:00+02:00",
+    "speakerIds": [
+      "lucas_audart",
+      "mickael_alves"
+    ]
+  },
+  {
+    "id": "thedeveloperrenaissancethehumanspoweringtheageofai",
+    "title": "The Developer RenAIssance: The Humans Powering the Age of AI",
+    "type": "CONFERENCE",
+    "language": "ENGLISH",
+    "complexity": "BEGINNER",
+    "room": {
+      "id": "Titan",
+      "name": "Titan",
+      "sortIndex": 1
+    },
+    "startDate": "2025-10-16T11:10:00+02:00",
+    "endDate": "2025-10-16T12:00:00+02:00",
+    "speakerIds": [
+      "kate_smith"
+    ]
+  },
+  {
+    "id": "day-1-lunch",
+    "title": "Lunch",
+    "type": "LUNCH",
+    "language": "FRENCH",
+    "complexity": null,
+    "room": null,
+    "startDate": "2025-10-16T12:00:00+02:00",
+    "endDate": "2025-10-16T14:00:00+02:00",
+    "speakerIds": []
+  },
+  {
+    "id": "charmerlesdragonspitchersonproduitcommeunheros",
+    "title": "Charmer les dragons : pitcher son produit comme un héros",
+    "type": "CODELAB",
+    "language": "FRENCH",
+    "complexity": "BEGINNER",
+    "room": {
+      "id": "Les Machines",
+      "name": "Les Machines",
+      "sortIndex": 4
+    },
+    "startDate": "2025-10-16T14:00:00+02:00",
+    "endDate": "2025-10-16T16:00:00+02:00",
+    "speakerIds": [
+      "montaine_marteau",
+      "rachel_dubois"
+    ]
+  },
+  {
+    "id": "devenezunastronautedecouvrezleframeworkastro",
+    "title": "Devenez un Astronaute : Découvrez le Framework Astro",
+    "type": "CODELAB",
+    "language": "FRENCH",
+    "complexity": "BEGINNER",
+    "room": {
+      "id": "Hangar",
+      "name": "Hangar",
+      "sortIndex": 5
+    },
+    "startDate": "2025-10-16T14:00:00+02:00",
+    "endDate": "2025-10-16T16:00:00+02:00",
+    "speakerIds": [
+      "florent_albert",
+      "jeremy_chauvin"
+    ]
+  },
+  {
+    "id": "ensorcelletonidedezeroademo",
+    "title": "🤖 Ensorcelle ton IDE: de zéro à démo",
+    "type": "CODELAB",
+    "language": "FRENCH",
+    "complexity": "BEGINNER",
+    "room": {
+      "id": "L'Atelier",
+      "name": "L'Atelier",
+      "sortIndex": 6
+    },
+    "startDate": "2025-10-16T14:00:00+02:00",
+    "endDate": "2025-10-16T16:00:00+02:00",
+    "speakerIds": [
+      "maxime_courant",
+      "samuel_berthe"
+    ]
+  },
+  {
+    "id": "lasciencefictionpeutellesimplementerpositivement",
+    "title": "La science-fiction peut-elle s'implémenter positivement ?",
+    "type": "CONFERENCE",
+    "language": "FRENCH",
+    "complexity": "BEGINNER",
+    "room": {
+      "id": "Titan",
+      "name": "Titan",
+      "sortIndex": 1
+    },
+    "startDate": "2025-10-16T14:00:00+02:00",
+    "endDate": "2025-10-16T14:50:00+02:00",
+    "speakerIds": [
+      "nicolas_delsaux",
+      "m4dz"
+    ]
+  },
+  {
+    "id": "mobilesenperspectivequelsimpactssociauxetenvironnementauxontnoss",
+    "title": "Mobiles en Perspective: quels impacts sociaux et environnementaux ont nos smartphones ?",
+    "type": "CODELAB",
+    "language": "FRENCH",
+    "complexity": "BEGINNER",
+    "room": {
+      "id": "Unconf",
+      "name": "Unconf",
+      "sortIndex": 2147483647
+    },
+    "startDate": "2025-10-16T14:00:00+02:00",
+    "endDate": "2025-10-16T16:00:00+02:00",
+    "speakerIds": [
+      "robin_caroff",
+      "thomas_boutin"
+    ]
+  },
+  {
+    "id": "nelaissezplustrainervosdonneesdeprodanonymisezlesavecdbtoolsbund",
+    "title": "Ne laissez-plus traîner vos données de prod: anonymisez-les avec DbToolsBundle !",
+    "type": "CONFERENCE",
+    "language": "FRENCH",
+    "complexity": "BEGINNER",
+    "room": {
+      "id": "Belem",
+      "name": "Belem",
+      "sortIndex": 2
+    },
+    "startDate": "2025-10-16T14:00:00+02:00",
+    "endDate": "2025-10-16T14:50:00+02:00",
+    "speakerIds": [
+      "pierre",
+      "simon_mellerin"
+    ]
+  },
+  {
+    "id": "thefutureofroutingwiththenavigationapi",
+    "title": "The future of routing with the Navigation API",
+    "type": "CONFERENCE",
+    "language": "ENGLISH",
+    "complexity": "INTERMEDIATE",
+    "room": {
+      "id": "Tour Bretagne",
+      "name": "Tour Bretagne",
+      "sortIndex": 2147483647
+    },
+    "startDate": "2025-10-16T14:00:00+02:00",
+    "endDate": "2025-10-16T14:50:00+02:00",
+    "speakerIds": [
+      "eduardo_san_martin_morote"
+    ]
+  },
+  {
+    "id": "vosrequetessql10000xplusperformantesdurablement",
+    "title": "Vos requêtes SQL 10000x plus performantes, durablement.",
+    "type": "CONFERENCE",
+    "language": "FRENCH",
+    "complexity": "INTERMEDIATE",
+    "room": {
+      "id": "Jules Verne",
+      "name": "Jules Verne",
+      "sortIndex": 0
+    },
+    "startDate": "2025-10-16T14:00:00+02:00",
+    "endDate": "2025-10-16T14:50:00+02:00",
+    "speakerIds": [
+      "alain"
+    ]
+  },
+  {
+    "id": "day-1-pause-3",
+    "title": "Break",
+    "type": "BREAK",
+    "language": "FRENCH",
+    "complexity": null,
+    "room": null,
+    "startDate": "2025-10-16T14:50:00+02:00",
+    "endDate": "2025-10-16T15:10:00+02:00",
+    "speakerIds": []
+  },
+  {
+    "id": "becomeawizardandmakethebrowseryourown",
+    "title": "Become a wizard and make the browser your own",
+    "type": "CONFERENCE",
+    "language": "ENGLISH",
+    "complexity": "INTERMEDIATE",
+    "room": {
+      "id": "Tour Bretagne",
+      "name": "Tour Bretagne",
+      "sortIndex": 2147483647
+    },
+    "startDate": "2025-10-16T15:10:00+02:00",
+    "endDate": "2025-10-16T16:00:00+02:00",
+    "speakerIds": [
+      "oliver_dunk"
+    ]
+  },
+  {
+    "id": "fromragtoricheslessecretsdesllmaugmentesparladonnee",
+    "title": "From RAG to riches : les secrets des LLM augmentés par la donnée !",
+    "type": "CONFERENCE",
+    "language": "FRENCH",
+    "complexity": "BEGINNER",
+    "room": {
+      "id": "Jules Verne",
+      "name": "Jules Verne",
+      "sortIndex": 0
+    },
+    "startDate": "2025-10-16T15:10:00+02:00",
+    "endDate": "2025-10-16T16:00:00+02:00",
+    "speakerIds": [
+      "laurent_mangin"
+    ]
+  },
+  {
+    "id": "letsplayfactorio",
+    "title": "Let's play Factorio",
+    "type": "CONFERENCE",
+    "language": "FRENCH",
+    "complexity": "BEGINNER",
+    "room": {
+      "id": "Belem",
+      "name": "Belem",
+      "sortIndex": 2
+    },
+    "startDate": "2025-10-16T15:10:00+02:00",
+    "endDate": "2025-10-16T16:00:00+02:00",
+    "speakerIds": [
+      "julien_wittouck"
+    ]
+  },
+  {
+    "id": "savingtimewithamazonqdeveloper",
+    "title": "Saving Time With Amazon Q Developer",
+    "type": "CONFERENCE",
+    "language": "ENGLISH",
+    "complexity": "BEGINNER",
+    "room": {
+      "id": "Titan",
+      "name": "Titan",
+      "sortIndex": 1
+    },
+    "startDate": "2025-10-16T15:10:00+02:00",
+    "endDate": "2025-10-16T16:00:00+02:00",
+    "speakerIds": [
+      "faye_ellis"
+    ]
+  },
+  {
+    "id": "day-1-pause-4",
+    "title": "Break",
+    "type": "BREAK",
+    "language": "FRENCH",
+    "complexity": null,
+    "room": null,
+    "startDate": "2025-10-16T16:00:00+02:00",
+    "endDate": "2025-10-16T16:20:00+02:00",
+    "speakerIds": []
+  },
+  {
+    "id": "etatdeslieuxdelasouveraineteduclouddescloudspublicsauxcloudsconf",
+    "title": "État des Lieux de la Souveraineté du Cloud : Des Clouds Publics aux Clouds Confidentiels",
+    "type": "CONFERENCE",
+    "language": "FRENCH",
+    "complexity": "INTERMEDIATE",
+    "room": {
+      "id": "Jules Verne",
+      "name": "Jules Verne",
+      "sortIndex": 0
+    },
+    "startDate": "2025-10-16T16:20:00+02:00",
+    "endDate": "2025-10-16T17:10:00+02:00",
+    "speakerIds": [
+      "seifeddin_mansri"
+    ]
+  },
+  {
+    "id": "etsionparlaitdemalwarecraftsmanship",
+    "title": "Et si on parlait de \"malware craftsmanship\"?",
+    "type": "CONFERENCE",
+    "language": "FRENCH",
+    "complexity": "BEGINNER",
+    "room": {
+      "id": "Tour Bretagne",
+      "name": "Tour Bretagne",
+      "sortIndex": 2147483647
+    },
+    "startDate": "2025-10-16T16:20:00+02:00",
+    "endDate": "2025-10-16T17:10:00+02:00",
+    "speakerIds": [
+      "nailya_bogrova",
+      "sonia_seddiki"
+    ]
+  },
+  {
+    "id": "faireuneappfrontavecrustleptos",
+    "title": "Faire une app front avec Rust/leptos",
+    "type": "CODELAB",
+    "language": "FRENCH",
+    "complexity": "BEGINNER",
+    "room": {
+      "id": "Hangar",
+      "name": "Hangar",
+      "sortIndex": 5
+    },
+    "startDate": "2025-10-16T16:20:00+02:00",
+    "endDate": "2025-10-16T18:20:00+02:00",
+    "speakerIds": [
+      "lesage_yann"
+    ]
+  },
+  {
+    "id": "guildedesconteursunateliera2amcppourlessagasdusoir",
+    "title": "Guilde des Conteurs : Un atelier A2A/MCP pour les Sagas du Soir",
+    "type": "CODELAB",
+    "language": "FRENCH",
+    "complexity": "INTERMEDIATE",
+    "room": {
+      "id": "L'Atelier",
+      "name": "L'Atelier",
+      "sortIndex": 6
+    },
+    "startDate": "2025-10-16T16:20:00+02:00",
+    "endDate": "2025-10-16T18:20:00+02:00",
+    "speakerIds": [
+      "florent_legras",
+      "yulianna_khorolich"
+    ]
+  },
+  {
+    "id": "immersiondanslessituationsdehandicapparticipezaunpanoramainterac",
+    "title": "Immersion dans les Situations de Handicap : Participez à un Panorama Interactif",
+    "type": "CODELAB",
+    "language": "FRENCH",
+    "complexity": "BEGINNER",
+    "room": {
+      "id": "Les Machines",
+      "name": "Les Machines",
+      "sortIndex": 4
+    },
+    "startDate": "2025-10-16T16:20:00+02:00",
+    "endDate": "2025-10-16T18:20:00+02:00",
+    "speakerIds": [
+      "angi___guyard",
+      "emmanuelle_aboaf"
+    ]
+  },
+  {
+    "id": "letsbuildkittwithjavascript",
+    "title": "Let’s build K.I.T.T. with JavaScript",
+    "type": "CONFERENCE",
+    "language": "ENGLISH",
+    "complexity": "INTERMEDIATE",
+    "room": {
+      "id": "Titan",
+      "name": "Titan",
+      "sortIndex": 1
+    },
+    "startDate": "2025-10-16T16:20:00+02:00",
+    "endDate": "2025-10-16T17:10:00+02:00",
+    "speakerIds": [
+      "nico_martin"
+    ]
+  },
+  {
+    "id": "proprieteetintelligenceartificielleundroitsacrealepreuvedesmachi",
+    "title": "Propriété et Intelligence Artificielle : un droit sacré à l’épreuve des machines ?",
+    "type": "CONFERENCE",
+    "language": "FRENCH",
+    "complexity": "INTERMEDIATE",
+    "room": {
+      "id": "Belem",
+      "name": "Belem",
+      "sortIndex": 2
+    },
+    "startDate": "2025-10-16T16:20:00+02:00",
+    "endDate": "2025-10-16T17:10:00+02:00",
+    "speakerIds": [
+      "nicolas_blanchon"
+    ]
+  },
+  {
+    "id": "day-1-pause-5",
+    "title": "Break",
+    "type": "BREAK",
+    "language": "FRENCH",
+    "complexity": null,
+    "room": null,
+    "startDate": "2025-10-16T17:10:00+02:00",
+    "endDate": "2025-10-16T17:20:00+02:00",
+    "speakerIds": []
+  },
+  {
+    "id": "airightinthebrowserwithchromesbuiltinaiapis",
+    "title": "AI right in the browser with Chrome's built-in AI APIs",
+    "type": "QUICKIE",
+    "language": "ENGLISH",
+    "complexity": "INTERMEDIATE",
+    "room": {
+      "id": "Titan",
+      "name": "Titan",
+      "sortIndex": 1
+    },
+    "startDate": "2025-10-16T17:20:00+02:00",
+    "endDate": "2025-10-16T17:40:00+02:00",
+    "speakerIds": [
+      "thomas_steiner"
+    ]
+  },
+  {
+    "id": "aliceauxpaysdugambling",
+    "title": "Alice aux pays du gambling",
+    "type": "QUICKIE",
+    "language": "FRENCH",
+    "complexity": "BEGINNER",
+    "room": {
+      "id": "Jules Verne",
+      "name": "Jules Verne",
+      "sortIndex": 0
+    },
+    "startDate": "2025-10-16T17:20:00+02:00",
+    "endDate": "2025-10-16T17:40:00+02:00",
+    "speakerIds": [
+      "alexis_lina"
+    ]
+  },
+  {
+    "id": "deopenidconnectaopenidauthzen",
+    "title": "De OpenID Connect à OpenID AuthZEN",
+    "type": "QUICKIE",
+    "language": "FRENCH",
+    "complexity": "BEGINNER",
+    "room": {
+      "id": "Belem",
+      "name": "Belem",
+      "sortIndex": 2
+    },
+    "startDate": "2025-10-16T17:20:00+02:00",
+    "endDate": "2025-10-16T17:40:00+02:00",
+    "speakerIds": [
+      "francois_eckert"
+    ]
+  },
+  {
+    "id": "terramateloutilquifaitscalervotrecodeterraform",
+    "title": "Terramate l'outil qui fait scaler votre code Terraform",
+    "type": "QUICKIE",
+    "language": "FRENCH",
+    "complexity": "BEGINNER",
+    "room": {
+      "id": "Tour Bretagne",
+      "name": "Tour Bretagne",
+      "sortIndex": 2147483647
+    },
+    "startDate": "2025-10-16T17:20:00+02:00",
+    "endDate": "2025-10-16T17:40:00+02:00",
+    "speakerIds": [
+      "mathieu_herbert"
+    ]
+  },
+  {
+    "id": "day-1-pause-6",
+    "title": "Break",
+    "type": "BREAK",
+    "language": "FRENCH",
+    "complexity": null,
+    "room": null,
+    "startDate": "2025-10-16T17:40:00+02:00",
+    "endDate": "2025-10-16T17:50:00+02:00",
+    "speakerIds": []
+  },
+  {
+    "id": "anintrotoebpfwithgothefoundationofmodernkubernetesnetworking",
+    "title": "An Intro to eBPF with Go: The Foundation of Modern Kubernetes Networking",
+    "type": "QUICKIE",
+    "language": "FRENCH",
+    "complexity": "INTERMEDIATE",
+    "room": {
+      "id": "Tour Bretagne",
+      "name": "Tour Bretagne",
+      "sortIndex": 2147483647
+    },
+    "startDate": "2025-10-16T17:50:00+02:00",
+    "endDate": "2025-10-16T18:10:00+02:00",
+    "speakerIds": [
+      "donia_chaiehloudj"
+    ]
+  },
+  {
+    "id": "cetaitdansquelepisodedejabrefjaiindexeuneserieculte",
+    "title": "\"C'était dans quel épisode déjà ?\" - Bref, j'ai indexé une série culte",
+    "type": "QUICKIE",
+    "language": "FRENCH",
+    "complexity": "INTERMEDIATE",
+    "room": {
+      "id": "Jules Verne",
+      "name": "Jules Verne",
+      "sortIndex": 0
+    },
+    "startDate": "2025-10-16T17:50:00+02:00",
+    "endDate": "2025-10-16T18:10:00+02:00",
+    "speakerIds": [
+      "tim_carry"
+    ]
+  },
+  {
+    "id": "lanotificationenjeuxetpistesdesolutions",
+    "title": "La notification : enjeux et pistes de solutions",
+    "type": "QUICKIE",
+    "language": "FRENCH",
+    "complexity": "BEGINNER",
+    "room": {
+      "id": "Belem",
+      "name": "Belem",
+      "sortIndex": 2
+    },
+    "startDate": "2025-10-16T17:50:00+02:00",
+    "endDate": "2025-10-16T18:10:00+02:00",
+    "speakerIds": [
+      "flora_brochier"
+    ]
+  },
+  {
+    "id": "osintlartdetrouvercequinedevraitpasetretrouve",
+    "title": "OSINT : L’art de trouver ce qui ne devrait pas être trouvé",
+    "type": "QUICKIE",
+    "language": "FRENCH",
+    "complexity": "BEGINNER",
+    "room": {
+      "id": "Titan",
+      "name": "Titan",
+      "sortIndex": 1
+    },
+    "startDate": "2025-10-16T17:50:00+02:00",
+    "endDate": "2025-10-16T18:10:00+02:00",
+    "speakerIds": [
+      "marie_viley"
+    ]
+  },
+  {
+    "id": "day-1-party",
+    "title": "Party",
+    "type": null,
+    "language": "FRENCH",
+    "complexity": null,
+    "room": null,
+    "startDate": "2025-10-16T18:30:00+02:00",
+    "endDate": "2025-10-16T18:50:00+02:00",
+    "speakerIds": []
+  },
+  {
+    "id": "day-2-open",
+    "title": "Opening",
+    "type": "OPENING",
+    "language": "FRENCH",
+    "complexity": null,
+    "room": null,
+    "startDate": "2025-10-17T08:30:00+02:00",
+    "endDate": "2025-10-17T09:00:00+02:00",
+    "speakerIds": []
+  },
+  {
+    "id": "angularsignalmondeasynchroneetatdependant",
+    "title": "Angular Signal - Monde Asynchrone, État dépendant",
+    "type": "CODELAB",
+    "language": "FRENCH",
+    "complexity": "INTERMEDIATE",
+    "room": {
+      "id": "Les Machines",
+      "name": "Les Machines",
+      "sortIndex": 4
+    },
+    "startDate": "2025-10-17T09:00:00+02:00",
+    "endDate": "2025-10-17T11:00:00+02:00",
+    "speakerIds": [
+      "camille_pillot",
+      "modeste_assiongbon"
+    ]
+  },
+  {
+    "id": "buildingofflineaiagentsinyourmobileapp",
+    "title": "Building Offline AI Agents in Your Mobile App",
+    "type": "CONFERENCE",
+    "language": "ENGLISH",
+    "complexity": "INTERMEDIATE",
+    "room": {
+      "id": "Belem",
+      "name": "Belem",
+      "sortIndex": 2
+    },
+    "startDate": "2025-10-17T09:00:00+02:00",
+    "endDate": "2025-10-17T09:50:00+02:00",
+    "speakerIds": [
+      "sasha_denisov"
+    ]
+  },
+  {
+    "id": "designfirstopenapietasyncapienaction",
+    "title": "Design First : OpenApi et AsyncApi en action !",
+    "type": "CONFERENCE",
+    "language": "FRENCH",
+    "complexity": "INTERMEDIATE",
+    "room": {
+      "id": "Tour Bretagne",
+      "name": "Tour Bretagne",
+      "sortIndex": 2147483647
+    },
+    "startDate": "2025-10-17T09:00:00+02:00",
+    "endDate": "2025-10-17T09:50:00+02:00",
+    "speakerIds": [
+      "philippe_bousquet"
+    ]
+  },
+  {
+    "id": "karpenterkedaleduogagnantdufinops",
+    "title": "Karpenter * Keda : Le duo gagnant du FinOps",
+    "type": "CONFERENCE",
+    "language": "FRENCH",
+    "complexity": "BEGINNER",
+    "room": {
+      "id": "Titan",
+      "name": "Titan",
+      "sortIndex": 1
+    },
+    "startDate": "2025-10-17T09:00:00+02:00",
+    "endDate": "2025-10-17T09:50:00+02:00",
+    "speakerIds": [
+      "guillaume_membre",
+      "sebastien_fourreau"
+    ]
+  },
+  {
+    "id": "laguerredespromptsattaquesdefensesauroyaumedesllm",
+    "title": "La Guerre des Prompts : attaques & défenses au royaume des LLM ⚔️🛡️🤖",
+    "type": "CODELAB",
+    "language": "FRENCH",
+    "complexity": "INTERMEDIATE",
+    "room": {
+      "id": "Hangar",
+      "name": "Hangar",
+      "sortIndex": 5
+    },
+    "startDate": "2025-10-17T09:00:00+02:00",
+    "endDate": "2025-10-17T11:00:00+02:00",
+    "speakerIds": [
+      "benjamin_bernard",
+      "francois_nollen",
+      "pierre_therrode",
+      "xavier_charef"
+    ]
+  },
+  {
+    "id": "maisquestcequonvadevenirlemetierdedevpasseaucribledesscenariosde",
+    "title": "\"Mais qu'est ce qu'on va devenir ?\" - Le métier de dev passé au crible des scénarios de l'ADEME",
+    "type": "CODELAB",
+    "language": "FRENCH",
+    "complexity": "BEGINNER",
+    "room": {
+      "id": "Unconf",
+      "name": "Unconf",
+      "sortIndex": 2147483647
+    },
+    "startDate": "2025-10-17T09:00:00+02:00",
+    "endDate": "2025-10-17T11:00:00+02:00",
+    "speakerIds": [
+      "cecilia_bossard",
+      "jean_palies"
+    ]
+  },
+  {
+    "id": "makinganemulatorinjavascript",
+    "title": "Making an Emulator in JavaScript?",
+    "type": "CONFERENCE",
+    "language": "ENGLISH",
+    "complexity": "INTERMEDIATE",
+    "room": {
+      "id": "Jules Verne",
+      "name": "Jules Verne",
+      "sortIndex": 0
+    },
+    "startDate": "2025-10-17T09:00:00+02:00",
+    "endDate": "2025-10-17T09:50:00+02:00",
+    "speakerIds": [
+      "sara_vieira"
+    ]
+  },
+  {
+    "id": "toiaussidonnesdustyleatesdonneesavecgrafana",
+    "title": "Toi aussi donnes du style à tes données avec Grafana",
+    "type": "CODELAB",
+    "language": "FRENCH",
+    "complexity": "BEGINNER",
+    "room": {
+      "id": "L'Atelier",
+      "name": "L'Atelier",
+      "sortIndex": 6
+    },
+    "startDate": "2025-10-17T09:00:00+02:00",
+    "endDate": "2025-10-17T11:00:00+02:00",
+    "speakerIds": [
+      "matthieu_vincent",
+      "thomas_jouve"
+    ]
+  },
+  {
+    "id": "day-2-pause-1",
+    "title": "Break",
+    "type": "BREAK",
+    "language": "FRENCH",
+    "complexity": null,
+    "room": null,
+    "startDate": "2025-10-17T09:50:00+02:00",
+    "endDate": "2025-10-17T10:10:00+02:00",
+    "speakerIds": []
+  },
+  {
+    "id": "45minpourmettresonapplicationagenouxleguidecompletdutestdecharge",
+    "title": "45 min pour mettre son application à genoux : le guide complet du test de charge",
+    "type": "CONFERENCE",
+    "language": "FRENCH",
+    "complexity": "INTERMEDIATE",
+    "room": {
+      "id": "Belem",
+      "name": "Belem",
+      "sortIndex": 2
+    },
+    "startDate": "2025-10-17T10:10:00+02:00",
+    "endDate": "2025-10-17T11:00:00+02:00",
+    "speakerIds": [
+      "loic_ortola",
+      "mathilde_lorrain"
+    ]
+  },
+  {
+    "id": "commentnousavonstransformelesrestosducoeurencloudprovider",
+    "title": "Comment nous avons transformé les Restos du Coeur en Cloud Provider",
+    "type": "CONFERENCE",
+    "language": "FRENCH",
+    "complexity": "INTERMEDIATE",
+    "room": {
+      "id": "Jules Verne",
+      "name": "Jules Verne",
+      "sortIndex": 0
+    },
+    "startDate": "2025-10-17T10:10:00+02:00",
+    "endDate": "2025-10-17T11:00:00+02:00",
+    "speakerIds": [
+      "julien_briault"
+    ]
+  },
+  {
+    "id": "optimizingthirdpartiesinframeworkswithdx",
+    "title": "Optimizing third parties in frameworks with DX",
+    "type": "CONFERENCE",
+    "language": "ENGLISH",
+    "complexity": "INTERMEDIATE",
+    "room": {
+      "id": "Tour Bretagne",
+      "name": "Tour Bretagne",
+      "sortIndex": 2147483647
+    },
+    "startDate": "2025-10-17T10:10:00+02:00",
+    "endDate": "2025-10-17T11:00:00+02:00",
+    "speakerIds": [
+      "julien_huang"
+    ]
+  },
+  {
+    "id": "revolutionnezvotreprisedenotesdubulletjournalaobsidian",
+    "title": "Révolutionnez votre prise de notes : du Bullet Journal à Obsidian",
+    "type": "CONFERENCE",
+    "language": "FRENCH",
+    "complexity": "BEGINNER",
+    "room": {
+      "id": "Titan",
+      "name": "Titan",
+      "sortIndex": 1
+    },
+    "startDate": "2025-10-17T10:10:00+02:00",
+    "endDate": "2025-10-17T11:00:00+02:00",
+    "speakerIds": [
+      "hoani_cross"
+    ]
+  },
+  {
+    "id": "day-2-pause-2",
+    "title": "Break",
+    "type": "BREAK",
+    "language": "FRENCH",
+    "complexity": null,
+    "room": null,
+    "startDate": "2025-10-17T11:00:00+02:00",
+    "endDate": "2025-10-17T11:20:00+02:00",
+    "speakerIds": []
+  },
+  {
+    "id": "breakingailivecodingandhackingapplicationswithgenerativeai",
+    "title": "Breaking AI: Live coding and hacking applications with Generative AI",
+    "type": "CONFERENCE",
+    "language": "ENGLISH",
+    "complexity": "INTERMEDIATE",
+    "room": {
+      "id": "Jules Verne",
+      "name": "Jules Verne",
+      "sortIndex": 0
+    },
+    "startDate": "2025-10-17T11:20:00+02:00",
+    "endDate": "2025-10-17T12:10:00+02:00",
+    "speakerIds": [
+      "brian_vermeer"
+    ]
+  },
+  {
+    "id": "iletaitunefoismodularmonolithlaquetedelarchitectureparfaite",
+    "title": "Il était une fois... Modular monolith : la quête de l’architecture parfaite",
+    "type": "CONFERENCE",
+    "language": "FRENCH",
+    "complexity": "INTERMEDIATE",
+    "room": {
+      "id": "Titan",
+      "name": "Titan",
+      "sortIndex": 1
+    },
+    "startDate": "2025-10-17T11:20:00+02:00",
+    "endDate": "2025-10-17T12:10:00+02:00",
+    "speakerIds": [
+      "thomas_piscitelli"
+    ]
+  },
+  {
+    "id": "limitsrequestsqospriorityclassesonbalaiecequevouspensiezsavoirsu",
+    "title": "Limits, Requests, QoS, PriorityClasses, on balaie ce que vous pensiez savoir sur le scheduling dans Kubernetes",
+    "type": "CONFERENCE",
+    "language": "FRENCH",
+    "complexity": "INTERMEDIATE",
+    "room": {
+      "id": "Belem",
+      "name": "Belem",
+      "sortIndex": 2
+    },
+    "startDate": "2025-10-17T11:20:00+02:00",
+    "endDate": "2025-10-17T12:10:00+02:00",
+    "speakerIds": [
+      "denis_germain",
+      "quentin_joly"
+    ]
+  },
+  {
+    "id": "quantumcomputinginpracticewherewearewhatworksandwhatsnext",
+    "title": "Quantum Computing in Practice: Where We Are, What Works, and What’s Next",
+    "type": "CONFERENCE",
+    "language": "ENGLISH",
+    "complexity": "INTERMEDIATE",
+    "room": {
+      "id": "Tour Bretagne",
+      "name": "Tour Bretagne",
+      "sortIndex": 2147483647
+    },
+    "startDate": "2025-10-17T11:20:00+02:00",
+    "endDate": "2025-10-17T12:10:00+02:00",
+    "speakerIds": [
+      "florent_houbart",
+      "lennart"
+    ]
+  },
+  {
+    "id": "day-2-lunch",
+    "title": "Lunch",
+    "type": "LUNCH",
+    "language": "FRENCH",
+    "complexity": null,
+    "room": null,
+    "startDate": "2025-10-17T12:10:00+02:00",
+    "endDate": "2025-10-17T14:00:00+02:00",
+    "speakerIds": []
+  },
+  {
+    "id": "2hchronopourtraquertoutcequibougedanstonbackendavecopentelemetry",
+    "title": "2h chrono pour traquer tout ce qui bouge dans ton backend avec OpenTelemetry",
+    "type": "CODELAB",
+    "language": "FRENCH",
+    "complexity": "INTERMEDIATE",
+    "room": {
+      "id": "L'Atelier",
+      "name": "L'Atelier",
+      "sortIndex": 6
+    },
+    "startDate": "2025-10-17T14:00:00+02:00",
+    "endDate": "2025-10-17T16:00:00+02:00",
+    "speakerIds": [
+      "sebastien_oddo",
+      "vivien_maleze"
+    ]
+  },
+  {
+    "id": "agentsintelligentslanouvellefrontieredesllms",
+    "title": "Agents intelligents, la nouvelle frontière des LLMs",
+    "type": "CONFERENCE",
+    "language": "FRENCH",
+    "complexity": "INTERMEDIATE",
+    "room": {
+      "id": "Jules Verne",
+      "name": "Jules Verne",
+      "sortIndex": 0
+    },
+    "startDate": "2025-10-17T14:00:00+02:00",
+    "endDate": "2025-10-17T14:50:00+02:00",
+    "speakerIds": [
+      "guillaume_laforge"
+    ]
+  },
+  {
+    "id": "iletaitunefailleconstruirelaresiliencedansunmondechaotique",
+    "title": "Il Était une Faille : Construire la Résilience dans un Monde Chaotique",
+    "type": "CONFERENCE",
+    "language": "FRENCH",
+    "complexity": "INTERMEDIATE",
+    "room": {
+      "id": "Belem",
+      "name": "Belem",
+      "sortIndex": 2
+    },
+    "startDate": "2025-10-17T14:00:00+02:00",
+    "endDate": "2025-10-17T14:50:00+02:00",
+    "speakerIds": [
+      "julien_crestin",
+      "vincent_daligault"
+    ]
+  },
+  {
+    "id": "liotpour5ansetatelierdinitiationsurcartemicrobit",
+    "title": "L'IOT pour 5 ans et + : atelier d'initiation sur carte micro:bit",
+    "type": "CODELAB",
+    "language": "FRENCH",
+    "complexity": "BEGINNER",
+    "room": {
+      "id": "Les Machines",
+      "name": "Les Machines",
+      "sortIndex": 4
+    },
+    "startDate": "2025-10-17T14:00:00+02:00",
+    "endDate": "2025-10-17T16:00:00+02:00",
+    "speakerIds": [
+      "jonathan_baranzini",
+      "thomas_cami"
+    ]
+  },
+  {
+    "id": "maitrisetypescriptparlapratique",
+    "title": "Maîtrise Typescript par la pratique",
+    "type": "CODELAB",
+    "language": "FRENCH",
+    "complexity": "INTERMEDIATE",
+    "room": {
+      "id": "Hangar",
+      "name": "Hangar",
+      "sortIndex": 5
+    },
+    "startDate": "2025-10-17T14:00:00+02:00",
+    "endDate": "2025-10-17T16:00:00+02:00",
+    "speakerIds": [
+      "bastien_tran",
+      "johan_rouve",
+      "marjorie_aubert"
+    ]
+  },
+  {
+    "id": "parolesdedevlaconferenceouvousavezlaparole",
+    "title": "Paroles de dev' : la conférence où vous avez la parole !",
+    "type": "CODELAB",
+    "language": "FRENCH",
+    "complexity": "INTERMEDIATE",
+    "room": {
+      "id": "Unconf",
+      "name": "Unconf",
+      "sortIndex": 2147483647
+    },
+    "startDate": "2025-10-17T14:00:00+02:00",
+    "endDate": "2025-10-17T16:00:00+02:00",
+    "speakerIds": [
+      "benoit_martin",
+      "damien_raude_morvan"
+    ]
+  },
+  {
+    "id": "succesdebloquerendresonjeuvideoaccessible",
+    "title": "Succès débloqué : rendre son jeu vidéo accessible",
+    "type": "CONFERENCE",
+    "language": "FRENCH",
+    "complexity": "BEGINNER",
+    "room": {
+      "id": "Tour Bretagne",
+      "name": "Tour Bretagne",
+      "sortIndex": 2147483647
+    },
+    "startDate": "2025-10-17T14:00:00+02:00",
+    "endDate": "2025-10-17T14:50:00+02:00",
+    "speakerIds": [
+      "noelie_roux"
+    ]
+  },
+  {
+    "id": "thefutureofuiisopen",
+    "title": "Select it! Styling new HTML UI capabilities",
+    "type": "CONFERENCE",
+    "language": "ENGLISH",
+    "complexity": "INTERMEDIATE",
+    "room": {
+      "id": "Titan",
+      "name": "Titan",
+      "sortIndex": 1
+    },
+    "startDate": "2025-10-17T14:00:00+02:00",
+    "endDate": "2025-10-17T14:50:00+02:00",
+    "speakerIds": [
+      "brecht_de_ruyte"
+    ]
+  },
+  {
+    "id": "day-2-pause-3",
+    "title": "Break",
+    "type": "BREAK",
+    "language": "FRENCH",
+    "complexity": null,
+    "room": null,
+    "startDate": "2025-10-17T14:50:00+02:00",
+    "endDate": "2025-10-17T15:10:00+02:00",
+    "speakerIds": []
+  },
+  {
+    "id": "howaunicornmigratedfromaninhousesolutiontohelm",
+    "title": "How a Unicorn Migrated From an In-House Solution to Helm",
+    "type": "CONFERENCE",
+    "language": "ENGLISH",
+    "complexity": "ADVANCED",
+    "room": {
+      "id": "Belem",
+      "name": "Belem",
+      "sortIndex": 2
+    },
+    "startDate": "2025-10-17T15:10:00+02:00",
+    "endDate": "2025-10-17T16:00:00+02:00",
+    "speakerIds": [
+      "mey_beisaron"
+    ]
+  },
+  {
+    "id": "optimiserdesuisweblegacydansunmoteurdejeuaaa",
+    "title": "Optimiser des UIs Web legacy dans un moteur de jeu AAA",
+    "type": "CONFERENCE",
+    "language": "FRENCH",
+    "complexity": "INTERMEDIATE",
+    "room": {
+      "id": "Titan",
+      "name": "Titan",
+      "sortIndex": 1
+    },
+    "startDate": "2025-10-17T15:10:00+02:00",
+    "endDate": "2025-10-17T16:00:00+02:00",
+    "speakerIds": [
+      "clement_gregoire",
+      "cedric_chariere_fiedler"
+    ]
+  },
+  {
+    "id": "protegermespoissonsavecgemini",
+    "title": "Abracadabra ! Donnez vie à vos idées avec Google AI Studio.",
+    "type": "CONFERENCE",
+    "language": "FRENCH",
+    "complexity": "BEGINNER",
+    "room": {
+      "id": "Jules Verne",
+      "name": "Jules Verne",
+      "sortIndex": 0
+    },
+    "startDate": "2025-10-17T15:10:00+02:00",
+    "endDate": "2025-10-17T16:00:00+02:00",
+    "speakerIds": [
+      "guillaume_vernade"
+    ]
+  },
+  {
+    "id": "quandleterminaldevorelauituipourtoutlemonde",
+    "title": "Quand le Terminal dévore la UI : TUI pour tout le monde !",
+    "type": "CONFERENCE",
+    "language": "FRENCH",
+    "complexity": "BEGINNER",
+    "room": {
+      "id": "Tour Bretagne",
+      "name": "Tour Bretagne",
+      "sortIndex": 2147483647
+    },
+    "startDate": "2025-10-17T15:10:00+02:00",
+    "endDate": "2025-10-17T16:00:00+02:00",
+    "speakerIds": [
+      "thierry_chantier"
+    ]
+  },
+  {
+    "id": "day-2-pause-4",
+    "title": "Break",
+    "type": "BREAK",
+    "language": "FRENCH",
+    "complexity": null,
+    "room": null,
+    "startDate": "2025-10-17T16:00:00+02:00",
+    "endDate": "2025-10-17T16:20:00+02:00",
+    "speakerIds": []
+  },
+  {
+    "id": "conceptionduneiadejeuvideoaveclapprentissageparrenforcement",
+    "title": "Conception d'une IA de jeu vidéo avec l'apprentissage par renforcement",
+    "type": "QUICKIE",
+    "language": "FRENCH",
+    "complexity": "INTERMEDIATE",
+    "room": {
+      "id": "Titan",
+      "name": "Titan",
+      "sortIndex": 1
+    },
+    "startDate": "2025-10-17T16:20:00+02:00",
+    "endDate": "2025-10-17T16:40:00+02:00",
+    "speakerIds": [
+      "vincent_ogloblinsky"
+    ]
+  },
+  {
+    "id": "jbangunfichierjavapourlesgouvernertous",
+    "title": "JBang, un fichier Java pour les gouverner tous ? 💍",
+    "type": "QUICKIE",
+    "language": "FRENCH",
+    "complexity": "BEGINNER",
+    "room": {
+      "id": "Belem",
+      "name": "Belem",
+      "sortIndex": 2
+    },
+    "startDate": "2025-10-17T16:20:00+02:00",
+    "endDate": "2025-10-17T16:40:00+02:00",
+    "speakerIds": [
+      "stephane_philippart"
+    ]
+  },
+  {
+    "id": "laspirantchevalierlynxjspeutildetronermonseigneurreactnativeetle",
+    "title": "L'aspirant chevalier LynxJS peut-il détrôner monseigneur React Native et le duc de Flutter ?",
+    "type": "QUICKIE",
+    "language": "FRENCH",
+    "complexity": "INTERMEDIATE",
+    "room": {
+      "id": "Jules Verne",
+      "name": "Jules Verne",
+      "sortIndex": 0
+    },
+    "startDate": "2025-10-17T16:20:00+02:00",
+    "endDate": "2025-10-17T16:40:00+02:00",
+    "speakerIds": [
+      "simon_bernardin"
+    ]
+  },
+  {
+    "id": "silencecatournedelecovolontariatalapromotiondemonsideprojectenau",
+    "title": "Silence... Ça tourne ! De l'éco-volontariat à la promotion de mon side project en Australie",
+    "type": "QUICKIE",
+    "language": "FRENCH",
+    "complexity": "BEGINNER",
+    "room": {
+      "id": "Tour Bretagne",
+      "name": "Tour Bretagne",
+      "sortIndex": 2147483647
+    },
+    "startDate": "2025-10-17T16:20:00+02:00",
+    "endDate": "2025-10-17T16:40:00+02:00",
+    "speakerIds": [
+      "nicolas_guillot"
+    ]
+  },
+  {
+    "id": "day-2-pause-5",
+    "title": "Break",
+    "type": "BREAK",
+    "language": "FRENCH",
+    "complexity": null,
+    "room": null,
+    "startDate": "2025-10-17T16:40:00+02:00",
+    "endDate": "2025-10-17T16:50:00+02:00",
+    "speakerIds": []
+  },
+  {
+    "id": "demelervraisproduitsethallucinationsrexdunagenttelephoniquecherc",
+    "title": "Démêler vrais produits et hallucinations, REX d'un agent téléphonique chercheur de chaussettes",
+    "type": "QUICKIE",
+    "language": "FRENCH",
+    "complexity": "BEGINNER",
+    "room": {
+      "id": "Tour Bretagne",
+      "name": "Tour Bretagne",
+      "sortIndex": 2147483647
+    },
+    "startDate": "2025-10-17T16:50:00+02:00",
+    "endDate": "2025-10-17T17:10:00+02:00",
+    "speakerIds": [
+      "marie_terrier"
+    ]
+  },
+  {
+    "id": "embellirdesqrcodesaleredelagenai",
+    "title": "Embellir des QR Codes à l’ère de la GenAI",
+    "type": "QUICKIE",
+    "language": "FRENCH",
+    "complexity": "BEGINNER",
+    "room": {
+      "id": "Belem",
+      "name": "Belem",
+      "sortIndex": 2
+    },
+    "startDate": "2025-10-17T16:50:00+02:00",
+    "endDate": "2025-10-17T17:10:00+02:00",
+    "speakerIds": [
+      "raphael_semeteys"
+    ]
+  },
+  {
+    "id": "enjavascriptilyaunpaquetpourtoutetsouventpourrien",
+    "title": "En JavaScript, il y a un paquet pour tout... et souvent pour rien.",
+    "type": "QUICKIE",
+    "language": "FRENCH",
+    "complexity": "BEGINNER",
+    "room": {
+      "id": "Titan",
+      "name": "Titan",
+      "sortIndex": 1
+    },
+    "startDate": "2025-10-17T16:50:00+02:00",
+    "endDate": "2025-10-17T17:10:00+02:00",
+    "speakerIds": [
+      "esteban_s"
+    ]
+  },
+  {
+    "id": "voyageguideaupaysdelinaccessibilite",
+    "title": "Voyage guidé au pays de l’inaccessibilité",
+    "type": "QUICKIE",
+    "language": "FRENCH",
+    "complexity": "BEGINNER",
+    "room": {
+      "id": "Jules Verne",
+      "name": "Jules Verne",
+      "sortIndex": 0
+    },
+    "startDate": "2025-10-17T16:50:00+02:00",
+    "endDate": "2025-10-17T17:10:00+02:00",
+    "speakerIds": [
+      "thanh_lan_doublier"
+    ]
+  },
+  {
+    "id": "day-2-pause-6",
+    "title": "Break",
+    "type": "BREAK",
+    "language": "FRENCH",
+    "complexity": null,
+    "room": null,
+    "startDate": "2025-10-17T17:10:00+02:00",
+    "endDate": "2025-10-17T17:20:00+02:00",
+    "speakerIds": []
+  },
+  {
+    "id": "day-2-keynote-close",
+    "title": "Keynote",
+    "type": "KEYNOTE",
+    "language": "FRENCH",
+    "complexity": null,
+    "room": {
+      "id": "Jules Verne",
+      "name": "Jules Verne",
+      "sortIndex": 0
+    },
+    "startDate": "2025-10-17T17:20:00+02:00",
+    "endDate": "2025-10-17T17:40:00+02:00",
+    "speakerIds": []
+  }
+]

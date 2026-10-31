@@ -1,0 +1,42 @@
+[
+  {
+    "id": "Jules Verne",
+    "name": "Jules Verne",
+    "sortIndex": 0
+  },
+  {
+    "id": "Titan",
+    "name": "Titan",
+    "sortIndex": 1
+  },
+  {
+    "id": "Belem",
+    "name": "Belem",
+    "sortIndex": 2
+  },
+  {
+    "id": "Les Machines",
+    "name": "Les Machines",
+    "sortIndex": 4
+  },
+  {
+    "id": "Hangar",
+    "name": "Hangar",
+    "sortIndex": 5
+  },
+  {
+    "id": "L'Atelier",
+    "name": "L'Atelier",
+    "sortIndex": 6
+  },
+  {
+    "id": "Tour Bretagne",
+    "name": "Tour Bretagne",
+    "sortIndex": 2147483647
+  },
+  {
+    "id": "Unconf",
+    "name": "Unconf",
+    "sortIndex": 2147483647
+  }
+]

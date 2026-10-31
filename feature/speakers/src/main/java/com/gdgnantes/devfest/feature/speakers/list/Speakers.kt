@@ -55,10 +55,13 @@ fun Speakers(
     viewModel: SpeakersViewModel = koinViewModel(),
     onSpeakerClick: (Speaker) -> Unit
 ) {
+    val speakers = viewModel.speakers.collectAsState()
+    val firstLetterIndexes by viewModel.letterIndexes.collectAsState()
     Speakers(
         modifier = modifier,
-        speakers = viewModel.speakers.collectAsState(),
+        speakers = speakers,
         uiState = viewModel.uiState.collectAsState(),
+        firstLetterIndexes = firstLetterIndexes,
         onSpeakerClick = onSpeakerClick
     )
 }
@@ -68,12 +71,14 @@ fun Speakers(
     modifier: Modifier = Modifier,
     speakers: State<List<Speaker>>,
     uiState: State<UiState>,
+    firstLetterIndexes: Map<Char, Int>,
     onSpeakerClick: (Speaker) -> Unit
 ) {
     Speakers(
         modifier = modifier,
         speakers = speakers.value,
         uiState = uiState.value,
+        firstLetterIndexes = firstLetterIndexes,
         onSpeakerClick = onSpeakerClick
     )
 }
@@ -83,6 +88,7 @@ fun Speakers(
     modifier: Modifier = Modifier,
     speakers: List<Speaker>,
     uiState: UiState,
+    firstLetterIndexes: Map<Char, Int>,
     onSpeakerClick: (Speaker) -> Unit
 ) {
     val context = LocalDensity.current
@@ -106,6 +112,7 @@ fun Speakers(
             BoxWithConstraints {
                 SpeakersListWithScroller(
                     speakers = speakers,
+                    firstLetterIndexes = firstLetterIndexes,
                     onAlphabetListDrag = { relativeDragYOffset, containerDistance ->
                         alphabetRelativeDragYOffset = relativeDragYOffset
                         alphabetDistanceFromTopOfScreen = containerDistance
@@ -163,19 +170,6 @@ fun ScrollingBubble(
     }
 }
 
-fun List<Speaker>.getMapOfFirstUniqueCharIndex(): Map<Char, Int> {
-    val firstLetterIndexes = mutableMapOf<Char, Int>()
-    this
-        .map { it.name.lowercase().first() }
-        .forEachIndexed { index, char ->
-            if (!firstLetterIndexes.contains(char)) {
-                firstLetterIndexes[char] = index
-            }
-            // else don't care about letters that don't exist
-        }
-    return firstLetterIndexes
-}
-
 internal fun Float.getIndexOfCharBasedOnYPosition(
     alphabetHeightInPixels: Float,
 ): Char {
@@ -198,10 +192,10 @@ internal fun Float.getIndexOfCharBasedOnYPosition(
 fun SpeakersListWithScroller(
     modifier: Modifier = Modifier,
     speakers: List<Speaker>,
+    firstLetterIndexes: Map<Char, Int>,
     onAlphabetListDrag: (Float?, Float) -> Unit,
     onSpeakerClick: (Speaker) -> Unit
 ) {
-    val mapOfFirstLetterIndex = remember(speakers) { speakers.getMapOfFirstUniqueCharIndex() }
     val alphabetHeightInPixels = with(LocalDensity.current) { alphabetItemHeight.toPx() }
     val lazyListState = rememberLazyListState()
     val coroutineScope = rememberCoroutineScope()
@@ -216,7 +210,7 @@ fun SpeakersListWithScroller(
                 .weight(1F),
             speakers,
             lazyListState,
-            mapOfFirstLetterIndex,
+            firstLetterIndexes,
             onSpeakerClick
         )
 
@@ -230,7 +224,7 @@ fun SpeakersListWithScroller(
                         relativeDragYOffset?.getIndexOfCharBasedOnYPosition(
                             alphabetHeightInPixels = alphabetHeightInPixels,
                         )
-                    mapOfFirstLetterIndex[indexOfChar]?.let {
+                    firstLetterIndexes[indexOfChar]?.let {
                         lazyListState.scrollToItem(it)
                     }
                 }
@@ -256,7 +250,7 @@ fun SpeakersList(
                 modifier = Modifier.clickable { onSpeakerClick(speaker) },
                 speaker = speaker,
                 isAlphabeticallyFirstInCharGroup =
-                firstLetterIndexes[speaker.name.lowercase().first()] == index,
+                speakerLetterKey(speaker.name)?.let { firstLetterIndexes[it] } == index,
             )
         }
     }

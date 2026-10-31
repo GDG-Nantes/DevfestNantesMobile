@@ -1,0 +1,1 @@
+No external API integration: moves existing agenda logic into a KMP module and adds local preference stores; the only network use is a test recorder replaying the app's existing GraphQL queries to build offline fixtures.

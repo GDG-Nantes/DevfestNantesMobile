@@ -1,0 +1,81 @@
+{
+  "source": "android-v1.0",
+  "firstIndexes": [
+    {
+      "key": "a",
+      "index": 0
+    },
+    {
+      "key": "b",
+      "index": 7
+    },
+    {
+      "key": "c",
+      "index": 13
+    },
+    {
+      "key": "d",
+      "index": 17
+    },
+    {
+      "key": "e",
+      "index": 21
+    },
+    {
+      "key": "f",
+      "index": 24
+    },
+    {
+      "key": "g",
+      "index": 31
+    },
+    {
+      "key": "h",
+      "index": 34
+    },
+    {
+      "key": "j",
+      "index": 35
+    },
+    {
+      "key": "k",
+      "index": 44
+    },
+    {
+      "key": "l",
+      "index": 46
+    },
+    {
+      "key": "m",
+      "index": 51
+    },
+    {
+      "key": "n",
+      "index": 64
+    },
+    {
+      "key": "o",
+      "index": 70
+    },
+    {
+      "key": "p",
+      "index": 73
+    },
+    {
+      "key": "q",
+      "index": 77
+    },
+    {
+      "key": "r",
+      "index": 78
+    },
+    {
+      "key": "s",
+      "index": 81
+    },
+    {
+      "key": "t",
+      "index": 93
+    }
+  ]
+}

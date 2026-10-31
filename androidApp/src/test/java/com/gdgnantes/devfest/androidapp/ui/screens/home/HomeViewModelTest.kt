@@ -1,9 +1,10 @@
 package com.gdgnantes.devfest.androidapp.ui.screens.home
 
 import app.cash.turbine.test
+import com.gdgnantes.devfest.core.data.SessionFiltersStore
+import com.gdgnantes.devfest.core.model.SessionFilter
+import com.gdgnantes.devfest.core.model.SessionFilterType
 import com.gdgnantes.devfest.core.testing.MainDispatcherRule
-import com.gdgnantes.devfest.feature.agenda.services.SessionFiltersService
-import com.gdgnantes.devfest.feature.agenda.utils.SessionFilter
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.test.runTest
@@ -16,7 +17,7 @@ class HomeViewModelTest {
     val mainDispatcherRule = MainDispatcherRule()
 
     // The agenda test sources are not visible from :androidApp, so the fake is local.
-    private class FakeFilters : SessionFiltersService {
+    private class FakeFilters : SessionFiltersStore {
         val state = MutableStateFlow<Set<SessionFilter>>(emptySet())
         override val filters: StateFlow<Set<SessionFilter>> = state
 
@@ -26,7 +27,7 @@ class HomeViewModelTest {
     }
 
     private val filters = FakeFilters()
-    private val anyFilter = SessionFilter(SessionFilter.FilterType.BOOKMARK, "")
+    private val anyFilter = SessionFilter(SessionFilterType.BOOKMARK, "")
 
     private fun viewModel() = HomeViewModel(filters)
 

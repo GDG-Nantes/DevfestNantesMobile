@@ -16,7 +16,7 @@ plugins {
     alias(libs.plugins.secrets) apply false
 }
 
-// Kover is report-only (D-18): the root merges the 13 production modules into one report.
+// Kover is report-only (D-18): the root merges the 14 production modules into one report.
 // There is deliberately no verify rule and no threshold. :core:testing is test-support code
 // and is not aggregated.
 dependencies {
@@ -25,6 +25,7 @@ dependencies {
     kover(project(":core:model"))
     kover(project(":core:network"))
     kover(project(":core:analytics"))
+    kover(project(":core:domain"))
     kover(project(":core:data"))
     kover(project(":core:ui"))
     kover(project(":feature:venue"))

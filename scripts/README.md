@@ -187,3 +187,38 @@ bash scripts/kmp-nc-version-gate.sh selftest   # prove each decision on fixture 
 - `1` = skew, non-exact requirement, a source that cannot be read, or `selftest` failed
 
 ---
+
+### `record-agenda-snapshot.sh`
+**Agenda snapshot recorder** - Re-records the real API snapshot the Phase 7 characterization tests replay offline.
+
+```bash
+bash scripts/record-agenda-snapshot.sh
+```
+
+**What it does:**
+- Runs `AgendaSnapshotRecorder` (`:core:data:jvmTest -PrecordAgendaSnapshot`): posts the app's own three
+  agenda queries (`GetSessions`, `GetSpeakers`, `GetRooms`, the exact generated `OPERATION_DOCUMENT`) to
+  `https://confetti-app.dev/graphql` with the public header `conference: devfestnantes2025`
+- Writes the raw responses to `core/data/testdata/graphql/{GetSessions,GetSpeakers,GetRooms}.json`, plus
+  `snapshot-meta.json` (recording date and the server `speakersPage` total, metadata only)
+- Then runs `AgendaSnapshotTest.neutral_snapshot_matches_the_raw_responses` in record mode to rewrite the
+  neutral snapshot in `core/domain/testdata/agenda/` from the raw files (two Gradle invocations, so the order
+  is guaranteed; any failure, including "No tests found", stops the script). The tests that pin the counts of
+  the previous recording do not run in this step, so they cannot block re-recording
+- Prints `AGENDA-SNAPSHOT-RECORDED` as the last line
+
+**When to re-record:** only when the API shape changes or a new edition is recorded. Review the diff of the
+committed files before committing, then update the counts pinned in `AgendaSnapshotTest`
+(`recorded_snapshot_has_the_expected_shape`) by hand; only public conference data may be recorded.
+
+**Tests stay offline:** the recorder is excluded from `jvmTest` unless `-PrecordAgendaSnapshot` is set
+(same gating as `-PliveNetworkTests`), so a normal test run makes no network call.
+
+**Requirements:**
+- Internet access to `confetti-app.dev` and a JDK (the recorder uses `java.net.http`)
+
+**Exit codes:**
+- `0` = snapshot recorded
+- non-zero = the API did not answer 200, the response carried GraphQL errors, or a Gradle task failed
+
+---

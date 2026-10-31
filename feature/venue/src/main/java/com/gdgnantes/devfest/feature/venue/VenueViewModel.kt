@@ -5,9 +5,9 @@ import androidx.core.os.ConfigurationCompat
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.gdgnantes.devfest.core.data.DevFestNantesStore
+import com.gdgnantes.devfest.core.domain.venue.VenueLanguageUseCase
 import com.gdgnantes.devfest.core.model.Venue
 import com.gdgnantes.devfest.core.ui.UiState
-import com.gdgnantes.devfest.feature.venue.utils.toContentLanguage
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.StateFlow
@@ -16,7 +16,8 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.flow.stateIn
 
 class VenueViewModel(
-    private val store: DevFestNantesStore
+    private val store: DevFestNantesStore,
+    private val venueLanguage: VenueLanguageUseCase
 ) : ViewModel() {
     private val _uiState = MutableStateFlow(UiState.LOADING)
     val uiState: StateFlow<UiState>
@@ -26,7 +27,7 @@ class VenueViewModel(
         get() =
             flow {
                 ConfigurationCompat.getLocales(Resources.getSystem().configuration)[0]?.let { locale ->
-                    emit(store.getVenue(locale.toContentLanguage()))
+                    emit(store.getVenue(venueLanguage.languageFor(locale.language)))
                 }
             }
                 .onEach { _uiState.emit(UiState.SUCCESS) }
