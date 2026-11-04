@@ -417,16 +417,19 @@ Follow `di-gate.sh`: `set -euo pipefail`, `export LC_ALL=C`, modes `check` (defa
 | A6 | `Environment` propagates into `Menu` content used from `navigationBarItems(trailing:)` | Pitfall 9 | Menus crash/trap on open; fallback to passing the VM down |
 | A7 | Swift 6.3.3 (CI) emits no new error for the verified bridge shapes in Swift 5 language mode; the CI run of the existing v1.0 bridge call sites passed on 26.6 but the *new* wrapper was only compiled on 6.4 | Summary | First CI run fails to compile; fix is local to the adapter helper |
 
-## Open Questions
+## Open Questions (RESOLVED)
 
 1. **Does the Swift 6.3.3 compiler accept the new adapter/stream shapes?**
    - Known: v1.0 call sites passed CI on Xcode 26.6; project is Swift 5 mode with no strict concurrency; shapes compile clean on 6.4.
    - Unclear: nothing runnable locally for 26.6.
    - Recommendation: make plan 08-01 (iOS 17 floor, no Swift changes) plus the first VM plan the earliest CI-visible changes; the human pushes and runs `gh workflow run ios.yml` before the Speakers/Agenda plans (Phase 6 recorded that push is not authorized for agents).
+   - **RESOLVED (plan 08-04):** 08-04 is a blocking CI replay between the Venue plan (08-03) and the Speakers plan (08-05): the local CI-equivalent lane runs on the 08-03 head, the human pushes and dispatches `ios.yml`, and Claude verifies with `gh` that the run on the same SHA (Xcode 26.6 / Swift 6.3.3) is green with the About and Venue tests (`KotlinStreamBridge` over `asyncSequence`, `asyncFunction`, Observation, hosted `DevFestLogger`). 08-05 does not start before a green run; a Swift 6.3.3 diagnostic is fixed locally in the bridge or the adapter (A7).
 
 2. **Delete `BaseViewModel` now or keep a plain class?** Recommendation: delete in the plan that migrates the last VM (it has no users then); update `documentation/ARCHITECTURE.md` line "`Model/BaseViewModel.swift` gets the store…" accordingly.
+   - **RESOLVED (plans 08-02, 08-07, 08-08):** every migrated ViewModel drops the superclass (Agenda, the last one, in 08-07 Task 1); `BaseViewModel.swift` and its four project entries are deleted in 08-08 Task 1, the first plan in which it has no user (only the unused `ContentView` state object, removed in the same task). `documentation/ARCHITECTURE.md` gets a transitional bullet in 08-02 Task 3 and the final iOS section without `BaseViewModel` in 08-08 Task 3.
 
 3. **Local iOS 17 runtime?** Installed simulator runtimes are iOS 18.0, 18.3, 18.6, 26.1, 27.0 (no 17.x). Success criterion 1 ("builds and runs on simulator") is satisfied by the 18.0 floor-adjacent runtime; running on a real 17.x runtime is optional (`xcodebuild -downloadPlatform iOS -buildVersion 17.5`).
+   - **RESOLVED (plan 08-01):** 08-01 proves the floor with resolved build settings (17.0 for every target and configuration) and runs the Swift suite on the newest installed plain iPhone runtime, as CI does; running on a 17.x runtime stays optional and is recorded as a flagged assumption in 08-01 (FUT-04).
 
 ## Environment Availability
 

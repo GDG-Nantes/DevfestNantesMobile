@@ -43,8 +43,10 @@ Baseline: CI on main reports `XCRESULT-TESTS total=19 passed=19 failed=0 skipped
 | Task ID | Plan | Wave | Requirement | Threat Ref | Secure Behavior | Test Type | Automated Command | File Exists | Status |
 |---------|------|------|-------------|------------|-----------------|-----------|-------------------|-------------|--------|
 | 8-01-* | 01 | 1 | IOSUI-01 | — | N/A | script/grep | `grep -c "IPHONEOS_DEPLOYMENT_TARGET = 17.0;" iosApp/iosApp.xcodeproj/project.pbxproj` = 6 and no `15.0` | ✅ | ⬜ pending |
-| 8-02..05-* | 02–05 | 2+ | IOSUI-02, IOSTEST-01 | — | N/A | unit (Swift Testing) | `-only-testing:DevFestNantesTests/<Feature>ViewModelTests` | ❌ W0 | ⬜ pending |
-| 8-06-* | 06 | last | IOSUI-03 | — | N/A | gate | `bash scripts/swift-observation-gate.sh && bash scripts/swift-observation-gate.sh selftest` | ❌ W0 | ⬜ pending |
+| 8-02,03,05,06,07-* | 02, 03, 05, 06, 07 | 2–7 | IOSUI-02, IOSTEST-01 | — | N/A | unit (Swift Testing) | non-final tasks: `-only-testing:DevFestNantesTests/<Feature>ViewModelTests` (plus the matching characterization suite); final task of each plan: full suite command | ❌ W0 | ⬜ pending |
+| 8-04-* | 04 | 4 | IOSUI-01..02, IOSTEST-01 | T-08-09 | CI run SHA = local SHA | CI replay | local full lane + `gh run view <id>` on `ios.yml` | ✅ | ⬜ pending |
+| 8-08-* | 08 | 8 | IOSUI-03 | T-08-18, T-08-19 | gate cannot pass empty | gate | `bash scripts/swift-observation-gate.sh && bash scripts/swift-observation-gate.sh selftest` | ❌ W0 | ⬜ pending |
+| 8-09-* | 09 | 9 | IOSUI-02, IOSUI-03 | T-08-21 | human-approved parity | manual + full gate | D-16 paired screenshots + full CI-equivalent gate | ❌ W0 | ⬜ pending |
 | (regression) | all | all | — | — | N/A | unit | existing 19 characterization tests | ✅ | ⬜ pending |
 
 *Status: ⬜ pending · ✅ green · ❌ red · ⚠️ flaky*
