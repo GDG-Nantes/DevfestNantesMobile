@@ -55,7 +55,9 @@ Constraints from existing characterization tests (Pitfall 5): keep `speakersCont
 
 ### Port + live adapter files (`<Feature>Source.swift`)
 
-No in-repo analog; copy RESEARCH Pattern 1:
+> **Superseded at plan-check iteration 2:** the task-based bridge below is NOT the one to build. IOSUI-02 / Roadmap SC2 allow no unstructured task, so `KotlinStreamBridge` (08-02 Task 1) takes the store's KMP-NativeCoroutines `NativeFlow` directly, subscribes through its `onItem` / `onComplete` / `onCancelled` callbacks inside the `AsyncThrowingStream` build closure (`return next()` after each yield) and calls the returned native cancellable from `continuation.onTermination`; live adapters call `KotlinStreamBridge.stream(store.<flow>)` and import only `shared` (one-shot adapters still import `KMPNativeCoroutinesAsync` for `asyncFunction(for:)`). The snippet is kept only as the research record.
+
+No in-repo analog; RESEARCH Pattern 1 (superseded, see the note above):
 ```swift
 enum Bridge {
     static func stream<S: AsyncSequence>(_ make: @escaping () -> S) -> AsyncThrowingStream<S.Element, Error> {

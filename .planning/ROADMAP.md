@@ -160,7 +160,7 @@ Plans:
 - [ ] 08-01-PLAN.md — iOS 17.0 deployment target on every configuration (D-13), proven by resolved build settings and the Swift suite
 
 **Wave 2** *(blocked on Wave 1 completion)*
-- [ ] 08-02-PLAN.md — About on Observation behind a port; `KotlinStreamBridge` (its onTermination-cancelled child task recorded as the one IOSUI-02 exception), live adapter proven over the mocked Kotlin store, `FakeStream` and About tests, docs
+- [ ] 08-02-PLAN.md — About on Observation behind a port; Task-free `KotlinStreamBridge` (KMP-NativeCoroutines native-flow callbacks, native subscription cancelled from onTermination), live adapter proven over the mocked Kotlin store, `FakeStream` and About tests, docs
 
 **Wave 3** *(blocked on Wave 2 completion)*
 - [ ] 08-03-PLAN.md — Venue on Observation behind a one-shot port (no unstructured task), `FakeCall` and Venue tests

@@ -174,6 +174,8 @@ scripts/swift-observation-gate.sh
 Every new `.swift` file needs the four pbxproj edits (Pitfall 7).
 
 ### Pattern 1: Generic bridge helper (live adapters only)
+> **Superseded at plan-check iteration 2:** IOSUI-02 / Roadmap SC2 allow no unstructured task, so the plans build a Task-free bridge over the KMP-NativeCoroutines `NativeFlow` callbacks instead (see 08-02 Task 1). The task-based example below is kept as the research record only.
+
 **What:** wrap any `AsyncSequence` into an `AsyncThrowingStream`, cancelling the upstream when the consumer stops (break, cancellation, deinit).
 **When to use:** every streaming port method (`sessions`, `rooms`, `speakers`, `partners`).
 **Example:**
