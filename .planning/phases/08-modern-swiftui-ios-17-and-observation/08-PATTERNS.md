@@ -26,7 +26,7 @@
 | `.github/workflows/ios.yml` (add step) | config | n/a | "KMP-NativeCoroutines version gate" step, lines 32-35 | exact |
 | `scripts/README.md`, `AGENTS.md`, `documentation/ARCHITECTURE.md` (~l.324), `DEVELOPMENT.md` | docs | n/a | existing gate entries | exact |
 
-No analog: `Bridge.stream` generic AsyncSequence-to-AsyncThrowingStream helper, `DataLoadTracing` protocol, AsyncStream-handshake fakes (use RESEARCH Patterns 1, 2, 4 and Test Code Examples; no existing Swift equivalent). Android seam named in CONTEXT (Phase 4 `PerformanceMonitoring` interface) is conceptual only.
+No analog: the bridge helper (superseded: build the Task-free `KotlinStreamBridge` over `NativeFlow` callbacks from 08-02 Task 1, not the task-based `Bridge.stream` below; D-04 amended 2026-11-04), `DataLoadTracing` protocol, AsyncStream-handshake fakes (use RESEARCH Patterns 1, 2, 4 and Test Code Examples; no existing Swift equivalent). Android seam named in CONTEXT (Phase 4 `PerformanceMonitoring` interface) is conceptual only.
 
 ## Pattern Assignments
 

@@ -44,6 +44,13 @@ SPM packages (Phase 11), Swift 6 and warning-free build (Phase 12).
   `func venue(language:) async throws -> Venue`). A `Live…` adapter wraps
   `asyncSequence(for:)` / `asyncFunction(for:)` on `DevFestNantesStore`. **Only live adapters call
   the KMP-NativeCoroutines bridge**; ViewModels never do. Swift value types are not introduced here.
+  **Amended 2026-11-04 (user decision at plan-check iteration 3):** live *stream* adapters do not wrap
+  `asyncSequence(for:)`. Turning an `AsyncSequence` into an `AsyncThrowingStream` needs a pump `Task {}`,
+  which IOSUI-02 / SC2 forbid. Instead they pass the store's `NativeFlow` to the Task-free
+  `KotlinStreamBridge` (callback subscription inside the `AsyncThrowingStream` build closure, native
+  cancellable called from `continuation.onTermination`). One-shot adapters keep `asyncFunction(for:)`.
+  Accepted trade-off: the bridge requests the next item right after yielding (no pull-based
+  backpressure), which is harmless for these small flows and is documented next to the bridge.
 - **D-05:** **Live wiring through an init default argument** until Phase 10:
   `init(source: SpeakersSource = LiveSpeakersSource(), ...)`, the live adapter reading
   `IosDependencies.shared.store()`. Tests pass fakes. Phase 10 removes the defaults.
@@ -56,6 +63,10 @@ SPM packages (Phase 11), Swift 6 and warning-free build (Phase 12).
   to its VM (ready to move into feature packages in Phase 11). Fakes in `iosApp/DevFestNantesTests/Fakes/`.
   Fakes return Kotlin values built from the recorded snapshot (`TestData` in
   `CharacterizationSupport.swift`) or small hand-built values. No mocking library.
+  **Exception approved 2026-11-04 (user decision at plan-check iteration 3):** the Venue fake's fixture
+  is the `Venue` read from the mocked Kotlin store (`buildVenueStub`) through `LiveVenueSource`, because
+  `VenueContent(from:)` force-casts coordinates and a hand-built non-nil `Venue` needs `KotlinDouble`
+  (a swift-names baseline change). Plan 08-03 records it.
 - **D-08:** **`AgendaViewModel` persistence stays in the VM on the legacy keys**, made testable by
   injecting `defaults: UserDefaults = .standard`. Tests use a throwaway `UserDefaults(suiteName:)`.
   Keys (`Favorites`, `AgendaSessionFilters`) and formats stay byte-identical (`[String]` and Swift
