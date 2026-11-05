@@ -54,8 +54,10 @@ struct AgendaView: View {
             .navigationBarTitle(L10n.screenAgenda)
             .navigationBarItems(trailing: AgendaNavigationBarItems(viewModel: viewModel))
             .task {
-                RCValues.sharedInstance.fetchCloudValues()
                 await viewModel.observeRooms()
+            }
+            .task {
+                RCValues.sharedInstance.fetchCloudValues()
                 await viewModel.observeSessions()
             }
         }
