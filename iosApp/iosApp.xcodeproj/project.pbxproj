@@ -80,8 +80,10 @@
 		1B6C8E0F5A7D4382C9E4B196 /* SpeakersVenueCharacterizationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F20C7A95D1E8436BA5D3C871 /* SpeakersVenueCharacterizationTests.swift */; };
 		23D179FC4ADE83DA766E8933 /* DataLoadTracing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C36E1C6A17EDFD1903E370D /* DataLoadTracing.swift */; };
 		3200C5E4E59BB77870CB90C6 /* SpeakersSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 904A2B5E421D39222CB15BB2 /* SpeakersSource.swift */; };
+		4DFB7676531C41048CF529C0 /* SpeakerDetailsSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 76784A977F0045C591DD486B /* SpeakerDetailsSource.swift */; };
 		5C2C83F66D3490C6FBDE2F44 /* RecordingDataLoadTracing.swift in Sources */ = {isa = PBXBuildFile; fileRef = B535C1B9E2672E214CE86408 /* RecordingDataLoadTracing.swift */; };
 		89C8F7850AAB7060CD43701B /* SpeakersViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D68522B17CFB7CC1224520C /* SpeakersViewModelTests.swift */; };
+		BB6EF6B8087B464FB35C4DE5 /* SpeakerDetailsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D64FF3AC68A40D98EBBD741 /* SpeakerDetailsViewModelTests.swift */; };
 		F3F53DFBFAFE001CDBF76059 /* FakeSpeakersSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = E82AE7CE22A95B705B8219FF /* FakeSpeakersSource.swift */; };
 /* End PBXBuildFile section */
 
@@ -168,8 +170,10 @@
 		F20C7A95D1E8436BA5D3C871 /* SpeakersVenueCharacterizationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeakersVenueCharacterizationTests.swift; sourceTree = "<group>"; };
 		7C36E1C6A17EDFD1903E370D /* DataLoadTracing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataLoadTracing.swift; sourceTree = "<group>"; };
 		904A2B5E421D39222CB15BB2 /* SpeakersSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeakersSource.swift; sourceTree = "<group>"; };
+		76784A977F0045C591DD486B /* SpeakerDetailsSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeakerDetailsSource.swift; sourceTree = "<group>"; };
 		B535C1B9E2672E214CE86408 /* RecordingDataLoadTracing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingDataLoadTracing.swift; sourceTree = "<group>"; };
 		5D68522B17CFB7CC1224520C /* SpeakersViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeakersViewModelTests.swift; sourceTree = "<group>"; };
+		3D64FF3AC68A40D98EBBD741 /* SpeakerDetailsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeakerDetailsViewModelTests.swift; sourceTree = "<group>"; };
 		E82AE7CE22A95B705B8219FF /* FakeSpeakersSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeSpeakersSource.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -388,6 +392,7 @@
 				CBDFA0352AB1B72200302D34 /* SpeakerDetailsViewModel.swift */,
 				CBDFA03F2AB1EDA200302D34 /* SpeakersViewModel.swift */,
 				904A2B5E421D39222CB15BB2 /* SpeakersSource.swift */,
+				76784A977F0045C591DD486B /* SpeakerDetailsSource.swift */,
 			);
 			path = Speakers;
 			sourceTree = "<group>";
@@ -425,6 +430,7 @@
 				0266C2377B61A876B903B0DD /* AboutViewModelTests.swift */,
 				6B3C9E4F1D50A728C3F9E604 /* VenueViewModelTests.swift */,
 				5D68522B17CFB7CC1224520C /* SpeakersViewModelTests.swift */,
+				3D64FF3AC68A40D98EBBD741 /* SpeakerDetailsViewModelTests.swift */,
 			);
 			path = DevFestNantesTests;
 			sourceTree = "<group>";
@@ -650,6 +656,7 @@
 				5A2B8D3E0C4F6917B2E8D5F3 /* VenueSource.swift in Sources */,
 				23D179FC4ADE83DA766E8933 /* DataLoadTracing.swift in Sources */,
 				3200C5E4E59BB77870CB90C6 /* SpeakersSource.swift in Sources */,
+				4DFB7676531C41048CF529C0 /* SpeakerDetailsSource.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -670,6 +677,7 @@
 				B081E39E62A5FC7D184E3B59 /* FakeVenueSource.swift in Sources */,
 				5C2C83F66D3490C6FBDE2F44 /* RecordingDataLoadTracing.swift in Sources */,
 				89C8F7850AAB7060CD43701B /* SpeakersViewModelTests.swift in Sources */,
+				BB6EF6B8087B464FB35C4DE5 /* SpeakerDetailsViewModelTests.swift in Sources */,
 				F3F53DFBFAFE001CDBF76059 /* FakeSpeakersSource.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

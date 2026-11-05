@@ -10,14 +10,14 @@ import SwiftUI
 import shared
 
 struct SpeakerDetails: View {
-    @StateObject private var viewModel: SpeakerDetailsViewModel
+    @State private var viewModel: SpeakerDetailsViewModel
     var speakerId: String
 
     init(speakerId: String) {
         self.speakerId = speakerId
-        _viewModel = StateObject(wrappedValue: SpeakerDetailsViewModel(speakerId: speakerId))
+        _viewModel = State(initialValue: SpeakerDetailsViewModel(speakerId: speakerId))
     }
-    
+
     var body: some View {
         LoadingView(isShowing: $viewModel.isLoading) {
             ZStack {
@@ -86,6 +86,7 @@ struct SpeakerDetails: View {
                 }
             }
         }
+        .task { await viewModel.load() }
     }
     
     func onSocialLinkClick(socialitem: SocialItem) {

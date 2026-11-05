@@ -6,71 +6,69 @@
 //  Copyright © 2023 orgName. All rights reserved.
 //
 
+import Foundation
+import Observation
 import shared
-import Combine
-import KMPNativeCoroutinesAsync
-import SwiftUI
-import os
 
+@Observable
+@MainActor
+final class SpeakerDetailsViewModel {
+    var speaker: Speaker?
+    var speakerSession: [Session]?
+    var isLoading: Bool = true
+    let speakerId: String
 
-class SpeakerDetailsViewModel: BaseViewModel {
-    @Published var speaker: Speaker?
-    @Published var speakerSession: [Session]?
-    @Published var isLoading: Bool = true
-    var speakerId: String
-    
-    private let performanceMonitoring = PerformanceMonitoring.shared
-    private let logger = DevFestLogger(category: "SpeakerDetailsViewModel")
-    
-    init(speakerId: String) {
+    @ObservationIgnored private let source: SpeakerDetailsSource
+    @ObservationIgnored private let tracing: DataLoadTracing
+    @ObservationIgnored private let logger = DevFestLogger(category: "SpeakerDetailsViewModel")
+
+    init(speakerId: String, source: SpeakerDetailsSource = LiveSpeakerDetailsSource(), tracing: DataLoadTracing = PerformanceMonitoring.shared) {
         self.speakerId = speakerId
-        super.init()
-        
-        Task {
-            await getSpeaker(speakerId: speakerId)
-            await getSpeakerSession(speakerId: speakerId)
-        }
+        self.source = source
+        self.tracing = tracing
     }
-    
-    
+
+    /// Loads the speaker, then their sessions (same order as v1.0). Called from the view's `.task`.
+    func load() async {
+        await getSpeaker(speakerId: speakerId)
+        if Task.isCancelled { return }
+        await getSpeakerSession(speakerId: speakerId)
+    }
+
     func getSpeaker(speakerId: String) async {
+        let source = self.source
         do {
-            let speakerResult = try await performanceMonitoring.trackDataLoad(
+            let speakerResult = try await tracing.trackDataLoad(
                 traceName: PerformanceMonitoring.TRACE_SPEAKER_DETAILS_LOAD,
                 dataSource: "graphql"
             ) {
-                try await asyncFunction(for: self.store.getSpeaker(id: speakerId))
+                try await source.speaker(id: speakerId)
             }
-            
-            DispatchQueue.main.async {
-                self.speaker = speakerResult
-                // L'état de chargement sera arrêté une fois les sessions récupérées également
-            }
-            
+
+            // The loading state stops once the sessions are retrieved as well.
+            speaker = speakerResult
+
             logger.log(.info, "Speaker details loaded: \(speakerResult?.name ?? "Unknown")")
-            
+        } catch is CancellationError {
+            return
         } catch {
             logger.log(.error, "Get Speaker error: \(error.localizedDescription)")
-            DispatchQueue.main.async {
-                self.isLoading = false
-            }
+            isLoading = false
         }
     }
-    
+
     func getSpeakerSession(speakerId: String) async {
         do {
-            let speakerSessionResult = try await asyncFunction(for: store.getSpeakerSessions(speakerId: speakerId))
-            DispatchQueue.main.async {
-                self.speakerSession = speakerSessionResult
-                self.isLoading = false
-            }
-            
+            let speakerSessionResult = try await source.speakerSessions(speakerId: speakerId)
+            speakerSession = speakerSessionResult
+            isLoading = false
+
             logger.log(.info, "Speaker sessions loaded: \(speakerSessionResult.count) sessions")
+        } catch is CancellationError {
+            return
         } catch {
             logger.log(.error, "Get Speaker Sessions error: \(error.localizedDescription)")
-            DispatchQueue.main.async {
-                self.isLoading = false
-            }
+            isLoading = false
         }
     }
 }
