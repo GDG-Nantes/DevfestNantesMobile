@@ -1,0 +1,10 @@
+appId: com.gdgnantes.devfest.iosApp
+# D-16 parity flow (phase 08). Run from base/ or branch/ so the screenshots land there:
+#   cd 08-parity/base   && maestro --device <udid> test ../parity-flow.yaml
+#   cd 08-parity/branch && maestro --device <udid> test ../parity-flow.yaml
+---
+- launchApp
+- extendedWaitUntil:
+    visible: "08:00"
+    timeout: 600000
+- takeScreenshot: 01-agenda-day1
