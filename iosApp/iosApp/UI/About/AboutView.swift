@@ -10,7 +10,7 @@ import SwiftUI
 import shared
 
 struct AboutView: View {
-    @ObservedObject var viewModel = AboutViewModel()
+    @State private var viewModel = AboutViewModel()
     
     var body: some View {
         NavigationView {

@@ -7,27 +7,30 @@
 //
 
 import Foundation
+import Observation
 import shared
-import Combine
-import KMPNativeCoroutinesAsync
-import SwiftUI
-import os
 
+@Observable
 @MainActor
-class AboutViewModel: BaseViewModel {
-    @Published var partnersContent: [PartnerContent]?
-    @Published var isLoading = true
-    
+final class AboutViewModel {
+    var partnersContent: [PartnerContent]?
+    var isLoading = true
+
+    @ObservationIgnored private let source: AboutSource
+
+    init(source: AboutSource = LiveAboutSource()) {
+        self.source = source
+    }
+
     /// Asynchronous method to retrieve partners
     func observePartners() async {
-        self.isLoading = true
-        self.partnersContent = []
+        isLoading = true
+        partnersContent = []
 
         do {
-            let partnersSequence = asyncSequence(for: store.partners)
             var newContentArray = [PartnerContent]()
-            // Consommer uniquement la première émission pour éviter une attente infinie
-            for try await partners in partnersSequence {
+            // Only the first emission is used; leaving the loop terminates the upstream stream.
+            for try await partners in source.partners() {
                 let sortedKeys = partners.keys.sorted()
                 for key in sortedKeys {
                     if let list = partners[key] {
@@ -39,12 +42,15 @@ class AboutViewModel: BaseViewModel {
                 }
                 break
             }
-            self.partnersContent = newContentArray
-            self.isLoading = false
+            // The bridge ends silently when the load is cancelled, so cancellation is checked explicitly.
+            try Task.checkCancellation()
+            partnersContent = newContentArray
+            isLoading = false
+        } catch is CancellationError {
+            return
         } catch {
             DevFestLogger(category: "About").log(.error, "Observe Partners error: \(error.localizedDescription)", error: error)
-            self.isLoading = false
+            isLoading = false
         }
     }
 }
-
