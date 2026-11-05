@@ -88,6 +88,7 @@
 		B13578B57B84459DA3F9363E /* FakeSpeakerDetailsSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B180C1D20614A53806942A2 /* FakeSpeakerDetailsSource.swift */; };
 		57B9927230676CF563627ED8 /* AgendaSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D8490F1AA1AF6EEAE45E8E2 /* AgendaSource.swift */; };
 		F529F567183DE0B596609D13 /* AgendaViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59876FADBD32923B55AC6A11 /* AgendaViewModelTests.swift */; };
+		DC076202C14D990A8B73FDD7 /* FakeAgendaSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27FC659D344124EE3FF1B8E8 /* FakeAgendaSource.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -181,6 +182,7 @@
 		5B180C1D20614A53806942A2 /* FakeSpeakerDetailsSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeSpeakerDetailsSource.swift; sourceTree = "<group>"; };
 		2D8490F1AA1AF6EEAE45E8E2 /* AgendaSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgendaSource.swift; sourceTree = "<group>"; };
 		59876FADBD32923B55AC6A11 /* AgendaViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgendaViewModelTests.swift; sourceTree = "<group>"; };
+		27FC659D344124EE3FF1B8E8 /* FakeAgendaSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeAgendaSource.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -415,6 +417,7 @@
 		E20E62857AD0223FB28B7134 /* Fakes */ = {
 			isa = PBXGroup;
 			children = (
+				27FC659D344124EE3FF1B8E8 /* FakeAgendaSource.swift */,
 				3354B7EB51BE9C5CBD82738D /* FakeStream.swift */,
 				A5E13E475E6CFC5FE7407E60 /* FakeAboutSource.swift */,
 				8D5EB06B3F72C94AE51B0826 /* FakeCall.swift */,
@@ -674,6 +677,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DC076202C14D990A8B73FDD7 /* FakeAgendaSource.swift in Sources */,
 				F529F567183DE0B596609D13 /* AgendaViewModelTests.swift in Sources */,
 				9E41D7A05B6C82F3D1048B7A /* AgendaDateParsingTests.swift in Sources */,
 				C8E3F5B21D6A4079B2F18E53 /* CharacterizationSupport.swift in Sources */,
