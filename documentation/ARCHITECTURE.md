@@ -326,7 +326,10 @@ To add a screen, add a `Screen` subclass and a `composable(...)` entry in `MainA
   (`asyncFunction` for one-shot calls; flows are handed to `Model/KotlinStreamBridge.swift`) and
   resolves `IosDependencies.shared.store()` lazily. ViewModels not yet migrated still extend
   `Model/BaseViewModel.swift`, which gets the store from `IosDependencies.shared.store()` and consumes
-  flows through KMP-NativeCoroutines (Combine / async sequences).
+  flows through KMP-NativeCoroutines (Combine / async sequences). Traced ViewModels take a
+  `DataLoadTracing` (conformed by `PerformanceMonitoring`, same trace names), so tests use a recording
+  fake instead of Firebase Performance, and a cancelled load is logged at info level only, never
+  forwarded to Crashlytics.
 - `KotlinStreamBridge` turns a store flow into an `AsyncThrowingStream` by subscribing through the
   KMP-NativeCoroutines native-flow callbacks, without creating a task, and cancels the native
   subscription from `continuation.onTermination`; ViewModels and views load only in `.task`, so app
