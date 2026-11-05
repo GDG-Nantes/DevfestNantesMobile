@@ -96,6 +96,17 @@ public class PerformanceMonitoring: ObservableObject {
             
             logger.log(.info, "Completed data load trace: \(traceName) in \(Int(duration))ms")
             return result
+        } catch let cancellation as CancellationError {
+            let duration = Date().timeIntervalSince(startTime) * 1000
+
+            trace.setValue(String(Int(duration)), forAttribute: "duration_ms")
+            trace.setValue("false", forAttribute: "success")
+            trace.setValue(String(describing: type(of: cancellation)), forAttribute: PerformanceMonitoring.ATTR_ERROR_TYPE)
+            trace.stop()
+
+            // A cancelled load is not a failure: no error object, so nothing is forwarded to Crashlytics.
+            logger.log(.info, "Cancelled data load trace: \(traceName)")
+            throw cancellation
         } catch {
             let duration = Date().timeIntervalSince(startTime) * 1000
             
