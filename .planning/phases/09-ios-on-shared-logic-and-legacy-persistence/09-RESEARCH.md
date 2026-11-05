@@ -148,7 +148,7 @@ The highest-risk item is the one-way store switch (07 D-15). Keep it as its own 
 | Capability | Primary Tier | Secondary Tier | Rationale |
 |------------|-------------|----------------|-----------|
 | Filtering sessions (OR within type, AND across) | Shared domain (`FilterSessionsUseCase`) | — | One rule for both platforms; Swift copy is deleted (IOSDATA-01) |
-| Day / time-slot grouping and in-slot room order | Shared domain (`GroupSessionsUseCase` with `LocalDateDays`) | — | `RoomSortIndex` order is the documented deviation in normal use (three edge cases accepted at planning, see 09-CONTEXT "Accepted deviations") |
+| Day / time-slot grouping and in-slot room order | Shared domain (`GroupSessionsUseCase` with `LocalDateDays`) | — | `RoomSortIndex` order is the documented deviation in normal use (four edge cases accepted at planning, see 09-CONTEXT "Accepted deviations") |
 | Combining sessions + filters + bookmarks | Shared domain (`ObserveAgendaUseCase`, `flowOn(Default)`) | iOS VM (collects, owns loading/error/trace) | Use case is data-only (its KDoc D-04); loading, tracing, cancellation stay in the ViewModel |
 | Persisting bookmarks and filters | Shared data, iOS `UserDefaults*Store` (Koin singles) | — | Writes synchronous and locked in Kotlin; Swift never touches `UserDefaults` for these |
 | Observable bookmark/filter mirror | iOS ViewModel (Swift, `@Observable`) | Shared stores (seed + write-through) | SwiftUI needs observable properties; mirror is a cache of store truth, not a second source of persistence |
