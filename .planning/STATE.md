@@ -5,10 +5,10 @@ milestone_name: iOS Architecture
 current_phase: 9
 current_phase_name: iOS on Shared Logic and Legacy Persistence
 status: "Phase 08 shipped — PR #432"
-stopped_at: Phase 9 context gathered
-last_updated: "2026-11-05T20:06:30.875Z"
+stopped_at: Phase 9 UI-SPEC approved
+last_updated: "2026-11-05T20:29:38.383Z"
 last_activity: 2026-11-05
-state_head: 2c37b1ac4a856cd0ecc51a628bf716e7900e9d07
+state_head: 56b30679290f994dd7ddfd672c1cde9ac65c9a19
 progress:
   total_phases: 7
   completed_phases: 8
@@ -266,9 +266,9 @@ Items acknowledged and deferred at milestone close, most recent first:
 
 ## Session Continuity
 
-Last session: 2026-11-05T20:06:30.795Z
-Stopped at: Phase 9 context gathered
-Resume file: .planning/phases/09-ios-on-shared-logic-and-legacy-persistence/09-CONTEXT.md
+Last session: 2026-11-05T20:29:38.283Z
+Stopped at: Phase 9 UI-SPEC approved
+Resume file: .planning/phases/09-ios-on-shared-logic-and-legacy-persistence/09-UI-SPEC.md
 
 ## Operator Next Steps
 
