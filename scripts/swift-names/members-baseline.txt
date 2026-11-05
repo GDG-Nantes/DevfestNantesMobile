@@ -99,6 +99,9 @@ DevFestNantesStore	partners
 DevFestNantesStore	rooms
 DevFestNantesStore	sessions
 DevFestNantesStore	speakers
+DevFestNantesStoreBuilder	build()
+DevFestNantesStoreBuilder	init()
+DevFestNantesStoreBuilder	setUseMockServer(useMockServer:)
 IosDependencies	init()
 IosDependencies	shared
 IosDependencies	start()

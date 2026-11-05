@@ -2,19 +2,19 @@
 gsd_state_version: "1.0"
 milestone: v1.1
 milestone_name: iOS Architecture
-current_phase: 8
-current_phase_name: Modern SwiftUI, iOS 17 and Observation
-status: "Phase 07 shipped — PR #431"
-stopped_at: Phase 07 complete, ready to plan Phase 8
-last_updated: "2026-10-31T17:41:40.239Z"
-last_activity: 2026-10-31
-state_head: 8290214c32d541f9bd7a3cdb3b707a98f63972f9
+current_phase: 9
+current_phase_name: iOS on Shared Logic and Legacy Persistence
+status: "Phase 08 shipped — PR #432"
+stopped_at: Phase 08 complete, ready to plan Phase 9
+last_updated: "2026-11-05T16:49:40.588Z"
+last_activity: 2026-11-05
+state_head: 8ab59d7dcaab77eb427d8d73c8361fb30b4ce97c
 progress:
   total_phases: 7
-  completed_phases: 7
-  total_plans: 25
-  completed_plans: 25
-  percent: 58
+  completed_phases: 8
+  total_plans: 34
+  completed_plans: 34
+  percent: 67
 ---
 
 # Project State
@@ -24,22 +24,22 @@ progress:
 See: .planning/PROJECT.md (updated 2026-10-29)
 
 **Core value:** CI/CD must work again and the project must become maintainable again (modern build, modular architecture, decentralized DI, solid test coverage) without ever regressing the app's existing behavior for users.
-**Current focus:** Phase 8 — Modern SwiftUI, iOS 17 and Observation
+**Current focus:** Phase 08 — Modern SwiftUI, iOS 17 and Observation
 
 ## Current Position
 
-Phase: 8 — Modern SwiftUI, iOS 17 and Observation
+Phase: 9 — iOS on Shared Logic and Legacy Persistence
 Plan: Not started
-Status: Phase 07 shipped — PR #431
-Last activity: 2026-10-31
+Status: Phase 08 shipped — PR #432
+Last activity: 2026-11-05
 
-Progress: [██████░░░░] 58%
+Progress: [███████░░░] 67%
 
 ## Performance Metrics
 
 **Velocity:**
 
-- Total plans completed: 62
+- Total plans completed: 71
 - Average duration: N/A
 - Total execution time: 0 hours
 
@@ -54,6 +54,7 @@ Progress: [██████░░░░] 58%
 | 05 | 11 | - | - |
 | 06 | 6 | - | - |
 | 07 | 19 | - | - |
+| 08 | 9 | - | - |
 
 **Recent Trend:**
 
@@ -170,6 +171,8 @@ Recent decisions affecting current work:
 - [Phase 06]: 06-06: KMP-NativeCoroutines 1.0.6 bump (21b58bc) kept after human-approved v1.0 parity smoke; Xcode GUI build x86_64 JDK issue logged as dev-environment debt
 - [Phase 07]: Phase 7 complete (2026-10-29): `:core:domain` shared use cases + common stores, Android adopted with zero visible change; verification passed 5/5, Nyquist-compliant, threats_open 0, UI review 18/24 (pre-existing v1.0 issues only), code review 0 critical / 4 warnings open (07-REVIEW-DISPOSITION.md)
 - [Phase 07]: 07-19: Android parity with v1.0 approved by the human (2026-10-29) from 15 paired main/branch screenshots and the R8 release smoke; no phase-caused difference
+- [Phase 08]: Wave 7 UI safety gate (no UI-SPEC.md for Phase 08) overridden once by the user (2026-11-05): Phase 8 is a behavior-preserving Observation refactor with no visual change; the 08-09 paired-screenshot parity checkpoint (D-16) is the UI proof. workflow.ui_safety_gate left enabled
+- [Phase 08]: UI safety gate override extended by the user (2026-11-05) to all remaining Phase 8 waves (wave 8: 08-08 import/state-object removal, no visual change; wave 9: 08-09 parity checkpoint); config unchanged
 
 ### Pending Todos
 
@@ -263,9 +266,9 @@ Items acknowledged and deferred at milestone close, most recent first:
 
 ## Session Continuity
 
-Last session: 2026-10-29T22:29:07.077Z
-Stopped at: Phase 07 complete, ready to plan Phase 8
-Resume file: None
+Last session: 2026-11-03T22:34:48.338Z
+Stopped at: Phase 08 complete, ready to plan Phase 9
+Resume file: .planning/phases/08-modern-swiftui-ios-17-and-observation/08-CONTEXT.md
 
 ## Operator Next Steps
 

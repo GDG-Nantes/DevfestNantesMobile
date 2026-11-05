@@ -18,7 +18,7 @@ import SwiftUI
 import shared
 
 struct AgendaView: View {
-    @ObservedObject var viewModel = AgendaViewModel()
+    @Environment(AgendaViewModel.self) private var viewModel
     
     @State private var day = "2025-10-16"
     @State private var scrollToSectionID: Date? = nil
@@ -31,12 +31,13 @@ struct AgendaView: View {
     }()
 
     var body: some View {
+        @Bindable var bindable = viewModel
         NavigationStack {
             ZStack {
                 // Fond DevFest sous toute la vue
                 DevFestSiteBackground()
 
-                LoadingView(isShowing: $viewModel.isLoading) {
+                LoadingView(isShowing: $bindable.isLoading) {
                     ScrollViewReader { proxy in
                         VStack(spacing: 12) {
                             dayPicker
@@ -52,10 +53,12 @@ struct AgendaView: View {
                 handleInitialScrollIfNeeded(isLoading: isLoading)
             }
             .navigationBarTitle(L10n.screenAgenda)
-            .navigationBarItems(trailing: AgendaNavigationBarItems(viewModel: viewModel))
+            .navigationBarItems(trailing: AgendaNavigationBarItems().environment(viewModel))
+            .task {
+                await viewModel.observeRooms()
+            }
             .task {
                 RCValues.sharedInstance.fetchCloudValues()
-                await viewModel.observeRooms()
                 await viewModel.observeSessions()
             }
         }
@@ -209,7 +212,7 @@ struct AgendaView: View {
                 if t <= nowTotal { previous = s } else { break }
             }
             if let previous {
-                DispatchQueue.main.async { scrollToSectionID = previous.date }
+                scrollToSectionID = previous.date
             }
             firstAppear = false
         }

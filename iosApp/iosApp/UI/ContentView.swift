@@ -1,11 +1,10 @@
 import SwiftUI
 import shared
-import Combine
 
 ///SwiftUI TabView
 struct ContentView: View {
-    @StateObject var viewModel = BaseViewModel()
     @State private var selection = 0
+    @State private var agendaViewModel = AgendaViewModel()
 
     var body: some View {
         ZStack {
@@ -41,6 +40,7 @@ struct ContentView: View {
                     .tag(3)
             }
             .accentColor(Color(Asset.devFestRed.color))
+            .environment(agendaViewModel)
         }
         .onAppear {
             if #available(iOS 26.0, *) {

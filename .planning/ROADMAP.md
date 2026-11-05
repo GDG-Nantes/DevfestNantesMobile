@@ -36,7 +36,7 @@ Full details: [milestones/v1.0-ROADMAP.md](milestones/v1.0-ROADMAP.md). Requirem
 
 - [x] **Phase 6: iOS Test Foundation and CI Gates** - iOS CI runs real Swift tests on every PR and the Kotlin/Swift interop gates are active (completed 2026-10-27)
 - [x] **Phase 7: KMP Domain Layer and Android Adoption** - The agenda/filters/bookmarks logic lives in `:core:domain`, tested on JVM and iOS simulator, and Android uses it with no visible difference (completed 2026-10-29)
-- [ ] **Phase 8: Modern SwiftUI, iOS 17 and Observation** - iOS 17 everywhere, `@Observable @MainActor` ViewModels tested on fakes, Combine removed
+- [x] **Phase 8: Modern SwiftUI, iOS 17 and Observation** - iOS 17 everywhere, `@Observable @MainActor` ViewModels tested on fakes, Combine removed (completed 2026-11-05)
 - [ ] **Phase 9: iOS on Shared Logic and Legacy Persistence** - iOS delegates filtering, grouping and bookmarks/filters to the shared domain without losing v1.0 data
 - [ ] **Phase 10: Explicit iOS DI** - `AppDependencies` composition root and constructor injection; singletons and service-locator removed
 - [ ] **Phase 11: SPM Modularization** - `shared` as a static XCFramework, local core and feature packages, app target reduced to a shell
@@ -154,7 +154,35 @@ Plans:
   4. Each iOS ViewModel has Swift Testing tests on fakes (narrow ports per ViewModel), run in the Phase 6 CI lane
   5. UAT: agenda, filters, bookmarks, session detail, speakers, venue and about behave as in v1.0
 
-**Plans**: TBD
+**Plans**: 9/9 plans complete
+Plans:
+**Wave 1**
+- [x] 08-01-PLAN.md — iOS 17.0 deployment target on every configuration (D-13), proven by resolved build settings and the Swift suite
+
+**Wave 2** *(blocked on Wave 1 completion)*
+- [x] 08-02-PLAN.md — About on Observation behind a port; Task-free `KotlinStreamBridge` (KMP-NativeCoroutines native-flow callbacks, native subscription cancelled from onTermination), live adapter proven over the mocked Kotlin store, `FakeStream` and About tests, docs
+
+**Wave 3** *(blocked on Wave 2 completion)*
+- [x] 08-03-PLAN.md — Venue on Observation behind a one-shot port (no unstructured task), `FakeCall` and Venue tests
+
+**Wave 4** *(blocked on Wave 3 completion)*
+- [x] 08-04-PLAN.md — CI toolchain replay: human pushes, `ios.yml` on Xcode 26.6 runs the new bridge shapes green before Speakers/SpeakerDetails/Agenda (blocking checkpoint)
+
+**Wave 5** *(blocked on Wave 4 completion)*
+- [x] 08-05-PLAN.md — Speakers on Observation, `DataLoadTracing` seam (D-06), silent cancelled traces, Speakers tests
+
+**Wave 6** *(blocked on Wave 5 completion)*
+- [x] 08-06-PLAN.md — SpeakerDetails on Observation behind a one-shot port, load moved from init to `.task`, SpeakerDetails tests
+
+**Wave 7** *(blocked on Wave 6 completion)*
+- [x] 08-07-PLAN.md — Agenda: one shared `AgendaViewModel` owned by `ContentView` in the environment (D-01/D-02), ports, rooms in its own `.task`, legacy persistence keys (D-08), scroll hop removed, tests
+
+**Wave 8** *(blocked on Wave 7 completion)*
+- [x] 08-08-PLAN.md — Combine, `BaseViewModel` and the Combine SPM product removed; `scripts/swift-observation-gate.sh` in `ios.yml` (D-15); docs (including the Agenda docs handed off by 08-07) and D-12 debt list
+
+**Wave 9** *(blocked on Wave 8 completion)*
+- [x] 08-09-PLAN.md — D-16 parity: Maestro-captured baseline vs branch screenshots, shifted-clock scroll check, full gate, blocking human checkpoint
+
 **Research flag**: replay the KMP-NativeCoroutines async bridge (`asyncSequence`/`asyncFunction`) on the CI toolchain (Xcode 26.6 / Swift 6.3.3), not only on the local Swift 6.4 experiment
 **UI hint**: yes
 
@@ -232,7 +260,7 @@ Phases execute in numeric order: 6 → 7 → 8 → 9 → 10 → 11 → 12
 | 5. Test Coverage Retrofit | v1.0 | 11/11 | Complete | 2026-10-16 |
 | 6. iOS Test Foundation and CI Gates | v1.1 | 6/6 | Complete    | 2026-10-27 |
 | 7. KMP Domain Layer and Android Adoption | v1.1 | 19/19 | Complete    | 2026-10-29 |
-| 8. Modern SwiftUI, iOS 17 and Observation | v1.1 | 0/? | Not started | - |
+| 8. Modern SwiftUI, iOS 17 and Observation | v1.1 | 9/9 | Complete    | 2026-11-05 |
 | 9. iOS on Shared Logic and Legacy Persistence | v1.1 | 0/? | Not started | - |
 | 10. Explicit iOS DI | v1.1 | 0/? | Not started | - |
 | 11. SPM Modularization | v1.1 | 0/? | Not started | - |

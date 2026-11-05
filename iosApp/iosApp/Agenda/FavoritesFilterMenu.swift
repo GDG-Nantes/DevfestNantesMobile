@@ -2,7 +2,7 @@ import SwiftUI
 import shared
 
 struct FavoritesFilterMenu: View {
-    @ObservedObject var viewModel: AgendaViewModel
+    @Environment(AgendaViewModel.self) private var viewModel
     var body: some View {
         let isSelected = viewModel.sessionFilters.contains { $0.type == .bookmark }
         Button(action: {

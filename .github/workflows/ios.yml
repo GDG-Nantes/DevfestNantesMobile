@@ -34,6 +34,13 @@ jobs:
           bash scripts/kmp-nc-version-gate.sh
           bash scripts/kmp-nc-version-gate.sh selftest
 
+      # Pure text check (Phase 8, IOSUI-03): Combine and the legacy observation APIs must not
+      # come back into the iOS Swift sources or the Xcode project.
+      - name: Swift observation gate
+        run: |
+          bash scripts/swift-observation-gate.sh
+          bash scripts/swift-observation-gate.sh selftest
+
       - uses: ./.github/actions/android-setup
         with:
           java-version: ${{ env.JAVA_VERSION }}
