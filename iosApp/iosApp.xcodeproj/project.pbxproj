@@ -65,6 +65,8 @@
 		F58368862E70701E001A9B8A /* LiquidGlassButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = F58368852E70701E001A9B8A /* LiquidGlassButtonStyle.swift */; };
 		F5BA00E32E7014DA00A31383 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F5BA00E22E7014DA00A31383 /* GoogleService-Info.plist */; };
 		F58B5AB8B24860681567F470 /* SessionFilterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07FA17E61A9DDADF5C507A31 /* SessionFilterTests.swift */; };
+		936E5F8A210C9B5E0A5CE29E /* FakeAboutSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E13E475E6CFC5FE7407E60 /* FakeAboutSource.swift */; };
+		D378BCA12D9B2E250F182DD0 /* FakeStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3354B7EB51BE9C5CBD82738D /* FakeStream.swift */; };
 		C6D6895F689FF4871B13968B /* AboutViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0266C2377B61A876B903B0DD /* AboutViewModelTests.swift */; };
 		62BEF6EDD7B3F05E3843199A /* AboutSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BE9799BB1BB3B8AB874E318 /* AboutSource.swift */; };
 		3B5E706CACD747451417A8BB /* KotlinStreamBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DFBB1839062F11AE893C471 /* KotlinStreamBridge.swift */; };
@@ -142,6 +144,8 @@
 		F5BA00E22E7014DA00A31383 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		938E1B2393F75FF8A7B71E9B /* DevFestNantesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DevFestNantesTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		07FA17E61A9DDADF5C507A31 /* SessionFilterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionFilterTests.swift; sourceTree = "<group>"; };
+		A5E13E475E6CFC5FE7407E60 /* FakeAboutSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeAboutSource.swift; sourceTree = "<group>"; };
+		3354B7EB51BE9C5CBD82738D /* FakeStream.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeStream.swift; sourceTree = "<group>"; };
 		0266C2377B61A876B903B0DD /* AboutViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewModelTests.swift; sourceTree = "<group>"; };
 		7BE9799BB1BB3B8AB874E318 /* AboutSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutSource.swift; sourceTree = "<group>"; };
 		3DFBB1839062F11AE893C471 /* KotlinStreamBridge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KotlinStreamBridge.swift; sourceTree = "<group>"; };
@@ -375,9 +379,19 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		E20E62857AD0223FB28B7134 /* Fakes */ = {
+			isa = PBXGroup;
+			children = (
+				3354B7EB51BE9C5CBD82738D /* FakeStream.swift */,
+				A5E13E475E6CFC5FE7407E60 /* FakeAboutSource.swift */,
+			);
+			path = Fakes;
+			sourceTree = "<group>";
+		};
 		70708D92D3C406142E250997 /* DevFestNantesTests */ = {
 			isa = PBXGroup;
 			children = (
+				E20E62857AD0223FB28B7134 /* Fakes */,
 				3C5A91E7B2D04F6810A7C3E9 /* AgendaDateParsingTests.swift */,
 				B7D2E4A10C5F3968A1E07D42 /* CharacterizationSupport.swift */,
 				D9F4A6C32E7B518AC3A29F64 /* AgendaCharacterizationTests.swift */,
@@ -619,6 +633,8 @@
 				1B6C8E0F5A7D4382C9E4B196 /* SpeakersVenueCharacterizationTests.swift in Sources */,
 				F58B5AB8B24860681567F470 /* SessionFilterTests.swift in Sources */,
 				C6D6895F689FF4871B13968B /* AboutViewModelTests.swift in Sources */,
+				D378BCA12D9B2E250F182DD0 /* FakeStream.swift in Sources */,
+				936E5F8A210C9B5E0A5CE29E /* FakeAboutSource.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
