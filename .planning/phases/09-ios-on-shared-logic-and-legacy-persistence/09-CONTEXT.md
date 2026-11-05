@@ -104,13 +104,16 @@ Swift 6 and deprecated SwiftUI APIs (Phase 12), removing the legacy `UserDefault
 
 ### Accepted deviations (user decision at planning, 2026-11-05)
 The shared flow only outputs filtered, shared-grouped data, so these three edge cases are accepted rather
-than rebuilt in Swift. They are the only additions to the room-order exception of ROADMAP criterion 3 and
-go in the `Behavior deviations (v1.1)` table of `documentation/ARCHITECTURE.md`:
+than rebuilt in Swift. With the D-05 seed window below, they are the only additions to the room-order
+exception of ROADMAP criterion 3 and go in the `Behavior deviations (v1.1)` table of
+`documentation/ARCHITECTURE.md`:
 - With filters active on a conference day, the initial scroll goes to the latest visible slot; v1.0 could
   pick a hidden slot and not scroll.
 - Day labels no longer follow a non-Gregorian device calendar.
 - Fractional-second start dates are parsed in Kotlin instead of falling back to the current date; this
   never occurs in the data.
+- D-05 seed window: a star reached through Speakers before the first agenda load seeds the bookmark mirror
+  can read stale until next launch; the toggle still writes what the user sees, so the store stays correct.
 
 ### Claude's Discretion
 - Where the filter menu option lists (languages, complexities, session types) come from — Kotlin

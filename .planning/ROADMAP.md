@@ -188,7 +188,7 @@ Plans:
 
 ### Phase 9: iOS on Shared Logic and Legacy Persistence
 
-**Goal**: The iOS app delegates filtering, grouping and persistence of bookmarks and filters to the shared domain layer, without any user losing their bookmarks or filters on update
+**Goal**: The iOS app delegates filtering, grouping and persistence of bookmarks and filters to the shared domain layer; a user updating from v1.0 starts with empty bookmarks and filters (intentional, 07-CONTEXT D-15) and the app works normally
 **Depends on**: Phase 7, Phase 8
 **Requirements**: IOSDATA-01, IOSDATA-02, IOSDATA-03
 **Success Criteria** (what must be TRUE):
