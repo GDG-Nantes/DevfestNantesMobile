@@ -148,7 +148,7 @@ The highest-risk item is the one-way store switch (07 D-15). Keep it as its own 
 | Capability | Primary Tier | Secondary Tier | Rationale |
 |------------|-------------|----------------|-----------|
 | Filtering sessions (OR within type, AND across) | Shared domain (`FilterSessionsUseCase`) | — | One rule for both platforms; Swift copy is deleted (IOSDATA-01) |
-| Day / time-slot grouping and in-slot room order | Shared domain (`GroupSessionsUseCase` with `LocalDateDays`) | — | `RoomSortIndex` order is the documented single deviation |
+| Day / time-slot grouping and in-slot room order | Shared domain (`GroupSessionsUseCase` with `LocalDateDays`) | — | `RoomSortIndex` order is the documented deviation in normal use (three edge cases accepted at planning, see 09-CONTEXT "Accepted deviations") |
 | Combining sessions + filters + bookmarks | Shared domain (`ObserveAgendaUseCase`, `flowOn(Default)`) | iOS VM (collects, owns loading/error/trace) | Use case is data-only (its KDoc D-04); loading, tracing, cancellation stay in the ViewModel |
 | Persisting bookmarks and filters | Shared data, iOS `UserDefaults*Store` (Koin singles) | — | Writes synchronous and locked in Kotlin; Swift never touches `UserDefaults` for these |
 | Observable bookmark/filter mirror | iOS ViewModel (Swift, `@Observable`) | Shared stores (seed + write-through) | SwiftUI needs observable properties; mirror is a cache of store truth, not a second source of persistence |
@@ -478,18 +478,20 @@ Build `[DaySchedule]` with `GroupSessionsUseCase().group(sessions:dayAssignment:
 | A6 | `UserDefaults` writes performed by the Kotlin stores survive `simctl terminate` | UAT | If a write is lost, the persistence requirement fails and is a real bug; the UAT exists to catch it |
 | A7 | KMP-NativeCoroutines 1.0.6 native flows from a `StateFlow`/`combine` invoke `onItem` possibly off the main thread; yielding into `AsyncThrowingStream` from any thread is safe and the `@MainActor` consumer resumes on main | Pattern 2 | A data race would show in the spike or the strict-concurrency Phase 12 |
 
-## Open Questions
+## Open Questions (RESOLVED)
 
-1. **How is the bookmark mirror seeded?**
+Resolved at planning, 2026-11-05. Q1 was confirmed by the user; Q2 to Q4 take the recommendation.
+
+1. **RESOLVED: first-emission read, once per ViewModel, at the start of the first agenda load (09-CONTEXT D-05 amendment). How is the bookmark mirror seeded?**
    - What we know: `BookmarksStore` has no snapshot (`bookmarkedSessionIds` is a plain `Flow`); `SessionFiltersStore.filters` has one. D-06 forbids a new shared output type but leaves seeding to discretion ("a current bookmarks snapshot, or a first-emission read").
    - What's unclear: whether the user accepts a one-hop async seed.
    - Recommendation: first-emission read in the agenda `.task` (no Kotlin change, no Android impact). The alternative (a `@NativeCoroutinesState`/snapshot member on `BookmarksStore`) touches `BookmarksStoreImpl`, the `core:testing` fakes and `swift-names` baselines for a window of a few milliseconds at launch; reject unless the plan-checker objects.
 
-2. **Rooms menu order (non-deterministic `Set` order).** Recommendation: keep as is, document as pre-existing (Pitfall 9).
+2. **RESOLVED: keep the existing order. Rooms menu order (non-deterministic `Set` order).** Recommendation: keep as is, document as pre-existing (Pitfall 9).
 
-3. **Optional: should the mid-flow Kotlin cancellation guard (08 WR-01) be included?** Recommendation: include the one-line guard with a test; it cannot change normal-path behavior.
+3. **RESOLVED: included, agenda only (09-07). Optional: should the mid-flow Kotlin cancellation guard (08 WR-01) be included?** Recommendation: include the one-line guard with a test; it cannot change normal-path behavior.
 
-4. **Baseline for D-10/D-09: `main` (Phase 8) or tag `iOS_1_0_3`?** CONTEXT allows either; `main` has the same legacy keys and the existing Maestro harness, so use `main`; run the v1.0 tag pass only if the user asks (tags `iOS_1_0_0` and `iOS_1_0_3` exist locally).
+4. **RESOLVED: `main`. Baseline for D-10/D-09: `main` (Phase 8) or tag `iOS_1_0_3`?** CONTEXT allows either; `main` has the same legacy keys and the existing Maestro harness, so use `main`; run the v1.0 tag pass only if the user asks (tags `iOS_1_0_0` and `iOS_1_0_3` exist locally).
 
 ## Environment Availability
 

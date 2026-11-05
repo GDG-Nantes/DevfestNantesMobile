@@ -16,7 +16,8 @@ created: "2026-11-05"
 (IOSDATA-01/02/03). The v1.1 transverse rule is strict parity: no new screen, no new component, no new
 copy, no token change. This spec therefore (1) pins the v1.0/Phase 8 iOS visual system the executor must
 not alter, (2) defines the interaction and state contract of the agenda once it is driven by the shared
-combined flow, and (3) lists the single accepted visible deviation. Sources: 09-CONTEXT.md D-01..D-11,
+combined flow, and (3) lists the accepted visible deviation (amended 2026-11-05: three edge-case
+deviations are also accepted, see 09-CONTEXT "Accepted deviations"; they do not show in the D-10 screenshots). Sources: 09-CONTEXT.md D-01..D-11,
 ROADMAP Phase 9 success criteria 1-4, REQUIREMENTS IOSDATA-01..03, and the SwiftUI sources under
 `iosApp/iosApp/` as of commit a0e85137. No questions were asked of the user: every answer was already
 locked upstream or is read from the code.
@@ -199,7 +200,7 @@ state UI.
 | interaction † | Bookmark toggle from the session detail, including Speakers → speaker → session while the agenda task is cancelled | ✅ covered | The detail star reads the mirror, not the cancelled flow, so it is correct immediately; the agenda list refreshes on next appear (D-01, D-05) |
 | interaction † | Favorites filter active and the user un-stars a row | ✅ covered | The row leaves the list as soon as the flow re-emits; no animation or confirmation is added (parity) |
 | interaction † | Filter toggled or cleared from the menu | ✅ covered | Menu selection marks (`checkmark.square`, `star.fill`) follow the mirror immediately; the list follows the flow; "Clear" disappears when no filter is active |
-| ordering † | Room order inside a time slot | 🧪 backstop | The only accepted visible deviation: rooms inside a slot now follow `RoomSortIndex` (SHARED-03), as on Android. Recorded as the one expected difference in the D-10 screenshot diff; any other difference is a documented deviation |
+| ordering † | Room order inside a time slot | 🧪 backstop | The only accepted deviation visible in the D-10 screenshots (the three edge cases in 09-CONTEXT "Accepted deviations" do not show there): rooms inside a slot now follow `RoomSortIndex` (SHARED-03), as on Android. Recorded as the one expected difference in the D-10 screenshot diff; any other difference is a documented deviation |
 
 ---
 

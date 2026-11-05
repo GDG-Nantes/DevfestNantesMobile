@@ -13,7 +13,8 @@ continuously observes the shared `ObserveAgendaUseCase` (iOS passes `LocalDateDa
 venue and session classification go through `SpeakerIndexUseCase`, `VenueLanguageUseCase` and
 `ClassifySessionUseCase`, and the Swift `SessionFilter` / `FilterType` types are deleted
 (IOSDATA-01/02/03). No user-visible change except the documented in-slot room order
-(`RoomSortIndex`) and the intentional loss of v1.0 bookmarks/filters (07 D-15).
+(`RoomSortIndex`), the intentional loss of v1.0 bookmarks/filters (07 D-15) and the accepted edge-case
+deviations listed under "Accepted deviations" below.
 
 Out of this phase: explicit DI / `AppDependencies` (Phase 10), SPM packages (Phase 11), strict
 Swift 6 and deprecated SwiftUI APIs (Phase 12), removing the legacy `UserDefaults` keys (deferred).
@@ -65,6 +66,11 @@ Swift 6 and deprecated SwiftUI APIs (Phase 12), removing the legacy `UserDefault
   star correct in a pushed detail while the agenda `.task` is cancelled (including Speakers → speaker
   detail → session) and keeps the bookmark analytics event reading the post-toggle value right after
   the toggle, as in v1.0. The **filtered agenda list itself only comes from the combined flow**.
+  **Amended 2026-11-05 at planning (user decision):** `BookmarksStore` has no synchronous snapshot, so
+  filters seed in the VM `init` and bookmarks seed **once per ViewModel** through a first-emission read at
+  the start of the first agenda load, behind `LoadingView`. No Kotlin or Android change. Accepted risk: a
+  star reached through Speakers inside that first window can read stale until next launch; the store
+  stays correct.
 - **D-06:** No new shared output type for this; the mirror reads the stores through the agenda port
   (exact port methods are Claude's discretion). Clearing filters writes an empty set through the store.
 
@@ -95,6 +101,16 @@ Swift 6 and deprecated SwiftUI APIs (Phase 12), removing the legacy `UserDefault
 - **D-11:** **Scroll to the current slot** is proven by a **unit test with an injected "now"**: the
   scroll-target selection is extracted into a pure function (behavior-preserving) and tested on the
   recorded snapshot for both days. No shifted-clock UAT.
+
+### Accepted deviations (user decision at planning, 2026-11-05)
+The shared flow only outputs filtered, shared-grouped data, so these three edge cases are accepted rather
+than rebuilt in Swift. They are the only additions to the room-order exception of ROADMAP criterion 3 and
+go in the `Behavior deviations (v1.1)` table of `documentation/ARCHITECTURE.md`:
+- With filters active on a conference day, the initial scroll goes to the latest visible slot; v1.0 could
+  pick a hidden slot and not scroll.
+- Day labels no longer follow a non-Gregorian device calendar.
+- Fractional-second start dates are parsed in Kotlin instead of falling back to the current date; this
+  never occurs in the data.
 
 ### Claude's Discretion
 - Where the filter menu option lists (languages, complexities, session types) come from — Kotlin

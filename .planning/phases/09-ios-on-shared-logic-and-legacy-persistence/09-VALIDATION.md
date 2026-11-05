@@ -45,7 +45,7 @@ Task IDs are assigned once plans exist. Requirement-level map from 09-RESEARCH.m
 | Task ID | Plan | Wave | Requirement | Threat Ref | Secure Behavior | Test Type | Automated Command | File Exists | Status |
 |---------|------|------|-------------|------------|-----------------|-----------|-------------------|-------------|--------|
 | TBD | TBD | TBD | IOSDATA-01 | — | N/A | Kotlin iosTest | `./gradlew :shared:iosSimulatorArm64Test` (six `IosDependencies` accessors resolve) | ❌ W0 | ⬜ pending |
-| TBD | TBD | TBD | IOSDATA-01 | — | N/A | script | `test ! -e iosApp/iosApp/Model/SessionFilter.swift && ! grep -rn 'AgendaSessionFilters\|"Favorites"' iosApp/iosApp --include='*.swift'` | ❌ W0 | ⬜ pending |
+| TBD | TBD | TBD | IOSDATA-01 | — | N/A | script | `test ! -e iosApp/iosApp/Model/SessionFilter.swift && ! grep -rnE 'AgendaSessionFilters|forKey: "Favorites"' iosApp/iosApp --include='*.swift'` | ❌ W0 | ⬜ pending |
 | TBD | TBD | TBD | IOSDATA-01 | — | N/A | gate | `bash scripts/swift-names-gate.sh check && bash scripts/swift-names-gate.sh selftest` | ✅ | ⬜ pending |
 | TBD | TBD | TBD | IOSDATA-01 | — | N/A | Swift Testing | `-only-testing:DevFestNantesTests/AgendaCharacterizationTests` (rewritten, same goldens; classification table) | ❌ rewrite | ⬜ pending |
 | TBD | TBD | TBD | IOSDATA-01 | — | N/A | Swift Testing | `-only-testing:DevFestNantesTests/SpeakersVenueCharacterizationTests`, `SpeakersViewModelTests`, `VenueViewModelTests` | ✅ adapt | ⬜ pending |

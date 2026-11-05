@@ -194,7 +194,7 @@ Plans:
 **Success Criteria** (what must be TRUE):
   1. A user who installs the new version over a v1.0 build (bookmarked sessions, active filters, app killed then relaunched) starts with empty bookmarks and filters (intentional, 07-CONTEXT D-15) and the app works normally; bookmarks and filters set afterwards survive a kill and relaunch, confirmed by the in-place update UAT
   2. The Swift sources no longer filter, group or persist bookmarks or filters; `SessionFilter`, `FilterType` and the other duplicated types are removed in favor of the exported Kotlin types, and speakers, venue and session classification go through the shared use cases
-  3. The iOS agenda shows the same days (labels and time zone), time slots, sessions and filter results as in v1.0 (comparative UAT), with the sole documented exception of the room order within a time slot, which now follows `RoomSortIndex`
+  3. The iOS agenda shows the same days (labels and time zone), time slots, sessions and filter results as in v1.0 (comparative UAT), with the documented exceptions of the room order within a time slot, which now follows `RoomSortIndex`, and three edge-case deviations accepted on 2026-11-05 (09-CONTEXT "Accepted deviations"): the scroll target with active filters, day labels on a non-Gregorian device calendar, and fractional-second start dates
   4. The agenda continuously observes the shared combined flow (sessions + bookmarks + filters): adding or removing a bookmark or a filter from the list, a cell or the detail updates the agenda without relaunch, through a single `AgendaViewModel` instance
 
 **Plans**: 10 plans
