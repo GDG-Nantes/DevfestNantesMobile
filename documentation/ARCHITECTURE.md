@@ -320,8 +320,19 @@ To add a screen, add a `Screen` subclass and a `composable(...)` entry in `MainA
 `iosApp/iosApp/` is a SwiftUI app (deployment target iOS 17.0):
 
 - `iOSApp.swift` configures Firebase, then calls `IosDependencies.shared.start()` to start Koin.
-- `Model/BaseViewModel.swift` gets the store from `IosDependencies.shared.store()`. Flows are
-  consumed through KMP-NativeCoroutines (Combine / async sequences).
+- ViewModels migrated in Phase 8 are `@Observable @MainActor` classes owned by their view with
+  `@State` and loaded in `.task`. They read data through a per-ViewModel port
+  (`<Feature>Source.swift`) whose `Live...` adapter is the only code using KMP-NativeCoroutines
+  (`asyncFunction` for one-shot calls; flows are handed to `Model/KotlinStreamBridge.swift`) and
+  resolves `IosDependencies.shared.store()` lazily. ViewModels not yet migrated still extend
+  `Model/BaseViewModel.swift`, which gets the store from `IosDependencies.shared.store()` and consumes
+  flows through KMP-NativeCoroutines (Combine / async sequences).
+- `KotlinStreamBridge` turns a store flow into an `AsyncThrowingStream` by subscribing through the
+  KMP-NativeCoroutines native-flow callbacks, without creating a task, and cancels the native
+  subscription from `continuation.onTermination`; ViewModels and views load only in `.task`, so app
+  code creates no unstructured task (IOSUI-02). The accepted trade-off: the bridge requests the next
+  native item right after each yield (no pull-based backpressure), which is fine for the small, mostly
+  single-emission flows used here.
 - Feature code is in `Agenda/` and `UI/` (`Speakers/`, `Venue/`, `About/`, `Common/`).
 - `Analytics/FirebaseAnalyticsService.swift` and `Performance/PerformanceMonitoring.swift` call the
   Firebase iOS SDK (Swift Package Manager) directly.
