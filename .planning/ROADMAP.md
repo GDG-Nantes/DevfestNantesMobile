@@ -154,7 +154,7 @@ Plans:
   4. Each iOS ViewModel has Swift Testing tests on fakes (narrow ports per ViewModel), run in the Phase 6 CI lane
   5. UAT: agenda, filters, bookmarks, session detail, speakers, venue and about behave as in v1.0
 
-**Plans**: 5/9 plans executed
+**Plans**: 6/9 plans executed
 Plans:
 **Wave 1**
 - [x] 08-01-PLAN.md — iOS 17.0 deployment target on every configuration (D-13), proven by resolved build settings and the Swift suite
@@ -172,7 +172,7 @@ Plans:
 - [x] 08-05-PLAN.md — Speakers on Observation, `DataLoadTracing` seam (D-06), silent cancelled traces, Speakers tests
 
 **Wave 6** *(blocked on Wave 5 completion)*
-- [ ] 08-06-PLAN.md — SpeakerDetails on Observation behind a one-shot port, load moved from init to `.task`, SpeakerDetails tests
+- [x] 08-06-PLAN.md — SpeakerDetails on Observation behind a one-shot port, load moved from init to `.task`, SpeakerDetails tests
 
 **Wave 7** *(blocked on Wave 6 completion)*
 - [ ] 08-07-PLAN.md — Agenda: one shared `AgendaViewModel` owned by `ContentView` in the environment (D-01/D-02), ports, rooms in its own `.task`, legacy persistence keys (D-08), scroll hop removed, tests
@@ -260,7 +260,7 @@ Phases execute in numeric order: 6 → 7 → 8 → 9 → 10 → 11 → 12
 | 5. Test Coverage Retrofit | v1.0 | 11/11 | Complete | 2026-10-16 |
 | 6. iOS Test Foundation and CI Gates | v1.1 | 6/6 | Complete    | 2026-10-27 |
 | 7. KMP Domain Layer and Android Adoption | v1.1 | 19/19 | Complete    | 2026-10-29 |
-| 8. Modern SwiftUI, iOS 17 and Observation | v1.1 | 5/9 | In Progress | - |
+| 8. Modern SwiftUI, iOS 17 and Observation | v1.1 | 6/9 | In Progress | - |
 | 9. iOS on Shared Logic and Legacy Persistence | v1.1 | 0/? | Not started | - |
 | 10. Explicit iOS DI | v1.1 | 0/? | Not started | - |
 | 11. SPM Modularization | v1.1 | 0/? | Not started | - |
