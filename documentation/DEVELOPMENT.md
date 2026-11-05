@@ -103,9 +103,10 @@ The iOS unit tests use Swift Testing (shipped with the Xcode toolchain), live in
 `iosApp/DevFestNantesTests/` and run hosted in the app (`@testable import DevFest_Nantes`). The
 `iosApp` scheme runs them through the committed `iosApp/iosApp.xctestplan`. In Debug builds the app skips Firebase
 and Koin start-up when launched by XCTest (`XCTestConfigurationFilePath` is set; the switch is
-compiled out of Release), so a test that creates a ViewModel must call
+compiled out of Release), so a test that creates a ViewModel still on `BaseViewModel` must call
 `IosDependencies.shared.start()` first (see the characterization suites below); prefer static or
-pure helpers otherwise. A future UI-test target must not rely on this switch, since it would
+pure helpers otherwise. ViewModels migrated to Observation need no Koin start (see
+"ViewModel tests on fakes" below). A future UI-test target must not rely on this switch, since it would
 render an empty window. Pick a simulator with
 `xcrun simctl list devices available`, then:
 
@@ -120,6 +121,23 @@ xcodebuild -project iosApp/iosApp.xcodeproj -scheme iosApp -testPlan iosApp \
 
 For a quick local run, the single `xcodebuild ... -testPlan iosApp test` form works too. Test
 names are snake_case sentences, as on Android.
+
+#### ViewModel tests on fakes
+
+Migrated ViewModels take a narrow port (`<Feature>Source`, declared with its `Live...` adapter in
+`<Feature>Source.swift` next to the ViewModel) through an init default, for example
+`AboutViewModel(source: AboutSource = LiveAboutSource())`. Tests pass hand-written fakes from
+`iosApp/DevFestNantesTests/Fakes/` and need no Koin start. `FakeStream` scripts emissions, failures
+and never-ending streams as a fake KMP-NativeCoroutines native flow served through the real
+`KotlinStreamBridge`, with subscription and native-cancellation handshakes (`waitUntilSubscribed()`,
+`waitUntilTerminated()`, `terminationCount`): no sleeps and no mocking library. Each live adapter is
+checked once against the in-memory mocked Kotlin store
+(`DevFestNantesStoreBuilder().setUseMockServer(useMockServer: true).build()`), which needs no
+network, Firebase or Koin.
+
+Every new Swift file needs four `project.pbxproj` entries (file reference, build file, group child,
+Sources phase entry). A test file that is missing from the project is not compiled and passes
+unnoticed, so check that `XCRESULT-TESTS total=` grows with the tests you add.
 
 #### Characterization suites and goldens
 
