@@ -8,7 +8,7 @@ struct ComplexityFilterItem: Identifiable {
 }
 
 struct ComplexityFilterMenu: View {
-    @ObservedObject var viewModel: AgendaViewModel
+    @Environment(AgendaViewModel.self) private var viewModel
 
     private var filterItems: [ComplexityFilterItem] {
         let complexities: [Complexity] = [.beginner, .intermediate, .advanced]

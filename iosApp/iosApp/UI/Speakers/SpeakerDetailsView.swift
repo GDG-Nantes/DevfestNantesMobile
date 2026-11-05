@@ -69,7 +69,7 @@ struct SpeakerDetails: View {
                                     VStack(spacing: 8) {
                                         ForEach(speakerSessions, id: \.id) { session in
                                             NavigationLink(destination: AgendaDetailView(session: AgendaContent.Session(from: session), day: "day")) {
-                                                AgendaCellView(session: AgendaContent.Session(from: session), isBookmarked: false)
+                                                AgendaCellView(session: AgendaContent.Session(from: session))
                                                     .foregroundColor(.primary)
                                                     .frame(maxWidth: .infinity)
                                             }

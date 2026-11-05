@@ -2,7 +2,7 @@ import SwiftUI
 import shared
 
 struct ClearFiltersButton: View {
-    @ObservedObject var viewModel: AgendaViewModel
+    @Environment(AgendaViewModel.self) private var viewModel
     var body: some View {
         if !viewModel.sessionFilters.isEmpty {
             Button(action: {
