@@ -103,11 +103,9 @@ The iOS unit tests use Swift Testing (shipped with the Xcode toolchain), live in
 `iosApp/DevFestNantesTests/` and run hosted in the app (`@testable import DevFest_Nantes`). The
 `iosApp` scheme runs them through the committed `iosApp/iosApp.xctestplan`. In Debug builds the app skips Firebase
 and Koin start-up when launched by XCTest (`XCTestConfigurationFilePath` is set; the switch is
-compiled out of Release), so a test that creates a ViewModel still on `BaseViewModel` must call
-`IosDependencies.shared.start()` first (see the characterization suites below); prefer static or
-pure helpers otherwise. ViewModels migrated to Observation need no Koin start (see
-"ViewModel tests on fakes" below). A future UI-test target must not rely on this switch, since it would
-render an empty window. Pick a simulator with
+compiled out of Release). Every ViewModel takes its data through a port with an init default, so
+ViewModel tests pass fakes and need no Koin start (see "ViewModel tests on fakes" below). A future
+UI-test target must not rely on this switch, since it would render an empty window. Pick a simulator with
 `xcrun simctl list devices available`, then:
 
 ```bash
@@ -135,6 +133,10 @@ checked once against the in-memory mocked Kotlin store
 (`DevFestNantesStoreBuilder().setUseMockServer(useMockServer: true).build()`), which needs no
 network, Firebase or Koin.
 
+Persistence tests (favorites and filters in `AgendaViewModelTests`) never touch the standard
+`UserDefaults` domain: each test builds its own `UserDefaults(suiteName:)` with a unique name, passes it
+to the ViewModel and removes the domain (`removePersistentDomain(forName:)`) when it ends.
+
 Every new Swift file needs four `project.pbxproj` entries (file reference, build file, group child,
 Sources phase entry). A test file that is missing from the project is not compiled and passes
 unnoticed, so check that `XCRESULT-TESTS total=` grows with the tests you add.
@@ -144,10 +146,11 @@ unnoticed, so check that `XCRESULT-TESTS total=` grows with the tests you add.
 `AgendaCharacterizationTests` and `SpeakersVenueCharacterizationTests` pin the v1.0 iOS behavior
 (agenda grouping in `Europe/Paris` and `Pacific/Auckland`, filtering on the 15 shared cases,
 `isATalk`, the speaker alphabet, the venue language) on the recorded snapshot in
-`core/domain/testdata/agenda/`. They call the unchanged v1.0 ViewModel code, after
-`IosDependencies.shared.start()` (idempotent, `TestHost.start()` in `CharacterizationSupport.swift`; the
-Debug app skips Koin under XCTest, so the tests start it). They only use the initializers and pure
-methods: never `observe*`, `toggleFavorite`, `clearFilters` nor a `sessionFilters` assignment.
+`core/domain/testdata/agenda/`. They run against the migrated (Observation) ViewModels, built through
+their init defaults, and keep calling `TestHost.start()` in `CharacterizationSupport.swift` (an
+idempotent `IosDependencies.shared.start()`, now harmless since the ViewModels resolve the store
+lazily). They only use the initializers and pure methods: never `observe*`, `toggleFavorite`,
+`clearFilters` nor a `sessionFilters` assignment.
 Test files that import `shared` refer to the app filter type as `DevFest_Nantes.SessionFilter`, so
 the Kotlin `SessionFilter` export cannot make it ambiguous.
 
