@@ -33,3 +33,24 @@ the baseline was recorded. `swift-names-gate.sh check` still ends with `SWIFT-NA
 section for that file only). Found in plan 08-02, confirmed in 08-06 and 08-07. Not regenerated in
 Phase 8; AGENTS.md allows a baseline regeneration only in the same commit as the matching Swift call-site
 update, so it belongs to the first plan that touches a Swift call site of a `core:domain` export (Phase 9).
+
+## From 08-09
+
+Found during the iOS parity pass (plan 08-09). Neither item is phase-caused: both behave identically on the
+pre-phase baseline build and on the branch build.
+
+### Shifted-clock initial scroll check (RESEARCH A4) could not be done by hand
+
+D-12 removed the scroll hop from the initial agenda scroll, and the plan asked the human to verify the
+result with the Mac clock set to 2025-10-16 12:30 (event day). On iOS this cannot be done by hand: the
+simulators use the host clock, and a shifted host clock makes every TLS request fail ("certificate is not
+yet valid"), so the app loaded nothing on either build (see the next item). Recommendation: cover the
+initial scroll with a unit test that injects a clock into `AgendaViewModel` (the initial scroll index for
+an event-day "now") in a later phase, instead of a manual shifted-clock pass.
+
+### Pre-existing v1.0 behavior: no cached agenda shown when the network call fails
+
+With the network failing (here TLS validation, but the same applies to any failed request), the iOS agenda
+shows no previously cached data, even though the app had loaded the agenda before. This is the same on the
+baseline build (v1.0 behavior), so per strict parity it was not fixed in Phase 8. Candidate for a later
+phase: fall back to the Apollo normalized cache when the network fetch errors.
