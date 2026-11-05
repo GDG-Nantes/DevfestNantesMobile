@@ -188,6 +188,41 @@ bash scripts/kmp-nc-version-gate.sh selftest   # prove each decision on fixture 
 
 ---
 
+### `swift-observation-gate.sh`
+**Swift observation gate** - Fails when Combine or a legacy observation API comes back into the iOS Swift sources.
+
+```bash
+bash scripts/swift-observation-gate.sh            # check (default)
+bash scripts/swift-observation-gate.sh selftest   # prove each pattern, the clean case and the exclusion
+```
+
+**What it does:**
+- Scans the tracked Swift files under `iosApp/` (the app and `DevFestNantesTests`) and fails on any line
+  containing: an `import` of the Combine module, the KMP-NativeCoroutines Combine module name, the
+  legacy observable-object protocol, the published property wrapper, the will-change publisher, or a
+  main-queue async hop (`DispatchQueue.main.async`, including the `asyncAfter` variant)
+- Comments are scanned too, so a comment must not name these APIs either; there is no allowlist or
+  exemption. The only excluded paths are the generated SwiftGen files under `iosApp/iosApp/SwiftGen/`
+- Also fails when `iosApp/iosApp.xcodeproj/project.pbxproj` names the KMP-NativeCoroutines Combine
+  product (the package reference and the Async product are not touched)
+- Prints one token per violation: `SWIFT-OBS-FOUND <path>:<line>`, `SWIFT-OBS-PBXPROJ-FOUND <path>:<line>`,
+  `SWIFT-OBS-PBXPROJ-MISSING <path>`, `SWIFT-OBS-SCAN-EMPTY` (an empty scan set fails, it never passes
+  silently); on success the last line is `SWIFT-OBS-GATE-OK`
+- `selftest` plants fixtures under a temp dir (one per pattern, a clean Observation file, a SwiftGen file,
+  both project cases and an empty scan list) and prints `SWIFT-OBS-GATE-SELFTEST-OK` (or
+  `SWIFT-OBS-GATE-SELFTEST-FAILED <case>`)
+- Pure text check: runs anywhere, no Xcode or Gradle. `.github/workflows/ios.yml` runs `check` then
+  `selftest` right after the KMP-NativeCoroutines version gate, before any Gradle work
+- Use `@Observable`, `@State`, `@Environment` and `.task` instead (see
+  [ARCHITECTURE.md](../documentation/ARCHITECTURE.md#ios-app))
+
+**Exit codes:**
+- `0` = `check` / `selftest` passed
+- `1` = a banned construct or the Combine product was found, the scan set is empty, or `selftest` failed
+- `2` = unknown mode
+
+---
+
 ### `record-agenda-snapshot.sh`
 **Agenda snapshot recorder** - Re-records the real API snapshot the Phase 7 characterization tests replay offline.
 

@@ -16,7 +16,6 @@
 		003EC8D42DF8D7E1000E5689 /* FirebaseCrashlytics in Frameworks */ = {isa = PBXBuildFile; productRef = 003EC8D32DF8D7E1000E5689 /* FirebaseCrashlytics */; };
 		003EC8D62DF8D7E1000E5689 /* FirebaseRemoteConfig in Frameworks */ = {isa = PBXBuildFile; productRef = 003EC8D52DF8D7E1000E5689 /* FirebaseRemoteConfig */; };
 		003EC8D92DF8D84B000E5689 /* KMPNativeCoroutinesAsync in Frameworks */ = {isa = PBXBuildFile; productRef = 003EC8D82DF8D84B000E5689 /* KMPNativeCoroutinesAsync */; };
-		003EC8DB2DF8D84B000E5689 /* KMPNativeCoroutinesCombine in Frameworks */ = {isa = PBXBuildFile; productRef = 003EC8DA2DF8D84B000E5689 /* KMPNativeCoroutinesCombine */; };
 		003EC8DD2DF8D7E1000E5689 /* FirebasePerformance in Frameworks */ = {isa = PBXBuildFile; productRef = 003EC8DC2DF8D7E1000E5689 /* FirebasePerformance */; };
 		007DF0992E71D0D4007B2627 /* DevFestLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 007DF0982E71D0D4007B2627 /* DevFestLogger.swift */; };
 		00D442852E6638F100199668 /* SessionFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00D442842E6638F100199668 /* SessionFilter.swift */; };
@@ -57,7 +56,6 @@
 		CBDFA0322AB0F4FC00302D34 /* SocialIcon.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDFA0312AB0F4FC00302D34 /* SocialIcon.swift */; };
 		CBDFA0342AB0F5C500302D34 /* SpeakerPicture.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDFA0332AB0F5C500302D34 /* SpeakerPicture.swift */; };
 		CBDFA0362AB1B72200302D34 /* SpeakerDetailsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDFA0352AB1B72200302D34 /* SpeakerDetailsViewModel.swift */; };
-		CBDFA0382AB1B74000302D34 /* BaseViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDFA0372AB1B74000302D34 /* BaseViewModel.swift */; };
 		CBDFA03C2AB1BEFD00302D34 /* VenueViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDFA03B2AB1BEFD00302D34 /* VenueViewModel.swift */; };
 		CBDFA03E2AB1BFBC00302D34 /* AboutViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDFA03D2AB1BFBC00302D34 /* AboutViewModel.swift */; };
 		CBDFA0402AB1EDA200302D34 /* SpeakersViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = CBDFA03F2AB1EDA200302D34 /* SpeakersViewModel.swift */; };
@@ -150,7 +148,6 @@
 		CBDFA0312AB0F4FC00302D34 /* SocialIcon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SocialIcon.swift; sourceTree = "<group>"; };
 		CBDFA0332AB0F5C500302D34 /* SpeakerPicture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeakerPicture.swift; sourceTree = "<group>"; };
 		CBDFA0352AB1B72200302D34 /* SpeakerDetailsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeakerDetailsViewModel.swift; sourceTree = "<group>"; };
-		CBDFA0372AB1B74000302D34 /* BaseViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseViewModel.swift; sourceTree = "<group>"; };
 		CBDFA03B2AB1BEFD00302D34 /* VenueViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VenueViewModel.swift; sourceTree = "<group>"; };
 		CBDFA03D2AB1BFBC00302D34 /* AboutViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewModel.swift; sourceTree = "<group>"; };
 		CBDFA03F2AB1EDA200302D34 /* SpeakersViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeakersViewModel.swift; sourceTree = "<group>"; };
@@ -191,7 +188,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				003EC8D92DF8D84B000E5689 /* KMPNativeCoroutinesAsync in Frameworks */,
-				003EC8DB2DF8D84B000E5689 /* KMPNativeCoroutinesCombine in Frameworks */,
 				003EC8D62DF8D7E1000E5689 /* FirebaseRemoteConfig in Frameworks */,
 				003EC8DD2DF8D7E1000E5689 /* FirebasePerformance in Frameworks */,
 				003EC8D22DF8D7E1000E5689 /* FirebaseAnalyticsWithoutAdIdSupport in Frameworks */,
@@ -349,7 +345,6 @@
 		CB3979C829199C0B00BDAE6F /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				CBDFA0372AB1B74000302D34 /* BaseViewModel.swift */,
 				CB179BDC28D365B400BB9934 /* Data */,
 				00D442842E6638F100199668 /* SessionFilter.swift */,
 				3DFBB1839062F11AE893C471 /* KotlinStreamBridge.swift */,
@@ -645,7 +640,6 @@
 				007DF0992E71D0D4007B2627 /* DevFestLogger.swift in Sources */,
 				00D442942E67096900199668 /* SessionTypeFilterMenu.swift in Sources */,
 				00D442952E67096900199668 /* RoomFilterMenu.swift in Sources */,
-				CBDFA0382AB1B74000302D34 /* BaseViewModel.swift in Sources */,
 				CBA5C23028DB4F5100D2779B /* CardView.swift in Sources */,
 				0011BE942E36D8270084BE4D /* PerformanceMonitoring.swift in Sources */,
 				CBDFA0342AB0F5C500302D34 /* SpeakerPicture.swift in Sources */,
@@ -1021,11 +1015,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 003EC8D72DF8D84B000E5689 /* XCRemoteSwiftPackageReference "KMP-NativeCoroutines" */;
 			productName = KMPNativeCoroutinesAsync;
-		};
-		003EC8DA2DF8D84B000E5689 /* KMPNativeCoroutinesCombine */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 003EC8D72DF8D84B000E5689 /* XCRemoteSwiftPackageReference "KMP-NativeCoroutines" */;
-			productName = KMPNativeCoroutinesCombine;
 		};
 		003EC8DC2DF8D7E1000E5689 /* FirebasePerformance */ = {
 			isa = XCSwiftPackageProductDependency;

@@ -117,6 +117,7 @@ bash scripts/di-gate.sh
 
 # iOS gates
 bash scripts/kmp-nc-version-gate.sh      # KMP-NativeCoroutines Gradle/SPM versions identical (runs anywhere)
+bash scripts/swift-observation-gate.sh   # iOS Swift sources: no Combine, no legacy observation APIs (runs anywhere)
 bash scripts/swift-names-gate.sh check   # macOS: Swift names of exported Kotlin types unchanged
                                          # (links the shared framework)
 

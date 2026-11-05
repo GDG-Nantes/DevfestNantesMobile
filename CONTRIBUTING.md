@@ -256,23 +256,51 @@ fun SessionCard(
 - Use Swift Package Manager for dependencies
 - Prefer SwiftUI over UIKit
 
+A ViewModel reads data through a small port with a `Live...` adapter, which is the only code that
+calls KMP-NativeCoroutines. Combine and the legacy observation APIs are not allowed (a CI gate checks
+it, see `scripts/README.md`).
+
 ```swift
-// Good
+// Good: the port and its live adapter (the store is resolved lazily)
+protocol SessionSource {
+    func session(id: String) async throws -> Session_?
+}
+
+struct LiveSessionSource: SessionSource {
+    private let store: () -> DevFestNantesStore
+
+    init(store: @escaping () -> DevFestNantesStore = { IosDependencies.shared.store() }) {
+        self.store = store
+    }
+
+    func session(id: String) async throws -> Session_? {
+        try await asyncFunction(for: store().getSession(id: id))
+    }
+}
+
+// Good: an Observation ViewModel with an init default
+@Observable
 @MainActor
-class SessionViewModel: BaseViewModel {
-    @Published var session: Session_?
-    @Published var isLoading = false
-    
+final class SessionViewModel {
+    var session: Session_?
+    var isLoading = true
+
+    @ObservationIgnored private let source: SessionSource
+
+    init(source: SessionSource = LiveSessionSource()) {
+        self.source = source
+    }
+
     func loadSession(sessionId: String) async {
         isLoading = true
-        defer { isLoading = false }
-        
         do {
-            let fetchedSession = try await asyncFunction(for: store.getSession(id: sessionId))
-            session = fetchedSession
+            session = try await source.session(id: sessionId)
+            isLoading = false
+        } catch is CancellationError {
+            return // the view disappeared: stay silent
         } catch {
-            Logger(subsystem: Bundle.main.bundleIdentifier ?? "DevFestNantes", category: "Session")
-                .error("Failed to load session: \(error.localizedDescription)")
+            DevFestLogger(category: "Session").log(.error, "Failed to load session", error: error)
+            isLoading = false
         }
     }
 }
@@ -280,22 +308,23 @@ class SessionViewModel: BaseViewModel {
 
 #### SwiftUI Guidelines
 
-- Use ViewModels for business logic
-- Follow MVVM pattern
-- Use proper state management
+- Put business logic in `@Observable @MainActor` ViewModels, owned by the view with `@State`
+- Load in `.task` (SwiftUI cancels it when the view disappears); do not create unstructured tasks
+- Share one instance across screens with `.environment` and `@Environment(Type.self)`
+- Test ViewModels with hand-written fakes of the port, not with the live store
 
 ```swift
 struct SessionView: View {
-    @ObservedObject var viewModel: SessionViewModel
+    @State private var viewModel = SessionViewModel()
     let sessionId: String
-    
+
     var body: some View {
         LoadingView(isShowing: $viewModel.isLoading) {
             if let session = viewModel.session {
                 SessionDetailView(session: session)
             } else {
                 Text("Session not found")
-                    .foregroundColor(.secondary)
+                    .foregroundStyle(.secondary)
             }
         }
         .task {

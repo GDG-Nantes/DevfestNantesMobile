@@ -1,8 +1,6 @@
 import SwiftUI
 import shared
-import Combine
 import KMPNativeCoroutinesCore
-import KMPNativeCoroutinesCombine
 import FirebaseCore
 import FirebaseCrashlytics
 import FirebaseRemoteConfig

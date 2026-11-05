@@ -78,6 +78,7 @@ Before considering a change done, run what CI runs:
 ./gradlew detekt lint
 bash scripts/di-gate.sh
 bash scripts/kmp-nc-version-gate.sh
+bash scripts/swift-observation-gate.sh
 ./gradlew testDebugUnitTest jvmTest testAndroidHostTest
 ```
 
@@ -119,6 +120,13 @@ follow the detailed guidance in the `android-cli` skill's `references/interact.m
   `core:domain` from Phase 7), run `bash scripts/swift-names-gate.sh check` (iOS CI runs it too).
   Regenerate the baselines in `scripts/swift-names/` only in the same commit as the matching Swift
   call-site update, never to silence a failing check.
+- ViewModels are `@Observable @MainActor` classes, owned with `@State` (the single shared
+  `AgendaViewModel` is owned by `ContentView` and read through `@Environment`), loaded in `.task`.
+  They read data through a per-ViewModel `<Feature>Source` port whose `Live...` adapter is the only
+  KMP-NativeCoroutines caller. Combine and the legacy observation APIs (the Combine imports,
+  `ObservableObject`, `@Published`, `objectWillChange`, `DispatchQueue.main.async`) are banned in iOS
+  Swift sources, comments included, and in the Xcode project (the KMP-NativeCoroutines Combine product);
+  `bash scripts/swift-observation-gate.sh` enforces it in CI.
 - The iOS app needs SwiftGen (`brew install swiftgen`) and a `GoogleService-Info.plist` that is not
   committed. Test SwiftGen configuration changes manually before relying on the build phase.
 - Logging: use `DevFestLogger` (`iosApp/iosApp/Analytics/DevFestLogger.swift`), which wraps the

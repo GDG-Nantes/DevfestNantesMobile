@@ -1,10 +1,8 @@
 import SwiftUI
 import shared
-import Combine
 
 ///SwiftUI TabView
 struct ContentView: View {
-    @StateObject var viewModel = BaseViewModel()
     @State private var selection = 0
     @State private var agendaViewModel = AgendaViewModel()
 

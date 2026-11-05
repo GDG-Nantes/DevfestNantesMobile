@@ -320,13 +320,22 @@ To add a screen, add a `Screen` subclass and a `composable(...)` entry in `MainA
 `iosApp/iosApp/` is a SwiftUI app (deployment target iOS 17.0):
 
 - `iOSApp.swift` configures Firebase, then calls `IosDependencies.shared.start()` to start Koin.
-- ViewModels migrated in Phase 8 are `@Observable @MainActor` classes owned by their view with
-  `@State` and loaded in `.task`. They read data through a per-ViewModel port
-  (`<Feature>Source.swift`) whose `Live...` adapter is the only code using KMP-NativeCoroutines
-  (`asyncFunction` for one-shot calls; flows are handed to `Model/KotlinStreamBridge.swift`) and
-  resolves `IosDependencies.shared.store()` lazily. ViewModels not yet migrated still extend
-  `Model/BaseViewModel.swift`, which gets the store from `IosDependencies.shared.store()` and consumes
-  flows through KMP-NativeCoroutines (Combine / async sequences). Traced ViewModels take a
+- Every ViewModel (Phase 8) is an `@Observable @MainActor` class with no base class. A screen owns its
+  ViewModel with `@State` (`SpeakerDetails` builds it with `State(initialValue:)` because it needs the
+  speaker id) and loads in `.task`, which SwiftUI cancels when the view disappears; a cancelled load
+  is silent.
+- The single `AgendaViewModel` is owned by `ContentView` with `@State` and injected on the `TabView`
+  with `.environment`; the agenda views, the filter menus and the session detail read it with
+  `@Environment(AgendaViewModel.self)` (one instance, so the favorites and the filters stay shared
+  between the Agenda tab and the Speakers > speaker > session path). The navigation-bar items live in
+  a separate hosting context, so `AgendaView` re-injects the instance into them explicitly. Favorites
+  and the session filters stay on the legacy `UserDefaults` keys `Favorites` and `AgendaSessionFilters`
+  (byte-identical encodings) until Phase 9 moves them to the shared stores.
+- ViewModels read data through a per-ViewModel port (`AboutSource`, `VenueSource`, `SpeakersSource`,
+  `SpeakerDetailsSource`, `AgendaSource`, each in `<Feature>Source.swift`) taken by an init default.
+  The `Live...` adapter is the only code using KMP-NativeCoroutines (`asyncFunction` for one-shot
+  calls; flows are handed to `Model/KotlinStreamBridge.swift`) and resolves
+  `IosDependencies.shared.store()` lazily, never in an initializer. Traced ViewModels take a
   `DataLoadTracing` (conformed by `PerformanceMonitoring`, same trace names), so tests use a recording
   fake instead of Firebase Performance, and a cancelled load is logged at info level only, never
   forwarded to Crashlytics.
@@ -336,6 +345,9 @@ To add a screen, add a `Screen` subclass and a `composable(...)` entry in `MainA
   code creates no unstructured task (IOSUI-02). The accepted trade-off: the bridge requests the next
   native item right after each yield (no pull-based backpressure), which is fine for the small, mostly
   single-emission flows used here.
+- `scripts/swift-observation-gate.sh` (iOS CI, early) keeps the pre-Observation APIs and the
+  KMP-NativeCoroutines reactive-streams product out of the iOS sources and the Xcode project; only the
+  `KMPNativeCoroutinesAsync` product is linked.
 - Feature code is in `Agenda/` and `UI/` (`Speakers/`, `Venue/`, `About/`, `Common/`).
 - `Analytics/FirebaseAnalyticsService.swift` and `Performance/PerformanceMonitoring.swift` call the
   Firebase iOS SDK (Swift Package Manager) directly.
