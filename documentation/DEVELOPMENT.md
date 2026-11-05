@@ -229,11 +229,14 @@ bash scripts/swift-names-gate.sh check   # macOS: Swift names of exported Kotlin
                                # (links the shared framework unless SWIFT_GATE_HEADER is set)
 bash scripts/kmp-nc-version-gate.sh      # KMP-NativeCoroutines: Gradle and SPM versions identical
                                # (pure text check, runs anywhere; first step of ios.yml)
+bash scripts/swift-observation-gate.sh   # iOS Swift sources: no Combine, no legacy observation APIs
+                               # (pure text check, runs anywhere; second step of ios.yml)
 ```
 
 The detekt, lint and DI checks run in CI (`.github/workflows/android.yml`) together with unit tests,
 instrumented tests on API 34 and a debug build. `.github/workflows/ios.yml` starts with the
-KMP-NativeCoroutines version gate (`check` then `selftest`), builds the shared framework, runs the Swift
+KMP-NativeCoroutines version gate (`check` then `selftest`), then the Swift observation gate (`check`
+then `selftest`, same pure text check), builds the shared framework, runs the Swift
 names gate (`check` then `selftest`, reusing the header just linked), runs the KMP
 iOS tests, then builds the app and its Swift tests once (`build-for-testing`) and runs them with
 `test-without-building` through `iosApp.xctestplan` on the newest iPhone simulator (selected and
