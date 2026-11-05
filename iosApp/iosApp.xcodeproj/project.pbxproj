@@ -78,6 +78,10 @@
 		C8E3F5B21D6A4079B2F18E53 /* CharacterizationSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7D2E4A10C5F3968A1E07D42 /* CharacterizationSupport.swift */; };
 		EA05B7D43F8C629BD4B3A075 /* AgendaCharacterizationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9F4A6C32E7B518AC3A29F64 /* AgendaCharacterizationTests.swift */; };
 		1B6C8E0F5A7D4382C9E4B196 /* SpeakersVenueCharacterizationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F20C7A95D1E8436BA5D3C871 /* SpeakersVenueCharacterizationTests.swift */; };
+		23D179FC4ADE83DA766E8933 /* DataLoadTracing.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7C36E1C6A17EDFD1903E370D /* DataLoadTracing.swift */; };
+		3200C5E4E59BB77870CB90C6 /* SpeakersSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 904A2B5E421D39222CB15BB2 /* SpeakersSource.swift */; };
+		5C2C83F66D3490C6FBDE2F44 /* RecordingDataLoadTracing.swift in Sources */ = {isa = PBXBuildFile; fileRef = B535C1B9E2672E214CE86408 /* RecordingDataLoadTracing.swift */; };
+		89C8F7850AAB7060CD43701B /* SpeakersViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D68522B17CFB7CC1224520C /* SpeakersViewModelTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -161,6 +165,10 @@
 		B7D2E4A10C5F3968A1E07D42 /* CharacterizationSupport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterizationSupport.swift; sourceTree = "<group>"; };
 		D9F4A6C32E7B518AC3A29F64 /* AgendaCharacterizationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgendaCharacterizationTests.swift; sourceTree = "<group>"; };
 		F20C7A95D1E8436BA5D3C871 /* SpeakersVenueCharacterizationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeakersVenueCharacterizationTests.swift; sourceTree = "<group>"; };
+		7C36E1C6A17EDFD1903E370D /* DataLoadTracing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataLoadTracing.swift; sourceTree = "<group>"; };
+		904A2B5E421D39222CB15BB2 /* SpeakersSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeakersSource.swift; sourceTree = "<group>"; };
+		B535C1B9E2672E214CE86408 /* RecordingDataLoadTracing.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RecordingDataLoadTracing.swift; sourceTree = "<group>"; };
+		5D68522B17CFB7CC1224520C /* SpeakersViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeakersViewModelTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -191,6 +199,7 @@
 			isa = PBXGroup;
 			children = (
 				0011BE922E36D8270084BE4D /* PerformanceMonitoring.swift */,
+				7C36E1C6A17EDFD1903E370D /* DataLoadTracing.swift */,
 			);
 			path = Performance;
 			sourceTree = "<group>";
@@ -376,6 +385,7 @@
 				CBDFA02F2AB0F3E000302D34 /* SpeakerDetailsView.swift */,
 				CBDFA0352AB1B72200302D34 /* SpeakerDetailsViewModel.swift */,
 				CBDFA03F2AB1EDA200302D34 /* SpeakersViewModel.swift */,
+				904A2B5E421D39222CB15BB2 /* SpeakersSource.swift */,
 			);
 			path = Speakers;
 			sourceTree = "<group>";
@@ -395,6 +405,7 @@
 				A5E13E475E6CFC5FE7407E60 /* FakeAboutSource.swift */,
 				8D5EB06B3F72C94AE51B0826 /* FakeCall.swift */,
 				AF70D28D5194EB6C073D2A48 /* FakeVenueSource.swift */,
+				B535C1B9E2672E214CE86408 /* RecordingDataLoadTracing.swift */,
 			);
 			path = Fakes;
 			sourceTree = "<group>";
@@ -410,6 +421,7 @@
 				07FA17E61A9DDADF5C507A31 /* SessionFilterTests.swift */,
 				0266C2377B61A876B903B0DD /* AboutViewModelTests.swift */,
 				6B3C9E4F1D50A728C3F9E604 /* VenueViewModelTests.swift */,
+				5D68522B17CFB7CC1224520C /* SpeakersViewModelTests.swift */,
 			);
 			path = DevFestNantesTests;
 			sourceTree = "<group>";
@@ -633,6 +645,8 @@
 				3B5E706CACD747451417A8BB /* KotlinStreamBridge.swift in Sources */,
 				62BEF6EDD7B3F05E3843199A /* AboutSource.swift in Sources */,
 				5A2B8D3E0C4F6917B2E8D5F3 /* VenueSource.swift in Sources */,
+				23D179FC4ADE83DA766E8933 /* DataLoadTracing.swift in Sources */,
+				3200C5E4E59BB77870CB90C6 /* SpeakersSource.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -651,6 +665,8 @@
 				936E5F8A210C9B5E0A5CE29E /* FakeAboutSource.swift in Sources */,
 				9E6FC17C4083DA5BF62C1937 /* FakeCall.swift in Sources */,
 				B081E39E62A5FC7D184E3B59 /* FakeVenueSource.swift in Sources */,
+				5C2C83F66D3490C6FBDE2F44 /* RecordingDataLoadTracing.swift in Sources */,
+				89C8F7850AAB7060CD43701B /* SpeakersViewModelTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

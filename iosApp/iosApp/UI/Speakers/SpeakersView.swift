@@ -10,7 +10,7 @@ import SwiftUI
 import shared
 
 struct SpeakersView: View {
-    @ObservedObject var viewModel = SpeakersViewModel()
+    @State private var viewModel = SpeakersViewModel()
 
     /// Largeur de la bande d’index et marge côté bord droit
     private let indexWidth: CGFloat  = 24
