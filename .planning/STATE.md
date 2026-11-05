@@ -171,6 +171,7 @@ Recent decisions affecting current work:
 - [Phase 06]: 06-06: KMP-NativeCoroutines 1.0.6 bump (21b58bc) kept after human-approved v1.0 parity smoke; Xcode GUI build x86_64 JDK issue logged as dev-environment debt
 - [Phase 07]: Phase 7 complete (2026-10-29): `:core:domain` shared use cases + common stores, Android adopted with zero visible change; verification passed 5/5, Nyquist-compliant, threats_open 0, UI review 18/24 (pre-existing v1.0 issues only), code review 0 critical / 4 warnings open (07-REVIEW-DISPOSITION.md)
 - [Phase 07]: 07-19: Android parity with v1.0 approved by the human (2026-10-29) from 15 paired main/branch screenshots and the R8 release smoke; no phase-caused difference
+- [Phase 08]: Wave 7 UI safety gate (no UI-SPEC.md for Phase 08) overridden once by the user (2026-11-05): Phase 8 is a behavior-preserving Observation refactor with no visual change; the 08-09 paired-screenshot parity checkpoint (D-16) is the UI proof. workflow.ui_safety_gate left enabled
 
 ### Pending Todos
 
