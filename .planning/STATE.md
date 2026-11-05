@@ -4,12 +4,11 @@ milestone: v1.1
 milestone_name: iOS Architecture
 current_phase: 9
 current_phase_name: iOS on Shared Logic and Legacy Persistence
-status: planning
+status: "Phase 08 shipped — PR #432"
 stopped_at: Phase 08 complete, ready to plan Phase 9
-last_updated: "2026-11-05T16:21:54.153Z"
+last_updated: "2026-11-05T16:49:40.588Z"
 last_activity: 2026-11-05
-last_activity_desc: Phase 08 complete, transitioned to Phase 9
-state_head: 813a51020409aa61dc5c44d0446a2e2c56df6fc3
+state_head: 8ab59d7dcaab77eb427d8d73c8361fb30b4ce97c
 progress:
   total_phases: 7
   completed_phases: 8
@@ -31,8 +30,8 @@ See: .planning/PROJECT.md (updated 2026-10-29)
 
 Phase: 9 — iOS on Shared Logic and Legacy Persistence
 Plan: Not started
-Status: Ready to plan
-Last activity: 2026-11-05 — Phase 08 complete, transitioned to Phase 9
+Status: Phase 08 shipped — PR #432
+Last activity: 2026-11-05
 
 Progress: [███████░░░] 67%
 
