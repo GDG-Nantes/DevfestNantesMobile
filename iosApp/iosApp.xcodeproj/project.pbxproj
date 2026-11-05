@@ -66,6 +66,8 @@
 		F5BA00E32E7014DA00A31383 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F5BA00E22E7014DA00A31383 /* GoogleService-Info.plist */; };
 		F58B5AB8B24860681567F470 /* SessionFilterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07FA17E61A9DDADF5C507A31 /* SessionFilterTests.swift */; };
 		936E5F8A210C9B5E0A5CE29E /* FakeAboutSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E13E475E6CFC5FE7407E60 /* FakeAboutSource.swift */; };
+		9E6FC17C4083DA5BF62C1937 /* FakeCall.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D5EB06B3F72C94AE51B0826 /* FakeCall.swift */; };
+		B081E39E62A5FC7D184E3B59 /* FakeVenueSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF70D28D5194EB6C073D2A48 /* FakeVenueSource.swift */; };
 		D378BCA12D9B2E250F182DD0 /* FakeStream.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3354B7EB51BE9C5CBD82738D /* FakeStream.swift */; };
 		C6D6895F689FF4871B13968B /* AboutViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0266C2377B61A876B903B0DD /* AboutViewModelTests.swift */; };
 		62BEF6EDD7B3F05E3843199A /* AboutSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BE9799BB1BB3B8AB874E318 /* AboutSource.swift */; };
@@ -147,6 +149,8 @@
 		938E1B2393F75FF8A7B71E9B /* DevFestNantesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DevFestNantesTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		07FA17E61A9DDADF5C507A31 /* SessionFilterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionFilterTests.swift; sourceTree = "<group>"; };
 		A5E13E475E6CFC5FE7407E60 /* FakeAboutSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeAboutSource.swift; sourceTree = "<group>"; };
+		8D5EB06B3F72C94AE51B0826 /* FakeCall.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeCall.swift; sourceTree = "<group>"; };
+		AF70D28D5194EB6C073D2A48 /* FakeVenueSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeVenueSource.swift; sourceTree = "<group>"; };
 		3354B7EB51BE9C5CBD82738D /* FakeStream.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeStream.swift; sourceTree = "<group>"; };
 		0266C2377B61A876B903B0DD /* AboutViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutViewModelTests.swift; sourceTree = "<group>"; };
 		7BE9799BB1BB3B8AB874E318 /* AboutSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutSource.swift; sourceTree = "<group>"; };
@@ -389,6 +393,8 @@
 			children = (
 				3354B7EB51BE9C5CBD82738D /* FakeStream.swift */,
 				A5E13E475E6CFC5FE7407E60 /* FakeAboutSource.swift */,
+				8D5EB06B3F72C94AE51B0826 /* FakeCall.swift */,
+				AF70D28D5194EB6C073D2A48 /* FakeVenueSource.swift */,
 			);
 			path = Fakes;
 			sourceTree = "<group>";
@@ -643,6 +649,8 @@
 				7C4DAF5A2E61B839D40AF715 /* VenueViewModelTests.swift in Sources */,
 				D378BCA12D9B2E250F182DD0 /* FakeStream.swift in Sources */,
 				936E5F8A210C9B5E0A5CE29E /* FakeAboutSource.swift in Sources */,
+				9E6FC17C4083DA5BF62C1937 /* FakeCall.swift in Sources */,
+				B081E39E62A5FC7D184E3B59 /* FakeVenueSource.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
