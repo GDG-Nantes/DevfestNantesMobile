@@ -85,6 +85,7 @@
 		89C8F7850AAB7060CD43701B /* SpeakersViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5D68522B17CFB7CC1224520C /* SpeakersViewModelTests.swift */; };
 		BB6EF6B8087B464FB35C4DE5 /* SpeakerDetailsViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D64FF3AC68A40D98EBBD741 /* SpeakerDetailsViewModelTests.swift */; };
 		F3F53DFBFAFE001CDBF76059 /* FakeSpeakersSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = E82AE7CE22A95B705B8219FF /* FakeSpeakersSource.swift */; };
+		B13578B57B84459DA3F9363E /* FakeSpeakerDetailsSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B180C1D20614A53806942A2 /* FakeSpeakerDetailsSource.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -175,6 +176,7 @@
 		5D68522B17CFB7CC1224520C /* SpeakersViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeakersViewModelTests.swift; sourceTree = "<group>"; };
 		3D64FF3AC68A40D98EBBD741 /* SpeakerDetailsViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeakerDetailsViewModelTests.swift; sourceTree = "<group>"; };
 		E82AE7CE22A95B705B8219FF /* FakeSpeakersSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeSpeakersSource.swift; sourceTree = "<group>"; };
+		5B180C1D20614A53806942A2 /* FakeSpeakerDetailsSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeSpeakerDetailsSource.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -414,6 +416,7 @@
 				AF70D28D5194EB6C073D2A48 /* FakeVenueSource.swift */,
 				B535C1B9E2672E214CE86408 /* RecordingDataLoadTracing.swift */,
 				E82AE7CE22A95B705B8219FF /* FakeSpeakersSource.swift */,
+				5B180C1D20614A53806942A2 /* FakeSpeakerDetailsSource.swift */,
 			);
 			path = Fakes;
 			sourceTree = "<group>";
@@ -679,6 +682,7 @@
 				89C8F7850AAB7060CD43701B /* SpeakersViewModelTests.swift in Sources */,
 				BB6EF6B8087B464FB35C4DE5 /* SpeakerDetailsViewModelTests.swift in Sources */,
 				F3F53DFBFAFE001CDBF76059 /* FakeSpeakersSource.swift in Sources */,
+				B13578B57B84459DA3F9363E /* FakeSpeakerDetailsSource.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
