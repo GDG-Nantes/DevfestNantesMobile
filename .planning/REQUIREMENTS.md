@@ -27,9 +27,9 @@ Research context: `.planning/research/SUMMARY.md` (and STACK/FEATURES/ARCHITECTU
 
 ### IOSUI (Modern SwiftUI)
 
-- [ ] **IOSUI-01**: All iOS targets and packages have an iOS 17.0 deployment target
-- [ ] **IOSUI-02**: All iOS ViewModels are `@Observable @MainActor`, owned via `@State` without being recreated on re-render, with collection started in `.task` and cancelled when the view disappears (no more unstructured `Task {}`)
-- [ ] **IOSUI-03**: Combine, `KMPNativeCoroutinesCombine`, `ObservableObject`/`@Published`, `objectWillChange.send()` and `DispatchQueue.main.async` are no longer used
+- [x] **IOSUI-01**: All iOS targets and packages have an iOS 17.0 deployment target
+- [x] **IOSUI-02**: All iOS ViewModels are `@Observable @MainActor`, owned via `@State` without being recreated on re-render, with collection started in `.task` and cancelled when the view disappears (no more unstructured `Task {}`)
+- [x] **IOSUI-03**: Combine, `KMPNativeCoroutinesCombine`, `ObservableObject`/`@Published`, `objectWillChange.send()` and `DispatchQueue.main.async` are no longer used
 
 ### IOSDI (Explicit iOS DI)
 
@@ -51,7 +51,7 @@ Research context: `.planning/research/SUMMARY.md` (and STACK/FEATURES/ARCHITECTU
 
 ### IOSTEST (iOS tests & CI)
 
-- [ ] **IOSTEST-01**: The obsolete test target (`DevFest NantesTests`) is replaced; each iOS ViewModel has Swift Testing tests on fakes
+- [x] **IOSTEST-01**: The obsolete test target (`DevFest NantesTests`) is replaced; each iOS ViewModel has Swift Testing tests on fakes
 - [ ] **IOSTEST-02**: Each iOS feature has a SwiftUI smoke test (rendered via `UIHostingController`)
 - [x] **IOSTEST-03**: iOS CI runs `xcodebuild test` via a test plan including the package tests, fails if no test is run, and its cache key includes the Xcode version
 - [x] **IOSTEST-04**: `swift-names-gate.sh` is restored in `scripts/` and run in CI
@@ -98,9 +98,9 @@ Which phases cover which requirements. Updated during roadmap creation.
 | IOSDATA-01 | Phase 9 | Pending |
 | IOSDATA-02 | Phase 9 | Pending |
 | IOSDATA-03 | Phase 9 | Pending |
-| IOSUI-01 | Phase 8 | Pending |
-| IOSUI-02 | Phase 8 | Pending |
-| IOSUI-03 | Phase 8 | Pending |
+| IOSUI-01 | Phase 8 | Complete |
+| IOSUI-02 | Phase 8 | Complete |
+| IOSUI-03 | Phase 8 | Complete |
 | IOSDI-01 | Phase 10 | Pending |
 | IOSDI-02 | Phase 10 | Pending |
 | IOSDI-03 | Phase 10 | Pending |
@@ -110,7 +110,7 @@ Which phases cover which requirements. Updated during roadmap creation.
 | CONC-01 | Phase 12 | Pending |
 | CONC-02 | Phase 12 | Pending |
 | CONC-03 | Phase 6 | Complete |
-| IOSTEST-01 | Phase 8 | Pending |
+| IOSTEST-01 | Phase 8 | Complete |
 | IOSTEST-02 | Phase 12 | Pending |
 | IOSTEST-03 | Phase 6 | Complete |
 | IOSTEST-04 | Phase 6 | Complete |

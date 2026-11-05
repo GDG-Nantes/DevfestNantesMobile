@@ -36,7 +36,7 @@ Full details: [milestones/v1.0-ROADMAP.md](milestones/v1.0-ROADMAP.md). Requirem
 
 - [x] **Phase 6: iOS Test Foundation and CI Gates** - iOS CI runs real Swift tests on every PR and the Kotlin/Swift interop gates are active (completed 2026-10-27)
 - [x] **Phase 7: KMP Domain Layer and Android Adoption** - The agenda/filters/bookmarks logic lives in `:core:domain`, tested on JVM and iOS simulator, and Android uses it with no visible difference (completed 2026-10-29)
-- [ ] **Phase 8: Modern SwiftUI, iOS 17 and Observation** - iOS 17 everywhere, `@Observable @MainActor` ViewModels tested on fakes, Combine removed
+- [x] **Phase 8: Modern SwiftUI, iOS 17 and Observation** - iOS 17 everywhere, `@Observable @MainActor` ViewModels tested on fakes, Combine removed (completed 2026-11-05)
 - [ ] **Phase 9: iOS on Shared Logic and Legacy Persistence** - iOS delegates filtering, grouping and bookmarks/filters to the shared domain without losing v1.0 data
 - [ ] **Phase 10: Explicit iOS DI** - `AppDependencies` composition root and constructor injection; singletons and service-locator removed
 - [ ] **Phase 11: SPM Modularization** - `shared` as a static XCFramework, local core and feature packages, app target reduced to a shell
@@ -154,7 +154,7 @@ Plans:
   4. Each iOS ViewModel has Swift Testing tests on fakes (narrow ports per ViewModel), run in the Phase 6 CI lane
   5. UAT: agenda, filters, bookmarks, session detail, speakers, venue and about behave as in v1.0
 
-**Plans**: 9/9 plans executed
+**Plans**: 9/9 plans complete
 Plans:
 **Wave 1**
 - [x] 08-01-PLAN.md — iOS 17.0 deployment target on every configuration (D-13), proven by resolved build settings and the Swift suite
@@ -260,7 +260,7 @@ Phases execute in numeric order: 6 → 7 → 8 → 9 → 10 → 11 → 12
 | 5. Test Coverage Retrofit | v1.0 | 11/11 | Complete | 2026-10-16 |
 | 6. iOS Test Foundation and CI Gates | v1.1 | 6/6 | Complete    | 2026-10-27 |
 | 7. KMP Domain Layer and Android Adoption | v1.1 | 19/19 | Complete    | 2026-10-29 |
-| 8. Modern SwiftUI, iOS 17 and Observation | v1.1 | 9/9 | In Progress | - |
+| 8. Modern SwiftUI, iOS 17 and Observation | v1.1 | 9/9 | Complete    | 2026-11-05 |
 | 9. iOS on Shared Logic and Legacy Persistence | v1.1 | 0/? | Not started | - |
 | 10. Explicit iOS DI | v1.1 | 0/? | Not started | - |
 | 11. SPM Modularization | v1.1 | 0/? | Not started | - |

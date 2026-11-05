@@ -2,20 +2,20 @@
 gsd_state_version: "1.0"
 milestone: v1.1
 milestone_name: iOS Architecture
-current_phase: 08
-current_phase_name: Modern SwiftUI, iOS 17 and Observation
-status: verifying
-stopped_at: Phase 8 context gathered
-last_updated: "2026-11-05T16:07:29.056Z"
-last_activity: 2026-11-04
-last_activity_desc: Phase 08 execution started
-state_head: 07a230517c620ebe970d21deb0d7c5b4d5b68952
+current_phase: 9
+current_phase_name: iOS on Shared Logic and Legacy Persistence
+status: planning
+stopped_at: Phase 08 complete, ready to plan Phase 9
+last_updated: "2026-11-05T16:21:54.153Z"
+last_activity: 2026-11-05
+last_activity_desc: Phase 08 complete, transitioned to Phase 9
+state_head: 813a51020409aa61dc5c44d0446a2e2c56df6fc3
 progress:
   total_phases: 7
-  completed_phases: 7
+  completed_phases: 8
   total_plans: 34
   completed_plans: 34
-  percent: 100
+  percent: 67
 ---
 
 # Project State
@@ -29,18 +29,18 @@ See: .planning/PROJECT.md (updated 2026-10-29)
 
 ## Current Position
 
-Phase: 08 (Modern SwiftUI, iOS 17 and Observation) — EXECUTING
-Plan: 9 of 9
-Status: Phase complete — ready for verification
-Last activity: 2026-11-04 — Phase 08 execution started
+Phase: 9 — iOS on Shared Logic and Legacy Persistence
+Plan: Not started
+Status: Ready to plan
+Last activity: 2026-11-05 — Phase 08 complete, transitioned to Phase 9
 
-Progress: [██████████] 100%
+Progress: [███████░░░] 67%
 
 ## Performance Metrics
 
 **Velocity:**
 
-- Total plans completed: 62
+- Total plans completed: 71
 - Average duration: N/A
 - Total execution time: 0 hours
 
@@ -55,6 +55,7 @@ Progress: [██████████] 100%
 | 05 | 11 | - | - |
 | 06 | 6 | - | - |
 | 07 | 19 | - | - |
+| 08 | 9 | - | - |
 
 **Recent Trend:**
 
@@ -267,7 +268,7 @@ Items acknowledged and deferred at milestone close, most recent first:
 ## Session Continuity
 
 Last session: 2026-11-03T22:34:48.338Z
-Stopped at: Phase 8 context gathered
+Stopped at: Phase 08 complete, ready to plan Phase 9
 Resume file: .planning/phases/08-modern-swiftui-ios-17-and-observation/08-CONTEXT.md
 
 ## Operator Next Steps
