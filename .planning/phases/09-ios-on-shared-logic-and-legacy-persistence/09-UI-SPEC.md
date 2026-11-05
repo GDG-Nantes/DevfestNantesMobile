@@ -1,7 +1,8 @@
 ---
 phase: "09"
 slug: ios-on-shared-logic-and-legacy-persistence
-status: draft
+status: approved
+reviewed_at: "2026-11-05"
 shadcn_initialized: false
 preset: none
 created: "2026-11-05"
@@ -94,7 +95,9 @@ Dynamic Type text styles, no custom font files. Sizes shown are the default (Lar
 | Heading | 17pt (`.headline`) for row title and the detail "Speaker" heading | semibold (600, `.headline` default) | system default |
 | Display | 22pt (`.title2.weight(.bold)`) for the detail title | bold (700), inherited exception | system default |
 
-Weights in use: regular, semibold, plus one inherited bold on the detail title (frozen, not extended).
+Weights in use: regular and semibold, plus inherited exceptions: bold on the session detail title and on
+the speaker name in `SpeakerDetailsView`, and medium on the speaker rows in `SpeakersView`. Also
+inherited: `.subheadline` semibold (15pt) on the detail date line. All are frozen and not extended.
 No typography change in this phase.
 
 ---
@@ -143,27 +146,60 @@ Phase 9 adds **zero** strings and removes none. Every label below already exists
 
 ## UI Considerations
 
-Applicable state considerations resolved: 11 covered, 2 backstop, 1 unresolved.
+Applicable state considerations resolved: 26 covered, 11 backstop, 0 unresolved (37 raised by the
+probe on 7 surfaces, element kinds confirmed by the user). Six more covered rows and one more
+backstop row record phase-specific behavior outside the probe taxonomy (marked †).
 
-State coverage for the agenda once driven by the shared combined flow. Empty and error copy live in
-`## Copywriting Contract`; this table references it.
+State coverage once the agenda is driven by the shared combined flow. Empty and error copy live in
+`## Copywriting Contract`; this table references it. Every row is v1.0 parity: Phase 9 adds no new
+state UI.
 
 | Category | Element(s) | Status | Resolution / Reason |
 |----------|------------|--------|---------------------|
-| loading | Agenda first load | ✅ covered | `isLoading` is true until the first emission of the first subscription; `LoadingView` blur plus "Loading..." shows exactly as in v1.0 |
-| loading | Agenda resubscribe (back from detail, tab switch) | ✅ covered | `isLoading` stays false and the previous content stays on screen until the new emission replaces it; no spinner flash (D-03) |
+| loading | Agenda list, first load | ✅ covered | `isLoading` is true until the first emission of the first subscription; `LoadingView` blur plus "Loading..." shows exactly as in v1.0 |
+| loading † | Agenda list, resubscribe (back from detail, tab switch) | ✅ covered | `isLoading` stays false and the previous content stays on screen until the new emission replaces it; no spinner flash (D-03) |
 | populated | Agenda list per day | ✅ covered | Sections and rows come only from the shared `DaySchedule` / time slot / `Session`; `AgendaContent` only formats (D-07). Same days, labels, time zone, slots and sessions as v1.0 |
-| partial | Time slot with no session matching the active filters | ✅ covered | The slot header is not rendered when none of its sessions match (v1.0 behavior); the header must not appear above an empty group |
-| empty | Day or filter result with no session | ✅ covered | Renders an empty list with no message, as in v1.0 (see Copywriting Contract); no new empty state |
-| error | Failure before the first emission | ✅ covered | Log, `isLoading = false`, empty list; copy: none (Copywriting Contract) |
-| error | Failure after the first emission | ✅ covered | Log through `DevFestLogger`, keep last content, stop; resubscribes on next appear (D-04). Cancellation is silent |
-| interaction | Bookmark toggle from a list row | ✅ covered | The star flips immediately (observable mirror updated synchronously, D-05) and the list reflects the change through the combined flow without relaunch; the analytics event reads the post-toggle value |
-| interaction | Bookmark toggle from the session detail, including Speakers → speaker → session while the agenda task is cancelled | ✅ covered | The detail star reads the mirror, not the cancelled flow, so it is correct immediately; the agenda list refreshes on next appear (D-01, D-05) |
-| interaction | Favorites filter active and the user un-stars a row | ✅ covered | The row leaves the list as soon as the flow re-emits; no animation or confirmation is added (parity) |
-| interaction | Filter toggled or cleared from the menu | ✅ covered | Menu selection marks (`checkmark.square`, `star.fill`) follow the mirror immediately; the list follows the flow; "Clear" disappears when no filter is active |
-| long-text | Session title, speaker names, room | 🧪 backstop | Title wraps (multi-line); speakers stay `lineLimit(1)`; verified by paired main-vs-branch screenshots in the D-10 checkpoint, not by a unit test |
-| ordering | Room order inside a time slot | 🧪 backstop | The only accepted visible deviation: rooms inside a slot now follow `RoomSortIndex` (SHARED-03), as on Android. Recorded as the one expected difference in the D-10 screenshot diff; any other difference is a documented deviation |
-| overflow | Dynamic Type at accessibility sizes and 100+ speakers/sessions | ⚠ unresolved | Not exercised in v1.0 parity runs; planner treats as an assumption (system text styles scale; no custom layout work in this phase) |
+| partial | Agenda time slot with no session matching the active filters | ✅ covered | The slot header is not rendered when none of its sessions match (v1.0 behavior); no header appears above an empty group |
+| empty | Agenda day or filter result with no session | ✅ covered | Renders an empty list with no message, as in v1.0 (see Copywriting Contract); no new empty state |
+| zero-one-many | Agenda list | ✅ covered | Zero: empty list as above. One or many: same section and row layout; there is no singular or plural copy |
+| error | Agenda list, failure before the first emission | ✅ covered | Log, `isLoading = false`, empty list; copy: none (Copywriting Contract) |
+| error † | Agenda list, failure after the first emission | ✅ covered | Log through `DevFestLogger`, keep last content, stop; resubscribes on next appear (D-04). Cancellation is silent |
+| overflow | Agenda list, Dynamic Type at accessibility sizes and 100+ sessions | 🧪 backstop | The list scrolls and system text styles scale; no layout work in this phase. Verified by one main-vs-branch accessibility-size screenshot pair added to the D-10 checkpoint; any difference is a deviation |
+| loading | Day picker | ✅ covered | Static `L10n.day1` / `L10n.day2` segments: no data dependency and no loading state of its own |
+| error | Day picker | ✅ covered | Cannot fail: labels are static and the day constants are single-source (07 D-07) |
+| long-text | Day picker | 🧪 backstop | Frozen short labels in en and fr; confirmed by the D-10 screenshots |
+| loading | Bookmark star (row and detail toolbar) | ✅ covered | No spinner: the mirror updates synchronously, so the star flips immediately (D-05) |
+| error | Bookmark star | ✅ covered | No error UI, no alert, no retry (v1.0 parity, Copywriting Contract) |
+| long-text | Bookmark star | 🧪 backstop | Icon-only control, no text; its size and position in the row are confirmed by the D-10 screenshots |
+| loading | Filter menu | ✅ covered | Static filter options are always available; the Rooms submenu has no items until `roomsContent` arrives, as in v1.0 |
+| error | Filter menu | ✅ covered | No error UI. If rooms never load, the Rooms submenu stays empty, as in v1.0 |
+| overflow | Filter menu, rooms list | 🧪 backstop | System `Menu` handles scrolling; confirmed by the D-10 accessibility-size pair |
+| long-text | Filter menu, labels and room names | 🧪 backstop | System `Menu` handles wrapping and truncation; confirmed by the D-10 screenshots |
+| loading | Session detail | ✅ covered | The screen receives the session as a value and has no loading state of its own; speaker pictures load in `SpeakerPicture` unchanged |
+| error | Session detail | ✅ covered | No screen-level error state, because no load happens on this screen |
+| empty | Session detail, empty abstract or no speakers | ✅ covered | The abstract and speakers blocks are hidden when empty, as in v1.0 |
+| populated | Session detail | ✅ covered | Same fields, order and cards as v1.0; only the bookmark source changes |
+| overflow | Session detail | 🧪 backstop | `ScrollView` content; confirmed by the D-10 accessibility-size pair |
+| long-text | Session detail title, date line, abstract, speaker names | 🧪 backstop | Current wrapping and `lineLimit` values are unchanged (date line `lineLimit(2)`); confirmed by the D-10 screenshots |
+| loading | Speakers list | ✅ covered | `LoadingView` until first emission; first-emission-only loading kept (08 D-09/D-10) |
+| error | Speakers list | ✅ covered | Log through `DevFestLogger`, `isLoading = false`, no message. Cancellation is silent |
+| empty | Speakers list | ✅ covered | No sections and no index entries, with no message, as in v1.0 |
+| populated | Speakers list | ✅ covered | Same A-Z sections, index and rows; only the data source moves to the shared use cases |
+| partial | Speakers list, speaker with no photo or a failed image | ✅ covered | The `Avatar` falls back to `person.circle` |
+| zero-one-many | Speakers list | ✅ covered | Sections exist only for letters with speakers; there is no singular or plural copy |
+| overflow | Speakers list, 100+ speakers | 🧪 backstop | List scrolls with the A-Z index overlay; confirmed by the D-10 accessibility-size pair |
+| long-text | Speakers list, speaker names | 🧪 backstop | `lineLimit(1)` kept; confirmed by the D-10 screenshots |
+| loading | Venue | ✅ covered | `LoadingView` during load, and `isLoading` is set to true on each `observeVenue()` call, as today; images show `ProgressView` |
+| error | Venue | ✅ covered | Log, `isLoading = false`, no message. Cancellation returns silently |
+| empty | Venue, no content | ✅ covered | Nothing renders while `venueContent` is nil, as in v1.0 |
+| populated | Venue | ✅ covered | Same cards and floor plan; `PhotoDetailView` unchanged. A failed image shows the `photo` symbol |
+| overflow | Venue | 🧪 backstop | `ScrollView` content; confirmed by the D-10 accessibility-size pair |
+| long-text | Venue address and description | 🧪 backstop | Current wrapping unchanged; confirmed by the D-10 screenshots |
+| interaction † | Bookmark toggle from a list row | ✅ covered | The star flips immediately (observable mirror updated synchronously, D-05) and the list reflects the change through the combined flow without relaunch; the analytics event reads the post-toggle value |
+| interaction † | Bookmark toggle from the session detail, including Speakers → speaker → session while the agenda task is cancelled | ✅ covered | The detail star reads the mirror, not the cancelled flow, so it is correct immediately; the agenda list refreshes on next appear (D-01, D-05) |
+| interaction † | Favorites filter active and the user un-stars a row | ✅ covered | The row leaves the list as soon as the flow re-emits; no animation or confirmation is added (parity) |
+| interaction † | Filter toggled or cleared from the menu | ✅ covered | Menu selection marks (`checkmark.square`, `star.fill`) follow the mirror immediately; the list follows the flow; "Clear" disappears when no filter is active |
+| ordering † | Room order inside a time slot | 🧪 backstop | The only accepted visible deviation: rooms inside a slot now follow `RoomSortIndex` (SHARED-03), as on Android. Recorded as the one expected difference in the D-10 screenshot diff; any other difference is a documented deviation |
 
 ---
 
@@ -223,12 +259,20 @@ These rules bind the executor where the data path changes under unchanged views.
 
 ## Checker Sign-Off
 
-- [ ] Dimension 1 Copywriting: PASS
-- [ ] Dimension 2 Visuals: PASS
-- [ ] Dimension 3 Color: PASS
-- [ ] Dimension 4 Typography: PASS
-- [ ] Dimension 5 Spacing: PASS
-- [ ] Dimension 6 Registry Safety: PASS
-- [ ] Dimension 7 Inventory Provenance: PASS
+- [x] Dimension 1 Copywriting: FLAG (parity exception accepted)
+- [x] Dimension 2 Visuals: FLAG
+- [x] Dimension 3 Color: FLAG
+- [x] Dimension 4 Typography: FLAG (parity exception accepted)
+- [x] Dimension 5 Spacing: FLAG (parity exception accepted)
+- [x] Dimension 6 Registry Safety: PASS
+- [x] Dimension 7 Inventory Provenance: PASS
 
-**Approval:** pending
+**Approval:** approved 2026-11-05, with parity exceptions accepted by the user. The literal BLOCK
+criteria on Dimensions 1, 4 and 5 (no empty or error copy, more than 2 weights, spacing not on a
+multiple of 4) are inherited v1.0 values frozen by strict parity (CONTEXT D-04, D-07). No new instance
+of any of them may be introduced. Empty and error states remain logged debt.
+
+Open recommendations (non-blocking, not applied): declare a focal point for the agenda; add
+accessibility labels to the icon-only star and filter controls (no `accessibilityLabel` exists in the
+agenda sources today, and adding one is outside strict parity); state "no red for destructive actions"
+as an explicit parity exception; record "Clear" (`filter_clear`) as wording debt.
