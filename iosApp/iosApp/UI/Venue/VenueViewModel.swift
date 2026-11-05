@@ -7,17 +7,21 @@
 //
 
 import Foundation
+import Observation
 import shared
-import Combine
-import KMPNativeCoroutinesAsync
-import SwiftUI
-import os
 
+@Observable
 @MainActor
-class VenueViewModel: BaseViewModel {
-    @Published var venueContent: VenueContent?
-    @Published var isLoading: Bool = true
-    
+final class VenueViewModel {
+    var venueContent: VenueContent?
+    var isLoading: Bool = true
+
+    @ObservationIgnored private let source: VenueSource
+
+    init(source: VenueSource = LiveVenueSource()) {
+        self.source = source
+    }
+
     ///Detect phone language
     var currentLanguage: ContentLanguage {
         guard let languageCode = Locale.current.languageCode else {
@@ -29,24 +33,19 @@ class VenueViewModel: BaseViewModel {
             return .english
         }
     }
-    
+
     ///Asynchronous method to retrieve venue
     func observeVenue() async {
-        self.isLoading = true
-        Task {
-            do {
-                let venueData = try await asyncFunction(for: store.getVenue(language: currentLanguage))
-                DispatchQueue.main.async {
-                    self.venueContent = VenueContent(from: venueData)
-                    self.isLoading = false
-                }
-            } catch {
-                DevFestLogger(category: "Venue").log(.error, "Observe Venue error: \(error.localizedDescription)", error: error)
-                // Handle error appropriately
-                DispatchQueue.main.async {
-                    self.isLoading = false
-                }
-            }
+        isLoading = true
+        do {
+            let venue = try await source.venue(language: currentLanguage)
+            venueContent = VenueContent(from: venue)
+            isLoading = false
+        } catch is CancellationError {
+            return
+        } catch {
+            DevFestLogger(category: "Venue").log(.error, "Observe Venue error: \(error.localizedDescription)", error: error)
+            isLoading = false
         }
     }
 }

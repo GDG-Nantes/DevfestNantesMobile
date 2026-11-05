@@ -10,7 +10,7 @@ import SwiftUI
 import shared
 
 struct VenueView: View {
-    @ObservedObject var viewModel = VenueViewModel()
+    @State private var viewModel = VenueViewModel()
 
     var body: some View {
         NavigationView {
