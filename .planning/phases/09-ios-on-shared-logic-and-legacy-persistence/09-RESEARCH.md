@@ -489,7 +489,7 @@ Resolved at planning, 2026-11-05. Q1 was confirmed by the user; Q2 to Q4 take th
 
 2. **RESOLVED: keep the existing order. Rooms menu order (non-deterministic `Set` order).** Recommendation: keep as is, document as pre-existing (Pitfall 9).
 
-3. **RESOLVED: included, agenda only (09-07). Optional: should the mid-flow Kotlin cancellation guard (08 WR-01) be included?** Recommendation: include the one-line guard with a test; it cannot change normal-path behavior.
+3. **RESOLVED: included, agenda only (09-11). Optional: should the mid-flow Kotlin cancellation guard (08 WR-01) be included?** Recommendation: include the one-line guard with a test; it cannot change normal-path behavior.
 
 4. **RESOLVED: `main`. Baseline for D-10/D-09: `main` (Phase 8) or tag `iOS_1_0_3`?** CONTEXT allows either; `main` has the same legacy keys and the existing Maestro harness, so use `main`; run the v1.0 tag pass only if the user asks (tags `iOS_1_0_0` and `iOS_1_0_3` exist locally).
 

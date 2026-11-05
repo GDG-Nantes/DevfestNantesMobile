@@ -197,7 +197,7 @@ Plans:
   3. The iOS agenda shows the same days (labels and time zone), time slots, sessions and filter results as in v1.0 (comparative UAT), with the documented exceptions of the room order within a time slot, which now follows `RoomSortIndex`, and three edge-case deviations accepted on 2026-11-05 (09-CONTEXT "Accepted deviations"): the scroll target with active filters, day labels on a non-Gregorian device calendar, and fractional-second start dates
   4. The agenda continuously observes the shared combined flow (sessions + bookmarks + filters): adding or removing a bookmark or a filter from the list, a cell or the detail updates the agenda without relaunch, through a single `AgendaViewModel` instance
 
-**Plans**: 10 plans
+**Plans**: 16 plans
 Plans:
 **Wave 1**
 - [ ] 09-01-PLAN.md — Tracer: six `IosDependencies` accessors (D-08), real continuous Kotlin flows through `KotlinStreamBridge` (research-flag spike), baselines
@@ -206,28 +206,46 @@ Plans:
 - [ ] 09-02-PLAN.md — CI toolchain replay of the spike: human pushes, `ios.yml` on the same SHA green before any ViewModel work (blocking checkpoint)
 
 **Wave 3** *(blocked on Wave 2 completion)*
-- [ ] 09-03-PLAN.md — Speakers and Venue on `SpeakerIndexUseCase` and `VenueLanguageUseCase`, goldens unedited
+- [ ] 09-03-PLAN.md — Speakers on `SpeakerIndexUseCase`, golden unedited
 
 **Wave 4** *(blocked on Wave 3 completion)*
-- [ ] 09-04-PLAN.md — Classification through `ClassifySessionUseCase`: stored flags on `AgendaContent.Session`, Speakers > session path included
+- [ ] 09-04-PLAN.md — Venue on `VenueLanguageUseCase`
 
 **Wave 5** *(blocked on Wave 4 completion)*
-- [ ] 09-05-PLAN.md — `AgendaDays`, scroll target as a pure function tested with an injected now (D-11), bookmark and filter intents, still on the legacy keys
+- [ ] 09-05-PLAN.md — Agenda rows classified through `ClassifySessionUseCase`: stored flags on `AgendaContent.Session`
 
 **Wave 6** *(blocked on Wave 5 completion)*
-- [ ] 09-06-PLAN.md — One-way store switch (07 D-15): `checkpoint:decision`, then one revertible commit to the Kotlin stores with the write-through mirror (D-05, D-06)
+- [ ] 09-06-PLAN.md — Speakers > session path on the shared classification, last Swift rules deleted, navigable column asserted
 
 **Wave 7** *(blocked on Wave 6 completion)*
-- [ ] 09-07-PLAN.md — Agenda on the shared combined flow: `observeAgenda`, first-emission trace, resubscribe and failure rules (D-01 to D-05), thin `AgendaContent`
+- [ ] 09-07-PLAN.md — `AgendaDays` and the scroll target as a pure function tested with an injected now (D-11), still on the legacy keys
 
 **Wave 8** *(blocked on Wave 7 completion)*
-- [ ] 09-08-PLAN.md — v1.0 goldens on the shared output, Swift grouping, filtering and duplicated types deleted, baselines and docs (IOSDATA-01)
+- [ ] 09-08-PLAN.md — Bookmark and filter intents on the ViewModel, every view on them, still on the legacy keys
 
 **Wave 9** *(blocked on Wave 8 completion)*
-- [ ] 09-09-PLAN.md — D-09 in-place update UAT from `main` with evidence, blocking human checkpoint
+- [ ] 09-09-PLAN.md — One-way store switch (07 D-15): `checkpoint:decision`, then one revertible commit to the Kotlin stores with the write-through mirror (D-05, D-06)
 
 **Wave 10** *(blocked on Wave 9 completion)*
-- [ ] 09-10-PLAN.md — D-10 paired `main` vs branch screenshots with accessibility pairs, full gate, CI on the head SHA, blocking human checkpoint
+- [ ] 09-10-PLAN.md — Agenda on the shared combined flow: `observeAgenda`, first-emission trace, thin `AgendaContent` (D-01, D-02, D-05, D-07)
+
+**Wave 11** *(blocked on Wave 10 completion)*
+- [ ] 09-11-PLAN.md — Resubscribe, failure and cancellation rules pinned on the scripted stream through the real bridge (D-01 to D-05)
+
+**Wave 12** *(blocked on Wave 11 completion)*
+- [ ] 09-12-PLAN.md — v1.0 goldens on the shared output, then Swift grouping, filtering and duplicated types deleted (IOSDATA-01)
+
+**Wave 13** *(blocked on Wave 12 completion)*
+- [ ] 09-13-PLAN.md — Kotlin `SessionFilter` names stand alone, exclusion line and baselines in one commit
+
+**Wave 14** *(blocked on Wave 13 completion)*
+- [ ] 09-14-PLAN.md — Documentation with the three accepted deviations, IOSDATA-01 sweep on the final tree
+
+**Wave 15** *(blocked on Wave 14 completion)*
+- [ ] 09-15-PLAN.md — D-09 in-place update UAT from `main` with evidence, blocking human checkpoint
+
+**Wave 16** *(blocked on Wave 15 completion)*
+- [ ] 09-16-PLAN.md — D-10 paired `main` vs branch screenshots with accessibility and French pairs, full gate, CI on the head SHA, blocking human checkpoint
 
 **Research flag**: spike + UAT, highest data-loss risk of the milestone: the in-place update UAT requires an installed v1.0 release build (store, TestFlight or v1.0 tag); confirm `room.id == room.name` for the room filter; validate the continuous combined flow across the bridge on the CI toolchain
 **UI hint**: yes
@@ -292,7 +310,7 @@ Phases execute in numeric order: 6 → 7 → 8 → 9 → 10 → 11 → 12
 | 6. iOS Test Foundation and CI Gates | v1.1 | 6/6 | Complete    | 2026-10-27 |
 | 7. KMP Domain Layer and Android Adoption | v1.1 | 19/19 | Complete    | 2026-10-29 |
 | 8. Modern SwiftUI, iOS 17 and Observation | v1.1 | 9/9 | Complete    | 2026-11-05 |
-| 9. iOS on Shared Logic and Legacy Persistence | v1.1 | 0/10 | Not started | - |
+| 9. iOS on Shared Logic and Legacy Persistence | v1.1 | 0/16 | Not started | - |
 | 10. Explicit iOS DI | v1.1 | 0/? | Not started | - |
 | 11. SPM Modularization | v1.1 | 0/? | Not started | - |
 | 12. Strict Swift 6, Smoke Tests and Documentation | v1.1 | 0/? | Not started | - |
