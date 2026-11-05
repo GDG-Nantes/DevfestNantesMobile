@@ -7,41 +7,36 @@
 //
 
 import Foundation
+import Observation
 import shared
-import Combine
-import SwiftUI
-import os
 
-
+@Observable
 @MainActor
-final class AgendaViewModel: ObservableObject {
-    @Published var agendaContent: AgendaContent = AgendaContent(sections: [])
-    @Published var roomsContent: [Room]?
-    @Published var isLoading = true
-    let defaults: UserDefaults
+final class AgendaViewModel {
+    var agendaContent: AgendaContent = AgendaContent(sections: [])
+    var roomsContent: [Room]?
+    var isLoading = true
 
-    // Filters as Set of SessionFilter
-    @Published var sessionFilters: Set<SessionFilter> {
+    // Filters as Set of SessionFilter, persisted as JSON on every change
+    var sessionFilters: Set<SessionFilter> {
         didSet { saveFilters() }
     }
 
-    private let source: AgendaSource
-    private let tracing: DataLoadTracing
-
+    // Favorite session ids, written through to the legacy key on every change
     var favorites: [String] {
-        get {
-            return defaults.object(forKey: "Favorites") as? [String] ?? []
-        }
-        set {
-            defaults.set(newValue, forKey: "Favorites")
-        }
+        didSet { defaults.set(favorites, forKey: "Favorites") }
     }
+
+    @ObservationIgnored private let source: AgendaSource
+    @ObservationIgnored private let tracing: DataLoadTracing
+    @ObservationIgnored private let defaults: UserDefaults
 
     ///Initialization of the model with its ports, the tracing seam and the UserDefaults object (init only reads)
     init(source: AgendaSource = LiveAgendaSource(), tracing: DataLoadTracing = PerformanceMonitoring.shared, defaults: UserDefaults = .standard) {
         self.source = source
         self.tracing = tracing
         self.defaults = defaults
+        self.favorites = defaults.object(forKey: "Favorites") as? [String] ?? []
         if let data = defaults.data(forKey: "AgendaSessionFilters"),
            let filters = try? JSONDecoder().decode(Set<SessionFilter>.self, from: data) {
             self.sessionFilters = filters
@@ -75,12 +70,10 @@ final class AgendaViewModel: ObservableObject {
 
     ///Method allowing the deletion of the session in favorites
     private func removeSessionFromFavorites(sessionId: String) {
-        objectWillChange.send()
         favorites = favorites.filter { $0 != sessionId }
     }
 
     private func addSessionToFavorites(sessionId: String) {
-        objectWillChange.send()
         favorites.append(sessionId)
     }
 
@@ -160,7 +153,7 @@ final class AgendaViewModel: ObservableObject {
     }
 
     ///Formatting the date
-    var sectionDateFormatter: DateFormatter = {
+    @ObservationIgnored var sectionDateFormatter: DateFormatter = {
         let formatter = DateFormatter()
         formatter.dateFormat = "yyyy-MM-d"
         return formatter

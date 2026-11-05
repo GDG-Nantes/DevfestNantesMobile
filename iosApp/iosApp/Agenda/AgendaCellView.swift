@@ -11,11 +11,8 @@ import shared
 
 
 struct AgendaCellView: View {
-    @ObservedObject var viewModel = AgendaViewModel()
-
     // Données
     var session: AgendaContent.Session
-    var isBookmarked = true
 
     var body: some View {
         GlassRowContainer(corner: 16) {
@@ -47,25 +44,6 @@ struct AgendaCellView: View {
                 }
 
                 Spacer(minLength: 0)
-
-                // Favori à droite
-                if session.isATalk && isBookmarked {
-                    Button {
-                        viewModel.toggleFavorite(ofSession: session)
-                        FirebaseAnalyticsService.shared.eventBookmark(
-                            page: .agenda,
-                            sessionId: session.id,
-                            bookmarked: viewModel.favorites.contains(session.id)
-                        )
-                    } label: {
-                        Image(systemName: viewModel.favorites.contains(session.id) ? "star.fill" : "star")
-                            .font(.system(size: 18, weight: .semibold))
-                            .foregroundColor(Color(Asset.devFestYellow.color))
-                            .padding(8)
-                            .contentShape(Rectangle())
-                    }
-                    .buttonStyle(.plain)
-                }
             }
         }
         // densité compacte (gouttières visibles entre rows)

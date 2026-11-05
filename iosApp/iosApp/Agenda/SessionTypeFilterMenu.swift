@@ -2,7 +2,7 @@ import SwiftUI
 import shared
 
 struct SessionTypeFilterMenu: View {
-    @ObservedObject var viewModel: AgendaViewModel
+    @Environment(AgendaViewModel.self) private var viewModel
     struct SessionTypeItem {
         let value: String
         let label: String

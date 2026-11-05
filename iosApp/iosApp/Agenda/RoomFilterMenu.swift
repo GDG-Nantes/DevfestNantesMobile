@@ -8,7 +8,7 @@ struct RoomFilterItem: Identifiable {
 }
 
 struct RoomFilterMenu: View {
-    @ObservedObject var viewModel: AgendaViewModel
+    @Environment(AgendaViewModel.self) private var viewModel
     var body: some View {
         let filterItems: [RoomFilterItem] = {
             guard let rooms = viewModel.roomsContent else { return [] }

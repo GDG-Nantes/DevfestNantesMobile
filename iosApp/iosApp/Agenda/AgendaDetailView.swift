@@ -11,7 +11,7 @@ import shared
 
 struct AgendaDetailView: View {
     var content: AgendaContent.Session?
-    @ObservedObject var viewModel = AgendaViewModel()
+    @Environment(AgendaViewModel.self) private var viewModel
     var day: String
 
     init(session: AgendaContent.Session, day: String) {

@@ -2,7 +2,7 @@ import SwiftUI
 import shared
 
 struct LanguageFilterMenu: View {
-    @ObservedObject var viewModel: AgendaViewModel
+    @Environment(AgendaViewModel.self) private var viewModel
     struct LanguageItem {
         let value: String
         let label: String
