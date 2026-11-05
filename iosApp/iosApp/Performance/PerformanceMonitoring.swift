@@ -7,7 +7,7 @@ import FirebasePerformance
  * iOS native Firebase Performance monitoring.
  * Uses Firebase Performance APIs directly (no shared module abstraction).
  */
-public class PerformanceMonitoring: ObservableObject {
+public class PerformanceMonitoring {
     
     private let logger = DevFestLogger(category: "PerformanceMonitoring")
     
