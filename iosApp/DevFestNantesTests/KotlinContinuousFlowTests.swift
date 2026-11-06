@@ -30,4 +30,22 @@ import shared
         let second = try await iterator.next()
         #expect(second?.contains(spike) == true)
     }
+
+    @Test func bookmarks_flow_delivers_a_second_value_after_a_write() async throws {
+        TestHost.start()
+        let store: BookmarksStore = IosDependencies.shared.bookmarksStore()
+        let id = "spike-\(UUID().uuidString)"
+        defer { store.setBookmarked(sessionId: id, bookmarked: false) }
+
+        var iterator = KotlinStreamBridge.stream(store.bookmarkedSessionIds).makeAsyncIterator()
+        let first = try await iterator.next()
+        #expect(first?.contains(id) == false)
+
+        store.setBookmarked(sessionId: id, bookmarked: true)
+        // D-05 premise: the write is visible synchronously, before any element is awaited.
+        #expect(store.isBookmarked(id: id))
+
+        let second = try await iterator.next()
+        #expect(second?.contains(id) == true)
+    }
 }
