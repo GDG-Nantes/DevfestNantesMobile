@@ -52,4 +52,46 @@ class IosKoinTest {
         assertSame(koin.get<BookmarksStore>(), koin.get<BookmarksStore>())
         assertSame(koin.get<SessionFiltersStore>(), koin.get<SessionFiltersStore>())
     }
+
+    @Test
+    fun observe_agenda_accessor_resolves_after_start() {
+        IosDependencies.start()
+
+        assertNotNull(IosDependencies.observeAgenda())
+    }
+
+    @Test
+    fun bookmarks_store_accessor_returns_the_shared_single() {
+        IosDependencies.start()
+
+        assertSame(IosDependencies.bookmarksStore(), IosDependencies.bookmarksStore())
+    }
+
+    @Test
+    fun session_filters_store_accessor_returns_the_shared_single() {
+        IosDependencies.start()
+
+        assertSame(IosDependencies.sessionFiltersStore(), IosDependencies.sessionFiltersStore())
+    }
+
+    @Test
+    fun speaker_index_accessor_resolves_after_start() {
+        IosDependencies.start()
+
+        assertNotNull(IosDependencies.speakerIndex())
+    }
+
+    @Test
+    fun venue_language_accessor_resolves_after_start() {
+        IosDependencies.start()
+
+        assertNotNull(IosDependencies.venueLanguage())
+    }
+
+    @Test
+    fun classify_session_accessor_resolves_after_start() {
+        IosDependencies.start()
+
+        assertNotNull(IosDependencies.classifySession())
+    }
 }
