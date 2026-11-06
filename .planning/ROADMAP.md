@@ -197,13 +197,13 @@ Plans:
   3. The iOS agenda shows the same days (labels and time zone), time slots, sessions and filter results as in v1.0 (comparative UAT), with the documented exceptions of the room order within a time slot, which now follows `RoomSortIndex`, and four edge-case deviations accepted on 2026-11-05 (09-CONTEXT "Accepted deviations"): the scroll target with active filters, day labels on a non-Gregorian device calendar, fractional-second start dates, and the D-05 bookmark seed window
   4. The agenda continuously observes the shared combined flow (sessions + bookmarks + filters): adding or removing a bookmark or a filter from the list, a cell or the detail updates the agenda without relaunch, through a single `AgendaViewModel` instance
 
-**Plans**: 1/16 plans executed
+**Plans**: 2/16 plans executed
 Plans:
 **Wave 1**
 - [x] 09-01-PLAN.md — Tracer: six `IosDependencies` accessors (D-08), real continuous Kotlin flows through `KotlinStreamBridge` (research-flag spike), baselines
 
 **Wave 2** *(blocked on Wave 1 completion)*
-- [ ] 09-02-PLAN.md — CI toolchain replay of the spike: human pushes, `ios.yml` on the same SHA green before any ViewModel work (blocking checkpoint)
+- [x] 09-02-PLAN.md — CI toolchain replay of the spike: human pushes, `ios.yml` on the same SHA green before any ViewModel work (blocking checkpoint)
 
 **Wave 3** *(blocked on Wave 2 completion)*
 - [ ] 09-03-PLAN.md — Speakers on `SpeakerIndexUseCase`, golden unedited
@@ -310,7 +310,7 @@ Phases execute in numeric order: 6 → 7 → 8 → 9 → 10 → 11 → 12
 | 6. iOS Test Foundation and CI Gates | v1.1 | 6/6 | Complete    | 2026-10-27 |
 | 7. KMP Domain Layer and Android Adoption | v1.1 | 19/19 | Complete    | 2026-10-29 |
 | 8. Modern SwiftUI, iOS 17 and Observation | v1.1 | 9/9 | Complete    | 2026-11-05 |
-| 9. iOS on Shared Logic and Legacy Persistence | v1.1 | 1/16 | In Progress | - |
+| 9. iOS on Shared Logic and Legacy Persistence | v1.1 | 2/16 | In Progress | - |
 | 10. Explicit iOS DI | v1.1 | 0/? | Not started | - |
 | 11. SPM Modularization | v1.1 | 0/? | Not started | - |
 | 12. Strict Swift 6, Smoke Tests and Documentation | v1.1 | 0/? | Not started | - |
