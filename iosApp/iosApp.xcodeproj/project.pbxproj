@@ -86,6 +86,7 @@
 		B13578B57B84459DA3F9363E /* FakeSpeakerDetailsSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B180C1D20614A53806942A2 /* FakeSpeakerDetailsSource.swift */; };
 		57B9927230676CF563627ED8 /* AgendaSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D8490F1AA1AF6EEAE45E8E2 /* AgendaSource.swift */; };
 		F529F567183DE0B596609D13 /* AgendaViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59876FADBD32923B55AC6A11 /* AgendaViewModelTests.swift */; };
+		A91C3E5D7B2F4086C1D5E7A3 /* KotlinContinuousFlowTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4E6D8F20A3C5719E2B4D6F8 /* KotlinContinuousFlowTests.swift */; };
 		DC076202C14D990A8B73FDD7 /* FakeAgendaSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27FC659D344124EE3FF1B8E8 /* FakeAgendaSource.swift */; };
 /* End PBXBuildFile section */
 
@@ -179,6 +180,7 @@
 		5B180C1D20614A53806942A2 /* FakeSpeakerDetailsSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeSpeakerDetailsSource.swift; sourceTree = "<group>"; };
 		2D8490F1AA1AF6EEAE45E8E2 /* AgendaSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgendaSource.swift; sourceTree = "<group>"; };
 		59876FADBD32923B55AC6A11 /* AgendaViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgendaViewModelTests.swift; sourceTree = "<group>"; };
+		B4E6D8F20A3C5719E2B4D6F8 /* KotlinContinuousFlowTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KotlinContinuousFlowTests.swift; sourceTree = "<group>"; };
 		27FC659D344124EE3FF1B8E8 /* FakeAgendaSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeAgendaSource.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -428,6 +430,7 @@
 			isa = PBXGroup;
 			children = (
 				59876FADBD32923B55AC6A11 /* AgendaViewModelTests.swift */,
+				B4E6D8F20A3C5719E2B4D6F8 /* KotlinContinuousFlowTests.swift */,
 				E20E62857AD0223FB28B7134 /* Fakes */,
 				3C5A91E7B2D04F6810A7C3E9 /* AgendaDateParsingTests.swift */,
 				B7D2E4A10C5F3968A1E07D42 /* CharacterizationSupport.swift */,
@@ -673,6 +676,7 @@
 			files = (
 				DC076202C14D990A8B73FDD7 /* FakeAgendaSource.swift in Sources */,
 				F529F567183DE0B596609D13 /* AgendaViewModelTests.swift in Sources */,
+				A91C3E5D7B2F4086C1D5E7A3 /* KotlinContinuousFlowTests.swift in Sources */,
 				9E41D7A05B6C82F3D1048B7A /* AgendaDateParsingTests.swift in Sources */,
 				C8E3F5B21D6A4079B2F18E53 /* CharacterizationSupport.swift in Sources */,
 				EA05B7D43F8C629BD4B3A075 /* AgendaCharacterizationTests.swift in Sources */,

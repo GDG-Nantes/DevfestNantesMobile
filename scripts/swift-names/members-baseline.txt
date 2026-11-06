@@ -102,10 +102,16 @@ DevFestNantesStore	speakers
 DevFestNantesStoreBuilder	build()
 DevFestNantesStoreBuilder	init()
 DevFestNantesStoreBuilder	setUseMockServer(useMockServer:)
+IosDependencies	bookmarksStore()
+IosDependencies	classifySession()
 IosDependencies	init()
+IosDependencies	observeAgenda()
+IosDependencies	sessionFiltersStore()
 IosDependencies	shared
+IosDependencies	speakerIndex()
 IosDependencies	start()
 IosDependencies	store()
+IosDependencies	venueLanguage()
 Partner	description()
 Partner	doCopy(name:logoUrl:url:)
 Partner	hash()
@@ -157,6 +163,9 @@ Session	scheduleSlot
 Session	speakers
 Session	title
 Session	type
+SessionFiltersStore	filters
+SessionFiltersStore	filtersFlow
+SessionFiltersStore	setFilters(filters:)
 SessionLanguage	english
 SessionLanguage	entries
 SessionLanguage	french
