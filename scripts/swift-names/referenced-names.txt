@@ -3,6 +3,7 @@ AnalyticsEvent
 AnalyticsPage
 AnalyticsParam
 AnalyticsService
+BookmarksStore
 Category
 Complexity
 ContentLanguage
@@ -20,5 +21,7 @@ SessionType
 SocialItem
 SocialType
 Speaker
+SpeakerIndexUseCase
+SpeakerLetterGroup
 Venue
 WebLinks
