@@ -69,6 +69,10 @@ AnalyticsService	eventSpeakerSocialLinkOpened(speakerId:type:)
 AnalyticsService	eventVenueFloorPlanClicked()
 AnalyticsService	eventVenueNavigationClicked()
 AnalyticsService	pageEvent(page:className:)
+BookmarksStore	bookmarkedSessionIds
+BookmarksStore	isBookmarked(id:)
+BookmarksStore	setBookmarked(sessionId:bookmarked:)
+BookmarksStore	subscribe(id:)
 Category	companion
 Category	description()
 Category	doCopy(id:label:)
@@ -210,6 +214,16 @@ Speaker	isEqual(_:)
 Speaker	name
 Speaker	photoUrl
 Speaker	socials
+SpeakerIndexUseCase	firstIndexes(speakers:)
+SpeakerIndexUseCase	init()
+SpeakerIndexUseCase	letterGroups(speakers:)
+SpeakerLetterGroup	description()
+SpeakerLetterGroup	doCopy(letter:speakers:)
+SpeakerLetterGroup	hash()
+SpeakerLetterGroup	init(letter:speakers:)
+SpeakerLetterGroup	isEqual(_:)
+SpeakerLetterGroup	letter
+SpeakerLetterGroup	speakers
 Venue	address
 Venue	description()
 Venue	description_
