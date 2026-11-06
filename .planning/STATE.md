@@ -4,12 +4,12 @@ milestone: v1.1
 milestone_name: iOS Architecture
 current_phase: 09
 current_phase_name: iOS on Shared Logic and Legacy Persistence
-status: "Phase 08 shipped — PR #432"
+status: executing
 stopped_at: Phase 9 UI-SPEC approved
-last_updated: "2026-11-05T22:48:28.409Z"
-last_activity: 2026-11-05
-last_activity_desc: Phase 09 planning complete
-state_head: bb6b2f0c39434ffbee8b171c0f8336966bea2430
+last_updated: "2026-11-06T19:30:07.773Z"
+last_activity: 2026-11-06
+last_activity_desc: Phase 09 execution started
+state_head: da2b8e264eff526867d03c26cfc1ebee6fc60b63
 progress:
   total_phases: 7
   completed_phases: 8
@@ -25,14 +25,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-10-29)
 
 **Core value:** CI/CD must work again and the project must become maintainable again (modern build, modular architecture, decentralized DI, solid test coverage) without ever regressing the app's existing behavior for users.
-**Current focus:** Phase 08 — Modern SwiftUI, iOS 17 and Observation
+**Current focus:** Phase 09 — iOS on Shared Logic and Legacy Persistence
 
 ## Current Position
 
-Phase: 09 (iOS on Shared Logic and Legacy Persistence) — READY TO EXECUTE
-Plan: Not started
-Status: Phase 08 shipped — PR #432
-Last activity: 2026-11-05 — Phase 09 planning complete
+Phase: 09 (iOS on Shared Logic and Legacy Persistence) — EXECUTING
+Plan: 1 of 16
+Status: Executing Phase 09
+Last activity: 2026-11-06 — Phase 09 execution started
 
 Progress: [███████░░░] 68%
 
