@@ -49,3 +49,15 @@ extension AgendaContent.Session {
 }
 
 extension Session: Identifiable { }
+
+// MARK: - AgendaDays
+
+/// The conference dates (`yyyy-MM-dd`), declared once. Still hardcoded per year (07 D-07, single-source debt):
+/// the day picker, the initial day and the scroll guard of `AgendaView` read these, and so does the shared
+/// grouping through `LocalDateDays`.
+enum AgendaDays {
+    static let day1 = "2025-10-16"
+    static let day2 = "2025-10-17"
+
+    static var all: [String] { [day1, day2] }
+}

@@ -184,7 +184,12 @@ struct AgendaView: View {
     }
     
     // MARK: - Initial scroll/day selection
-    
+
+    /// Static and pure so tests can call it without creating a view (D-11 extraction).
+    static func scrollTarget(slotDates: [Date], now: Date, calendar: Calendar) -> Date? {
+        nil
+    }
+
     private func handleInitialScrollIfNeeded(isLoading: Bool) {
         guard !isLoading else { return }
         let formatter = DateFormatter()
