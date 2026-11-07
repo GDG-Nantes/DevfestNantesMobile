@@ -103,8 +103,6 @@ struct AgendaView: View {
     
     @ViewBuilder
     private func agendaRow(for session: AgendaContent.Session) -> some View {
-        let isNavigable = (session.sessionType == .conference || session.sessionType == .codelab || session.sessionType == .quickie)
-        
         let rowContent = SessionRowContent(
             title: session.title,
             categoryLabel: session.category?.label,
@@ -113,7 +111,7 @@ struct AgendaView: View {
             speakersNames: session.speakers.map { $0.name }.joined(separator: ", "),
             isTalk: session.isATalk,
             isFavorite: viewModel.favorites.contains(session.id),
-            isNavigable: isNavigable,
+            isNavigable: session.isNavigable,
             favoriteTapped: {
                 viewModel.toggleFavorite(ofSession: session)
                 FirebaseAnalyticsService.shared.eventBookmark(
@@ -125,7 +123,7 @@ struct AgendaView: View {
         )
         
         // Cellule entière cliquable uniquement pour conference/codelab/quickie
-        if isNavigable {
+        if session.isNavigable {
             PushLink(destination: AgendaDetailView(session: session, day: day)) {
                 SessionRow(content: rowContent)
             }

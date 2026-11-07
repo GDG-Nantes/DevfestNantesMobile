@@ -5,6 +5,7 @@ AnalyticsParam
 AnalyticsService
 BookmarksStore
 Category
+ClassifySessionUseCase
 Complexity
 ContentLanguage
 DevFestNantesStore
