@@ -17,77 +17,83 @@ final class AgendaViewModel {
     var roomsContent: [Room]?
     var isLoading = true
 
-    // Filters as Set of SessionFilter, persisted as JSON on every change
-    private(set) var sessionFilters: Set<SessionFilter> {
-        didSet { saveFilters() }
-    }
-
-    // Favorite session ids, written through to the legacy key on every change
-    private(set) var favorites: [String] {
-        didSet { defaults.set(favorites, forKey: "Favorites") }
-    }
+    // Observable mirrors of what the Kotlin stores persist. Every intent updates the mirror synchronously
+    // and writes through to the store, which is the only place that persists (07 D-15, D-05).
+    private(set) var sessionFilters: Set<shared.SessionFilter>
+    private(set) var bookmarkedIds: Set<String> = []
 
     @ObservationIgnored private let source: AgendaSource
     @ObservationIgnored private let tracing: DataLoadTracing
-    @ObservationIgnored private let defaults: UserDefaults
+    @ObservationIgnored private var bookmarksSeeded = false
 
-    ///Initialization of the model with its ports, the tracing seam and the UserDefaults object (init only reads)
-    init(source: AgendaSource = LiveAgendaSource(), tracing: DataLoadTracing = PerformanceMonitoring.shared, defaults: UserDefaults = .standard) {
+    ///Initialization of the model with its ports and the tracing seam; the filter mirror is read from the store (init writes nothing)
+    init(source: AgendaSource = LiveAgendaSource(), tracing: DataLoadTracing = PerformanceMonitoring.shared) {
         self.source = source
         self.tracing = tracing
-        self.defaults = defaults
-        self.favorites = defaults.object(forKey: "Favorites") as? [String] ?? []
-        if let data = defaults.data(forKey: "AgendaSessionFilters"),
-           let filters = try? JSONDecoder().decode(Set<SessionFilter>.self, from: data) {
-            self.sessionFilters = filters
+        self.sessionFilters = source.currentFilters()
+    }
+
+    ///Adds the filter when absent and removes it when present, then writes the whole set through to the store
+    func toggleFilter(type: SessionFilterType, value: String) {
+        let filter = shared.SessionFilter(type: type, value: value)
+        var updated = sessionFilters
+        if updated.contains(filter) {
+            updated.remove(filter)
         } else {
-            self.sessionFilters = []
+            updated.insert(filter)
         }
+        sessionFilters = updated
+        source.setFilters(updated)
     }
 
-    // MARK: - Persistence helpers
-    private func saveFilters() {
-        if let data = try? JSONEncoder().encode(sessionFilters) {
-            defaults.set(data, forKey: "AgendaSessionFilters")
-        }
-    }
-
-    ///Adds the filter when absent and removes it when present
-    func toggleFilter(type: FilterType, value: String) {
-        let filter = SessionFilter(type: type, value: value)
-        if sessionFilters.contains(filter) {
-            sessionFilters.remove(filter)
-        } else {
-            sessionFilters.insert(filter)
-        }
-    }
-
+    ///Empties the filter mirror and writes an empty set through to the store
     func clearFilters() {
         sessionFilters = []
-        defaults.removeObject(forKey: "AgendaSessionFilters")
+        source.setFilters([])
     }
 
     // MARK: - Bookmark intents
 
-    ///Whether a session is in the favorites
+    ///Whether a session is bookmarked
     func isBookmarked(_ sessionId: String) -> Bool {
-        favorites.contains(sessionId)
+        bookmarkedIds.contains(sessionId)
     }
 
-    ///Adds or removes a session from the favorites and returns the value after the toggle
+    ///Adds or removes a session from the bookmarks, writes it through to the store and returns the value after the toggle
     @discardableResult
     func toggleBookmark(sessionId: String) -> Bool {
-        if favorites.contains(sessionId) {
-            favorites = favorites.filter { $0 != sessionId }
-            return false
+        let bookmarked = !bookmarkedIds.contains(sessionId)
+        if bookmarked {
+            bookmarkedIds.insert(sessionId)
         } else {
-            favorites.append(sessionId)
-            return true
+            bookmarkedIds.remove(sessionId)
+        }
+        source.setBookmarked(sessionId, bookmarked)
+        return bookmarked
+    }
+
+    ///Seeds the bookmark mirror once per ViewModel from the first emission of the store (it has no snapshot).
+    ///A cancelled or failed read leaves the flag false, so the next load retries.
+    private func seedBookmarksIfNeeded() async {
+        guard !bookmarksSeeded else { return }
+        do {
+            var iterator = source.bookmarkedIds().makeAsyncIterator()
+            guard let ids = try await iterator.next() else { return }
+            // The bridge ends silently when the read is cancelled, so cancellation is checked explicitly.
+            try Task.checkCancellation()
+            bookmarkedIds = ids
+            bookmarksSeeded = true
+        } catch is CancellationError {
+            return
+        } catch {
+            // Counts only, never the ids.
+            DevFestLogger(category: "Agenda").log(.error, "Seed bookmarks error: \(error.localizedDescription)", error: error)
         }
     }
 
     ///Asynchronous method to retrieve sessions
     func observeSessions() async {
+        await seedBookmarksIfNeeded()
         let source = self.source
         do {
             let sessions = try await tracing.trackDataLoad(

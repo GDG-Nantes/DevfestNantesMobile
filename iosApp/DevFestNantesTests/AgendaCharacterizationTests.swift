@@ -9,7 +9,8 @@ import shared
 /// flags, which since Phase 9 come from the shared `ClassifySessionUseCase` (the tables below are literal copies
 /// of its test table).
 /// Never calls `observe*`, `toggleBookmark`, `toggleFilter` nor `clearFilters` (side effects).
-/// The app filter type is always written `DevFest_Nantes.SessionFilter` (D-13).
+/// The Kotlin filter type is always written `shared.SessionFilter`: the app still declares its own
+/// `SessionFilter` struct.
 @MainActor @Suite struct AgendaCharacterizationTests {
 
     private static let tabs = ["2025-10-16", "2025-10-17"]
@@ -72,14 +73,14 @@ import shared
         let all = try TestData.sessions().map { AgendaContent.Session(from: $0) }
 
         let cases = try file.cases.map { filterCase -> GoldenCase in
-            let filters = Set(try filterCase.filters.map { filter -> DevFest_Nantes.SessionFilter in
-                guard let type = DevFest_Nantes.FilterType(rawValue: filter.type.lowercased()) else {
-                    throw TestDataError.unknownName(kind: "FilterType", name: filter.type)
+            let filters = Set(try filterCase.filters.map { filter -> shared.SessionFilter in
+                guard let type = SessionFilterType.entries.first(where: { $0.name == filter.type }) else {
+                    throw TestDataError.unknownName(kind: "SessionFilterType", name: filter.type)
                 }
-                return DevFest_Nantes.SessionFilter(type: type, value: filter.value)
+                return shared.SessionFilter(type: type, value: filter.value)
             })
             let ids = AgendaView
-                .filteredSessions(all, filters: filters, favorites: file.bookmarkedSessionIds)
+                .filteredSessions(all, filters: filters, favorites: Set(file.bookmarkedSessionIds))
                 .map(\.id)
                 .sorted()
             return GoldenCase(name: filterCase.name, sessionIds: ids)

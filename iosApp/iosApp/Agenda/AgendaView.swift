@@ -139,7 +139,7 @@ struct AgendaView: View {
     }
 
     private func filteredSessionsForSection(_ section: AgendaContent.Section) -> [AgendaContent.Session] {
-        Self.filteredSessions(section.sessions, filters: viewModel.sessionFilters, favorites: viewModel.favorites)
+        Self.filteredSessions(section.sessions, filters: viewModel.sessionFilters, favorites: viewModel.bookmarkedIds)
     }
 
     /// Static and pure so tests can call it without creating a view (D-10 extraction, bodies unchanged).
@@ -150,8 +150,8 @@ struct AgendaView: View {
     /// Static and pure so tests can call it without creating a view (D-10 extraction, bodies unchanged).
     static func filteredSessions(
         _ sessions: [AgendaContent.Session],
-        filters: Set<SessionFilter>,
-        favorites: [String]
+        filters: Set<shared.SessionFilter>,
+        favorites: Set<String>
     ) -> [AgendaContent.Session] {
         var filtered = sessions
         let selectedLanguages = filters.filter { $0.type == .language }.map { $0.value }
