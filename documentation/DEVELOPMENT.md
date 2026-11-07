@@ -143,16 +143,14 @@ unnoticed, so check that `XCRESULT-TESTS total=` grows with the tests you add.
 
 #### Characterization suites and goldens
 
-`AgendaCharacterizationTests` and `SpeakersVenueCharacterizationTests` pin the v1.0 iOS behavior
+`AgendaCharacterizationTests` and `SpeakersVenueCharacterizationTests` assert the shared output
 (agenda grouping in `Europe/Paris` and `Pacific/Auckland`, filtering on the 15 shared cases,
-`isATalk`, the speaker alphabet, the venue language) on the recorded snapshot in
-`core/domain/testdata/agenda/`. They run against the migrated (Observation) ViewModels, built through
-their init defaults, and keep calling `TestHost.start()` in `CharacterizationSupport.swift` (an
-idempotent `IosDependencies.shared.start()`, now harmless since the ViewModels resolve the store
-lazily). They only use the initializers and pure methods: never `observe*`, `toggleFavorite`,
-`clearFilters` nor a `sessionFilters` assignment.
-Test files that import `shared` refer to the app filter type as `DevFest_Nantes.SessionFilter`, so
-the Kotlin `SessionFilter` export cannot make it ambiguous.
+`isATalk`, the speaker alphabet, the venue language) against the same v1.0 goldens, on the recorded
+snapshot in `core/domain/testdata/agenda/`. They run against the shared use cases and the migrated
+(Observation) ViewModels, built through their init defaults, and keep calling `TestHost.start()` in
+`CharacterizationSupport.swift` (an idempotent `IosDependencies.shared.start()`, now harmless since
+the ViewModels resolve the store lazily). They avoid the side-effecting calls: never `observe*`,
+`toggleBookmark`, `toggleFilter` nor `clearFilters`.
 
 The expected outputs are the goldens in `core/domain/testdata/agenda/golden/ios-*.json`; Kotlin
 `commonTest` reads the same files. Golden rule: a default run never writes and fails with
@@ -201,7 +199,7 @@ Where tests live:
 | Instrumented smoke tests | `feature/<name>/src/androidTest/` | `SettingsSmokeTest` |
 | Shared domain use cases (JVM and iOS simulator) | `core/domain/src/commonTest/` | `GroupSessionsUseCaseTest`, `SpeakerIndexUseCaseTest`, `ObserveAgendaUseCaseTest` |
 | Domain and shared graph wiring | `core/domain/src/jvmTest/`, `shared/src/{jvmTest,iosTest}/` | `DomainModuleTest`, `KoinGraphTest`, `IosKoinTest` |
-| iOS Swift unit tests | `iosApp/DevFestNantesTests/` | `SessionFilterTests`, `AgendaDateParsingTests` |
+| iOS Swift unit tests | `iosApp/DevFestNantesTests/` | `AgendaViewModelTests`, `KotlinContinuousFlowTests` |
 
 #### Domain test data and goldens
 
