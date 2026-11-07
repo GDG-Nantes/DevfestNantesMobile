@@ -1,0 +1,54 @@
+appId: com.gdgnantes.devfest.iosApp
+# D-10 accessibility-size pairs (phase 09). Run with the simulator at accessibility-extra-large:
+#   xcrun simctl ui <udid> content_size accessibility-extra-large
+#   cd 09-parity/base   && maestro --device <base udid>   test ../parity-a11y-flow.yaml
+#   cd 09-parity/branch && maestro --device <branch udid> test ../parity-a11y-flow.yaml
+#   xcrun simctl ui <udid> content_size large   (restore)
+---
+- launchApp:
+    clearState: true
+- extendedWaitUntil:
+    visible: "08:00"
+    timeout: 120000
+- waitForAnimationToEnd
+- takeScreenshot: 26-a11y-agenda
+
+# 27: filter menu, Rooms submenu
+- tapOn:
+    point: "89%,10%"
+- extendedWaitUntil:
+    visible: "Rooms"
+    timeout: 30000
+- tapOn: "Rooms"
+- waitForAnimationToEnd
+- takeScreenshot: 27-a11y-filter-rooms
+
+# dismiss the menu
+- tapOn:
+    point: "50%,80%"
+- waitForAnimationToEnd
+
+# 28: open a talk
+- scrollUntilVisible:
+    element: "Opening Keynote.*"
+    direction: DOWN
+- tapOn: "Opening Keynote.*"
+- extendedWaitUntil:
+    visible:
+      id: "BackButton"
+    timeout: 30000
+- waitForAnimationToEnd
+- takeScreenshot: 28-a11y-session-detail
+
+# back, then Speakers
+- tapOn:
+    id: "BackButton"
+- waitForAnimationToEnd
+- tapOn: "Speakers"
+- waitForAnimationToEnd
+- takeScreenshot: 29-a11y-speakers
+
+# 30: Venue
+- tapOn: "Venue"
+- waitForAnimationToEnd
+- takeScreenshot: 30-a11y-venue
