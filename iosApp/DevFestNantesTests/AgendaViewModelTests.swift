@@ -6,8 +6,7 @@ import shared
 @testable import DevFest_Nantes
 
 /// Agenda ViewModel tests. Every test builds its own source fake, tracing fake and ViewModel, so nothing is
-/// shared between tests. The Kotlin filter type is always written `shared.SessionFilter`: the app still
-/// declares its own `SessionFilter` struct.
+/// shared between tests. The filter type is the exported Kotlin `SessionFilter`.
 @MainActor @Suite(.timeLimit(.minutes(1))) struct AgendaViewModelTests {
 
     /// Tracer: the live adapter over the in-memory mocked Kotlin store drives the rooms collection end to end
@@ -320,12 +319,12 @@ import shared
 
     // MARK: - Bookmark and filter mirrors (write-through to the shared stores)
 
-    private func filter(_ type: SessionFilterType, _ value: String) -> shared.SessionFilter {
-        shared.SessionFilter(type: type, value: value)
+    private func filter(_ type: SessionFilterType, _ value: String) -> SessionFilter {
+        SessionFilter(type: type, value: value)
     }
 
     @Test func init_seeds_the_filter_mirror_from_the_source_and_writes_nothing() {
-        let seeded: Set<shared.SessionFilter> = [filter(.language, "FRENCH"), filter(.room, "room-1")]
+        let seeded: Set<SessionFilter> = [filter(.language, "FRENCH"), filter(.room, "room-1")]
         let source = FakeAgendaSource(filters: seeded)
 
         let viewModel = makeViewModel(source: source)

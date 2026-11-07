@@ -8,8 +8,7 @@ import shared
 /// rely on the bridge before any ViewModel work starts. The tests use the real Koin stores on the test
 /// host's `standardUserDefaults` and restore what they write. A stalled bridge fails through the suite
 /// time limit instead of hanging CI.
-/// The Kotlin filter type is always written `shared.SessionFilter`: the app still declares its own
-/// `SessionFilter` struct.
+/// The filter type is the exported Kotlin `SessionFilter`.
 @MainActor @Suite(.serialized, .timeLimit(.minutes(1))) struct KotlinContinuousFlowTests {
 
     @Test func filters_flow_delivers_a_second_value_after_a_write() async throws {
@@ -17,7 +16,7 @@ import shared
         let store: SessionFiltersStore = IosDependencies.shared.sessionFiltersStore()
         let previous = store.filters
         defer { store.setFilters(filters: previous) }
-        let spike = shared.SessionFilter(type: .room, value: "spike-room")
+        let spike = SessionFilter(type: .room, value: "spike-room")
 
         var iterator = KotlinStreamBridge.stream(store.filtersFlow).makeAsyncIterator()
         let first = try await iterator.next()

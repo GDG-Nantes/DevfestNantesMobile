@@ -16,8 +16,8 @@ final class FakeAgendaSource: AgendaSource {
     let roomsStream: FakeStream<Set<Room>>
     let bookmarksStream: FakeStream<Set<String>>
     /// What `currentFilters()` returns.
-    var filters: Set<shared.SessionFilter>
-    private(set) var writtenFilters: [Set<shared.SessionFilter>] = []
+    var filters: Set<SessionFilter>
+    private(set) var writtenFilters: [Set<SessionFilter>] = []
     private(set) var writtenBookmarks: [BookmarkWrite] = []
     private let classifier = ClassifySessionUseCase()
     private let talkOverride: ((Session) -> Bool)?
@@ -27,7 +27,7 @@ final class FakeAgendaSource: AgendaSource {
         agendaStream: FakeStream<[DaySchedule]> = FakeStream(.hang),
         roomsStream: FakeStream<Set<Room>> = FakeStream(.hang),
         bookmarksStream: FakeStream<Set<String>> = FakeStream(.emit([[]], thenFinish: false)),
-        filters: Set<shared.SessionFilter> = [],
+        filters: Set<SessionFilter> = [],
         talkOverride: ((Session) -> Bool)? = nil,
         navigableOverride: ((Session) -> Bool)? = nil
     ) {
@@ -55,11 +55,11 @@ final class FakeAgendaSource: AgendaSource {
         navigableOverride?(session) ?? classifier.isNavigable(session: session)
     }
 
-    func currentFilters() -> Set<shared.SessionFilter> {
+    func currentFilters() -> Set<SessionFilter> {
         filters
     }
 
-    func setFilters(_ filters: Set<shared.SessionFilter>) {
+    func setFilters(_ filters: Set<SessionFilter>) {
         writtenFilters.append(filters)
     }
 

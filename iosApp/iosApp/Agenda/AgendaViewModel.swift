@@ -19,7 +19,7 @@ final class AgendaViewModel {
 
     // Observable mirrors of what the Kotlin stores persist. Every intent updates the mirror synchronously
     // and writes through to the store, which is the only place that persists (07 D-15, D-05).
-    private(set) var sessionFilters: Set<shared.SessionFilter>
+    private(set) var sessionFilters: Set<SessionFilter>
     private(set) var bookmarkedIds: Set<String> = []
 
     @ObservationIgnored private let source: AgendaSource
@@ -35,7 +35,7 @@ final class AgendaViewModel {
 
     ///Adds the filter when absent and removes it when present, then writes the whole set through to the store
     func toggleFilter(type: SessionFilterType, value: String) {
-        let filter = shared.SessionFilter(type: type, value: value)
+        let filter = SessionFilter(type: type, value: value)
         var updated = sessionFilters
         if updated.contains(filter) {
             updated.remove(filter)

@@ -118,6 +118,8 @@ DevFestNantesStore	speakers
 DevFestNantesStoreBuilder	build()
 DevFestNantesStoreBuilder	init()
 DevFestNantesStoreBuilder	setUseMockServer(useMockServer:)
+FilterSessionsUseCase	filter(sessions:filters:bookmarkedSessionIds:)
+FilterSessionsUseCase	init()
 GroupSessionsUseCase	group(sessions:dayAssignment:timeZone:)
 GroupSessionsUseCase	init()
 IosDependencies	bookmarksStore()
@@ -197,6 +199,14 @@ Session	scheduleSlot
 Session	speakers
 Session	title
 Session	type
+SessionFilter	companion
+SessionFilter	description()
+SessionFilter	doCopy(type:value:)
+SessionFilter	hash()
+SessionFilter	init(type:value:)
+SessionFilter	isEqual(_:)
+SessionFilter	type
+SessionFilter	value
 SessionFilterType	bookmark
 SessionFilterType	complexity
 SessionFilterType	entries

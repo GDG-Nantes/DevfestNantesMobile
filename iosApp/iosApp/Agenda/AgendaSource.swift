@@ -6,17 +6,16 @@
 import shared
 
 /// What the Agenda screen reads and writes: the combined agenda, the rooms, the persisted bookmarks and filters.
-/// The Kotlin filter type is always written `shared.SessionFilter`: the app still declares its own
-/// `SessionFilter` struct.
+/// The filter type is the exported Kotlin `SessionFilter`.
 protocol AgendaSource {
     func agenda() -> AsyncThrowingStream<[DaySchedule], Error>
     func rooms() -> AsyncThrowingStream<Set<Room>, Error>
     func isTalk(_ session: Session) -> Bool
     func isNavigable(_ session: Session) -> Bool
     /// The persisted filters right now (a snapshot of the shared store).
-    func currentFilters() -> Set<shared.SessionFilter>
+    func currentFilters() -> Set<SessionFilter>
     /// Writes the full filter set through to the shared store.
-    func setFilters(_ filters: Set<shared.SessionFilter>)
+    func setFilters(_ filters: Set<SessionFilter>)
     /// The persisted bookmarked session ids, as a flow of the whole set.
     func bookmarkedIds() -> AsyncThrowingStream<Set<String>, Error>
     /// Writes one bookmark through to the shared store.
@@ -68,11 +67,11 @@ struct LiveAgendaSource: AgendaSource {
         classify().isNavigable(session: session)
     }
 
-    func currentFilters() -> Set<shared.SessionFilter> {
+    func currentFilters() -> Set<SessionFilter> {
         filtersStore().filters
     }
 
-    func setFilters(_ filters: Set<shared.SessionFilter>) {
+    func setFilters(_ filters: Set<SessionFilter>) {
         filtersStore().setFilters(filters: filters)
     }
 
