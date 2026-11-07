@@ -36,7 +36,7 @@ plan_head_after: b55823d4ea8912512c820fff05e6dcbd62d4c7f8
 
 # Phase 9 Plan 16: Parity and Phase Gate Summary
 
-**The same 31 screens were captured on `main` and on the branch on two identical simulators. 20 pairs are pixel-identical. The 11 that differ were classified by the human: in-slot room order, or small layout offsets the human accepted as a new decision. The full gate is green on the branch head, with 72/72 Swift tests. CI on the pushed head SHA is pending.**
+**The same 31 screens were captured on `main` and on the branch on two identical simulators. 20 pairs are pixel-identical. The 11 that differ were classified by the human: in-slot room order, or small layout offsets the human accepted as a new decision. The full gate is green on the branch head, with 72/72 Swift tests, and `ios.yml` and `android.yml` are green on the pushed head SHA.**
 
 ## Verdict
 
@@ -83,9 +83,12 @@ The executor finished Tasks 1 and 2 and returned the checkpoint. It declined to 
   - `AgendaDetailView.swift` has the same layout modifiers as the branch point.
 - Swift suite on iPhone 17 (F59F5246): `XCRESULT-TESTS total=72 passed=72 failed=0 skipped=0`, `XCRESULT-OK`.
 
-## CI: pending
+## CI: green on the pushed head
 
-`ios.yml` and `android.yml` have not run on this branch yet: Claude does not push, and `android.yml` needs a pull request. Once the human pushes and opens the PR to `main`, the orchestrator checks both workflows with `gh` on the pushed head SHA. It then records the run ids and the iOS `XCRESULT-TESTS` line here, before `/gsd-verify-work`. **This criterion is not yet satisfied.**
+- The human pushed `feature/reno_phase_9` at `d5f5efb61b716780e6dd6ccc61d73df26e0f1ff9`, and the orchestrator opened PR #433 to `main` at the human's request.
+- `ios.yml` run `42419842682`: `gh run view` prints `d5f5efb61b716780e6dd6ccc61d73df26e0f1ff9 success`. The iOS log shows `XCRESULT-TESTS total=72 passed=72 failed=0 skipped=0` and `XCRESULT-OK`.
+- `android.yml` run `42419842760`: `d5f5efb61b716780e6dd6ccc61d73df26e0f1ff9 success`.
+- This SUMMARY update is docs-only and comes after the verified SHA.
 
 ## Deviations from Plan
 
@@ -100,7 +103,7 @@ No flow edit hides a difference: both full flows passed on both builds, and ever
 
 - **Split commands.** The plan's `<automated>` blocks were run as their component steps, because the worktree command guard refuses compound shell.
 - **Secrets.** The API key precondition was a comparison only. No secret, `local.properties` or `build/` file is tracked.
-- **Simulators.** The two parity simulators stay booted until CI is verified. They are deleted afterwards, and the iPhone 17 simulator is kept.
+- **Simulators.** The two parity simulators were deleted after CI was verified. The iPhone 17 simulator is kept.
 
 ## Self-Check: PASSED
 
