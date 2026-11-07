@@ -17,7 +17,7 @@ import shared
         let suiteName = "AgendaViewModelTests-\(UUID().uuidString)"
         let suite = UserDefaults(suiteName: suiteName)!
         defer { suite.removePersistentDomain(forName: suiteName) }
-        let viewModel = AgendaViewModel(source: LiveAgendaSource(store: { store }), tracing: tracing, defaults: suite)
+        let viewModel = AgendaViewModel(source: LiveAgendaSource(store: { store }, classify: { ClassifySessionUseCase() }), tracing: tracing, defaults: suite)
 
         await viewModel.observeSessions()
         await viewModel.observeRooms()
@@ -81,6 +81,24 @@ import shared
         #expect(viewModel.isLoading == false)
         #expect(tracing.recordedTraces == [.init(traceName: "agenda_load", dataSource: "graphql")])
         #expect(stream.terminationCount == 1)
+    }
+
+    @Test func rows_take_their_talk_and_navigable_flags_from_the_source() async throws {
+        let suite = Suite()
+        defer { suite.cleanup() }
+        let stream = FakeStream<[Session]>(.emit([try TestData.sessions()], thenFinish: false))
+        let source = FakeAgendaSource(
+            sessionsStream: stream,
+            talkOverride: { _ in false }
+        )
+        let viewModel = makeViewModel(source: source, suite: suite)
+
+        await viewModel.observeSessions()
+
+        let rows = viewModel.agendaContent.sections.flatMap(\.sessions)
+        #expect(!rows.isEmpty)
+        #expect(rows.allSatisfy { !$0.isATalk })
+        #expect(rows.allSatisfy { $0.isNavigable == ($0.sessionType == .conference || $0.sessionType == .codelab || $0.sessionType == .quickie) })
     }
 
     @Test func sessions_error_stops_loading_with_an_empty_agenda() async {

@@ -117,7 +117,7 @@ final class AgendaViewModel {
         var sections = [AgendaContent.Section]()
         sortedKeys.forEach { date in
             let sessions = groupedSessions[date]!
-                .map { AgendaContent.Session(from: $0) }
+                .map { AgendaContent.Session(from: $0, isATalk: source.isTalk($0), isNavigable: source.isNavigable($0)) }
                 .sorted { $0.room < $1.room }
             sections.append(AgendaContent.Section(
                 date: date,

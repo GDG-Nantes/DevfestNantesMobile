@@ -81,6 +81,10 @@ Category	id
 Category	init(id:label:)
 Category	isEqual(_:)
 Category	label
+ClassifySessionUseCase	init()
+ClassifySessionUseCase	isNavigable(session:)
+ClassifySessionUseCase	isService(session:)
+ClassifySessionUseCase	isTalk(session:)
 Complexity	advanced
 Complexity	beginner
 Complexity	entries
