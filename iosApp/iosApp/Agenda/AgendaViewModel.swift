@@ -23,7 +23,7 @@ final class AgendaViewModel {
     }
 
     // Favorite session ids, written through to the legacy key on every change
-    var favorites: [String] {
+    private(set) var favorites: [String] {
         didSet { defaults.set(favorites, forKey: "Favorites") }
     }
 
@@ -57,32 +57,24 @@ final class AgendaViewModel {
         defaults.removeObject(forKey: "AgendaSessionFilters")
     }
 
-    // MARK: - Favorites management
+    // MARK: - Bookmark intents
 
-    ///Method to add or remove a session from favorites
-    func toggleFavorite(ofSession session: AgendaContent.Session) {
-        if favorites.contains(session.id) {
-            removeSessionFromFavorites(sessionId: session.id)
+    ///Whether a session is in the favorites
+    func isBookmarked(_ sessionId: String) -> Bool {
+        favorites.contains(sessionId)
+    }
+
+    ///Adds or removes a session from the favorites and returns the value after the toggle
+    @discardableResult
+    func toggleBookmark(sessionId: String) -> Bool {
+        if favorites.contains(sessionId) {
+            favorites = favorites.filter { $0 != sessionId }
+            return false
         } else {
-            addSessionToFavorites(sessionId: session.id)
+            favorites.append(sessionId)
+            return true
         }
     }
-
-    ///Method allowing the deletion of the session in favorites
-    private func removeSessionFromFavorites(sessionId: String) {
-        favorites = favorites.filter { $0 != sessionId }
-    }
-
-    private func addSessionToFavorites(sessionId: String) {
-        favorites.append(sessionId)
-    }
-
-
-
-    func isBookmarked(_ sessionId: String) -> Bool { false }
-
-    @discardableResult
-    func toggleBookmark(sessionId: String) -> Bool { false }
 
     ///Asynchronous method to retrieve sessions
     func observeSessions() async {

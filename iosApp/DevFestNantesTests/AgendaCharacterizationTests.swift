@@ -8,7 +8,7 @@ import shared
 /// `AgendaViewModel.sessionsChanged`, the D-10 statics of `AgendaView`, and the `isATalk`/`isNavigable`
 /// flags, which since Phase 9 come from the shared `ClassifySessionUseCase` (the tables below are literal copies
 /// of its test table).
-/// Never calls `observe*`, `toggleFavorite`, `clearFilters` nor assigns `sessionFilters` (side effects).
+/// Never calls `observe*`, `toggleBookmark`, `toggleFilter` nor `clearFilters` (side effects).
 /// The app filter type is always written `DevFest_Nantes.SessionFilter` (D-13).
 @MainActor @Suite struct AgendaCharacterizationTests {
 
