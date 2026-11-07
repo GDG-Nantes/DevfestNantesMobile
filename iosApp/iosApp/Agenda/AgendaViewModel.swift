@@ -97,6 +97,7 @@ final class AgendaViewModel {
     func observeAgenda() async {
         await seedBookmarksIfNeeded()
         var iterator = source.agenda().makeAsyncIterator()
+        var hasEmitted = false
         do {
             let first = try await tracing.trackDataLoad(
                 traceName: PerformanceMonitoring.TRACE_AGENDA_LOAD,
@@ -114,6 +115,7 @@ final class AgendaViewModel {
                 return
             }
             apply(first)
+            hasEmitted = true
             let sessionCount = first.flatMap(\.slots).reduce(0) { $0 + $1.sessions.count }
             DevFestLogger(category: "Agenda").log(.info, "Agenda sessions loaded: \(sessionCount) sessions")
 
@@ -122,6 +124,12 @@ final class AgendaViewModel {
             }
             try Task.checkCancellation()
         } catch is CancellationError {
+            // A cancellation of the Kotlin collection leaves this task and the view alive, so the loading state
+            // must end when nothing was shown yet (v1.0 ended it on any error). A cancelled surrounding task keeps
+            // the state as is, and nothing is logged for either case (D-04).
+            if !Task.isCancelled && !hasEmitted {
+                isLoading = false
+            }
             return
         } catch {
             DevFestLogger(category: "Agenda").log(.error, "Observe Agenda error: \(error.localizedDescription)", error: error)
