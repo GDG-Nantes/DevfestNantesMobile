@@ -110,14 +110,14 @@ struct AgendaView: View {
             room: session.room,
             speakersNames: session.speakers.map { $0.name }.joined(separator: ", "),
             isTalk: session.isATalk,
-            isFavorite: viewModel.favorites.contains(session.id),
+            isFavorite: viewModel.isBookmarked(session.id),
             isNavigable: session.isNavigable,
             favoriteTapped: {
-                viewModel.toggleFavorite(ofSession: session)
+                let bookmarked = viewModel.toggleBookmark(sessionId: session.id)
                 FirebaseAnalyticsService.shared.eventBookmark(
                     page: .agenda,
                     sessionId: session.id,
-                    bookmarked: viewModel.favorites.contains(session.id)
+                    bookmarked: bookmarked
                 )
             }
         )
