@@ -186,7 +186,7 @@ Rules:
   `devfest.bookmarks.sessionIds` (array of session ids) and `devfest.agenda.filters` (array of JSON
   strings written with the shared filter codec, the same bytes as Android). The iOS stores never
   read or delete the legacy v1.0 keys (D-15: legacy data is intentionally not migrated), and the iOS
-  app starts using them in Phase 9.
+  app persists its bookmarks and filters only through them.
 
 ### Network (`:core:network`)
 
@@ -329,8 +329,13 @@ To add a screen, add a `Screen` subclass and a `composable(...)` entry in `MainA
   `@Environment(AgendaViewModel.self)` (one instance, so the favorites and the filters stay shared
   between the Agenda tab and the Speakers > speaker > session path). The navigation-bar items live in
   a separate hosting context, so `AgendaView` re-injects the instance into them explicitly. Favorites
-  and the session filters stay on the legacy `UserDefaults` keys `Favorites` and `AgendaSessionFilters`
-  (byte-identical encodings) until Phase 9 moves them to the shared stores.
+  and the session filters persist only through the Kotlin `BookmarksStore` and `SessionFiltersStore`
+  (keys `devfest.bookmarks.sessionIds` and `devfest.agenda.filters`). The ViewModel keeps a write-through
+  observable mirror of the bookmarked ids and the active filters: every intent updates the mirror
+  synchronously and writes to the store, the filter mirror is seeded from the store snapshot when the
+  ViewModel is created, and the bookmark mirror is seeded once from the store's first emission at the start
+  of the first agenda load. The v1.0 keys `Favorites` and `AgendaSessionFilters` are never read, migrated
+  or removed (07 D-15): updating users start with empty favorites and filters.
 - ViewModels read data through a per-ViewModel port (`AboutSource`, `VenueSource`, `SpeakersSource`,
   `SpeakerDetailsSource`, `AgendaSource`, each in `<Feature>Source.swift`) taken by an init default.
   The `Live...` adapter is the only code using KMP-NativeCoroutines (`asyncFunction` for one-shot
