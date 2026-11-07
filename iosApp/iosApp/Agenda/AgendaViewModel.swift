@@ -91,8 +91,47 @@ final class AgendaViewModel {
         }
     }
 
-    ///Skeleton of the continuous agenda collection (RED step)
+    ///Collects the shared combined flow until the stream ends or the surrounding task is cancelled (D-01).
+    ///The trace ends at the first emission while the same subscription keeps running. `isLoading` only ever
+    ///goes from true to false (D-03).
     func observeAgenda() async {
+        await seedBookmarksIfNeeded()
+        var iterator = source.agenda().makeAsyncIterator()
+        do {
+            let first = try await tracing.trackDataLoad(
+                traceName: PerformanceMonitoring.TRACE_AGENDA_LOAD,
+                dataSource: "graphql"
+            ) {
+                let first = try await iterator.next()
+                // The bridge ends silently when the load is cancelled, so cancellation is checked explicitly.
+                try Task.checkCancellation()
+                return first
+            }
+
+            guard let first else {
+                // The flow ended without a value: stop the spinner and keep any previous content.
+                isLoading = false
+                return
+            }
+            apply(first)
+            let sessionCount = first.flatMap(\.slots).reduce(0) { $0 + $1.sessions.count }
+            DevFestLogger(category: "Agenda").log(.info, "Agenda sessions loaded: \(sessionCount) sessions")
+
+            while let next = try await iterator.next() {
+                apply(next)
+            }
+            try Task.checkCancellation()
+        } catch is CancellationError {
+            return
+        } catch {
+            DevFestLogger(category: "Agenda").log(.error, "Observe Agenda error: \(error.localizedDescription)", error: error)
+            isLoading = false
+        }
+    }
+
+    private func apply(_ days: [DaySchedule]) {
+        agendaContent = AgendaContent(days: days, isTalk: source.isTalk, isNavigable: source.isNavigable)
+        isLoading = false
     }
 
     ///Allows you to classify sessions by time section

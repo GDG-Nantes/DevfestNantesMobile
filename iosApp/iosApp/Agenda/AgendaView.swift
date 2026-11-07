@@ -82,18 +82,15 @@ struct AgendaView: View {
     private var agendaList: some View {
         List {
             ForEach(filteredSections(for: day), id: \.date) { section in
-                let sessionsToShow = filteredSessionsForSection(section)
-                if !sessionsToShow.isEmpty {
-                    Section(header: TimeHeader(date: section.date, formatter: sectionTimeFormatter).id(section.date)) {
-                        ForEach(sessionsToShow, id: \.id) { session in
-                            agendaRow(for: session)
-                                .listRowBackground(Color.clear)
-                                .listRowSeparator(.hidden)
-                                .listRowInsets(EdgeInsets(top: 4, leading: 16, bottom: 4, trailing: 16))
-                        }
+                Section(header: TimeHeader(date: section.date, formatter: sectionTimeFormatter).id(section.date)) {
+                    ForEach(section.sessions, id: \.id) { session in
+                        agendaRow(for: session)
+                            .listRowBackground(Color.clear)
+                            .listRowSeparator(.hidden)
+                            .listRowInsets(EdgeInsets(top: 4, leading: 16, bottom: 4, trailing: 16))
                     }
-                    .textCase(nil)
                 }
+                .textCase(nil)
             }
         }
         .listStyle(.plain)
@@ -134,12 +131,10 @@ struct AgendaView: View {
     
     // MARK: - Filtering
     
+    /// The sections of one day. The list is already filtered and grouped by the shared combined flow (D-05):
+    /// the section `day` is the configured date string, so a day is selected by equality.
     private func filteredSections(for day: String) -> [AgendaContent.Section] {
-        Self.sections(viewModel.agendaContent.sections, forDay: day)
-    }
-
-    private func filteredSessionsForSection(_ section: AgendaContent.Section) -> [AgendaContent.Session] {
-        Self.filteredSessions(section.sessions, filters: viewModel.sessionFilters, favorites: viewModel.bookmarkedIds)
+        viewModel.agendaContent.sections.filter { $0.day == day }
     }
 
     /// Static and pure so tests can call it without creating a view (D-10 extraction, bodies unchanged).
@@ -210,9 +205,7 @@ struct AgendaView: View {
         let currentDay = formatter.string(from: Date())
         
         if currentDay == day && firstAppear {
-            let slotDates = viewModel.agendaContent.sections
-                .filter { $0.day.contains(day) }
-                .map(\.date)
+            let slotDates = filteredSections(for: day).map(\.date)
             if let target = Self.scrollTarget(slotDates: slotDates, now: Date(), calendar: Calendar.current) {
                 scrollToSectionID = target
             }
