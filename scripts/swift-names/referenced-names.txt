@@ -8,9 +8,13 @@ Category
 ClassifySessionUseCase
 Complexity
 ContentLanguage
+DaySchedule
 DevFestNantesStore
 DevFestNantesStoreBuilder
+GroupSessionsUseCase
 IosDependencies
+Kotlinx_datetimeTimeZone
+LocalDateDays
 Partner
 PartnerCategory
 Room

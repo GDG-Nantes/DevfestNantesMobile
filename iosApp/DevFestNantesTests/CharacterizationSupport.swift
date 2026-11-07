@@ -159,6 +159,16 @@ enum TestData {
         }
     }
 
+    /// The snapshot grouped by the shared use case, with the iOS day strategy over the conference dates
+    /// and an explicit zone (CI simulators run in UTC, so the zone is never the system one).
+    static func schedules(zoneId: String) throws -> [DaySchedule] {
+        GroupSessionsUseCase().group(
+            sessions: try sessions(),
+            dayAssignment: LocalDateDays(dates: AgendaDays.all),
+            timeZone: Kotlinx_datetimeTimeZone.companion.of(zoneId: zoneId)
+        )
+    }
+
     // MARK: Filter cases
 
     struct FilterCasesFile: Decodable {
