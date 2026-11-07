@@ -5,8 +5,6 @@ import shared
 
 // Support for the Phase 7 characterization suites: loads the shared recorded snapshot
 // (core/domain/testdata/agenda) into Kotlin model values and reads/records the iOS goldens.
-// Rule (agenda/README.md): refer to the app's filter type as `DevFest_Nantes.SessionFilter` in every
-// test file that imports `shared`, so the Kotlin `SessionFilter` export cannot make it ambiguous.
 
 // MARK: - Test host
 

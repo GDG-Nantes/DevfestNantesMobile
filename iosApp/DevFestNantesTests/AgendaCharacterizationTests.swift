@@ -10,8 +10,6 @@ import shared
 /// `ClassifySessionUseCase` (the tables below are literal copies of its test table). The goldens are the v1.0
 /// oracle and are never edited.
 /// Never calls `observe*`, `toggleBookmark`, `toggleFilter` nor `clearFilters` (side effects).
-/// The Kotlin filter type is always written `shared.SessionFilter`: the app still declares its own
-/// `SessionFilter` struct.
 @MainActor @Suite struct AgendaCharacterizationTests {
 
     private static let tabs = ["2025-10-16", "2025-10-17"]
@@ -95,11 +93,11 @@ import shared
         let useCase = FilterSessionsUseCase()
 
         let cases = try file.cases.map { filterCase -> GoldenCase in
-            let filters = Set(try filterCase.filters.map { filter -> shared.SessionFilter in
+            let filters = Set(try filterCase.filters.map { filter -> SessionFilter in
                 guard let type = SessionFilterType.entries.first(where: { $0.name == filter.type }) else {
                     throw TestDataError.unknownName(kind: "SessionFilterType", name: filter.type)
                 }
-                return shared.SessionFilter(type: type, value: filter.value)
+                return SessionFilter(type: type, value: filter.value)
             })
             let ids = useCase
                 .filter(sessions: all, filters: filters, bookmarkedSessionIds: Set(file.bookmarkedSessionIds))

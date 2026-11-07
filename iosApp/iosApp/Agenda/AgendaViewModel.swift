@@ -142,24 +142,6 @@ final class AgendaViewModel {
         isLoading = false
     }
 
-    ///Allows you to classify sessions by time section
-    func sessionsChanged(sessions: [Session]) {
-        let groupedSessions = Dictionary(grouping: sessions) { getDate(date: $0.scheduleSlot.startDate) }
-        let sortedKeys = groupedSessions.keys.sorted()
-        var sections = [AgendaContent.Section]()
-        sortedKeys.forEach { date in
-            let sessions = groupedSessions[date]!
-                .map { AgendaContent.Session(from: $0, isATalk: source.isTalk($0), isNavigable: source.isNavigable($0)) }
-                .sorted { $0.room < $1.room }
-            sections.append(AgendaContent.Section(
-                date: date,
-                day: self.sectionDateFormatter.string(from: date),
-                sessions: sessions))
-        }
-        self.isLoading = false
-        agendaContent.sections = sections
-    }
-
     ///Asynchronous method to collect rooms until the stream ends or the surrounding task is cancelled
     func observeRooms() async {
         do {
@@ -172,23 +154,4 @@ final class AgendaViewModel {
             DevFestLogger(category: "Agenda").log(.error, "Observe Rooms error: \(error.localizedDescription)", error: error)
         }
     }
-
-    ///Method to convert a date in string format to ISO 8601 format
-    func getDate(date: String) -> Date {
-        return AgendaViewModel.parseDate(date)
-    }
-
-    ///Static so tests can call it without creating a ViewModel
-    static func parseDate(_ date: String) -> Date {
-        let newFormatter = ISO8601DateFormatter()
-        return newFormatter.date(from: date) ?? Date() // replace Date String
-    }
-
-    ///Formatting the date
-    @ObservationIgnored var sectionDateFormatter: DateFormatter = {
-        let formatter = DateFormatter()
-        formatter.dateFormat = "yyyy-MM-d"
-        return formatter
-    }()
 }
-
