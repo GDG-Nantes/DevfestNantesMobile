@@ -18,7 +18,7 @@ final class AgendaViewModel {
     var isLoading = true
 
     // Filters as Set of SessionFilter, persisted as JSON on every change
-    var sessionFilters: Set<SessionFilter> {
+    private(set) var sessionFilters: Set<SessionFilter> {
         didSet { saveFilters() }
     }
 
@@ -52,7 +52,15 @@ final class AgendaViewModel {
         }
     }
 
-    func toggleFilter(type: FilterType, value: String) {}
+    ///Adds the filter when absent and removes it when present
+    func toggleFilter(type: FilterType, value: String) {
+        let filter = SessionFilter(type: type, value: value)
+        if sessionFilters.contains(filter) {
+            sessionFilters.remove(filter)
+        } else {
+            sessionFilters.insert(filter)
+        }
+    }
 
     func clearFilters() {
         sessionFilters = []

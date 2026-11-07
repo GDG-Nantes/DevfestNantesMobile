@@ -20,14 +20,7 @@ struct RoomFilterMenu: View {
         return Menu(L10n.sessionFiltersDrawerRoomsLabel) {
             ForEach(filterItems) { item in
                 Button(action: {
-                    var newFilters = viewModel.sessionFilters
-                    let filter = SessionFilter(type: .room, value: item.id)
-                    if newFilters.contains(filter) {
-                        newFilters.remove(filter)
-                    } else {
-                        newFilters.insert(filter)
-                    }
-                    viewModel.sessionFilters = newFilters
+                    viewModel.toggleFilter(type: .room, value: item.id)
                 }) {
                     HStack {
                         Image(systemName: item.isSelected ? "checkmark.square" : "square")
