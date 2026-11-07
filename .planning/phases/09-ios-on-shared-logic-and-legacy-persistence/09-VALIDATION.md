@@ -2,10 +2,10 @@
 phase: "9"
 slug: "ios-on-shared-logic-and-legacy-persistence"
 # status lifecycle: draft (seeded by plan-phase) → validated (set by validate-phase §6)
-# audit-milestone §5.5 distinguishes NOT-VALIDATED (draft) from PARTIAL (validated + nyquist_compliant: false) (#2117)
-status: draft
-nyquist_compliant: false
-wave_0_complete: false
+# audit-milestone §5.5 distinguishes NOT-VALIDATED (draft) from PARTIAL (validated + nyquist_compliant: true) (#2117)
+status: validated
+nyquist_compliant: true
+wave_0_complete: true
 created: "2026-11-05"
 ---
 
@@ -44,15 +44,17 @@ Task IDs are assigned once plans exist. Requirement-level map from 09-RESEARCH.m
 
 | Task ID | Plan | Wave | Requirement | Threat Ref | Secure Behavior | Test Type | Automated Command | File Exists | Status |
 |---------|------|------|-------------|------------|-----------------|-----------|-------------------|-------------|--------|
-| TBD | TBD | TBD | IOSDATA-01 | — | N/A | Kotlin iosTest | `./gradlew :shared:iosSimulatorArm64Test` (six `IosDependencies` accessors resolve) | ❌ W0 | ⬜ pending |
-| TBD | TBD | TBD | IOSDATA-01 | — | N/A | script | `test ! -e iosApp/iosApp/Model/SessionFilter.swift && ! grep -rnE 'AgendaSessionFilters|forKey: "Favorites"' iosApp/iosApp --include='*.swift'` | ❌ W0 | ⬜ pending |
-| TBD | TBD | TBD | IOSDATA-01 | — | N/A | gate | `bash scripts/swift-names-gate.sh check && bash scripts/swift-names-gate.sh selftest` | ✅ | ⬜ pending |
-| TBD | TBD | TBD | IOSDATA-01 | — | N/A | Swift Testing | `-only-testing:DevFestNantesTests/AgendaCharacterizationTests` (rewritten, same goldens; classification table) | ❌ rewrite | ⬜ pending |
-| TBD | TBD | TBD | IOSDATA-01 | — | N/A | Swift Testing | `-only-testing:DevFestNantesTests/SpeakersVenueCharacterizationTests`, `SpeakersViewModelTests`, `VenueViewModelTests` | ✅ adapt | ⬜ pending |
-| TBD | TBD | TBD | IOSDATA-02 | Silent data loss (D-15) | Legacy keys never read; VM seeds only from the port | Swift Testing | `-only-testing:DevFestNantesTests/AgendaViewModelTests` | ❌ W0 | ⬜ pending |
-| TBD | TBD | TBD | IOSDATA-03 | — | N/A | Swift Testing spike | `-only-testing:DevFestNantesTests/KotlinContinuousFlowTests` | ❌ W0 | ⬜ pending |
-| TBD | TBD | TBD | IOSDATA-03 | Stale mirror drift | Mirror write-through | Swift Testing | `-only-testing:DevFestNantesTests/AgendaViewModelTests` | ❌ rewrite | ⬜ pending |
-| TBD | TBD | TBD | IOSDATA-03 | — | N/A | Swift Testing | `-only-testing:DevFestNantesTests/AgendaScrollTargetTests` | ❌ W0 | ⬜ pending |
+| 09-01-T1 | 09-01 | 1 | IOSDATA-01 | — | N/A | Kotlin iosTest | `./gradlew :shared:iosSimulatorArm64Test` (`IosKoinTest`, 10 tests: six `IosDependencies` accessors resolve) | ✅ | ✅ green |
+| 09-12-T2, 09-14-T2 | 09-12, 09-14 | 12, 14 | IOSDATA-01 | — | N/A | script | `test ! -e iosApp/iosApp/Model/SessionFilter.swift && ! grep -rnE 'AgendaSessionFilters|forKey: "Favorites"' iosApp/iosApp --include='*.swift'` | ✅ | ✅ green |
+| every plan touching Swift names | 09-01..09-16 | all | IOSDATA-01 | — | N/A | gate | `bash scripts/swift-names-gate.sh check && bash scripts/swift-names-gate.sh selftest` | ✅ | ✅ green |
+| 09-12-T1 | 09-12 | 12 | IOSDATA-01 | — | N/A | Swift Testing | `-only-testing:DevFestNantesTests/AgendaCharacterizationTests` (8 tests, same v1.0 goldens on the shared output) | ✅ | ✅ green |
+| 09-03, 09-04, 09-06 | 09-03, 09-04, 09-06 | 3, 4, 6 | IOSDATA-01 | — | N/A | Swift Testing | `SpeakersVenueCharacterizationTests` (2), `SpeakersViewModelTests` (8), `VenueViewModelTests` (7), `SpeakerDetailsViewModelTests` (8) | ✅ | ✅ green |
+| 09-09-T3 | 09-09 | 9 | IOSDATA-02 | Silent data loss (D-15) | Legacy keys never read; VM seeds only from the port | Swift Testing | `-only-testing:DevFestNantesTests/AgendaViewModelTests` | ✅ | ✅ green |
+| 09-01-T1 | 09-01 | 1 | IOSDATA-03 | — | N/A | Swift Testing spike | `-only-testing:DevFestNantesTests/KotlinContinuousFlowTests` (2 tests) | ✅ | ✅ green |
+| 09-08, 09-09, 09-10, 09-11 | 09-08..09-11 | 8-11 | IOSDATA-03 | Stale mirror drift | Mirror write-through | Swift Testing | `-only-testing:DevFestNantesTests/AgendaViewModelTests` (25 tests: intents, mirror, combined flow, lifetime) | ✅ | ✅ green |
+| 09-07-T1 | 09-07 | 7 | IOSDATA-03 | — | N/A | Swift Testing | `-only-testing:DevFestNantesTests/AgendaScrollTargetTests` (5 tests) | ✅ | ✅ green |
+
+Evidence: full Swift suite `XCRESULT-TESTS total=72 passed=72` locally after wave 16 and on CI (`ios.yml` run 42419842682, `android.yml` run 42419842760, both `success` on `d5f5efb6`). The Kotlin iOS tests passed in the 09-16 gate.
 
 *Status: ⬜ pending · ✅ green · ❌ red · ⚠️ flaky*
 
@@ -60,12 +62,12 @@ Task IDs are assigned once plans exist. Requirement-level map from 09-RESEARCH.m
 
 ## Wave 0 Requirements
 
-- [ ] `iosApp/DevFestNantesTests/KotlinContinuousFlowTests.swift` — research-flag spike (IOSDATA-03), written first
-- [ ] `iosApp/DevFestNantesTests/Fakes/FakeAgendaSource.swift` — new port shape (scripted stream, filters and bookmarks snapshots, write recorders, classify stub)
-- [ ] `iosApp/DevFestNantesTests/AgendaScrollTargetTests.swift` — D-11
-- [ ] In-place update Maestro flow without `clearState` under the phase `09-parity/` directory
-- [ ] `IosKoinTest` accessor cases
-- [ ] Rebuilt `shared.framework` before any Swift compile check
+- [x] `iosApp/DevFestNantesTests/KotlinContinuousFlowTests.swift` — research-flag spike (IOSDATA-03), written first
+- [x] `iosApp/DevFestNantesTests/Fakes/FakeAgendaSource.swift` — new port shape (scripted stream, filters and bookmarks snapshots, write recorders, classify stub)
+- [x] `iosApp/DevFestNantesTests/AgendaScrollTargetTests.swift` — D-11
+- [x] In-place update Maestro flow without `clearState` under the phase `09-parity/` directory
+- [x] `IosKoinTest` accessor cases
+- [x] Rebuilt `shared.framework` before any Swift compile check
 
 ---
 
@@ -73,18 +75,26 @@ Task IDs are assigned once plans exist. Requirement-level map from 09-RESEARCH.m
 
 | Behavior | Requirement | Why Manual | Test Instructions |
 |----------|-------------|------------|-------------------|
-| In-place update starts empty and new values persist | IOSDATA-02 | Needs a real install-over on a simulator and a human decision (D-09) | Build and run `main`, add bookmarks and filters, kill; `xcrun simctl install` the branch build over it; relaunch: empty, app works; set new ones, kill, relaunch: they persist; compare the data container path before and after; human checkpoint |
-| Visual parity with the room order as sole difference | IOSDATA-01, IOSDATA-03 | Visual comparison needs a human (D-10) | Paired `main` vs branch simulator screenshots: both days, several slots, each filter type, favorites toggled from the list, the agenda detail and Speakers → session, favorites after relaunch, speakers A-Z, venue, plus one accessibility-size pair; any other difference is a documented deviation; human checkpoint |
+| In-place update starts empty and new values persist | IOSDATA-02 | Needs a real install-over on a simulator and a human decision (D-09) | Done in 09-15, approved by the human 2026-11-07 (`09-parity/update/`). Build and run `main`, add bookmarks and filters, kill; `xcrun simctl install` the branch build over it; relaunch: empty, app works; set new ones, kill, relaunch: they persist; compare the data container path before and after; human checkpoint |
+| Visual parity with the room order as sole difference | IOSDATA-01, IOSDATA-03 | Visual comparison needs a human (D-10) | Done in 09-16, approved by the human 2026-11-07 (`09-parity/base`, `branch`; offsets accepted, see 09-CONTEXT). Paired `main` vs branch simulator screenshots: both days, several slots, each filter type, favorites toggled from the list, the agenda detail and Speakers → session, favorites after relaunch, speakers A-Z, venue, plus one accessibility-size pair; any other difference is a documented deviation; human checkpoint |
 
 ---
 
 ## Validation Sign-Off
 
-- [ ] All tasks have `<automated>` verify or Wave 0 dependencies
-- [ ] Sampling continuity: no 3 consecutive tasks without automated verify
-- [ ] Wave 0 covers all MISSING references
-- [ ] No watch-mode flags
-- [ ] Feedback latency < 300s
-- [ ] `nyquist_compliant: true` set in frontmatter
+- [x] All tasks have `<automated>` verify or Wave 0 dependencies
+- [x] Sampling continuity: no 3 consecutive tasks without automated verify
+- [x] Wave 0 covers all MISSING references
+- [x] No watch-mode flags
+- [x] Feedback latency < 300s
+- [x] `nyquist_compliant: true` set in frontmatter
 
-**Approval:** pending
+**Approval:** validated 2026-11-07 (validate-phase audit after execution)
+
+## Validation Audit 2026-11-07
+
+| Metric | Count |
+|---|---|
+| Gaps found | 0 |
+| Resolved | 0 |
+| Escalated | 0 |
