@@ -236,6 +236,8 @@ Venue	isEqual(_:)
 Venue	latitude
 Venue	longitude
 Venue	name
+VenueLanguageUseCase	init()
+VenueLanguageUseCase	languageFor(languageCode:)
 WebLinks	codeOfConduct
 WebLinks	entries
 WebLinks	github

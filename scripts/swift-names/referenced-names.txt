@@ -24,4 +24,5 @@ Speaker
 SpeakerIndexUseCase
 SpeakerLetterGroup
 Venue
+VenueLanguageUseCase
 WebLinks
