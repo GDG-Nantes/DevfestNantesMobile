@@ -1,0 +1,11 @@
+appId: com.gdgnantes.devfest.iosApp
+# D-10 French day picker pair (phase 09). No launchApp step: start the app in French with simctl first:
+#   xcrun simctl launch <udid> com.gdgnantes.devfest.iosApp -AppleLanguages '(fr)' -AppleLocale fr_FR
+#   cd 09-parity/base   && maestro --device <base udid>   test ../parity-fr-flow.yaml
+#   cd 09-parity/branch && maestro --device <branch udid> test ../parity-fr-flow.yaml
+---
+- extendedWaitUntil:
+    visible: "16 Octobre 2025"
+    timeout: 120000
+- waitForAnimationToEnd
+- takeScreenshot: 31-fr-day-picker

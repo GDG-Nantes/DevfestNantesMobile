@@ -83,7 +83,9 @@ appId: com.gdgnantes.devfest.iosApp
 - takeScreenshot: 09-favorites-after-relaunch
 
 # 10: open the remaining favorite, un-star it in the detail, go back (Favorites filter still on)
-- tapOn: "OpenRewrite: Refactor as code"
+# the Favorites filter leaves one card; tap it by position, because which talk is second in the 10:00 slot depends on the in-slot room order
+- tapOn:
+    point: "40%,37%"
 - extendedWaitUntil:
     visible:
       id: "BackButton"
@@ -211,6 +213,12 @@ appId: com.gdgnantes.devfest.iosApp
 - waitForAnimationToEnd
 - takeScreenshot: 19-speaker-session-detail
 
+# 24: star the talk from the toolbar of a detail opened through Speakers
+- tapOn:
+    id: "star"
+- waitForAnimationToEnd
+- takeScreenshot: 24-speaker-session-starred
+
 # 20: Venue tab
 - tapOn: "Venue"
 - waitForAnimationToEnd
@@ -220,3 +228,50 @@ appId: com.gdgnantes.devfest.iosApp
 - tapOn: "About"
 - waitForAnimationToEnd
 - takeScreenshot: 21-about
+
+# 25: back on the Agenda tab, the Favorites filter shows the star set through Speakers
+- tapOn: "Agenda"
+- extendedWaitUntil:
+    visible: "October 16, 2025"
+    timeout: 60000
+- waitForAnimationToEnd
+- tapOn:
+    point: "89%,10%"
+- extendedWaitUntil:
+    visible: "Favorites"
+    timeout: 30000
+- tapOn: "Favorites"
+- waitForAnimationToEnd
+- takeScreenshot: 25-agenda-favorites-after-speakers-star
+
+# 22: clear the filter, day 1 scrolled down
+- tapOn:
+    point: "89%,10%"
+- extendedWaitUntil:
+    visible: "Clear"
+    timeout: 30000
+- tapOn: "Clear"
+- waitForAnimationToEnd
+- swipe:
+    start: 50%,75%
+    end: 50%,25%
+- swipe:
+    start: 50%,75%
+    end: 50%,25%
+- waitForAnimationToEnd
+- takeScreenshot: 22-agenda-day1-midday
+
+# 23: day 2, scrolled down
+- scrollUntilVisible:
+    element: "October 17, 2025"
+    direction: UP
+- tapOn: "October 17, 2025"
+- waitForAnimationToEnd
+- swipe:
+    start: 50%,75%
+    end: 50%,25%
+- swipe:
+    start: 50%,75%
+    end: 50%,25%
+- waitForAnimationToEnd
+- takeScreenshot: 23-agenda-day2-afternoon
