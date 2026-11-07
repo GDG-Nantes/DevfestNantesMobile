@@ -3,11 +3,12 @@ import Foundation
 import shared
 @testable import DevFest_Nantes
 
-/// Pins the v1.0 iOS agenda behavior (grouping, filtering, classification) on the recorded snapshot
-/// (core/domain/testdata/agenda). The code under test is the app code: the grouping body of
-/// `AgendaViewModel.sessionsChanged`, the D-10 statics of `AgendaView`, and the `isATalk`/`isNavigable`
-/// flags, which since Phase 9 come from the shared `ClassifySessionUseCase` (the tables below are literal copies
-/// of its test table).
+/// Pins the shared agenda output against the v1.0 iOS goldens on the recorded snapshot
+/// (core/domain/testdata/agenda). The grouping goldens are asserted on the sections that
+/// `AgendaContent(days:isTalk:isNavigable:)` maps from the shared `GroupSessionsUseCase`, the filtering golden
+/// on the shared `FilterSessionsUseCase`, and the `isATalk`/`isNavigable` flags come from the shared
+/// `ClassifySessionUseCase` (the tables below are literal copies of its test table). The goldens are the v1.0
+/// oracle and are never edited.
 /// Never calls `observe*`, `toggleBookmark`, `toggleFilter` nor `clearFilters` (side effects).
 /// The Kotlin filter type is always written `shared.SessionFilter`: the app still declares its own
 /// `SessionFilter` struct.
@@ -37,22 +38,30 @@ import shared
         try assertGrouping(zoneId: "Pacific/Auckland", golden: "agenda/golden/ios-agenda-Pacific_Auckland.json")
     }
 
+    /// The content the agenda screen shows, built the way the app builds it: the shared grouping of the snapshot
+    /// mapped by `AgendaContent`, with the classification decided by the shared use case.
+    private func content(zoneId: String) throws -> AgendaContent {
+        let classifier = ClassifySessionUseCase()
+        return AgendaContent(
+            days: try TestData.schedules(zoneId: zoneId),
+            isTalk: { classifier.isTalk(session: $0) },
+            isNavigable: { classifier.isNavigable(session: $0) }
+        )
+    }
+
     private func assertGrouping(zoneId: String, golden: String) throws {
         TestHost.start()
-        let sessions = try TestData.sessions()
-        let viewModel = AgendaViewModel()
-        viewModel.sectionDateFormatter.timeZone = try #require(TimeZone(identifier: zoneId))
-        viewModel.sessionsChanged(sessions: sessions)
+        let agenda = try content(zoneId: zoneId)
 
         let isoFormatter = ISO8601DateFormatter()
         var days: [GoldenDay] = []
         for (offset, tab) in Self.tabs.enumerated() {
-            let sections = AgendaView.sections(viewModel.agendaContent.sections, forDay: tab)
+            let sections = agenda.sections.filter { $0.day == tab }
             let slots = sections.map { section -> GoldenSlot in
                 for session in section.sessions {
-                    #expect(AgendaViewModel.parseDate(session.startDate) == section.date)
+                    #expect(isoFormatter.date(from: session.startDate) == section.date)
                 }
-                // Canonical order: Swift sort is not stable among equal room names.
+                // Canonical order: the golden does not pin the room order inside a slot.
                 let ids = section.sessions
                     .sorted { ($0.room, $0.id) < ($1.room, $1.id) }
                     .map(\.id)
@@ -68,9 +77,22 @@ import shared
         )
     }
 
+    // Edge IOSDATA-03: the mapping never re-sorts, so the order of `TimeSlot.sessions` reaches the screen as is.
+    @Test func mapping_keeps_the_shared_order_inside_a_slot() throws {
+        TestHost.start()
+        let expected = try TestData.schedules(zoneId: "Europe/Paris").flatMap { day in
+            day.slots.map { slot in slot.sessions.map(\.id) }
+        }
+        let actual = try content(zoneId: "Europe/Paris").sections.map { section in section.sessions.map(\.id) }
+
+        #expect(!expected.isEmpty)
+        #expect(actual == expected)
+    }
+
     @Test func filtering_matches_the_golden_for_every_case() throws {
         let file = try TestData.filterCases()
-        let all = try TestData.sessions().map { AgendaContent.Session(from: $0) }
+        let all = try TestData.sessions()
+        let useCase = FilterSessionsUseCase()
 
         let cases = try file.cases.map { filterCase -> GoldenCase in
             let filters = Set(try filterCase.filters.map { filter -> shared.SessionFilter in
@@ -79,8 +101,8 @@ import shared
                 }
                 return shared.SessionFilter(type: type, value: filter.value)
             })
-            let ids = AgendaView
-                .filteredSessions(all, filters: filters, favorites: Set(file.bookmarkedSessionIds))
+            let ids = useCase
+                .filter(sessions: all, filters: filters, bookmarkedSessionIds: Set(file.bookmarkedSessionIds))
                 .map(\.id)
                 .sorted()
             return GoldenCase(name: filterCase.name, sessionIds: ids)
