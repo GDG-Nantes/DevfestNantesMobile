@@ -23,7 +23,7 @@ import shared
     /// through the suspend-function bridge (no network, Firebase or Koin).
     @Test func live_source_loads_the_mocked_store_venue_through_the_kotlin_bridge() async throws {
         let store = makeMockedStore()
-        let source = LiveVenueSource(store: { store })
+        let source = LiveVenueSource(store: { store }, venueLanguage: { VenueLanguageUseCase() })
         let viewModel = VenueViewModel(source: source)
 
         await viewModel.observeVenue()
@@ -33,6 +33,17 @@ import shared
         #expect(!content.name.isEmpty)
         let fixture = try await source.venue(language: viewModel.currentLanguage)
         #expect(content.description == fixture.description_)
+    }
+
+    @Test func language_comes_from_the_source_with_the_locale_code() {
+        let source = FakeVenueSource(venueCall: FakeCall(.suspendUntilCancelled))
+        let viewModel = VenueViewModel(source: source)
+        let code = Locale.current.languageCode
+
+        let language = viewModel.currentLanguage
+
+        #expect(source.requestedLanguageCodes == [code])
+        #expect(language == VenueLanguageUseCase().languageFor(languageCode: code))
     }
 
     @Test func requests_the_venue_in_the_current_language() async throws {
