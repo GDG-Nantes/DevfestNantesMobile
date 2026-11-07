@@ -115,6 +115,13 @@ exception of ROADMAP criterion 3 and go in the `Behavior deviations (v1.1)` tabl
 - D-05 seed window: a star reached through Speakers before the first agenda load seeds the bookmark mirror
   can read stale until next launch; the toggle still writes what the user sees, so the store stays correct.
 
+### Accepted deviation (user decision at the 09-16 D-10 checkpoint, 2026-11-07)
+- Small layout offsets on the agenda: after a bookmark change in a session detail, the list on return sits
+  about 35 points higher than on `main` (parity pairs 06, 07, 22), and the filter menu panel opens a few
+  points further left (pairs 07, 27). Content, order and filter results are unchanged. The user compared the
+  pairs and accepted them ("some positions differ a bit but branch looks better than base"). Cause not
+  confirmed; likely the shared flow re-emitting the agenda on a bookmark change, which redraws the list.
+
 ### Claude's Discretion
 - Where the filter menu option lists (languages, complexities, session types) come from — Kotlin
   enum entries or Swift literals — as long as items, labels and order are identical to v1.0 and no
