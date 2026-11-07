@@ -307,13 +307,16 @@ To add a screen, add a `Screen` subclass and a `composable(...)` entry in `MainA
 | Room filter | Compares the filter value with `room.id` | Compares it with the room name | Compares with `room.id` | Equal on real data because `room.id == room.name` for every room |
 | Slot key | Localized short time in the device zone: starts within the same minute share a slot | Exact `Date` | Exact start `Instant` | Every real session starts on a whole minute; the shared key is the stricter of the two |
 | Filter output order | Unspecified (`HashSet`) | Store order | Store order | A deterministic subset of the old Android behavior |
-| Start with fractional seconds | Parsed | Falls back to "now" (pinned by `AgendaDateParsingTests`) | Parsed | Never occurs in real data; the shared parsing is the correct one |
+| Start with fractional seconds | Parsed | Falls back to "now" | Parsed | Never occurs in real data; the shared parsing is the correct one |
 | Start up to 24 h before a day start | Belongs to that day (`(start - dayStart).inWholeDays == 0`) | n/a (local calendar date) | `UtcDayWindows` copies the `Agenda.Builder` rule, so the same quirk remains | Strict parity; real sessions are inside their day |
 | Speaker index: empty name | `first()` throws `NoSuchElementException` | Adds an empty letter | Empty letter `""`; Android skips it and reports a non-fatal exception to Crashlytics through Timber | Never present in the data; an input that crashed v1.0 Android no longer does (accepted behavior change, D-20, implemented in 07-18); `SpeakerIndexEmptyNameTest` pins the skip and the report |
 | Speaker index: initial outside the Basic Multilingual Plane | One UTF-16 unit | One grapheme | One UTF-16 unit | Absent from the data; the platforms could still differ for such a letter |
 | Day time zone | Fixed UTC windows (zone ignored); the device zone only formats labels | Local calendar date in the device zone | The API takes the zone on every platform (D-05, D-19); `UtcDayWindows` ignores it by design, `LocalDateDays` reads it | The day assignment strategy is the per-platform choice; the Android label formatter keeps using the device zone |
 | Scroll to the current time slot | `currentStartTimeIndex` in `AgendaColumn` | Own logic in SwiftUI | Not shared | Stays per platform (D-08): wall-clock behavior tied to each UI |
 | Partner categories | Five fixed groups, ignores `PARTNERS` | Every category sorted by ordinal | Not shared | Stays per platform (D-08): the semantics differ |
+| Initial scroll with filters active | n/a | Reads the unfiltered sections, so on a conference day it could pick a hidden slot and not scroll | The initial scroll and the first-section scroll read filtered sections: with filters active the target is the latest visible slot; only visible on a conference day | Accepted by the user on 2026-11-05 (09-CONTEXT 'Accepted deviations'): the shared flow outputs only filtered data |
+| Day labels on a non-Gregorian device calendar | n/a | `DateFormatter` on the device calendar, which mislabeled days on a non-Gregorian calendar | Labels come from `LocalDateDays` (proleptic Gregorian) | Accepted by the user on 2026-11-05 (09-CONTEXT 'Accepted deviations'): the labels no longer depend on the device calendar, which fixes the v1.0 mislabeling |
+| iOS bookmark mirror seed window | n/a | n/a | `BookmarksStore` has no synchronous snapshot, so the iOS bookmark mirror seeds from a first-emission read at the start of the first agenda load: a star reached through Speakers before that load can read stale until next launch; the toggle still writes what the user sees, so the store stays correct | Accepted by the user on 2026-11-05 (09-CONTEXT 'Accepted deviations', D-05 seed window) |
 
 ## iOS App
 
@@ -344,12 +347,25 @@ To add a screen, add a `Screen` subclass and a `composable(...)` entry in `MainA
   `DataLoadTracing` (conformed by `PerformanceMonitoring`, same trace names), so tests use a recording
   fake instead of Firebase Performance, and a cancelled load is logged at info level only, never
   forwarded to Crashlytics.
+- The agenda comes from the shared `ObserveAgendaUseCase`, not from Swift. `AgendaViewModel.observeAgenda()`
+  observes it continuously from `AgendaView`'s `.task`: SwiftUI cancels the subscription when the view
+  disappears and the task subscribes again on appear. The load trace ends on the first emission of each
+  subscription while the subscription keeps running, and the previous content stays on screen until the next
+  emission. `LiveAgendaSource` passes `LocalDateDays` built from `AgendaDays` and the device zone, built
+  inside each call so every subscription gets the current zone. `AgendaContent` only maps the shared
+  `DaySchedule` values to display values (formatted times, day labels, speakers); it filters and groups
+  nothing. The stars, the checkmarks and Clear read the ViewModel mirror, while the list comes only from the
+  flow. Speakers, venue and session classification use the shared use cases as well (`SpeakerIndexUseCase`,
+  `VenueLanguageUseCase`, `ClassifySessionUseCase`). The `Live...` adapters reach the use cases and the
+  stores through the plain `IosDependencies` accessors (`store()`, `bookmarksStore()`,
+  `sessionFiltersStore()`, `observeAgenda()`, `classifySession()`, `speakerIndex()`, `venueLanguage()`).
 - `KotlinStreamBridge` turns a store flow into an `AsyncThrowingStream` by subscribing through the
   KMP-NativeCoroutines native-flow callbacks, without creating a task, and cancels the native
   subscription from `continuation.onTermination`; ViewModels and views load only in `.task`, so app
   code creates no unstructured task (IOSUI-02). The accepted trade-off: the bridge requests the next
-  native item right after each yield (no pull-based backpressure), which is fine for the small, mostly
-  single-emission flows used here.
+  native item right after each yield (no pull-based backpressure), which is fine for the small flows used
+  here: mostly single-emission ones, plus the continuous agenda flow, which emits again when the data, the
+  bookmarks or the filters change.
 - `scripts/swift-observation-gate.sh` (iOS CI, early) keeps the pre-Observation APIs and the
   KMP-NativeCoroutines reactive-streams product out of the iOS sources and the Xcode project; only the
   `KMPNativeCoroutinesAsync` product is linked.
