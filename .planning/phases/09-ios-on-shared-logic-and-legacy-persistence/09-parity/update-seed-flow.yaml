@@ -1,0 +1,43 @@
+appId: com.gdgnantes.devfest.iosApp
+# 09-15 in-place update UAT, step 1: seed the MAIN build (legacy keys `Favorites` and
+# `AgendaSessionFilters`). Run from 09-parity/update/ so the screenshots land there:
+#   cd 09-parity/update && maestro --device <udid> test ../update-seed-flow.yaml
+# The seed starts from nothing because the harness uninstalls and reinstalls the main build once,
+# before any data exists (Maestro clearState moves the container to the Dead area and, after a
+# later simctl install, loses the data, so it is not used). No state reset happens after the seed.
+# Targets reused from 08-parity/parity-flow.yaml.
+---
+- launchApp
+- extendedWaitUntil:
+    visible: "08:00"
+    timeout: 120000
+
+# star the first two talks from the list
+- tapOn:
+    id: "star"
+- scrollUntilVisible:
+    element:
+      id: "star"
+    direction: DOWN
+- tapOn:
+    id: "star"
+- waitForAnimationToEnd
+# bring the first talk back into view: u01 shows its filled star, the second star (OpenRewrite) is
+# just below the fold; u02 (Favorites filter) shows both filled stars together
+- scrollUntilVisible:
+    element: "Opening Keynote - Advice Well Taken"
+    direction: UP
+- waitForAnimationToEnd
+- takeScreenshot: u01-main-two-stars
+
+# Favorites filter
+- tapOn:
+    point: "89%,10%"
+- extendedWaitUntil:
+    visible: "Favorites"
+    timeout: 30000
+- tapOn: "Favorites"
+- waitForAnimationToEnd
+- takeScreenshot: u02-main-favorites-filter
+
+- stopApp

@@ -1,0 +1,51 @@
+09-15 in-place update UAT evidence (simulator DevFest Update UAT, EFB89B46-6222-4A6E-8AFD-1B60D87D39C7)
+
+== BEFORE (main build 1077fd84, after the seed flow, app stopped) ==
+data container: /Users/robin/Library/Developer/CoreSimulator/Devices/EFB89B46-6222-4A6E-8AFD-1B60D87D39C7/data/Containers/Data/Application/593D3831-7E8E-4E11-B0E2-E7F57FBF56F2
+plist: /Users/robin/Library/Developer/CoreSimulator/Devices/EFB89B46-6222-4A6E-8AFD-1B60D87D39C7/data/Containers/Data/Application/593D3831-7E8E-4E11-B0E2-E7F57FBF56F2/Library/Preferences/com.gdgnantes.devfest.iosApp.plist
+-- plutil -p filtered to the legacy keys (Favorites, AgendaSessionFilters) --
+  "AgendaSessionFilters" => {length = 40, bytes = 0x5b7b2276616c7565223a22626f6f6b6d ... 6b6d61726b227d5d}
+  "Favorites" => [
+    0 => "keynotedouverture"
+    1 => "openrewriterefactorascode"
+  ]
+-- legacy key lookups for the new keys (expected absent) --
+devfest.bookmarks.sessionIds: absent
+devfest.agenda.filters: absent
+
+== AFTER (branch build 3af70f7a installed over main with simctl install, no uninstall; verify flow run; app stopped) ==
+data container: /Users/robin/Library/Developer/CoreSimulator/Devices/EFB89B46-6222-4A6E-8AFD-1B60D87D39C7/data/Containers/Data/Application/7466DBEF-6A0D-4068-A99F-48E42929AB7C
+plist: /Users/robin/Library/Developer/CoreSimulator/Devices/EFB89B46-6222-4A6E-8AFD-1B60D87D39C7/data/Containers/Data/Application/7466DBEF-6A0D-4068-A99F-48E42929AB7C/Library/Preferences/com.gdgnantes.devfest.iosApp.plist
+-- plutil -p filtered to the two legacy keys and the two new keys --
+  "AgendaSessionFilters" => {length = 40, bytes = 0x5b7b2276616c7565223a22626f6f6b6d ... 6b6d61726b227d5d}
+  "devfest.agenda.filters" => [
+    0 => "{"type":"BOOKMARK","value":"bookmark"}"
+  ]
+  "devfest.bookmarks.sessionIds" => [
+    0 => "keynotedouverture"
+  ]
+  "Favorites" => [
+    0 => "keynotedouverture"
+    1 => "openrewriterefactorascode"
+  ]
+-- legacy values before vs after (legacy-before.txt vs legacy-after.txt) --
+cmp: IDENTICAL (cmp exit 0)
+
+NOTE (orchestrator diagnosis, 09-15 resume)
+The container path differs between BEFORE and AFTER. That is expected on this runtime (iOS 27.0,
+Xcode 27.2): simctl install keeps the data but moves it to a new container UUID. The unchanged
+legacy values above are the proof the data was kept (plan Task 3 step 4). Diagnosis, marker file
+in the data container, then simctl install:
+  | scenario                                            | path    | marker |
+  | never launched, main to branch                      | changed | KEPT   |
+  | simctl launch, main to same main                    | changed | KEPT   |
+  | simctl launch, main to branch                       | changed | KEPT   |
+  | Maestro launchApp (no clearState), main to branch   | changed | KEPT   |
+  | Maestro launchApp clearState: true, main to branch  | changed | LOST   |
+A first attempt that seeded with clearState lost the data at install (container moved to the
+containermanagerd Dead area) and was discarded. Seed-flow change: update-seed-flow.yaml now uses a
+plain launchApp. The seed starts from nothing through one uninstall plus install of the main build,
+done once before any data existed. No uninstall, wipe or state reset happened between the seed and
+the branch build, and the verify flow has no state reset.
+u01 shows the Opening Keynote star filled and the OpenRewrite star just below the fold; u02 (the
+Favorites filter) shows both filled stars together.

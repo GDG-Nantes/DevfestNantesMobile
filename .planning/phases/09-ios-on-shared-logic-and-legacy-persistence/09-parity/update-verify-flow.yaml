@@ -1,0 +1,75 @@
+appId: com.gdgnantes.devfest.iosApp
+# 09-15 in-place update UAT, step 2: run on the BRANCH build installed over the main build
+# with `xcrun simctl install` (data container kept). It never resets state: a reset here would
+# pass while proving nothing (RESEARCH Pitfall 8). Run from 09-parity/update/:
+#   cd 09-parity/update && maestro --device <udid> test ../update-verify-flow.yaml
+# Targets reused from 08-parity/parity-flow.yaml.
+---
+# u03: the app starts clean after the update (07 D-15): full agenda, no filled star
+- launchApp
+- extendedWaitUntil:
+    visible: "08:00"
+    timeout: 120000
+- assertNotVisible:
+    id: "star.fill"
+- waitForAnimationToEnd
+- takeScreenshot: u03-after-update-empty
+
+# u04: no filter is active, so the menu has no Clear entry
+- tapOn:
+    point: "89%,10%"
+- extendedWaitUntil:
+    visible: "Favorites"
+    timeout: 30000
+- assertNotVisible: "Clear"
+- takeScreenshot: u04-filter-menu-no-clear
+# dismiss the menu with a tap outside it
+- tapOn:
+    point: "10%,50%"
+- waitForAnimationToEnd
+
+# u05: set new values: one bookmark and the Favorites filter
+- tapOn:
+    id: "star"
+- waitForAnimationToEnd
+- tapOn:
+    point: "89%,10%"
+- extendedWaitUntil:
+    visible: "Favorites"
+    timeout: 30000
+- tapOn: "Favorites"
+- waitForAnimationToEnd
+- takeScreenshot: u05-new-values-set
+- stopApp
+
+# u06: first kill and relaunch keeps both
+- launchApp
+- extendedWaitUntil:
+    visible: "October 16, 2025"
+    timeout: 120000
+- waitForAnimationToEnd
+- assertVisible:
+    id: "star.fill"
+- takeScreenshot: u06-after-relaunch
+- tapOn:
+    point: "89%,10%"
+- extendedWaitUntil:
+    visible: "Clear"
+    timeout: 30000
+- assertVisible: "Clear"
+# dismiss the menu with a tap outside it
+- tapOn:
+    point: "10%,50%"
+- waitForAnimationToEnd
+- stopApp
+
+# u07: second kill and relaunch shows the same thing (idempotency)
+- launchApp
+- extendedWaitUntil:
+    visible: "October 16, 2025"
+    timeout: 120000
+- waitForAnimationToEnd
+- assertVisible:
+    id: "star.fill"
+- takeScreenshot: u07-after-second-relaunch
+- stopApp
