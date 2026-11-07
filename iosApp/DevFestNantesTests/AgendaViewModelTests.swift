@@ -1,6 +1,7 @@
 import Testing
 import Foundation
 import os
+import Observation
 import shared
 @testable import DevFest_Nantes
 
@@ -123,6 +124,171 @@ import shared
 
         #expect(viewModel.isLoading == true)
         #expect(viewModel.agendaContent.sections.isEmpty)
+    }
+
+    // MARK: - Agenda lifetime and failure (D-01 to D-05)
+
+    /// Returns once the condition holds. Observation-based, no sleep: it returns at once when the condition
+    /// already holds, otherwise it suspends until a tracked property changes and checks again.
+    private func waitUntil(_ condition: @MainActor @escaping () -> Bool) async {
+        while !condition() {
+            await withCheckedContinuation { (continuation: CheckedContinuation<Void, Never>) in
+                withObservationTracking {
+                    _ = condition()
+                } onChange: {
+                    continuation.resume()
+                }
+            }
+        }
+    }
+
+    @Test func trace_ends_at_the_first_emission_while_the_stream_stays_open() async throws {
+        let stream = FakeStream<[DaySchedule]>(.emit([try schedules()], thenFinish: false))
+        let tracing = RecordingDataLoadTracing()
+        let viewModel = makeViewModel(source: FakeAgendaSource(agendaStream: stream), tracing: tracing)
+
+        let load = Task { @MainActor in await viewModel.observeAgenda() }
+        await tracing.waitUntilCompleted()
+
+        #expect(tracing.completedTraceCount == 1)
+        #expect(stream.terminationCount == 0)
+
+        load.cancel()
+        await load.value
+        await stream.waitUntilTerminated()
+
+        #expect(tracing.recordedTraces == [.init(traceName: "agenda_load", dataSource: "graphql")])
+        #expect(tracing.completedTraceCount == 1)
+        #expect(stream.terminationCount == 1)
+    }
+
+    @Test func each_subscription_records_one_trace() async throws {
+        let all = try schedules()
+        let stream = FakeStream<[DaySchedule]>(.emit([all, Array(all.prefix(1))], thenFinish: true))
+        let tracing = RecordingDataLoadTracing()
+        let viewModel = makeViewModel(source: FakeAgendaSource(agendaStream: stream), tracing: tracing)
+
+        await viewModel.observeAgenda()
+        await viewModel.observeAgenda()
+
+        #expect(stream.subscriptionCount == 2)
+        #expect(tracing.recordedTraces == [
+            .init(traceName: "agenda_load", dataSource: "graphql"),
+            .init(traceName: "agenda_load", dataSource: "graphql")
+        ])
+        #expect(tracing.completedTraceCount == 2)
+    }
+
+    @Test func resubscribing_keeps_the_previous_content_and_no_spinner() async throws {
+        let all = try schedules()
+        let stream = FakeStream<[DaySchedule]>(.emit([all], thenFinish: true), .hang)
+        let viewModel = makeViewModel(source: FakeAgendaSource(agendaStream: stream))
+
+        await viewModel.observeAgenda()
+        await stream.waitUntilSubscribed()
+
+        #expect(viewModel.isLoading == false)
+        #expect(viewModel.agendaContent.sections == content(all).sections)
+
+        let second = Task { @MainActor in await viewModel.observeAgenda() }
+        await stream.waitUntilSubscribed()
+
+        #expect(stream.subscriptionCount == 2)
+        #expect(viewModel.isLoading == false)
+        #expect(viewModel.agendaContent.sections == content(all).sections)
+
+        second.cancel()
+        await second.value
+
+        #expect(viewModel.isLoading == false)
+        #expect(viewModel.agendaContent.sections == content(all).sections)
+    }
+
+    @Test func error_after_an_emission_keeps_the_content_and_stops() async throws {
+        let all = try schedules()
+        let stream = FakeStream<[DaySchedule]>(.emitThenFail([all], TestError()))
+        let viewModel = makeViewModel(source: FakeAgendaSource(agendaStream: stream))
+
+        await viewModel.observeAgenda()
+
+        #expect(viewModel.isLoading == false)
+        #expect(viewModel.agendaContent.sections == content(all).sections)
+        #expect(!viewModel.agendaContent.sections.isEmpty)
+        #expect(stream.subscriptionCount == 1)
+    }
+
+    @Test func cancelled_collection_is_silent_and_keeps_the_content() async throws {
+        let all = try schedules()
+        let stream = FakeStream<[DaySchedule]>(.emit([all], thenFinish: false))
+        let viewModel = makeViewModel(source: FakeAgendaSource(agendaStream: stream))
+
+        let collection = Task { @MainActor in await viewModel.observeAgenda() }
+        await waitUntil { viewModel.isLoading == false }
+        collection.cancel()
+        await collection.value
+        await stream.waitUntilTerminated()
+
+        #expect(viewModel.isLoading == false)
+        #expect(viewModel.agendaContent.sections == content(all).sections)
+        #expect(stream.terminationCount == 1)
+    }
+
+    @Test func upstream_cancellation_before_the_first_emission_stops_loading_silently() async {
+        let stream = FakeStream<[DaySchedule]>(.cancelUpstream)
+        let viewModel = makeViewModel(source: FakeAgendaSource(agendaStream: stream))
+
+        await viewModel.observeAgenda()
+
+        #expect(viewModel.isLoading == false)
+        #expect(viewModel.agendaContent.sections.isEmpty)
+        #expect(stream.subscriptionCount == 1)
+    }
+
+    @Test func equal_consecutive_emissions_leave_the_content_unchanged() async throws {
+        let all = try schedules()
+        let stream = FakeStream<[DaySchedule]>(.emit([all, all], thenFinish: true))
+        let viewModel = makeViewModel(source: FakeAgendaSource(agendaStream: stream))
+
+        await viewModel.observeAgenda()
+
+        #expect(!viewModel.agendaContent.sections.isEmpty)
+        #expect(viewModel.agendaContent.sections == content(all).sections)
+        #expect(sectionSessionIds(viewModel) == content(all).sections.flatMap { $0.sessions.map(\.id) })
+        #expect(viewModel.isLoading == false)
+    }
+
+    @Test func days_without_slots_show_an_empty_list() async throws {
+        let empty = try schedules().map { DaySchedule(dayIndex: $0.dayIndex, date: $0.date, slots: []) }
+        let stream = FakeStream<[DaySchedule]>(.emit([empty], thenFinish: false))
+        let viewModel = makeViewModel(source: FakeAgendaSource(agendaStream: stream))
+
+        let load = Task { @MainActor in await viewModel.observeAgenda() }
+        await waitUntil { viewModel.isLoading == false }
+        load.cancel()
+        await load.value
+
+        #expect(!empty.isEmpty)
+        #expect(viewModel.agendaContent.sections.isEmpty)
+        #expect(viewModel.isLoading == false)
+    }
+
+    @Test func mirror_stays_correct_while_the_collection_is_cancelled() async throws {
+        let stream = FakeStream<[DaySchedule]>(.emit([try schedules()], thenFinish: false))
+        let source = FakeAgendaSource(agendaStream: stream)
+        let viewModel = makeViewModel(source: source)
+
+        let collection = Task { @MainActor in await viewModel.observeAgenda() }
+        await waitUntil { viewModel.isLoading == false }
+        collection.cancel()
+        await collection.value
+        await stream.waitUntilTerminated()
+
+        let bookmarked = viewModel.toggleBookmark(sessionId: "s1")
+
+        #expect(bookmarked == true)
+        #expect(viewModel.isBookmarked("s1") == true)
+        #expect(source.writtenBookmarks == [.init(sessionId: "s1", bookmarked: true)])
+        #expect(stream.subscriptionCount == 1)
     }
 
     // MARK: - Rooms

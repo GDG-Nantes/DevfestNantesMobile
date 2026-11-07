@@ -18,6 +18,16 @@ final class FakeStream<Element>: @unchecked Sendable {
         case fail(Error)
         /// Never calls back and keeps the subscription open.
         case hang
+        /// Delivers the values one by one, then completes with the error: a failure after emissions.
+        case emitThenFail([Element], Error)
+        /// Reports a cancellation of the Kotlin collection, without any value: the consumer's task stays alive.
+        case cancelUpstream
+    }
+
+    private enum Ending {
+        case stayOpen
+        case finish
+        case fail(Error)
     }
 
     private let scripts: [Script]
@@ -84,11 +94,15 @@ final class FakeStream<Element>: @unchecked Sendable {
 
         switch scripts[min(index, scripts.count - 1)] {
         case .emit(let values, let thenFinish):
-            deliver(values[...], thenFinish: thenFinish, onItem: onItem, onComplete: onComplete)
+            deliver(values[...], ending: thenFinish ? .finish : .stayOpen, onItem: onItem, onComplete: onComplete)
         case .fail(let error):
             onComplete(error, ())
         case .hang:
             break
+        case .emitThenFail(let values, let error):
+            deliver(values[...], ending: .fail(error), onItem: onItem, onComplete: onComplete)
+        case .cancelUpstream:
+            onCancelled(CancellationError(), ())
         }
 
         return { [self] in
@@ -101,17 +115,21 @@ final class FakeStream<Element>: @unchecked Sendable {
 
     private func deliver(
         _ values: ArraySlice<Element>,
-        thenFinish: Bool,
+        ending: Ending,
         onItem: @escaping (Element, @escaping () -> Void, Void) -> Void,
         onComplete: @escaping (Error?, Void) -> Void
     ) {
         guard let first = values.first else {
-            if thenFinish { onComplete(nil, ()) }
+            switch ending {
+            case .stayOpen: break
+            case .finish: onComplete(nil, ())
+            case .fail(let error): onComplete(error, ())
+            }
             return
         }
         let rest = values.dropFirst()
         onItem(first, { [self] in
-            deliver(rest, thenFinish: thenFinish, onItem: onItem, onComplete: onComplete)
+            deliver(rest, ending: ending, onItem: onItem, onComplete: onComplete)
         }, ())
     }
 }
