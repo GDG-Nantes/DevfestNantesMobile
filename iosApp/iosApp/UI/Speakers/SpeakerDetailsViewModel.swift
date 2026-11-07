@@ -35,6 +35,11 @@ final class SpeakerDetailsViewModel {
         await getSpeakerSession(speakerId: speakerId)
     }
 
+    /// RED stub: ignores the source on purpose; replaced by the shared classification in the GREEN commit.
+    func content(for session: Session) -> AgendaContent.Session {
+        AgendaContent.Session(from: session)
+    }
+
     func getSpeaker(speakerId: String) async {
         let source = self.source
         do {
