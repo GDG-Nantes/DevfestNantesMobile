@@ -52,6 +52,8 @@ final class AgendaViewModel {
         }
     }
 
+    func toggleFilter(type: FilterType, value: String) {}
+
     func clearFilters() {
         sessionFilters = []
         defaults.removeObject(forKey: "AgendaSessionFilters")
