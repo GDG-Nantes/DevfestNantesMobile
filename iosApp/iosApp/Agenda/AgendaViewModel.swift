@@ -79,6 +79,11 @@ final class AgendaViewModel {
 
 
 
+    func isBookmarked(_ sessionId: String) -> Bool { false }
+
+    @discardableResult
+    func toggleBookmark(sessionId: String) -> Bool { false }
+
     ///Asynchronous method to retrieve sessions
     func observeSessions() async {
         let source = self.source

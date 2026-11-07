@@ -185,14 +185,26 @@ import shared
         } onChange: {
             notified.withLock { $0 = true }
         }
-        viewModel.toggleFavorite(ofSession: session)
+        viewModel.toggleBookmark(sessionId: session.id)
 
         #expect(notified.withLock { $0 })
         #expect(suite.defaults.object(forKey: "Favorites") as? [String] == [session.id])
 
-        viewModel.toggleFavorite(ofSession: session)
+        viewModel.toggleBookmark(sessionId: session.id)
 
         #expect(suite.defaults.object(forKey: "Favorites") as? [String] == [])
+    }
+
+    @Test func toggle_bookmark_returns_the_post_toggle_value() {
+        let suite = Suite()
+        defer { suite.cleanup() }
+        let viewModel = makeViewModel(source: FakeAgendaSource(), suite: suite)
+
+        #expect(viewModel.toggleBookmark(sessionId: "s1") == true)
+        #expect(viewModel.isBookmarked("s1") == true)
+
+        #expect(viewModel.toggleBookmark(sessionId: "s1") == false)
+        #expect(viewModel.isBookmarked("s1") == false)
     }
 
     @Test func favorites_and_filters_are_read_from_the_legacy_keys_and_init_writes_nothing() {
