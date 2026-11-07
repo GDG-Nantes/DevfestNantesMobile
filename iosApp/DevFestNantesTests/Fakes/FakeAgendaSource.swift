@@ -1,7 +1,7 @@
 import shared
 @testable import DevFest_Nantes
 
-/// Hand-written fake of the Agenda port: its sessions, rooms and bookmark ids come from scripted
+/// Hand-written fake of the Agenda port: its day schedules, rooms and bookmark ids come from scripted
 /// `FakeStream`s (through the real `KotlinStreamBridge`). Classification delegates to the real shared use
 /// case unless a test scripts the two flags. The persisted filters are a plain snapshot, and every write is
 /// recorded in order. The recorders are lock-free: the fake runs on the main actor in these tests.
@@ -12,7 +12,7 @@ final class FakeAgendaSource: AgendaSource {
         let bookmarked: Bool
     }
 
-    let sessionsStream: FakeStream<[Session]>
+    let agendaStream: FakeStream<[DaySchedule]>
     let roomsStream: FakeStream<Set<Room>>
     let bookmarksStream: FakeStream<Set<String>>
     /// What `currentFilters()` returns.
@@ -24,14 +24,14 @@ final class FakeAgendaSource: AgendaSource {
     private let navigableOverride: ((Session) -> Bool)?
 
     init(
-        sessionsStream: FakeStream<[Session]> = FakeStream(.hang),
+        agendaStream: FakeStream<[DaySchedule]> = FakeStream(.hang),
         roomsStream: FakeStream<Set<Room>> = FakeStream(.hang),
         bookmarksStream: FakeStream<Set<String>> = FakeStream(.emit([[]], thenFinish: false)),
         filters: Set<shared.SessionFilter> = [],
         talkOverride: ((Session) -> Bool)? = nil,
         navigableOverride: ((Session) -> Bool)? = nil
     ) {
-        self.sessionsStream = sessionsStream
+        self.agendaStream = agendaStream
         self.roomsStream = roomsStream
         self.bookmarksStream = bookmarksStream
         self.filters = filters
@@ -39,8 +39,8 @@ final class FakeAgendaSource: AgendaSource {
         self.navigableOverride = navigableOverride
     }
 
-    func sessions() -> AsyncThrowingStream<[Session], Error> {
-        sessionsStream.stream()
+    func agenda() -> AsyncThrowingStream<[DaySchedule], Error> {
+        agendaStream.stream()
     }
 
     func rooms() -> AsyncThrowingStream<Set<Room>, Error> {

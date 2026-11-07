@@ -48,6 +48,12 @@ extension AgendaContent.Session {
     }
 }
 
+extension AgendaContent {
+    init(days: [DaySchedule], isTalk: (shared.Session) -> Bool, isNavigable: (shared.Session) -> Bool) {
+        self.init(sections: [])
+    }
+}
+
 extension Session: Identifiable { }
 
 // MARK: - AgendaDays

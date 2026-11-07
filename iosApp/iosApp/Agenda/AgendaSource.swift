@@ -9,7 +9,7 @@ import shared
 /// The Kotlin filter type is always written `shared.SessionFilter`: the app still declares its own
 /// `SessionFilter` struct.
 protocol AgendaSource {
-    func sessions() -> AsyncThrowingStream<[Session], Error>
+    func agenda() -> AsyncThrowingStream<[DaySchedule], Error>
     func rooms() -> AsyncThrowingStream<Set<Room>, Error>
     func isTalk(_ session: Session) -> Bool
     func isNavigable(_ session: Session) -> Bool
@@ -43,9 +43,8 @@ struct LiveAgendaSource: AgendaSource {
         self.filtersStore = filtersStore
     }
 
-    func sessions() -> AsyncThrowingStream<[Session], Error> {
-        let resolvedStore = store()
-        return KotlinStreamBridge.stream(resolvedStore.sessions)
+    func agenda() -> AsyncThrowingStream<[DaySchedule], Error> {
+        AsyncThrowingStream { $0.finish() }
     }
 
     func rooms() -> AsyncThrowingStream<Set<Room>, Error> {

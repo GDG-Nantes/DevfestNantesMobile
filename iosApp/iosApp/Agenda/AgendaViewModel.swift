@@ -91,36 +91,8 @@ final class AgendaViewModel {
         }
     }
 
-    ///Asynchronous method to retrieve sessions
-    func observeSessions() async {
-        await seedBookmarksIfNeeded()
-        let source = self.source
-        do {
-            let sessions = try await tracing.trackDataLoad(
-                traceName: PerformanceMonitoring.TRACE_AGENDA_LOAD,
-                dataSource: "graphql"
-            ) {
-                var first: [Session]?
-                // Only the first emission is used; leaving the loop terminates the upstream stream.
-                for try await sessionsList in source.sessions() {
-                    first = sessionsList
-                    break
-                }
-                // The bridge ends silently when the load is cancelled, so cancellation is checked explicitly.
-                try Task.checkCancellation()
-                return first ?? []
-            }
-
-            sessionsChanged(sessions: sessions)
-
-            DevFestLogger(category: "Agenda").log(.info, "Agenda sessions loaded: \(sessions.count) sessions")
-
-        } catch is CancellationError {
-            return
-        } catch {
-            DevFestLogger(category: "Agenda").log(.error, "Observe Sessions error: \(error.localizedDescription)", error: error)
-            isLoading = false
-        }
+    ///Skeleton of the continuous agenda collection (RED step)
+    func observeAgenda() async {
     }
 
     ///Allows you to classify sessions by time section
