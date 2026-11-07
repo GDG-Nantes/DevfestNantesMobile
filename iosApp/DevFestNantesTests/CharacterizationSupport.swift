@@ -17,6 +17,21 @@ import shared
     }
 }
 
+// MARK: - Display model
+
+extension AgendaContent.Session {
+    /// Test-only: classifies through a real `ClassifySessionUseCase`, so the existing call sites keep the
+    /// one-argument form. The app has no such initializer (D-07).
+    init(from session: shared.Session) {
+        let classifier = ClassifySessionUseCase()
+        self.init(
+            from: session,
+            isATalk: classifier.isTalk(session: session),
+            isNavigable: classifier.isNavigable(session: session)
+        )
+    }
+}
+
 // MARK: - Snapshot loading
 
 enum TestDataError: Error, CustomStringConvertible {
