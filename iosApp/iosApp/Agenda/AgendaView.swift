@@ -20,7 +20,7 @@ import shared
 struct AgendaView: View {
     @Environment(AgendaViewModel.self) private var viewModel
     
-    @State private var day = "2025-10-16"
+    @State private var day = AgendaDays.day1
     @State private var scrollToSectionID: Date? = nil
     @State private var firstAppear = true
     
@@ -72,8 +72,8 @@ struct AgendaView: View {
     
     private var dayPicker: some View {
         Picker("What is the day?", selection: $day) {
-            Text(L10n.day1).tag("2025-10-16")
-            Text(L10n.day2).tag("2025-10-17")
+            Text(L10n.day1).tag(AgendaDays.day1)
+            Text(L10n.day2).tag(AgendaDays.day2)
         }
         .pickerStyle(.segmented)
         .padding(.horizontal, 12)
@@ -187,7 +187,20 @@ struct AgendaView: View {
 
     /// Static and pure so tests can call it without creating a view (D-11 extraction).
     static func scrollTarget(slotDates: [Date], now: Date, calendar: Calendar) -> Date? {
-        nil
+        let nowTotal = calendar.component(.hour, from: now) * 60 + calendar.component(.minute, from: now)
+
+        let sorted = slotDates.sorted {
+            let t1 = calendar.component(.hour, from: $0) * 60 + calendar.component(.minute, from: $0)
+            let t2 = calendar.component(.hour, from: $1) * 60 + calendar.component(.minute, from: $1)
+            return t1 < t2
+        }
+
+        var previous: Date?
+        for date in sorted {
+            let t = calendar.component(.hour, from: date) * 60 + calendar.component(.minute, from: date)
+            if t <= nowTotal { previous = date } else { break }
+        }
+        return previous
     }
 
     private func handleInitialScrollIfNeeded(isLoading: Bool) {
@@ -197,25 +210,11 @@ struct AgendaView: View {
         let currentDay = formatter.string(from: Date())
         
         if currentDay == day && firstAppear {
-            let cal = Calendar.current
-            let now = Date()
-            let nowTotal = cal.component(.hour, from: now) * 60 + cal.component(.minute, from: now)
-            
-            let sorted = viewModel.agendaContent.sections
+            let slotDates = viewModel.agendaContent.sections
                 .filter { $0.day.contains(day) }
-                .sorted {
-                    let t1 = cal.component(.hour, from: $0.date) * 60 + cal.component(.minute, from: $0.date)
-                    let t2 = cal.component(.hour, from: $1.date) * 60 + cal.component(.minute, from: $1.date)
-                    return t1 < t2
-                }
-            
-            var previous: AgendaContent.Section?
-            for s in sorted {
-                let t = cal.component(.hour, from: s.date) * 60 + cal.component(.minute, from: s.date)
-                if t <= nowTotal { previous = s } else { break }
-            }
-            if let previous {
-                scrollToSectionID = previous.date
+                .map(\.date)
+            if let target = Self.scrollTarget(slotDates: slotDates, now: Date(), calendar: Calendar.current) {
+                scrollToSectionID = target
             }
             firstAppear = false
         }
@@ -229,12 +228,12 @@ struct AgendaView: View {
         f.dateFormat = "yyyy-MM-dd"
         let currentDay = f.string(from: Date())
 
-        if currentDay == "2025-10-16" {
-            day = "2025-10-16"
-        } else if currentDay == "2025-10-17" {
-            day = "2025-10-17"
+        if currentDay == AgendaDays.day1 {
+            day = AgendaDays.day1
+        } else if currentDay == AgendaDays.day2 {
+            day = AgendaDays.day2
         } else {
-            day = "2025-10-16"
+            day = AgendaDays.day1
         }
     }
 }
