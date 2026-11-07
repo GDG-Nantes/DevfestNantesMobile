@@ -15,11 +15,13 @@ GroupSessionsUseCase
 IosDependencies
 Kotlinx_datetimeTimeZone
 LocalDateDays
+ObserveAgendaUseCase
 Partner
 PartnerCategory
 Room
 ScheduleSlot
 Session
+SessionFilterType
 SessionFiltersStore
 SessionLanguage
 SessionType

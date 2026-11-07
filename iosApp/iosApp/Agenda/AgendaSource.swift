@@ -5,11 +5,11 @@
 
 import shared
 
-/// What the Agenda screen reads and writes: the sessions, the rooms, the persisted bookmarks and filters.
+/// What the Agenda screen reads and writes: the combined agenda, the rooms, the persisted bookmarks and filters.
 /// The Kotlin filter type is always written `shared.SessionFilter`: the app still declares its own
 /// `SessionFilter` struct.
 protocol AgendaSource {
-    func sessions() -> AsyncThrowingStream<[Session], Error>
+    func agenda() -> AsyncThrowingStream<[DaySchedule], Error>
     func rooms() -> AsyncThrowingStream<Set<Room>, Error>
     func isTalk(_ session: Session) -> Bool
     func isNavigable(_ session: Session) -> Bool
@@ -30,22 +30,29 @@ struct LiveAgendaSource: AgendaSource {
     private let classify: () -> ClassifySessionUseCase
     private let bookmarksStore: () -> BookmarksStore
     private let filtersStore: () -> SessionFiltersStore
+    private let observeAgenda: () -> ObserveAgendaUseCase
 
     init(
         store: @escaping () -> DevFestNantesStore = { IosDependencies.shared.store() },
         classify: @escaping () -> ClassifySessionUseCase = { IosDependencies.shared.classifySession() },
         bookmarksStore: @escaping () -> BookmarksStore = { IosDependencies.shared.bookmarksStore() },
-        filtersStore: @escaping () -> SessionFiltersStore = { IosDependencies.shared.sessionFiltersStore() }
+        filtersStore: @escaping () -> SessionFiltersStore = { IosDependencies.shared.sessionFiltersStore() },
+        observeAgenda: @escaping () -> ObserveAgendaUseCase = { IosDependencies.shared.observeAgenda() }
     ) {
         self.store = store
         self.classify = classify
         self.bookmarksStore = bookmarksStore
         self.filtersStore = filtersStore
+        self.observeAgenda = observeAgenda
     }
 
-    func sessions() -> AsyncThrowingStream<[Session], Error> {
-        let resolvedStore = store()
-        return KotlinStreamBridge.stream(resolvedStore.sessions)
+    /// The filtered and grouped agenda as one continuous flow. The day strategy and the device zone are built
+    /// inside the call, so every subscription gets the current zone and none is cached (07 D-19).
+    func agenda() -> AsyncThrowingStream<[DaySchedule], Error> {
+        let useCase = observeAgenda()
+        let days = LocalDateDays(dates: AgendaDays.all)
+        let timeZone = Kotlinx_datetimeTimeZone.companion.currentSystemDefault()
+        return KotlinStreamBridge.stream(useCase.observe(dayAssignment: days, timeZone: timeZone))
     }
 
     func rooms() -> AsyncThrowingStream<Set<Room>, Error> {

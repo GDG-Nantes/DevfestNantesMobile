@@ -144,6 +144,8 @@ LocalDateDays	doCopy(dates:)
 LocalDateDays	hash()
 LocalDateDays	init(dates:)
 LocalDateDays	isEqual(_:)
+ObserveAgendaUseCase	init(store:sessionFiltersStore:bookmarksStore:filterSessions:groupSessions:dispatcher:)
+ObserveAgendaUseCase	observe(dayAssignment:timeZone:)
 Partner	description()
 Partner	doCopy(name:logoUrl:url:)
 Partner	hash()
@@ -195,6 +197,14 @@ Session	scheduleSlot
 Session	speakers
 Session	title
 Session	type
+SessionFilterType	bookmark
+SessionFilterType	complexity
+SessionFilterType	entries
+SessionFilterType	init(name:ordinal:)
+SessionFilterType	language
+SessionFilterType	room
+SessionFilterType	type
+SessionFilterType	values()
 SessionFiltersStore	filters
 SessionFiltersStore	filtersFlow
 SessionFiltersStore	setFilters(filters:)

@@ -9,24 +9,18 @@ import shared
 /// declares its own `SessionFilter` struct.
 @MainActor @Suite(.timeLimit(.minutes(1))) struct AgendaViewModelTests {
 
-    /// Tracer: the live adapter over the in-memory mocked Kotlin store drives the ViewModel end to end
-    /// through `KotlinStreamBridge` and the store's native flows (no network or Firebase), and the sessions
-    /// load goes through the tracing seam under the v1.0 trace name and data source. The filter seed and the
-    /// bookmark seed resolve the real Koin stores, so Koin is started first (idempotent); both stores only
-    /// read here, nothing is written.
-    @Test func live_source_loads_the_mocked_store_sessions_and_rooms() async {
+    /// Tracer: the live adapter over the in-memory mocked Kotlin store drives the rooms collection end to end
+    /// through `KotlinStreamBridge` and the store's native flows (no network or Firebase). The filter seed
+    /// resolves the real Koin stores, so Koin is started first (idempotent); the store only reads here. The live
+    /// `agenda()` path is one line over the Koin-bound use case and has no hosted test.
+    @Test func live_source_loads_the_mocked_store_rooms() async {
         TestHost.start()
         let store = DevFestNantesStoreBuilder().setUseMockServer(useMockServer: true).build()
-        let tracing = RecordingDataLoadTracing()
-        let viewModel = AgendaViewModel(source: LiveAgendaSource(store: { store }, classify: { ClassifySessionUseCase() }), tracing: tracing)
+        let viewModel = AgendaViewModel(source: LiveAgendaSource(store: { store }, classify: { ClassifySessionUseCase() }), tracing: RecordingDataLoadTracing())
 
-        await viewModel.observeSessions()
         await viewModel.observeRooms()
 
-        #expect(!viewModel.agendaContent.sections.isEmpty)
-        #expect(viewModel.isLoading == false)
         #expect(!(viewModel.roomsContent ?? []).isEmpty)
-        #expect(tracing.recordedTraces == [.init(traceName: "agenda_load", dataSource: "graphql")])
     }
 
     // MARK: - Helpers
@@ -48,34 +42,49 @@ import shared
         viewModel.agendaContent.sections.flatMap { $0.sessions.map(\.id) }
     }
 
-    // MARK: - Sessions
+    /// What the display mapping makes of the shared output, with a real shared classification.
+    private func content(_ days: [DaySchedule]) -> AgendaContent {
+        let classifier = ClassifySessionUseCase()
+        return AgendaContent(
+            days: days,
+            isTalk: { classifier.isTalk(session: $0) },
+            isNavigable: { classifier.isNavigable(session: $0) }
+        )
+    }
 
-    @Test func loads_only_the_first_sessions_emission_and_records_the_agenda_trace() async throws {
-        let all = try TestData.sessions()
-        let listA = Array(all.prefix(3))
-        let listB = Array(all.suffix(2))
-        let stream = FakeStream<[Session]>(.emit([listA, listB], thenFinish: false))
+    private func schedules() throws -> [DaySchedule] {
+        try TestData.schedules(zoneId: "Europe/Paris")
+    }
+
+    // MARK: - Agenda
+
+    @Test func each_emission_replaces_the_agenda_content() async throws {
+        let all = try schedules()
+        let first = all
+        let second = Array(all.prefix(1))
+        let stream = FakeStream<[DaySchedule]>(.emit([first, second], thenFinish: true))
         let tracing = RecordingDataLoadTracing()
-        let viewModel = makeViewModel(source: FakeAgendaSource(sessionsStream: stream), tracing: tracing)
+        let viewModel = makeViewModel(source: FakeAgendaSource(agendaStream: stream), tracing: tracing)
 
-        await viewModel.observeSessions()
-        await stream.waitUntilTerminated()
+        await viewModel.observeAgenda()
 
-        #expect(Set(sectionSessionIds(viewModel)) == Set(listA.map(\.id)))
+        #expect(!content(second).sections.isEmpty)
+        #expect(content(second).sections != content(first).sections)
+        #expect(viewModel.agendaContent.sections == content(second).sections)
         #expect(viewModel.isLoading == false)
         #expect(tracing.recordedTraces == [.init(traceName: "agenda_load", dataSource: "graphql")])
-        #expect(stream.terminationCount == 1)
+        #expect(stream.subscriptionCount == 1)
     }
 
     @Test func rows_take_their_talk_and_navigable_flags_from_the_source() async throws {
-        let stream = FakeStream<[Session]>(.emit([try TestData.sessions()], thenFinish: false))
+        let stream = FakeStream<[DaySchedule]>(.emit([try schedules()], thenFinish: true))
         let source = FakeAgendaSource(
-            sessionsStream: stream,
+            agendaStream: stream,
             talkOverride: { _ in false }
         )
         let viewModel = makeViewModel(source: source)
 
-        await viewModel.observeSessions()
+        await viewModel.observeAgenda()
 
         let rows = viewModel.agendaContent.sections.flatMap(\.sessions)
         #expect(!rows.isEmpty)
@@ -83,30 +92,30 @@ import shared
         #expect(rows.allSatisfy { $0.isNavigable == ($0.sessionType == .conference || $0.sessionType == .codelab || $0.sessionType == .quickie) })
     }
 
-    @Test func sessions_error_stops_loading_with_an_empty_agenda() async {
-        let viewModel = makeViewModel(source: FakeAgendaSource(sessionsStream: FakeStream(.fail(TestError()))))
+    @Test func agenda_error_stops_loading_with_an_empty_agenda() async {
+        let viewModel = makeViewModel(source: FakeAgendaSource(agendaStream: FakeStream(.fail(TestError()))))
 
-        await viewModel.observeSessions()
-
-        #expect(viewModel.isLoading == false)
-        #expect(viewModel.agendaContent.sections.isEmpty)
-    }
-
-    @Test func sessions_stream_without_emission_stops_loading_with_an_empty_agenda() async {
-        let stream = FakeStream<[Session]>(.emit([], thenFinish: true))
-        let viewModel = makeViewModel(source: FakeAgendaSource(sessionsStream: stream))
-
-        await viewModel.observeSessions()
+        await viewModel.observeAgenda()
 
         #expect(viewModel.isLoading == false)
         #expect(viewModel.agendaContent.sections.isEmpty)
     }
 
-    @Test func cancelled_sessions_load_keeps_the_spinner() async {
-        let stream = FakeStream<[Session]>(.hang)
-        let viewModel = makeViewModel(source: FakeAgendaSource(sessionsStream: stream))
+    @Test func agenda_stream_without_emission_stops_loading_with_an_empty_agenda() async {
+        let stream = FakeStream<[DaySchedule]>(.emit([], thenFinish: true))
+        let viewModel = makeViewModel(source: FakeAgendaSource(agendaStream: stream))
 
-        let load = Task { @MainActor in await viewModel.observeSessions() }
+        await viewModel.observeAgenda()
+
+        #expect(viewModel.isLoading == false)
+        #expect(viewModel.agendaContent.sections.isEmpty)
+    }
+
+    @Test func cancelled_agenda_load_keeps_the_spinner() async {
+        let stream = FakeStream<[DaySchedule]>(.hang)
+        let viewModel = makeViewModel(source: FakeAgendaSource(agendaStream: stream))
+
+        let load = Task { @MainActor in await viewModel.observeAgenda() }
         await stream.waitUntilSubscribed()
         load.cancel()
         await load.value
@@ -222,17 +231,17 @@ import shared
     }
 
     @Test func bookmarks_are_seeded_once_from_the_first_emission() async throws {
-        let sessions = FakeStream<[Session]>(.emit([try TestData.sessions()], thenFinish: false))
+        let agenda = FakeStream<[DaySchedule]>(.emit([try schedules()], thenFinish: true))
         let bookmarks = FakeStream<Set<String>>(.emit([["a"], ["a", "stale"]], thenFinish: false))
-        let source = FakeAgendaSource(sessionsStream: sessions, bookmarksStream: bookmarks)
+        let source = FakeAgendaSource(agendaStream: agenda, bookmarksStream: bookmarks)
         let viewModel = makeViewModel(source: source)
 
-        await viewModel.observeSessions()
+        await viewModel.observeAgenda()
 
         #expect(viewModel.bookmarkedIds == ["a"])
 
         viewModel.toggleBookmark(sessionId: "b")
-        await viewModel.observeSessions()
+        await viewModel.observeAgenda()
 
         #expect(bookmarks.subscriptionCount == 1)
         #expect(viewModel.bookmarkedIds == ["a", "b"])
@@ -240,14 +249,14 @@ import shared
     }
 
     @Test func empty_stores_start_with_no_bookmarks_and_no_filters() async throws {
-        let sessions = FakeStream<[Session]>(.emit([try TestData.sessions()], thenFinish: false))
-        let source = FakeAgendaSource(sessionsStream: sessions)
+        let agenda = FakeStream<[DaySchedule]>(.emit([try schedules()], thenFinish: true))
+        let source = FakeAgendaSource(agendaStream: agenda)
         let viewModel = makeViewModel(source: source)
 
         #expect(viewModel.sessionFilters.isEmpty)
         #expect(viewModel.bookmarkedIds.isEmpty)
 
-        await viewModel.observeSessions()
+        await viewModel.observeAgenda()
 
         #expect(viewModel.isLoading == false)
         #expect(!viewModel.agendaContent.sections.isEmpty)

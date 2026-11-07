@@ -48,6 +48,25 @@ extension AgendaContent.Session {
     }
 }
 
+extension AgendaContent {
+    /// Thin display mapping from the shared output (D-07): one section per time slot, in the shared order.
+    /// The grouping, the filtering and the room order are already decided by the shared use case, so nothing
+    /// is sorted or filtered here. Inside this extension the unqualified `Session` is the nested struct.
+    init(days: [DaySchedule], isTalk: (shared.Session) -> Bool, isNavigable: (shared.Session) -> Bool) {
+        self.init(sections: days.flatMap { day in
+            day.slots.map { slot in
+                Section(
+                    date: Date(timeIntervalSince1970: TimeInterval(slot.start.epochSeconds)),
+                    day: day.date,
+                    sessions: slot.sessions.map {
+                        AgendaContent.Session(from: $0, isATalk: isTalk($0), isNavigable: isNavigable($0))
+                    }
+                )
+            }
+        })
+    }
+}
+
 extension Session: Identifiable { }
 
 // MARK: - AgendaDays
