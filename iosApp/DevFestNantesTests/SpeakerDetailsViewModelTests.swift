@@ -126,6 +126,41 @@ import shared
         #expect(viewModel.isLoading == false)
     }
 
+    @Test func content_for_a_session_carries_the_shared_classification() throws {
+        let sessions = try TestData.sessions()
+        let talk = try #require(sessions.first { $0.type == .conference })
+        let service = try #require(sessions.first { $0.type == .opening || $0.type == .lunch || $0.type == .break_ })
+        let classifier = ClassifySessionUseCase()
+
+        // Real shared use case behind the port: the flags are the use case's, the session is unchanged.
+        let live = makeViewModel(FakeSpeakerDetailsSource(
+            speakerCall: FakeCall(.value(nil)),
+            sessionsCall: FakeCall(.value([]))
+        ))
+        for session in [talk, service] {
+            let content = live.content(for: session)
+            #expect(content.isATalk == classifier.isTalk(session: session), "isATalk of \(session.id)")
+            #expect(content.isNavigable == classifier.isNavigable(session: session), "isNavigable of \(session.id)")
+            #expect(content.id == session.id)
+            #expect(content.title == session.title)
+        }
+        #expect(live.content(for: talk).isATalk == true)
+        #expect(live.content(for: talk).isNavigable == true)
+        #expect(live.content(for: service).isATalk == false)
+        #expect(live.content(for: service).isNavigable == false)
+
+        // Scripted port, opposite to the v1.0 rules: the ViewModel takes the flags from its source only.
+        let scripted = makeViewModel(FakeSpeakerDetailsSource(
+            speakerCall: FakeCall(.value(nil)),
+            sessionsCall: FakeCall(.value([])),
+            talkOverride: { _ in false },
+            navigableOverride: { _ in false }
+        ))
+        #expect(scripted.content(for: talk).isATalk == false)
+        #expect(scripted.content(for: talk).isNavigable == false)
+        #expect(scripted.content(for: talk).id == talk.id)
+    }
+
     @Test func cancellation_during_the_speaker_call_is_silent() async throws {
         let source = FakeSpeakerDetailsSource(
             speakerCall: FakeCall(.suspendUntilCancelled),

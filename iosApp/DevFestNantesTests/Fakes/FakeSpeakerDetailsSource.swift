@@ -11,10 +11,29 @@ final class FakeSpeakerDetailsSource: SpeakerDetailsSource, @unchecked Sendable 
     private let lock = NSLock()
     private var speakerIds: [String] = []
     private var sessionsSpeakerIds: [String] = []
+    private let classifier = ClassifySessionUseCase()
+    private let talkOverride: (@Sendable (Session) -> Bool)?
+    private let navigableOverride: (@Sendable (Session) -> Bool)?
 
-    init(speakerCall: FakeCall<Speaker?>, sessionsCall: FakeCall<[Session]>) {
+    /// Classification delegates to the real shared use case unless a test scripts the two flags.
+    init(
+        speakerCall: FakeCall<Speaker?>,
+        sessionsCall: FakeCall<[Session]>,
+        talkOverride: (@Sendable (Session) -> Bool)? = nil,
+        navigableOverride: (@Sendable (Session) -> Bool)? = nil
+    ) {
         self.speakerCall = speakerCall
         self.sessionsCall = sessionsCall
+        self.talkOverride = talkOverride
+        self.navigableOverride = navigableOverride
+    }
+
+    func isTalk(_ session: Session) -> Bool {
+        talkOverride?(session) ?? classifier.isTalk(session: session)
+    }
+
+    func isNavigable(_ session: Session) -> Bool {
+        navigableOverride?(session) ?? classifier.isNavigable(session: session)
     }
 
     /// Speaker ids requested through `speaker(id:)` so far, in call order.

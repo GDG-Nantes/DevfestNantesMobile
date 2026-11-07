@@ -4,8 +4,10 @@ import shared
 @testable import DevFest_Nantes
 
 /// Pins the v1.0 iOS agenda behavior (grouping, filtering, classification) on the recorded snapshot
-/// (core/domain/testdata/agenda). The code under test is the unchanged app code: the grouping body of
-/// `AgendaViewModel.sessionsChanged`, the D-10 statics of `AgendaView`, and `AgendaContent.Session.isATalk`.
+/// (core/domain/testdata/agenda). The code under test is the app code: the grouping body of
+/// `AgendaViewModel.sessionsChanged`, the D-10 statics of `AgendaView`, and the `isATalk`/`isNavigable`
+/// flags, which since Phase 9 come from the shared `ClassifySessionUseCase` (the tables below are literal copies
+/// of its test table).
 /// Never calls `observe*`, `toggleFavorite`, `clearFilters` nor assigns `sessionFilters` (side effects).
 /// The app filter type is always written `DevFest_Nantes.SessionFilter` (D-13).
 @MainActor @Suite struct AgendaCharacterizationTests {
@@ -112,21 +114,44 @@ import shared
         let template = try #require(TestData.sessions().first)
 
         for (name, expected) in table {
-            let type = try name.map(TestData.sessionType)
-            let session = Session(
-                id: template.id,
-                abstract: "",
-                category: nil,
-                language: nil,
-                complexity: nil,
-                openFeedbackFormId: nil,
-                room: nil,
-                scheduleSlot: template.scheduleSlot,
-                speakers: [],
-                title: template.title,
-                type: type
-            )
+            let session = try Self.session(of: name, like: template)
             #expect(AgendaContent.Session(from: session).isATalk == expected, "isATalk(\(name ?? "nil"))")
         }
+    }
+
+    // Literal table identical to the isNavigable column of ClassifySessionUseCaseTest.
+    @Test func is_navigable_matches_the_shared_table() throws {
+        let table: [(String?, Bool)] = [
+            ("BREAK", false),
+            ("CODELAB", true),
+            ("CONFERENCE", true),
+            ("KEYNOTE", false),
+            ("LUNCH", false),
+            ("OPENING", false),
+            ("QUICKIE", true),
+            (nil, false),
+        ]
+        let template = try #require(TestData.sessions().first)
+
+        for (name, expected) in table {
+            let session = try Self.session(of: name, like: template)
+            #expect(AgendaContent.Session(from: session).isNavigable == expected, "isNavigable(\(name ?? "nil"))")
+        }
+    }
+
+    private static func session(of typeName: String?, like template: Session) throws -> Session {
+        Session(
+            id: template.id,
+            abstract: "",
+            category: nil,
+            language: nil,
+            complexity: nil,
+            openFeedbackFormId: nil,
+            room: nil,
+            scheduleSlot: template.scheduleSlot,
+            speakers: [],
+            title: template.title,
+            type: try typeName.map(TestData.sessionType)
+        )
     }
 }
