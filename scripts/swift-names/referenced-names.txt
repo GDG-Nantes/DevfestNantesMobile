@@ -11,6 +11,7 @@ ContentLanguage
 DaySchedule
 DevFestNantesStore
 DevFestNantesStoreBuilder
+FilterSessionsUseCase
 GroupSessionsUseCase
 IosDependencies
 Kotlinx_datetimeTimeZone
@@ -21,6 +22,7 @@ PartnerCategory
 Room
 ScheduleSlot
 Session
+SessionFilter
 SessionFilterType
 SessionFiltersStore
 SessionLanguage
