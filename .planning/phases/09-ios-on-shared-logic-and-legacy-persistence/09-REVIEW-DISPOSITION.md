@@ -5,7 +5,7 @@ titles: json
 findings:
   - id: WR-01
     severity: warning
-    disposition: open
+    disposition: fixed
     title: "Bookmark mirror is never reconciled with the store after a failed or skipped seed"
   - id: IN-01
     severity: info
@@ -27,7 +27,7 @@ findings:
     severity: info
     disposition: open
     title: "Pre-existing items on touched lines (not phase defects)"
-open: 6
+open: 5
 total: 6
 recorded: 2026-11-08T08:56:01.761Z
 ---
@@ -36,7 +36,7 @@ recorded: 2026-11-08T08:56:01.761Z
 
 | Finding | Severity | Disposition | Source |
 |---------|----------|-------------|--------|
-| WR-01 | warning | open | - |
+| WR-01 | warning | fixed | 61bb6b28 fix, b4245bf0 tests (quick 261108-e0y) |
 | IN-01 | info | open | - |
 | IN-02 | info | open | - |
 | IN-03 | info | open | - |
