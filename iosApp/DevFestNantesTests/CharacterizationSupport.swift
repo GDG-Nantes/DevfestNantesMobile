@@ -5,8 +5,6 @@ import shared
 
 // Support for the Phase 7 characterization suites: loads the shared recorded snapshot
 // (core/domain/testdata/agenda) into Kotlin model values and reads/records the iOS goldens.
-// Rule (agenda/README.md): refer to the app's filter type as `DevFest_Nantes.SessionFilter` in every
-// test file that imports `shared`, so the Kotlin `SessionFilter` export cannot make it ambiguous.
 
 // MARK: - Test host
 
@@ -14,6 +12,21 @@ import shared
     /// Idempotent: the host app already started Koin at launch; Kotlin starts it only when absent.
     static func start() {
         IosDependencies.shared.start()
+    }
+}
+
+// MARK: - Display model
+
+extension AgendaContent.Session {
+    /// Test-only: classifies through a real `ClassifySessionUseCase`, so the existing call sites keep the
+    /// one-argument form. The app has no such initializer (D-07).
+    init(from session: shared.Session) {
+        let classifier = ClassifySessionUseCase()
+        self.init(
+            from: session,
+            isATalk: classifier.isTalk(session: session),
+            isNavigable: classifier.isNavigable(session: session)
+        )
     }
 }
 
@@ -142,6 +155,16 @@ enum TestData {
         case "ADVANCED": return .advanced
         default: throw TestDataError.unknownName(kind: "Complexity", name: name)
         }
+    }
+
+    /// The snapshot grouped by the shared use case, with the iOS day strategy over the conference dates
+    /// and an explicit zone (CI simulators run in UTC, so the zone is never the system one).
+    static func schedules(zoneId: String) throws -> [DaySchedule] {
+        GroupSessionsUseCase().group(
+            sessions: try sessions(),
+            dayAssignment: LocalDateDays(dates: AgendaDays.all),
+            timeZone: Kotlinx_datetimeTimeZone.companion.of(zoneId: zoneId)
+        )
     }
 
     // MARK: Filter cases

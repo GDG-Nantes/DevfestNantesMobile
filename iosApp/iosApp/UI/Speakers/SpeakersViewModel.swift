@@ -13,7 +13,11 @@ import shared
 @Observable
 @MainActor
 final class SpeakersViewModel {
-    var speakersContent: [Speaker]?
+    var speakersContent: [Speaker]? {
+        // The A-Z grouping is computed once per change of the speakers, not on every view read.
+        didSet { letterGroups = source.letterGroups(speakers: speakersContent ?? []) }
+    }
+    private(set) var letterGroups: [SpeakerLetterGroup] = []
     var isLoading = true
 
     @ObservationIgnored private let source: SpeakersSource
@@ -56,17 +60,13 @@ final class SpeakersViewModel {
         }
     }
 
-    ///Function to get the first letters of speaker names
+    ///Function to get the first letters of speaker names, from the shared speaker index
     func getAlphabets() -> [String] {
-        let letters = speakersContent?.compactMap { $0.name.prefix(1).uppercased() }
-        let uniqueLetters = Array(Set(letters ?? []))
-        return uniqueLetters.sorted()
+        letterGroups.map(\.letter)
     }
 
-    ///Function to get speakers by the first letter of their name
+    ///Function to get speakers by the first letter of their name, from the shared speaker index
     func speakers(for letter: String) -> [Speaker] {
-        return speakersContent?.filter {
-            $0.name.prefix(1).uppercased() == letter
-        } ?? []
+        letterGroups.first { $0.letter == letter }?.speakers ?? []
     }
 }

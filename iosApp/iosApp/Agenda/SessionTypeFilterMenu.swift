@@ -21,14 +21,7 @@ struct SessionTypeFilterMenu: View {
             ForEach(sessionTypeItems, id: \ .value) { item in
                 let isSelected = viewModel.sessionFilters.contains { $0.type == .type && $0.value == item.value }
                 Button(action: {
-                    var newFilters = viewModel.sessionFilters
-                    let filter = SessionFilter(type: .type, value: item.value)
-                    if newFilters.contains(filter) {
-                        newFilters.remove(filter)
-                    } else {
-                        newFilters.insert(filter)
-                    }
-                    viewModel.sessionFilters = newFilters
+                    viewModel.toggleFilter(type: .type, value: item.value)
                 }) {
                     HStack {
                         Image(systemName: isSelected ? "checkmark.square" : "square")

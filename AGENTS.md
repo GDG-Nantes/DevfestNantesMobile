@@ -127,6 +127,8 @@ follow the detailed guidance in the `android-cli` skill's `references/interact.m
   `ObservableObject`, `@Published`, `objectWillChange`, `DispatchQueue.main.async`) are banned in iOS
   Swift sources, comments included, and in the Xcode project (the KMP-NativeCoroutines Combine product);
   `bash scripts/swift-observation-gate.sh` enforces it in CI.
+- `Live...` adapters are the only callers of the plain IosDependencies accessors for shared use cases and
+  stores, and the iOS app persists bookmarks and filters only through those stores.
 - The iOS app needs SwiftGen (`brew install swiftgen`) and a `GoogleService-Info.plist` that is not
   committed. Test SwiftGen configuration changes manually before relying on the build phase.
 - Logging: use `DevFestLogger` (`iosApp/iosApp/Analytics/DevFestLogger.swift`), which wraps the

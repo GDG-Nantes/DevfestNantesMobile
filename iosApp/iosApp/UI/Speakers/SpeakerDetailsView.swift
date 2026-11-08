@@ -68,8 +68,9 @@ struct SpeakerDetails: View {
                                 if let speakerSessions = viewModel.speakerSession {
                                     VStack(spacing: 8) {
                                         ForEach(speakerSessions, id: \.id) { session in
-                                            NavigationLink(destination: AgendaDetailView(session: AgendaContent.Session(from: session), day: "day")) {
-                                                AgendaCellView(session: AgendaContent.Session(from: session))
+                                            let content = viewModel.content(for: session)
+                                            NavigationLink(destination: AgendaDetailView(session: content, day: "day")) {
+                                                AgendaCellView(session: content)
                                                     .foregroundColor(.primary)
                                                     .frame(maxWidth: .infinity)
                                             }

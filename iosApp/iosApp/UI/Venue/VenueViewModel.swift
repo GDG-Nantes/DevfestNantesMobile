@@ -22,16 +22,9 @@ final class VenueViewModel {
         self.source = source
     }
 
-    ///Detect phone language
+    ///Content language for the phone language, chosen by the shared venue language rule
     var currentLanguage: ContentLanguage {
-        guard let languageCode = Locale.current.languageCode else {
-            return .english
-        }
-        if languageCode == "fr" {
-            return .french
-        } else {
-            return .english
-        }
+        source.language(forCode: Locale.current.languageCode)
     }
 
     ///Asynchronous method to retrieve venue

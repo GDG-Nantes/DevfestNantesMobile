@@ -17,7 +17,9 @@ import Foundation
 /// which cancels the Kotlin collection.
 ///
 /// Trade-off: the next native item is requested right after each yield (no pull-based backpressure), which
-/// is fine for the small, mostly single-emission flows the app consumes.
+/// is fine for the small flows the app consumes: mostly single-emission ones, plus the continuous agenda
+/// flow, which emits again when the data, the bookmarks or the filters change and is consumed as fast as it
+/// emits.
 enum KotlinStreamBridge {
 
     static func stream<Output, Failure: Error, Unit>(

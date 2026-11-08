@@ -1,0 +1,277 @@
+appId: com.gdgnantes.devfest.iosApp
+# D-10 parity flow (phase 09), derived from the phase 08 D-16 flow. Run from base/ or branch/ so the screenshots land there:
+#   cd 09-parity/base   && maestro --device <base udid>   test ../parity-flow.yaml
+#   cd 09-parity/branch && maestro --device <branch udid> test ../parity-flow.yaml
+# base = main (1077fd84) on "DevFest Parity Base", branch = the phase 09 head on "DevFest Parity Branch".
+# Targets were located with `maestro hierarchy` on the branch build and are reused unchanged on the baseline.
+---
+- launchApp:
+    clearState: true
+- extendedWaitUntil:
+    visible: "08:00"
+    timeout: 120000
+- takeScreenshot: 01-agenda-day1
+
+# 02: day 2 segment
+- tapOn: "October 17, 2025"
+- waitForAnimationToEnd
+- takeScreenshot: 02-agenda-day2
+
+# 03: back to day 1, star the first two talks from the list
+- tapOn: "October 16, 2025"
+- extendedWaitUntil:
+    visible: "08:00"
+    timeout: 60000
+- tapOn:
+    id: "star"
+- scrollUntilVisible:
+    element:
+      id: "star"
+    direction: DOWN
+- tapOn:
+    id: "star"
+- waitForAnimationToEnd
+- takeScreenshot: 03-list-two-stars
+
+# 04: open the first starred talk (Opening Keynote)
+- scrollUntilVisible:
+    element: "Opening Keynote - Advice Well Taken"
+    direction: UP
+- tapOn: "Opening Keynote - Advice Well Taken"
+- extendedWaitUntil:
+    visible:
+      id: "BackButton"
+    timeout: 30000
+- waitForAnimationToEnd
+- takeScreenshot: 04-session-detail
+
+# 05: un-star in the detail toolbar
+- tapOn:
+    id: "star.fill"
+- waitForAnimationToEnd
+- takeScreenshot: 05-detail-unstarred
+
+# 06: back to the list
+- tapOn:
+    id: "BackButton"
+- extendedWaitUntil:
+    visible: "October 16, 2025"
+    timeout: 30000
+- waitForAnimationToEnd
+- takeScreenshot: 06-list-after-detail-toggle
+
+# 07: filter menu
+- tapOn:
+    point: "89%,10%"
+- extendedWaitUntil:
+    visible: "Favorites"
+    timeout: 30000
+- takeScreenshot: 07-filter-menu
+
+# 08: Favorites filter
+- tapOn: "Favorites"
+- waitForAnimationToEnd
+- takeScreenshot: 08-filter-favorites
+
+# 09: relaunch, favorites (and filter) after relaunch
+- stopApp
+- launchApp
+- extendedWaitUntil:
+    visible: "October 16, 2025"
+    timeout: 120000
+- waitForAnimationToEnd
+- takeScreenshot: 09-favorites-after-relaunch
+
+# 10: open the remaining favorite, un-star it in the detail, go back (Favorites filter still on)
+# the Favorites filter leaves one card; tap it by position, because which talk is second in the 10:00 slot depends on the in-slot room order
+- tapOn:
+    point: "40%,37%"
+- extendedWaitUntil:
+    visible:
+      id: "BackButton"
+    timeout: 30000
+- tapOn:
+    id: "star.fill"
+- waitForAnimationToEnd
+- tapOn:
+    id: "BackButton"
+- extendedWaitUntil:
+    visible: "October 16, 2025"
+    timeout: 30000
+- waitForAnimationToEnd
+- takeScreenshot: 10-list-after-unstar-in-detail-with-favorites-filter
+
+# 11: clear filters, Languages > english
+- tapOn:
+    point: "89%,10%"
+- extendedWaitUntil:
+    visible: "Clear"
+    timeout: 30000
+- tapOn: "Clear"
+- waitForAnimationToEnd
+- tapOn:
+    point: "89%,10%"
+- extendedWaitUntil:
+    visible: "Languages"
+    timeout: 30000
+- tapOn: "Languages"
+- tapOn: "english"
+- waitForAnimationToEnd
+- takeScreenshot: 11-filter-language-english
+
+# 12: clear, Complexity > Beginer
+- tapOn:
+    point: "89%,10%"
+- extendedWaitUntil:
+    visible: "Clear"
+    timeout: 30000
+- tapOn: "Clear"
+- waitForAnimationToEnd
+- tapOn:
+    point: "89%,10%"
+- extendedWaitUntil:
+    visible: "Complexity"
+    timeout: 30000
+- tapOn: "Complexity"
+- tapOn: "Beginer"
+- waitForAnimationToEnd
+- takeScreenshot: 12-filter-complexity-beginner
+
+# 13: clear, Rooms > first room (L'Atelier)
+- tapOn:
+    point: "89%,10%"
+- extendedWaitUntil:
+    visible: "Clear"
+    timeout: 30000
+- tapOn: "Clear"
+- waitForAnimationToEnd
+- tapOn:
+    point: "89%,10%"
+- extendedWaitUntil:
+    visible: "Rooms"
+    timeout: 30000
+- tapOn: "Rooms"
+- tapOn: "L'Atelier"
+- waitForAnimationToEnd
+- takeScreenshot: 13-filter-room
+
+# 14: clear, Session type > Codelab
+- tapOn:
+    point: "89%,10%"
+- extendedWaitUntil:
+    visible: "Clear"
+    timeout: 30000
+- tapOn: "Clear"
+- waitForAnimationToEnd
+- tapOn:
+    point: "89%,10%"
+- extendedWaitUntil:
+    visible: "Session type"
+    timeout: 30000
+- tapOn: "Session type"
+- tapOn: "Codelab"
+- waitForAnimationToEnd
+- takeScreenshot: 14-filter-type-codelab
+
+# 15: clear filters
+- tapOn:
+    point: "89%,10%"
+- extendedWaitUntil:
+    visible: "Clear"
+    timeout: 30000
+- tapOn: "Clear"
+- waitForAnimationToEnd
+- takeScreenshot: 15-filters-cleared
+
+# 16: Speakers tab
+- tapOn: "Speakers"
+- extendedWaitUntil:
+    visible: "M"
+    timeout: 60000
+- waitForAnimationToEnd
+- takeScreenshot: 16-speakers
+
+# 17: A-Z index, M
+- tapOn: "M"
+- waitForAnimationToEnd
+- takeScreenshot: 17-speakers-index-m
+
+# 18: first speaker under M
+- tapOn: "Marie Terrier"
+- extendedWaitUntil:
+    visible: "Talks"
+    timeout: 30000
+- waitForAnimationToEnd
+- takeScreenshot: 18-speaker-detail
+
+# 19: the speaker's first talk (agenda detail through the environment)
+- tapOn: "Démêler vrais produits.*"
+- extendedWaitUntil:
+    visible:
+      id: "BackButton"
+    timeout: 30000
+- waitForAnimationToEnd
+- takeScreenshot: 19-speaker-session-detail
+
+# 24: star the talk from the toolbar of a detail opened through Speakers
+- tapOn:
+    id: "star"
+- waitForAnimationToEnd
+- takeScreenshot: 24-speaker-session-starred
+
+# 20: Venue tab
+- tapOn: "Venue"
+- waitForAnimationToEnd
+- takeScreenshot: 20-venue
+
+# 21: About tab
+- tapOn: "About"
+- waitForAnimationToEnd
+- takeScreenshot: 21-about
+
+# 25: back on the Agenda tab, the Favorites filter shows the star set through Speakers
+- tapOn: "Agenda"
+- extendedWaitUntil:
+    visible: "October 16, 2025"
+    timeout: 60000
+- waitForAnimationToEnd
+- tapOn:
+    point: "89%,10%"
+- extendedWaitUntil:
+    visible: "Favorites"
+    timeout: 30000
+- tapOn: "Favorites"
+- waitForAnimationToEnd
+- takeScreenshot: 25-agenda-favorites-after-speakers-star
+
+# 22: clear the filter, day 1 scrolled down
+- tapOn:
+    point: "89%,10%"
+- extendedWaitUntil:
+    visible: "Clear"
+    timeout: 30000
+- tapOn: "Clear"
+- waitForAnimationToEnd
+- swipe:
+    start: 50%,75%
+    end: 50%,25%
+- swipe:
+    start: 50%,75%
+    end: 50%,25%
+- waitForAnimationToEnd
+- takeScreenshot: 22-agenda-day1-midday
+
+# 23: day 2, scrolled down
+- scrollUntilVisible:
+    element: "October 17, 2025"
+    direction: UP
+- tapOn: "October 17, 2025"
+- waitForAnimationToEnd
+- swipe:
+    start: 50%,75%
+    end: 50%,25%
+- swipe:
+    start: 50%,75%
+    end: 50%,25%
+- waitForAnimationToEnd
+- takeScreenshot: 23-agenda-day2-afternoon

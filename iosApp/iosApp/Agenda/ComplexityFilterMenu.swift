@@ -29,14 +29,7 @@ struct ComplexityFilterMenu: View {
         Menu(L10n.sessionFiltersDrawerComplexityLabel) {
             ForEach(filterItems) { item in
                 Button(action: {
-                    var newFilters = viewModel.sessionFilters
-                    let filter = SessionFilter(type: .complexity, value: item.id)
-                    if newFilters.contains(filter) {
-                        newFilters.remove(filter)
-                    } else {
-                        newFilters.insert(filter)
-                    }
-                    viewModel.sessionFilters = newFilters
+                    viewModel.toggleFilter(type: .complexity, value: item.id)
                 }) {
                     HStack {
                         Image(systemName: item.isSelected ? "checkmark.square" : "square")

@@ -1,0 +1,1 @@
+No external API integration: this phase rewires the iOS app onto in-repo Kotlin use cases and stores exported by the `shared` framework, and adds no external API, SDK or service (the detector matched the words "Swift API").

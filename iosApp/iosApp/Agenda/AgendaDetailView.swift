@@ -129,14 +129,14 @@ struct AgendaDetailView: View {
                 .toolbar {
                     ToolbarItem(placement: .navigationBarTrailing) {
                         Button {
-                            viewModel.toggleFavorite(ofSession: session)
+                            let bookmarked = viewModel.toggleBookmark(sessionId: session.id)
                             FirebaseAnalyticsService.shared.eventBookmark(
                                 page: .sessionDetails,
                                 sessionId: session.id,
-                                bookmarked: viewModel.favorites.contains(session.id)
+                                bookmarked: bookmarked
                             )
                         } label: {
-                            Image(systemName: viewModel.favorites.contains(session.id) ? "star.fill" : "star")
+                            Image(systemName: viewModel.isBookmarked(session.id) ? "star.fill" : "star")
                                 .foregroundColor(Color(Asset.devFestYellow.color))
                         }
                     }

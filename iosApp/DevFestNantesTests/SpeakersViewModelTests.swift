@@ -14,7 +14,7 @@ import shared
     @Test func live_source_loads_the_mocked_store_speakers_and_records_the_speakers_trace() async {
         let store = DevFestNantesStoreBuilder().setUseMockServer(useMockServer: true).build()
         let tracing = RecordingDataLoadTracing()
-        let viewModel = SpeakersViewModel(source: LiveSpeakersSource(store: { store }), tracing: tracing)
+        let viewModel = SpeakersViewModel(source: LiveSpeakersSource(store: { store }, speakerIndex: { SpeakerIndexUseCase() }), tracing: tracing)
 
         await viewModel.observeSpeakers()
 
@@ -110,6 +110,21 @@ import shared
         #expect(viewModel.speakersContent?.map(\.id) == ["a"])
         #expect(viewModel.isLoading == false)
         #expect(stream.subscriptionCount == 2)
+    }
+
+    @Test func letter_groups_come_from_the_source_once_per_emission() async {
+        let stream = FakeStream<[Speaker]>(.emit([[speaker("a", "Ada"), speaker("b", "bob"), speaker("c", "Alan")]], thenFinish: true))
+        let source = FakeSpeakersSource(speakersStream: stream)
+        let viewModel = SpeakersViewModel(source: source, tracing: RecordingDataLoadTracing())
+
+        await viewModel.observeSpeakers()
+
+        #expect(source.letterGroupRequestCount == 1)
+        #expect(viewModel.getAlphabets() == ["A", "B"])
+        #expect(viewModel.speakers(for: "A").map(\.id) == ["a", "c"])
+        #expect(viewModel.speakers(for: "B").map(\.id) == ["b"])
+        #expect(viewModel.speakers(for: "Z").isEmpty)
+        #expect(source.letterGroupRequestCount == 1)
     }
 
     @Test func init_does_not_subscribe() {

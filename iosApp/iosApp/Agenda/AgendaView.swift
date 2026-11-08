@@ -20,7 +20,7 @@ import shared
 struct AgendaView: View {
     @Environment(AgendaViewModel.self) private var viewModel
     
-    @State private var day = "2025-10-16"
+    @State private var day = AgendaDays.day1
     @State private var scrollToSectionID: Date? = nil
     @State private var firstAppear = true
     
@@ -59,7 +59,7 @@ struct AgendaView: View {
             }
             .task {
                 RCValues.sharedInstance.fetchCloudValues()
-                await viewModel.observeSessions()
+                await viewModel.observeAgenda()
             }
         }
         .onAppear {
@@ -72,8 +72,8 @@ struct AgendaView: View {
     
     private var dayPicker: some View {
         Picker("What is the day?", selection: $day) {
-            Text(L10n.day1).tag("2025-10-16")
-            Text(L10n.day2).tag("2025-10-17")
+            Text(L10n.day1).tag(AgendaDays.day1)
+            Text(L10n.day2).tag(AgendaDays.day2)
         }
         .pickerStyle(.segmented)
         .padding(.horizontal, 12)
@@ -82,18 +82,15 @@ struct AgendaView: View {
     private var agendaList: some View {
         List {
             ForEach(filteredSections(for: day), id: \.date) { section in
-                let sessionsToShow = filteredSessionsForSection(section)
-                if !sessionsToShow.isEmpty {
-                    Section(header: TimeHeader(date: section.date, formatter: sectionTimeFormatter).id(section.date)) {
-                        ForEach(sessionsToShow, id: \.id) { session in
-                            agendaRow(for: session)
-                                .listRowBackground(Color.clear)
-                                .listRowSeparator(.hidden)
-                                .listRowInsets(EdgeInsets(top: 4, leading: 16, bottom: 4, trailing: 16))
-                        }
+                Section(header: TimeHeader(date: section.date, formatter: sectionTimeFormatter).id(section.date)) {
+                    ForEach(section.sessions, id: \.id) { session in
+                        agendaRow(for: session)
+                            .listRowBackground(Color.clear)
+                            .listRowSeparator(.hidden)
+                            .listRowInsets(EdgeInsets(top: 4, leading: 16, bottom: 4, trailing: 16))
                     }
-                    .textCase(nil)
                 }
+                .textCase(nil)
             }
         }
         .listStyle(.plain)
@@ -103,8 +100,6 @@ struct AgendaView: View {
     
     @ViewBuilder
     private func agendaRow(for session: AgendaContent.Session) -> some View {
-        let isNavigable = (session.sessionType == .conference || session.sessionType == .codelab || session.sessionType == .quickie)
-        
         let rowContent = SessionRowContent(
             title: session.title,
             categoryLabel: session.category?.label,
@@ -112,20 +107,20 @@ struct AgendaView: View {
             room: session.room,
             speakersNames: session.speakers.map { $0.name }.joined(separator: ", "),
             isTalk: session.isATalk,
-            isFavorite: viewModel.favorites.contains(session.id),
-            isNavigable: isNavigable,
+            isFavorite: viewModel.isBookmarked(session.id),
+            isNavigable: session.isNavigable,
             favoriteTapped: {
-                viewModel.toggleFavorite(ofSession: session)
+                let bookmarked = viewModel.toggleBookmark(sessionId: session.id)
                 FirebaseAnalyticsService.shared.eventBookmark(
                     page: .agenda,
                     sessionId: session.id,
-                    bookmarked: viewModel.favorites.contains(session.id)
+                    bookmarked: bookmarked
                 )
             }
         )
         
         // Cellule entière cliquable uniquement pour conference/codelab/quickie
-        if isNavigable {
+        if session.isNavigable {
             PushLink(destination: AgendaDetailView(session: session, day: day)) {
                 SessionRow(content: rowContent)
             }
@@ -136,57 +131,32 @@ struct AgendaView: View {
     
     // MARK: - Filtering
     
+    /// The sections of one day. The list is already filtered and grouped by the shared combined flow (D-05):
+    /// the section `day` is the configured date string, so a day is selected by equality.
     private func filteredSections(for day: String) -> [AgendaContent.Section] {
-        Self.sections(viewModel.agendaContent.sections, forDay: day)
-    }
-
-    private func filteredSessionsForSection(_ section: AgendaContent.Section) -> [AgendaContent.Session] {
-        Self.filteredSessions(section.sessions, filters: viewModel.sessionFilters, favorites: viewModel.favorites)
-    }
-
-    /// Static and pure so tests can call it without creating a view (D-10 extraction, bodies unchanged).
-    static func sections(_ sections: [AgendaContent.Section], forDay day: String) -> [AgendaContent.Section] {
-        sections.filter { $0.day.contains(day) }
-    }
-
-    /// Static and pure so tests can call it without creating a view (D-10 extraction, bodies unchanged).
-    static func filteredSessions(
-        _ sessions: [AgendaContent.Session],
-        filters: Set<SessionFilter>,
-        favorites: [String]
-    ) -> [AgendaContent.Session] {
-        var filtered = sessions
-        let selectedLanguages = filters.filter { $0.type == .language }.map { $0.value }
-        let selectedSessionTypes = filters.filter { $0.type == .type }.map { $0.value }
-        let selectedRooms = filters.filter { $0.type == .room }.map { $0.value }
-        let selectedComplexities = filters.filter { $0.type == .complexity }.map { $0.value }
-
-        if !selectedLanguages.isEmpty {
-            filtered = filtered.filter { s in
-                if let lang = s.language?.name { selectedLanguages.contains(lang) } else { false }
-            }
-        }
-        if !selectedSessionTypes.isEmpty {
-            filtered = filtered.filter { s in
-                selectedSessionTypes.contains(s.sessionType?.name ?? "")
-            }
-        }
-        if !selectedRooms.isEmpty {
-            filtered = filtered.filter { s in
-                selectedRooms.contains(s.room)
-            }
-        }
-        if !selectedComplexities.isEmpty {
-            filtered = filtered.filter { s in
-                if let comp = s.complexity?.name { selectedComplexities.contains(comp) } else { false }
-            }
-        }
-        let isFavorites = filters.contains { $0.type == .bookmark }
-        return isFavorites ? filtered.filter { favorites.contains($0.id) } : filtered
+        viewModel.agendaContent.sections.filter { $0.day == day }
     }
     
     // MARK: - Initial scroll/day selection
-    
+
+    /// Static and pure so tests can call it without creating a view (D-11 extraction).
+    static func scrollTarget(slotDates: [Date], now: Date, calendar: Calendar) -> Date? {
+        let nowTotal = calendar.component(.hour, from: now) * 60 + calendar.component(.minute, from: now)
+
+        let sorted = slotDates.sorted {
+            let t1 = calendar.component(.hour, from: $0) * 60 + calendar.component(.minute, from: $0)
+            let t2 = calendar.component(.hour, from: $1) * 60 + calendar.component(.minute, from: $1)
+            return t1 < t2
+        }
+
+        var previous: Date?
+        for date in sorted {
+            let t = calendar.component(.hour, from: date) * 60 + calendar.component(.minute, from: date)
+            if t <= nowTotal { previous = date } else { break }
+        }
+        return previous
+    }
+
     private func handleInitialScrollIfNeeded(isLoading: Bool) {
         guard !isLoading else { return }
         let formatter = DateFormatter()
@@ -194,25 +164,9 @@ struct AgendaView: View {
         let currentDay = formatter.string(from: Date())
         
         if currentDay == day && firstAppear {
-            let cal = Calendar.current
-            let now = Date()
-            let nowTotal = cal.component(.hour, from: now) * 60 + cal.component(.minute, from: now)
-            
-            let sorted = viewModel.agendaContent.sections
-                .filter { $0.day.contains(day) }
-                .sorted {
-                    let t1 = cal.component(.hour, from: $0.date) * 60 + cal.component(.minute, from: $0.date)
-                    let t2 = cal.component(.hour, from: $1.date) * 60 + cal.component(.minute, from: $1.date)
-                    return t1 < t2
-                }
-            
-            var previous: AgendaContent.Section?
-            for s in sorted {
-                let t = cal.component(.hour, from: s.date) * 60 + cal.component(.minute, from: s.date)
-                if t <= nowTotal { previous = s } else { break }
-            }
-            if let previous {
-                scrollToSectionID = previous.date
+            let slotDates = filteredSections(for: day).map(\.date)
+            if let target = Self.scrollTarget(slotDates: slotDates, now: Date(), calendar: Calendar.current) {
+                scrollToSectionID = target
             }
             firstAppear = false
         }
@@ -226,12 +180,12 @@ struct AgendaView: View {
         f.dateFormat = "yyyy-MM-dd"
         let currentDay = f.string(from: Date())
 
-        if currentDay == "2025-10-16" {
-            day = "2025-10-16"
-        } else if currentDay == "2025-10-17" {
-            day = "2025-10-17"
+        if currentDay == AgendaDays.day1 {
+            day = AgendaDays.day1
+        } else if currentDay == AgendaDays.day2 {
+            day = AgendaDays.day2
         } else {
-            day = "2025-10-16"
+            day = AgendaDays.day1
         }
     }
 }

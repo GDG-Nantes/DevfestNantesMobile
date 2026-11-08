@@ -49,15 +49,14 @@ CI/CD must work again and the project must become maintainable again (modern bui
 
 - ✓ iOS tests: hosted Swift Testing target `DevFestNantesTests` (replaces the broken `DevFest NantesTests`) run through the committed `iosApp.xctestplan`; iOS CI runs build-for-testing + test-without-building on every PR, fails on zero executed tests (`scripts/xcresult-assert-tests.sh`), Xcode-keyed DerivedData cache; `swift-names-gate.sh` restored in `scripts/` and run in CI; KMP-NativeCoroutines aligned on 1.0.6 (SPM + Gradle) guarded by `scripts/kmp-nc-version-gate.sh`; v1.0 parity smoke approved — v1.1 (Phase 6, IOSTEST-03/04, CONC-03)
 - ✓ Shared KMP domain layer: `:core:domain` (filter, day/time-slot grouping, session classification, speaker A-Z index, venue language, combined `ObserveAgendaUseCase`) exported by `:shared`, `SessionFilter` moved to `:core:model`, common `BookmarksStore`/`SessionFiltersStore` with the Android codec (iOS NSUserDefaults implementation on new keys, tested on simulator); characterization goldens from a recorded API snapshot on both v1.0 platforms; Android consumes it with `SessionFiltersService` removed and human-approved visual parity — v1.1 (Phase 7, SHARED-01..07)
+- ✓ Modern SwiftUI: iOS 17 minimum, `@Observable @MainActor` ViewModels owned with `@State`, one shared `AgendaViewModel`, Combine and the legacy observation APIs removed (guarded by `scripts/swift-observation-gate.sh`), obsolete test target replaced — v1.1 (Phase 8, IOSUI-01..03, IOSTEST-01)
+- ✓ iOS on the shared logic: filtering, grouping, session classification, speaker index and venue language come from `:core:domain`; bookmarks and filters persist only through the Kotlin stores on new keys (v1.0 keys never read, migrated or removed — updating users start empty, proven by an in-place update UAT); the agenda observes the combined flow continuously; duplicated Swift logic deleted; visual parity with `main` approved — v1.1 (Phase 9, IOSDATA-01..03)
 
 ### Active
 
 Milestone v1.1 iOS Architecture (details and REQ-IDs in `REQUIREMENTS.md`):
-- [ ] Domain logic (agenda, filters, favorites, mapping) shared in KMP and consumed by Android and iOS — shared layer and Android adoption done in Phase 7; iOS consumption pending (Phase 9)
-- [ ] No more duplicated business logic on iOS; legacy 2025 `UserDefaults` favorites/filters intentionally not migrated (07-CONTEXT D-15)
 - [ ] iOS app split into local feature/core SPM packages, app target as a shell
 - [ ] Explicit iOS DI through a composition root, with no service-locator or global singletons in ViewModels
-- [ ] iOS 17 minimum, `@Observable` ViewModels, Combine removed
 - [ ] Swift 6 strict concurrency with no warning
 - [ ] Shared tests + Swift Testing + SwiftUI smoke tests, run in iOS CI
 
@@ -116,6 +115,10 @@ Milestone v1.1 iOS Architecture (details and REQ-IDs in `REQUIREMENTS.md`):
 | Phase 7: characterize before moving — goldens recorded on unmodified v1.0 Android and iOS code from a committed real API snapshot, never overwritten (`GoldenFiles` writes only when absent in record mode) | Every move of logic is proven against both platforms' actual behavior, including two time zones for grouping | ✓ Phase 7 — 7 goldens, shared use cases reproduce them on JVM and iOS simulator |
 | Phase 7: iOS room order deviation (`RoomSortIndex`) kept as a documented, test-asserted difference; divergent behaviors (day time zone) go through explicit parameters (`UtcDayWindows`, `TimeZone`) | Strict parity except where the roadmap allowed a documented deviation (SHARED-03/04) | ✓ Phase 7 — documented in `documentation/ARCHITECTURE.md` |
 | Phase 7: Android switch done in small wiring-only commits, `SessionFiltersService` replaced by `SharedPreferencesSessionFiltersStore` in `:core:data` in a single commit (one holder over the filters key at all times) | Avoid two writers on the same SharedPreferences key; keep persisted bytes identical | ✓ Phase 7 — R8 release smoke + 15 paired screenshots approved 2026-10-29 |
+| Phase 9: the one-way switch to the shared stores was a single revertible commit (`586eb4b0`) behind a human `checkpoint:decision`, placed before the combined-flow commits | Moving to `ObserveAgendaUseCase` while still persisting on the legacy keys would have needed a migrator, which 07 D-15 forbids | ✓ Phase 9 — option-proceed, in-place update UAT approved |
+| Phase 9: `AgendaViewModel` keeps an observable write-through mirror of bookmarks and filters; the bookmark mirror is seeded once from the store's first emission (D-05) | `BookmarksStore` has no synchronous snapshot; persistence stays in Kotlin only | ✓ Phase 9 — seed window recorded as an accepted deviation; code review WR-01 (no fallback when the seed fails) open |
+| Phase 9: small agenda offsets after a bookmark change in a detail (list ~35 pt higher, filter menu a few points left) accepted at the D-10 parity checkpoint | Content, order and filter results unchanged; the user judged the branch better than `main` | ✓ Phase 9 — recorded in 09-CONTEXT and the ARCHITECTURE.md deviations table |
+| Phase 9: in-place update UATs seed from an uninstall plus fresh install, never Maestro `clearState` | `clearState` makes the next `simctl install` drop the data container, which would fake a data-loss result | ✓ Phase 9 — diagnosed with a marker-file matrix |
 
 ## Evolution
 
@@ -135,4 +138,4 @@ This document evolves at phase transitions and milestone boundaries.
 4. Update Context with current state
 
 ---
-*Last updated: 2026-10-29 after Phase 7*
+*Last updated: 2026-11-08 after Phase 9*

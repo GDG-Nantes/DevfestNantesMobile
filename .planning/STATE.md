@@ -2,44 +2,44 @@
 gsd_state_version: "1.0"
 milestone: v1.1
 milestone_name: iOS Architecture
-current_phase: 9
-current_phase_name: iOS on Shared Logic and Legacy Persistence
-status: "Phase 08 shipped — PR #432"
-stopped_at: Phase 08 complete, ready to plan Phase 9
-last_updated: "2026-11-05T16:49:40.588Z"
-last_activity: 2026-11-05
-state_head: 8ab59d7dcaab77eb427d8d73c8361fb30b4ce97c
+current_phase: 10
+current_phase_name: Explicit iOS DI
+status: "Phase 09 shipped — PR #433"
+stopped_at: Phase 09 complete, ready to plan Phase 10
+last_updated: "2026-11-08T09:43:24.406Z"
+last_activity: 2026-11-08
+state_head: feca05041e86272c07e86c39d1239d202a39c70b
 progress:
   total_phases: 7
-  completed_phases: 8
-  total_plans: 34
-  completed_plans: 34
-  percent: 67
+  completed_phases: 9
+  total_plans: 50
+  completed_plans: 50
+  percent: 75
 ---
 
 # Project State
 
 ## Project Reference
 
-See: .planning/PROJECT.md (updated 2026-10-29)
+See: .planning/PROJECT.md (updated 2026-11-08)
 
 **Core value:** CI/CD must work again and the project must become maintainable again (modern build, modular architecture, decentralized DI, solid test coverage) without ever regressing the app's existing behavior for users.
-**Current focus:** Phase 08 — Modern SwiftUI, iOS 17 and Observation
+**Current focus:** Phase 09 — iOS on Shared Logic and Legacy Persistence
 
 ## Current Position
 
-Phase: 9 — iOS on Shared Logic and Legacy Persistence
+Phase: 10 — Explicit iOS DI
 Plan: Not started
-Status: Phase 08 shipped — PR #432
-Last activity: 2026-11-05
+Status: Phase 09 shipped — PR #433
+Last activity: 2026-11-08
 
-Progress: [███████░░░] 67%
+Progress: [████████░░] 75%
 
 ## Performance Metrics
 
 **Velocity:**
 
-- Total plans completed: 71
+- Total plans completed: 87
 - Average duration: N/A
 - Total execution time: 0 hours
 
@@ -55,6 +55,7 @@ Progress: [███████░░░] 67%
 | 06 | 6 | - | - |
 | 07 | 19 | - | - |
 | 08 | 9 | - | - |
+| 09 | 16 | - | - |
 
 **Recent Trend:**
 
@@ -173,6 +174,8 @@ Recent decisions affecting current work:
 - [Phase 07]: 07-19: Android parity with v1.0 approved by the human (2026-10-29) from 15 paired main/branch screenshots and the R8 release smoke; no phase-caused difference
 - [Phase 08]: Wave 7 UI safety gate (no UI-SPEC.md for Phase 08) overridden once by the user (2026-11-05): Phase 8 is a behavior-preserving Observation refactor with no visual change; the 08-09 paired-screenshot parity checkpoint (D-16) is the UI proof. workflow.ui_safety_gate left enabled
 - [Phase 08]: UI safety gate override extended by the user (2026-11-05) to all remaining Phase 8 waves (wave 8: 08-08 import/state-object removal, no visual change; wave 9: 08-09 parity checkpoint); config unchanged
+- [Phase 09]: Phase 9 complete (2026-11-08): iOS on the shared logic and stores; verification passed 4/4, Nyquist-compliant, threats_open 0, UI review 17/24 (top findings pre-existing v1.0), code review 0 critical / 1 warning / 5 info open (09-REVIEW-DISPOSITION.md); CI green on PR #433 (head d5f5efb6)
+- [Phase 09]: one-way persistence switch `586eb4b0` approved by the user (option-proceed); in-place update UAT and 31-pair parity approved; small agenda offsets after a bookmark change accepted as a new deviation (09-CONTEXT, ARCHITECTURE.md)
 
 ### Pending Todos
 
@@ -180,7 +183,7 @@ None yet.
 
 ### Blockers/Concerns
 
-- **v1.1 — spikes to plan:** Phase 9 (installed v1.0 release build for the in-place update UAT, check `room.id == room.name`); Phase 11 (XCFramework from a clean checkout on Xcode 26.6 CI, Release/dSYM path, `Bundle.module` with SwiftGen 6.6.3); Phases 8 and 12 (KMP-NativeCoroutines bridge replayed on Swift 6.3.3 in CI)
+- **v1.1 — spikes to plan:** Phase 11 (XCFramework from a clean checkout on Xcode 26.6 CI, Release/dSYM path, `Bundle.module` with SwiftGen 6.6.3); Phases 8 and 12 (KMP-NativeCoroutines bridge replayed on Swift 6.3.3 in CI)
 - **v1.1 — granularity:** 7 phases for a `standard` granularity (4-6 expected); accepted given the risk (27 requirements, every phase green and shippable, order imposed by the user)
 - **Phase 3 — RESOLVED:** About/Partners live in a dedicated `:feature:about` module (D-05, 03-06).
 - **Phase 3 — RESOLVED 2026-09-24 by 03-10 + 03-11:** (history, kept for context) moving `Venue`/`Session`/`Speaker`/`Room`/`Partner` from package `com.gdgnantes.devfest.model` into `com.gdgnantes.devfest.core.model` flipped which of two same-simple-named Kotlin classes (the domain model vs. the Apollo-generated `GetXQuery.X`/`fragment.XDetails.X` GraphQL response class already colliding on that name) keeps the unprefixed Swift name vs. gets suffixed `_`. Kotlin/Native's ObjC header generator resolves same-simple-name collisions across the whole compiled framework by an alphabetical-FQN tie-break (shortest proof: `com.gdgnantes.devfest.model.Venue` sorted AFTER `com.gdgnantes.devfest.graphql.GetVenueQuery.Venue` at baseline — domain model got `Venue_`; `com.gdgnantes.devfest.core.model.Venue` sorts BEFORE `...graphql...` post-rename — domain model now gets clean `Venue`, GraphQL type flips to `Venue_`). This broke ~10 pre-existing Swift files (`VenueContent.swift`, `AgendaContent.swift`, `AgendaViewModel.swift`, `AgendaView.swift`, `AgendaCellView.swift`, `AgendaDetailView.swift`, `SpeakerDetailsViewModel.swift`, `SpeakersViewModel.swift`, `SpeakerDetailsView.swift`, `SpeakerView.swift`, `AboutViewModel.swift`) that hardcode the `_`-suffixed name expecting it to be the domain model. iOS CI failed on Swift compilation (run 35847334261, PR #419) — the swift-names-gate.sh gate (missing-name + collision-COUNT checks) did not catch this because the collision COUNT stayed the same, only the per-name IDENTITY swapped. **Resolution:** see `.planning/phases/03-multi-module-architecture-extraction/03-01-SUMMARY.md` "Halt Resolution (03-10 + 03-11)" for the full diagnosis, the @targetName mechanism, the corrected collision attribution, and the D-11 amendment.
@@ -191,7 +194,6 @@ None yet.
 - **RESOLVED 2026-09-27:** Phase 03 Plan 09 (final phase plan) Android CI Instrumentation-tests OOM blocker. Root cause: D8's `DexMergingWorkAction` shares the Gradle daemon heap (`org.gradle.jvmargs`, was `-Xmx2048M`) while assembling `feature:settings`/`feature:session-detail`/`feature:speakers` androidTest APKs concurrently — 3 consecutive CI failures (run 36270314662 and reruns) with `java.lang.OutOfMemoryError: Java heap space`. Fix: raised the Gradle daemon heap to `-Xmx4096M` in `gradle.properties` (commit 5cb0389, user-approved deviation, Kotlin daemon heap left unchanged). CI-GREEN-BOTH is now satisfied on HEAD 5cb0389: android.yml run 36328538946 (all 4 jobs green, incl. Instrumentation tests (34)), ios.yml run 36328538965 (green). Task 1 (thin :shared umbrella + drop androidApp->:shared dep + delete buildSrc, commits 1bf81ae/2b03d4f) and Task 2 (all phase gates) are both complete; 03-09-SUMMARY.md written and ARCH-01..04 marked complete per the shared-ID gate.
 - Follow-up (not blocking, from 03-SECURITY.md note 2): `swift-names-gate.sh` — RESOLVED in Phase 6 (moved to `scripts/`, runs in iOS CI). `resources-gate.sh` still only runs manually from `.planning`; wire it into CI (CICD-V2-01).
 - Note (not blocking, Phase 6): Xcode launched from the Dock does not inherit the shell `JAVA_HOME`; the default `java_home` JDKs on the maintainer Mac are x86_64-only and Rosetta is absent, so the Gradle Run Script fails in the GUI ("Bad CPU type"). Workaround `launchctl setenv JAVA_HOME …` (lost on reboot); durable fix logged in Phase 6 `deferred-items.md`.
-- Note (not blocking, Phase 6): start dates with fractional seconds fall back to "now" in `AgendaViewModel.parseDate` (pinned by a test) — Phase 9 shared grouping must reproduce it or change it as a recorded deviation.
 - **Phase 3 follow-up — RESOLVED in Phase 4:** `:core:testing` now consumed (`testImplementation`) by `:core:ui` and `:androidApp` (fakes + `testDoublesModule`); Phase 5 extends it.
 - Note (not blocking, Phase 4): `com.google.dagger:dagger` remains on the release classpath only as a Firebase Performance internal transitive; the DI gate and `NO-HILT-ON-CLASSPATH` cover Hilt itself.
 - Note (not blocking, Phase 4 UAT): speaker images may fail to load on networks with SSL interception/blocking of raw.githubusercontent.com — environmental, observed on Android and iOS, not a code regression.
@@ -199,6 +201,14 @@ None yet.
 - Follow-up (not blocking, G-05-3): kotlinx-datetime resolves to `0.8.0-0.6.x-compat` because OpenFeedback 1.0.0-alpha.3 (and every release up to alpha.6) links against the 0.6.x `Instant`/`Clock` classes, which plain 0.8.0 no longer ships. Compat releases end with 0.8.x, so any move to 0.9+ first needs an OpenFeedback release built on `kotlin.time.Instant` (upstream main was still on the deprecated type as of 2026-10-15). `OpenFeedbackDatetimeLinkageTest` fails CI on any bump that drops the compat classes. The Phase 02 R8 suppression premise was false: the secrets plugin sets OPEN_FEEDBACK_ENABLED from local.properties, so the feedback code was reachable on developer and release builds. The suppressions were removed in 05-11.
 - Phase 7 code review: WR-01..04 fixed 2026-10-30 (b6ff4909, 89ccddd0, 87c9fe66, 575970ae; 07-REVIEW-FIX.md). Residual WR-01 limit: the shared `SpeakerIndexUseCase` de-duplicates by uppercase letter, so an `ı` speaker before an `i` speaker hides the `i` header (changing it alters the iOS contract; revisit in Phase 9). IN-01..04 remain open (advisory) in `07-REVIEW-DISPOSITION.md`
 - Follow-up (not blocking): the regression gate resolves to `true` in this repo (no `workflow.test_command`); set it to the Gradle suite so the gate is real
+- Phase 9 code review: WR-01 fixed by quick task 261108-e0y (store fallback while the bookmark mirror is unseeded; the "seed window" deviation row is removed from ARCHITECTURE.md); IN-01..05 info remain open in `09-REVIEW-DISPOSITION.md`. Phase 9 UI review: missing VoiceOver labels on stars/filter menu and an English `Picker` label are v1.0 debt
+- Note (not blocking, Phase 9): local toolchain moved to Xcode 27.2 mid-phase (CoreSimulator 1174.21 after first-launch); CI stays on Xcode 26.6
+
+### Quick Tasks Completed
+
+| # | Description | Date | Commit | Directory |
+|---|-------------|------|--------|-----------|
+| 261108-e0y | Fix Phase 9 code review WR-01: bookmark mirror fallback when the one-shot seed fails | 2026-11-08 | eef62348 | [261108-e0y-fix-phase-9-code-review-wr-01-bookmark-m](./quick/261108-e0y-fix-phase-9-code-review-wr-01-bookmark-m/) |
 
 ## Phase 02 DCL pilot outcome
 
@@ -266,11 +276,11 @@ Items acknowledged and deferred at milestone close, most recent first:
 
 ## Session Continuity
 
-Last session: 2026-11-03T22:34:48.338Z
-Stopped at: Phase 08 complete, ready to plan Phase 9
-Resume file: .planning/phases/08-modern-swiftui-ios-17-and-observation/08-CONTEXT.md
+Last session: 2026-11-08
+Stopped at: Phase 09 complete, ready to plan Phase 10
+Resume file: None
 
 ## Operator Next Steps
 
-- Discuss Phase 7 with /gsd-discuss-phase 7, then plan it with /gsd-plan-phase 7
-- Phase 6 follow-ups (advisory): triage 06-REVIEW-DISPOSITION.md (WR-01 `#if DEBUG` test-host guard, WR-02 xcresult env override, WR-03 floating Xcode vs pinned formatter test); first real `pull_request` run of ios.yml happens on the PR
+- Discuss Phase 10 with /gsd-discuss-phase 10, then plan it with /gsd-plan-phase 10
+- Phase 9 follow-ups: WR-01 fixed (quick 261108-e0y); IN-01..05 advisory in 09-REVIEW-DISPOSITION.md; push and merge PR #433 when ready

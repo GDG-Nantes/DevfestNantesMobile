@@ -35,6 +35,12 @@ final class SpeakerDetailsViewModel {
         await getSpeakerSession(speakerId: speakerId)
     }
 
+    /// Maps a session with the shared classification (D-07, D-08). Pure and called per row during view
+    /// evaluation; the speaker lists are short, so nothing is cached.
+    func content(for session: Session) -> AgendaContent.Session {
+        AgendaContent.Session(from: session, isATalk: source.isTalk(session), isNavigable: source.isNavigable(session))
+    }
+
     func getSpeaker(speakerId: String) async {
         let source = self.source
         do {

@@ -18,7 +18,6 @@
 		003EC8D92DF8D84B000E5689 /* KMPNativeCoroutinesAsync in Frameworks */ = {isa = PBXBuildFile; productRef = 003EC8D82DF8D84B000E5689 /* KMPNativeCoroutinesAsync */; };
 		003EC8DD2DF8D7E1000E5689 /* FirebasePerformance in Frameworks */ = {isa = PBXBuildFile; productRef = 003EC8DC2DF8D7E1000E5689 /* FirebasePerformance */; };
 		007DF0992E71D0D4007B2627 /* DevFestLogger.swift in Sources */ = {isa = PBXBuildFile; fileRef = 007DF0982E71D0D4007B2627 /* DevFestLogger.swift */; };
-		00D442852E6638F100199668 /* SessionFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00D442842E6638F100199668 /* SessionFilter.swift */; };
 		00D442892E6707A600199668 /* AgendaNavigationBarItems.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00D442872E6707A600199668 /* AgendaNavigationBarItems.swift */; };
 		00D442902E67096900199668 /* ComplexityFilterMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00D4428B2E67096900199668 /* ComplexityFilterMenu.swift */; };
 		00D442912E67096900199668 /* ClearFiltersButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 00D4428A2E67096900199668 /* ClearFiltersButton.swift */; };
@@ -62,7 +61,6 @@
 		F5010D532E730D470048CCCE /* GlassRowContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = F5010D522E730D470048CCCE /* GlassRowContainer.swift */; };
 		F58368862E70701E001A9B8A /* LiquidGlassButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = F58368852E70701E001A9B8A /* LiquidGlassButtonStyle.swift */; };
 		F5BA00E32E7014DA00A31383 /* GoogleService-Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = F5BA00E22E7014DA00A31383 /* GoogleService-Info.plist */; };
-		F58B5AB8B24860681567F470 /* SessionFilterTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 07FA17E61A9DDADF5C507A31 /* SessionFilterTests.swift */; };
 		936E5F8A210C9B5E0A5CE29E /* FakeAboutSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = A5E13E475E6CFC5FE7407E60 /* FakeAboutSource.swift */; };
 		9E6FC17C4083DA5BF62C1937 /* FakeCall.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D5EB06B3F72C94AE51B0826 /* FakeCall.swift */; };
 		B081E39E62A5FC7D184E3B59 /* FakeVenueSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = AF70D28D5194EB6C073D2A48 /* FakeVenueSource.swift */; };
@@ -72,7 +70,6 @@
 		5A2B8D3E0C4F6917B2E8D5F3 /* VenueSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4F1A7C2D9B3E5806A1D7C4E2 /* VenueSource.swift */; };
 		7C4DAF5A2E61B839D40AF715 /* VenueViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6B3C9E4F1D50A728C3F9E604 /* VenueViewModelTests.swift */; };
 		3B5E706CACD747451417A8BB /* KotlinStreamBridge.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3DFBB1839062F11AE893C471 /* KotlinStreamBridge.swift */; };
-		9E41D7A05B6C82F3D1048B7A /* AgendaDateParsingTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3C5A91E7B2D04F6810A7C3E9 /* AgendaDateParsingTests.swift */; };
 		C8E3F5B21D6A4079B2F18E53 /* CharacterizationSupport.swift in Sources */ = {isa = PBXBuildFile; fileRef = B7D2E4A10C5F3968A1E07D42 /* CharacterizationSupport.swift */; };
 		EA05B7D43F8C629BD4B3A075 /* AgendaCharacterizationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = D9F4A6C32E7B518AC3A29F64 /* AgendaCharacterizationTests.swift */; };
 		1B6C8E0F5A7D4382C9E4B196 /* SpeakersVenueCharacterizationTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = F20C7A95D1E8436BA5D3C871 /* SpeakersVenueCharacterizationTests.swift */; };
@@ -86,6 +83,8 @@
 		B13578B57B84459DA3F9363E /* FakeSpeakerDetailsSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B180C1D20614A53806942A2 /* FakeSpeakerDetailsSource.swift */; };
 		57B9927230676CF563627ED8 /* AgendaSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2D8490F1AA1AF6EEAE45E8E2 /* AgendaSource.swift */; };
 		F529F567183DE0B596609D13 /* AgendaViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 59876FADBD32923B55AC6A11 /* AgendaViewModelTests.swift */; };
+		5D2B8F4C1A7E3609B4C8D1F2 /* AgendaScrollTargetTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2A6E9C3F7B1D4850E8A3C6D7 /* AgendaScrollTargetTests.swift */; };
+		A91C3E5D7B2F4086C1D5E7A3 /* KotlinContinuousFlowTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4E6D8F20A3C5719E2B4D6F8 /* KotlinContinuousFlowTests.swift */; };
 		DC076202C14D990A8B73FDD7 /* FakeAgendaSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 27FC659D344124EE3FF1B8E8 /* FakeAgendaSource.swift */; };
 /* End PBXBuildFile section */
 
@@ -106,7 +105,6 @@
 		001CB9D42E3829B400614907 /* AgendaView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgendaView.swift; sourceTree = "<group>"; };
 		001CB9D52E3829B400614907 /* AgendaViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgendaViewModel.swift; sourceTree = "<group>"; };
 		007DF0982E71D0D4007B2627 /* DevFestLogger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DevFestLogger.swift; sourceTree = "<group>"; };
-		00D442842E6638F100199668 /* SessionFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionFilter.swift; sourceTree = "<group>"; };
 		00D442872E6707A600199668 /* AgendaNavigationBarItems.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgendaNavigationBarItems.swift; sourceTree = "<group>"; };
 		00D4428A2E67096900199668 /* ClearFiltersButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClearFiltersButton.swift; sourceTree = "<group>"; };
 		00D4428B2E67096900199668 /* ComplexityFilterMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ComplexityFilterMenu.swift; sourceTree = "<group>"; };
@@ -155,7 +153,6 @@
 		F58368852E70701E001A9B8A /* LiquidGlassButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LiquidGlassButtonStyle.swift; sourceTree = "<group>"; };
 		F5BA00E22E7014DA00A31383 /* GoogleService-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "GoogleService-Info.plist"; sourceTree = "<group>"; };
 		938E1B2393F75FF8A7B71E9B /* DevFestNantesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DevFestNantesTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		07FA17E61A9DDADF5C507A31 /* SessionFilterTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionFilterTests.swift; sourceTree = "<group>"; };
 		A5E13E475E6CFC5FE7407E60 /* FakeAboutSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeAboutSource.swift; sourceTree = "<group>"; };
 		8D5EB06B3F72C94AE51B0826 /* FakeCall.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeCall.swift; sourceTree = "<group>"; };
 		AF70D28D5194EB6C073D2A48 /* FakeVenueSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeVenueSource.swift; sourceTree = "<group>"; };
@@ -165,7 +162,6 @@
 		4F1A7C2D9B3E5806A1D7C4E2 /* VenueSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VenueSource.swift; sourceTree = "<group>"; };
 		6B3C9E4F1D50A728C3F9E604 /* VenueViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VenueViewModelTests.swift; sourceTree = "<group>"; };
 		3DFBB1839062F11AE893C471 /* KotlinStreamBridge.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KotlinStreamBridge.swift; sourceTree = "<group>"; };
-		3C5A91E7B2D04F6810A7C3E9 /* AgendaDateParsingTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgendaDateParsingTests.swift; sourceTree = "<group>"; };
 		B7D2E4A10C5F3968A1E07D42 /* CharacterizationSupport.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CharacterizationSupport.swift; sourceTree = "<group>"; };
 		D9F4A6C32E7B518AC3A29F64 /* AgendaCharacterizationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgendaCharacterizationTests.swift; sourceTree = "<group>"; };
 		F20C7A95D1E8436BA5D3C871 /* SpeakersVenueCharacterizationTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpeakersVenueCharacterizationTests.swift; sourceTree = "<group>"; };
@@ -179,6 +175,8 @@
 		5B180C1D20614A53806942A2 /* FakeSpeakerDetailsSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeSpeakerDetailsSource.swift; sourceTree = "<group>"; };
 		2D8490F1AA1AF6EEAE45E8E2 /* AgendaSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgendaSource.swift; sourceTree = "<group>"; };
 		59876FADBD32923B55AC6A11 /* AgendaViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgendaViewModelTests.swift; sourceTree = "<group>"; };
+		2A6E9C3F7B1D4850E8A3C6D7 /* AgendaScrollTargetTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgendaScrollTargetTests.swift; sourceTree = "<group>"; };
+		B4E6D8F20A3C5719E2B4D6F8 /* KotlinContinuousFlowTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KotlinContinuousFlowTests.swift; sourceTree = "<group>"; };
 		27FC659D344124EE3FF1B8E8 /* FakeAgendaSource.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FakeAgendaSource.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -346,7 +344,6 @@
 			isa = PBXGroup;
 			children = (
 				CB179BDC28D365B400BB9934 /* Data */,
-				00D442842E6638F100199668 /* SessionFilter.swift */,
 				3DFBB1839062F11AE893C471 /* KotlinStreamBridge.swift */,
 			);
 			path = Model;
@@ -428,12 +425,12 @@
 			isa = PBXGroup;
 			children = (
 				59876FADBD32923B55AC6A11 /* AgendaViewModelTests.swift */,
+				2A6E9C3F7B1D4850E8A3C6D7 /* AgendaScrollTargetTests.swift */,
+				B4E6D8F20A3C5719E2B4D6F8 /* KotlinContinuousFlowTests.swift */,
 				E20E62857AD0223FB28B7134 /* Fakes */,
-				3C5A91E7B2D04F6810A7C3E9 /* AgendaDateParsingTests.swift */,
 				B7D2E4A10C5F3968A1E07D42 /* CharacterizationSupport.swift */,
 				D9F4A6C32E7B518AC3A29F64 /* AgendaCharacterizationTests.swift */,
 				F20C7A95D1E8436BA5D3C871 /* SpeakersVenueCharacterizationTests.swift */,
-				07FA17E61A9DDADF5C507A31 /* SessionFilterTests.swift */,
 				0266C2377B61A876B903B0DD /* AboutViewModelTests.swift */,
 				6B3C9E4F1D50A728C3F9E604 /* VenueViewModelTests.swift */,
 				5D68522B17CFB7CC1224520C /* SpeakersViewModelTests.swift */,
@@ -644,7 +641,6 @@
 				0011BE942E36D8270084BE4D /* PerformanceMonitoring.swift in Sources */,
 				CBDFA0342AB0F5C500302D34 /* SpeakerPicture.swift in Sources */,
 				CB179BF628D4C36A00BB9934 /* Strings.swift in Sources */,
-				00D442852E6638F100199668 /* SessionFilter.swift in Sources */,
 				CBCB60FA28E48F27001E9B1A /* FirebaseAnalyticsService.swift in Sources */,
 				CBA5C23228DBC5CA00D2779B /* Assets.swift in Sources */,
 				7555FF83242A565900829871 /* ContentView.swift in Sources */,
@@ -673,11 +669,11 @@
 			files = (
 				DC076202C14D990A8B73FDD7 /* FakeAgendaSource.swift in Sources */,
 				F529F567183DE0B596609D13 /* AgendaViewModelTests.swift in Sources */,
-				9E41D7A05B6C82F3D1048B7A /* AgendaDateParsingTests.swift in Sources */,
+				5D2B8F4C1A7E3609B4C8D1F2 /* AgendaScrollTargetTests.swift in Sources */,
+				A91C3E5D7B2F4086C1D5E7A3 /* KotlinContinuousFlowTests.swift in Sources */,
 				C8E3F5B21D6A4079B2F18E53 /* CharacterizationSupport.swift in Sources */,
 				EA05B7D43F8C629BD4B3A075 /* AgendaCharacterizationTests.swift in Sources */,
 				1B6C8E0F5A7D4382C9E4B196 /* SpeakersVenueCharacterizationTests.swift in Sources */,
-				F58B5AB8B24860681567F470 /* SessionFilterTests.swift in Sources */,
 				C6D6895F689FF4871B13968B /* AboutViewModelTests.swift in Sources */,
 				7C4DAF5A2E61B839D40AF715 /* VenueViewModelTests.swift in Sources */,
 				D378BCA12D9B2E250F182DD0 /* FakeStream.swift in Sources */,

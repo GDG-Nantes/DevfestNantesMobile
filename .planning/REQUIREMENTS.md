@@ -21,9 +21,9 @@ Research context: `.planning/research/SUMMARY.md` (and STACK/FEATURES/ARCHITECTU
 
 ### IOSDATA (iOS on the shared logic)
 
-- [ ] **IOSDATA-01**: The iOS app no longer filters, groups or persists favorites/filters in Swift; the duplicated Swift types (`SessionFilter`, `FilterType`…) are removed in favor of the exported Kotlin types
-- [ ] **IOSDATA-02**: A user who updates from the v1.0 version starts with empty favorites and filters (legacy iOS data intentionally not migrated, 07-CONTEXT D-15) and the app works normally; favorites and filters set afterwards survive a relaunch (in-place update UAT from a v1.0 build)
-- [ ] **IOSDATA-03**: The iOS agenda continuously observes the shared combined stream (sessions + favorites + filters); the list, cells and detail share a single `AgendaViewModel` instance
+- [x] **IOSDATA-01**: The iOS app no longer filters, groups or persists favorites/filters in Swift; the duplicated Swift types (`SessionFilter`, `FilterType`…) are removed in favor of the exported Kotlin types
+- [x] **IOSDATA-02**: A user who updates from the v1.0 version starts with empty favorites and filters (legacy iOS data intentionally not migrated, 07-CONTEXT D-15) and the app works normally; favorites and filters set afterwards survive a relaunch (in-place update UAT from a v1.0 build)
+- [x] **IOSDATA-03**: The iOS agenda continuously observes the shared combined stream (sessions + favorites + filters); the list, cells and detail share a single `AgendaViewModel` instance
 
 ### IOSUI (Modern SwiftUI)
 
@@ -95,9 +95,9 @@ Which phases cover which requirements. Updated during roadmap creation.
 | SHARED-05 | Phase 7 | Complete |
 | SHARED-06 | Phase 7 | Complete |
 | SHARED-07 | Phase 7 | Complete |
-| IOSDATA-01 | Phase 9 | Pending |
-| IOSDATA-02 | Phase 9 | Pending |
-| IOSDATA-03 | Phase 9 | Pending |
+| IOSDATA-01 | Phase 9 | Complete |
+| IOSDATA-02 | Phase 9 | Complete |
+| IOSDATA-03 | Phase 9 | Complete |
 | IOSUI-01 | Phase 8 | Complete |
 | IOSUI-02 | Phase 8 | Complete |
 | IOSUI-03 | Phase 8 | Complete |
