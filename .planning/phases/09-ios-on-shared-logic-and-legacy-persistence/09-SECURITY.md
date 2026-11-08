@@ -46,11 +46,11 @@ Built from the `<threat_model>` blocks of plans 09-01 to 09-16 (authored at plan
 | T-09-10 | Repudiation | Bookmark analytics value | low | mitigate | `toggle_bookmark_returns_the_post_toggle_value` test | closed |
 | T-09-11 | Denial of service (user data) | Silent loss of v1.0 favorites and filters on update | high | mitigate | Human chose option-proceed at the 09-09 checkpoint; standalone revertible switch commit 586eb4b0; in-place update UAT approved (09-15) | closed |
 | T-09-12 | Tampering | Corrupt or hostile persisted values | medium | mitigate | Kotlin stores decode with `decodeOrNull` (SessionFilterCodec, UserDefaultsSessionFiltersStore); Swift never parses persisted values | closed |
-| T-09-13 | Repudiation | Mirror drift between UI and storage | medium | mitigate | Write-through and one-shot seed tests in AgendaViewModelTests; UAT kill-and-relaunch kept writes | closed |
-| T-09-14 | Information disclosure | Persisted payloads in logs | low | mitigate | Seed failure log carries the error description only, no ids or filters (AgendaViewModel.swift:90) | closed |
+| T-09-13 | Repudiation | Mirror drift between UI and storage | medium | mitigate | Write-through, one-shot seed and failed-seed store fallback tests in AgendaViewModelTests (WR-01 fix 61bb6b28); UAT kill-and-relaunch kept writes | closed |
+| T-09-14 | Information disclosure | Persisted payloads in logs | low | mitigate | Seed failure log carries the error description only, no ids or filters (AgendaViewModel.swift:104) | closed |
 | T-09-15 | Information disclosure | Legacy keys left on disk | low | accept | They hold session ids and filter names, no secret; removal is a deferred cleanup (CONTEXT Deferred Ideas) | closed (accepted) |
 | T-09-17 | Tampering | Data race between native callbacks and the ViewModel | medium | mitigate | `SWIFT-OBS-GATE-OK`; no unstructured `Task` in app sources; spike proved the bridge | closed |
-| T-09-18 | Information disclosure | Agenda logging | low | mitigate | Agenda logs carry counts and error descriptions only (AgendaViewModel.swift:120,135,154) | closed |
+| T-09-18 | Information disclosure | Agenda logging | low | mitigate | Agenda logs carry counts and error descriptions only (AgendaViewModel.swift:134,149,168) | closed |
 | T-09-19 | Denial of service | Repeated emissions on rapid taps | low | accept | The `.task` cancels on disappear, the flow runs on the domain dispatcher and each emission is a small mapping; the conference data is under 100 sessions | closed (accepted) |
 | T-09-16 | Denial of service | A failing or stalled agenda stream | medium | mitigate | Lifetime and failure tests in AgendaViewModelTests (09-11) | closed |
 | T-09-20 | Tampering | Golden files | high | mitigate | `core/domain/testdata` unchanged against the merge-base; goldens asserted, never overwritten | closed |
@@ -101,3 +101,11 @@ Built from the `<threat_model>` blocks of plans 09-01 to 09-16 (authored at plan
 - [x] `status: verified` set in frontmatter
 
 **Approval:** verified 2026-11-07
+
+## Security Audit 2026-11-08
+
+| Metric | Count |
+|---|---|
+| Threats found | 30 |
+| Closed | 30 |
+| Open | 0 |
