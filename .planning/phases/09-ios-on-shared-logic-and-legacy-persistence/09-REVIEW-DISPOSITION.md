@@ -5,16 +5,16 @@ titles: json
 findings:
   - id: WR-01
     severity: warning
-    disposition: fixed
-    title: "Bookmark mirror is never reconciled with the store after a failed or skipped seed"
+    disposition: open
+    title: "A bookmark toggled while the seed is awaiting can be overwritten by the stale first emission"
   - id: IN-01
     severity: info
     disposition: open
-    title: "`AgendaViewModel.init` now calls into Kotlin and starts Koin from a `@State` initializer"
+    title: "The insert/remove pair is duplicated inside `toggleBookmark`"
   - id: IN-02
     severity: info
     disposition: open
-    title: "Duplicate tests in `IosKoinTest`"
+    title: "Stale comment in the seed error path"
   - id: IN-03
     severity: info
     disposition: open
@@ -27,21 +27,21 @@ findings:
     severity: info
     disposition: open
     title: "Pre-existing items on touched lines (not phase defects)"
-open: 5
+open: 6
 total: 6
-recorded: 2026-11-08T08:56:01.761Z
+recorded: 2026-11-08T09:39:40.397Z
 ---
 
 # Phase 09: Code Review Disposition
 
 | Finding | Severity | Disposition | Source |
 |---------|----------|-------------|--------|
-| WR-01 | warning | fixed | 61bb6b28 fix, b4245bf0 tests (quick 261108-e0y) |
+| WR-01 | warning | open | - |
 | IN-01 | info | open | - |
 | IN-02 | info | open | - |
-| IN-03 | info | open | - |
-| IN-04 | info | open | - |
-| IN-05 | info | open | - |
+| IN-03 | info | open | - (not in the current review) |
+| IN-04 | info | open | - (not in the current review) |
+| IN-05 | info | open | - (not in the current review) |
 
 Dispositions: `open` (recorded, not yet triaged), `fixed`, `skipped`, `deferred`.
 Set `deferred` by hand and put the reason in the Source cell; both are preserved. A `|` in the reason is kept as prose and escaped on the next run.
