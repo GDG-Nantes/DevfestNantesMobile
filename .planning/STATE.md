@@ -4,12 +4,11 @@ milestone: v1.1
 milestone_name: iOS Architecture
 current_phase: 10
 current_phase_name: Explicit iOS DI
-status: planning
+status: "Phase 09 shipped — PR #433"
 stopped_at: Phase 09 complete, ready to plan Phase 10
-last_updated: "2026-11-08T09:42:43.559Z"
+last_updated: "2026-11-08T09:43:24.406Z"
 last_activity: 2026-11-08
-last_activity_desc: Phase 09 complete, transitioned to Phase 10
-state_head: 062177c909397ecdc84961e9d28784731f223c4b
+state_head: feca05041e86272c07e86c39d1239d202a39c70b
 progress:
   total_phases: 7
   completed_phases: 9
@@ -31,8 +30,8 @@ See: .planning/PROJECT.md (updated 2026-11-08)
 
 Phase: 10 — Explicit iOS DI
 Plan: Not started
-Status: Ready to plan
-Last activity: 2026-11-08 — Phase 09 complete, transitioned to Phase 10
+Status: Phase 09 shipped — PR #433
+Last activity: 2026-11-08
 
 Progress: [████████░░] 75%
 
