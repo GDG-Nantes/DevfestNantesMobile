@@ -50,11 +50,11 @@ Task IDs are assigned once plans exist. Requirement-level map from 09-RESEARCH.m
 | 09-12-T1 | 09-12 | 12 | IOSDATA-01 | — | N/A | Swift Testing | `-only-testing:DevFestNantesTests/AgendaCharacterizationTests` (8 tests, same v1.0 goldens on the shared output) | ✅ | ✅ green |
 | 09-03, 09-04, 09-06 | 09-03, 09-04, 09-06 | 3, 4, 6 | IOSDATA-01 | — | N/A | Swift Testing | `SpeakersVenueCharacterizationTests` (2), `SpeakersViewModelTests` (8), `VenueViewModelTests` (7), `SpeakerDetailsViewModelTests` (8) | ✅ | ✅ green |
 | 09-09-T3 | 09-09 | 9 | IOSDATA-02 | Silent data loss (D-15) | Legacy keys never read; VM seeds only from the port | Swift Testing | `-only-testing:DevFestNantesTests/AgendaViewModelTests` | ✅ | ✅ green |
-| 09-01-T1 | 09-01 | 1 | IOSDATA-03 | — | N/A | Swift Testing spike | `-only-testing:DevFestNantesTests/KotlinContinuousFlowTests` (2 tests) | ✅ | ✅ green |
-| 09-08, 09-09, 09-10, 09-11 | 09-08..09-11 | 8-11 | IOSDATA-03 | Stale mirror drift | Mirror write-through | Swift Testing | `-only-testing:DevFestNantesTests/AgendaViewModelTests` (25 tests: intents, mirror, combined flow, lifetime) | ✅ | ✅ green |
+| 09-01-T1 | 09-01 | 1 | IOSDATA-03 | — | N/A | Swift Testing spike | `-only-testing:DevFestNantesTests/KotlinContinuousFlowTests` (3 tests) | ✅ | ✅ green |
+| 09-08, 09-09, 09-10, 09-11 | 09-08..09-11 | 8-11 | IOSDATA-03 | Stale mirror drift | Mirror write-through | Swift Testing | `-only-testing:DevFestNantesTests/AgendaViewModelTests` (28 tests: intents, mirror, combined flow, lifetime, failed-seed store fallback) | ✅ | ✅ green |
 | 09-07-T1 | 09-07 | 7 | IOSDATA-03 | — | N/A | Swift Testing | `-only-testing:DevFestNantesTests/AgendaScrollTargetTests` (5 tests) | ✅ | ✅ green |
 
-Evidence: full Swift suite `XCRESULT-TESTS total=72 passed=72` locally after wave 16 and on CI (`ios.yml` run 42419842682, `android.yml` run 42419842760, both `success` on `d5f5efb6`). The Kotlin iOS tests passed in the 09-16 gate.
+Evidence: full Swift suite `XCRESULT-TESTS total=72 passed=72` locally after wave 16 and on CI (`ios.yml` run 42419842682, `android.yml` run 42419842760, both `success` on `d5f5efb6`). The Kotlin iOS tests passed in the 09-16 gate. Re-audited 2026-11-08 at `13b9a4fd` after the WR-01 fix (four tests added): full Swift suite `XCRESULT-TESTS total=76 passed=76` locally, `swift-names-gate`, `di-gate`, `kmp-nc-version-gate` and `swift-observation-gate` clean, Android/KMP tests up to date and green; the Kotlin iOS tests were not re-run because no Kotlin changed.
 
 *Status: ⬜ pending · ✅ green · ❌ red · ⚠️ flaky*
 
