@@ -6,10 +6,10 @@ current_phase: 10
 current_phase_name: Explicit iOS DI
 status: planning
 stopped_at: Phase 09 complete, ready to plan Phase 10
-last_updated: "2026-11-08T09:03:02.422Z"
+last_updated: "2026-11-08T09:28:31.278Z"
 last_activity: 2026-11-08
 last_activity_desc: Phase 09 complete, transitioned to Phase 10
-state_head: 2fd347e00f7f6873b960028a4af05569e63a5a3e
+state_head: eef62348a8bb00f68f9c1bca3d03938adf0c38c3
 progress:
   total_phases: 7
   completed_phases: 9
@@ -32,7 +32,7 @@ See: .planning/PROJECT.md (updated 2026-11-08)
 Phase: 10 — Explicit iOS DI
 Plan: Not started
 Status: Ready to plan
-Last activity: 2026-11-08 — Phase 09 complete, transitioned to Phase 10
+Last activity: 2026-11-08 - Completed quick task 261108-e0y: Fix Phase 9 code review WR-01: bookmark mirror fallback when the one-shot seed fails
 
 Progress: [████████░░] 75%
 
@@ -202,8 +202,14 @@ None yet.
 - Follow-up (not blocking, G-05-3): kotlinx-datetime resolves to `0.8.0-0.6.x-compat` because OpenFeedback 1.0.0-alpha.3 (and every release up to alpha.6) links against the 0.6.x `Instant`/`Clock` classes, which plain 0.8.0 no longer ships. Compat releases end with 0.8.x, so any move to 0.9+ first needs an OpenFeedback release built on `kotlin.time.Instant` (upstream main was still on the deprecated type as of 2026-10-15). `OpenFeedbackDatetimeLinkageTest` fails CI on any bump that drops the compat classes. The Phase 02 R8 suppression premise was false: the secrets plugin sets OPEN_FEEDBACK_ENABLED from local.properties, so the feedback code was reachable on developer and release builds. The suppressions were removed in 05-11.
 - Phase 7 code review: WR-01..04 fixed 2026-10-30 (b6ff4909, 89ccddd0, 87c9fe66, 575970ae; 07-REVIEW-FIX.md). Residual WR-01 limit: the shared `SpeakerIndexUseCase` de-duplicates by uppercase letter, so an `ı` speaker before an `i` speaker hides the `i` header (changing it alters the iOS contract; revisit in Phase 9). IN-01..04 remain open (advisory) in `07-REVIEW-DISPOSITION.md`
 - Follow-up (not blocking): the regression gate resolves to `true` in this repo (no `workflow.test_command`); set it to the Gradle suite so the gate is real
-- Phase 9 code review (advisory, open in `09-REVIEW-DISPOSITION.md`): WR-01 the bookmark mirror has no fallback when its one-shot seed fails (a bookmarked session can show an empty star and send a wrong analytics value until the next seed); IN-01..05 info. Phase 9 UI review: missing VoiceOver labels on stars/filter menu and an English `Picker` label are v1.0 debt
+- Phase 9 code review: WR-01 fixed by quick task 261108-e0y (store fallback while the bookmark mirror is unseeded; the "seed window" deviation row is removed from ARCHITECTURE.md); IN-01..05 info remain open in `09-REVIEW-DISPOSITION.md`. Phase 9 UI review: missing VoiceOver labels on stars/filter menu and an English `Picker` label are v1.0 debt
 - Note (not blocking, Phase 9): local toolchain moved to Xcode 27.2 mid-phase (CoreSimulator 1174.21 after first-launch); CI stays on Xcode 26.6
+
+### Quick Tasks Completed
+
+| # | Description | Date | Commit | Directory |
+|---|-------------|------|--------|-----------|
+| 261108-e0y | Fix Phase 9 code review WR-01: bookmark mirror fallback when the one-shot seed fails | 2026-11-08 | eef62348 | [261108-e0y-fix-phase-9-code-review-wr-01-bookmark-m](./quick/261108-e0y-fix-phase-9-code-review-wr-01-bookmark-m/) |
 
 ## Phase 02 DCL pilot outcome
 
@@ -278,4 +284,4 @@ Resume file: None
 ## Operator Next Steps
 
 - Discuss Phase 10 with /gsd-discuss-phase 10, then plan it with /gsd-plan-phase 10
-- Phase 9 follow-ups (advisory): triage 09-REVIEW-DISPOSITION.md (WR-01 bookmark seed fallback); merge PR #433 when ready
+- Phase 9 follow-ups: WR-01 fixed (quick 261108-e0y); IN-01..05 advisory in 09-REVIEW-DISPOSITION.md; push and merge PR #433 when ready
