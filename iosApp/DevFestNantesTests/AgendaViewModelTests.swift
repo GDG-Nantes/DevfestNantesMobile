@@ -431,6 +431,61 @@ import shared
         #expect(source.writtenFilters.isEmpty)
     }
 
+    @Test func a_failed_bookmark_seed_reads_the_star_and_the_toggle_from_the_store() async throws {
+        let agenda = FakeStream<[DaySchedule]>(.emit([try schedules()], thenFinish: true))
+        let source = FakeAgendaSource(
+            agendaStream: agenda,
+            bookmarksStream: FakeStream(.fail(TestError())),
+            storedBookmarks: ["s1"]
+        )
+        let viewModel = makeViewModel(source: source)
+
+        await viewModel.observeAgenda()
+
+        #expect(viewModel.isLoading == false)
+        #expect(!viewModel.agendaContent.sections.isEmpty)
+        #expect(viewModel.bookmarkedIds.isEmpty)
+        #expect(viewModel.isBookmarked("s1"))
+        #expect(viewModel.toggleBookmark(sessionId: "s1") == false)
+        #expect(source.writtenBookmarks == [.init(sessionId: "s1", bookmarked: false)])
+        #expect(viewModel.isBookmarked("s1") == false)
+    }
+
+    @Test func an_unseeded_toggle_notifies_the_observers_of_the_star() {
+        let source = FakeAgendaSource(storedBookmarks: ["s1"])
+        let viewModel = makeViewModel(source: source)
+
+        let notified = OSAllocatedUnfairLock(initialState: false)
+        let starBefore = withObservationTracking {
+            viewModel.isBookmarked("s1")
+        } onChange: {
+            notified.withLock { $0 = true }
+        }
+        #expect(starBefore)
+
+        let toggled = viewModel.toggleBookmark(sessionId: "s1")
+
+        #expect(notified.withLock { $0 })
+        #expect(toggled == false)
+        #expect(viewModel.isBookmarked("s1") == false)
+    }
+
+    @Test func a_failed_seed_is_retried_on_the_next_load_and_the_mirror_then_answers() async throws {
+        let agenda = FakeStream<[DaySchedule]>(.emit([try schedules()], thenFinish: true))
+        let bookmarks = FakeStream<Set<String>>(.fail(TestError()), .emit([["a"]], thenFinish: false))
+        let source = FakeAgendaSource(agendaStream: agenda, bookmarksStream: bookmarks)
+        let viewModel = makeViewModel(source: source)
+
+        await viewModel.observeAgenda()
+        #expect(viewModel.bookmarkedIds.isEmpty)
+
+        await viewModel.observeAgenda()
+        #expect(bookmarks.subscriptionCount == 2)
+        #expect(viewModel.bookmarkedIds == ["a"])
+        #expect(viewModel.isBookmarked("a"))
+        #expect(source.bookmarkReads.isEmpty)
+    }
+
     // MARK: - Intents on the mirrors
 
     @Test func toggle_bookmark_returns_the_post_toggle_value() {

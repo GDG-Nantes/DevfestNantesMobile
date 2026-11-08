@@ -18,6 +18,8 @@ protocol AgendaSource {
     func setFilters(_ filters: Set<SessionFilter>)
     /// The persisted bookmarked session ids, as a flow of the whole set.
     func bookmarkedIds() -> AsyncThrowingStream<Set<String>, Error>
+    /// Whether one session is bookmarked right now (a snapshot of the shared store).
+    func isBookmarked(_ sessionId: String) -> Bool
     /// Writes one bookmark through to the shared store.
     func setBookmarked(_ sessionId: String, _ bookmarked: Bool)
 }
@@ -78,6 +80,10 @@ struct LiveAgendaSource: AgendaSource {
     func bookmarkedIds() -> AsyncThrowingStream<Set<String>, Error> {
         let resolvedStore = bookmarksStore()
         return KotlinStreamBridge.stream(resolvedStore.bookmarkedSessionIds)
+    }
+
+    func isBookmarked(_ sessionId: String) -> Bool {
+        bookmarksStore().isBookmarked(id: sessionId)
     }
 
     func setBookmarked(_ sessionId: String, _ bookmarked: Bool) {
