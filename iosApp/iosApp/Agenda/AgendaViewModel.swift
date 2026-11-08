@@ -18,7 +18,8 @@ final class AgendaViewModel {
     var isLoading = true
 
     // Observable mirrors of what the Kotlin stores persist. Every intent updates the mirror synchronously
-    // and writes through to the store, which is the only place that persists (07 D-15, D-05).
+    // and writes through to the store, which is the only place that persists (07 D-15, D-05). Until the bookmark
+    // mirror is seeded, bookmark reads fall back to the store's per-session snapshot.
     private(set) var sessionFilters: Set<SessionFilter>
     private(set) var bookmarkedIds: Set<String> = []
 
@@ -54,14 +55,27 @@ final class AgendaViewModel {
 
     // MARK: - Bookmark intents
 
-    ///Whether a session is bookmarked
+    ///Whether a session is bookmarked. The mirror is always read first so the views observe it; while it is
+    ///unseeded the store's per-session snapshot answers instead (WR-01).
     func isBookmarked(_ sessionId: String) -> Bool {
-        bookmarkedIds.contains(sessionId)
+        let mirrored = bookmarkedIds.contains(sessionId)
+        return bookmarksSeeded ? mirrored : source.isBookmarked(sessionId)
     }
 
-    ///Adds or removes a session from the bookmarks, writes it through to the store and returns the value after the toggle
+    ///Adds or removes a session from the bookmarks, writes it through to the store and returns the value after the toggle.
+    ///While the mirror is unseeded, its entry is first aligned with the store so the toggle flips what the star shows.
     @discardableResult
     func toggleBookmark(sessionId: String) -> Bool {
+        if !bookmarksSeeded {
+            let stored = source.isBookmarked(sessionId)
+            if stored != bookmarkedIds.contains(sessionId) {
+                if stored {
+                    bookmarkedIds.insert(sessionId)
+                } else {
+                    bookmarkedIds.remove(sessionId)
+                }
+            }
+        }
         let bookmarked = !bookmarkedIds.contains(sessionId)
         if bookmarked {
             bookmarkedIds.insert(sessionId)
@@ -73,7 +87,7 @@ final class AgendaViewModel {
     }
 
     ///Seeds the bookmark mirror once per ViewModel from the first emission of the store (it has no snapshot).
-    ///A cancelled or failed read leaves the flag false, so the next load retries.
+    ///A cancelled or failed read leaves the flag false, so the next load retries; meanwhile the star and the toggle read the store.
     private func seedBookmarksIfNeeded() async {
         guard !bookmarksSeeded else { return }
         do {

@@ -9,6 +9,8 @@ import shared
 /// host's `standardUserDefaults` and restore what they write. A stalled bridge fails through the suite
 /// time limit instead of hanging CI.
 /// The filter type is the exported Kotlin `SessionFilter`.
+/// The suite also hosts the one ViewModel test over the live bookmark store, so its store writes stay
+/// serialized with the flow test.
 @MainActor @Suite(.serialized, .timeLimit(.minutes(1))) struct KotlinContinuousFlowTests {
 
     @Test func filters_flow_delivers_a_second_value_after_a_write() async throws {
@@ -46,5 +48,21 @@ import shared
 
         let second = try await iterator.next()
         #expect(second?.contains(id) == true)
+    }
+
+    @Test func agenda_view_model_reads_a_stored_bookmark_from_the_live_store_before_the_seed() {
+        TestHost.start()
+        let source = LiveAgendaSource()
+        let id = "wr01-\(UUID().uuidString)"
+        source.setBookmarked(id, true)
+        defer { source.setBookmarked(id, false) }
+
+        // observeAgenda() is never called: the seed was skipped, as on the Speakers path.
+        let viewModel = AgendaViewModel(source: LiveAgendaSource(), tracing: RecordingDataLoadTracing())
+
+        #expect(viewModel.isBookmarked(id))
+        #expect(viewModel.toggleBookmark(sessionId: id) == false)
+        #expect(source.isBookmarked(id) == false)
+        #expect(viewModel.isBookmarked(id) == false)
     }
 }

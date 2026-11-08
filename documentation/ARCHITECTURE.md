@@ -316,7 +316,6 @@ To add a screen, add a `Screen` subclass and a `composable(...)` entry in `MainA
 | Partner categories | Five fixed groups, ignores `PARTNERS` | Every category sorted by ordinal | Not shared | Stays per platform (D-08): the semantics differ |
 | Initial scroll with filters active | n/a | Reads the unfiltered sections, so on a conference day it could pick a hidden slot and not scroll | The initial scroll and the first-section scroll read filtered sections: with filters active the target is the latest visible slot; only visible on a conference day | Accepted by the user on 2026-11-05 (09-CONTEXT 'Accepted deviations'): the shared flow outputs only filtered data |
 | Day labels on a non-Gregorian device calendar | n/a | `DateFormatter` on the device calendar, which mislabeled days on a non-Gregorian calendar | Labels come from `LocalDateDays` (proleptic Gregorian) | Accepted by the user on 2026-11-05 (09-CONTEXT 'Accepted deviations'): the labels no longer depend on the device calendar, which fixes the v1.0 mislabeling |
-| iOS bookmark mirror seed window | n/a | n/a | `BookmarksStore` has no synchronous snapshot, so the iOS bookmark mirror seeds from a first-emission read at the start of the first agenda load: a star reached through Speakers before that load can read stale until next launch; the toggle still writes what the user sees, so the store stays correct | Accepted by the user on 2026-11-05 (09-CONTEXT 'Accepted deviations', D-05 seed window) |
 | iOS agenda position after a bookmark change in a detail | n/a | The list keeps its exact scroll position | The agenda observes the combined flow, so a bookmark change re-emits it: on return the list sits about 35 points higher, and the filter menu opens a few points further left | Accepted by the user on 2026-11-07 at the 09-16 parity checkpoint: content, order and filter results are unchanged |
 
 ## iOS App
@@ -338,7 +337,10 @@ To add a screen, add a `Screen` subclass and a `composable(...)` entry in `MainA
   observable mirror of the bookmarked ids and the active filters: every intent updates the mirror
   synchronously and writes to the store, the filter mirror is seeded from the store snapshot when the
   ViewModel is created, and the bookmark mirror is seeded once from the store's first emission at the start
-  of the first agenda load. The v1.0 keys `Favorites` and `AgendaSessionFilters` are never read, migrated
+  of the first agenda load. Until that seed succeeds (a failed read, or a session opened through Speakers
+  before the first agenda load), the star and the toggle read the store's per-session snapshot
+  (`BookmarksStore.isBookmarked(id:)`) through `AgendaSource`, so they always match what is persisted.
+  The v1.0 keys `Favorites` and `AgendaSessionFilters` are never read, migrated
   or removed (07 D-15): updating users start with empty favorites and filters.
 - ViewModels read data through a per-ViewModel port (`AboutSource`, `VenueSource`, `SpeakersSource`,
   `SpeakerDetailsSource`, `AgendaSource`, each in `<Feature>Source.swift`) taken by an init default.
