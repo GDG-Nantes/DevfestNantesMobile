@@ -1,6 +1,6 @@
 ---
 phase: 09-ios-on-shared-logic-and-legacy-persistence
-verified: 2026-11-08T12:00:00Z
+verified: 2026-11-08T14:00:00Z
 status: passed
 score: 4/4 must-haves verified
 covered_files:
@@ -37,14 +37,23 @@ covered_files:
   - ".planning/phases/09-ios-on-shared-logic-and-legacy-persistence/09-16-PLAN.md"
   - ".planning/phases/09-ios-on-shared-logic-and-legacy-persistence/09-16-SUMMARY.md"
   - "documentation/ARCHITECTURE.md"
+  - "iosApp/DevFestNantesTests/AgendaViewModelTests.swift"
+  - "iosApp/DevFestNantesTests/Fakes/FakeAgendaSource.swift"
+  - "iosApp/DevFestNantesTests/KotlinContinuousFlowTests.swift"
   - "iosApp/iosApp/Agenda/AgendaSource.swift"
   - "iosApp/iosApp/Agenda/AgendaView.swift"
   - "iosApp/iosApp/Agenda/AgendaViewModel.swift"
   - "iosApp/iosApp/Model/Data/AgendaContent.swift"
   - "shared/src/iosMain/kotlin/com/gdgnantes/devfest/shared/IosDependencies.kt"
-covered_digest: "v3:sha256:1b40a9da030e78eb4720e7ec3bd009a49766fd92a9d9b99d936e54675382d0fe"
+covered_digest: "v3:sha256:25390fc7d28bda2427a67f9290222625ae0a2c09151124e4ac48f84ac8123d20"
 behavior_unverified: 0
 overrides_applied: 0
+re_verification:
+  previous_status: passed
+  previous_score: 4/4
+  gaps_closed: []
+  gaps_remaining: []
+  regressions: []
 ---
 
 # Phase 9: iOS on Shared Logic and Legacy Persistence Verification Report
@@ -52,53 +61,58 @@ overrides_applied: 0
 **Phase Goal:** The iOS app delegates filtering, grouping and persistence of bookmarks and filters to the shared domain layer; a user updating from v1.0 starts with empty bookmarks and filters (intentional, 07-CONTEXT D-15) and the app works normally
 **Verified:** 2026-11-08
 **Status:** passed
-**Re-verification:** No, initial verification
+**Re-verification:** Yes. The earlier report was stale because `AgendaSource.swift`, `AgendaViewModel.swift` and `documentation/ARCHITECTURE.md` changed after it (fix `61bb6b28`, tests `b4245bf0`). The verdict was re-derived from the current source. The prior report had no `gaps:`, so every truth got a full check rather than a regression-only pass.
 
 ## Goal Achievement
 
 ### Observable Truths
 
-The four ROADMAP success criteria are the contract. The plan-level truths (single `AgendaViewModel`, write-through mirror, one-way store switch checkpoint) are folded into them.
+The four ROADMAP success criteria are the contract. PLAN-level truths (single `AgendaViewModel`, write-through mirror, one-way store switch checkpoint) are folded into them.
 
 | # | Truth | Status | Evidence |
 | --- | ------- | ---------- | -------------- |
-| 1 | A user installing the new build over v1.0 starts with empty bookmarks and filters and the app works; bookmarks and filters set afterwards survive kill and relaunch (in-place update UAT) | VERIFIED | `iosApp/iosApp/` has no read of the legacy `Favorites` or `AgendaSessionFilters` keys (grep: only the unrelated `L10n.filterFavorites` string matches). The iOS stores use the new keys `devfest.bookmarks.sessionIds` and `devfest.agenda.filters` (`UserDefaultsBookmarksStore.kt:49`, `UserDefaultsSessionFiltersStore.kt:45`) and are bound in `DataPlatformModule.ios.kt:16-17`. Recorded UAT `09-parity/update/evidence.txt`: a `main` build seeded legacy keys, `simctl install` of the branch build left them byte-identical (`cmp` identical) and unread, the new keys were absent at start and then set, and they persisted over two kill and relaunch cycles. Human approval at the 09-09 one-way checkpoint (`option-proceed`) and at the 09-15 UAT checkpoint (`approved`). |
-| 2 | Swift no longer filters, groups or persists bookmarks or filters; `SessionFilter`, `FilterType` and the other duplicated types are removed in favor of the exported Kotlin types; speakers, venue and classification go through shared use cases | VERIFIED | `iosApp/iosApp/Model/SessionFilter.swift` is not tracked. No `FilterType`, no `UserDefaults`, no `Dictionary(grouping:)`, no `ObservableObject` or Combine in `iosApp/iosApp`. `SessionFilter` and `SessionFilterType` in Swift are the Kotlin types (`core/model/.../SessionFilter.kt`). `AgendaContent.init(days:isTalk:isNavigable:)` is a display mapping only; classification delegates to `ClassifySessionUseCase` (`AgendaSource.swift:62-68`), speakers to `SpeakerIndexUseCase.letterGroups` (`SpeakersSource.swift:36`), venue to `VenueLanguageUseCase.languageFor` (`VenueSource.swift:37`). The only remaining `.filter`/`.sorted` in the agenda are `AgendaView.filteredSections` (selects the shared section for the picked day by equality) and `scrollTarget` (D-11 pure scroll-to-now function, test-covered); neither is the filtering, grouping or persistence the criterion targets. |
-| 3 | The iOS agenda shows the same days, slots, sessions and filter results as v1.0 (comparative UAT), with the documented exceptions | VERIFIED | `09-parity/` holds paired base and branch captures (69 PNGs tracked) and Maestro flows. Human accepted the pairs at the 09-16 D-10 checkpoint ("branch looks better than base"). Every deviation is recorded in `documentation/ARCHITECTURE.md` "Behavior deviations (v1.1)": room order (`RoomSortIndex`, line 306), scroll target with filters (317), non-Gregorian calendar day labels (318), D-05 seed window (319), fractional-second dates (310), and the 09-16 layout offsets (320). Parity cannot be re-run here; this rests on recorded human UAT. |
-| 4 | The agenda continuously observes the shared combined flow; adding or removing a bookmark or filter from the list, a cell or the detail updates the agenda without relaunch, through a single `AgendaViewModel` | VERIFIED | `ContentView.swift:7` is the only `AgendaViewModel()` construction; it is injected with `.environment(agendaViewModel)` (line 43) and read via `@Environment` by `AgendaView`, `AgendaDetailView` and all five filter menus. `LiveAgendaSource.agenda()` returns `KotlinStreamBridge.stream(observeAgenda().observe(dayAssignment: LocalDateDays, timeZone: currentSystemDefault))`. `observeAgenda()` loops `while let next = try await iterator.next() { apply(next) }` (continuous, not first-only). Behavioral evidence: `KotlinContinuousFlowTests` proves a real Kotlin `StateFlow` delivers a second element through the bridge after a write; `AgendaViewModelTests` covers re-emission replacing content, trace at first emission only, resubscribe keeping content, mid-stream error keeping content, cancellation silence, mirror correct while collection is cancelled, write-through for bookmark and filters. Orchestrator reports 72 of 72 Swift tests passed and CI green at head `d5f5efb6`; I confirmed `gh pr checks 433` shows 5 passed, 0 failed, head `d5f5efb6`. |
+| 1 | A user installing the new build over v1.0 starts with empty bookmarks and filters and the app works; bookmarks and filters set afterwards survive kill and relaunch (in-place update UAT) | VERIFIED | `rtk grep` over `iosApp/iosApp` finds no read of `UserDefaults`, the `Favorites` key or `AgendaSessionFilters` (only the unrelated `filter_favorites` L10n string matches). The iOS stores use the new keys: `KEY_BOOKMARKS = "devfest.bookmarks.sessionIds"` (`UserDefaultsBookmarksStore.kt:49`), `devfest.agenda.filters` for filters. The `UserDefaultsBookmarksStore` KDoc states that the legacy key is never read, migrated or removed. Recorded UAT `09-parity/update/evidence.txt`: a `main` build was seeded with legacy `Favorites` (two ids) and `AgendaSessionFilters`, and the new keys were absent before the update. The branch build was installed over it with `simctl install` and no uninstall. The legacy keys were left byte-identical, and the new keys were set afterwards and persisted over two kill and relaunch cycles (screenshots u01 to u07 are present). Human approval at the 09-09 one-way checkpoint (`option-proceed`, 09-09-SUMMARY) and at the 09-15 UAT checkpoint (`approved`, 09-15-SUMMARY). This truth depends on recorded human UAT, which cannot be re-run here. |
+| 2 | Swift no longer filters, groups or persists bookmarks or filters; `SessionFilter`, `FilterType` and the other duplicated types are removed in favor of the exported Kotlin types; speakers, venue and classification go through shared use cases | VERIFIED | `git ls-files iosApp/iosApp/Model/SessionFilter.swift` returns nothing (deleted). In `iosApp/iosApp` there is no `FilterType`, no `Dictionary(grouping:)`, no `UserDefaults`, no `ObservableObject`, no `@Published` and no `import Combine`. `AgendaViewModel` persists only through `source.setFilters` and `source.setBookmarked`, which `LiveAgendaSource` forwards to `SessionFiltersStore.setFilters` and `BookmarksStore.setBookmarked`. `LiveAgendaSource.isTalk` and `isNavigable` delegate to `ClassifySessionUseCase`. The previous report cites `SpeakerIndexUseCase.letterGroups` (`SpeakersSource.swift:36`) and `VenueLanguageUseCase.languageFor` (`VenueSource.swift:37`); this run did not re-read those two files. |
+| 3 | The iOS agenda shows the same days, slots, sessions and filter results as v1.0 (comparative UAT), with the documented exceptions | VERIFIED | `09-parity/` holds paired `base/` and `branch/` captures and Maestro flows. The human accepted the pairs at the 09-16 D-10 checkpoint ("branch looks better than base", 09-16-SUMMARY). The deviations are recorded in `documentation/ARCHITECTURE.md` "Behavior deviations (v1.1)". Parity rests on recorded human UAT and cannot be re-run here. |
+| 4 | The agenda continuously observes the shared combined flow; adding or removing a bookmark or filter from the list, a cell or the detail updates the agenda without relaunch, through a single `AgendaViewModel` | VERIFIED | `ContentView.swift:7` is the only `AgendaViewModel()` construction. It is read through `@Environment(AgendaViewModel.self)` by `AgendaView`, `AgendaDetailView` and all six filter menus and the clear button (confirmed by grep). `LiveAgendaSource.agenda()` returns `KotlinStreamBridge.stream(useCase.observe(dayAssignment:timeZone:))` with the zone built per subscription. `observeAgenda()` loops `while let next = try await iterator.next() { apply(next) }` (`AgendaViewModel.swift:136`), which is continuous and not first-only. The agenda list itself is driven by the Kotlin combined flow (sessions + bookmarks + filters), so filter and Favorites results stay correct regardless of the star mirror. Behavioral evidence: `KotlinContinuousFlowTests` (real Kotlin `StateFlow` through the bridge) and `AgendaViewModelTests` (re-emission, trace at first emission only, resubscribe, mid-stream error, cancellation, write-through). The orchestrator reports `XCRESULT-TESTS total=76 passed=76 failed=0 skipped=0`. I did not re-run the suite; I confirmed that the test files exist and contain the cases above. |
 
 **Score:** 4/4 truths verified (0 present, behavior-unverified)
+
+### Changes since the previous report
+
+The fix `61bb6b28` and tests `b4245bf0` (WR-01 of the earlier review) add `AgendaSource.isBookmarked(_:)`, which `LiveAgendaSource` backs with the synchronous `BookmarksStore.isBookmarked(id:)`. `UserDefaultsBookmarksStore.kt:29` implements it as `id in state.value`. While `bookmarksSeeded` is false, `AgendaViewModel.isBookmarked` and `toggleBookmark` read through to the store (`AgendaViewModel.swift:60-87`). The read of `bookmarkedIds` happens before the branch, so Observation still tracks the mirror. New tests in `AgendaViewModelTests.swift:434-487` cover the failed seed (star and toggle read the store), an unseeded toggle notifying observers, and retry then mirror. This strengthens truth 4 and changes no ROADMAP criterion. All 4 truths still hold at the current source.
 
 ### Required Artifacts
 
 | Artifact | Expected | Status | Details |
 | -------- | ----------- | ------ | ------- |
-| `shared/.../IosDependencies.kt` | Plain accessors for store, observeAgenda, bookmarksStore, sessionFiltersStore, speakerIndex, venueLanguage, classifySession | VERIFIED | All seven present (lines 40-58), resolved from Koin, no Koin type in the Swift API |
-| `iosApp/iosApp/Agenda/AgendaSource.swift` | Port plus `Live` adapter | VERIFIED | Wired to shared use cases and stores; the only Agenda caller of `IosDependencies` |
-| `iosApp/iosApp/Agenda/AgendaViewModel.swift` | Continuous observation, write-through mirror | VERIFIED | Substantive and wired (see truth 4) |
-| `iosApp/iosApp/Model/Data/AgendaContent.swift` | Thin mapping | VERIFIED | No sort, filter or group |
-| `iosApp/iosApp/Model/SessionFilter.swift` | Deleted | VERIFIED | Absent from `git ls-files` |
-| `iosApp/DevFestNantesTests/{AgendaViewModelTests,AgendaScrollTargetTests,KotlinContinuousFlowTests,...}` | Test list from CONTEXT | VERIFIED | Present with the required cases |
-| `09-parity/update/*` | In-place update UAT evidence | VERIFIED | `evidence.txt`, before and after legacy dumps, screenshots u01 to u07 |
+| `shared/.../IosDependencies.kt` | Plain accessors for store, observeAgenda, bookmarksStore, sessionFiltersStore, speakerIndex, venueLanguage, classifySession | VERIFIED | Listed as covered; `LiveAgendaSource` calls `store()`, `classifySession()`, `bookmarksStore()`, `sessionFiltersStore()` and `observeAgenda()` |
+| `iosApp/iosApp/Agenda/AgendaSource.swift` | Port plus `Live` adapter, the only KMP caller for the agenda | VERIFIED | Read in full. Substantive and wired. No Combine. |
+| `iosApp/iosApp/Agenda/AgendaViewModel.swift` | Continuous observation, write-through mirror, store fallback while unseeded | VERIFIED | Read in full. Substantive and wired. |
+| `iosApp/iosApp/Model/Data/AgendaContent.swift` | Thin display mapping | VERIFIED | Per the previous report: no sort, filter or group. Not re-read in this run. |
+| `iosApp/iosApp/Model/SessionFilter.swift` | Deleted | VERIFIED | Not in `git ls-files` |
+| `core/data/src/iosMain/.../UserDefaultsBookmarksStore.kt` | New-key bookmark store with sync `isBookmarked` | VERIFIED | Read in full. Lock-serialized writes, `StateFlow` state, new key. |
+| `iosApp/DevFestNantesTests/{AgendaViewModelTests,KotlinContinuousFlowTests,Fakes/FakeAgendaSource}.swift` | Required test cases | VERIFIED | Present. WR-01 fallback cases confirmed at `AgendaViewModelTests.swift:434-487`. |
+| `09-parity/update/*` | In-place update UAT evidence | VERIFIED | `evidence.txt`, `legacy-before.txt`, `legacy-after.txt`, screenshots u01 to u07 |
 
 ### Key Link Verification
 
 | From | To | Via | Status | Details |
 | ---- | --- | --- | ------ | ------- |
-| `ContentView` | all agenda views | `.environment(agendaViewModel)` | WIRED | Single instance |
-| `AgendaView.task` | `AgendaViewModel.observeAgenda` | `await viewModel.observeAgenda()` | WIRED | D-01, cancelled on disappear |
-| `AgendaViewModel` | Kotlin stores | `source.setFilters`, `source.setBookmarked` | WIRED | Persistence only in Kotlin |
-| `LiveAgendaSource` | `ObserveAgendaUseCase` | `IosDependencies.shared.observeAgenda()` + `LocalDateDays(AgendaDays.all)` | WIRED | Zone built per subscription |
-| Koin iOS module | `UserDefaults*Store` | `DataPlatformModule.ios.kt:16-17` | WIRED | Singletons on `standardUserDefaults` |
-| Speakers/Venue/Details sources | shared use cases | `IosDependencies.shared.*` | WIRED | |
+| `ContentView` | all agenda views | `.environment(agendaViewModel)` | WIRED | Single `AgendaViewModel()` at `ContentView.swift:7`; eight `@Environment(AgendaViewModel.self)` readers |
+| `AgendaView.task` | `AgendaViewModel.observeAgenda` | `await viewModel.observeAgenda()` | WIRED | Per the previous report; not re-read |
+| `AgendaViewModel` | Kotlin stores | `source.setFilters`, `source.setBookmarked`, `source.isBookmarked` | WIRED | `AgendaSource.swift:76-91` |
+| `LiveAgendaSource` | `ObserveAgendaUseCase` | `IosDependencies.shared.observeAgenda()` + `LocalDateDays(dates: AgendaDays.all)` | WIRED | `AgendaSource.swift:52-57` |
+| `AgendaView` / `AgendaDetailView` | star state | `viewModel.isBookmarked(session.id)` | WIRED | `AgendaView.swift:110`, `AgendaDetailView.swift:139` |
+| Koin iOS module | `UserDefaults*Store` | `DataPlatformModule.ios.kt` | WIRED | Per the previous report; not re-read |
 
 ### Data-Flow Trace (Level 4)
 
 | Artifact | Data Variable | Source | Produces Real Data | Status |
 | -------- | ------------- | ------ | ------------------ | ------ |
 | `AgendaView.agendaList` | `viewModel.agendaContent.sections` | `ObserveAgendaUseCase.observe` (store + bookmarks + filters combine) | Yes | FLOWING |
-| `AgendaViewModel.bookmarkedIds` | mirror | first emission of `bookmarkedSessionIds`, then tap write-through | Yes | FLOWING |
-| `AgendaViewModel.sessionFilters` | mirror | `filtersStore().filters` at init, then tap write-through | Yes | FLOWING |
+| `AgendaViewModel.bookmarkedIds` | mirror | first emission of `bookmarkedSessionIds`, then toggle write-through; store snapshot while unseeded | Yes | FLOWING |
+| `AgendaViewModel.sessionFilters` | mirror | `filtersStore().filters` at init, then toggle write-through | Yes | FLOWING |
 
 ### Behavioral Spot-Checks
 
@@ -108,8 +122,10 @@ The four ROADMAP success criteria are the contract. The plan-level truths (singl
 | DI gate | `bash scripts/di-gate.sh` | `DI-GATE-OK` | PASS |
 | KMP-NC version gate | `bash scripts/kmp-nc-version-gate.sh` | `KMPNC-VERSION-OK 1.0.6` | PASS |
 | Swift names gate | `bash scripts/swift-names-gate.sh check` | `SWIFT-NAMES-OK`, empty diff | PASS |
-| Swift suite, CI | `gh pr checks 433` | 5 passed, 0 failed, head `d5f5efb6` | PASS |
-| Swift suite, local | not run | Relied on CI and orchestrator `XCRESULT-TESTS total=72 passed=72` | SKIPPED (CI evidence used) |
+| Debt-marker scan | grep `TBD\|FIXME\|XXX` in `iosApp/iosApp`, `shared/src/iosMain`, `core/data/src/iosMain` | none (one binary-file false match on an app icon PNG) | PASS |
+| Swift suite | not re-run by the verifier | Orchestrator evidence: `XCRESULT-TESTS total=76 passed=76 failed=0 skipped=0`, `XCRESULT-OK` | SKIPPED (orchestrator evidence used) |
+| Android and JVM tests | not re-run by the verifier | Orchestrator evidence: `./gradlew testDebugUnitTest jvmTest testAndroidHostTest` BUILD SUCCESSFUL (up to date) | SKIPPED (orchestrator evidence used) |
+| Kotlin iOS tests | not re-run | No Kotlin changed since the last run | SKIPPED |
 
 ### Probe Execution
 
@@ -123,28 +139,44 @@ No phase-declared probes (`probe-*.sh`). Not applicable.
 | IOSDATA-02 | 09-09, 09-15 | Update from v1.0 starts empty and works; new values survive relaunch (in-place update UAT) | SATISFIED | Truth 1 |
 | IOSDATA-03 | 09-01, 02, 07, 08, 10, 11, 16 | Agenda continuously observes the shared combined stream; list, cells and detail share one `AgendaViewModel` | SATISFIED | Truth 4 |
 
-All three IDs appear in `.planning/REQUIREMENTS.md`, mapped to Phase 9. No ORPHANED requirements: no other ID in REQUIREMENTS.md maps to Phase 9.
+All three IDs appear in `.planning/REQUIREMENTS.md` (lines 24-26) and in the ROADMAP Phase 9 entry. No ORPHANED requirements: no other ID maps to Phase 9. REQUIREMENTS.md already shows all three as `[x]`.
 
 ### Anti-Patterns Found
 
 | File | Line | Pattern | Severity | Impact |
 | ---- | ---- | ------- | -------- | ------ |
-| none | - | No `TBD`, `FIXME` or `XXX` in iOS Swift, `shared` iosMain or `core/data` iosMain | - | - |
-| `iosApp/iosApp/Agenda/AgendaViewModel.swift` | 77-92 | WR-01 (from 09-REVIEW): a failed first bookmark seed is logged and leaves the mirror empty with no fallback read | Warning | Narrow edge: the store flow is a `StateFlow` that emits immediately, and the window is already an accepted deviation (D-05 seed window). Not a goal failure; left open in the review disposition |
+| `iosApp/iosApp/Agenda/AgendaViewModel.swift` | 93-99 | WR-01 (09-REVIEW, open): a bookmark toggled while the first seed is awaiting can be overwritten by the older first-emission snapshot | Warning (advisory) | See "Weighing WR-01" below. Not a goal gap. |
+| `iosApp/iosApp/Agenda/AgendaViewModel.swift` | 69-84 | IN-01: duplicated insert/remove block in `toggleBookmark` | Info | Readability only |
+| `iosApp/iosApp/Agenda/AgendaViewModel.swift` | 103 | IN-02: stale comment "Counts only, never the ids." above an error log | Info | Misleading comment only |
+| `09-REVIEW-DISPOSITION.md` | - | IN-03, IN-04, IN-05 (test isolation, teardown assertion, pre-existing items) | Info | Open in the ledger; not goal items |
+
+No `TBD`, `FIXME` or `XXX` markers in the Swift or Kotlin iOS sources of this phase, so the debt-marker gate is clear.
+
+### Weighing WR-01
+
+Finding: `seedBookmarksIfNeeded` awaits the first `bookmarkedSessionIds` emission and then assigns `bookmarkedIds = ids` wholesale. A toggle that lands on the main actor between the Kotlin collection starting and that element arriving is written to the store and the mirror, then overwritten in the mirror by the older snapshot. I read the code at `AgendaViewModel.swift:91-106` and the finding is real.
+
+Why it does not fail the phase goal, on the evidence read:
+- **Persistence is not affected.** `source.setBookmarked` runs on the toggle path, so the store holds the toggled value. Nothing is lost on relaunch, and the v1.0 empty-start guarantee is not touched.
+- **The agenda list is not affected.** It is driven by the Kotlin combined flow, which reads the store directly, so Favorites filtering and the sessions shown stay correct. Only the star glyph, which reads the mirror, can be stale.
+- **The window is narrow in practice.** On the first load the seed completes before `source.agenda()` is subscribed (`observeAgenda` awaits the seed first), and `agendaContent` starts empty, so no star is on screen to tap during that first window. The remaining case is a retry after a failed seed, where the window is again one flow-to-main-actor hop. The Kotlin store is a `StateFlow`, which emits immediately.
+- **It self-heals.** The next toggle of that session or the next launch realigns the star.
+- **Roadmap criterion 4 still holds.** Updates without relaunch work on the normal path, and the one-way persistence criteria are unaffected.
+
+What it does leave: the ARCHITECTURE.md statement that the mirrors "always match what is persisted" is slightly stronger than this race allows. This is recorded as a WARNING (advisory) for the phase owner to triage. The review's suggested fix, replaying toggles made while unseeded over the seeded set, is small and local. It is not required to close the phase, and it was left as `open` in the disposition ledger, which is the correct state until someone decides.
 
 ### Human Verification Required
 
-None outstanding. The three human checkpoints (09-09, 09-15, 09-16) were already passed and are recorded in the SUMMARYs.
+None outstanding. The three human checkpoints (09-09 one-way decision, 09-15 in-place update UAT, 09-16 paired parity) are recorded as passed in their SUMMARYs, and the 09-parity evidence files are present.
 
 ### Gaps Summary
 
-No gaps. All four ROADMAP success criteria are met in the code. The accepted deviations are documented, and the Swift suite, the gates and CI agree.
+No gaps. All four ROADMAP success criteria are met in the current source, and the WR-01 fix is present, wired and tested. Four truths rely on prior human UAT (1 and 3) or on the orchestrator's reported suite and CI results (4); the verifier re-ran the four gate scripts only.
 
-Bookkeeping for the orchestrator, none of it blocking:
-- `.planning/REQUIREMENTS.md` still shows IOSDATA-01, IOSDATA-02 and IOSDATA-03 as `[ ]` and `Pending` (lines 24-26, 98-100). Mark them complete on phase close.
-- The ROADMAP index line for Phase 9 (line 40) is still `[ ]`.
-- Advisory: WR-01 plus 5 info items from 09-REVIEW remain open in the disposition ledger, and 09-UI-REVIEW scored 17/24. Neither is a phase-goal item.
-- Limits: the local Swift suite was not re-run here, and visual parity rests on the recorded human UAT.
+Limits to carry forward:
+- CI has not run on the commits after `d5f5efb6` (including `61bb6b28` and `b4245bf0`). The local 76/76 Swift result is orchestrator evidence, not re-run by the verifier.
+- `.planning/ROADMAP.md` still needs its Phase 9 index line marked complete on phase close if it is not already.
+- WR-01 (warning) and IN-01 to IN-05 remain `open` in `09-REVIEW-DISPOSITION.md`. `09-UI-REVIEW.md` scored 17/24 earlier; neither is a phase-goal item.
 
 ---
 

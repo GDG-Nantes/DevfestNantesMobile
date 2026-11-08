@@ -6,10 +6,10 @@ current_phase: 10
 current_phase_name: Explicit iOS DI
 status: planning
 stopped_at: Phase 09 complete, ready to plan Phase 10
-last_updated: "2026-11-08T09:28:31.278Z"
+last_updated: "2026-11-08T09:42:43.559Z"
 last_activity: 2026-11-08
 last_activity_desc: Phase 09 complete, transitioned to Phase 10
-state_head: eef62348a8bb00f68f9c1bca3d03938adf0c38c3
+state_head: 062177c909397ecdc84961e9d28784731f223c4b
 progress:
   total_phases: 7
   completed_phases: 9
@@ -25,14 +25,14 @@ progress:
 See: .planning/PROJECT.md (updated 2026-11-08)
 
 **Core value:** CI/CD must work again and the project must become maintainable again (modern build, modular architecture, decentralized DI, solid test coverage) without ever regressing the app's existing behavior for users.
-**Current focus:** Phase 10 — Explicit iOS DI
+**Current focus:** Phase 09 — iOS on Shared Logic and Legacy Persistence
 
 ## Current Position
 
 Phase: 10 — Explicit iOS DI
 Plan: Not started
 Status: Ready to plan
-Last activity: 2026-11-08 - Completed quick task 261108-e0y: Fix Phase 9 code review WR-01: bookmark mirror fallback when the one-shot seed fails
+Last activity: 2026-11-08 — Phase 09 complete, transitioned to Phase 10
 
 Progress: [████████░░] 75%
 
